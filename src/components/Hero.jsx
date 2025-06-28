@@ -1,6 +1,8 @@
 import useTypewriter from '../hooks/useTypewriter';
 import useScrollTransform from '../hooks/useScrollTransform';
 import Starfield from './Starfield';
+import GradientButton from './GradientButton';
+import Section from './Section';
 
 function Hero() {
   const words = ['Inteligência Artificial', 'Design 3D', 'Programação', 'Marketing'];
@@ -8,17 +10,17 @@ function Hero() {
   const taglineRef = useScrollTransform();
 
   return (
-    <section className="relative flex flex-col items-center justify-center text-center min-h-screen px-4 bg-zinc-950 overflow-visible">
+    <Section className="text-center bg-zinc-950 overflow-visible">
       <Starfield />
       {/* Conteúdo */}
       <h1 className="text-white font-bold text-3xl sm:text-5xl leading-relaxed tracking-tight max-w-2xl mb-10">
         {/* Texto fixo com efeito "lâmpada de lava" */}
-        <span className="inline-block text-6xl sm:text-8xl font-extrabold bg-gradient-to-r from-fuchsia-500 via-purple-500 to-cyan-400 bg-clip-text text-transparent animate-gradient">
+        <span className="inline-block text-6xl sm:text-8xl font-extrabold gradient-text animate-gradient">
           Habilidade em
         </span>
 
         {/* Texto dinâmico com máquina de escrever */}
-        <span className="block bg-gradient-to-r from-fuchsia-500 to-cyan-400 bg-clip-text text-transparent text-3xl sm:text-5xl pb-2">
+        <span className="block gradient-text text-3xl sm:text-5xl pb-2">
           {text}
           {/* Barra piscante estilo cursor */}
           <span className="inline-block animate-blink text-white ml-0.5">|</span>
@@ -41,12 +43,9 @@ function Hero() {
         );
       })()}
       <div className="mt-8 flex flex-col sm:flex-row gap-4">
-        <a
-          href="#como-funciona"
-          className="btn-neon bg-zinc-900/70 text-white px-6 py-3 rounded-md font-semibold hover:bg-zinc-900 transition text-sm"
-        >
+        <GradientButton href="#como-funciona" className="px-6 py-3 text-sm">
           Ver Como Funciona
-        </a>
+        </GradientButton>
       </div>
 
       {/* Seta para próxima seção */}
@@ -59,7 +58,7 @@ function Hero() {
           <path d="M12 16.5a1 1 0 0 1-.707-.293l-6-6a1 1 0 1 1 1.414-1.414L12 14.086l5.293-5.293a1 1 0 0 1 1.414 1.414l-6 6A1 1 0 0 1 12 16.5z" />
         </svg>
       </a>
-    </section>
+    </Section>
   );
 }
 

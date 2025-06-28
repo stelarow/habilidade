@@ -138,6 +138,12 @@
   .pulse-border:hover::before {
     animation-play-state: paused;
   }
+  .gradient-text {
+    background-image: linear-gradient(to right, #d400ff, #a000ff, #00c4ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
 }
 
 @layer base {

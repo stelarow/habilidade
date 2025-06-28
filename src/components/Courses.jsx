@@ -1,4 +1,5 @@
 import Starfield from './Starfield';
+import Section from './Section';
 import {
   Cube,
   FilmSlate,
@@ -74,7 +75,7 @@ function CourseCard({ title, icon: Icon, desc }) {
 
 function Courses() {
   return (
-    <section id="cursos" className="relative px-4 py-24 bg-zinc-950 text-white">
+    <Section id="cursos" className="px-4 py-24 bg-zinc-950 text-white items-start justify-start min-h-0">
       <Starfield className="opacity-20" />
 
       <div className="relative z-10 max-w-7xl mx-auto">
@@ -86,7 +87,7 @@ function Courses() {
           ))}
         </div>
       </div>
-    </section>
+    </Section>
   );
 }
 

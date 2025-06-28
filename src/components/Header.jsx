@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import useToggle from '../hooks/useToggle';
+import { NAV_LINKS } from '../constants/navigation.js';
+import GradientButton from './GradientButton';
 
 function Header() {
-  const [open, setOpen] = useState(false);
+  const [open, toggleOpen, , setClose] = useToggle(false);
 
   return (
     <header className="fixed top-0 w-full bg-zinc-900/70 backdrop-blur-md z-50">
@@ -10,25 +12,26 @@ function Header() {
 
         {/* Navegação desktop */}
         <nav className="hidden md:flex gap-6 text-sm">
-          <a href="#cursos" className="text-white hover:text-cyan-300 transition">Cursos Presenciais</a>
-          <a href="#estrutura" className="text-white hover:text-cyan-300 transition">Estrutura</a>
-          <a href="#instrutores" className="text-white hover:text-cyan-300 transition">Instrutores</a>
-          <a href="#contato" className="text-white hover:text-cyan-300 transition">Contato</a>
+          {NAV_LINKS.map(({ label, href }) => (
+            <a key={href} href={href} className="text-white hover:text-cyan-300 transition">
+              {label}
+            </a>
+          ))}
         </nav>
 
         {/* CTA desktop */}
-        <a
+        <GradientButton
           href="https://wa.me/5548999999999"
           target="_blank"
           rel="noopener noreferrer"
-          className="hidden md:inline-block btn-neon bg-zinc-900/70 text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-zinc-900 transition"
+          className="hidden md:inline-block px-4 py-2 text-sm"
         >
           Começar Agora
-        </a>
+        </GradientButton>
 
         {/* Botão Hamburguer mobile */}
         <button
-          onClick={() => setOpen(!open)}
+          onClick={toggleOpen}
           aria-label="Abrir menu"
           className="md:hidden flex flex-col justify-center gap-[3px]"
         >
@@ -42,18 +45,24 @@ function Header() {
       {open && (
         <div className="md:hidden bg-zinc-900">
           <nav className="flex flex-col gap-4 px-4 py-4 text-sm">
-            <a href="#cursos" className="text-white" onClick={() => setOpen(false)}>Cursos Presenciais</a>
-            <a href="#estrutura" className="text-white" onClick={() => setOpen(false)}>Estrutura</a>
-            <a href="#instrutores" className="text-white" onClick={() => setOpen(false)}>Instrutores</a>
-            <a href="#contato" className="text-white" onClick={() => setOpen(false)}>Contato</a>
-            <a
+            {NAV_LINKS.map(({ label, href }) => (
+              <a
+                key={href}
+                href={href}
+                className="text-white"
+                onClick={setClose}
+              >
+                {label}
+              </a>
+            ))}
+            <GradientButton
               href="https://wa.me/5548999999999"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-neon bg-zinc-900/70 text-white px-4 py-2 rounded-md font-semibold"
+              className="px-4 py-2"
             >
               Começar Agora
-            </a>
+            </GradientButton>
           </nav>
         </div>
       )}
