@@ -21,7 +21,7 @@ function Header() {
           href="https://wa.me/5548999999999"
           target="_blank"
           rel="noopener noreferrer"
-          className="hidden md:inline-block bg-gradient-to-r from-fuchsia-500 to-cyan-400 text-white px-4 py-2 rounded-md text-sm font-semibold shadow hover:opacity-90 transition"
+          className="hidden md:inline-block btn-neon bg-zinc-900/70 text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-zinc-900 transition"
         >
           Começar Agora
         </a>
@@ -50,7 +50,7 @@ function Header() {
               href="https://wa.me/5548999999999"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-gradient-to-r from-fuchsia-500 to-cyan-400 text-white px-4 py-2 rounded-md font-semibold shadow"
+              className="btn-neon bg-zinc-900/70 text-white px-4 py-2 rounded-md font-semibold"
             >
               Começar Agora
             </a>

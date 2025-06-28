@@ -40,6 +40,104 @@
     background-size: 300% 300%;
     animation: gradient 8s ease infinite;
   }
+  .btn-neon {
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-neon::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 2px;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #d400ff, #00c4ff, #d400ff);
+    background-size: 300% 100%;
+    animation: borderFlow 4s linear infinite;
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+  .word-fade {
+    opacity: 0;
+    animation: wordFade 0.6s forwards;
+  }
+  .glow-hover::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(212,0,255,0.4), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+  }
+  .glow-hover:hover::after {
+    animation: innerGlow 2s ease-in-out infinite;
+    opacity: 1;
+  }
+  .corner-glow {
+    position: relative;
+  }
+  .corner-glow::before,
+  .corner-glow::after {
+    content: "";
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    pointer-events: none;
+    background: linear-gradient(135deg, #d400ff, #00c4ff);
+  }
+  .corner-glow::before {
+    bottom: -1px;
+    left: -1px;
+    clip-path: polygon(0 0, 0 100%, 100% 100%);
+  }
+  .corner-glow::after {
+    top: -1px;
+    right: -1px;
+    clip-path: polygon(0 0, 100% 0, 100% 100%);
+  }
+  /* glass card with gradient border on hover */
+  .glass-hover {
+    position: relative;
+  }
+  .glass-hover::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #d400ff, #00c4ff);
+    opacity: 0;
+    transition: opacity 0.3s;
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+  .glass-hover:hover::before {
+    opacity: 1;
+  }
+  /* pulse border utility */
+  .pulse-border {
+    position: relative;
+  }
+  .pulse-border::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    background: linear-gradient(90deg,#d400ff,#00c4ff,#d400ff);
+    background-size: 300% 100%;
+    -webkit-mask: linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    animation: pulseBorder 3s ease-in-out infinite;
+    pointer-events: none;
+  }
+  .pulse-border:hover::before {
+    animation-play-state: paused;
+  }
 }
 
 @layer base {
@@ -54,5 +152,21 @@
   @keyframes blink {
     0%,100% { opacity: 1; }
     50% { opacity: 0; }
+  }
+  @keyframes borderFlow {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+  }
+  @keyframes wordFade {
+    0% { opacity: 0; transform: translateY(8px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes innerGlow {
+    0%,100% { opacity: 0.2; }
+    50% { opacity: 0.6; }
+  }
+  @keyframes pulseBorder {
+    0%,100% { opacity: 0.4; }
+    50% { opacity: 1; }
   }
 }

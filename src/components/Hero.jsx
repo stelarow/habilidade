@@ -1,9 +1,11 @@
 import useTypewriter from '../hooks/useTypewriter';
+import useScrollTransform from '../hooks/useScrollTransform';
 import Starfield from './Starfield';
 
 function Hero() {
   const words = ['Inteligência Artificial', 'Design 3D', 'Programação', 'Marketing'];
   const text = useTypewriter(words);
+  const taglineRef = useScrollTransform();
 
   return (
     <section className="relative flex flex-col items-center justify-center text-center min-h-screen px-4 bg-zinc-950 overflow-visible">
@@ -17,26 +19,31 @@ function Hero() {
 
         {/* Texto dinâmico com máquina de escrever */}
         <span className="block bg-gradient-to-r from-fuchsia-500 to-cyan-400 bg-clip-text text-transparent text-3xl sm:text-5xl pb-2">
-          {/* Cursor inicial */}
-          {text.length === 0 && (
-            <span className="inline-block w-1 h-full bg-white animate-blink align-bottom" />
-          )}
-
           {text}
-
-          {/* Cursor que segue o texto */}
-          {text.length > 0 && (
-            <span className="inline-block w-1 h-full bg-white animate-blink align-bottom" />
-          )}
+          {/* Barra piscante estilo cursor */}
+          <span className="inline-block animate-blink text-white ml-0.5">|</span>
         </span>
       </h1>
-      <p className="mt-16 text-zinc-300 max-w-md text-sm sm:text-base">
-        Aprenda hoje as habilidades que vão liderar o mercado de amanhã.
-      </p>
+      {(() => {
+        const sentence = 'Aprenda hoje as habilidades que vão liderar o mercado de amanhã.';
+        return (
+          <p ref={taglineRef} className="mt-16 text-zinc-300 text-sm sm:text-base whitespace-nowrap">
+            {sentence.split(' ').map((word, i) => (
+              <span
+                key={i}
+                style={{ animationDelay: `${i * 0.08}s` }}
+                className="inline-block mr-1 word-fade"
+              >
+                {word}
+              </span>
+            ))}
+          </p>
+        );
+      })()}
       <div className="mt-8 flex flex-col sm:flex-row gap-4">
         <a
           href="#como-funciona"
-          className="border border-zinc-600 text-white px-6 py-3 rounded-md font-semibold hover:bg-zinc-800 transition text-sm"
+          className="btn-neon bg-zinc-900/70 text-white px-6 py-3 rounded-md font-semibold hover:bg-zinc-900 transition text-sm"
         >
           Ver Como Funciona
         </a>

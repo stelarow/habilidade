@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escola Habilidade - Do Render à Inteligência Artificial</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div style="position: absolute; top: 100px; left: 50%; transform: translateX(-50%); z-index: 9999;">
+        <i data-lucide="home" class="test-icon"></i>
+    </div>
+
+    <svg width="0" height="0" style="position:absolute">
+        <defs>
+            <linearGradient id="icon-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color: #d400ff;"/>
+                <stop offset="100%" style="stop-color: #00c4ff;"/>
+            </linearGradient>
+        </defs>
+    </svg>
+    <!-- Header Fixo -->
+    <header class="header" id="header">
+        <div class="header-container">
+            <div class="logo">
+                <span class="logo-text">Escola Habilidade</span>
+            </div>
+            <nav class="nav">
+                <a href="#cursos" class="nav-link">Cursos Presenciais</a>
+                <a href="#estrutura" class="nav-link">Estrutura</a>
+                <a href="#instrutores" class="nav-link">Instrutores</a>
+                <a href="#contato" class="nav-link">Contato</a>
+            </nav>
+            <a href="https://wa.me/5548999999999" class="btn btn-primary header-cta" target="_blank">
+                Começar Agora
+            </a>
+            <button class="hamburger" id="hamburger" aria-label="Abrir menu" aria-controls="mobile-menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+        <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+            <nav class="mobile-nav">
+                <a href="#cursos" class="nav-link">Cursos Presenciais</a>
+                <a href="#estrutura" class="nav-link">Estrutura</a>
+                <a href="#instrutores" class="nav-link">Instrutores</a>
+                <a href="#contato" class="nav-link">Contato</a>
+                <a href="https://wa.me/5548999999999" class="btn btn-primary mobile-cta" target="_blank">Começar Agora</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="starfield" id="starfield-hero"></div>
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span class="title-line-1">Habilidade em</span>
+                <span class="title-line-2" id="typewriter-wrapper" style="display:inline-block; position:relative; min-width:320px;">
+                    <span id="typewriter" aria-live="polite"></span>
+                    <span id="typewriter-ghost" aria-hidden="true" style="visibility:hidden; position:absolute; left:0; top:0; white-space:pre;">Inteligência Artificial</span>
+                </span>
+            </h1>
+            
+            <p class="hero-description">
+                Aprenda hoje as habilidades que vão liderar o mercado de amanhã.
+            </p>
+            
+            <div class="hero-badge">
+                <span class="badge-text">Agende uma aula experimental gratuita e sem compromisso</span>
+            </div>
+            
+            <div class="hero-buttons">
+                <a href="#detalhes" class="btn btn-primary btn-large">Quero Dominar IA</a>
+                <a href="#como-funciona" class="btn btn-outline btn-large">Ver Como Funciona</a>
+            </div>
+            
+            <div class="hero-features">
+                <div class="feature">
+                    <div class="feature-icon">🛡️</div>
+                    <span class="feature-text">Conteúdo estruturado</span>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🎓</div>
+                    <span class="feature-text">Aulas presenciais</span>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">👥</div>
+                    <span class="feature-text">Suporte incluído</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="scroll-indicator">
+            <div class="scroll-arrow">↓</div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <!--
+    <section class="problem-section" id="problema">
+        <div class="container">
+            <h2 class="section-title">Você está ficando para trás na evolução dos projetos</h2>
+            <div class="problem-cards">
+                <div class="problem-card">
+                    <div class="card-icon gradient-red">
+                        <span>⏰</span>
+                    </div>
+                    <h3 class="card-title">Tempo Desperdiçado</h3>
+                    <p class="card-description">
+                        Horas perdidas com processos manuais que poderiam ser automatizados 
+                        com inteligência artificial.
+                    </p>
+                </div>
+                <div class="problem-card">
+                    <div class="card-icon gradient-orange">
+                        <span>📊</span>
+                    </div>
+                    <h3 class="card-title">Projetos que não impressionam</h3>
+                    <p class="card-description">
+                        Renders básicos que não se destacam da concorrência e não 
+                        transmitem profissionalismo.
+                    </p>
+                </div>
+                <div class="problem-card">
+                    <div class="card-icon gradient-yellow">
+                        <span>📈</span>
+                    </div>
+                    <h3 class="card-title">Perda de mercado</h3>
+                    <p class="card-description">
+                        Clientes escolhendo concorrentes que já dominam as ferramentas 
+                        de inteligência artificial.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    -->
+
+    <!-- Cursos Disponíveis -->
+    <section class="cursos-section" id="cursos">
+        <h2 class="cursos-title">
+            <span class="cursos-title-white">Desenvolva novas</span>
+            <span class="cursos-title-gradient-group"><span class="cursos-title-gradient">Habilidades</span><span class="cursos-title-glow">:</span></span>
+        </h2>
+        <div class="cursos-subtitle">Cursos presenciais que conectam criatividade e tecnologia.</div>
+        <div class="starfield" id="starfield-cursos"></div>
+        <div class="cursos-bg">
+            <div class="cursos-grid">
+                <button class="curso-card curso-projetista" tabindex="0" aria-label="Curso Projetista 3D">
+                    <div class="curso-card-inner">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="curso-icon">
+                            <path d="M20.16,6.38l-7.16-4.13c-0.54-0.31-1.2-0.31-1.74,0l-7.16,4.13c-0.54,0.31-0.9,0.85-0.9,1.45v8.34 c0,0.6,0.36,1.14,0.9,1.45l7.16,4.13c0.27,0.16,0.57,0.23,0.87,0.23s0.6-0.08,0.87-0.23l7.16-4.13c0.54-0.31,0.9-0.85,0.9-1.45 V7.83C21.06,7.23,20.7,6.69,20.16,6.38z"/>
+                        </svg>
+                        <div class="curso-content">
+                            <span class="curso-nome">Projetista 3D</span>
+                            <span class="curso-desc">Blender, AutoCAD, SketchUp, Impressão 3D, Maquetes…</span>
+                        </div>
+                    </div>
+                </button>
+                <button class="curso-card curso-video" tabindex="0" aria-label="Curso Edição de Vídeo">
+                    <div class="curso-card-inner">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="curso-icon">
+                            <path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z"></path>
+                        </svg>
+                        <div class="curso-content">
+                            <span class="curso-nome">Edição de Vídeo</span>
+                            <span class="curso-desc">Premiere, After Effects, DaVinci Resolve, Motion Graphics…</span>
+                        </div>
+                    </div>
+                </button>
+                <button class="curso-card curso-informatica" tabindex="0" aria-label="Curso Informática">
+                    <div class="curso-card-inner">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="curso-icon">
+                            <path d="M20 18c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2H0v2h24v-2h-4zM4 6h16v10H4V6z"></path>
+                        </svg>
+                        <div class="curso-content">
+                            <span class="curso-nome">Informática</span>
+                            <span class="curso-desc">Windows, Word, Excel (fundamental → avançado), PowerPoint, Nuvem, IA…</span>
+                        </div>
+                    </div>
+                </button>
+                <button class="curso-card curso-design" tabindex="0" aria-label="Curso Design Gráfico">
+                    <div class="curso-card-inner">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="curso-icon">
+                            <path d="M20.71,7.04C21.1,6.65 21.1,6.02 20.71,5.63l-2.34-2.34c-0.39-0.39-1.02-0.39-1.41,0l-1.83,1.83l3.75,3.75 L20.71,7.04z M3,17.25V21h3.75l11.06-11.06l-3.75-3.75L3,17.25z"/>
+                        </svg>
+                        <div class="curso-content">
+                            <span class="curso-nome">Design Gráfico</span>
+                            <span class="curso-desc">Photoshop, Illustrator, InDesign, Canva, Social Media…</span>
+                        </div>
+                    </div>
+                </button>
+                <button class="curso-card curso-programacao" tabindex="0" aria-label="Curso Programação">
+                    <div class="curso-card-inner">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="curso-icon">
+                            <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"></path>
+                        </svg>
+                        <div class="curso-content">
+                            <span class="curso-nome">Programação</span>
+                            <span class="curso-desc">Lógica, Python, Java, PHP, Android Studio, Jogos, Algoritmos…</span>
+                        </div>
+                    </div>
+                </button>
+                <button class="curso-card curso-marketing" tabindex="0" aria-label="Curso Marketing Digital">
+                    <div class="curso-card-inner">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="curso-icon">
+                            <path d="M10 20h4V4h-4v16zm-6 0h4v-8H4v8zM16 9v11h4V9h-4z"></path>
+                        </svg>
+                        <div class="curso-content">
+                            <span class="curso-nome">Marketing Digital</span>
+                            <span class="curso-desc">Social Ads, SEO, Copywriting, Canva, Branding, Analytics…</span>
+                        </div>
+                    </div>
+                </button>
+                <button class="curso-card curso-ia" tabindex="0" aria-label="Curso Inteligência Artificial">
+                    <div class="curso-card-inner">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="curso-icon">
+                            <path d="M19,6h-2V4c0-1.1-0.9-2-2-2H9C7.9,2,7,2.9,7,4v2H5C3.9,6,3,6.9,3,8v10c0,1.1,0.9,2,2,2h14c1.1,0,2-0.9,2-2V8 C21,6.9,20.1,6,19,6z M9,4h6v2H9V4z M15,15c-0.83,0-1.5-0.67-1.5-1.5S14.17,12,15,12s1.5,0.67,1.5,1.5S15.83,15,15,15z M9,15 c-0.83,0-1.5-0.67-1.5-1.5S8.17,12,9,12s1.5,0.67,1.5,1.5S9.83,15,9,15z"/>
+                        </svg>
+                        <div class="curso-content">
+                            <span class="curso-nome">Inteligência Artificial</span>
+                            <span class="curso-desc">Machine Learning, Prompt Engineering, ChatGPT, Visão Computacional…</span>
+                        </div>
+                    </div>
+                </button>
+                <button class="curso-card curso-bi" tabindex="0" aria-label="Curso Business Intelligence">
+                    <div class="curso-card-inner">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="curso-icon">
+                            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"></path>
+                        </svg>
+                        <div class="curso-content">
+                            <span class="curso-nome">Business Intelligence</span>
+                            <span class="curso-desc">Master Excel, Power BI, Dashboards, Storytelling de dados…</span>
+                        </div>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section class="solution-section" id="solucao">
+        <div class="container">
+            <h2 class="section-title">A Escola Habilidade criou um método simples e poderoso</h2>
+            <p class="solution-description">
+                Em apenas 4 semanas, você aprenderá a otimizar seus processos com inteligência 
+                artificial e criar apresentações que impressionam seus clientes. 
+                Formato 100% presencial em São José-SC.
+            </p>
+        </div>
+    </section>
+
+    <!-- Etapas Section -->
+    <section class="etapas-section" id="etapas">
+        <div class="container">
+            <div class="etapas-intro">
+                <h2 class="section-title">Etapas do curso em 4 semanas</h2>
+                <p class="etapas-subtitle">1 encontro por semana, 2 horas cada</p>
+            </div>
+            
+            <div class="etapas-grid">
+                <div class="etapa-item">
+                    <div class="etapa-content">
+                        <div class="etapa-number gradient-blue">1</div>
+                        <h3 class="etapa-title">Criação de códigos com IA para o SketchUp</h3>
+                        <p class="etapa-description">
+                            Aprenda a gerar códigos personalizados usando inteligência artificial 
+                            para automatizar processos no SketchUp.
+                        </p>
+                        <div class="etapa-results">
+                            <div class="result-item">
+                                <span class="check">✓</span>
+                                <span>Automatização de tarefas repetitivas</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="check">✓</span>
+                                <span>Scripts personalizados para seu workflow</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="check">✓</span>
+                                <span>Economia de tempo significativa</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="etapa-item">
+                    <div class="etapa-image gradient-purple">
+                        <span>🎨</span>
+                    </div>
+                </div>
+                
+                <div class="etapa-item">
+                    <div class="etapa-image gradient-green">
+                        <span>🎬</span>
+                    </div>
+                </div>
+                
+                <div class="etapa-item">
+                    <div class="etapa-content">
+                        <div class="etapa-number gradient-green">2</div>
+                        <h3 class="etapa-title">Imagens realistas com IA</h3>
+                        <p class="etapa-description">
+                            Domine as ferramentas de IA para criar renders fotorealistas 
+                            que impressionam seus clientes.
+                        </p>
+                        <div class="etapa-results">
+                            <div class="result-item">
+                                <span class="check">✓</span>
+                                <span>Renders de qualidade profissional</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="check">✓</span>
+                                <span>Estilos visuais personalizados</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="check">✓</span>
+                                <span>Resultados em minutos, não horas</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="etapa-item">
+                    <div class="etapa-content">
+                        <div class="etapa-number gradient-turquoise">3</div>
+                        <h3 class="etapa-title">Vídeos cinematográficos</h3>
+                        <p class="etapa-description">
+                            Crie vídeos impressionantes usando IA para animações, 
+                            transições e efeitos visuais.
+                        </p>
+                        <div class="etapa-results">
+                            <div class="result-item">
+                                <span class="check">✓</span>
+                                <span>Vídeos com qualidade cinematográfica</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="check">✓</span>
+                                <span>Animações fluidas e profissionais</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="check">✓</span>
+                                <span>Apresentações que se destacam</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="etapa-item">
+                    <div class="etapa-image gradient-indigo">
+                        <span>💻</span>
+                    </div>
+                </div>
+                
+                <div class="etapa-item">
+                    <div class="etapa-image gradient-blue">
+                        <span>📱</span>
+                    </div>
+                </div>
+                
+                <div class="etapa-item">
+                    <div class="etapa-content">
+                        <div class="etapa-number gradient-indigo">4</div>
+                        <h3 class="etapa-title">Página de apresentação</h3>
+                        <p class="etapa-description">
+                            Desenvolva páginas interativas e responsivas para apresentar 
+                            seus projetos de forma profissional.
+                        </p>
+                        <div class="etapa-results">
+                            <div class="result-item">
+                                <span class="check">✓</span>
+                                <span>Páginas interativas e responsivas</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="check">✓</span>
+                                <span>Portfólio digital profissional</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="check">✓</span>
+                                <span>Destaque da concorrência</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Histórias de Sucesso -->
+    <section class="success-section" id="sucesso">
+        <div class="container">
+            <h2 class="section-title">Profissionais de várias áreas já estão aplicando a transformação</h2>
+            
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-avatar">
+                        <img src="https://via.placeholder.com/60x60/333/fff?text=J" alt="João Silva">
+                    </div>
+                    <div class="testimonial-stars">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                    </div>
+                    <p class="testimonial-text">
+                        "Comecei aplicando IA nos meus renders e os clientes ficaram impressionados. 
+                        Agora consigo entregar projetos em metade do tempo!"
+                    </p>
+                    <p class="testimonial-author">João Silva, Arquiteto</p>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-avatar">
+                        <img src="https://via.placeholder.com/60x60/333/fff?text=M" alt="Maria Costa">
+                    </div>
+                    <div class="testimonial-stars">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                    </div>
+                    <p class="testimonial-text">
+                        "Os vídeos que criei com IA para meus projetos de interiores 
+                        fizeram toda a diferença nas apresentações."
+                    </p>
+                    <p class="testimonial-author">Maria Costa, Designer de Interiores</p>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-avatar">
+                        <img src="https://via.placeholder.com/60x60/333/fff?text=P" alt="Pedro Santos">
+                    </div>
+                    <div class="testimonial-stars">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                    </div>
+                    <p class="testimonial-text">
+                        "A página de apresentação que desenvolvi com IA me ajudou 
+                        a fechar contratos que antes perdia para a concorrência."
+                    </p>
+                    <p class="testimonial-author">Pedro Santos, Engenheiro Civil</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Final -->
+    <section class="cta-section" id="cta">
+        <div class="cta-content">
+            <h2 class="cta-title">Chegou a sua vez de evoluir com a inteligência artificial</h2>
+            <p class="cta-description">
+                Junte-se aos profissionais que já estão na frente da concorrência 
+                usando as ferramentas mais avançadas de IA.
+            </p>
+            <div class="cta-divider"></div>
+            <a href="#detalhes" class="btn btn-white btn-large">Ver detalhes do curso</a>
+        </div>
+        
+        <div class="cta-card">
+            <h3 class="card-title">O que está incluído no curso:</h3>
+            <div class="card-features">
+                <div class="feature-item">
+                    <span class="check">✓</span>
+                    <span>4 encontros presenciais em São José-SC</span>
+                </div>
+                <div class="feature-item">
+                    <span class="check">✓</span>
+                    <span>Material didático completo</span>
+                </div>
+                <div class="feature-item">
+                    <span class="check">✓</span>
+                    <span>Suporte durante e após o curso</span>
+                </div>
+                <div class="feature-item">
+                    <span class="check">✓</span>
+                    <span>Acesso vitalício ao conteúdo</span>
+                </div>
+                <div class="feature-item">
+                    <span class="check">✓</span>
+                    <span>Certificado de conclusão</span>
+                </div>
+                <div class="feature-item">
+                    <span class="check">✓</span>
+                    <span>Aula experimental gratuita</span>
+                </div>
+            </div>
+            <p class="investment-text">Investimento informado na aula experimental</p>
+        </div>
+    </section>
+
+    <!-- Botão WhatsApp Flutuante -->
+    <a href="https://wa.me/5548999999999" class="whatsapp-button" target="_blank">
+        <span class="whatsapp-icon">💬</span>
+    </a>
+
+    <script src="script.js"></script>
+</body>
+</html> 
