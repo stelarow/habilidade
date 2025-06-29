@@ -270,9 +270,14 @@ const Reviews = () => {
                 <GradientButton href="#cursos" className="px-8 py-3">
                   Ver Cursos Disponíveis
                 </GradientButton>
-                <button className="border-2 border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-blue-600 transition-all duration-300 hover:scale-105">
+                <GradientButton 
+                  href="https://wa.me/5548988559491?text=Olá! Gostaria de agendar uma visita."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-8 py-3"
+                >
                   Agendar Visita
-                </button>
+                </GradientButton>
               </div>
             </div>
           </div>

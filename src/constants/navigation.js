@@ -1,6 +1,7 @@
 export const NAV_LINKS = [
-  { label: 'Cursos Presenciais', href: '#cursos' },
-  { label: 'Estrutura', href: '#estrutura' },
-  { label: 'Instrutores', href: '#instrutores' },
+  { label: 'Cursos', href: '#cursos' },
+  { label: 'Como Funciona', href: '#como-funciona' },
+  { label: 'Avaliações', href: '#avaliacoes' },
+  { label: 'FAQ', href: '#faq' },
   { label: 'Contato', href: '#contato' },
 ]; 

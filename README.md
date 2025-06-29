@@ -1,12 +1,104 @@
-# React + Vite
+# 🎓 Escola Habilidade - Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Site institucional da Escola Habilidade com sistema de formulário de contato integrado.
 
-Currently, two official plugins are available:
+## ✨ Funcionalidades
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 🎨 Design moderno e responsivo
+- 📱 Totalmente otimizado para mobile
+- 📧 **Sistema de envio de emails (EmailJS)**
+- 💬 Fallback para WhatsApp
+- 🚀 Performance otimizada
+- ♿ Acessibilidade implementada
 
-## Expanding the ESLint configuration
+## 📧 Sistema de Contato
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+O formulário de contato possui **dupla camada de segurança**:
+
+1. **Envio por Email** (Principal)
+   - Utiliza EmailJS para envio direto
+   - Destino: `alessandro.ferreira@escolahabilidade.com`
+   - Feedback visual ao usuário
+
+2. **WhatsApp** (Fallback)
+   - Ativado automaticamente se email falhar
+   - Garante que nenhum lead seja perdido
+   - Redirecionamento automático
+
+## 🚀 Configuração
+
+### Pré-requisitos
+- Node.js 18+ 
+- npm ou yarn
+
+### Instalação
+```bash
+# Clone o repositório
+git clone [URL_DO_REPOSITORIO]
+
+# Entre na pasta
+cd Habilidade
+
+# Instale as dependências
+npm install
+
+# Inicie o servidor de desenvolvimento
+npm run dev
+```
+
+### 📧 Configurar EmailJS
+
+1. **Acesse** [EmailJS.com](https://emailjs.com) e crie uma conta
+2. **Configure** seguindo o guia em `EMAILJS_SETUP.md`
+3. **Atualize** as chaves em `src/components/ContactForm.jsx`:
+
+```javascript
+const EMAIL_CONFIG = {
+  SERVICE_ID: 'seu_service_id',
+  TEMPLATE_ID: 'seu_template_id', 
+  PUBLIC_KEY: 'sua_public_key'
+};
+```
+
+## 🛠️ Scripts Disponíveis
+
+```bash
+npm run dev      # Servidor de desenvolvimento
+npm run build    # Build para produção
+npm run preview  # Preview do build
+npm run lint     # Verificar código
+```
+
+## 📁 Estrutura do Projeto
+
+```
+src/
+├── components/          # Componentes React
+│   ├── ContactForm.jsx  # 📧 Formulário com EmailJS
+│   ├── Header.jsx       # Cabeçalho/Navegação
+│   ├── Hero.jsx         # Seção principal
+│   └── ...
+├── utils/               # Utilitários
+│   └── emailConfig.js   # ⚙️ Configurações de email
+├── hooks/               # Hooks customizados
+└── constants/           # Constantes
+```
+
+## 🔧 Tecnologias
+
+- **React 19** - Framework principal
+- **Vite** - Build tool
+- **TailwindCSS** - Estilização
+- **EmailJS** - Sistema de emails
+- **Phosphor Icons** - Ícones
+- **ESLint** - Linting
+
+## 📱 Contato
+
+- 📧 Email: alessandro.ferreira@escolahabilidade.com
+- 📱 WhatsApp: (48) 98855-9491
+- 📍 Endereço: Rua Exemplo, 123 - Kobrasol, São José - SC
+
+---
+
+**Desenvolvido para Escola Habilidade** 🎓

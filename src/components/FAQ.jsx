@@ -2,6 +2,7 @@
 import { CaretDown, Question } from 'phosphor-react';
 import Section from './Section';
 import useInView from '../hooks/useInView';
+import GradientButton from './GradientButton';
 
 const FAQ_DATA = [
   {
@@ -117,15 +118,15 @@ const FAQ = () => {
           <p className="text-zinc-400 mb-4">
             Não encontrou sua resposta?
           </p>
-          <a
-            href="https://wa.me/5548988559491?text=Olá! Tenho uma dúvida sobre os cursos."
+          <GradientButton
+            href="https://wa.me/5548988559491?text=Olá! Ainda tenho uma dúvida a respeito dos cursos, pode me ajudar?"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-gradient-to-r from-fuchsia-500 to-cyan-500 text-white font-semibold px-6 py-3 rounded-lg hover:from-fuchsia-600 hover:to-cyan-600 transition-all duration-300 hover:scale-105"
+            className="inline-flex items-center gap-2 px-6 py-3 hover:scale-105"
           >
             <Question size={20} />
             Fale Conosco
-          </a>
+          </GradientButton>
         </div>
       </div>
     </Section>

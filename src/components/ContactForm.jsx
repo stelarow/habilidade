@@ -1,8 +1,12 @@
-﻿import { useState } from 'react';
-import { PaperPlaneTilt, User, Envelope, Phone, BookOpen } from 'phosphor-react';
+﻿import { useState, useRef } from 'react';
+import { PaperPlaneTilt, User, Envelope, Phone, BookOpen, CheckCircle, XCircle } from 'phosphor-react';
+import emailjs from '@emailjs/browser';
 import Loading from './Loading';
+import GradientButton from './GradientButton';
+import { EMAIL_CONFIG, isEmailConfigured } from '../utils/emailConfig';
 
 const ContactForm = () => {
+  const form = useRef();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -31,21 +35,81 @@ const ContactForm = () => {
     });
   };
 
+  const sendEmail = async () => {
+    try {
+      // Verificar se o EmailJS está configurado
+      if (!isEmailConfigured()) {
+        console.warn('EmailJS não configurado, usando WhatsApp como fallback');
+        return { success: false, error: 'EmailJS não configurado' };
+      }
+
+      console.log('Tentando enviar email com EmailJS...');
+      console.log('Service ID:', EMAIL_CONFIG.SERVICE_ID);
+      console.log('Template ID:', EMAIL_CONFIG.TEMPLATE_ID);
+
+      // Preparar dados para EmailJS
+      const templateParams = {
+        from_name: formData.name,
+        from_email: formData.email,
+        phone: formData.phone,
+        course: formData.course || 'Não especificado',
+        message: formData.message || 'Nenhuma mensagem adicional',
+        to_email: EMAIL_CONFIG.CONTACT_EMAIL,
+        reply_to: formData.email
+      };
+
+      console.log('Parâmetros do template:', templateParams);
+
+      const result = await emailjs.send(
+        EMAIL_CONFIG.SERVICE_ID,
+        EMAIL_CONFIG.TEMPLATE_ID,
+        templateParams,
+        EMAIL_CONFIG.PUBLIC_KEY
+      );
+
+      console.log('Email enviado com sucesso!', result);
+      return { success: true };
+    } catch (error) {
+      console.error('Erro ao enviar email:', error);
+      return { success: false, error };
+    }
+  };
+
+  const sendWhatsApp = () => {
+    const message = `*Nova solicitação de contato*%0A%0A*Nome:* ${formData.name}%0A*Email:* ${formData.email}%0A*Telefone:* ${formData.phone}%0A*Curso de interesse:* ${formData.course || 'Não especificado'}%0A*Mensagem:* ${formData.message || 'Nenhuma mensagem adicional'}`;
+    window.open(`https://wa.me/${EMAIL_CONFIG.WHATSAPP_NUMBER}?text=${message}`, '_blank');
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmitStatus(null);
+    
+    console.log('Formulário submetido, dados:', formData);
     
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // Tentativa 1: Enviar por email
+      const emailResult = await sendEmail();
       
-      const message = `*Nova solicitação de contato*%0A%0A*Nome:* ${formData.name}%0A*Email:* ${formData.email}%0A*Telefone:* ${formData.phone}%0A*Curso de interesse:* ${formData.course}%0A*Mensagem:* ${formData.message}`;
-      
-      window.open(`https://wa.me/5548988559491?text=${message}`, '_blank');
-      
-      setSubmitStatus('success');
-      setFormData({ name: '', email: '', phone: '', course: '', message: '' });
+      if (emailResult.success) {
+        console.log('Email enviado com sucesso!');
+        setSubmitStatus('email_success');
+        setFormData({ name: '', email: '', phone: '', course: '', message: '' });
+      } else {
+        console.log('Falha no email, redirecionando para WhatsApp...');
+        // Fallback: WhatsApp
+        setSubmitStatus('whatsapp_fallback');
+        setTimeout(() => {
+          sendWhatsApp();
+        }, 1500);
+      }
     } catch (error) {
-      setSubmitStatus('error');
+      console.error('Erro no envio:', error);
+      // Fallback: WhatsApp
+      setSubmitStatus('whatsapp_fallback');
+      setTimeout(() => {
+        sendWhatsApp();
+      }, 1500);
     } finally {
       setIsSubmitting(false);
     }
@@ -64,7 +128,7 @@ const ContactForm = () => {
         </div>
 
         <div className="bg-zinc-800/50 backdrop-blur-sm rounded-2xl p-8 border border-zinc-700/50">
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form ref={form} onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
                 <label htmlFor="name" className="block text-sm font-medium text-zinc-300">
@@ -148,37 +212,55 @@ const ContactForm = () => {
                 onChange={handleChange}
                 rows={4}
                 className="w-full px-4 py-3 bg-zinc-900/50 border border-zinc-600 rounded-lg text-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-fuchsia-500 focus:border-transparent transition-all resize-none"
-                placeholder="Conte-nos mais sobre seus objetivos..."
+                placeholder="Deixe uma mensagem (opcional)"
               />
             </div>
 
-            {submitStatus === 'success' && (
-              <div className="p-4 bg-green-500/20 border border-green-500/30 rounded-lg text-green-300 text-sm">
-                ✅ Mensagem enviada! Redirecionando para WhatsApp...
-              </div>
-            )}
-            
-            {submitStatus === 'error' && (
-              <div className="p-4 bg-red-500/20 border border-red-500/30 rounded-lg text-red-300 text-sm">
-                ❌ Erro ao enviar. Tente novamente ou entre em contato pelo WhatsApp.
+            {/* Mensagens de Status */}
+            {submitStatus === 'email_success' && (
+              <div className="flex items-center gap-3 p-4 bg-green-500/20 border border-green-500/30 rounded-lg">
+                <CheckCircle size={24} className="text-green-400 flex-shrink-0" />
+                <div>
+                  <p className="text-green-300 font-medium">Email enviado com sucesso!</p>
+                  <p className="text-green-400 text-sm">Entraremos em contato em breve.</p>
+                </div>
               </div>
             )}
 
-            <button
+            {submitStatus === 'whatsapp_fallback' && (
+              <div className="flex items-center gap-3 p-4 bg-blue-500/20 border border-blue-500/30 rounded-lg">
+                <CheckCircle size={24} className="text-blue-400 flex-shrink-0" />
+                <div>
+                  <p className="text-blue-300 font-medium">Redirecionando para WhatsApp...</p>
+                  <p className="text-blue-400 text-sm">Você será direcionado para continuar pelo WhatsApp.</p>
+                </div>
+              </div>
+            )}
+
+            <GradientButton
               type="submit"
               disabled={isSubmitting}
-              className="w-full bg-gradient-to-r from-fuchsia-500 to-cyan-500 text-white font-semibold py-4 px-6 rounded-lg hover:from-fuchsia-600 hover:to-cyan-600 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+              className="w-full flex items-center justify-center gap-3 py-4 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isSubmitting ? (
-                <Loading size="sm" color="white" text="Enviando..." />
+                <>
+                  <Loading size="sm" />
+                  Enviando...
+                </>
               ) : (
                 <>
                   <PaperPlaneTilt size={20} />
                   Enviar Mensagem
                 </>
               )}
-            </button>
+            </GradientButton>
           </form>
+
+          <div className="mt-6 text-center">
+            <p className="text-xs text-zinc-500">
+              Seus dados são tratados com total confidencialidade conforme nossa política de privacidade.
+            </p>
+          </div>
         </div>
       </div>
     </section>
