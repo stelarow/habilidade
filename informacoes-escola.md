@@ -19,7 +19,7 @@ CEP: 88102-280
 
 **Redes Sociais:**  
 - WhatsApp: (48) 98855-9491  
-- Instagram: @escolahabilidade  
+- Instagram: @habilidade.escola  
 
 ## 🕒 Horário de Funcionamento
 
@@ -106,7 +106,7 @@ Localizada em **Kobrasol, São José - SC**, uma das regiões mais dinâmicas da
 ## 📞 Como Entrar em Contato
 
 - **Telefone/WhatsApp:** (48) 98855-9491
-- **Instagram:** @escolahabilidade
+- **Instagram:** @habilidade.escola
 - **Endereço:** R. Caetano José Ferreira, 426 - Sala 5, Kobrasol, São José - SC
 
 ---

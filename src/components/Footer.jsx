@@ -99,7 +99,7 @@ const Footer = () => {
               </a>
               
               <a
-                href="https://instagram.com/escolahabilidade"
+                href="https://instagram.com/habilidade.escola"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 rounded-lg transition-all group"
@@ -107,7 +107,7 @@ const Footer = () => {
                 <InstagramLogo size={20} className="text-white" />
                 <div className="text-left">
                   <div className="text-white text-sm font-medium">Instagram</div>
-                  <div className="text-purple-100 text-xs">@escolahabilidade</div>
+                  <div className="text-purple-100 text-xs">@habilidade.escola</div>
                 </div>
               </a>
             </div>
