@@ -60,7 +60,6 @@
   }
   .word-fade {
     opacity: 0;
-    animation: wordFade 0.6s forwards;
   }
   .glow-hover::after {
     content: "";
@@ -144,6 +143,186 @@
     background-clip: text;
     color: transparent;
   }
+  /* entrance animation for course cards */
+  .card-enter {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .card-enter.in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  /* entrance animation for step cards - dynamic */
+  .step-card {
+    opacity: 0;
+    transform: translateY(60px) scale(0.8) rotateX(15deg);
+    transition: opacity 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .step-card.in-view {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotateX(0deg);
+  }
+  /* tech badge effects */
+  .tech-badge {
+    animation: techPulse 3s ease-in-out infinite;
+  }
+  .tech-badge-special {
+    animation: techPulseSpecial 2s ease-in-out infinite;
+  }
+  .tech-badge:hover {
+    animation: techSpin 0.8s ease-out;
+  }
+  /* tech card effects */
+  .tech-card {
+    position: relative;
+  }
+  .tech-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(45deg, transparent, rgba(0,196,255,0.1), transparent);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+  .tech-card:hover::before {
+    opacity: 1;
+    animation: techGlow 1.5s ease-in-out infinite;
+  }
+  /* tech icon effects */
+  .tech-icon {
+    animation: techFloat 2.5s ease-in-out infinite;
+    width: 32px !important;
+    height: 32px !important;
+    display: block;
+  }
+  .tech-icon:hover {
+    animation: techBounce 0.6s ease-out;
+  }
+  /* tech arrow with energy pulse */
+  .tech-arrow {
+    position: relative;
+    overflow: hidden;
+  }
+  .tech-arrow:hover + .w-0 {
+    border-l-color: #22d3ee;
+    transition: border-color 0.3s ease;
+  }
+  .energy-pulse {
+    animation: energyTravel 3s ease-in-out infinite;
+  }
+  .energy-line {
+    animation: energyFlow 4s ease-in-out infinite;
+  }
+  /* animation delays */
+  .animation-delay-300 {
+    animation-delay: 300ms;
+  }
+  .animation-delay-500 {
+    animation-delay: 500ms;
+  }
+  /* special effects for experimental class card */
+  .special-badge {
+    animation: specialPulse 2s ease-in-out infinite;
+  }
+  .special-card {
+    position: relative;
+  }
+  .special-card::after {
+    content: "GRÁTIS";
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: linear-gradient(45deg, #f59e0b, #eab308);
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 2px 8px;
+    border-radius: 12px;
+    animation: specialBadge 2s ease-in-out infinite;
+    z-index: 10;
+  }
+  /* timeline container effects */
+  .timeline-container:hover .arrow-connector .tech-arrow {
+    background: linear-gradient(90deg, #22d3ee, #a855f7);
+  }
+  .timeline-container:hover .arrow-connector .w-0 {
+    border-l-color: #a855f7;
+  }
+  .timeline-container:hover .energy-line {
+    opacity: 1;
+  }
+  .timeline-container:hover .energy-shimmer {
+    animation: shimmerFlow 2s ease-in-out infinite;
+  }
+  /* shimmer effect */
+  .energy-shimmer {
+    transition: transform 0.5s ease;
+  }
+  /* timeline dynamic effects */
+  .timeline-dynamic {
+    animation: breathe 6s ease-in-out infinite;
+  }
+  .dynamic-step {
+    position: relative;
+    animation: sequentialPulse 3s ease-in-out infinite;
+  }
+  /* ripple wave effects */
+  .ripple-wave {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(0, 196, 255, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: ripple 3s ease-out infinite;
+  }
+  .ripple-wave-2 {
+    animation-delay: 1s;
+    border-color: rgba(168, 85, 247, 0.3);
+  }
+  .ripple-wave-3 {
+    animation-delay: 2s;
+    border-color: rgba(245, 158, 11, 0.3);
+  }
+  /* energy pulse ring */
+  .energy-pulse-ring {
+    background: radial-gradient(circle, transparent 60%, rgba(0, 196, 255, 0.1) 70%, transparent 80%);
+    animation: energyRing 4s ease-in-out infinite;
+  }
+  /* sequential activation */
+  .dynamic-step:nth-child(1) .energy-pulse-ring { animation-delay: 0s; }
+  .dynamic-step:nth-child(2) .energy-pulse-ring { animation-delay: 0.8s; }
+  .dynamic-step:nth-child(3) .energy-pulse-ring { animation-delay: 1.6s; }
+  .dynamic-step:nth-child(4) .energy-pulse-ring { animation-delay: 2.4s; }
+  
+  /* review card specific animations */
+  .review-star-fill {
+    animation: starFillGlow 2s ease-in-out infinite;
+  }
+  
+  .avatar-glow {
+    position: relative;
+  }
+  
+  .avatar-glow::after {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    background: linear-gradient(45deg, transparent, rgba(0, 196, 255, 0.4), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+  }
+  
+  .avatar-glow:hover::after {
+    opacity: 1;
+    animation: avatarPulse 1.5s ease-in-out infinite;
+  }
 }
 
 @layer base {
@@ -167,6 +346,11 @@
     0% { opacity: 0; transform: translateY(8px); }
     100% { opacity: 1; transform: translateY(0); }
   }
+  @media (min-width: 640px) {
+    .word-fade {
+      animation: wordFade 0.6s forwards;
+    }
+  }
   @keyframes innerGlow {
     0%,100% { opacity: 0.2; }
     50% { opacity: 0.6; }
@@ -174,5 +358,154 @@
   @keyframes pulseBorder {
     0%,100% { opacity: 0.4; }
     50% { opacity: 1; }
+  }
+  @keyframes techPulse {
+    0%, 100% { 
+      box-shadow: 0 0 0 0 rgba(0, 196, 255, 0.4);
+    }
+    50% { 
+      box-shadow: 0 0 0 8px rgba(0, 196, 255, 0);
+    }
+  }
+  @keyframes techPulseSpecial {
+    0%, 100% { 
+      box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.6);
+    }
+    50% { 
+      box-shadow: 0 0 0 10px rgba(245, 158, 11, 0);
+    }
+  }
+  @keyframes techSpin {
+    0% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(180deg) scale(1.2); }
+    100% { transform: rotate(360deg) scale(1); }
+  }
+  @keyframes techGlow {
+    0%, 100% { 
+      background: linear-gradient(45deg, transparent, rgba(0,196,255,0.1), transparent);
+    }
+    50% { 
+      background: linear-gradient(45deg, rgba(212,0,255,0.1), rgba(0,196,255,0.2), rgba(212,0,255,0.1));
+    }
+  }
+  @keyframes techFloat {
+    0%, 100% { 
+      transform: translateY(0px) rotate(0deg);
+    }
+    33% { 
+      transform: translateY(-2px) rotate(1deg);
+    }
+    66% { 
+      transform: translateY(1px) rotate(-0.5deg);
+    }
+  }
+  @keyframes techBounce {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    25% { transform: scale(1.2) rotate(5deg); }
+    75% { transform: scale(1.1) rotate(-3deg); }
+  }
+  @keyframes energyTravel {
+    0% { 
+      left: -8px;
+      opacity: 0;
+      transform: scale(0.5);
+    }
+    20% { 
+      opacity: 1;
+      transform: scale(1);
+    }
+    80% { 
+      opacity: 1;
+      transform: scale(1);
+    }
+    100% { 
+      left: calc(100% + 8px);
+      opacity: 0;
+      transform: scale(0.5);
+    }
+  }
+  @keyframes energyFlow {
+    0%, 100% { 
+      opacity: 0;
+      transform: scaleX(0);
+    }
+    50% { 
+      opacity: 1;
+      transform: scaleX(1);
+    }
+  }
+  @keyframes specialPulse {
+    0%, 100% { 
+      box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.6);
+    }
+    50% { 
+      box-shadow: 0 0 0 12px rgba(245, 158, 11, 0);
+    }
+  }
+  @keyframes specialBadge {
+    0%, 100% { 
+      transform: scale(1);
+    }
+    50% { 
+      transform: scale(1.1);
+    }
+  }
+  @keyframes shimmerFlow {
+    0% { 
+      transform: translateX(-100%);
+    }
+    100% { 
+      transform: translateX(200%);
+    }
+  }
+  @keyframes breathe {
+    0%, 100% { 
+      transform: scale(1);
+      filter: brightness(1);
+    }
+    50% { 
+      transform: scale(1.02);
+      filter: brightness(1.1);
+    }
+  }
+  @keyframes sequentialPulse {
+    0%, 80%, 100% { 
+      transform: scale(1);
+      opacity: 1;
+    }
+    40% { 
+      transform: scale(1.05);
+      opacity: 0.9;
+    }
+  }
+  @keyframes ripple {
+    0% { 
+      transform: translate(-50%, -50%) scale(0.5);
+      opacity: 1;
+    }
+    100% { 
+      transform: translate(-50%, -50%) scale(3);
+      opacity: 0;
+    }
+  }
+  
+  @keyframes starFillGlow {
+    0%, 100% { 
+      filter: drop-shadow(0 0 2px #fbbf24);
+    }
+    50% { 
+      filter: drop-shadow(0 0 8px #fbbf24) drop-shadow(0 0 12px #f59e0b);
+    }
+  }
+  
+  @keyframes avatarPulse {
+    0%, 100% { 
+      transform: scale(1);
+      opacity: 0.6;
+    }
+    50% { 
+      transform: scale(1.05);
+      opacity: 1;
+    }
   }
 }

@@ -1,5 +1,4 @@
 import useTypewriter from '../hooks/useTypewriter';
-import useScrollTransform from '../hooks/useScrollTransform';
 import Starfield from './Starfield';
 import GradientButton from './GradientButton';
 import Section from './Section';
@@ -7,7 +6,6 @@ import Section from './Section';
 function Hero() {
   const words = ['Inteligência Artificial', 'Design 3D', 'Programação', 'Marketing'];
   const text = useTypewriter(words);
-  const taglineRef = useScrollTransform();
 
   return (
     <Section className="text-center bg-zinc-950 overflow-visible">
@@ -26,22 +24,9 @@ function Hero() {
           <span className="inline-block animate-blink text-white ml-0.5">|</span>
         </span>
       </h1>
-      {(() => {
-        const sentence = 'Aprenda hoje as habilidades que vão liderar o mercado de amanhã.';
-        return (
-          <p ref={taglineRef} className="mt-16 text-zinc-300 text-sm sm:text-base whitespace-nowrap">
-            {sentence.split(' ').map((word, i) => (
-              <span
-                key={i}
-                style={{ animationDelay: `${i * 0.08}s` }}
-                className="inline-block mr-1 word-fade"
-              >
-                {word}
-              </span>
-            ))}
-          </p>
-        );
-      })()}
+      <p className="mt-16 text-zinc-300 text-xs sm:text-sm md:text-base text-center max-w-md md:max-w-none mx-auto leading-relaxed md:whitespace-nowrap">
+        Aprenda hoje as habilidades que vão liderar o mercado de amanhã.
+      </p>
       <div className="mt-8 flex flex-col sm:flex-row gap-4">
         <GradientButton href="#como-funciona" className="px-6 py-3 text-sm">
           Ver Como Funciona
