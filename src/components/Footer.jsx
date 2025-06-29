@@ -1,4 +1,4 @@
-import { MapPin, Phone, Heart, Clock, InstagramLogo } from "phosphor-react";
+import { MapPin, Phone, Heart, Clock, InstagramLogo, WhatsappLogo } from "phosphor-react";
 
 const Footer = () => {
   return (
@@ -38,8 +38,17 @@ const Footer = () => {
           </div>
           
           <div className="text-center md:text-left">
-            <h4 className="text-lg font-semibold mb-4 text-cyan-400">Redes Sociais</h4>
+            <h4 className="text-lg font-semibold mb-4 text-cyan-400">Contato Rápido</h4>
             <div className="flex justify-center md:justify-start gap-4">
+              <a 
+                href="https://wa.me/5548988559491"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-3 rounded-full bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-green-500/30 hover:border-green-400 transition-all duration-300 hover:scale-110 hover:shadow-[0_0_20px_#10b981aa]"
+                aria-label="WhatsApp da Escola Habilidade"
+              >
+                <WhatsappLogo size={20} className="text-green-400" />
+              </a>
               <a 
                 href="https://instagram.com/habilidade.escola" 
                 target="_blank"
@@ -50,7 +59,10 @@ const Footer = () => {
                 <InstagramLogo size={20} className="text-fuchsia-400" />
               </a>
             </div>
-            <p className="text-zinc-300 text-xs mt-3">@habilidade.escola</p>
+            <div className="text-zinc-300 text-xs mt-3 space-y-1">
+              <p>WhatsApp: (48) 9 8855-9491</p>
+              <p>Instagram: @habilidade.escola</p>
+            </div>
           </div>
         </div>
         
