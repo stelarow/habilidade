@@ -1,5 +1,41 @@
 @import "tailwindcss";
 
+/* Mobile Performance Optimizations */
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Otimização para mobile */
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+body {
+  /* Melhoria de performance em mobile */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Evita problemas de scroll em iOS */
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: none;
+}
+
+/* Touch optimizations */
+button, a, [role="button"] {
+  touch-action: manipulation;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Performance para animações */
+.animate-bounce, .animate-blink, .animate-gradient, 
+.tech-badge, .tech-icon, .star {
+  will-change: transform;
+}
+
 /* Sistema de cores padronizado */
 :root {
   /* Cores primárias */
@@ -37,9 +73,17 @@
   --shadow-glow: 0 0 25px rgba(212, 0, 255, 0.4);
 }
 
-/* Scroll suave para toda a página */
-html {
-  scroll-behavior: smooth;
+/* Reduzir animações em dispositivos com preferência */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 @layer utilities {

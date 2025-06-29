@@ -30,7 +30,7 @@ function Header() {
 
         {/* CTA desktop */}
         <GradientButton
-          href="https://wa.me/5548999999999"
+          href="https://wa.me/5548988559491"
           target="_blank"
           rel="noopener noreferrer"
           className="hidden md:inline-block px-4 py-2 text-sm"
@@ -67,7 +67,7 @@ function Header() {
                 </a>
               ))}
               <GradientButton
-                href="https://wa.me/5548999999999"
+                href="https://wa.me/5548988559491"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-4 py-2"

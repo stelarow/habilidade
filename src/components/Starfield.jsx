@@ -1,9 +1,34 @@
-import { useMemo } from 'react';
+import { useMemo, useEffect, useState } from 'react';
 
 function Starfield({ count = 50, className = '' }) {
+  const [isMobile, setIsMobile] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  useEffect(() => {
+    // Detectar mobile
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    // Detectar preferência de movimento reduzido
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setPrefersReducedMotion(mediaQuery.matches);
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const stars = useMemo(() => {
+    // Se preferência de movimento reduzido, não mostrar estrelas
+    if (prefersReducedMotion) return [];
+    
+    // Reduzir estrelas em mobile para melhor performance
+    const starCount = isMobile ? Math.min(count / 2, 25) : count;
+    
     const arr = [];
-    for (let i = 0; i < count; i++) {
+    for (let i = 0; i < starCount; i++) {
       const left = Math.random() * 100;
       const top = Math.random() * 100;
       const size = Math.random() * 2 + 1; // 1–3px
@@ -12,7 +37,10 @@ function Starfield({ count = 50, className = '' }) {
       arr.push({ left, top, size, delay, duration });
     }
     return arr;
-  }, [count]);
+  }, [count, isMobile, prefersReducedMotion]);
+
+  // Não renderizar nada se preferência de movimento reduzido
+  if (prefersReducedMotion) return null;
 
   return (
     <div className={`absolute inset-0 pointer-events-none ${className}`} aria-hidden="true">
@@ -27,6 +55,7 @@ function Starfield({ count = 50, className = '' }) {
             height: `${s.size}px`,
             animationDelay: `${s.delay}s`,
             animationDuration: `${s.duration}s`,
+            willChange: 'opacity',
           }}
         />
       ))}
