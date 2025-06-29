@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://escola-habilidade.com.br/sitemap.xml 

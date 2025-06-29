@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+/* Scroll suave para toda a página */
+html {
+  scroll-behavior: smooth;
+}
+
 @layer utilities {
   .clip-card {
     clip-path: polygon(0 0, calc(100% - 30px) 0, 100% 30px, 100% 100%, 30px 100%, 0 calc(100% - 30px));
