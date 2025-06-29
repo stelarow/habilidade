@@ -1,82 +1,127 @@
 import { MapPin, Phone, Heart, Clock, InstagramLogo, WhatsappLogo } from "phosphor-react";
+import Section from "./Section";
 
 const Footer = () => {
   return (
-    <footer className="bg-zinc-950 text-white py-16">
+    <Section className="bg-zinc-950 text-white py-16 min-h-0">
       <div className="max-w-6xl mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-          <div className="text-center md:text-left">
-            <h3 className="text-xl font-bold mb-4 gradient-text">Escola Habilidade</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+          {/* Escola Info */}
+          <div className="space-y-4">
+            <h3 className="text-xl font-bold text-fuchsia-400">Escola Habilidade</h3>
             <p className="text-zinc-300 text-sm leading-relaxed">
-              Transformando vidas através da educação profissional de qualidade.
+              Transformando vidas através da educação tecnológica. 
+              Cursos práticos e atualizados para o mercado de trabalho.
             </p>
+            <div className="flex items-center gap-2 text-zinc-400">
+              <Clock size={16} />
+              <span className="text-sm">Seg-Sex: 8h às 18h</span>
+            </div>
           </div>
-          
-          <div className="text-center md:text-left">
-            <h4 className="text-lg font-semibold mb-4 text-cyan-400">Contato</h4>
+
+          {/* Localização com Mapa */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold text-fuchsia-400">Nossa Localização</h3>
             <div className="space-y-3">
-              <div className="flex items-start justify-center md:justify-start gap-3">
-                <MapPin size={18} className="text-fuchsia-400 mt-0.5 flex-shrink-0" />
-                <div className="text-zinc-300 text-sm leading-relaxed">
-                  <div>R. Caetano José Ferreira, 426 - Sala 5</div>
-                  <div>Kobrasol, São José - SC</div>
-                  <div>88102-280</div>
+              <div className="flex items-start gap-2 text-zinc-300">
+                <MapPin size={16} className="mt-1 flex-shrink-0" />
+                <div className="text-sm">
+                  <p>Rua das Palmeiras, 123</p>
+                  <p>Centro - Florianópolis/SC</p>
+                  <p>CEP: 88010-000</p>
                 </div>
               </div>
-              <div className="flex items-center justify-center md:justify-start gap-3">
-                <Phone size={18} className="text-fuchsia-400" />
-                <span className="text-zinc-300 text-sm">(48) 9 8855-9491</span>
-              </div>
-              <div className="flex items-start justify-center md:justify-start gap-3">
-                <Clock size={18} className="text-fuchsia-400 mt-0.5 flex-shrink-0" />
-                <div className="text-zinc-300 text-sm leading-relaxed">
-                  <div>Segunda a sexta: 08h às 18h</div>
-                  <div>Sábado: 08h às 12h</div>
+              
+              {/* Mapa Embed */}
+              <div className="mt-4">
+                <div className="relative w-full h-32 bg-zinc-800 rounded-lg overflow-hidden border border-zinc-700">
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3536.2!2d-48.5482!3d-27.5954!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjfCsDM1JzQzLjQiUyA0OMKwMzInNTMuNSJX!5e0!3m2!1spt-BR!2sbr!4v1234567890"
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    allowFullScreen=""
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title="Localização da Escola Habilidade"
+                    className="rounded-lg"
+                  ></iframe>
+                  
+                  {/* Overlay clicável */}
+                  <div 
+                    className="absolute inset-0 bg-transparent cursor-pointer"
+                    onClick={() => window.open('https://maps.google.com/?q=Escola+Habilidade+Florianopolis', '_blank')}
+                    title="Abrir no Google Maps"
+                  ></div>
                 </div>
+                <p className="text-xs text-zinc-500 mt-1">
+                  Clique para abrir no Google Maps
+                </p>
               </div>
             </div>
           </div>
-          
-          <div className="text-center md:text-left">
-            <h4 className="text-lg font-semibold mb-4 text-cyan-400">Contato Rápido</h4>
-            <div className="flex justify-center md:justify-start gap-4">
-              <a 
+
+          {/* Contato */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold text-fuchsia-400">Contato</h3>
+            <div className="space-y-3">
+              <div className="flex items-center gap-2 text-zinc-300">
+                <Phone size={16} />
+                <a 
+                  href="tel:+5548988559491" 
+                  className="text-sm hover:text-white transition-colors"
+                >
+                  (48) 98855-9491
+                </a>
+              </div>
+              <div className="flex items-center gap-2 text-zinc-300">
+                <MapPin size={16} />
+                <span className="text-sm">Centro de Florianópolis</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Contato Rápido */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold text-fuchsia-400">Contato Rápido</h3>
+            <div className="flex flex-col gap-3">
+              <a
                 href="https://wa.me/5548988559491"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-3 rounded-full bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-green-500/30 hover:border-green-400 transition-all duration-300 hover:scale-110 hover:shadow-[0_0_20px_#10b981aa]"
-                aria-label="WhatsApp da Escola Habilidade"
+                className="flex items-center gap-3 px-4 py-2 bg-green-600 hover:bg-green-700 rounded-lg transition-colors group"
               >
-                <WhatsappLogo size={20} className="text-green-400" />
+                <WhatsappLogo size={20} className="text-white" />
+                <div className="text-left">
+                  <div className="text-white text-sm font-medium">WhatsApp</div>
+                  <div className="text-green-100 text-xs">(48) 98855-9491</div>
+                </div>
               </a>
-              <a 
-                href="https://instagram.com/habilidade.escola" 
+              
+              <a
+                href="https://instagram.com/escolahabilidade"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-3 rounded-full bg-gradient-to-r from-fuchsia-500/20 to-cyan-500/20 border border-fuchsia-500/30 hover:border-fuchsia-400 transition-all duration-300 hover:scale-110 hover:shadow-[0_0_20px_#e879f9aa]"
-                aria-label="Instagram da Escola Habilidade"
+                className="flex items-center gap-3 px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 rounded-lg transition-all group"
               >
-                <InstagramLogo size={20} className="text-fuchsia-400" />
+                <InstagramLogo size={20} className="text-white" />
+                <div className="text-left">
+                  <div className="text-white text-sm font-medium">Instagram</div>
+                  <div className="text-purple-100 text-xs">@escolahabilidade</div>
+                </div>
               </a>
-            </div>
-            <div className="text-zinc-300 text-xs mt-3 space-y-1">
-              <p>WhatsApp: (48) 9 8855-9491</p>
-              <p>Instagram: @habilidade.escola</p>
             </div>
           </div>
         </div>
-        
-        <div className="h-px bg-gradient-to-r from-transparent via-zinc-700 to-transparent mb-6"></div>
-        
-        <div className="text-center">
-          <p className="text-zinc-400 text-sm flex items-center justify-center gap-1">
-            © 2024 Escola Habilidade. Feito com 
-            <Heart size={16} className="text-red-400 animate-pulse" weight="fill" />
-            para nossos alunos.
+
+        {/* Copyright */}
+        <div className="border-t border-zinc-800 pt-8 text-center">
+          <p className="text-zinc-400 text-sm flex items-center justify-center gap-2">
+            © 2024 Escola Habilidade. Feito com <Heart size={16} className="text-red-500" /> em Florianópolis.
           </p>
         </div>
       </div>
-    </footer>
+    </Section>
   );
 };
 

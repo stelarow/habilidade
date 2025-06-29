@@ -64,7 +64,7 @@ const COURSES = [
   {
     title: 'Inteligência Artificial',
     icon: Robot,
-    desc: 'Machine Learning, Prompt Engineering, ChatGPT, Visão…',
+    desc: 'Certificação Nacional, Prompt Engineering, ChatGPT, Visão…',
     textColor: 'text-cyan-400',
     borderGradient: 'from-cyan-500/60 to-teal-400/60',
     hoverShadow: 'hover:shadow-[0_0_25px_#22d3eeaa]',
