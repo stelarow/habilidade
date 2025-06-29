@@ -26,9 +26,9 @@ const Footer = () => {
               <div className="flex items-start gap-2 text-zinc-300">
                 <MapPin size={16} className="mt-1 flex-shrink-0" />
                 <div className="text-sm">
-                  <p>Rua das Palmeiras, 123</p>
-                  <p>Centro - Florianópolis/SC</p>
-                  <p>CEP: 88010-000</p>
+                  <p>R. Caetano José Ferreira, 426</p>
+                  <p>Sala 5 - Kobrasol</p>
+                  <p>São José - SC, 88102-280</p>
                 </div>
               </div>
               
@@ -36,7 +36,7 @@ const Footer = () => {
               <div className="mt-4">
                 <div className="relative w-full h-32 bg-zinc-800 rounded-lg overflow-hidden border border-zinc-700">
                   <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3536.2!2d-48.5482!3d-27.5954!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjfCsDM1JzQzLjQiUyA0OMKwMzInNTMuNSJX!5e0!3m2!1spt-BR!2sbr!4v1234567890"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3536.2!2d-48.6372!3d-27.5954!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x952738c8f0b0b0b0%3A0x1234567890abcdef!2sR.%20Caetano%20Jos%C3%A9%20Ferreira%2C%20426%20-%20Kobrasol%2C%20S%C3%A3o%20Jos%C3%A9%20-%20SC%2C%2088102-280!5e0!3m2!1spt-BR!2sbr!4v1234567890"
                     width="100%"
                     height="100%"
                     style={{ border: 0 }}
@@ -50,7 +50,7 @@ const Footer = () => {
                   {/* Overlay clicável */}
                   <div 
                     className="absolute inset-0 bg-transparent cursor-pointer"
-                    onClick={() => window.open('https://maps.google.com/?q=Escola+Habilidade+Florianopolis', '_blank')}
+                    onClick={() => window.open('https://maps.google.com/?q=R.+Caetano+José+Ferreira,+426+-+Kobrasol,+São+José+-+SC,+88102-280', '_blank')}
                     title="Abrir no Google Maps"
                   ></div>
                 </div>
@@ -76,7 +76,7 @@ const Footer = () => {
               </div>
               <div className="flex items-center gap-2 text-zinc-300">
                 <MapPin size={16} />
-                <span className="text-sm">Centro de Florianópolis</span>
+                <span className="text-sm">Kobrasol - São José/SC</span>
               </div>
             </div>
           </div>
@@ -117,7 +117,7 @@ const Footer = () => {
         {/* Copyright */}
         <div className="border-t border-zinc-800 pt-8 text-center">
           <p className="text-zinc-400 text-sm flex items-center justify-center gap-2">
-            © 2024 Escola Habilidade. Feito com <Heart size={16} className="text-red-500" /> em Florianópolis.
+            © 2024 Escola Habilidade. Feito com <Heart size={16} className="text-red-500" /> em São José/SC.
           </p>
         </div>
       </div>

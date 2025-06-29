@@ -281,7 +281,7 @@ const Reviews = () => {
         <div className="flex flex-wrap justify-center items-center gap-8 mt-12 opacity-60">
           <div className="flex items-center gap-2 text-zinc-500 hover:text-purple-400 transition-colors duration-300">
             <Trophy size={18} className="tech-icon" />
-            <span className="text-sm">Certificação MEC</span>
+            <span className="text-sm">Certificação Nacional</span>
           </div>
           <div className="flex items-center gap-2 text-zinc-500 hover:text-pink-400 transition-colors duration-300">
             <MapPin size={18} className="tech-icon" />
