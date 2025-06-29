@@ -1,4 +1,4 @@
-import { MapPin, Phone, Heart, Clock } from "phosphor-react";
+import { MapPin, Phone, Heart, Clock, InstagramLogo } from "phosphor-react";
 
 const Footer = () => {
   return (
@@ -15,27 +15,42 @@ const Footer = () => {
           <div className="text-center md:text-left">
             <h4 className="text-lg font-semibold mb-4 text-cyan-400">Contato</h4>
             <div className="space-y-3">
-              <div className="flex items-center justify-center md:justify-start gap-3">
-                <MapPin size={18} className="text-fuchsia-400" />
-                <span className="text-zinc-300 text-sm">Endereço da Escola</span>
+              <div className="flex items-start justify-center md:justify-start gap-3">
+                <MapPin size={18} className="text-fuchsia-400 mt-0.5 flex-shrink-0" />
+                <div className="text-zinc-300 text-sm leading-relaxed">
+                  <div>R. Caetano José Ferreira, 426 - Sala 5</div>
+                  <div>Kobrasol, São José - SC</div>
+                  <div>88102-280</div>
+                </div>
               </div>
               <div className="flex items-center justify-center md:justify-start gap-3">
                 <Phone size={18} className="text-fuchsia-400" />
-                <span className="text-zinc-300 text-sm">(11) 9999-9999</span>
+                <span className="text-zinc-300 text-sm">(48) 9 8855-9491</span>
               </div>
-              <div className="flex items-center justify-center md:justify-start gap-3">
-                <Clock size={18} className="text-fuchsia-400" />
-                <span className="text-zinc-300 text-sm">Seg-Sex: 8h às 18h</span>
+              <div className="flex items-start justify-center md:justify-start gap-3">
+                <Clock size={18} className="text-fuchsia-400 mt-0.5 flex-shrink-0" />
+                <div className="text-zinc-300 text-sm leading-relaxed">
+                  <div>Segunda a sexta: 08h às 18h</div>
+                  <div>Sábado: 08h às 12h</div>
+                </div>
               </div>
             </div>
           </div>
           
           <div className="text-center md:text-left">
-            <h4 className="text-lg font-semibold mb-4 text-cyan-400">Horário</h4>
-            <p className="text-zinc-300 text-sm">
-              Segunda à Sexta: 8h às 18h<br />
-              Sábado: 8h às 12h
-            </p>
+            <h4 className="text-lg font-semibold mb-4 text-cyan-400">Redes Sociais</h4>
+            <div className="flex justify-center md:justify-start gap-4">
+              <a 
+                href="https://instagram.com/habilidade.escola" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-3 rounded-full bg-gradient-to-r from-fuchsia-500/20 to-cyan-500/20 border border-fuchsia-500/30 hover:border-fuchsia-400 transition-all duration-300 hover:scale-110 hover:shadow-[0_0_20px_#e879f9aa]"
+                aria-label="Instagram da Escola Habilidade"
+              >
+                <InstagramLogo size={20} className="text-fuchsia-400" />
+              </a>
+            </div>
+            <p className="text-zinc-300 text-xs mt-3">@habilidade.escola</p>
           </div>
         </div>
         

@@ -9,7 +9,7 @@ function App() {
   return (
     <>
       <Header />
-      <main className="pt-16">
+      <main id="main-content" className="pt-16" role="main">
         <Hero />
         <Courses />
         <HowItWorksSimple />
