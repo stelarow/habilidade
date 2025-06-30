@@ -102,3 +102,32 @@ src/
 ---
 
 **Desenvolvido para Escola Habilidade** 🎓
+
+# Escola Habilidade
+
+Site da Escola Habilidade desenvolvido com React e Vite.
+
+## Tecnologias Utilizadas
+
+- React 19
+- Vite 7
+- Tailwind CSS 4
+- React Router Dom
+- EmailJS
+
+## Funcionalidades
+
+- Design responsivo e moderno
+- Sistema de contato por email
+- Navegação fluida entre páginas
+- Otimizado para performance
+
+## Deploy
+
+O site está automaticamente deployado no GitHub Pages através de GitHub Actions.
+
+URL: https://stelarow.github.io/habilidade/
+
+## Última atualização
+
+Site atualizado com novo sistema de deploy - 2025-01-27
