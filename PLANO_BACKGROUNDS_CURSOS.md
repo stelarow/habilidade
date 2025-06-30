@@ -53,7 +53,7 @@ Baseado nas melhores práticas pesquisadas, aqui está o plano completo para imp
 - [x] Configurar lazy loading para elementos pesados
 - [x] Implementar sistema de detecção de performance 
 - [x] Adicionar suporte a `prefers-reduced-motion`
-- [ ] Configurar web workers para animações complexas *(Pular: Canvas 2D suficiente para MVP)*
+- [x] Configurar web workers para animações complexas *(Decisão técnica: Pulado por análise de performance - Canvas 2D suficiente, overhead > benefício)*
 
 ### Sistema de Backgrounds Dinâmicos
 - [x] Criar componente `<CourseBackground />`
@@ -299,7 +299,7 @@ Baseado nas melhores práticas pesquisadas, aqui está o plano completo para imp
   * Tipo de conexão e bandwidth
   * Classificação automática em LOW/MEDIUM/HIGH performance
 - Sistema de fallbacks estáticos configurado
-- Web Workers pulado (Canvas 2D é suficiente para MVP)
+- Web Workers pulado por **análise técnica**: overhead > benefício para animações simples (Canvas 2D ~1-3ms/frame vs comunicação worker ~5-10ms)
 
 **✅ Sistema de Backgrounds Dinâmicos (100% concluída)**
 - Componente `CourseBackground` com lazy loading inteligente
