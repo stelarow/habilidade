@@ -1,0 +1,777 @@
+
+
+Cursos de Informática e Pacote Office
+Introdução à Informática V3: Curso básico de computação com 5 aulas (7,5 horas) que
+introduz noções fundamentais de informática. Conteúdo inclui familiarização com o Windows
+11, uso de programas básicos e navegação na internet. Os alunos aprendem desde
+operações básicas no sistema operacional até ferramentas essenciais como navegadores e
+editores de texto. Conteúdo Programático: Introdução ao Windows 11; Gerenciamento de
+arquivos e personalização; Fundamentos da Internet (I e II); Introdução ao Word; Formatação
+avançada no Word; Gestão de documentos (tabelas, cabeçalhos, impressão); Introdução ao
+Excel; Formatação de planilhas; Fórmulas e funções básicas; Gráficos; Postura profissional;
+Comunicação; Organização do trabalho; Gerenciamento de tempo; Introdução ao Power BI;
+Noções de matemática financeira; Operações financeiras; Planejamento financeiro pessoal;
+Noções de nota fiscal (I e II); Impostos e tributos; Documentos formais e redação; Relatórios e e-
+mails profissionais. 
+Windows 10 e Windows 11: Cursos dedicados aos sistemas operacionais Windows 10 (10 aulas,
+15h) e Windows 11 (12 aulas, 18h) que cobrem instalação, interface, personalização do sistema e
+recursos como gerenciamento de arquivos e configurações de segurança. Ensina-se o uso
+das ferramentas nativas do Windows, navegação na internet e noções de manutenção básica. 
+Conteúdo Programático: exploração da interface do Windows, painel de controle, gerenciamento
+de pastas/arquivos, configurações de rede, e recursos de segurança do sistema (firewall, contas
+de usuário, etc). (Os conteúdos detalhados seguem a estrutura de introdução ao sistema,
+personalização, ferramentas administrativas e noções de resolução de problemas.)
+Microsoft Word: Curso de Word   (ex.:  Microsoft Word 2019, 14 aulas, 21h) abrangendo criação e
+formatação de documentos profissionais. Ensina edição de texto, formatação avançada,
+inserção de tabelas, imagens e gráficos, revisão ortográfica e preparação para impressão.
+Versões Word Kids (10 aulas, 15h) e Word Fast (12 aulas, 18h) também estão disponíveis,
+adaptadas para crianças ou para aprendizagem acelerada, respectivamente. Conteúdo
+Programático: interface do Word; digitação e formatação básica; estilos e formatação avançada;
+criação de tabelas e organogramas; inserção de objetos (imagens, formas); cabeçalhos e
+rodapés; mala direta; revisão de texto; configurações de página e impressão. (As versões Kids e
+Fast condensam os tópicos essenciais conforme o público-alvo.)
+Microsoft Excel: Há diversos cursos de Excel, desde o Excel 2013/2016/2019 (14 aulas, 21h cada)
+até o Excel Fundamental (curso completo atualizado, 18 aulas, 27h) e níveis avançados. O Excel
+Fundamental fornece base sólida em planilhas eletrônicas: navegação no Excel, criação e
+formatação de planilhas, fórmulas básicas, gráficos e funções essenciais. Conteúdo
+Programático (Excel Fundamental): Introdução e primeira planilha; formatação básica; uso da guia
+Revisão; operações aritméticas; porcentagens; referências relativas/absolutas; funções comuns
+(SOMA, MÉDIA etc.); gráficos (parte I e II); formatação condicional; validação de dados;
+funções de pesquisa (PROCV); fórmulas de texto e autosoma; funções financeiras básicas;
+gerenciador de nomes; auditoria e impressão. Já o Excel 2019 Avançado (13 aulas,
+19,5h) aprofunda em fórmulas e recursos avançados: funções de texto, lógicas, matemáticas/
+estatísticas, data/hora, auditoria de fórmulas, tabelas e gráficos dinâmicos, formulários, macros/
+VBA e solver. Conteúdo Programático (Excel Avançado 2019): Revisão de fórmulas básicas;
+funções de texto; funções lógicas; funções de matemática e estatística (parte I e II); funções de
+data e hora; ferramentas de auditoria e teste de hipóteses; funções de informação; funções de
+pesquisa e referência; tabela dinâmica e formatação condicional; gráfico dinâmico e
+classificação; formulários no Excel; introdução a Macros e VBA; solver e funções financeiras
+• 
+12
+3
+24
+• 
+5
+• 
+67
+8
+• 
+910
+1112
+1013
+1415
+16
+1
+
+. (Além disso, existem Excel Fast/Fundamental Fast com 9 aulas, 13,5h para aprendizagem
+acelerada, e versões em espanhol dos cursos de Excel.) 
+Microsoft PowerPoint: Curso de PowerPoint 2019 (12 aulas, 18h) abordando criação de
+apresentações profissionais, inserção de textos e imagens, animações e transições, e técnicas de
+oratória. Inclui noções de design de slides e uso de modelos. Também há PowerPoint Fast
+(9 aulas, 13,5h) e PowerPoint Kids (16 aulas, 24h) adaptados para aprendizagem rápida ou para
+crianças, respectivamente. Conteúdo Programático: interface do PowerPoint; criação de
+slides; formatação de textos e elementos gráficos; uso de temas e modelos; inserção de
+imagens, formas e multimídia; criação de animações e transições; dicas de apresentação em
+público; exibição e impressão de slides. 
+Ambientes Digitais: Curso voltado a ferramentas e plataformas digitais modernas (16 aulas,
+24h). Apresenta os principais ambientes virtuais utilizados no cotidiano e trabalho, como
+serviços de nuvem, ferramentas de colaboração online e redes sociais. Conteúdo
+Programático: introdução à computação em nuvem; utilização de Google Drive/Docs e similares;
+ferramentas de videoconferência e chamadas online; aplicativos de acesso remoto; noções de
+segurança digital; etiqueta e boa conduta na internet. Versão Ambientes Digitais Kids (12 aulas,
+18h) ensina crianças a utilizarem plataformas digitais com segurança. (Versões Fast e 
+Lite também disponíveis, com conteúdo reduzido.) 
+Segurança Digital: Curso de 6 aulas (9h) que ensina práticas de segurança da informação para
+usuários comuns. Abrange proteção de dados, senhas seguras, identificação de ameaças
+online (vírus, phishing) e noções de privacidade na internet. Conteúdo Programático: conceitos de
+segurança cibernética; antivírus e firewalls; golpes comuns na internet e como evitá-los; backups
+e armazenamento seguro; legislação básica de proteção de dados. 
+Outros cursos de informática:Aplicativos de Nuvem e Remoto (como Armazenamento em
+Nuvem, 4 aulas, 6h, e Aplicativos de Acesso Remoto, 2 aulas, 3h) introduzem o uso de serviços de
+armazenamento online e controle remoto de PCs. Aplicativos de Chamada (4 aulas) foca
+em uso de apps de videoconferência. Documentos Google (2 aulas) ensina a usar o Google
+Docs e ferramentas colaborativas. Normas ABNT (2 aulas, 3h) orienta sobre formatação de
+trabalhos acadêmicos segundo as normas ABNT. 
+Cursos de Desenvolvimento e Programação
+Java (Desenvolvedor Java): Curso completo de programação Java (16 aulas, 24h) que prepara o
+aluno nos fundamentos da linguagem orientada a objetos e uso do ambiente NetBeans. O curso
+abrange desde lógica básica até conceitos de POO (Programação Orientada a Objetos). 
+Conteúdo Programático: Introdução ao Java e configuração do ambiente; uso de interface e
+componentes básicos; variáveis e operadores (matemáticos e relacionais); estruturas de controle
+de fluxo (if/else, loops for/while)  ; manipulação de strings; arrays (variáveis compostas);
+introdução à orientação a objetos (classes, métodos, atributos); encapsulamento; vetores e
+coleções; conceitos de herança e polimorfismo; introdução a interface gráfica (construção de
+GUI). Ao final, o aluno desenvolve pequenos projetos no NetBeans aplicando os
+conceitos aprendidos. 
+Python: Curso introdutório abrangente em Python (16 aulas, 24h) voltado para iniciantes,
+cobrindo conceitos essenciais de forma prática e interativa. Os alunos aprendem a
+escrever programas simples e ganham base para projetos mais complexos. Conteúdo
+Programático: Iniciando no Python (instalação e primeiras sintaxes); entrada e saída de dados;
+estruturas condicionais (if , else, elif)  ; loops (for , while); tipos de dados
+fundamentais (listas, strings, dicionários); criação de funções; tratamento de erros (exceções)
+; módulos e pacotes; programação orientada a objetos básica (classes e objetos);
+manipulação de arquivos; uso de bibliotecas externas; trabalhando com datas e horas;
+17
+• 
+18
+1920
+• 
+2122
+2223
+• 
+24
+• 
+25
+26
+27
+28
+• 
+2930
+30
+3132
+3334
+• 
+3536
+37
+36
+2
+
+introdução a expressões regulares; projeto final integrando os conceitos aprendidos.
+(Ferramentas: Python 3 e IDE PyCharm.) 
+Desenvolvedor de Aplicativos Android: Cursos focados em desenvolvimento mobile Android,
+incluindo Desenvolvedor de Aplicativos Android Studio V3 (16 aulas, 24h, atualizado para
+Android Studio) e versão anterior Android V.2 (16 aulas). Abrangem a criação de apps Android
+nativos com Java/Kotlin no Android Studio, interfaces móveis, e consumo de APIs. Conteúdo
+Programático: configuração do ambiente Android Studio; fundamentos de UI/UX em Android
+(Layouts, Views); manipulação de componentes (botões, caixas de texto, etc.); navegação entre
+telas (Activities/Intents); armazenamento de dados (SQLite, SharedPreferences); acesso a
+recursos do dispositivo (sensores, câmera); publicação básica de aplicativos. (Os cursos
+atualizados enfatizam práticas modernas e compatibilidade com versões recentes do Android.)
+Programação Web (PHP e WordPress): O curso Programação PHP – Versão 2 (20 aulas, 30h)
+ensina criação de sites dinâmicos em PHP, incluindo sintaxe da linguagem, manipulação de
+formulários, conexão a banco de dados e construção de um sistema web básico. Já o curso
+de WordPress (17 aulas, 25,5h) foca no uso do CMS WordPress para criação de sites e blogs,
+abordando instalação, configuração de temas/plugins e publicação de conteúdo. Conteúdo
+Programático (PHP): sintaxe básica do PHP; variáveis e tipos; estruturas de controle; formulários
+HTML e método POST/GET; interação com MySQL (CRUD – criar, ler, atualizar, deletar dados);
+sessões e autenticação; desenvolvimento de um mini-projeto (ex: portal de notícias). Conteúdo
+(WordPress): instalação do WordPress; painel administrativo; criação de páginas e posts;
+personalização de temas; utilização de plugins essenciais (SEO, formulários); gerenciamento de
+usuários; boas práticas de segurança no WP. 
+Lógica de Programação: Curso introdutório (normalmente 8–10 aulas) cobrindo fundamentos
+lógicos para qualquer linguagem. Abrange tipos de dados, fluxogramas, pseudocódigo,
+estruturas condicionais e de repetição. Útil para alunos iniciarem em programação de forma
+linguagens-agnóstica antes de avançar para Java, Python, etc. (Este curso prepara para o
+raciocínio computacional necessário nas demais formações.)
+Outros cursos de desenvolvimento:Desenvolvedor de Games 3D (Módulos I, II, III) – três
+cursos (cada ~14–20 aulas) ensinando criação de jogos 3D em etapas progressivas.
+Cobre ferramentas de game design (possivelmente Unity ou Unreal), modelagem de objetos,
+física e lógica de jogo, e programação de interações para jogos. Desenvolvedor de Games
+Online V2 (20 aulas, 30h) foca em jogos para web/multiplayer. Programação Kids (16 aulas,
+24h) introduz crianças à lógica de programação de forma lúdica, possivelmente usando
+ferramentas visuais (como Scratch). Robótica (20 aulas, 30h) apresenta fundamentos de
+robótica educacional, incluindo montagem de kits robóticos e lógica de programação para
+controle de sensores e motores. 
+Cursos de Design Gráfico, Multimídia e CAD
+3DS Max 2020: Curso de computação gráfica 3D (20 aulas, 30h) ensinando modelagem
+tridimensional, animação e renderização com Autodesk 3ds Max. Ideal para interessados
+em animação e design de interiores/arquitetura. Conteúdo Programático: Conhecendo a interface
+do 3ds Max; atalhos e menus; criação de objetos básicos; ferramentas de seleção e
+transformação; desenho de linhas e splines (I e II); criação de textos 3D; clonagem e conexão de
+objetos; uso de modificadores; edição de polígonos (faces, arestas, vértices); extrusão e chanfro
+(Extrude/Bevel); modificadores avançados (Slice, Bend, Chamfer); edição de sólidos com Editable
+Poly/Mesh; aplicação de materiais e texturas; iluminação de cenas; simulação de fluidos; criação
+de animações; posicionamento de câmeras; renderização básica. (Software: Autodesk 3ds
+Max 2020, em inglês.) 
+Adobe Illustrator: Curso de Illustrator CC (16 aulas, 24h) voltado para design vetorial e
+ilustração digital. Ensina a criar gráficos escaláveis, logotipos e ilustrar com precisão. 
+3839
+40
+• 
+• 
+41
+42
+• 
+• 
+4344
+45
+41
+46
+• 
+4748
+4950
+51
+• 
+5253
+3
+
+Conteúdo Programático: Introdução ao Illustrator e gráficos vetoriais; desenho de formas básicas;
+teoria e aplicação de cores; utilização da ferramenta Caneta (Pen Tool) para curvas e
+traçados; preparação de projetos para impressão; uso da ferramenta Texto e criação de
+tipografia vetorizada; organização de arte em Camadas; máscaras de recorte (clipping mask);
+recursos de IA do Illustrator (ferramentas automatizadas inteligentes); aplicação de efeitos
+visuais; vetorização de imagens (image trace); uso de pincéis artísticos; ferramenta Pathfinder
+para combinar formas; desenvolvimento de um projeto final integrando as técnicas. 
+Adobe Photoshop CC: Curso de edição de imagens (20 aulas, 30h) ensinando as principais
+ferramentas do Photoshop para tratamento de fotos e design digital. Conteúdo Programático:
+interface do Photoshop; ferramentas de seleção e corte; ajustes de cores e iluminação; uso de
+camadas e máscaras; filtros e efeitos; retoque e restauração de fotografias; criação de
+composições com texto e imagens; conceitos de design para mídias sociais. (Inclui projeto prático
+de edição completa de imagem.) (Também disponível Photoshop CS6 en español, com conteúdo
+equivalente em espanhol.) 
+CorelDRAW: Curso de design gráfico vetorial com CorelDRAW (16 aulas, 24h) abrangendo
+criação de layouts, desenhos e materiais gráficos profissionais. Há variações CorelDRAW
+Fast (8 aulas, 12h) e Lite (3 aulas, 4,5h) para aprendizado acelerado ou conteúdo resumido. 
+Conteúdo Programático: ferramentas de desenho vetorial (linha, forma, curva Bézier);
+manipulação de nós e curvas; aplicação de cores e preenchimentos; uso de camadas e páginas;
+inserção e formatação de texto; criação de logotipos e flyers; exportação em formatos diversos. 
+(Versão Fast/Lite cobre os fundamentos essenciais do software.)
+AutoCAD 2D e 3D: Cursos de CAD para desenho técnico. AutoCAD 2D 2020 (22 aulas, 33h)
+ensina projetos em duas dimensões – criação de plantas, vistas e cortes. Conteúdo
+Programático: interface do AutoCAD; comandos de desenho (linhas, círculos, retângulos);
+coordenadas e unidades de medida; layers e organização de desenho; cotas e anotações;
+hachuras; blocos e bibliotecas; impressão e escalas. AutoCAD 3D (14 aulas, 21h) abrange
+modelagem tridimensional no AutoCAD – criação de sólidos e superfícies, visualização 3D e
+renderização básica. (Também há versões em espanhol: AutoCAD 2D en Español e AutoCAD 3D en
+Español, com conteúdo equivalente ministrado em espanhol.)
+Revit e SketchUp:Revit   (16 aulas, 24h) foca em modelagem BIM para arquitetura, cobrindo
+desde criação de plantas arquitetônicas até geração de modelos 3D integrados (paredes, lajes,
+telhados, famílias de componentes). SketchUp (10 aulas, 15h) ensina modelagem 3D rápida
+para projetos de arquitetura e design de interiores, incluindo ferramentas de extrusão, materiais
+e exportação de modelos. 
+InDesign CS6: Curso de 12 aulas (18h) sobre diagramação e editoração eletrônica usando Adobe
+InDesign. Ensina a criar layouts de revistas, livros e materiais gráficos multi-página –
+trabalhando com páginas mestres, colunas, estilos de texto, inserção de imagens e preparação
+de arquivos para impressão. (Versão atualizada do Illustrator/Photoshop substitui algumas
+funções, mas o curso CS6 permanece disponível.)
+Canva: Curso de Canva (12 aulas, 18h) que ensina a usar a plataforma online Canva para design
+gráfico simplificado. Os alunos aprendem a criar posts para redes sociais, apresentações,
+convites e outros materiais visuais sem necessidade de conhecimentos avançados em design
+. Conteúdo Programático: introdução ao Canva; escolha de layouts e modelos; inserção de
+textos e imagens; personalização de cores e fontes; criação de posts para Instagram/Facebook;
+elaboração de banners e cartões; download/exportação dos designs. 
+Cursos Profissionalizantes e de Serviços
+Administrativo Informatizado: Curso profissionalizante Administrativo Informatizado V4 (25
+aulas, 37,5h) que capacita para tarefas administrativas integradas ao uso de ferramentas digitais
+atuais. Abrange conhecimentos de escritório (Windows, Word, Excel) e fundamentos de
+5354
+5556
+• 
+57
+58
+• 
+59
+59
+• 
+60
+61
+62
+• 
+63
+64
+• 
+65
+• 
+66
+67
+• 
+68
+4
+
+administração e finanças. Descrição: aborda do básico do Windows 11, navegação na internet e
+uso do Word, até domínio de planilhas no Excel e criação de gráficos para uso administrativo
+. Inclui também noções de matemática financeira, notas fiscais, impostos e redação
+comercial. Conteúdo Programático: (Veja  Introdução à Informática V4 acima – o conteúdo é
+equivalente ao listado, cobrindo ampla gama de temas de informática e gestão em contexto
+administrativo.) – Administrativo V4 Fast (12 aulas, 18h) e V4 Lite (3 aulas, 4,5h) são
+versões resumidas: a versão Fast foca pontos essenciais em metade das aulas, e a Lite oferece
+um módulo introdutório compacto. (Ambas mantêm tópicos-chave como Windows, Word,
+Excel e noções financeiras, porém de forma mais sintetizada.) Versões anteriores incluem 
+Administrativo Informatizado V3 (25 aulas, 37,5h, Windows 10/Word 2016) com conteúdo
+semelhante adaptado a ferramentas de 2017. 
+Atendente de Farmácia (Versão 2): Curso de 10 aulas (15h) que prepara para a profissão de
+balconista de farmácia, abordando conceitos de medicamentos e primeiros socorros. Ensina
+funções e responsabilidades no atendimento ao cliente em drogarias, noções de anatomia e
+farmacologia básica. Conteúdo Programático: Introdução à profissão; noções de anatomia
+humana; principais doenças comuns e seus tratamentos básicos; história da indústria
+farmacêutica e tipos de medicamentos; leitura e interpretação de bulas; técnicas de bom
+atendimento ao cliente; administração de medicamentos (via oral, tópica etc., parte I e
+II); noções de primeiros socorros (parte I, II, III) cobrindo procedimentos emergenciais em
+situações comuns. (Faixa etária recomendada: acima de 18 anos.) 
+Atendente de Posto de Gasolina: Curso de 4 aulas (6h) orientado ao trabalho em postos de
+combustíveis. Cobre normas de segurança com inflamáveis, atendimento ao cliente e
+operações de bomba de combustível. Conteúdo: orientações de segurança (NR-20 básica);
+procedimentos de abastecimento; verificação de níveis de óleo/água em veículos; atendimento
+cordial e técnicas de venda de produtos automotivos (lubrificantes, aditivos); medidas de
+emergência em caso de vazamentos ou incidentes. 
+Operador de Caixa: Curso de 8 aulas (12h) que capacita para atuação como caixa em
+estabelecimentos comerciais. Ensina manuseio do caixa registradora ou sistema de PDV,
+operação de máquinas de cartão, fechamento de caixa e atendimento ao cliente. Conteúdo:
+responsabilidades do operador de caixa; abertura e fechamento de caixa; conferência de
+valores; registro de vendas (produtos e códigos de barras); formas de pagamento (cartão,
+dinheiro, PIX); noções de prevenção de perdas e detecção de cédulas falsas; atendimento ao
+cliente e resolução de problemas (trocas, reclamações). 
+Cuidador de Idosos: Curso profissionalizante (10 aulas, 15h) que capacita cuidadores de
+pessoas idosas, abordando cuidados de saúde, higiene e bem-estar na terceira idade. 
+Conteúdo Programático: Introdução à profissão de cuidador; tipos de cuidadores e contexto de
+mercado; etapas do envelhecimento e riscos associados a cada fase; alimentação
+saudável para idosos; higiene pessoal do idoso e do ambiente; noções de primeiros socorros
+(parte I e II) – como reconhecer urgências/emergências e prestar atendimento básico inicial;
+estímulo a atividades físicas e cognitivas para o idoso; principais doenças da terceira idade (parte
+I e II) e cuidados específicos; utilização correta de equipamentos de apoio (cadeira de rodas,
+andador); aspectos psicológicos do cuidado (paciência, empatia). 
+Logística: Curso de 16 aulas (24h) introduzindo conceitos de logística empresarial, cadeia de
+suprimentos e gestão de estoque. Cobre desde procedimentos de armazenagem, controle
+de inventário, até transporte e distribuição de mercadorias. Conteúdo: fundamentos da logística
+e supply chain; planejamento de demandas; métodos de armazenamento e endereçamento;
+gestão de estoques (FIFO, LIFO, inventários); embalagem e expedição; modais de transporte e
+roteirização; noções de logística reversa. 
+Crédito, Cobrança e Atendimento: Curso de 6 aulas (9h) que aborda técnicas de análise de
+crédito, procedimentos de cobrança e atendimento ao cliente em contextos financeiros.
+Ensina avaliar risco de crédito, negociar com clientes inadimplentes e comunicar-se de forma
+1
+69
+70
+7172
+7374
+7576
+7778
+• 
+7980
+8081
+8283
+• 
+84
+• 
+85
+• 
+8687
+8788
+89
+8790
+• 
+91
+• 
+92
+5
+
+eficaz. Conteúdo: política de crédito e cadastro de clientes; técnicas de análise de crédito
+(consulta a bureaus, indicadores); estratégias de cobrança amigável e negociação de dívidas;
+script de atendimento telefônico em cobranças; aspectos legais do CDC (Código de Defesa do
+Consumidor) relacionados a cobrança; atendimento ao cliente com foco em resolução de
+conflitos e retenção. 
+Departamento Pessoal (Versão 3): Curso de 8 aulas (12h) sobre rotinas de RH e pessoal em
+empresas. Cobre legislação trabalhista básica, folha de pagamento, férias, 13º salário,
+cálculos de rescisão e obrigações acessórias (eSocial, CAGED, RAIS). Conteúdo: admissão de
+funcionários (documentação, registro em carteira); cálculo de folha (salário, horas extras, INSS,
+FGTS, IRRF); gerenciamento de ponto e jornada; férias (direito e cálculo); rescisões de contrato
+(aviso prévio, verbas rescisórias); segurança do trabalho (noções de PPRA, PCMSO); elaboração
+de relatórios anuais (RAIS) e envio de informações ao eSocial. 
+Gestão Administrativa e de RH: Cursos como Gestão Administrativa (Versão 2) e Gestão de
+RH (Versão 2), cada com 8 aulas (12h) aproximadamente, focam em habilidades de gerência. 
+Gestão Administrativa: aborda funções do administrador, planejamento e organização
+empresarial, departamento financeiro básico e gestão de pessoas. Gestão de RH: cobre
+recrutamento e seleção, treinamento e desenvolvimento, avaliação de desempenho, clima
+organizacional e legislação trabalhista básica. Ambos os cursos visam preparar para
+posições de liderança e supervisão. 
+Empreendedorismo: Curso de 4 aulas (6h) que apresenta conceitos básicos de
+empreendedorismo – características do empreendedor, planejamento de negócios e inovação
+. Conteúdo Programático: Determinações do empreendedor (metas, perfil e habilidades)
+; criando a estrutura de um negócio (modelos de negócio, estudo de mercado);
+elaboração de plano de negócio e fundamentos financeiros; dicas para perseverança e sucesso
+empreendedor (estratégias de crescimento e estudos de caso). 
+Liderança Eficaz: Curso de 5 aulas (7,5h) voltado a desenvolvimento de habilidades de
+liderança. Abrange estilos de liderança, motivação de equipes, comunicação eficaz e gestão de
+conflitos. Conteúdo: papel do líder dentro das organizações; inteligência emocional aplicada à
+liderança; técnicas de feedback construtivo; delegação de tarefas e desenvolvimento de equipes;
+resolução de conflitos internos e construção de um ambiente de trabalho positivo. 
+Marketing Digital V2: Curso atualizado de Marketing Digital (12 aulas, 18h) ensinando
+estratégias de promoção online, mídias sociais, SEO e publicidade digital. Conteúdo:
+fundamentos de marketing digital; planejamento de campanhas online; uso profissional de
+redes sociais (Facebook, Instagram); marketing de conteúdo; conceitos de SEO (otimização para
+buscadores); links patrocinados e anúncios (Google Ads, Facebook Ads); métricas e análise de
+resultados (Google Analytics); tendências atuais (marketing de influência, funil de vendas digital).
+Versões Fast (6 aulas, 9h) e Lite (3 aulas, 4,5h) condensam os principais tópicos para
+aprendizado rápido. (Há também curso Marketing Digital original e Marketing Pessoal,
+descrito adiante.)
+Marketing Pessoal: Curso de 2 aulas (3h) que orienta profissionais a desenvolver sua imagem
+pessoal e marca pessoal no mercado de trabalho. Ensina técnicas para melhorar a
+apresentação, networking, uso de LinkedIn e outras redes para promoção profissional. 
+Telemarketing: Curso de 8 aulas (12h) que prepara para atuar com televendas ou SAC,
+abordando técnicas de comunicação ao telefone, scripts de atendimento e contorno de objeções
+. Inclui treinamento de voz, dicção, postura profissional e cumprimento das normas do 
+Código de Defesa do Consumidor aplicáveis ao telemarketing. (Versão em espanhol disponível: 
+Telemarketing en Español, 8 aulas, 12h.)
+Técnicas de Vendas: Curso de 10 aulas (15h) ensinando princípios e técnicas de vendas eficazes,
+do primeiro contato ao fechamento. Conteúdo: perfil do vendedor de sucesso; abordagem
+inicial e criação de rapport com o cliente; identificação de necessidades; técnicas de persuasão e
+apresentação de produtos/serviços; contornando objeções; estratégias de fechamento de venda;
+• 
+93
+• 
+94
+95
+• 
+9697
+9697
+9899
+• 
+• 
+100
+101102
+• 
+103
+• 
+104
+104105
+• 
+106
+6
+
+pós-venda e fidelização do cliente. (Versão em espanhol disponível: Técnicas de Ventas en Español,
+10 aulas, 15h.)
+Mídias Sociais: Curso (10 aulas, 15h na Versão 3) que orienta sobre uso estratégico de redes
+sociais para negócios. Cobre planejamento de conteúdo para Facebook, Instagram, etc.,
+engajamento de seguidores e métricas de desempenho. (Versão em espanhol disponível
+como Mídias Sociais en Español, 8 aulas, 12h.)
+Hotelaria e Turismo: Curso de 12 aulas (18h) preparando profissionais para atuar em hotelaria,
+turismo e recepção. Abrange atendimento ao cliente, rotinas de hotel (reservas, check-in/
+out), noções de turismo regional, e inglês básico para hotelaria. 
+Matemática Financeira (HP 12C): Curso de 8 aulas (12h) que ensina cálculo financeiro usando a
+calculadora HP12C, incluindo juros simples e compostos, descontos, series de pagamentos
+(parcelas, prestações) e análise de financiamentos. 
+Cursos de Idiomas (Inglês e Espanhol)
+Inglês Básico (Descontinuado): Curso completo de Inglês Básico (40 aulas, 60h) que utilizava
+metodologia interativa com suporte a escrita, fala e audição. Abrangia desde o nível
+iniciante até elementos pré-intermediários. Descrição: voltado para alunos com pouco ou
+nenhum conhecimento do idioma, ensinando de forma amigável estruturas fundamentais do
+inglês. Conteúdo Programático: Alfabeto e números; cumprimentos e verbo to live;
+família, pronomes possessivos e there is/are; sentimentos e adjetivos; horas, dias da semana e
+clima; cores, países e preposições; verbo can e esportes; present continuous; expressando gostos
+(like/dislike); adjetivos opostos; vocabulário de sala de aula; verbo to have (terceira pessoa) e
+passado simples; futuro com going to; expressões idiomáticas (I e II); passado simples (parte II) e
+condição com if; estrutura If + will; WH- questions; uso de for e comparativos; verbo must
+(obrigação); apresentando-se; fazendo perguntas e simple past; futuro com will e uso de should;
+advérbios de frequência; descrição de pessoas e objetos; comparativo e superlativo; pronomes
+indefinidos (someone, nobody, anywhere etc.); voz passiva e present perfect; conjunções (and, or,
+but, so); expressões úteis em viagens e advérbios de tempo (ever, never, yet, once); futuro com 
+going to + gerúndio; present continuous para futuro, verbos was/were; modal must vs. have to;
+pronomes one/any (someone, anybody...); comparativos avançados; uso de would e expressando
+decepção; opinando (I think...); pedindo desculpas; pedindo permissão; modal could e dando
+comandos. (Este curso básico foi descontinuado e substituído por módulos mais
+segmentados.) 
+Inglês Introdutório: Curso curto (5 aulas, 7,5h) cobrindo noções bem básicas de inglês –
+saudações, vocabulário simples e frases do dia a dia. Voltado a quem nunca estudou inglês,
+servindo de porta de entrada para os níveis seguintes. 
+Inglês Intermediário e Avançado: Cursos de níveis Intermediário (previsto ~30 aulas, 45h) e 
+Avançado (20 aulas, 30h) que aprofundam estruturas mais complexas. O Inglês Avançado foca
+em conversação fluente e vocabulário avançado, situações de negócios e viagens, e refina
+conhecimentos gramaticais complexos (ex.: condicionais avançadas, voz passiva, phrasal verbs e
+expressões idiomáticas). Conteúdo típico: no nível intermediário – revisão de tempos
+verbais, introdução a passado perfeito e futuros contínuos, aumento de vocabulário e
+compreensão auditiva; no avançado – discurso indireto, expressões idiomáticas, collocations,
+prática intensiva de fala e compreensão de textos/autênticos, escrita de e-mails e textos formais.
+(OBS: O curso Intermediário consta no catálogo, mas possivelmente em lançamento, dado não haver
+data de disponibilidade.)
+Inglês para Viagens, Negócios, Hotelaria: Módulos de inglês aplicados: Inglês para Hotelaria
+e Turismo (42 aulas, 63h) foca no vocabulário e situações de atendimento ao turista, reservas de
+hotel, restaurantes e passeios. Inglês para Negócios (60h estimadas) abrange inglês
+corporativo – reuniões, apresentações, negociações, termos de negócios (comercial, financeiro)
+106107
+• 
+108109
+110
+• 
+111
+• 
+112
+• 
+113114
+115116
+117118
+• 
+• 
+119120
+121
+• 
+122
+7
+
+. Inglês para Viagens (41 aulas, 61,5h) prepara o aluno para situações comuns de viagem
+internacional – aeroporto, imigração, hotel, compras, direções, emergências. Conteúdo:
+nesses cursos temáticos, além de gramática funcional, enfatiza-se listening e speaking em
+contextos específicos (simulações de check-in, diálogos de escritório, etc.). Por exemplo, “Inglês
+para Negócios” inclui termos de escritório, inglês telefônico, redação de e-mails e etiqueta
+corporativa em inglês. 
+Inglês Kids: Curso infantil (24 aulas, 36h) que ensina inglês básico de forma lúdica para crianças
+. Apresenta vocabulário simples (cores, números, animais, objetos) e estruturas básicas em
+atividades interativas. Conteúdo: cumprimentos e apresentações em inglês; números e cores;
+família e amigos; brinquedos e objetos; animais e sons; comidas e frutas; partes do corpo; rotina
+diária em inglês; músicas e histórias infantis em inglês para fixação. (O curso utiliza jogos e
+músicas para manter a atenção do público infantil.) 
+Cursos de Idiomas em Espanhol: A Ouro Moderno oferece versões de seus cursos de
+informática e idiomas adaptados para falantes de espanhol. Por exemplo, AutoCAD 2D en
+Español (22 aulas, 33h) e AutoCAD 3D en Español (12 aulas, 18h) ensinam os mesmos
+conteúdos de CAD, porém com instrução em espanhol. Há também Excel 2016 en Español, 
+Word 2016 en Español, PowerPoint 2016 en Español – cobrindo o pacote Office em espanhol
+com ênfase nas terminologias do idioma. Nos idiomas, a plataforma oferece Inglés Básico/
+Intermedio/Avanzado en Español (cursos de inglês explicados em espanhol para
+hispanofalantes) com cargas horárias similares aos equivalentes em português. Esses cursos
+espelham o conteúdo dos cursos em português, garantindo que alunos de língua espanhola
+também possam se qualificar utilizando a plataforma. (Exemplo: o curso AutoCAD 2D em Espanhol
+aborda introducción al AutoCAD, herramientas de dibujo 2D, coordenadas, capas, sombreados y
+cotas, tal como a versão em português, mas inteiramente em espanhol.)
+Cursos Kids e Personalizados
+Criador de Conteúdo Kids: Curso de 16 aulas (24h) criado especialmente para crianças de ~8 a
+12 anos que desejam se tornar youtubers e criadores de conteúdo digitais. Ensina
+fundamentos do YouTube, criação de vídeos e identidade visual de forma acessível. Conteúdo
+Programático: Introdução ao YouTube (como funciona a plataforma); criando um canal e
+configurando perfis; segurança na internet para crianças; tipos de conteúdo no YouTube;
+planejamento do primeiro vídeo; noções básicas de gravação de vídeo; edição simples de
+imagens e vídeos usando Canva (miniaturas, ícones, capas); edição de vídeos curtos (shorts);
+edição de vídeos longos; otimização de títulos, tags e descrições; estratégias de divulgação do
+vídeo; lidando com críticas e comentários negativos de forma positiva; conceitos básicos de
+monetização e responsabilidade online; orientações sobre como encarar o futuro como
+youtuber. (Ferramentas: YouTube e Canva.) Versões Kids Fast (8 aulas, 12h) e Kids Lite (3
+aulas, 4,5h) oferecem conteúdos resumidos para projetos menores. 
+YouTuber (curso profissionalizante): Curso de 10 aulas (15h) direcionado a jovens e adultos
+que desejam criar um canal de sucesso no YouTube. Complementa o curso kids, porém
+com enfoque mais profissional. Descrição: abrange desde entender o público do YouTube,
+desenvolver e configurar um canal otimizado, até técnicas de áudio/vídeo para produzir
+conteúdo de qualidade. Conteúdo Programático: Primeiros passos como youtuber
+(cenário atual e públicos do YouTube); criação de logo e configuração avançada do canal
+; recursos adicionais da plataforma e importância da segmentação de nicho; montagem de
+cenário e iluminação para vídeos; técnicas de captação e melhoria de áudio (remoção de ruídos,
+uso de microfones); fundamentos de SEO no YouTube para ganhar inscritos; estratégias de
+engajamento e fidelização da audiência; produzindo conteúdo de sucesso e mantendo o público
+engajado; monetização via Google AdSense (regras e requisitos) e estratégias para aumentar
+receita; introdução às lives (transmissões ao vivo) e como usá-las para engajamento.
+122
+123124
+• 
+111
+• 
+62
+125
+126
+127128
+• 
+129130
+131
+132
+133134
+135
+• 
+136137
+138139
+138140
+140
+141
+142
+8
+
+(Ferramentas mencionadas: softwares como ApowerSoft e Audacity para gravação de tela e
+edição de áudio.) 
+Programação Kids: Curso de 16 aulas (24h) que introduz crianças ao pensamento
+computacional e programação básica de forma divertida. Geralmente utiliza plataformas
+visuais (como Scratch) para ensinar conceitos como sequência de comandos, eventos e laços de
+repetição por meio de histórias e jogos simples. Conteúdo: construção de histórias animadas
+passo a passo; criação de jogos simples arrastando blocos lógicos; noções de coordenadas
+(movimento de personagens na tela); uso de condições (por ex: se jogador pontua, então...);
+laços (repetir ações); projeto final de um jogo ou animação criado pela criança. 
+Internet Kids: Curso de 5 aulas (7,5h) ensinando crianças a navegar na internet com segurança
+. Aborda conceitos de busca online, consumo de conteúdo apropriado, riscos na internet e
+cidadania digital para os pequenos. Conteúdo: apresentação do que é a Internet; navegadores
+web simples; procurando informações (busca segura no Google Kids); Netiqueta básica (como
+se comportar online); cuidado com informações pessoais; diversão online em ambientes
+monitorados; uso educacional da internet. 
+Windows 10 Kids: Versão do curso de Windows adaptada para crianças (10 aulas, 15h) –
+apresenta o sistema operacional de forma lúdica, ensinando-as a ligar/desligar o computador,
+abrir programas, desenhar no Paint, criar pastas, etc., com foco em segurança (não excluir
+arquivos importantes). Conteúdo: área de trabalho e janelas; programas básicos (editor de
+texto, desenho); jogos educativos no PC; regras de uso (tempo de tela, não instalar sem
+permissão); noções de segurança (não clicar em pop-ups). (Também ofertado em espanhol: 
+Windows 10 Kids Español, 10 aulas.)
+Melhor Idade V2: Curso de 15 aulas (22,5h) voltado ao público da terceira idade, ensinando
+informática básica e uso de tecnologia no dia a dia. Abrange desde ligar o computador, usar
+smartphone, redes sociais, até exercícios cognitivos. Conteúdo: familiarização com computador
+(teclado, mouse) e celular; usando WhatsApp para comunicação com família; internet para
+terceira idade (acesso a notícias, vídeos, chamadas de vídeo); jogos eletrônicos para manter a
+mente ativa; dicas de segurança (evitar golpes telefônicos ou online); aplicativos úteis para
+saúde (medicação, consultas) e lazer. 
+Guia de Prevenção COVID-19: Curso curto (2 aulas, 3h) desenvolvido durante a pandemia,
+orientando sobre medidas de prevenção ao coronavírus. Explica protocolos de higiene, uso
+correto de máscaras, distanciamento social e procedimentos em caso de suspeita de contágio. 
+Síndico de Condomínio: Curso de 2 aulas (3h) que forma síndicos e gestores condominiais
+básicos. Ensina responsabilidades legais do síndico, gestão financeira do condomínio,
+resolução de conflitos entre condôminos, manutenção predial e organização de assembleias. 
+WhatsApp Business: Curso de 4 aulas (6h) ensinando empreendedores e pequenos negócios a
+usarem o WhatsApp Business profissionalmente. Cobre configuração do perfil comercial,
+uso de etiquetas, mensagens automáticas, catálogo de produtos e estratégias de atendimento e
+vendas pelo WhatsApp. 
+Cursos Normativos e Especiais
+NR 10 – Segurança em Instalações Elétricas: Curso Norma Regulamentadora 10 (27 aulas,
+40,5h) que capacita sobre segurança em eletricidade. Aborda princípios de eletricidade,
+riscos elétricos, EPI/EPC, prevenção de acidentes e procedimentos em trabalhos com instalações
+elétricas de baixa tensão. Conteúdo: introdução à NR10 e legislação; choques elétricos e
+primeiros socorros; delimitação de áreas e sinalizações; equipamentos de proteção; práticas
+seguras em instalações e serviços com eletricidade; documentação e ordens de serviço;
+responsabilidades do profissional autorizado. 
+NR 20 – Líquidos Combustíveis e Inflamáveis: Curso de 6 aulas (9h) sobre manuseio e
+armazenagem segura de líquidos inflamáveis (combustíveis) conforme NR20. Ensina
+143
+• 
+41
+• 
+144
+• 
+145
+146
+• 
+147
+• 
+148
+• 
+149
+• 
+150
+• 
+151
+• 
+152
+9
+
+classificação de líquidos inflamáveis, sistemas de prevenção e combate a incêndios, e planos de
+emergência em postos de combustíveis, indústrias químicas etc. 
+NR 33 – Espaço Confinado: Curso de 7 aulas (10,5h) que trata da segurança em espaços
+confinados (silos, tanques, tubulações). Cobre identificação de riscos (gases tóxicos, falta de
+oxigênio), equipamentos de monitoramento ambiental, procedimentos de entrada/saída e
+resgate de emergência. 
+NR 35 – Trabalho em Altura: Curso de 6 aulas (9h) sobre segurança para trabalho acima de 2
+metros de altura. Ensina uso de equipamentos antiqueda (cintos, linhas de vida), técnicas de
+movimentação segura, montagem de andaimes, e medidas de prevenção de quedas conforme a
+Norma 35. 
+Robótica (já citado): (Reiterando, curso de 20 aulas, 30h) – abrange montagem de robôs
+educacionais e conceitos de programação física, sensorização e atuadores, orientando projetos 
+hands-on para estudantes. 
+Cursos Chancelados (Conteúdos Parceiros)
+A plataforma Ouro Moderno também disponibiliza Cursos Chancelados, produzidos por especialistas
+externos e oferecidos aos licenciados da rede. Esses cursos ampliam a gama de conteúdos em
+áreas específicas:
+-   Programa Sem Limites (Marcos Rossi):  Curso motivacional com 12 aulas (18h) produzido pelo
+palestrante e autor best-seller Marcos Rossi. Trabalha desenvolvimento pessoal, superação de limites e
+liderança, baseado na trajetória de vida inspiradora do autor.
+-  Tráfego ROI no Talo (Lucas Renault): Curso intensivo de Marketing Digital e gestão de tráfego pago
+(46 aulas, 69h) conduzido por Lucas Renault (considerado “Rei do Tráfego”), ensinando estratégias
+avançadas de anúncios online com foco em alto Retorno sobre Investimento.
+-  SOS Aulas Online (Ney Pereira): Curso de 32 aulas (48h) que capacita professores para o ensino
+online, produzido por Ney Pereira (especialista em neurociência pedagógica). Abrange metodologias e
+ferramentas para aulas virtuais eficazes.
+-  Escola de Palestrantes (Vicente Falcão): Curso de 32 aulas (48h) que ensina a arte de palestrar e
+empreender no ramo educacional, com técnicas de oratória, criação de palestras de impacto e
+networking profissional, por Vicente Falcão.
+-   Como Vender para o Governo (RCC):  Curso de 7 aulas (11h) produzido pela RCC (empresa de
+inteligência de mercado público) que orienta empresários a participarem de licitações e vender para
+órgãos governamentais, abordando desde legislação até estratégias para vencer pregões eletrônicos
+. 
+Nota: Todos os cursos da Ouro Moderno incluem certificado de conclusão e  suporte pedagógico, e
+muitos oferecem aula demonstrativa gratuita para conhecer a metodologia antes da matrícula
+. Os conteúdos acima foram pesquisados no site oficial da Ouro Moderno e materiais vinculados,
+garantindo informações atualizadas sobre carga horária, módulos e tópicos de cada curso. Cada curso
+possui material didático interativo e, em alguns casos, bônus como ferramentas extras ou exercícios
+complementares (por exemplo, pacotes de exercícios no curso de Informática Essencial sugerido no
+blog da Ouro Moderno). Em suma, a plataforma Ouro Moderno oferece um catálogo amplo e
+estruturado de cursos profissionalizantes, de informática, idiomas e muito mais – todos com conteúdo
+programático detalhado conforme descrito acima, atendendo às exigências atuais do mercado de
+trabalho. 
+Administrativo Informatizado V4 - Ouro Moderno
+https://ouromoderno.com.br/portfolio/administrativo-informatizado-v4/
+• 
+153
+• 
+154
+• 
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+12346869707172
+10
+
+Ouro Moderno - Lista de Cursos
+https://ouromoderno.com.br/lista-de-cursos/
+Cursos – Ouro Moderno
+https://ms.ouromoderno.com.br/website/listadecursos/
+Excel Fundamental - Ouro Moderno
+https://ouromoderno.com.br/portfolio/excel-fundamental/
+Excel 2019 Avançado - Ouro Moderno
+https://ouromoderno.com.br/portfolio/excel-2019-avancado/
+Java - Ouro Moderno
+https://ouromoderno.com.br/portfolio/java/
+Python - Ouro Moderno
+https://ouromoderno.com.br/portfolio/python/
+3DS MAX - Ouro Moderno
+https://ouromoderno.com.br/portfolio/3ds-max-v2/
+Adobe Illustrator - Ouro Moderno
+https://ouromoderno.com.br/portfolio/adobe-illustrator/
+Curso de Canva - Ouro Moderno
+https://ouromoderno.com.br/portfolio/canva/
+Administrativo Informatizado V4 Fast - Ouro Moderno
+https://ouromoderno.com.br/portfolio/administrativo-informatizado-v4-fast/
+Administrativo Informatizado V.3 - Ouro Moderno
+https://ouromoderno.com.br/portfolio/adm-informatizado/
+Atendente de Farmácia V.2 - Ouro Moderno
+https://ouromoderno.com.br/portfolio/atendente-de-farmacia-v2/
+Cuidador de Idosos - Ouro Moderno
+https://ouromoderno.com.br/portfolio/cuidador-de-idosos/
+Empreendedorismo - Ouro Moderno
+https://ouromoderno.com.br/portfolio/empreendedorismo/
+Inglês Básico - Ouro Moderno
+https://ouromoderno.com.br/portfolio/ingles-basico/
+AutoCAD 2D en español - Ouro Moderno
+https://ouromoderno.com.br/portfolio/autocad-2d-en-espanol/
+Criador de Conteúdo Kids - Ouro Moderno
+https://ouromoderno.com.br/portfolio/criador-de-conteudo-kids/
+YouTuber - Ouro Moderno
+https://ouromoderno.com.br/portfolio/youtuber/
+Cursos Chancelados - Ouro Moderno
+https://ouromoderno.com.br/cursos-chancelados/
+ChatGPT - Ouro Moderno
+https://ouromoderno.com.br/portfolio/chatgpt/
+5681819212223242526272841424345465758596061626364656673
+748485919293100101102103104105106107108109110111112119120121122123124125135
+144145146147148149150151152153154
+720449495126
+910111213
+14151617
+293031323334
+353637383940
+4748495051161
+5253545556
+67
+7576
+7778
+7980818283
+8687888990
+96979899
+113114115116117118
+127128
+129130131132133134
+136137138139140141142143
+155156157158159160
+162
+11
+
+5 estratégias para aumentar sua conversão! - Ouro Moderno
+https://ouromoderno.com.br/5-estrategias-para-aumentar-sua-conversao/
+Ouro Moderno - Cursos
+https://ouromoderno.com.br/cursos/
+163
+164
+12

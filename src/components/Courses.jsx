@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import Starfield from './Starfield';
 import Section from './Section';
 import {
@@ -15,6 +16,7 @@ import useInView from '../hooks/useInView';
 const COURSES = [
   {
     title: 'Projetista 3D',
+    slug: 'projetista-3d',
     icon: Cube,
     desc: 'Blender, AutoCAD, SketchUp, Impressão 3D, Maquetes…',
     textColor: 'text-orange-400',
@@ -23,6 +25,7 @@ const COURSES = [
   },
   {
     title: 'Edição de Vídeo',
+    slug: 'edicao-video',
     icon: FilmSlate,
     desc: 'Premiere, After Effects, DaVinci Resolve, Motion Graphics…',
     textColor: 'text-red-400',
@@ -31,6 +34,7 @@ const COURSES = [
   },
   {
     title: 'Informática',
+    slug: 'informatica',
     icon: Desktop,
     desc: 'Windows, Word, Excel (fundamental → avançado)…',
     textColor: 'text-blue-400',
@@ -39,6 +43,7 @@ const COURSES = [
   },
   {
     title: 'Design Gráfico',
+    slug: 'design-grafico',
     icon: PenNib,
     desc: 'Photoshop, Illustrator, InDesign, Canva, Social…',
     textColor: 'text-pink-400',
@@ -47,6 +52,7 @@ const COURSES = [
   },
   {
     title: 'Programação',
+    slug: 'programacao',
     icon: Code,
     desc: 'Lógica, Python, Java, PHP, Android Studio, Jogos…',
     textColor: 'text-green-400',
@@ -55,6 +61,7 @@ const COURSES = [
   },
   {
     title: 'Marketing Digital',
+    slug: 'marketing-digital',
     icon: ChartLine,
     desc: 'Social Ads, SEO, Copywriting, Canva, Branding, Analytics…',
     textColor: 'text-purple-400',
@@ -63,6 +70,7 @@ const COURSES = [
   },
   {
     title: 'Inteligência Artificial',
+    slug: 'inteligencia-artificial',
     icon: Robot,
     desc: 'Cursor, Prompt Engineering, ChatGPT, Visão…',
     textColor: 'text-cyan-400',
@@ -71,6 +79,7 @@ const COURSES = [
   },
   {
     title: 'Business Intelligence',
+    slug: 'business-intelligence',
     icon: ChartBar,
     desc: 'Master Excel, Power BI, Dashboards, Storytelling de Dados…',
     textColor: 'text-indigo-400',
@@ -79,12 +88,12 @@ const COURSES = [
   },
 ];
 
-function CourseCard({ title, icon: Icon, desc, textColor, borderGradient, hoverShadow }) {
+function CourseCard({ title, slug, icon: Icon, desc, textColor, borderGradient, hoverShadow }) {
   const [ref, visible] = useInView();
   return (
-    <a
+    <Link
       ref={ref}
-      href="#"
+      to={`/cursos/${slug}`}
       className={`card-enter ${visible ? 'in-view' : ''} relative clip-card w-full md:w-[320px] h-[120px] p-[3px] bg-gradient-to-r ${borderGradient} transition-transform duration-200 hover:-translate-y-1.5 hover:scale-[1.02] ${hoverShadow} focus-visible:ring-2 ring-fuchsia-500 focus:outline-none`}
     >
       <div
@@ -96,7 +105,7 @@ function CourseCard({ title, icon: Icon, desc, textColor, borderGradient, hoverS
           <p className="text-sm text-zinc-300 leading-snug text-left line-clamp-2">{desc}</p>
         </div>
       </div>
-    </a>
+    </Link>
   );
 }
 
