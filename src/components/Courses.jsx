@@ -15,10 +15,10 @@ import useInView from '../hooks/useInView';
 
 const COURSES = [
   {
-    title: 'Projetista 3D',
+    title: 'Projetista',
     slug: 'projetista-3d',
     icon: Cube,
-    desc: 'Blender, AutoCAD, SketchUp, Impressão 3D, Maquetes…',
+    desc: 'SketchUp, Enscape, Renderização com IA, Projetos 3D…',
     textColor: 'text-orange-400',
     borderGradient: 'from-orange-500/60 to-amber-400/60',
     hoverShadow: 'hover:shadow-[0_0_25px_#f97316aa]',

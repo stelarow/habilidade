@@ -33,7 +33,7 @@ function CoursePage() {
   const [submitStatus, setSubmitStatus] = useState(null);
 
   const courses = [
-    'Projetista 3D',
+    'Projetista',
     'Edição de Vídeo', 
     'Informática',
     'Design Gráfico',
@@ -270,6 +270,37 @@ function CoursePage() {
             </div>
           </div>
 
+          {/* Materials Section */}
+          {course.materials?.included && (
+            <div className="mb-16">
+              <div className="bg-gradient-to-r from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-white/10 rounded-2xl p-8">
+                <div className="text-center mb-6">
+                  <div 
+                    className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
+                    style={{ backgroundColor: `${course.themeColors.primary}20`, border: `2px solid ${course.themeColors.primary}` }}
+                  >
+                    <span className="text-3xl">📖</span>
+                  </div>
+                  <h3 className="text-2xl font-bold text-white mb-2">Material Didático Incluso</h3>
+                  <p className="text-gray-300">{course.materials.description}</p>
+                </div>
+                <div className="space-y-3">
+                  {course.materials.details?.map((detail, index) => (
+                    <div key={index} className="flex items-start gap-3">
+                      <div 
+                        className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-1"
+                        style={{ backgroundColor: course.themeColors.primary }}
+                      >
+                        <span className="text-white text-xs font-bold">✓</span>
+                      </div>
+                      <span className="text-gray-300 text-sm">{detail}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Course Content Grid */}
           <div className="grid lg:grid-cols-3 gap-8">
             
@@ -315,13 +346,15 @@ function CoursePage() {
                       <span>✅</span>
                       <span>Certificado reconhecido</span>
                     </div>
+                    {course.materials?.included && (
+                      <div className="flex items-center gap-2">
+                        <span>📖</span>
+                        <span>{course.materials.description}</span>
+                      </div>
+                    )}
                     <div className="flex items-center gap-2">
-                      <span>✅</span>
-                      <span>Material didático incluso</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span>✅</span>
-                      <span>Laboratório equipado</span>
+                      <span>🏫</span>
+                      <span>Modalidades: Presencial ou Online</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <span>✅</span>

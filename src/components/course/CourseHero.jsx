@@ -1,8 +1,6 @@
 import PropTypes from 'prop-types';
-import { formatPrice, calculateDiscount } from '../../utils/courseHelpers';
 
 function CourseHero({ course, onEnrollClick }) {
-  const discount = calculateDiscount(course.investment);
 
   return (
     <div 
@@ -56,48 +54,8 @@ function CourseHero({ course, onEnrollClick }) {
           {course.basicInfo.longDescription}
         </p>
         
-        {/* Price and CTA Section */}
-        <div className="flex flex-col lg:flex-row gap-8 justify-center items-center">
-          
-          {/* Price Box */}
-          <div className="bg-gradient-to-r from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 min-w-[280px]">
-            
-            {/* Discount Badge */}
-            {discount > 0 && (
-              <div 
-                className="inline-block px-3 py-1 rounded-full text-xs font-bold text-white mb-4"
-                style={{ backgroundColor: course.themeColors.primary }}
-              >
-                {discount}% OFF
-              </div>
-            )}
-            
-            {/* Current Price */}
-            <div className="text-center mb-4">
-              <div className="text-4xl md:text-5xl font-bold text-white mb-2">
-                {formatPrice(course.investment.currentPrice)}
-              </div>
-              
-              {/* Original Price */}
-              {discount > 0 && (
-                <div className="text-gray-400 line-through text-lg">
-                  de {formatPrice(course.investment.originalPrice)}
-                </div>
-              )}
-              
-              {/* Installments */}
-              <div className="text-green-400 text-sm mt-2">
-                ou {course.investment.installments.max}x de {formatPrice(course.investment.installments.value)}
-              </div>
-            </div>
-            
-            {/* Payment Methods */}
-            <div className="text-xs text-gray-400 text-center">
-              {course.investment.paymentMethods.join(' • ')}
-            </div>
-          </div>
-          
-          {/* CTA Button */}
+        {/* CTA Section */}
+        <div className="flex justify-center">
           <div className="flex flex-col gap-4">
             <button
               onClick={onEnrollClick}
@@ -107,7 +65,7 @@ function CourseHero({ course, onEnrollClick }) {
                 boxShadow: `0 10px 30px ${course.themeColors.primary}40`
               }}
             >
-              <span className="relative z-10">Matricular-se Agora</span>
+              <span className="relative z-10">Solicitar Informações</span>
               <div 
                 className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                 style={{
@@ -116,9 +74,9 @@ function CourseHero({ course, onEnrollClick }) {
               />
             </button>
             
-            {/* Guarantee */}
+            {/* Info */}
             <div className="text-center text-sm text-gray-400">
-              ✅ Garantia de 30 dias
+              ✅ Entre em contato para valores e condições
             </div>
           </div>
         </div>
@@ -158,15 +116,6 @@ CourseHero.propTypes = {
       duration: PropTypes.string.isRequired,
       certificate: PropTypes.bool.isRequired,
       longDescription: PropTypes.string.isRequired,
-    }).isRequired,
-    investment: PropTypes.shape({
-      originalPrice: PropTypes.number.isRequired,
-      currentPrice: PropTypes.number.isRequired,
-      installments: PropTypes.shape({
-        max: PropTypes.number.isRequired,
-        value: PropTypes.number.isRequired,
-      }).isRequired,
-      paymentMethods: PropTypes.arrayOf(PropTypes.string).isRequired,
     }).isRequired,
     curriculum: PropTypes.arrayOf(PropTypes.shape({
       lessons: PropTypes.array.isRequired,

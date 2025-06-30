@@ -16,7 +16,7 @@ const Reviews = () => {
     {
       id: 1,
       name: "Karolain Roberta Régis",
-      course: "Projetista 3D",
+      course: "Projetista",
       rating: 5,
       date: "2024-11-20",
       text: "Estou fazendo o curso e estou adorando, professor atencioso, com atividades super dinâmicas, aprendi já bastante coisas que ainda não sabia, estão super atualizados no mercado, eles têm deles mesmo até IA ajudando o pessoal nas medições e até em render rápidos, fora a apostila bem completa.",
@@ -60,7 +60,7 @@ const Reviews = () => {
     {
       id: 5,
       name: "Jonatas Torres",
-      course: "Projetista 3D",
+      course: "Projetista",
       rating: 5,
       date: "2024-11-20",
       text: "Estou tendo uma excelente experiência com a Escola Habilidade no curso de SketchUp. O conteúdo é muito bem estruturado, o professor domina o assunto e sabe explicar de forma clara, mesmo para quem está começando.",
@@ -71,7 +71,7 @@ const Reviews = () => {
     {
       id: 6,
       name: "Ana Caroline Orofino",
-      course: "Projetista 3D",
+      course: "Projetista",
       rating: 5,
       date: "2024-10-15",
       text: "Estou adorando as aulas, professor muito atencioso, sempre traz questões do cotidiano para resolução das atividades!",

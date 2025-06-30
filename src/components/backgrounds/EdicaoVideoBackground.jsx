@@ -13,19 +13,24 @@ const EdicaoVideoBackground = ({
   const animationRef = useRef(null);
   const filmFramesRef = useRef([]);
   const timelineRef = useRef({ position: 0 });
+  const cameraRef = useRef(null);
 
   // Configurações baseadas na performance - REDUZIDAS v1.2
   const config = useMemo(() => ({
-    // Timeline - SIMPLIFICADA
-    timelineHeight: 60, // era 80
-    timelineSpeed: performanceConfig?.staticFallback ? 0 : 0.6, // era 1
-    keyframeSpacing: 180, // era 120 (menos keyframes)
+    // Timeline - REMOVIDA COMPLETAMENTE
+    timelineHeight: 0, // Era 60 → 0 (timeline removida)
+    timelineSpeed: 0, // Era 0.6 → 0 (sem timeline)
+    keyframeSpacing: 180,
     
-    // Frames de filme - DRASTICAMENTE REDUZIDOS
-    frameCount: Math.min(performanceConfig?.particleCount || 6, 2), // era 40/12
-    frameSpeed: performanceConfig?.staticFallback ? 0 : 0.4, // era 0.8
+    // Frames de filme - AUMENTADOS LEVEMENTE
+    frameCount: Math.min(performanceConfig?.particleCount || 12, 6), // Era 6/2 → 12/6 (aumento 200%)
+    frameSpeed: performanceConfig?.staticFallback ? 0 : 0.8, // Era 0.4 → 0.8 (aumento 100%)
     frameWidth: 45, // era 60
     frameHeight: 30, // era 40
+    
+    // Câmera de cinema - REMOVIDA
+    cameraEnabled: false, // Era true → false (câmera removida)
+    cameraSpeed: 0, // Era 0.02 → 0 (sem animação)
     
     // Lens flares e sparkles - REMOVIDOS
     sparkleCount: 0, // era Math.min(performanceConfig?.particleCount || 20, 6)
@@ -221,8 +226,120 @@ const EdicaoVideoBackground = ({
     }
   }
 
+  // Classe para câmera de cinema
+  class CinemaCamera {
+    constructor(canvas) {
+      this.canvas = canvas;
+      this.x = canvas.width * 0.8; // Posição fixa no canto direito
+      this.y = canvas.height * 0.2; // Parte superior
+      this.rotation = 0;
+      this.bobOffset = 0;
+      this.bobSpeed = 0.03;
+      this.scale = 0.8 + Math.random() * 0.4;
+      this.opacity = 0.6 + Math.random() * 0.3;
+      this.lensRotation = 0;
+      this.lensSpeed = 0.01;
+      this.recordingBlink = 0;
+      this.recordingSpeed = 0.1;
+    }
+
+    update() {
+      if (!config.cameraEnabled || config.cameraSpeed === 0) return;
+      
+      this.rotation += config.cameraSpeed;
+      this.bobOffset += this.bobSpeed;
+      this.lensRotation += this.lensSpeed;
+      this.recordingBlink += this.recordingSpeed;
+    }
+
+    draw(ctx) {
+      if (!config.cameraEnabled) return;
+      
+      ctx.save();
+      ctx.translate(this.x, this.y + Math.sin(this.bobOffset) * 3);
+      ctx.rotate(this.rotation);
+      ctx.scale(this.scale, this.scale);
+      ctx.globalAlpha = this.opacity;
+
+      // Corpo da câmera
+      ctx.fillStyle = config.colors.secondary;
+      ctx.fillRect(-30, -20, 60, 40);
+      
+      // Borda do corpo
+      ctx.strokeStyle = config.colors.frame;
+      ctx.lineWidth = 2;
+      ctx.strokeRect(-30, -20, 60, 40);
+      
+      // Lente principal
+      ctx.save();
+      ctx.translate(20, 0);
+      ctx.rotate(this.lensRotation);
+      
+      // Círculo externo da lente
+      ctx.strokeStyle = config.colors.accent;
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.arc(0, 0, 15, 0, Math.PI * 2);
+      ctx.stroke();
+      
+      // Círculo interno da lente
+      ctx.fillStyle = config.colors.primary + '40';
+      ctx.beginPath();
+      ctx.arc(0, 0, 10, 0, Math.PI * 2);
+      ctx.fill();
+      
+      // Reflexo da lente
+      ctx.fillStyle = config.colors.flare + '80';
+      ctx.beginPath();
+      ctx.arc(-3, -3, 4, 0, Math.PI * 2);
+      ctx.fill();
+      
+      ctx.restore();
+      
+      // Suporte superior
+      ctx.fillStyle = config.colors.frame;
+      ctx.fillRect(-5, -30, 10, 15);
+      
+      // Visor
+      ctx.fillStyle = config.colors.primary + '60';
+      ctx.fillRect(-25, -15, 20, 12);
+      
+      // Botão de gravação (piscando)
+      const recordingAlpha = 0.5 + Math.sin(this.recordingBlink) * 0.5;
+      ctx.globalAlpha = this.opacity * recordingAlpha;
+      ctx.fillStyle = '#FF0000';
+      ctx.beginPath();
+      ctx.arc(-20, -25, 3, 0, Math.PI * 2);
+      ctx.fill();
+      
+      // Texto "REC"
+      ctx.globalAlpha = this.opacity;
+      ctx.font = '8px Arial';
+      ctx.fillStyle = config.colors.flare;
+      ctx.fillText('REC', -15, -22);
+      
+      // Tripé (três pernas simples)
+      ctx.strokeStyle = config.colors.secondary;
+      ctx.lineWidth = 2;
+      for (let i = 0; i < 3; i++) {
+        const angle = (i * Math.PI * 2) / 3;
+        const legX = Math.cos(angle) * 25;
+        const legY = Math.sin(angle) * 25;
+        
+        ctx.beginPath();
+        ctx.moveTo(0, 20);
+        ctx.lineTo(legX, 20 + legY);
+        ctx.stroke();
+      }
+
+      ctx.restore();
+    }
+  }
+
   // Desenhar timeline cinematográfica
   const drawTimeline = (ctx) => {
+    if (config.timelineHeight === 0 || config.timelineSpeed === 0) return; // Não desenhar se removida
+    
     const { width, height } = ctx.canvas;
     const timelineY = height - config.timelineHeight - 20;
     
@@ -276,12 +393,17 @@ const EdicaoVideoBackground = ({
     ctx.restore();
   };
 
-  // Inicializar elementos - REDUZIDOS
+  // Inicializar elementos - AUMENTADOS + CÂMERA
   const initializeElements = (canvas) => {
-    // Film frames - APENAS frames, sem sparkles
+    // Film frames - AUMENTADOS
     filmFramesRef.current = [];
     for (let i = 0; i < config.frameCount; i++) {
       filmFramesRef.current.push(new FilmFrame(canvas));
+    }
+    
+    // Câmera de cinema - NOVA
+    if (config.cameraEnabled) {
+      cameraRef.current = new CinemaCamera(canvas);
     }
     
     // Sparkles removidos para simplicidade
@@ -298,16 +420,22 @@ const EdicaoVideoBackground = ({
     const ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Desenhar timeline
+    // Desenhar timeline (se ativa)
     drawTimeline(ctx);
 
-    // Desenhar e atualizar elementos
+    // Desenhar e atualizar film frames
     filmFramesRef.current.forEach(element => {
       element.update();
       element.draw(ctx);
     });
 
-    if (config.timelineSpeed > 0 || config.frameSpeed > 0) {
+    // Desenhar e atualizar câmera
+    if (cameraRef.current) {
+      cameraRef.current.update();
+      cameraRef.current.draw(ctx);
+    }
+
+    if (config.frameSpeed > 0 || config.cameraSpeed > 0) {
       animationRef.current = requestAnimationFrame(animate);
     }
   };

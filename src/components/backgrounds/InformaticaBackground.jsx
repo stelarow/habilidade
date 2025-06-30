@@ -19,18 +19,18 @@ const InformaticaBackground = ({
   const config = useMemo(() => ({
     // Grid digital
     gridSize: 25,
-    gridOpacity: performanceConfig?.staticFallback ? 0 : 0.15,
-    gridSpeed: performanceConfig?.staticFallback ? 0 : 0.5,
+    gridOpacity: 0, // Era 0.15 → 0 (grid digital REMOVIDO)
+    gridSpeed: 0, // Era 0.5 → 0 (sem animação de grid)
     
-    // Partículas conectadas
-    particleCount: Math.min(performanceConfig?.particleCount || 30, 15),
-    connectionDistance: 120,
-    particleSpeed: performanceConfig?.staticFallback ? 0 : 1.2,
+    // Partículas conectadas - REDUZIDAS DRASTICAMENTE
+    particleCount: Math.min(performanceConfig?.particleCount || 8, 4), // Era 30/15 → 8/4 (73% redução)
+    connectionDistance: 80, // Era 120 → 80 (33% redução na distância de conexão)
+    particleSpeed: performanceConfig?.staticFallback ? 0 : 0.6, // Era 1.2 → 0.6 (50% redução na velocidade)
     
-    // Matrix rain
-    matrixColumns: Math.floor((window.innerWidth || 800) / 20),
-    matrixSpeed: performanceConfig?.staticFallback ? 0 : 2,
-    matrixOpacity: performanceConfig?.staticFallback ? 0 : 0.8,
+    // Matrix rain - REDUZIDO DRASTICAMENTE (mantendo orbs intactas)
+    matrixColumns: Math.floor((window.innerWidth || 800) / 80), // Era /20 → /80 (75% redução)
+    matrixSpeed: performanceConfig?.staticFallback ? 0 : 0.8, // Era 2 → 0.8 (60% redução)
+    matrixOpacity: performanceConfig?.staticFallback ? 0 : 0.3, // Era 0.8 → 0.3 (63% redução)
     
     // Cores do tema digital
     colors: {
@@ -56,11 +56,11 @@ const InformaticaBackground = ({
       this.y = Math.random() * canvas.height;
       this.vx = (Math.random() - 0.5) * config.particleSpeed;
       this.vy = (Math.random() - 0.5) * config.particleSpeed;
-      this.size = 2 + Math.random() * 3;
+      this.size = 1 + Math.random() * 1.5; // Era 2-5 → 1-2.5 (50% redução no tamanho)
       this.life = 1;
-      this.decay = 0.001 + Math.random() * 0.002;
+      this.decay = 0.002 + Math.random() * 0.003; // Era 0.001-0.003 → 0.002-0.005 (vida mais curta)
       this.glow = Math.random() * Math.PI * 2;
-      this.glowSpeed = 0.05 + Math.random() * 0.05;
+      this.glowSpeed = 0.02 + Math.random() * 0.02; // Era 0.05-0.1 → 0.02-0.04 (60% redução)
       this.trail = [];
       this.maxTrailLength = 5;
     }
@@ -113,12 +113,12 @@ const InformaticaBackground = ({
 
       // Desenhar partícula principal com glow
       ctx.save();
-      ctx.globalAlpha = this.life;
+      ctx.globalAlpha = this.life * 0.5; // Era this.life → this.life * 0.5 (50% redução na opacidade)
       
       // Glow effect
       const glowIntensity = 0.5 + Math.sin(this.glow) * 0.3;
       ctx.shadowColor = config.colors.glow;
-      ctx.shadowBlur = this.size * 3 * glowIntensity;
+      ctx.shadowBlur = this.size * 1.5 * glowIntensity; // Era *3 → *1.5 (50% redução no glow)
       
       ctx.fillStyle = config.colors.particle;
       ctx.beginPath();
@@ -141,12 +141,12 @@ const InformaticaBackground = ({
       this.x = x;
       this.y = 0;
       this.fontSize = fontSize;
-      this.speed = config.matrixSpeed + Math.random() * 2;
+      this.speed = config.matrixSpeed + Math.random() * 0.8; // Era *2 → *0.8 (60% redução)
       this.chars = [];
-      this.opacity = 0.8 + Math.random() * 0.2;
+      this.opacity = 0.4 + Math.random() * 0.2; // Era 0.8-1.0 → 0.4-0.6 (50% redução)
       
-      // Gerar string de caracteres
-      const length = 5 + Math.floor(Math.random() * 10);
+      // Gerar string de caracteres - REDUZIDA
+      const length = 2 + Math.floor(Math.random() * 4); // Era 5-15 → 2-6 caracteres (60% redução)
       for (let i = 0; i < length; i++) {
         this.chars.push(config.matrixChars[Math.floor(Math.random() * config.matrixChars.length)]);
       }
@@ -162,7 +162,7 @@ const InformaticaBackground = ({
         this.y = -this.chars.length * this.fontSize;
         
         // Trocar alguns caracteres aleatoriamente
-        if (Math.random() < 0.1) {
+        if (Math.random() < 0.03) { // Era 0.1 → 0.03 (70% redução na frequência)
           const index = Math.floor(Math.random() * this.chars.length);
           this.chars[index] = config.matrixChars[Math.floor(Math.random() * config.matrixChars.length)];
         }
@@ -253,7 +253,7 @@ const InformaticaBackground = ({
         
         if (distance < config.connectionDistance) {
           const alpha = 1 - (distance / config.connectionDistance);
-          ctx.globalAlpha = alpha * 0.5;
+          ctx.globalAlpha = alpha * 0.2; // Era * 0.5 → * 0.2 (60% redução na opacidade das conexões)
           
           ctx.beginPath();
           ctx.moveTo(particles[i].x, particles[i].y);

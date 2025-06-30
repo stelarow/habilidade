@@ -17,16 +17,16 @@ const BIBackground = ({
 
   // Configurações baseadas na performance
   const config = useMemo(() => ({
-    // Fluxos de dados
-    streamCount: Math.min(performanceConfig?.particleCount || 15, 8),
-    streamSpeed: performanceConfig?.staticFallback ? 0 : 1.5,
+    // Fluxos de dados - REMOVIDO efeito de partículas jato
+    streamCount: 0, // Era Math.min(performanceConfig?.particleCount || 15, 8)
+    streamSpeed: 0, // Era performanceConfig?.staticFallback ? 0 : 1.5
     
-    // KPI Cards
-    kpiCount: Math.min(performanceConfig?.particleCount || 12, 6),
-    kpiSpeed: performanceConfig?.staticFallback ? 0 : 0.8,
+    // KPI Cards - REDUZIDO drasticamente
+    kpiCount: Math.min(performanceConfig?.particleCount || 3, 2), // Era 12/6 → 3/2 (83% redução)
+    kpiSpeed: performanceConfig?.staticFallback ? 0 : 0.4, // Era 0.8 → 0.4 (50% redução)
     
-    // Dashboard
-    dashboardSpeed: performanceConfig?.staticFallback ? 0 : 0.02,
+    // Dashboard - REDUZIDO
+    dashboardSpeed: performanceConfig?.staticFallback ? 0 : 0.01, // Era 0.02 → 0.01 (50% redução)
     
     // Cores do tema BI
     colors: {
@@ -41,14 +41,12 @@ const BIBackground = ({
       background: '#2C2C2C'  // Fundo escuro
     },
     
-    // KPIs para animar
+    // KPIs para animar - REDUZIDO para apenas 3 principais
     kpis: [
       { label: 'Revenue', value: '$2.4M', trend: 'up', format: 'currency' },
-      { label: 'Profit Margin', value: '23.5%', trend: 'up', format: 'percentage' },
       { label: 'Orders', value: '12,847', trend: 'up', format: 'number' },
-      { label: 'Conversion', value: '4.2%', trend: 'down', format: 'percentage' },
-      { label: 'AOV', value: '$186', trend: 'up', format: 'currency' },
-      { label: 'CLTV', value: '$542', trend: 'up', format: 'currency' }
+      { label: 'Conversion', value: '4.2%', trend: 'down', format: 'percentage' }
+      // Removidos: Profit Margin, AOV, CLTV (50% redução: 6→3 KPIs)
     ]
   }), [performanceConfig]);
 
@@ -160,8 +158,8 @@ const BIBackground = ({
       this.y = Math.random() * (canvas.height - 100) + 50;
       this.vx = (Math.random() - 0.5) * config.kpiSpeed;
       this.vy = (Math.random() - 0.5) * config.kpiSpeed;
-      this.opacity = 0.6 + Math.random() * 0.3;
-      this.scale = 0.8 + Math.random() * 0.4;
+      this.opacity = 0.3 + Math.random() * 0.2; // Era 0.6-0.9 → 0.3-0.5 (50% redução)
+      this.scale = 0.6 + Math.random() * 0.2; // Era 0.8-1.2 → 0.6-0.8 (33% redução)
       this.rotation = 0;
       this.rotationSpeed = (Math.random() - 0.5) * 0.01;
       this.pulse = Math.random() * Math.PI * 2;
@@ -204,9 +202,9 @@ const BIBackground = ({
       ctx.scale(this.scale, this.scale);
       ctx.globalAlpha = this.opacity * (0.8 + Math.sin(this.pulse) * 0.2);
 
-      // Card do KPI
-      const cardWidth = 140;
-      const cardHeight = 80;
+      // Card do KPI - REDUZIDO
+      const cardWidth = 100; // Era 140 → 100 (29% redução)
+      const cardHeight = 60; // Era 80 → 60 (25% redução)
       
       // Fundo do card com glow
       ctx.shadowColor = this.kpi.trend === 'up' ? config.colors.success : config.colors.warning;
@@ -281,10 +279,10 @@ const BIBackground = ({
     dashboardRef.current.animationPhase += config.dashboardSpeed;
     dashboardRef.current.dataUpdate += 0.01;
     
-    const dashX = ctx.canvas.width - 320;
-    const dashY = ctx.canvas.height - 220;
-    const dashWidth = 300;
-    const dashHeight = 200;
+    const dashX = ctx.canvas.width - 250; // Era 320 → 250 (22% redução)
+    const dashY = 30; // Era ctx.canvas.height - 160 → 30 (movido para cima para caber no hero)
+    const dashWidth = 220; // Era 300 → 220 (27% redução)
+    const dashHeight = 140; // Era 200 → 140 (30% redução)
     
     // Fundo do dashboard
     ctx.save();
@@ -308,22 +306,22 @@ const BIBackground = ({
     const now = new Date();
     ctx.fillText(`Updated: ${now.toLocaleTimeString()}`, dashX + 15, dashY + 40);
     
-    // Gráfico de tendência principal
+    // Gráfico de tendência principal - SIMPLIFICADO
     ctx.strokeStyle = config.colors.success;
-    ctx.lineWidth = 2;
+    ctx.lineWidth = 1; // Era 2 → 1 (50% redução)
     ctx.beginPath();
     
     const chartStartX = dashX + 15;
-    const chartStartY = dashY + 60;
+    const chartStartY = dashY + 50; // Era 60 → 50 (ajuste para dashboard menor)
     const chartWidth = dashWidth - 30;
-    const chartHeight = 60;
+    const chartHeight = 40; // Era 60 → 40 (33% redução)
     
-    for (let i = 0; i <= 20; i++) {
-      const x = chartStartX + (i / 20) * chartWidth;
+    for (let i = 0; i <= 10; i++) { // Era 20 → 10 pontos (50% redução)
+      const x = chartStartX + (i / 10) * chartWidth;
       const baseY = chartStartY + chartHeight/2;
-      const trend = Math.sin((i + dashboardRef.current.dataUpdate * 10) * 0.3) * 15;
-      const growth = Math.sin((i + dashboardRef.current.dataUpdate * 5) * 0.1) * 20;
-      const y = baseY + trend + growth - (i * 0.8); // Tendência de crescimento
+      const trend = Math.sin((i + dashboardRef.current.dataUpdate * 5) * 0.2) * 8; // Era *10*0.3*15 → *5*0.2*8
+      const growth = Math.sin((i + dashboardRef.current.dataUpdate * 3) * 0.05) * 10; // Era *5*0.1*20 → *3*0.05*10
+      const y = baseY + trend + growth - (i * 0.4); // Era 0.8 → 0.4 (50% redução)
       
       if (i === 0) ctx.moveTo(x, y);
       else ctx.lineTo(x, y);
@@ -340,12 +338,12 @@ const BIBackground = ({
     ctx.fill();
     ctx.restore();
     
-    // Resumo de métricas
-    const summaryY = dashY + 140;
+    // Resumo de métricas - REDUZIDO
+    const summaryY = dashY + 110; // Era 140 → 110 (ajuste para dashboard menor)
     const summaryMetrics = [
       { label: 'Active Users', value: '24.8K', color: config.colors.success },
-      { label: 'Sessions', value: '156.2K', color: config.colors.primary },
-      { label: 'Bounce Rate', value: '32.1%', color: config.colors.warning }
+      { label: 'Sessions', value: '156.2K', color: config.colors.primary }
+      // Removido: Bounce Rate (33% redução: 3→2 métricas)
     ];
     
     ctx.font = '11px Arial';

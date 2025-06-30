@@ -17,16 +17,16 @@ const MarketingDigitalBackground = ({
 
   // Configurações baseadas na performance
   const config = useMemo(() => ({
-    // Métricas flutuantes
-    metricCount: Math.min(performanceConfig?.particleCount || 15, 8),
-    metricSpeed: performanceConfig?.staticFallback ? 0 : 1.2,
+    // Métricas flutuantes - REDUZIDO DRASTICAMENTE  
+    metricCount: Math.min(performanceConfig?.particleCount || 3, 2), // Era 15/8 → 3/2 (83% redução)
+    metricSpeed: performanceConfig?.staticFallback ? 0 : 0.6, // Era 1.2 → 0.6 (50% redução)
     
-    // Gráficos animados
-    chartCount: Math.min(performanceConfig?.particleCount || 10, 4),
-    chartSpeed: performanceConfig?.staticFallback ? 0 : 0.8,
+    // Gráficos animados - REDUZIDO DRASTICAMENTE
+    chartCount: Math.min(performanceConfig?.particleCount || 2, 1), // Era 10/4 → 2/1 (90% redução)
+    chartSpeed: performanceConfig?.staticFallback ? 0 : 0.4, // Era 0.8 → 0.4 (50% redução)
     
-    // Dashboard
-    dashboardSpeed: performanceConfig?.staticFallback ? 0 : 0.03,
+    // Dashboard - REDUZIDO
+    dashboardSpeed: performanceConfig?.staticFallback ? 0 : 0.015, // Era 0.03 → 0.015 (50% redução)
     
     // Cores do tema marketing
     colors: {
@@ -62,19 +62,19 @@ const MarketingDigitalBackground = ({
       this.y = Math.random() * canvas.height;
       this.vx = (Math.random() - 0.5) * config.metricSpeed;
       this.vy = (Math.random() - 0.5) * config.metricSpeed;
-      this.opacity = 0.5 + Math.random() * 0.4;
-      this.scale = 0.8 + Math.random() * 0.4;
+      this.opacity = 0.25 + Math.random() * 0.2; // Era 0.5-0.9 → 0.25-0.45 (50% redução)
+      this.scale = 0.6 + Math.random() * 0.2; // Era 0.8-1.2 → 0.6-0.8 (33% redução)
       this.rotation = 0;
-      this.rotationSpeed = (Math.random() - 0.5) * 0.02;
+      this.rotationSpeed = (Math.random() - 0.5) * 0.01; // Era 0.02 → 0.01 (50% redução)
       
       // Selecionar métrica aleatória
       this.metric = config.metrics[Math.floor(Math.random() * config.metrics.length)];
       this.pulse = Math.random() * Math.PI * 2;
-      this.pulseSpeed = 0.03 + Math.random() * 0.02;
+      this.pulseSpeed = 0.015 + Math.random() * 0.01; // Era 0.03-0.05 → 0.015-0.025 (50% redução)
       
-      // Animação de valor
+      // Animação de valor - REDUZIDA
       this.valueAnimation = 0;
-      this.animationSpeed = 0.05 + Math.random() * 0.05;
+      this.animationSpeed = 0.025 + Math.random() * 0.025; // Era 0.05-0.1 → 0.025-0.05 (50% redução)
     }
 
     update() {
@@ -102,9 +102,9 @@ const MarketingDigitalBackground = ({
       ctx.scale(this.scale, this.scale);
       ctx.globalAlpha = this.opacity * (0.8 + Math.sin(this.pulse) * 0.2);
 
-      // Card da métrica
-      const cardWidth = 120;
-      const cardHeight = 60;
+      // Card da métrica - REDUZIDO
+      const cardWidth = 90; // Era 120 → 90 (25% redução)
+      const cardHeight = 45; // Era 60 → 45 (25% redução)
       
       // Fundo do card com glow
       ctx.shadowColor = this.metric.trend === 'up' ? config.colors.success : config.colors.warning;
@@ -154,13 +154,13 @@ const MarketingDigitalBackground = ({
       this.canvas = canvas;
       this.x = Math.random() * (canvas.width - 200) + 100;
       this.y = Math.random() * (canvas.height - 150) + 75;
-      this.width = 120 + Math.random() * 80;
-      this.height = 60 + Math.random() * 40;
-      this.opacity = 0.3 + Math.random() * 0.3;
+      this.width = 80 + Math.random() * 40; // Era 120-200 → 80-120 (40% redução)
+      this.height = 40 + Math.random() * 20; // Era 60-100 → 40-60 (40% redução)
+      this.opacity = 0.15 + Math.random() * 0.15; // Era 0.3-0.6 → 0.15-0.3 (50% redução)
       this.type = ['bar', 'line', 'pie'][Math.floor(Math.random() * 3)];
-      this.data = Array.from({length: 6}, () => Math.random());
+      this.data = Array.from({length: 4}, () => Math.random()); // Era 6 → 4 pontos (33% redução)
       this.animationProgress = 0;
-      this.animationSpeed = 0.02 + Math.random() * 0.02;
+      this.animationSpeed = 0.01 + Math.random() * 0.01; // Era 0.02-0.04 → 0.01-0.02 (50% redução)
       this.color = [config.colors.primary, config.colors.secondary, config.colors.accent][Math.floor(Math.random() * 3)];
     }
 
@@ -171,7 +171,7 @@ const MarketingDigitalBackground = ({
       if (this.animationProgress > 1) {
         this.animationProgress = 0;
         // Gerar novos dados
-        this.data = Array.from({length: 6}, () => Math.random());
+        this.data = Array.from({length: 4}, () => Math.random()); // Era 6 → 4 pontos (33% redução)
       }
     }
 
@@ -273,10 +273,10 @@ const MarketingDigitalBackground = ({
     
     dashboardRef.current.animationPhase += config.dashboardSpeed;
     
-    const dashX = ctx.canvas.width - 300;
+    const dashX = ctx.canvas.width - 220; // Era 300 → 220 (27% redução)
     const dashY = 20;
-    const dashWidth = 280;
-    const dashHeight = 180;
+    const dashWidth = 200; // Era 280 → 200 (29% redução)
+    const dashHeight = 150; // Era 180 → 150 (ajustado para caber todo o conteúdo)
     
     // Fundo do dashboard
     ctx.save();
@@ -319,7 +319,7 @@ const MarketingDigitalBackground = ({
     ];
     
     summaryMetrics.forEach((metric, index) => {
-      const y = dashY + 110 + index * 20;
+      const y = dashY + 90 + index * 18; // Era 110 → 90, espaçamento 20 → 18 para caber melhor
       
       ctx.font = '12px Arial';
       ctx.fillStyle = config.colors.metric;

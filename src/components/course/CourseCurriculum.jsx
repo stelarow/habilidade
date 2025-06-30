@@ -58,7 +58,7 @@ function CourseCurriculum({ course }) {
         <div>
           <h2 className="text-3xl font-bold text-white mb-2">Currículo do Curso</h2>
           <p className="text-gray-400">
-            {course.curriculum.length} módulos • {totalLessons} aulas presenciais • {formatTotalDuration(totalDuration)} de conteúdo
+            {course.curriculum.length} módulos • {totalLessons} aulas • {formatTotalDuration(totalDuration)} de conteúdo
           </p>
         </div>
         
@@ -211,9 +211,9 @@ function CourseCurriculum({ course }) {
           </div>
           <div>
             <div className="text-2xl font-bold" style={{ color: course.themeColors.primary }}>
-              Presencial
+              Presencial ou Online
             </div>
-            <div className="text-sm text-gray-400">Modalidade</div>
+            <div className="text-sm text-gray-400">Modalidades</div>
           </div>
         </div>
       </div>

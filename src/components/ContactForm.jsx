@@ -18,7 +18,7 @@ const ContactForm = () => {
   const [submitStatus, setSubmitStatus] = useState(null);
 
   const courses = [
-    'Projetista 3D',
+    'Projetista',
     'Edição de Vídeo', 
     'Informática',
     'Design Gráfico',

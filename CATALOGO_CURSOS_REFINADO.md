@@ -1,265 +1,4 @@
-Pular para o conteúdo
-Histórico de chats
 
-Você disse:
-preciso achar o conteudo programatico dos cursos que estarao no texto abaixo. no texto os cursos estao segmentados por grupo, ou seja o curso de informatica, contem varios modulos, estamos atras do conteudo programatico de cada modulo. voce pode encontrar pesquisando pelos cursos do site da ouromoderno e apenas da ouromoderno. caso voce nao encontre o curso, deixe em branco e me avise que nao encontrou. os cursos word fundamental e power point fundamental serão encontrados como apenas word e como apenas power point sem a palavra fundamental. sempre procure pela ultima versao de cada curso. REGRA: sempre da ouromoderno. Nao crie conteudo se nao encontrar. espero que voce me envie do seguinte formato para cada modulo:
-
-Nome do modulo
-horas de curso
-Numero de aulas
-Lista de todas as aulas quebrado por numero, exemplo
-Aula 1 - conteudo tal
-Aula 2 - outro conteudo tal
-O ChatGPT disse:
-Claro! Por favor, envie o texto com os nomes dos cursos e módulos segmentados por grupo, como você mencionou. Assim, poderei buscar o conteúdo programático correspondente no site da OuroModerno para cada módulo listado.
-
-Você disse:
- **INFORMÁTICA**
-*Fundamentos digitais e ferramentas essenciais*
-
-- **Windows 11** (12 aulas, 18h)
-  - Interface moderna
-  - Gerenciamento de arquivos
-  - Configurações de sistema
-  - Segurança básica
-
-- **Word Fundamental** (14 aulas, 21h)
-  - Criação e formatação de documentos
-  - Tabelas e imagens
-  - Estilos e modelos
-  - Revisão e impressão
-
-- **Excel Fundamental** (18 aulas, 27h)
-  - Navegação e formatação
-  - Fórmulas básicas
-  - Funções essenciais
-  - Gráficos básicos
-
-- **Excel Avançado** (13 aulas, 19,5h)
-  - Funções avançadas
-  - Tabelas dinâmicas
-  - Macros e VBA
-  - Análise de dados
-
-- **PowerPoint Fundamental** (12 aulas, 18h)
-  - Criação de apresentações
-  - Design de slides
-  - Animações e transições
-  - Técnicas de apresentação
-
-- **Ambientes Digitais** (16 aulas, 24h)
-  - Computação em nuvem
-  - Ferramentas colaborativas
-  - Videoconferência
-  - Segurança digital
-
-- **Canva** (12 aulas, 18h)
-  - Design simplificado
-  - Templates e layouts
-  - Criação para redes sociais
-  - Exportação e compartilhamento
-
-- **Inteligência Artificial** (Novo curso)
-  - Fundamentos de IA
-  - Ferramentas práticas
-  - Automação de tarefas
-  - Aplicações no escritório
-
----
-
-### 4. 🎨 **DESIGN GRÁFICO**
-*Criação visual e comunicação*
-
-- **Photoshop** (20 aulas, 30h)
-  - Edição e manipulação de imagens
-  - Ferramentas de seleção
-  - Camadas e máscaras
-  - Correção de cor
-  - Efeitos e filtros
-
-- **Illustrator** (16 aulas, 24h)
-  - Design vetorial
-  - Ferramenta caneta
-  - Tipografia
-  - Logotipos e ilustrações
-  - Preparação para impressão
-
-- **InDesign** (12 aulas, 18h)
-  - Diagramação profissional
-  - Páginas mestres
-  - Estilos de texto
-  - Preparação para impressão
-  - Publicações digitais
-
-- **Canva** (12 aulas, 18h)
-  - Design acessível
-  - Posts para redes sociais
-  - Materiais de marketing
-  - Brandbook simplificado
-
-- **CorelDRAW** (16 aulas, 24h)
-  - Design vetorial alternativo
-  - Ferramentas de desenho
-  - Manipulação de curvas
-  - Layouts profissionais
-
----
-
-### 5. 💻 **PROGRAMAÇÃO**
-*Desenvolvimento de software e aplicações*
-
-- **Lógica de Programação** (8-10 aulas)
-  - Fundamentos algorítmicos
-  - Fluxogramas
-  - Estruturas condicionais
-  - Loops e repetições
-
-- **Python** (16 aulas, 24h)
-  - Sintaxe básica
-  - Estruturas de dados
-  - Programação orientada a objetos
-  - Bibliotecas essenciais
-  - Projetos práticos
-
-- **Java** (16 aulas, 24h)
-  - Orientação a objetos
-  - NetBeans IDE
-  - Interface gráfica
-  - Conexão com banco de dados
-
-- **Programação PHP** (20 aulas, 30h)
-  - Desenvolvimento web
-  - Formulários e validação
-  - Banco de dados MySQL
-  - Sistema web completo
-
-- **Desenvolvedor de Aplicativos** (16 aulas, 24h)
-  - Android Studio
-  - Desenvolvimento mobile
-  - Interface e UX
-  - Publicação de apps
-
-- **Cursor** (Novo curso - IDE com IA)
-  - IDE com IA integrada
-  - Programação assistida
-  - Otimização de código
-  - Pair programming com IA
-
----
-
-### 6. 📱 **MARKETING DIGITAL**
-*Estratégias digitais e crescimento online*
-
-- **Marketing Digital V2** (12 aulas, 18h)
-  - Fundamentos digitais
-  - Planejamento de campanhas
-  - SEO e SEM
-  - Métricas e análise
-
-- **Mídias Sociais** (10 aulas, 15h)
-  - Estratégia de conteúdo
-  - Facebook e Instagram
-  - Engajamento
-  - Análise de performance
-
-- **Armazenamento na Nuvem** (Novo curso)
-  - Google Drive/OneDrive
-  - Sincronização
-  - Colaboração online
-  - Backup e segurança
-
-- **Inteligência Artificial** (Novo curso)
-  - IA no marketing
-  - Automação de conteúdo
-  - Chatbots
-  - Personalização
-
-- **Marketing Pessoal** (2 aulas, 3h)
-  - Marca pessoal
-  - LinkedIn profissional
-  - Networking digital
-  - Presença online
-
-- **Facebook Business** (Novo curso)
-  - Business Manager
-  - Pixels e conversões
-  - Campanhas avançadas
-  - Remarketing
-
----
-
-### 7. 🤖 **INTELIGÊNCIA ARTIFICIAL**
-*IA aplicada e ferramentas emergentes*
-
-- **Inteligência Artificial** (Novo curso)
-  - Fundamentos de IA
-  - Prompt Engineering
-  - ChatGPT e LLMs
-  - Automação inteligente
-
-- **Inteligência Artificial for Business** (Novo curso)
-  - IA para negócios
-  - Processos automatizados
-  - Análise preditiva
-  - ROI com IA
-
-- **Cursor** (Novo curso)
-  - Programação com IA
-  - Code generation
-  - Debugging inteligente
-  - Produtividade de código
-
-- **Flowlabs** (Novo curso)
-  - Automação de fluxos
-  - No-code/Low-code
-  - Integração de sistemas
-  - Workflows inteligentes
-
-- **ElevenLabs** (Novo curso)
-  - Síntese de voz com IA
-  - Clonagem de voz
-  - Audiobooks e podcasts
-  - Locução automatizada
-
-- **HatchCanvas** (Novo curso)
-  - Design generativo
-  - Arte com IA
-  - Criação automatizada
-  - Iteração rápida
-
----
-
-### 8. 📊 **BUSINESS INTELLIGENCE**
-*Análise de dados e dashboards inteligentes*
-
-- **Excel Fundamental** (18 aulas, 27h)
-  - Base para análise
-  - Fórmulas e funções
-  - Organização de dados
-  - Gráficos básicos
-
-- **Excel Avançado** (13 aulas, 19,5h)
-  - Tabelas dinâmicas
-  - Funções estatísticas
-  - Análise de cenários
-  - Modelagem de dados
-
-- **Dashboard** (Novo curso)
-  - Design de dashboards
-  - KPIs e métricas
-  - Visualização de dados
-  - Storytelling com dados
-
-- **IA para Análise de Dados e Criação de Dashboard** (Novo curso)
-  - IA para análise
-  - Automação de relatórios
-  - Insights preditivos
-  - Dashboards inteligentes
-O ChatGPT disse:
-Ótimo, vou buscar o conteúdo programático completo de cada módulo listado no seu texto, exclusivamente no site da OuroModerno. Vou priorizar sempre a versão mais atual dos cursos e manterei exatamente o formato solicitado, incluindo horas de curso, número de aulas e o detalhamento aula a aula. Caso algum curso não seja encontrado no site da OuroModerno, deixarei em branco e informarei. Assim que a pesquisa estiver pronta, volto com os resultados organizados para você.
-
-Research completed in 7m· 32 fontes· 190 buscas
-Conteúdo Programático dos Cursos da OuroModerno
 
 Informática
 Windows 11
@@ -284,7 +23,7 @@ Aula 8 – Aplicativos Parte II
 ouromoderno.com.br
 Aula 9 – Aplicativos Parte III
 ouromoderno.com.br
-Aula 10 – Aplicativos Parte IV
+Aula 10 – Aplicativos Parte 
 ouromoderno.com.br
 Aula 11 – Barra de Tarefas
 ouromoderno.com.br
@@ -1770,3 +1509,104 @@ Aula 5 – Projeto Final (Construção de um dashboard completo)
 ouromoderno.com.br
 IA para Análise de Dados e Criação de Dashboard – Conteúdo programático não encontrado no site Ouro Moderno.
 Citações
+
+O curso de projetista da Escola Habilidade é totalmente presencial e baseado em projetos reais, garantindo um aprendizado prático e alinhado às necessidades do mercado. Você será capacitado para dominar todas as ferramentas essenciais do SketchUp, desde conceitos básicos até técnicas avançadas, incluindo criação de componentes dinâmicos, detalhamento técnico conforme normas ABNT, e uso profissional do Layout do SketchUp. Com o acompanhamento de professores especialistas certificados internacionalmente pela Trimble, você desenvolverá projetos reais que formarão seu portfólio profissional, aumentando significativamente suas oportunidades no mercado de trabalho.
+
+
+sketchup
+Conteúdo Programático
+Aula 1 – Fundamentos do SketchUp
+Introdução ao software, ferramentas básicas e primeiros comandos. Aula prática com criação de projeto guiado com o professor (hands-on).
+
+Aula 2 – Modificadores e Geometrias
+Exploração de ferramentas de modificação, manipulação de faces e arestas, superfícies, uso de matriz linear e matriz radial.
+
+Aula 3 – Projeto Guiado – Volume Simples
+Criação de um projeto completo com aplicação das ferramentas aprendidas nas aulas anteriores.
+
+Aula 4 – Grupos e Componentes
+Como criar, editar e organizar grupos e componentes. Técnicas para evitar que superfícies se misturem acidentalmente.
+
+Aula 5 – Manipulação Avançada de Geometrias
+Uso do AutoFold, mover para alongar ou deslocar partes do modelo, inferências e empurrar/puxar com modificadores. Aula prática com projeto guiado.
+
+Aula 6 – Eixos e Superfícies Inclinadas
+Trabalhando com manipulação de eixos, rotação precisa, ângulos personalizados e modelagem de superfícies inclinadas.
+
+Aula 7 – Projeto Guiado – Elementos Arquitetônicos
+Desenvolvimento de um projeto completo com foco em formas arquitetônicas e uso avançado de ferramentas.
+
+Aula 8 – Materiais e Texturas
+Importação e aplicação de materiais, manipulação de texturas em superfícies planas, curvas e cilíndricas. Técnicas de mapeamento e distorção.
+
+Aula 9 – Ferramenta Siga-me (Follow Me)
+Criação de perfis geométricos, rodapés, sancas, rodateto e outros acabamentos utilizando a ferramenta “Siga-me”.
+
+Aula 10 – Sandbox e Terrenos
+Uso do Sandbox para criar terrenos do zero, basear-se em curvas de nível, ajustar construções em topografia irregular e criar caminhos.
+
+Aula 11 – Vetorização e Logotipos 3D
+Criação de logos 3D e elementos gráficos a partir de imagens e vetores. Técnicas para aplicação em fachadas e sinalização.
+
+Aula 12 – Ferramentas de Sólidos
+Introdução às ferramentas booleanas e operações com sólidos para criar geometrias complexas.
+
+Aula 13 – Importação de Arquivos CAD
+Como importar arquivos DWG/DXF do AutoCAD, limpar e otimizar o modelo para uso eficiente no SketchUp.
+
+Aula 14 – Introdução ao Layout do SketchUp
+Apresentação do ambiente do LayOut, integração com o SketchUp, organização de vistas e estilos.
+
+Aula 15 – Documentação Técnica com Layout
+Criação de prancha completa com cortes, elevações, cotas e detalhes técnicos seguindo normas ABNT.
+
+Aula 16 – Plugins Essenciais
+Instalação e uso de plugins para agilizar o processo de modelagem e ampliar os recursos do SketchUp.
+
+Aula 17 – Componentes Dinâmicos I
+Introdução aos componentes dinâmicos: criação, parametrização e comportamento inteligente.
+
+Aula 18 – Projeto Guiado – Interiores Residenciais
+Desenvolvimento de um projeto interno completo com aplicação de todos os conhecimentos adquiridos até o momento.
+
+Aula 19 – Projeto Guiado – Fachada com Terreno
+Criação de um modelo arquitetônico com fachada, terrenos e elementos de paisagismo.
+
+Aula 20 – Layout Final do Projeto Completo
+Criação da prancha no LayOut do projeto de interiores e fachada desenvolvidos nas aulas anteriores, com cortes, elevações, vistas explodidas, cotas e organização final para apresentação profissional.
+
+
+
+
+
+Enscape Conteúdo Programático
+Sobre o curso
+O Enscape é uma ferramenta de renderização em tempo real e realidade virtual, ideal para profissionais que trabalham com visualização arquitetônica e design de interiores. Ele permite transformar projetos 3D em imagens e vídeos realistas de alta qualidade, além de criar passeios virtuais imersivos.
+
+O que aprender com este curso?
+Neste curso, você aprenderá a dominar as principais funcionalidades do Enscape, incluindo a criação de renderizações fotorrealistas, uso de luz natural e artificial, configuração de materiais, ajustes de câmera, criação de animações e exportação de panoramas em 360°. O curso aborda também a integração do Enscape com programas como SketchUp, Revit e Rhino, otimizando o fluxo de trabalho e o processo criativo.
+
+Conteúdo Programático – Curso de Enscape (Escola Habilidade)
+Aula 1 – Introdução ao Enscape e Configuração Inicial
+Apresentação do Enscape e integração com o SketchUp. Configurações iniciais, interface e requisitos para renderização em tempo real.
+
+Aula 2 – Iluminação Natural e Artificial
+Como controlar a iluminação solar, localização geográfica, horário e clima. Criação de luzes artificiais, incluindo spots, emissivas e luzes IES.
+
+Aula 3 – Materiais e Texturização no Enscape
+Aplicação e edição de materiais compatíveis. Tipos de materiais especiais (vidro, água, emissivos). Técnicas de ajuste para realismo.
+
+Aula 4 – Câmeras e Enquadramentos Profissionais
+Criação de cenas, posicionamento de câmeras, ângulos profissionais, controle de campo de visão, profundidade e composição visual.
+
+Aula 5 – Configurações de Render e Qualidade
+Ajustes de qualidade, resolução, exposição, contraste, filtros e estilo de imagem. Exportação de imagens estáticas e panorâmicas.
+
+Aula 6 – Animações e Vídeos com Enscape
+Criação de animações e vídeos walkthrough. Inserção de keyframes, controle de transições, velocidade e exportação de vídeos.
+
+Aula 7 – Ambientes Externos e Vegetação
+Uso de biblioteca de ativos do Enscape: vegetações, pessoas, mobiliário externo, paisagismo e elementos urbanos para ambientação.
+
+Aula 8 – Projeto Guiado Completo com Enscape
+Renderização final de um projeto desenvolvido no SketchUp com aplicação de materiais, iluminação, cenas e animação para portfólio.
