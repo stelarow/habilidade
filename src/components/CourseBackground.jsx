@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useCallback, useMemo, Suspense } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, Suspense, useRef } from 'react';
 import { usePerformanceLevel } from '../hooks/usePerformanceLevel';
 import backgroundPreloader from '../utils/backgroundPreloader';
+import viewportObserver from '../utils/viewportObserver';
 import { 
   COURSE_SLUGS, 
   DEFAULT_PERFORMANCE_CONFIG, 
@@ -97,11 +98,18 @@ const CourseBackground = ({
   const [isLoading, setIsLoading] = useState(false);
   const [loadError, setLoadError] = useState(null);
   const [mountedComponent, setMountedComponent] = useState(null);
+  const [isVisible, setIsVisible] = useState(true);
+  const containerRef = useRef(null);
 
   // Configuração de performance para o curso atual
   const performanceConfig = useMemo(() => {
-    return DEFAULT_PERFORMANCE_CONFIG[performanceLevel] || DEFAULT_PERFORMANCE_CONFIG.medium;
-  }, [performanceLevel]);
+    const config = DEFAULT_PERFORMANCE_CONFIG[performanceLevel] || DEFAULT_PERFORMANCE_CONFIG.medium;
+    return {
+      ...config,
+      // Pausar animação quando não visível
+      isPaused: !isVisible
+    };
+  }, [performanceLevel, isVisible]);
 
   // Determinar se deve carregar o background animado
   const shouldLoadAnimated = useMemo(() => {
@@ -153,6 +161,22 @@ const CourseBackground = ({
       setMountedComponent(null);
     }
   }, [shouldLoadAnimated, loadBackground]);
+
+  // Observer de viewport para pausar quando não visível
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const handleVisibilityChange = (visible) => {
+      setIsVisible(visible);
+    };
+
+    viewportObserver.observe(container, handleVisibilityChange);
+
+    return () => {
+      viewportObserver.unobserve(container);
+    };
+  }, []);
 
   // Preload de backgrounds adjacentes usando sistema inteligente
   useEffect(() => {
