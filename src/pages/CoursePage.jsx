@@ -219,28 +219,31 @@ function CoursePage() {
       </script>
       
       <div 
-        className="min-h-screen bg-gradient-radial from-gray-900 via-black to-gray-900 relative"
+        className="min-h-screen bg-gradient-radial from-gray-900 via-black to-gray-900"
         style={{
           background: `linear-gradient(135deg, ${course.themeColors.gradient.from}08 0%, ${course.themeColors.gradient.to}08 100%), radial-gradient(circle at top, #1a1a1a 0%, #000000 100%)`
         }}
       >
-        {/* Background único do curso */}
-        <CourseBackground 
-          courseSlug={course.basicInfo.slug}
-          priority={true}
-          onLoadComplete={(courseSlug, performanceLevel) => {
-            console.log(`✅ Background carregado: ${courseSlug} (${performanceLevel})`);
-          }}
-          onError={(error, courseSlug) => {
-            console.warn(`⚠️ Erro no background ${courseSlug}:`, error);
-          }}
-        />
         
         {/* Breadcrumb Navigation */}
         <CourseBreadcrumb course={course} />
         
-        {/* Hero Section */}
-        <CourseHero course={course} onEnrollClick={handleEnrollClick} />
+        {/* Hero Section com Background */}
+        <div className="relative">
+          {/* Background único do curso - APENAS no Hero */}
+          <CourseBackground 
+            courseSlug={course.basicInfo.slug}
+            priority={true}
+            area="hero"
+            onLoadComplete={(courseSlug, performanceLevel) => {
+              console.log(`✅ Background carregado: ${courseSlug} (${performanceLevel})`);
+            }}
+            onError={(error, courseSlug) => {
+              console.warn(`⚠️ Erro no background ${courseSlug}:`, error);
+            }}
+          />
+          <CourseHero course={course} onEnrollClick={handleEnrollClick} />
+        </div>
 
         {/* Main Content */}
         <div className="max-w-7xl mx-auto px-4 pb-16">

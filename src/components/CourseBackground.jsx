@@ -82,6 +82,7 @@ const CourseBackground = ({
   courseSlug, 
   className = '',
   priority = false,
+  area = 'full', // 'hero' | 'full'
   onLoadComplete = null,
   onError = null
 }) => {
@@ -199,13 +200,22 @@ const CourseBackground = ({
   // Renderizar background animado
   const BackgroundComponent = mountedComponent;
   
+  // Ajustar altura baseado na área
+  const heightClass = area === 'hero' ? 'h-screen max-h-screen' : 'min-h-screen';
+  
   return (
-    <div className={`absolute inset-0 ${className}`} style={{ zIndex: 5 }}>
+    <div 
+      ref={containerRef}
+      className={`absolute inset-0 ${heightClass} ${className}`} 
+      style={{ zIndex: 5 }}
+    >
       <Suspense fallback={<BackgroundLoader courseSlug={courseSlug} />}>
         <BackgroundComponent 
           performanceConfig={performanceConfig}
           deviceCapabilities={deviceCapabilities}
           courseSlug={courseSlug}
+          area={area}
+          isVisible={isVisible}
         />
       </Suspense>
     </div>

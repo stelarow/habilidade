@@ -16,13 +16,13 @@ const ProgramacaoBackground = ({
 
   // Configurações baseadas na performance
   const config = useMemo(() => ({
-    // Código flutuante
-    snippetCount: Math.min(performanceConfig?.particleCount || 20, 6),
-    codeSpeed: performanceConfig?.staticFallback ? 0 : 1,
+    // Código flutuante - REDUZIDO
+    snippetCount: Math.min(performanceConfig?.particleCount || 10, 4), // era 20/6
+    codeSpeed: performanceConfig?.staticFallback ? 0 : 0.6, // era 1
     
-    // Terminal animado
-    terminalSpeed: performanceConfig?.staticFallback ? 0 : 80, // ms entre caracteres
-    terminalLines: 5,
+    // Terminal animado - REDUZIDO
+    terminalSpeed: performanceConfig?.staticFallback ? 0 : 120, // ms entre caracteres (era 80)
+    terminalLines: 3, // era 5
     
     // Cores do tema programação
     colors: {
@@ -98,8 +98,8 @@ const ProgramacaoBackground = ({
       this.y = Math.random() * canvas.height;
       this.vx = -config.codeSpeed * (0.5 + Math.random() * 0.5);
       this.vy = (Math.random() - 0.5) * 0.5;
-      this.opacity = 0.4 + Math.random() * 0.4;
-      this.fontSize = 12 + Math.random() * 4;
+      this.opacity = 0.2 + Math.random() * 0.3; // era 0.4-0.8
+      this.fontSize = 12 + Math.random() * 3; // era 12-16
       this.lineHeight = this.fontSize + 4;
       this.maxWidth = 200 + Math.random() * 150;
       

@@ -13,15 +13,15 @@ const Projetista3DBackground = ({
   const animationRef = useRef(null);
   const wireframesRef = useRef([]);
 
-  // Configurações baseadas na performance
+  // Configurações baseadas na performance - OTIMIZADAS v1.1
   const config = useMemo(() => ({
-    // Grade isométrica
-    gridSize: performanceConfig?.particleCount > 100 ? 30 : 40,
-    gridOpacity: performanceConfig?.staticFallback ? 0.3 : 0.15,
+    // Grade isométrica - REDUZIDA
+    gridSize: performanceConfig?.particleCount > 100 ? 40 : 60,
+    gridOpacity: performanceConfig?.staticFallback ? 0.2 : 0.08, // era 0.15
     
-    // Wireframes flutuantes
-    wireframeCount: Math.min(performanceConfig?.particleCount || 30, 8),
-    animationSpeed: performanceConfig?.staticFallback ? 0 : 0.5,
+    // Wireframes flutuantes - REDUZIDOS
+    wireframeCount: Math.min(performanceConfig?.particleCount || 15, 4), // era 8
+    animationSpeed: performanceConfig?.staticFallback ? 0 : 0.3, // era 0.5
     
     // Cores do tema 3D
     colors: {
@@ -46,20 +46,20 @@ const Projetista3DBackground = ({
       this.vy = (Math.random() - 0.5) * config.animationSpeed;
       this.vz = (Math.random() - 0.5) * config.animationSpeed;
       
-      // Rotação
+      // Rotação - REDUZIDA
       this.rotationX = 0;
       this.rotationY = 0;
       this.rotationZ = 0;
       this.rotationSpeed = {
-        x: (Math.random() - 0.5) * 0.02,
-        y: (Math.random() - 0.5) * 0.02,
-        z: (Math.random() - 0.5) * 0.02
+        x: (Math.random() - 0.5) * 0.01, // era 0.02
+        y: (Math.random() - 0.5) * 0.01, // era 0.02
+        z: (Math.random() - 0.5) * 0.01  // era 0.02
       };
       
       // Tipo de wireframe (cubo, pirâmide, esfera)
       this.type = ['cube', 'pyramid', 'sphere'][Math.floor(Math.random() * 3)];
-      this.size = 20 + Math.random() * 30;
-      this.opacity = 0.3 + Math.random() * 0.4;
+      this.size = 15 + Math.random() * 20; // era 20-50
+      this.opacity = 0.15 + Math.random() * 0.25; // era 0.3-0.7
     }
 
     update() {
@@ -220,10 +220,23 @@ const Projetista3DBackground = ({
     }
   };
 
-  // Loop de animação
+  // Loop de animação com FPS limitado
   const animate = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
+
+    const currentTime = performance.now();
+    const deltaTime = currentTime - (animationRef.lastTime || 0);
+    
+    // Limitar FPS para 30fps (33.33ms por frame)
+    if (deltaTime < 33.33) {
+      if (config.animationSpeed > 0) {
+        animationRef.current = requestAnimationFrame(animate);
+      }
+      return;
+    }
+    
+    animationRef.lastTime = currentTime;
 
     const ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
