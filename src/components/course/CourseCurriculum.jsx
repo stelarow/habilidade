@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { CaretDown, CaretUp, ChalkboardTeacher, FileText, PencilSimple, FolderOpen, Users } from 'phosphor-react';
+import { CaretDown, CaretUp, Play, Article, PuzzlePiece, RocketLaunch, Users } from 'phosphor-react';
 
 function CourseCurriculum({ course }) {
   const [expandedModules, setExpandedModules] = useState(new Set([0])); // Primeiro módulo expandido por padrão
@@ -17,11 +17,11 @@ function CourseCurriculum({ course }) {
 
   const getLessonIcon = (type) => {
     switch (type) {
-      case 'video': return ChalkboardTeacher;
-      case 'text': return FileText;
-      case 'exercise': return PencilSimple;
-      case 'project': return FolderOpen;
-      default: return ChalkboardTeacher;
+      case 'video': return Play;
+      case 'text': return Article;
+      case 'exercise': return PuzzlePiece;
+      case 'project': return RocketLaunch;
+      default: return Play;
     }
   };
 
@@ -146,12 +146,13 @@ function CourseCurriculum({ course }) {
                           
                           {/* Lesson Icon */}
                           <div 
-                            className="w-8 h-8 rounded-lg flex items-center justify-center"
+                            className="w-10 h-10 rounded-xl flex items-center justify-center"
                             style={{ backgroundColor: `${iconColor}20` }}
                           >
                             <LessonIcon 
-                              size={16} 
-                              className="transition-colors group-hover:scale-110 duration-200"
+                              size={20} 
+                              weight="duotone"
+                              className="transition-all group-hover:scale-110 duration-200"
                               style={{ color: iconColor }}
                             />
                           </div>

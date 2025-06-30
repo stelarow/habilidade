@@ -16,34 +16,34 @@ function CourseOverview({ course }) {
 
   const overviewItems = [
     {
-      icon: <Clock size={24} />,
+      icon: <Clock size={28} weight="duotone" />,
       label: 'Duração',
       value: course.basicInfo.duration,
       highlight: true,
     },
     {
-      icon: <Users size={24} />,
+      icon: <Users size={28} weight="duotone" />,
       label: 'Nível',
       value: course.basicInfo.level,
     },
     {
-      icon: <Trophy size={24} />,
+      icon: <Trophy size={28} weight="duotone" />,
       label: 'Certificado',
       value: course.basicInfo.certificate ? 'Incluso' : 'Não incluso',
     },
     {
-      icon: <Calendar size={24} />,
+      icon: <Calendar size={28} weight="duotone" />,
       label: 'Modalidade',
-      value: 'Presencial',
+      value: 'Presencial ou Online',
     },
     {
-      icon: <DollarSign size={24} />,
+      icon: <DollarSign size={28} weight="duotone" />,
       label: 'Investimento',
-      value: formatPrice(course.investment.currentPrice),
+      value: 'Consulte valores',
       highlight: true,
     },
     {
-      icon: <CheckCircle size={24} />,
+      icon: <CheckCircle size={28} weight="duotone" />,
       label: 'Categoria',
       value: course.basicInfo.category,
     },
@@ -109,7 +109,7 @@ function CourseOverview({ course }) {
       <div className="mt-8 grid md:grid-cols-2 gap-4">
         <div className="p-4 bg-gray-800/30 rounded-lg">
           <h4 className="text-white font-semibold mb-2 flex items-center gap-2">
-            <CheckCircle size={18} color={course.themeColors.primary} />
+            <CheckCircle size={20} weight="duotone" color={course.themeColors.primary} />
             Garantias Inclusas
           </h4>
           <ul className="text-gray-300 text-sm space-y-1">
@@ -122,7 +122,7 @@ function CourseOverview({ course }) {
         
         <div className="p-4 bg-gray-800/30 rounded-lg">
           <h4 className="text-white font-semibold mb-2 flex items-center gap-2">
-            <Trophy size={18} color={course.themeColors.primary} />
+            <Trophy size={20} weight="duotone" color={course.themeColors.primary} />
             Diferenciais
           </h4>
           <ul className="text-gray-300 text-sm space-y-1">

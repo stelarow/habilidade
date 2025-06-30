@@ -10,8 +10,8 @@ function CourseTestimonials({ course }) {
     return Array.from({ length: 5 }, (_, index) => (
       <Star
         key={index}
-        size={16}
-        weight={index < rating ? 'fill' : 'regular'}
+        size={18}
+        weight={index < rating ? 'duotone' : 'regular'}
         className={index < rating ? 'text-yellow-400' : 'text-gray-400'}
       />
     ));
@@ -42,7 +42,7 @@ function CourseTestimonials({ course }) {
                 className="w-8 h-8 rounded-full flex items-center justify-center"
                 style={{ backgroundColor: course.themeColors.primary }}
               >
-                <Quotes size={16} weight="fill" className="text-white" />
+                <Quotes size={18} weight="duotone" className="text-white" />
               </div>
             </div>
 

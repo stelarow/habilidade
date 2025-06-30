@@ -29,7 +29,7 @@ function CourseBreadcrumb({ course }) {
                     style={{ color: course.themeColors.primary }}
                     aria-current="page"
                   >
-                    {IconComponent && <IconComponent size={16} />}
+                    {IconComponent && <IconComponent size={16} weight="duotone" />}
                     {item.name}
                   </span>
                 ) : (
@@ -37,7 +37,7 @@ function CourseBreadcrumb({ course }) {
                     to={item.url}
                     className="text-gray-400 hover:text-white transition-colors flex items-center gap-1"
                   >
-                    {IconComponent && <IconComponent size={16} />}
+                    {IconComponent && <IconComponent size={16} weight="duotone" />}
                     {item.name}
                   </Link>
                 )}

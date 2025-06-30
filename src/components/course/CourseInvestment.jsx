@@ -99,10 +99,10 @@ function CourseInvestment({ course, onEnrollClick }) {
             <div className="grid grid-cols-2 gap-3">
               {course.investment.paymentMethods.map((method, index) => {
                 const getIcon = (method) => {
-                  if (method.toLowerCase().includes('cartão')) return <CreditCard size={20} />;
-                  if (method.toLowerCase().includes('pix')) return <Money size={20} />;
-                  if (method.toLowerCase().includes('boleto')) return <PiggyBank size={20} />;
-                  return <CreditCard size={20} />;
+                  if (method.toLowerCase().includes('cartão')) return <CreditCard size={24} weight="duotone" />;
+                  if (method.toLowerCase().includes('pix')) return <Money size={24} weight="duotone" />;
+                  if (method.toLowerCase().includes('boleto')) return <PiggyBank size={24} weight="duotone" />;
+                  return <CreditCard size={24} weight="duotone" />;
                 };
 
                 return (
@@ -124,7 +124,7 @@ function CourseInvestment({ course, onEnrollClick }) {
           {/* Guarantees */}
           <div className="p-6 bg-gradient-to-r from-green-900/20 to-green-800/20 border border-green-500/30 rounded-xl">
             <h3 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
-              <Shield size={24} color="#10B981" />
+              <Shield size={28} weight="duotone" color="#10B981" />
               Suas Garantias
             </h3>
             <div className="space-y-3">
@@ -137,7 +137,7 @@ function CourseInvestment({ course, onEnrollClick }) {
                 'Acesso ao laboratório equipado'
               ].map((guarantee, index) => (
                 <div key={index} className="flex items-start gap-3">
-                  <CheckCircle size={18} color="#10B981" className="mt-0.5 flex-shrink-0" />
+                  <CheckCircle size={20} weight="duotone" color="#10B981" className="mt-0.5 flex-shrink-0" />
                   <span className="text-gray-300 text-sm">{guarantee}</span>
                 </div>
               ))}
@@ -147,7 +147,7 @@ function CourseInvestment({ course, onEnrollClick }) {
           {/* Course Value Proposition */}
           <div className="p-6 bg-gray-800/30 rounded-xl">
             <h3 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
-              <Clock size={24} style={{ color: course.themeColors.primary }} />
+              <Clock size={28} weight="duotone" style={{ color: course.themeColors.primary }} />
               Valor do Investimento
             </h3>
             <div className="space-y-4">
