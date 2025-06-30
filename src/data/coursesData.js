@@ -1634,12 +1634,185 @@ const businessIntelligence = {
   },
 };
 
+// Curso 4: Design Gráfico  
+const designGrafico = {
+  basicInfo: {
+    id: 'design-grafico-004',
+    title: 'Design Gráfico',
+    slug: 'design-grafico',
+    shortDescription: 'Torne-se um designer gráfico profissional com Photoshop, Illustrator e Corel Draw.',
+    longDescription: 'Aprenda design gráfico do zero ao profissional. Domine Photoshop, Illustrator, CorelDraw e as teorias fundamentais do design para criar projetos incríveis e se destacar no mercado.',
+    category: 'Design & Criação',
+    level: 'Intermediário',
+    duration: '96 horas',
+    certificate: true,
+    active: true,
+  },
+  investment: {
+    originalPrice: 997,
+    currentPrice: 597,
+    discount: 40,
+    installments: {
+      max: 12,
+      value: 59.70,
+    },
+    paymentMethods: ['Cartão de crédito', 'Boleto', 'PIX', 'Parcelamento'],
+  },
+  instructor: {
+    name: 'Camila Ribeiro',
+    bio: 'Designer Gráfica formada pela ESPM com 12 anos de mercado. Especialista em identidade visual e design editorial.',
+    photo: '/instructors/camila-ribeiro.jpg',
+    experience: '12 anos',
+    credentials: [
+      'Bacharelado em Design Gráfico - ESPM',
+      'Especialização em Branding',
+      'Adobe Certified Expert',
+      'Mais de 200 marcas criadas'
+    ],
+  },
+  curriculum: [
+    {
+      id: 1,
+      title: 'Fundamentos do Design',
+      description: 'Teoria das cores, tipografia e composição visual',
+      lessons: [
+        { id: 1, title: 'Teoria das cores', duration: '90 min', type: 'video' },
+        { id: 2, title: 'Tipografia essencial', duration: '90 min', type: 'video' },
+        { id: 3, title: 'Composição e hierarquia', duration: '90 min', type: 'video' },
+        { id: 4, title: 'Análise de layouts', duration: '90 min', type: 'exercise' },
+      ],
+    },
+    {
+      id: 2,
+      title: 'Adobe Photoshop Profissional',
+      description: 'Edição e manipulação de imagens para design gráfico',
+      lessons: [
+        { id: 5, title: 'Interface e configurações básicas', duration: '90 min', type: 'video' },
+        { id: 6, title: 'Ferramentas de seleção avançadas', duration: '90 min', type: 'video' },
+        { id: 7, title: 'Camadas e efeitos especiais', duration: '90 min', type: 'video' },
+        { id: 8, title: 'Tratamento e correção de imagens', duration: '90 min', type: 'video' },
+        { id: 9, title: 'Composições e montagens', duration: '90 min', type: 'video' },
+        { id: 10, title: 'Projeto: Banner publicitário', duration: '90 min', type: 'project' },
+      ],
+    },
+    {
+      id: 3,
+      title: 'Adobe Illustrator Vetorial',
+      description: 'Criação de ilustrações e logotipos vetoriais',
+      lessons: [
+        { id: 11, title: 'Workspace e ferramentas vetoriais', duration: '90 min', type: 'video' },
+        { id: 12, title: 'Desenho com pen tool e formas', duration: '90 min', type: 'video' },
+        { id: 13, title: 'Cores, gradientes e padrões', duration: '90 min', type: 'video' },
+        { id: 14, title: 'Tipografia criativa', duration: '90 min', type: 'video' },
+        { id: 15, title: 'Criação de logotipos profissionais', duration: '90 min', type: 'video' },
+        { id: 16, title: 'Projeto: Identidade visual completa', duration: '90 min', type: 'project' },
+      ],
+    },
+    {
+      id: 4,
+      title: 'Adobe InDesign Editorial',
+      description: 'Diagramação e design editorial profissional',
+      lessons: [
+        { id: 17, title: 'Interface e páginas mestras', duration: '90 min', type: 'video' },
+        { id: 18, title: 'Texto e tipografia editorial', duration: '90 min', type: 'video' },
+        { id: 19, title: 'Imagens e gráficos', duration: '90 min', type: 'video' },
+        { id: 20, title: 'Estilos e formatação automática', duration: '90 min', type: 'video' },
+        { id: 21, title: 'Projeto: Revista/catálogo completo', duration: '90 min', type: 'project' },
+      ],
+    }
+  ],
+  whatYouWillLearn: [
+    '✅ Adobe Photoshop profissional para design',
+    '✅ Adobe Illustrator para criação vetorial',
+    '✅ Adobe InDesign para design editorial',
+    '✅ Teoria do design e composição visual',
+    '✅ Criação de logotipos e identidade visual',
+    '✅ Design para redes sociais e marketing',
+    '✅ Portfolio com projetos reais',
+    '✅ Precificação e mercado de trabalho'
+  ],
+  requirements: [
+    'Computador com Windows 10/11 ou macOS',
+    '8GB de RAM (recomendado 16GB)',
+    'Adobe Creative Cloud (orientações de licenciamento)',
+    'Tablet gráfico (recomendado)',
+    'Senso estético e criatividade'
+  ],
+  testimonials: [
+    {
+      id: 1,
+      name: 'Lucas Mendes',
+      role: 'Designer Freelancer',
+      photo: '/testimonials/lucas-mendes.jpg',
+      rating: 5,
+      text: 'Em 4 meses já estava faturando R$ 5.000/mês como freelancer de design!',
+      result: 'Faturamento R$ 5.000/mês'
+    },
+    {
+      id: 2,
+      name: 'Amanda Castro',
+      role: 'Social Media Designer',
+      photo: '/testimonials/amanda-castro.jpg',
+      rating: 5,
+      text: 'Consegui emprego em agência de publicidade logo após terminar o curso.',
+      result: 'Emprego em agência'
+    },
+    {
+      id: 3,
+      name: 'Rafael Silva',
+      role: 'Designer Gráfico',
+      photo: '/testimonials/rafael-silva.jpg',
+      rating: 5,
+      text: 'Criei minha própria marca e hoje atendo clientes do Brasil inteiro!',
+      result: 'Negócio próprio nacional'
+    }
+  ],
+  faq: [
+    {
+      id: 1,
+      question: 'Preciso ter talento artístico natural?',
+      answer: 'Não! Design é técnica que se aprende. Ensinamos desde o básico até você desenvolver seu próprio estilo criativo.'
+    },
+    {
+      id: 2,
+      question: 'Os softwares Adobe são fornecidos?',
+      answer: 'Orientamos como obter as licenças oficiais e oferecemos alternativas gratuitas como GIMP e Inkscape para prática.'
+    },
+    {
+      id: 3,
+      question: 'Vou conseguir trabalhar como designer freelancer?',
+      answer: 'Sim! Ensinamos não só a técnica, mas também precificação, como conseguir clientes e montar portfolio vencedor.'
+    },
+    {
+      id: 4,
+      question: 'O curso serve para design de redes sociais?',
+      answer: 'Perfeitamente! Ensinamos design para Instagram, Facebook, LinkedIn e todas as principais plataformas.'
+    }
+  ],
+  themeColors: {
+    primary: '#9C27B0',
+    secondary: '#E91E63',
+    accent: '#FF5722',
+    gradient: {
+      from: '#9C27B0',
+      to: '#E91E63',
+    },
+  },
+  seoMeta: {
+    title: 'Curso Design Gráfico - Escola Habilidade | Photoshop, Illustrator, InDesign',
+    description: 'Torne-se Designer Gráfico profissional. Curso completo com Photoshop, Illustrator, InDesign e teoria do design. 96 horas práticas, certificação inclusa.',
+    keywords: ['design gráfico', 'photoshop', 'illustrator', 'indesign', 'identidade visual', 'logotipos'],
+    ogImage: '/og-images/design-grafico.jpg',
+    ogType: 'website',
+  },
+};
+
 // Lista completa de todos os cursos
 export const COURSES_DATA = [
   projetista3D,
   edicaoVideo,
   informatica,
-  projetista3d,
+  designGrafico,
   programacao,
   marketingDigital,
   inteligenciaArtificial,
