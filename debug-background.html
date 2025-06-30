@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Background - Projetista 3D</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
+        }
+        
+        .background-test {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+        }
+        
+        .content {
+            position: relative;
+            z-index: 10;
+            color: white;
+            padding: 20px;
+            background: rgba(0,0,0,0.7);
+            margin: 20px;
+            border-radius: 10px;
+        }
+        
+        .debug-canvas {
+            position: absolute;
+            inset: 0;
+            background: transparent;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Background Canvas -->
+        <div class="background-test">
+            <canvas id="debugCanvas" class="debug-canvas"></canvas>
+        </div>
+        
+        <!-- Content -->
+        <div class="content">
+            <h1>🧪 Debug Background - Projetista 3D</h1>
+            <p><strong>Status:</strong> <span id="status">Inicializando...</span></p>
+            <p><strong>Performance Level:</strong> <span id="perfLevel">Detectando...</span></p>
+            <p><strong>Animações Ativas:</strong> <span id="animStatus">Verificando...</span></p>
+            
+            <div style="margin-top: 20px;">
+                <button onclick="forceHighPerformance()" style="margin: 5px; padding: 10px;">Forçar HIGH Performance</button>
+                <button onclick="forceLowPerformance()" style="margin: 5px; padding: 10px;">Forçar LOW Performance</button>
+                <button onclick="clearAllCache()" style="margin: 5px; padding: 10px;">Limpar Cache</button>
+            </div>
+            
+            <div style="margin-top: 20px;">
+                <h3>🎯 O que você deve ver:</h3>
+                <ul>
+                    <li>✅ Grade isométrica laranja (linhas diagonais)</li>
+                    <li>✅ Wireframes 3D flutuando (cubo, pirâmide, esfera)</li>
+                    <li>✅ Cores laranja/dourado (#FF6B35, #F7931E)</li>
+                    <li>✅ Movimento suave das formas</li>
+                </ul>
+            </div>
+            
+            <div style="margin-top: 20px;">
+                <h3>📋 Logs do Console:</h3>
+                <div id="logs" style="background: #222; padding: 10px; border-radius: 5px; font-family: monospace; font-size: 12px; max-height: 200px; overflow-y: auto;">
+                    Aguardando logs...
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Debug functions
+        function log(message) {
+            const logsDiv = document.getElementById('logs');
+            const timestamp = new Date().toLocaleTimeString();
+            logsDiv.innerHTML += `<div style="color: #00ff00;">[${timestamp}] ${message}</div>`;
+            logsDiv.scrollTop = logsDiv.scrollHeight;
+            console.log(message);
+        }
+
+        function updateStatus(status) {
+            document.getElementById('status').textContent = status;
+            log(`Status: ${status}`);
+        }
+
+        function forceHighPerformance() {
+            localStorage.setItem('force-performance-level', 'HIGH');
+            localStorage.removeItem('prefers-reduced-motion');
+            log('🚀 Forçado HIGH performance');
+            window.location.reload();
+        }
+
+        function forceLowPerformance() {
+            localStorage.setItem('force-performance-level', 'LOW');
+            log('🐌 Forçado LOW performance');
+            window.location.reload();
+        }
+
+        function clearAllCache() {
+            localStorage.clear();
+            sessionStorage.clear();
+            log('🧹 Cache limpo');
+            window.location.reload();
+        }
+
+        // Simplified 3D Background (standalone version)
+        class DebugBackground {
+            constructor(canvas) {
+                this.canvas = canvas;
+                this.ctx = canvas.getContext('2d');
+                this.wireframes = [];
+                this.animationId = null;
+                
+                this.config = {
+                    gridSize: 40,
+                    gridOpacity: 0.15,
+                    wireframeCount: 6,
+                    animationSpeed: 0.5,
+                    colors: {
+                        primary: '#FF6B35',
+                        secondary: '#F7931E', 
+                        accent: '#FFD23F',
+                        grid: '#FF6B35',
+                        wireframe: '#F7931E'
+                    }
+                };
+
+                this.init();
+            }
+
+            init() {
+                this.resize();
+                this.createWireframes();
+                this.animate();
+                updateStatus('✅ Background inicializado');
+                document.getElementById('perfLevel').textContent = 'HIGH (Debug)';
+                document.getElementById('animStatus').textContent = '✅ Ativas';
+            }
+
+            resize() {
+                const rect = this.canvas.getBoundingClientRect();
+                this.canvas.width = rect.width;
+                this.canvas.height = rect.height;
+                log(`📐 Canvas redimensionado: ${rect.width}x${rect.height}`);
+            }
+
+            createWireframes() {
+                this.wireframes = [];
+                for (let i = 0; i < this.config.wireframeCount; i++) {
+                    this.wireframes.push({
+                        x: Math.random() * this.canvas.width,
+                        y: Math.random() * this.canvas.height,
+                        vx: (Math.random() - 0.5) * 2,
+                        vy: (Math.random() - 0.5) * 2,
+                        rotation: 0,
+                        rotationSpeed: (Math.random() - 0.5) * 0.02,
+                        size: 20 + Math.random() * 30,
+                        type: ['cube', 'pyramid', 'sphere'][Math.floor(Math.random() * 3)],
+                        opacity: 0.3 + Math.random() * 0.4
+                    });
+                }
+                log(`🎯 Criados ${this.wireframes.length} wireframes`);
+            }
+
+            drawGrid() {
+                this.ctx.strokeStyle = this.config.colors.grid;
+                this.ctx.globalAlpha = this.config.gridOpacity;
+                this.ctx.lineWidth = 0.5;
+
+                const spacing = this.config.gridSize;
+                this.ctx.beginPath();
+
+                // Linhas isométricas
+                for (let y = -spacing; y < this.canvas.height + spacing; y += spacing) {
+                    for (let x = -spacing; x < this.canvas.width + spacing * 2; x += spacing * 2) {
+                        this.ctx.moveTo(x, y);
+                        this.ctx.lineTo(x + spacing, y + spacing / 2);
+                    }
+                }
+
+                for (let y = -spacing; y < this.canvas.height + spacing; y += spacing) {
+                    for (let x = 0; x < this.canvas.width + spacing * 2; x += spacing * 2) {
+                        this.ctx.moveTo(x, y);
+                        this.ctx.lineTo(x - spacing, y + spacing / 2);
+                    }
+                }
+
+                this.ctx.stroke();
+                this.ctx.globalAlpha = 1;
+            }
+
+            drawWireframe(wf) {
+                this.ctx.save();
+                this.ctx.translate(wf.x, wf.y);
+                this.ctx.rotate(wf.rotation);
+                this.ctx.globalAlpha = wf.opacity;
+                this.ctx.strokeStyle = this.config.colors.wireframe;
+                this.ctx.lineWidth = 1;
+
+                const s = wf.size;
+                this.ctx.beginPath();
+
+                switch (wf.type) {
+                    case 'cube':
+                        this.ctx.strokeRect(-s/2, -s/2, s, s);
+                        break;
+                    case 'pyramid':
+                        this.ctx.moveTo(-s/2, s/2);
+                        this.ctx.lineTo(0, -s/2);
+                        this.ctx.lineTo(s/2, s/2);
+                        this.ctx.closePath();
+                        break;
+                    case 'sphere':
+                        this.ctx.arc(0, 0, s/2, 0, Math.PI * 2);
+                        break;
+                }
+
+                this.ctx.stroke();
+                this.ctx.restore();
+            }
+
+            animate() {
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+                // Grid
+                this.drawGrid();
+
+                // Wireframes
+                this.wireframes.forEach(wf => {
+                    wf.x += wf.vx;
+                    wf.y += wf.vy;
+                    wf.rotation += wf.rotationSpeed;
+
+                    if (wf.x < -50) wf.x = this.canvas.width + 50;
+                    if (wf.x > this.canvas.width + 50) wf.x = -50;
+                    if (wf.y < -50) wf.y = this.canvas.height + 50;
+                    if (wf.y > this.canvas.height + 50) wf.y = -50;
+
+                    this.drawWireframe(wf);
+                });
+
+                this.animationId = requestAnimationFrame(() => this.animate());
+            }
+        }
+
+        // Initialize
+        window.addEventListener('load', () => {
+            log('🚀 Iniciando debug background...');
+            const canvas = document.getElementById('debugCanvas');
+            const background = new DebugBackground(canvas);
+            
+            window.addEventListener('resize', () => background.resize());
+        });
+
+        // Override console.log to show in page
+        const originalLog = console.log;
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            const message = args.join(' ');
+            if (message.includes('Background') || message.includes('Canvas') || message.includes('Wireframe')) {
+                log(message);
+            }
+        };
+    </script>
+</body>
+</html> 

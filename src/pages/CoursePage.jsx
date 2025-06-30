@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import { PaperPlaneTilt, User, Envelope, Phone, BookOpen, CheckCircle } from 'phosphor-react';
 import emailjs from '@emailjs/browser';
 import ErrorBoundary from '../components/ErrorBoundary';
+import CourseBackground from '../components/CourseBackground';
 import CourseHero from '../components/course/CourseHero';
 import CourseBreadcrumb from '../components/course/CourseBreadcrumb';
 import CourseCurriculum from '../components/course/CourseCurriculum';
@@ -218,11 +219,22 @@ function CoursePage() {
       </script>
       
       <div 
-        className="min-h-screen bg-gradient-radial from-gray-900 via-black to-gray-900"
+        className="min-h-screen bg-gradient-radial from-gray-900 via-black to-gray-900 relative"
         style={{
           background: `linear-gradient(135deg, ${course.themeColors.gradient.from}08 0%, ${course.themeColors.gradient.to}08 100%), radial-gradient(circle at top, #1a1a1a 0%, #000000 100%)`
         }}
       >
+        {/* Background único do curso */}
+        <CourseBackground 
+          courseSlug={course.basicInfo.slug}
+          priority={true}
+          onLoadComplete={(courseSlug, performanceLevel) => {
+            console.log(`✅ Background carregado: ${courseSlug} (${performanceLevel})`);
+          }}
+          onError={(error, courseSlug) => {
+            console.warn(`⚠️ Erro no background ${courseSlug}:`, error);
+          }}
+        />
         
         {/* Breadcrumb Navigation */}
         <CourseBreadcrumb course={course} />

@@ -27,10 +27,11 @@ const StaticFallback = ({ courseSlug, className = '' }) => {
   
   return (
     <div 
-      className={`absolute inset-0 -z-10 ${className}`}
+      className={`absolute inset-0 ${className}`}
       style={{
         background: `linear-gradient(135deg, ${colors[0]} 0%, ${colors[1]} 50%, ${colors[2]} 100%)`,
-        opacity: 0.1
+        opacity: 0.1,
+        zIndex: 5
       }}
       role="presentation"
       aria-hidden="true"
@@ -46,8 +47,8 @@ const BackgroundLoader = ({ courseSlug }) => {
   
   return (
     <div 
-      className="absolute inset-0 -z-10 flex items-center justify-center"
-      style={{ backgroundColor: `${colors[0]}10` }}
+      className="absolute inset-0 flex items-center justify-center"
+      style={{ backgroundColor: `${colors[0]}10`, zIndex: 5 }}
     >
       <div 
         className="w-12 h-12 border-4 border-t-transparent rounded-full animate-spin"
@@ -199,7 +200,7 @@ const CourseBackground = ({
   const BackgroundComponent = mountedComponent;
   
   return (
-    <div className={`absolute inset-0 -z-10 ${className}`}>
+    <div className={`absolute inset-0 ${className}`} style={{ zIndex: 5 }}>
       <Suspense fallback={<BackgroundLoader courseSlug={courseSlug} />}>
         <BackgroundComponent 
           performanceConfig={performanceConfig}

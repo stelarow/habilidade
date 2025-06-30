@@ -3,7 +3,7 @@
  * Implementa estratégias de cache e carregamento baseadas em performance
  */
 
-import { COURSE_SLUGS } from '../types/backgrounds';
+import { COURSE_SLUGS } from '../types/backgrounds.js';
 
 class BackgroundPreloader {
   constructor() {
@@ -249,5 +249,20 @@ class BackgroundPreloader {
 
 // Singleton instance
 const backgroundPreloader = new BackgroundPreloader();
+
+// Export named functions para uso direto
+export const preloadBackground = (courseSlug, performanceLevel) => {
+  return backgroundPreloader.preloadBackground(courseSlug, { 
+    deviceCapabilities: { performanceLevel } 
+  });
+};
+
+export const clearCache = (keepRecent) => {
+  return backgroundPreloader.clearCache(keepRecent);
+};
+
+export const getStats = () => {
+  return backgroundPreloader.getStats();
+};
 
 export default backgroundPreloader; 

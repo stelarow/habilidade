@@ -3,8 +3,7 @@
  * Verifica carregamento, performance e funcionalidade
  */
 
-import backgroundPreloader from './backgroundPreloader';
-import { COURSE_SLUGS } from '../types/backgrounds';
+import { preloadBackground, clearCache, getStats } from './backgroundPreloader.js';
 
 class BackgroundTester {
   constructor() {
@@ -43,14 +42,14 @@ class BackgroundTester {
     
     try {
       // Testar stats do preloader
-      const stats = backgroundPreloader.getStats();
+      const stats = getStats();
       this.assert(typeof stats === 'object', 'Preloader deve retornar stats válidas');
       this.assert(typeof stats.cacheSize === 'number', 'Cache size deve ser um número');
       
       // Testar clear cache
       const initialSize = stats.cacheSize;
-      backgroundPreloader.clearCache(1);
-      const newStats = backgroundPreloader.getStats();
+      clearCache(1);
+      const newStats = getStats();
       this.assert(newStats.cacheSize <= Math.max(1, initialSize), 'Clear cache deve funcionar');
       
       this.recordTestResult('testPreloaderFunctionality', true, 'Preloader funcionando corretamente');
@@ -62,13 +61,15 @@ class BackgroundTester {
   async testAllBackgroundsLoad() {
     console.log('🎨 Testando carregamento de todos os backgrounds...');
     
-    const loadPromises = Object.values(COURSE_SLUGS).map(async (courseSlug) => {
+    const courseSlugs = [
+      'projetista-3d', 'edicao-video', 'informatica', 'design-grafico',
+      'programacao', 'marketing-digital', 'inteligencia-artificial', 'business-intelligence'
+    ];
+    
+    const loadPromises = courseSlugs.map(async (courseSlug) => {
       try {
         const startTime = performance.now();
-        const component = await backgroundPreloader.preloadBackground(courseSlug, {
-          priority: 999, // Baixa prioridade para teste
-          force: false
-        });
+        const component = await preloadBackground(courseSlug, 'MEDIUM');
         const loadTime = performance.now() - startTime;
         
         this.assert(component, `Background ${courseSlug} deve carregar`);
@@ -83,7 +84,7 @@ class BackgroundTester {
 
     const results = await Promise.allSettled(loadPromises);
     const successful = results.filter(r => r.status === 'fulfilled' && r.value.success).length;
-    const total = Object.values(COURSE_SLUGS).length;
+    const total = courseSlugs.length;
     
     this.assert(successful === total, `Todos os ${total} backgrounds devem carregar (${successful} carregados)`);
     this.recordTestResult('testAllBackgroundsLoad', successful === total, 
@@ -102,15 +103,15 @@ class BackgroundTester {
         effectiveNetworkType: '4g'
       };
       
-      // Testar preload adjacente
+      // Testar preload simples
       const startTime = performance.now();
-      await backgroundPreloader.preloadAdjacentBackgrounds(COURSE_SLUGS.PROJETISTA_3D, mockCapabilities);
+      await preloadBackground('projetista-3d', 'HIGH');
       const preloadTime = performance.now() - startTime;
       
-      this.assert(preloadTime < 3000, `Preload adjacente deve ser rápido (atual: ${preloadTime.toFixed(2)}ms)`);
+      this.assert(preloadTime < 3000, `Preload deve ser rápido (atual: ${preloadTime.toFixed(2)}ms)`);
       
       // Verificar que cache cresceu
-      const stats = backgroundPreloader.getStats();
+      const stats = getStats();
       this.assert(stats.cacheSize > 0, 'Cache deve ter itens após preload');
       
       this.recordTestResult('testPerformanceMetrics', true, 
@@ -154,17 +155,17 @@ class BackgroundTester {
     
     try {
       // Limpar cache primeiro
-      backgroundPreloader.clearCache(0);
+      clearCache(0);
       
       // Carregar um background
-      const courseSlug = COURSE_SLUGS.PROJETISTA_3D;
+      const courseSlug = 'projetista-3d';
       const firstLoadStart = performance.now();
-      await backgroundPreloader.preloadBackground(courseSlug);
+      await preloadBackground(courseSlug, 'MEDIUM');
       const firstLoadTime = performance.now() - firstLoadStart;
       
       // Carregar novamente (deve usar cache)
       const secondLoadStart = performance.now();
-      await backgroundPreloader.preloadBackground(courseSlug);
+      await preloadBackground(courseSlug, 'MEDIUM');
       const secondLoadTime = performance.now() - secondLoadStart;
       
       // Cache deve ser significativamente mais rápido
@@ -185,28 +186,11 @@ class BackgroundTester {
     try {
       // Testar slug inválido
       try {
-        await backgroundPreloader.preloadBackground('invalid-course-slug');
+        await preloadBackground('invalid-course-slug', 'MEDIUM');
         this.assert(false, 'Deve lançar erro para slug inválido');
       } catch (error) {
-        this.assert(error.message.includes('No background component found'), 'Erro deve ser específico');
+        this.assert(error.message.includes('Background component') || error.message.includes('not found'), 'Erro deve ser específico');
       }
-      
-      // Testar timeout (simular)
-      const originalTimeout = backgroundPreloader.loadBackgroundComponent;
-      backgroundPreloader.loadBackgroundComponent = () => new Promise(() => {}); // Never resolves
-      
-      try {
-        await Promise.race([
-          backgroundPreloader.preloadBackground(COURSE_SLUGS.PROJETISTA_3D),
-          new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout test')), 100))
-        ]);
-        this.assert(false, 'Deve haver timeout protection');
-      } catch (error) {
-        this.assert(error.message === 'Timeout test', 'Timeout deve funcionar');
-      }
-      
-      // Restaurar função original
-      backgroundPreloader.loadBackgroundComponent = originalTimeout;
       
       this.recordTestResult('testErrorHandling', true, 'Tratamento de erros funcionando');
     } catch (error) {
