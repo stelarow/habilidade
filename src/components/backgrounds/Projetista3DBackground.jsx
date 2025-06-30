@@ -181,35 +181,10 @@ const Projetista3DBackground = ({
     }
   }
 
-  // Desenhar grade isométrica
+  // Grade isométrica removida por solicitação do usuário
   const drawIsometricGrid = (ctx) => {
-    ctx.strokeStyle = config.colors.grid;
-    ctx.globalAlpha = config.gridOpacity;
-    ctx.lineWidth = 0.5;
-
-    const { width, height } = ctx.canvas;
-    const spacing = config.gridSize;
-
-    ctx.beginPath();
-
-    // Linhas horizontais inclinadas (isométricas)
-    for (let y = -spacing; y < height + spacing; y += spacing) {
-      for (let x = -spacing; x < width + spacing * 2; x += spacing * 2) {
-        ctx.moveTo(x, y);
-        ctx.lineTo(x + spacing, y + spacing / 2);
-      }
-    }
-
-    // Linhas verticais inclinadas (isométricas)
-    for (let y = -spacing; y < height + spacing; y += spacing) {
-      for (let x = 0; x < width + spacing * 2; x += spacing * 2) {
-        ctx.moveTo(x, y);
-        ctx.lineTo(x - spacing, y + spacing / 2);
-      }
-    }
-
-    ctx.stroke();
-    ctx.globalAlpha = 1;
+    // Grid removido - apenas wireframes 3D agora
+    return;
   };
 
   // Inicializar wireframes

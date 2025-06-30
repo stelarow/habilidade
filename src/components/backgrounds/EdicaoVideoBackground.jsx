@@ -14,22 +14,22 @@ const EdicaoVideoBackground = ({
   const filmFramesRef = useRef([]);
   const timelineRef = useRef({ position: 0 });
 
-  // Configurações baseadas na performance
+  // Configurações baseadas na performance - REDUZIDAS v1.2
   const config = useMemo(() => ({
-    // Timeline
-    timelineHeight: 80,
-    timelineSpeed: performanceConfig?.staticFallback ? 0 : 1,
-    keyframeSpacing: 120,
+    // Timeline - SIMPLIFICADA
+    timelineHeight: 60, // era 80
+    timelineSpeed: performanceConfig?.staticFallback ? 0 : 0.6, // era 1
+    keyframeSpacing: 180, // era 120 (menos keyframes)
     
-    // Frames de filme
-    frameCount: Math.min(performanceConfig?.particleCount || 40, 12),
-    frameSpeed: performanceConfig?.staticFallback ? 0 : 0.8,
-    frameWidth: 60,
-    frameHeight: 40,
+    // Frames de filme - DRASTICAMENTE REDUZIDOS
+    frameCount: Math.min(performanceConfig?.particleCount || 6, 2), // era 40/12
+    frameSpeed: performanceConfig?.staticFallback ? 0 : 0.4, // era 0.8
+    frameWidth: 45, // era 60
+    frameHeight: 30, // era 40
     
-    // Lens flares e sparkles
-    sparkleCount: Math.min(performanceConfig?.particleCount || 20, 6),
-    flareIntensity: performanceConfig?.staticFallback ? 0 : 0.6,
+    // Lens flares e sparkles - REMOVIDOS
+    sparkleCount: 0, // era Math.min(performanceConfig?.particleCount || 20, 6)
+    flareIntensity: 0, // era performanceConfig?.staticFallback ? 0 : 0.6
     
     // Cores do tema cinematográfico
     colors: {
@@ -276,18 +276,18 @@ const EdicaoVideoBackground = ({
     ctx.restore();
   };
 
-  // Inicializar elementos
+  // Inicializar elementos - REDUZIDOS
   const initializeElements = (canvas) => {
-    // Film frames
+    // Film frames - APENAS frames, sem sparkles
     filmFramesRef.current = [];
     for (let i = 0; i < config.frameCount; i++) {
       filmFramesRef.current.push(new FilmFrame(canvas));
     }
     
-    // Sparkles
-    for (let i = 0; i < config.sparkleCount; i++) {
-      filmFramesRef.current.push(new CinematicSparkle(canvas));
-    }
+    // Sparkles removidos para simplicidade
+    // for (let i = 0; i < config.sparkleCount; i++) {
+    //   filmFramesRef.current.push(new CinematicSparkle(canvas));
+    // }
   };
 
   // Loop de animação
