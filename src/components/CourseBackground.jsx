@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo, Suspense } from 'react';
 import { usePerformanceLevel } from '../hooks/usePerformanceLevel';
+import backgroundPreloader from '../utils/backgroundPreloader';
 import { 
   COURSE_SLUGS, 
   DEFAULT_PERFORMANCE_CONFIG, 
@@ -109,33 +110,21 @@ const CourseBackground = ({
     return Object.values(COURSE_SLUGS).includes(courseSlug);
   }, [courseSlug, shouldUseStaticVersion]);
 
-  // Carregar componente do background
+  // Carregar componente do background usando preloader inteligente
   const loadBackground = useCallback(async () => {
     if (!shouldLoadAnimated) return;
-    
-    // Verificar cache primeiro
-    if (hasInCache(courseSlug)) {
-      const cachedComponent = getFromCache(courseSlug);
-      setMountedComponent(cachedComponent);
-      return;
-    }
 
     setIsLoading(true);
     setLoadError(null);
 
     try {
-      const BackgroundComponent = backgroundComponents[courseSlug];
+      // Usar o preloader inteligente
+      const loadedComponent = await backgroundPreloader.preloadBackground(courseSlug, {
+        deviceCapabilities,
+        priority: 0 // Prioridade alta para carregamento atual
+      });
       
-      if (!BackgroundComponent) {
-        throw new Error(`Background component not found for course: ${courseSlug}`);
-      }
-
-      // Preload do componente
-      const loadedComponent = await BackgroundComponent;
-      
-      // Adicionar ao cache
-      addToCache(courseSlug, loadedComponent.default);
-      setMountedComponent(loadedComponent.default);
+      setMountedComponent(loadedComponent);
       
       // Callback de sucesso
       if (onLoadComplete) {
@@ -152,7 +141,7 @@ const CourseBackground = ({
     } finally {
       setIsLoading(false);
     }
-  }, [courseSlug, shouldLoadAnimated, hasInCache, getFromCache, addToCache, onLoadComplete, onError, performanceLevel]);
+  }, [courseSlug, shouldLoadAnimated, deviceCapabilities, onLoadComplete, onError, performanceLevel]);
 
   // Carregar background quando slug mudar
   useEffect(() => {
@@ -163,36 +152,17 @@ const CourseBackground = ({
     }
   }, [shouldLoadAnimated, loadBackground]);
 
-  // Preload de backgrounds prioritários
+  // Preload de backgrounds adjacentes usando sistema inteligente
   useEffect(() => {
-    if (priority && !shouldUseStaticVersion) {
-      const preloadNextBackgrounds = async () => {
-        const allSlugs = Object.values(COURSE_SLUGS);
-        const currentIndex = allSlugs.indexOf(courseSlug);
-        
-        // Preload do próximo e anterior
-        const toPreload = [
-          allSlugs[currentIndex + 1],
-          allSlugs[currentIndex - 1]
-        ].filter(Boolean);
-
-        for (const slug of toPreload) {
-          if (!hasInCache(slug) && backgroundComponents[slug]) {
-            try {
-              const component = await backgroundComponents[slug];
-              addToCache(slug, component.default);
-            } catch (error) {
-              console.warn(`Failed to preload background for ${slug}:`, error);
-            }
-          }
-        }
-      };
-
+    if (priority && !shouldUseStaticVersion && deviceCapabilities) {
       // Delay para não bloquear renderização inicial
-      const timeoutId = setTimeout(preloadNextBackgrounds, 1000);
+      const timeoutId = setTimeout(() => {
+        backgroundPreloader.preloadAdjacentBackgrounds(courseSlug, deviceCapabilities);
+      }, 1000);
+      
       return () => clearTimeout(timeoutId);
     }
-  }, [priority, courseSlug, shouldUseStaticVersion, hasInCache, addToCache]);
+  }, [priority, courseSlug, shouldUseStaticVersion, deviceCapabilities]);
 
   // Log de debug (apenas em desenvolvimento)
   useEffect(() => {
@@ -206,7 +176,8 @@ const CourseBackground = ({
           isMobile: deviceCapabilities.isMobile,
           estimatedRAM: deviceCapabilities.estimatedRAM,
           webglSupport: deviceCapabilities.webglSupport
-        } : 'loading...'
+        } : 'loading...',
+        preloaderStats: backgroundPreloader.getStats()
       });
     }
   }, [courseSlug, performanceLevel, shouldLoadAnimated, shouldUseStaticVersion, deviceCapabilities]);
