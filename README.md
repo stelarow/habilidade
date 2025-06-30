@@ -130,4 +130,4 @@ URL: https://stelarow.github.io/habilidade/
 
 ## Última atualização
 
-Site atualizado com novo sistema de deploy - 2025-01-27
+Site atualizado com curso Design Gráfico corrigido - 2025-01-27 16:30
