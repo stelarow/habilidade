@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <!-- Página principal -->
+  <url>
+    <loc>https://mariaeduardadias.github.io/habilidade/</loc>
+    <lastmod>2025-06-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <!-- Cursos - Informática -->
+  <url>
+    <loc>https://mariaeduardadias.github.io/habilidade/cursos/informatica</loc>
+    <lastmod>2025-06-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Cursos - Programação -->
+  <url>
+    <loc>https://mariaeduardadias.github.io/habilidade/cursos/programacao</loc>
+    <lastmod>2025-06-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Cursos - Design Gráfico -->
+  <url>
+    <loc>https://mariaeduardadias.github.io/habilidade/cursos/design-grafico</loc>
+    <lastmod>2025-06-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Cursos - Projetista 3D -->
+  <url>
+    <loc>https://mariaeduardadias.github.io/habilidade/cursos/projetista-3d</loc>
+    <lastmod>2025-06-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Cursos - Edição de Vídeo -->
+  <url>
+    <loc>https://mariaeduardadias.github.io/habilidade/cursos/edicao-video</loc>
+    <lastmod>2025-06-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Cursos - Marketing Digital -->
+  <url>
+    <loc>https://mariaeduardadias.github.io/habilidade/cursos/marketing-digital</loc>
+    <lastmod>2025-06-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Cursos - Inteligência Artificial -->
+  <url>
+    <loc>https://mariaeduardadias.github.io/habilidade/cursos/inteligencia-artificial</loc>
+    <lastmod>2025-06-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Cursos - Business Intelligence -->
+  <url>
+    <loc>https://mariaeduardadias.github.io/habilidade/cursos/business-intelligence</loc>
+    <lastmod>2025-06-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+</urlset> 
