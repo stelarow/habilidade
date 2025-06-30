@@ -1,5 +1,4 @@
 import { useParams, Navigate } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
 import { useState, useEffect, useRef } from 'react';
 import { PaperPlaneTilt, User, Envelope, Phone, BookOpen, CheckCircle } from 'phosphor-react';
 import emailjs from '@emailjs/browser';
@@ -195,29 +194,28 @@ function CoursePage() {
 
   return (
     <ErrorBoundary>
-      <Helmet>
-        <title>{metadata.title}</title>
-        <meta name="description" content={metadata.description} />
-        <meta name="keywords" content={metadata.keywords} />
-        
-        {/* Open Graph */}
-        <meta property="og:title" content={metadata.openGraph.title} />
-        <meta property="og:description" content={metadata.openGraph.description} />
-        <meta property="og:type" content={metadata.openGraph.type} />
-        <meta property="og:image" content={metadata.openGraph.image} />
-        <meta property="og:url" content={metadata.openGraph.url} />
-        
-        {/* Twitter */}
-        <meta name="twitter:card" content={metadata.twitter.card} />
-        <meta name="twitter:title" content={metadata.twitter.title} />
-        <meta name="twitter:description" content={metadata.twitter.description} />
-        <meta name="twitter:image" content={metadata.twitter.image} />
-        
-        {/* Structured Data */}
-        <script type="application/ld+json">
-          {JSON.stringify(metadata.structuredData)}
-        </script>
-      </Helmet>
+      {/* React 19 native metadata support */}
+      <title>{metadata.title}</title>
+      <meta name="description" content={metadata.description} />
+      <meta name="keywords" content={metadata.keywords} />
+      
+      {/* Open Graph */}
+      <meta property="og:title" content={metadata.openGraph.title} />
+      <meta property="og:description" content={metadata.openGraph.description} />
+      <meta property="og:type" content={metadata.openGraph.type} />
+      <meta property="og:image" content={metadata.openGraph.image} />
+      <meta property="og:url" content={metadata.openGraph.url} />
+      
+      {/* Twitter */}
+      <meta name="twitter:card" content={metadata.twitter.card} />
+      <meta name="twitter:title" content={metadata.twitter.title} />
+      <meta name="twitter:description" content={metadata.twitter.description} />
+      <meta name="twitter:image" content={metadata.twitter.image} />
+      
+      {/* Structured Data */}
+      <script type="application/ld+json">
+        {JSON.stringify(metadata.structuredData)}
+      </script>
       
       <div 
         className="min-h-screen bg-gradient-radial from-gray-900 via-black to-gray-900"

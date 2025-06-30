@@ -1,15 +1,12 @@
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
-import PropTypes from 'prop-types';
 
 function NotFound() {
   return (
     <>
-      <Helmet>
-        <title>Página não encontrada - Escola Habilidade</title>
-        <meta name="description" content="A página que você procura não foi encontrada. Explore nossos cursos e encontre a formação ideal para você." />
-        <meta name="robots" content="noindex, nofollow" />
-      </Helmet>
+      {/* React 19 native metadata support */}
+      <title>Página não encontrada - Escola Habilidade</title>
+      <meta name="description" content="A página que você procura não foi encontrada. Explore nossos cursos e encontre a formação ideal para você." />
+      <meta name="robots" content="noindex, nofollow" />
       
       <div className="min-h-screen bg-gradient-radial from-gray-900 via-black to-gray-900 flex items-center justify-center px-4">
         <div className="text-center max-w-2xl mx-auto">
