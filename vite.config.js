@@ -13,7 +13,7 @@ export default defineConfig({
       }
     })
   ],
-  base: '/',
+  base: '/habilidade/',
   
   build: {
     // Code splitting otimizado para 2025
