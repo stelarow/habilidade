@@ -32,7 +32,7 @@ import { EMAIL_CONFIG, isEmailConfigured } from '../utils/emailConfig';
 import COURSES_DATA from '../data/coursesData';
 
 function CoursePage() {
-  const { slug } = useParams();
+  const { courseSlug } = useParams();
   const [loading, setLoading] = useState(true);
   const [course, setCourse] = useState(null);
   const [error, setError] = useState(null);
@@ -70,7 +70,7 @@ function CoursePage() {
         await new Promise(resolve => setTimeout(resolve, 300));
         
         // Busca curso pelos dados
-        const foundCourse = getCourseBySlug(slug, COURSES_DATA);
+        const foundCourse = getCourseBySlug(courseSlug, COURSES_DATA);
         
         if (!foundCourse) {
           setError('Curso não encontrado');
@@ -95,10 +95,10 @@ function CoursePage() {
       }
     };
 
-    if (slug) {
+    if (courseSlug) {
       loadCourse();
     }
-  }, [slug]);
+  }, [courseSlug]);
 
   // Handler para botão de matrícula
   const handleEnrollClick = () => {
@@ -246,18 +246,11 @@ function CoursePage() {
         <CourseBreadcrumb course={course} />
         
         {/* Hero Section com Background */}
-        <div className="relative">
+        <div className="relative min-h-screen">
           {/* Background único do curso - APENAS no Hero */}
           <CourseBackground 
             courseSlug={course.basicInfo.slug}
             priority={true}
-            area="hero"
-            onLoadComplete={(courseSlug, performanceLevel) => {
-              console.log(`✅ Background carregado: ${courseSlug} (${performanceLevel})`);
-            }}
-            onError={(error, courseSlug) => {
-              console.warn(`⚠️ Erro no background ${courseSlug}:`, error);
-            }}
           />
           <CourseHero course={course} onEnrollClick={handleEnrollClick} />
         </div>

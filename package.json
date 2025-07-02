@@ -5,12 +5,22 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "npm run build:optimize",
+    "build:optimize": "vite build && npm run optimize:assets && npm run analyze:bundle",
+    "build:production": "NODE_ENV=production vite build --mode production",
     "lint": "eslint .",
     "preview": "vite preview",
-    "deploy": "npm run build && git add dist/ && git commit -m \"Deploy: atualização do build\" && git push origin main",
+    "deploy": "npm run build:production && git add dist/ && git commit -m \"Deploy: atualização do build\" && git push origin main",
     "test:data": "node src/test-courses.js",
     "test:routes": "node -e \"const routes = ['informatica', 'programacao', 'design-grafico', 'projetista-3d', 'edicao-video', 'marketing-digital', 'inteligencia-artificial', 'business-intelligence']; console.log('✅ Testando rotas dos cursos:'); routes.forEach(slug => console.log(`  ✓ /cursos/${slug}`)); console.log(`\\n📊 Total: ${routes.length} rotas configuradas`);\""
+,
+    "optimize:assets": "echo '🎯 Otimizando assets...' && npm run optimize:images",
+    "optimize:images": "echo '🖼️ Imagens já otimizadas via Vite'",
+    "analyze:bundle": "echo '📊 Análise de bundle disponível em: https://bundlephobia.com'",
+    "perf:audit": "lighthouse --only-categories=performance --output=json --output-path=lighthouse-audit.json http://localhost:4173",
+    "perf:test": "npm run build && npm run preview & sleep 3 && npm run perf:audit",
+    "clean": "rm -rf dist/ node_modules/.vite/",
+    "fresh": "npm run clean && npm install && npm run build"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",

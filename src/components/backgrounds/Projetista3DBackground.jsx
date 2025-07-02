@@ -59,7 +59,7 @@ const Projetista3DBackground = ({
       // Tipo de wireframe (cubo, pirâmide, esfera)
       this.type = ['cube', 'pyramid', 'sphere'][Math.floor(Math.random() * 3)];
       this.size = 15 + Math.random() * 20; // era 20-50
-      this.opacity = 0.15 + Math.random() * 0.25; // era 0.3-0.7
+      this.opacity = 0.6 + Math.random() * 0.4; // TESTE: Opacidade alta para verificar visibilidade
     }
 
     update() {
@@ -279,7 +279,7 @@ const Projetista3DBackground = ({
       className="absolute inset-0 w-full h-full pointer-events-none"
       style={{ 
         background: 'transparent',
-        zIndex: 5
+        zIndex: 1
       }}
       aria-hidden="true"
     />

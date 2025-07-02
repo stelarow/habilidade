@@ -12,18 +12,27 @@ export const usePageContext = () => {
   });
 
   useEffect(() => {
-    if (location.pathname === '/') {
-      setContext(prev => ({ ...prev, pageType: 'home' }));
-    } else if (location.pathname.startsWith('/cursos/')) {
-      setContext(prev => ({ 
-        ...prev, 
-        pageType: 'coursePage',
-        currentCourse: params.slug 
-      }));
+    const currentPath = location.pathname;
+    const courseSlug = params.courseSlug || params.slug;
+    
+    let newContext = {
+      pageType: 'home',
+      currentCourse: null,
+      breadcrumbs: [],
+      activeSection: null
+    };
+
+    if (currentPath === '/' || currentPath === '/habilidade' || currentPath === '/habilidade/') {
+      newContext.pageType = 'home';
+    } else if (currentPath.startsWith('/cursos/') || currentPath.includes('/cursos/')) {
+      newContext.pageType = 'coursePage';
+      newContext.currentCourse = courseSlug;
     } else {
-      setContext(prev => ({ ...prev, pageType: 'other' }));
+      newContext.pageType = 'other';
     }
-  }, [location, params]);
+
+    setContext(newContext);
+  }, [location.pathname, params.courseSlug, params.slug]);
 
   return context;
 }; 

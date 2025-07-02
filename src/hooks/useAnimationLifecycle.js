@@ -1,110 +1,98 @@
 import { useEffect, useRef, useCallback } from 'react';
-import memoryManager from '../utils/memoryManager';
 
 /**
- * Hook para gerenciar ciclo de vida de animações com memory management
- * Integra com o MemoryManager para prevenir vazamentos
+ * Hook para gerenciar ciclo de vida de animações e otimizar will-change
+ * Remove will-change automaticamente quando animações terminam
  */
-export const useAnimationLifecycle = (componentId, dependencies = []) => {
-  const animationRef = useRef(null);
-  const animationIdRef = useRef(null);
-  const registeredAnimationRef = useRef(null);
-  const isPausedRef = useRef(false);
+export default function useAnimationLifecycle({
+  willChangeProps = 'opacity, transform',
+  removeDelay = 100,
+  onComplete = null
+} = {}) {
+  const elementRef = useRef(null);
+  const timeoutRef = useRef(null);
+  const isAnimating = useRef(false);
 
-  // Função para pausar animação
-  const pauseAnimation = useCallback(() => {
-    if (animationRef.current) {
-      cancelAnimationFrame(animationRef.current);
-      animationRef.current = null;
-    }
-    isPausedRef.current = true;
-  }, []);
-
-  // Função para retomar animação
-  const resumeAnimation = useCallback((animateFunction) => {
-    if (!isPausedRef.current || !animateFunction) return;
+  // Aplicar will-change no início da animação
+  const startAnimation = useCallback(() => {
+    const element = elementRef.current;
+    if (!element || isAnimating.current) return;
     
-    isPausedRef.current = false;
-    const animate = () => {
-      if (!isPausedRef.current) {
-        animateFunction();
-        animationRef.current = requestAnimationFrame(animate);
-      }
-    };
-    animationRef.current = requestAnimationFrame(animate);
-  }, []);
-
-  // Função para iniciar animação
-  const startAnimation = useCallback((animateFunction) => {
-    if (!animateFunction) return;
-
-    // Limpar animação anterior se existir
-    if (animationRef.current) {
-      cancelAnimationFrame(animationRef.current);
-    }
-
-    isPausedRef.current = false;
+    isAnimating.current = true;
+    element.style.willChange = willChangeProps;
     
-    const animate = () => {
-      if (!isPausedRef.current) {
-        animateFunction();
-        animationRef.current = requestAnimationFrame(animate);
-      }
-    };
+    // Adicionar contain para melhor performance
+    element.style.contain = 'layout style paint';
+    
+    // Garantir que está em layer própria
+    if (!element.style.transform.includes('translateZ')) {
+      element.style.transform += ' translateZ(0)';
+    }
+  }, [willChangeProps]);
 
-    animationRef.current = requestAnimationFrame(animate);
-
-    // Registrar no memory manager
-    if (!registeredAnimationRef.current) {
-      registeredAnimationRef.current = memoryManager.registerAnimation(
-        `${componentId}-${Date.now()}`,
-        pauseAnimation,
-        () => resumeAnimation(animateFunction),
-        () => {
-          if (animationRef.current) {
-            cancelAnimationFrame(animationRef.current);
-            animationRef.current = null;
-          }
+  // Remover will-change ao final da animação
+  const endAnimation = useCallback(() => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    
+    timeoutRef.current = setTimeout(() => {
+      const element = elementRef.current;
+      if (element && isAnimating.current) {
+        element.style.willChange = 'auto';
+        element.style.contain = '';
+        isAnimating.current = false;
+        
+        if (onComplete) {
+          onComplete();
         }
-      );
-    }
-  }, [componentId, pauseAnimation, resumeAnimation]);
+      }
+    }, removeDelay);
+  }, [removeDelay, onComplete]);
 
-  // Função para parar animação
-  const stopAnimation = useCallback(() => {
-    if (animationRef.current) {
-      cancelAnimationFrame(animationRef.current);
-      animationRef.current = null;
-    }
+  // Detectar fim de animação automaticamente
+  useEffect(() => {
+    const element = elementRef.current;
+    if (!element) return;
 
-    if (registeredAnimationRef.current) {
-      memoryManager.unregisterAnimation(registeredAnimationRef.current);
-      registeredAnimationRef.current = null;
-    }
+    const handleAnimationEnd = () => {
+      endAnimation();
+    };
 
-    isPausedRef.current = true;
-  }, []);
+    const handleTransitionEnd = () => {
+      endAnimation();
+    };
 
-  // Cleanup automático
+    element.addEventListener('animationend', handleAnimationEnd);
+    element.addEventListener('transitionend', handleTransitionEnd);
+
+    return () => {
+      element.removeEventListener('animationend', handleAnimationEnd);
+      element.removeEventListener('transitionend', handleTransitionEnd);
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, [endAnimation]);
+
+  // Cleanup no unmount
   useEffect(() => {
     return () => {
-      stopAnimation();
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+      const element = elementRef.current;
+      if (element) {
+        element.style.willChange = 'auto';
+        element.style.contain = '';
+      }
     };
-  }, [stopAnimation]);
-
-  // Reiniciar animação quando dependências mudarem
-  useEffect(() => {
-    // Não fazer nada aqui, deixar para o componente decidir quando reiniciar
-  }, dependencies);
+  }, []);
 
   return {
+    ref: elementRef,
     startAnimation,
-    stopAnimation,
-    pauseAnimation,
-    resumeAnimation,
-    isAnimating: !isPausedRef.current && !!animationRef.current,
-    isPaused: isPausedRef.current
+    endAnimation,
+    isAnimating: isAnimating.current
   };
-};
-
-export default useAnimationLifecycle; 
+} 

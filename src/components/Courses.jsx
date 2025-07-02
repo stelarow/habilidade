@@ -10,6 +10,7 @@ import {
   ChartLine,
   Robot,
   ChartBar,
+  Briefcase,
 } from 'phosphor-react';
 import useInView from '../hooks/useInView';
 
@@ -85,6 +86,15 @@ const COURSES = [
     textColor: 'text-indigo-400',
     borderGradient: 'from-indigo-500/60 to-blue-400/60',
     hoverShadow: 'hover:shadow-[0_0_25px_#818cf8aa]',
+  },
+  {
+    title: 'Administração',
+    slug: 'administracao',
+    icon: Briefcase,
+    desc: 'Office, Excel Avançado, DP, Matemática Financeira, Liderança…',
+    textColor: 'text-violet-400',
+    borderGradient: 'from-violet-500/60 to-purple-400/60',
+    hoverShadow: 'hover:shadow-[0_0_25px_#8b5cf6aa]',
   },
 ];
 

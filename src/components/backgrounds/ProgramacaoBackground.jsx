@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useMemo } from 'react';
-import useAnimationLifecycle from '../../hooks/useAnimationLifecycle';
+import React, { useEffect, useRef, useMemo, useCallback } from 'react';
 import memoryManager from '../../utils/memoryManager';
 
 /**
@@ -16,11 +15,29 @@ const ProgramacaoBackground = ({
   const codeSnippetsRef = useRef([]);
   const terminalRef = useRef({ lines: [], cursor: 0 });
   
-  // Gerenciamento de ciclo de vida da animação
-  const { startAnimation, stopAnimation } = useAnimationLifecycle(
-    `programacao-background-${courseSlug}`,
-    [performanceConfig]
-  );
+  // Controle de animação para canvas
+  const animationIdRef = useRef(null);
+  const isAnimatingRef = useRef(false);
+
+  const startAnimation = useCallback((animationFn) => {
+    if (isAnimatingRef.current) return;
+    
+    isAnimatingRef.current = true;
+    const animate = () => {
+      if (!isAnimatingRef.current) return;
+      animationFn();
+      animationIdRef.current = requestAnimationFrame(animate);
+    };
+    animate();
+  }, []);
+
+  const stopAnimation = useCallback(() => {
+    isAnimatingRef.current = false;
+    if (animationIdRef.current) {
+      cancelAnimationFrame(animationIdRef.current);
+      animationIdRef.current = null;
+    }
+  }, []);
 
   // Configurações baseadas na performance
   const config = useMemo(() => ({
@@ -106,7 +123,7 @@ const ProgramacaoBackground = ({
       this.y = Math.random() * canvas.height;
       this.vx = -config.codeSpeed * (0.5 + Math.random() * 0.5);
       this.vy = (Math.random() - 0.5) * 0.5;
-      this.opacity = 0.2 + Math.random() * 0.3; // era 0.4-0.8
+      this.opacity = 0.15 + Math.random() * 0.15; // Opacidade bem baixa para não atrapalhar leitura
       this.fontSize = 12 + Math.random() * 3; // era 12-16
       this.lineHeight = this.fontSize + 4;
       this.maxWidth = 200 + Math.random() * 150;
@@ -202,80 +219,7 @@ const ProgramacaoBackground = ({
     }
   }
 
-  // Desenhar terminal animado
-  const drawTerminal = (ctx) => {
-    if (config.terminalSpeed === 0) return;
-    
-    // Ajustar posição baseado no tamanho da tela
-    const isMobile = ctx.canvas.width < 768;
-    const terminalX = isMobile ? 20 : 50;
-    const terminalY = isMobile ? ctx.canvas.height - 250 : 50; // Mobile: mover para baixo
-    const terminalWidth = isMobile ? 280 : 400;
-    const terminalHeight = isMobile ? 150 : 200;
-    const fontSize = 14;
-    const lineHeight = 18;
-    
-    // Fundo do terminal
-    ctx.save();
-    ctx.fillStyle = config.colors.background + 'E6';
-    ctx.fillRect(terminalX, terminalY, terminalWidth, terminalHeight);
-    
-    // Borda do terminal
-    ctx.strokeStyle = config.colors.terminal;
-    ctx.lineWidth = 2;
-    ctx.strokeRect(terminalX, terminalY, terminalWidth, terminalHeight);
-    
-    // Header do terminal
-    ctx.fillStyle = config.colors.terminal + '40';
-    ctx.fillRect(terminalX, terminalY, terminalWidth, 25);
-    
-    // Botões do terminal
-    ['#FF5F56', '#FFBD2E', '#27CA3F'].forEach((color, index) => {
-      ctx.fillStyle = color;
-      ctx.beginPath();
-      ctx.arc(terminalX + 15 + index * 20, terminalY + 12, 6, 0, Math.PI * 2);
-      ctx.fill();
-    });
-    
-    // Conteúdo do terminal
-    ctx.font = `${fontSize}px 'Courier New', monospace`;
-    ctx.fillStyle = config.colors.terminal;
-    
-    const currentTime = Date.now();
-    const commandIndex = Math.floor(currentTime / 3000) % config.terminalCommands.length;
-    const command = config.terminalCommands[commandIndex];
-    const progress = (currentTime % 3000) / 3000;
-    const visibleChars = Math.floor(command.length * progress);
-    const visibleCommand = command.substring(0, visibleChars);
-    
-    // Linha de comando atual
-    ctx.fillText(visibleCommand, terminalX + 10, terminalY + 50);
-    
-    // Cursor do terminal
-    if (progress < 1) {
-      const cursorX = terminalX + 10 + ctx.measureText(visibleCommand).width;
-      const cursorOpacity = Math.sin(Date.now() * 0.008) * 0.5 + 0.5;
-      
-      ctx.save();
-      ctx.globalAlpha = cursorOpacity;
-      ctx.fillStyle = config.colors.cursor;
-      ctx.fillRect(cursorX, terminalY + 50 - fontSize, 2, fontSize);
-      ctx.restore();
-    }
-    
-    // Linhas anteriores
-    for (let i = 1; i <= 3; i++) {
-      const prevIndex = (commandIndex - i + config.terminalCommands.length) % config.terminalCommands.length;
-      const prevCommand = config.terminalCommands[prevIndex];
-      
-      ctx.save();
-      ctx.globalAlpha = 1 - (i * 0.25);
-      ctx.fillText(prevCommand, terminalX + 10, terminalY + 50 + i * lineHeight);
-      ctx.restore();
-    }
-    
-    ctx.restore();
-  };
+  // Terminal removido conforme solicitação do usuário
 
   // Inicializar elementos
   const initializeElements = (canvas) => {
@@ -299,9 +243,6 @@ const ProgramacaoBackground = ({
     
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Desenhar terminal
-    drawTerminal(ctx);
-    
     // Atualizar e desenhar snippets de código
     codeSnippetsRef.current.forEach(snippet => {
       snippet.update();
@@ -359,8 +300,7 @@ const ProgramacaoBackground = ({
       className="absolute inset-0 w-full h-full pointer-events-none"
       style={{ 
         background: 'transparent',
-        mixBlendMode: 'multiply',
-        zIndex: -1
+        zIndex: 1
       }}
       aria-hidden="true"
     />

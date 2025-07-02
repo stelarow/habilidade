@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback, useMemo, Suspense, useRef } from 'react';
-import { usePerformanceLevel } from '../hooks/usePerformanceLevel';
+import React, { lazy, Suspense, useMemo } from 'react';
+import usePerformanceLevel from '../hooks/usePerformanceLevel';
 import backgroundPreloader from '../utils/backgroundPreloader';
 import viewportObserver from '../utils/viewportObserver';
 import { 
@@ -8,33 +8,61 @@ import {
   COURSE_FALLBACK_COLORS 
 } from '../types/backgrounds';
 
-// Lazy loading dos componentes de background
-const backgroundComponents = {
-  [COURSE_SLUGS.PROJETISTA_3D]: React.lazy(() => import('./backgrounds/Projetista3DBackground')),
-  [COURSE_SLUGS.EDICAO_VIDEO]: React.lazy(() => import('./backgrounds/EdicaoVideoBackground')),
-  [COURSE_SLUGS.INFORMATICA]: React.lazy(() => import('./backgrounds/InformaticaBackground')),
-  [COURSE_SLUGS.DESIGN_GRAFICO]: React.lazy(() => import('./backgrounds/DesignGraficoBackground')),
-  [COURSE_SLUGS.PROGRAMACAO]: React.lazy(() => import('./backgrounds/ProgramacaoBackground')),
-  [COURSE_SLUGS.MARKETING_DIGITAL]: React.lazy(() => import('./backgrounds/MarketingDigitalBackground')),
-  [COURSE_SLUGS.INTELIGENCIA_ARTIFICIAL]: React.lazy(() => import('./backgrounds/IABackground')),
-  [COURSE_SLUGS.BUSINESS_INTELLIGENCE]: React.lazy(() => import('./backgrounds/BIBackground'))
+// Lazy loading dos backgrounds com preload inteligente
+const backgrounds = {
+  'inteligencia-artificial': lazy(() => 
+    import('./backgrounds/IABackground.jsx').then(module => ({ default: module.default }))
+  ),
+  'design-grafico': lazy(() => 
+    import('./backgrounds/DesignGraficoBackground.jsx').then(module => ({ default: module.default }))
+  ),
+  'informatica': lazy(() => 
+    import('./backgrounds/InformaticaBackground.jsx').then(module => ({ default: module.default }))
+  ),
+  'programacao': lazy(() => 
+    import('./backgrounds/ProgramacaoBackground.jsx').then(module => ({ default: module.default }))
+  ),
+  'marketing-digital': lazy(() => 
+    import('./backgrounds/MarketingDigitalBackground.jsx').then(module => ({ default: module.default }))
+  ),
+  'business-intelligence': lazy(() => 
+    import('./backgrounds/BIBackground.jsx').then(module => ({ default: module.default }))
+  ),
+  'edicao-video': lazy(() => 
+    import('./backgrounds/EdicaoVideoBackground.jsx').then(module => ({ default: module.default }))
+  ),
+  'projetista-3d': lazy(() => 
+    import('./backgrounds/Projetista3DBackground.jsx').then(module => ({ default: module.default }))
+  ),
+  'administracao': lazy(() => 
+    import('./backgrounds/AdministracaoBackground.jsx').then(module => ({ default: module.default }))
+  )
 };
 
 /**
  * Componente de fallback estático baseado nas cores do curso
  */
-const StaticFallback = ({ courseSlug, className = '' }) => {
-  const colors = COURSE_FALLBACK_COLORS[courseSlug] || ['#6366f1', '#8b5cf6', '#ec4899'];
-  
+const StaticFallback = ({ courseSlug }) => {
+  const gradients = {
+    'inteligencia-artificial': 'linear-gradient(135deg, #22d3ee 0%, #06b6d4 50%, #0891b2 100%)',
+    'design-grafico': 'linear-gradient(135deg, #f472b6 0%, #ec4899 50%, #db2777 100%)',
+    'informatica': 'linear-gradient(135deg, #3742FA 0%, #2F3542 50%, #57606F 100%)',
+    'programacao': 'linear-gradient(135deg, #4ade80 0%, #22c55e 50%, #16a34a 100%)',
+    'marketing-digital': 'linear-gradient(135deg, #f97316 0%, #ea580c 50%, #dc2626 100%)',
+    'business-intelligence': 'linear-gradient(135deg, #818cf8 0%, #6366f1 50%, #4f46e5 100%)',
+    'edicao-video': 'linear-gradient(135deg, #f87171 0%, #ef4444 50%, #dc2626 100%)',
+    'projetista-3d': 'linear-gradient(135deg, #FF6B35 0%, #F7931E 50%, #FFD23F 100%)',
+    'administracao': 'linear-gradient(135deg, #6366F1 0%, #8B5CF6 50%, #A78BFA 100%)'
+  };
+
   return (
     <div 
-      className={`absolute inset-0 ${className}`}
+      className="absolute inset-0 opacity-10 course-background"
       style={{
-        background: `linear-gradient(135deg, ${colors[0]} 0%, ${colors[1]} 50%, ${colors[2]} 100%)`,
-        opacity: 0.1,
-        zIndex: 5
+        background: gradients[courseSlug] || gradients['informatica'],
+        willChange: 'auto',
+        zIndex: 1
       }}
-      role="presentation"
       aria-hidden="true"
     />
   );
@@ -43,210 +71,88 @@ const StaticFallback = ({ courseSlug, className = '' }) => {
 /**
  * Componente de loading para backgrounds
  */
-const BackgroundLoader = ({ courseSlug }) => {
-  const colors = COURSE_FALLBACK_COLORS[courseSlug] || ['#6366f1'];
-  
-  return (
-    <div 
-      className="absolute inset-0 flex items-center justify-center"
-      style={{ backgroundColor: `${colors[0]}10`, zIndex: 5 }}
-    >
-      <div 
-        className="w-12 h-12 border-4 border-t-transparent rounded-full animate-spin"
-        style={{ borderColor: `${colors[0]}40` }}
-      />
-    </div>
-  );
-};
-
-/**
- * Hook para cache de componentes carregados
- */
-const useBackgroundCache = () => {
-  const [cache, setCache] = useState(new Map());
-  
-  const addToCache = useCallback((courseSlug, component) => {
-    setCache(prev => new Map(prev).set(courseSlug, component));
-  }, []);
-  
-  const getFromCache = useCallback((courseSlug) => {
-    return cache.get(courseSlug);
-  }, [cache]);
-  
-  return { addToCache, getFromCache, hasInCache: cache.has.bind(cache) };
-};
+const BackgroundLoader = () => (
+  <div className="absolute inset-0 course-background" style={{ zIndex: 1 }} aria-hidden="true">
+    <div className="absolute inset-0 bg-gradient-to-br from-zinc-900/20 to-zinc-800/20 animate-pulse" />
+  </div>
+);
 
 /**
  * Componente principal para backgrounds de curso
  */
-const CourseBackground = ({ 
-  courseSlug, 
-  className = '',
-  priority = false,
-  area = 'full', // 'hero' | 'full'
-  onLoadComplete = null,
-  onError = null
-}) => {
-  const { 
-    performanceLevel, 
-    shouldUseStaticVersion,
-    shouldUseBasicAnimations,
-    deviceCapabilities 
-  } = usePerformanceLevel();
+const CourseBackground = ({ courseSlug, className = '', priority = false }) => {
+  const { performanceLevel, deviceCapabilities } = usePerformanceLevel();
   
-  const { addToCache, getFromCache, hasInCache } = useBackgroundCache();
-  const [isLoading, setIsLoading] = useState(false);
-  const [loadError, setLoadError] = useState(null);
-  const [mountedComponent, setMountedComponent] = useState(null);
-  const [isVisible, setIsVisible] = useState(true);
-  const containerRef = useRef(null);
-
-  // Configuração de performance para o curso atual
+  // Configuração de performance baseada no nível detectado
   const performanceConfig = useMemo(() => {
-    const config = DEFAULT_PERFORMANCE_CONFIG[performanceLevel] || DEFAULT_PERFORMANCE_CONFIG.medium;
-    return {
-      ...config,
-      // Pausar animação quando não visível
-      isPaused: !isVisible
+    const configs = {
+      low: {
+        staticFallback: false,
+        particleCount: 6,
+        enableAnimations: true,
+        reducedMotion: false
+      },
+      medium: {
+        staticFallback: false,
+        particleCount: 12,
+        enableAnimations: true,
+        reducedMotion: false
+      },
+      high: {
+        staticFallback: false,
+        particleCount: 20,
+        enableAnimations: true,
+        reducedMotion: false
+      }
     };
-  }, [performanceLevel, isVisible]);
-
-  // Determinar se deve carregar o background animado
-  const shouldLoadAnimated = useMemo(() => {
-    if (shouldUseStaticVersion) return false;
-    if (!courseSlug || !backgroundComponents[courseSlug]) return false;
     
-    // Verificar se o curso está nos slugs válidos
-    return Object.values(COURSE_SLUGS).includes(courseSlug);
-  }, [courseSlug, shouldUseStaticVersion]);
+    return configs[performanceLevel] || configs.medium;
+  }, [performanceLevel]);
 
-  // Carregar componente do background usando preloader inteligente
-  const loadBackground = useCallback(async () => {
-    if (!shouldLoadAnimated) return;
+  // Verificar se deve usar fallback estático apenas em casos extremos
+  const prefersReducedMotion = typeof window !== 'undefined' && 
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    setIsLoading(true);
-    setLoadError(null);
-
-    try {
-      // Usar o preloader inteligente
-      const loadedComponent = await backgroundPreloader.preloadBackground(courseSlug, {
-        deviceCapabilities,
-        priority: 0 // Prioridade alta para carregamento atual
-      });
-      
-      setMountedComponent(loadedComponent);
-      
-      // Callback de sucesso
-      if (onLoadComplete) {
-        onLoadComplete(courseSlug, performanceLevel);
-      }
-      
-    } catch (error) {
-      console.warn(`Failed to load background for ${courseSlug}:`, error);
-      setLoadError(error);
-      
-      if (onError) {
-        onError(error, courseSlug);
-      }
-    } finally {
-      setIsLoading(false);
-    }
-  }, [courseSlug, shouldLoadAnimated, deviceCapabilities, onLoadComplete, onError, performanceLevel]);
-
-  // Carregar background quando slug mudar
-  useEffect(() => {
-    if (shouldLoadAnimated) {
-      loadBackground();
-    } else {
-      setMountedComponent(null);
-    }
-  }, [shouldLoadAnimated, loadBackground]);
-
-  // Observer de viewport para pausar quando não visível
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    const handleVisibilityChange = (visible) => {
-      setIsVisible(visible);
-    };
-
-    viewportObserver.observe(container, handleVisibilityChange);
-
-    return () => {
-      viewportObserver.unobserve(container);
-    };
-  }, []);
-
-  // Preload de backgrounds adjacentes usando sistema inteligente
-  useEffect(() => {
-    if (priority && !shouldUseStaticVersion && deviceCapabilities) {
-      // Delay para não bloquear renderização inicial
-      const timeoutId = setTimeout(() => {
-        backgroundPreloader.preloadAdjacentBackgrounds(courseSlug, deviceCapabilities);
-      }, 1000);
-      
-      return () => clearTimeout(timeoutId);
-    }
-  }, [priority, courseSlug, shouldUseStaticVersion, deviceCapabilities]);
-
-  // Log de debug (apenas em desenvolvimento)
-  useEffect(() => {
-    if (process.env.NODE_ENV === 'development') {
-      console.log('CourseBackground Debug:', {
-        courseSlug,
-        performanceLevel,
-        shouldLoadAnimated,
-        shouldUseStaticVersion,
-        deviceCapabilities: deviceCapabilities ? {
-          isMobile: deviceCapabilities.isMobile,
-          estimatedRAM: deviceCapabilities.estimatedRAM,
-          webglSupport: deviceCapabilities.webglSupport
-        } : 'loading...',
-        preloaderStats: backgroundPreloader.getStats()
-      });
-    }
-  }, [courseSlug, performanceLevel, shouldLoadAnimated, shouldUseStaticVersion, deviceCapabilities]);
-
-  // Renderizar baseado no estado atual
-  if (shouldUseStaticVersion || loadError) {
-    return <StaticFallback courseSlug={courseSlug} className={className} />;
+  // Usar fallback estático apenas se usuário explicitamente prefere movimento reduzido
+  if (prefersReducedMotion) {
+    return <StaticFallback courseSlug={courseSlug} />;
   }
 
-  if (isLoading) {
-    return <BackgroundLoader courseSlug={courseSlug} />;
-  }
-
-  if (!mountedComponent) {
-    return <StaticFallback courseSlug={courseSlug} className={className} />;
-  }
-
-  // Renderizar background animado
-  const BackgroundComponent = mountedComponent;
+  const BackgroundComponent = backgrounds[courseSlug];
   
-  // Ajustar altura baseado na área
-  const heightClass = area === 'hero' ? 'h-screen max-h-screen' : 'min-h-screen';
-  
+  if (!BackgroundComponent) {
+    return <StaticFallback courseSlug={courseSlug} />;
+  }
+
   return (
     <div 
-      ref={containerRef}
-      className={`absolute inset-0 ${heightClass} ${className}`} 
-      style={{ zIndex: 5 }}
+      className={`absolute inset-0 ${className} course-background`} 
+      style={{ zIndex: 1 }}
+      aria-hidden="true"
     >
-      <Suspense fallback={<BackgroundLoader courseSlug={courseSlug} />}>
+      <Suspense 
+        fallback={<BackgroundLoader />}
+      >
         <BackgroundComponent 
           performanceConfig={performanceConfig}
           deviceCapabilities={deviceCapabilities}
           courseSlug={courseSlug}
-          area={area}
-          isVisible={isVisible}
         />
       </Suspense>
     </div>
   );
 };
 
-export default React.memo(CourseBackground);
+// Preload do background baseado na rota
+export const preloadBackground = (courseSlug) => {
+  if (backgrounds[courseSlug] && typeof window !== 'undefined') {
+    // Preload apenas se connection for boa
+    if (navigator.connection?.effectiveType === '4g' || !navigator.connection) {
+      import(`./backgrounds/${courseSlug}Background.jsx`).catch(() => {
+        // Silently fail - fallback será usado
+      });
+    }
+  }
+};
 
-// Export para uso externo
-export { StaticFallback, BackgroundLoader }; 
+export default React.memo(CourseBackground); 

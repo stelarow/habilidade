@@ -296,33 +296,104 @@ const informatica = {
     'Dedicação de 10-15 horas semanais'
   ],
 
+  // ✅ DADOS DE INVESTIMENTO (OBRIGATÓRIO)
+  investment: {
+    originalPrice: 997,
+    currentPrice: 597,
+    discount: 40,
+    installments: {
+      max: 12,
+      value: 59.70,
+    },
+    paymentMethods: ['Cartão de crédito', 'PIX', 'Boleto bancário'],
+  },
+
+  // ✅ DADOS DO INSTRUTOR (OBRIGATÓRIO)
+  instructor: {
+    name: 'Equipe de Instrutores Especializados',
+    bio: 'Nossa equipe é formada por profissionais certificados em Windows, Office e IA com mais de 10 anos de experiência no ensino de informática para todas as idades.',
+    photo: '/instructors/team-informatica.jpg',
+    experience: '10+ anos',
+    credentials: [
+      'Certificação Microsoft Office Specialist',
+      'Especialização em Windows 11',
+      'Formação em Inteligência Artificial',
+      'Experiência corporativa em TI'
+    ],
+  },
+
   testimonials: [
     {
       id: 1,
-      name: 'Maria José Silva',
-      role: 'Assistente Administrativa',
-      photo: '/testimonials/maria-jose.jpg',
+      name: 'Maria Luiza Oliveira',
+      role: 'Usuária Iniciante',
+      photo: '/testimonials/maria-luiza-oliveira.jpg',
       rating: 5,
-      text: 'Aos 55 anos consegui meu primeiro emprego em escritório graças ao curso completo! O material impresso foi fundamental.',
-      result: 'Primeiro emprego formal aos 55 anos'
+      text: 'Antes eu tinha medo de usar o computador, mas esse curso mudou totalmente minha confiança! Agora consigo navegar, criar documentos e planilhas sem nenhuma dificuldade. Recomendo demais!',
+      result: 'Superou o medo da tecnologia'
     },
     {
       id: 2,
-      name: 'José Carlos Lima',
-      role: 'Aposentado',
-      photo: '/testimonials/jose-carlos.jpg',
+      name: 'Guilherme Fernandes',
+      role: 'Profissional Qualificado',
+      photo: '/testimonials/guilherme-fernandes.jpg',
       rating: 5,
-      text: 'Escolhi a modalidade presencial e foi perfeita! Agora domino desde Windows 11 até IA. As apostilas são excelentes!',
-      result: 'Transformação digital completa'
+      text: 'Aprender sobre Inteligência Artificial foi um diferencial enorme. Sinto que agora estou à frente no mercado profissional.',
+      result: 'Diferencial no mercado'
     },
     {
       id: 3,
-      name: 'Ana Beatriz Santos',
-      role: 'Freelancer Digital',
-      photo: '/testimonials/ana-beatriz.jpg',
+      name: 'Helena Almeida',
+      role: 'Criadora de Conteúdo',
+      photo: '/testimonials/helena-almeida.jpg',
       rating: 5,
-      text: 'Optei pelo online e superou expectativas! O módulo de IA e Excel Avançado revolucionou meu trabalho.',
-      result: 'Aumento de 300% na renda'
+      text: 'Nunca imaginei que pudesse fazer minhas próprias artes no Canva. Agora minhas redes sociais estão bem mais bonitas e profissionais!',
+      result: 'Redes sociais profissionais'
+    },
+    {
+      id: 4,
+      name: 'Lucas Rezende',
+      role: 'Funcionário Promovido',
+      photo: '/testimonials/lucas-rezende.jpg',
+      rating: 5,
+      text: 'Consegui uma promoção no trabalho graças às habilidades em Excel que aprendi aqui. O investimento valeu muito a pena!',
+      result: 'Promoção no trabalho'
+    },
+    {
+      id: 5,
+      name: 'Paulo Henrique Ribeiro',
+      role: 'Trabalhador Remoto',
+      photo: '/testimonials/paulo-henrique-ribeiro.jpg',
+      rating: 5,
+      text: 'Este curso foi a melhor decisão que tomei esse ano. Estou conseguindo trabalhar de casa e isso mudou minha rotina.',
+      result: 'Trabalho remoto'
+    },
+    {
+      id: 6,
+      name: 'Vanessa Leite',
+      role: 'Estagiária',
+      photo: '/testimonials/vanessa-leite.jpg',
+      rating: 5,
+      text: 'Consegui uma oportunidade de estágio graças ao que aprendi nesse curso. Muito obrigada!',
+      result: 'Oportunidade de estágio'
+    },
+    {
+      id: 7,
+      name: 'Emily Vitoria',
+      role: 'Aluna Satisfeita',
+      photo: '/testimonials/emily-vitoria.jpg',
+      rating: 5,
+      text: 'Lugar ótimo e acolhedor, as turmas pequenas realmente facilitam a precisão na hora de aprender e o foco do professor para cada aluno. Recomendo!',
+      result: 'Experiência excepcional'
+    },
+    {
+      id: 8,
+      name: 'Luiza Bóz Dutra',
+      role: 'Aluna Dedicada',
+      photo: '/testimonials/luiza-boz-dutra.jpg',
+      rating: 5,
+      text: 'O espaço é muito acolhedor, e as aulas são bastante explicativas e práticas. Durante as aulas, conseguimos tirar todas as nossas dúvidas, e os professores são extremamente dedicados.',
+      result: 'Aprendizado completo'
     }
   ],
 
@@ -602,33 +673,86 @@ const designGrafico = {
     'Senso estético e criatividade'
   ],
 
+  // ✅ DADOS DE INVESTIMENTO (OBRIGATÓRIO)
+  investment: {
+    originalPrice: 1197,
+    currentPrice: 797,
+    discount: 33,
+    installments: {
+      max: 12,
+      value: 79.70,
+    },
+    paymentMethods: ['Cartão de crédito', 'PIX', 'Boleto bancário'],
+  },
+
+  // ✅ DADOS DO INSTRUTOR (OBRIGATÓRIO)
+  instructor: {
+    name: 'Design Masters Team',
+    bio: 'Equipe de designers profissionais com certificação Adobe e experiência em agências e estúdios de design. Especialistas em formar novos talentos.',
+    photo: '/instructors/team-design.jpg',
+    experience: '8+ anos',
+    credentials: [
+      'Adobe Certified Expert (ACE)',
+      'Experiência em agências de publicidade',
+      'Portfolio internacional de clientes',
+      'Formação em Design Gráfico'
+    ],
+  },
+
   testimonials: [
     {
       id: 1,
-      name: 'Lucas Mendes',
-      role: 'Designer Freelancer',
-      photo: '/testimonials/lucas-mendes.jpg',
+      name: 'Ana Caroline Barros',
+      role: 'Designer em Transição',
+      photo: '/testimonials/ana-caroline-barros.jpg',
       rating: 5,
-      text: 'Em 4 meses já estava faturando R$ 5.000/mês como freelancer! As apostilas são uma referência constante no meu trabalho.',
-      result: 'Faturamento R$ 5.000/mês'
+      text: 'Sou formada em outra área e sempre quis trabalhar com design. Com esse curso, aprendi desde o Canva até a parte mais técnica como Photoshop. Me sinto finalmente no caminho certo!',
+      result: 'Transição de carreira'
     },
     {
       id: 2,
-      name: 'Amanda Castro',
-      role: 'Social Media Designer',
-      photo: '/testimonials/amanda-castro.jpg',
+      name: 'Camila Medeiros',
+      role: 'Empreendedora',
+      photo: '/testimonials/camila-medeiros.jpg',
       rating: 5,
-      text: 'Optei pela modalidade presencial e foi perfeita! Consegui emprego em agência logo após terminar o curso.',
-      result: 'Emprego em agência'
+      text: 'Estou abrindo meu próprio negócio e consegui criar toda a identidade visual graças ao curso. Logo, cartão, catálogo, tudo feito por mim! Isso é liberdade criativa.',
+      result: 'Identidade visual própria'
     },
     {
       id: 3,
-      name: 'Rafael Silva',
-      role: 'Designer Gráfico',
-      photo: '/testimonials/rafael-silva.jpg',
+      name: 'Aline Silva',
+      role: 'Designer Aprendiz',
+      photo: '/testimonials/aline-silva.jpg',
       rating: 5,
-      text: 'Fiz online e superou expectativas! Criei minha marca e hoje atendo clientes do Brasil inteiro.',
-      result: 'Negócio próprio nacional'
+      text: 'Achei que seria complicado aprender tantos softwares, mas a metodologia do curso facilita muito. Cada módulo é direto ao ponto, os professores ajudam muito nos exercícios - é realmente conhecimento e prática.',
+      result: 'Domínio de múltiplos softwares'
+    },
+    {
+      id: 4,
+      name: 'Yasmin Camile',
+      role: 'Designer Criativa',
+      photo: '/testimonials/yasmin-camile.jpg',
+      rating: 5,
+      text: 'O módulo de IA foi o que mais me surpreendeu. Aprender a usar inteligência artificial no processo criativo economiza tempo e abre a mente pra novas possibilidades. É um diferencial no mercado!',
+      result: 'Diferencial com IA'
+    },
+    {
+      id: 5,
+      name: 'Carlos Souza',
+      role: 'Designer Evoluído',
+      photo: '/testimonials/carlos-souza.jpg',
+      rating: 5,
+      text: 'Ver minha evolução desde o primeiro projeto até o final do curso foi gratificante. Obrigada!!',
+      result: 'Evolução visível'
+    },
+    {
+      id: 6,
+      name: 'Patrícia Lima',
+      role: 'Criadora de Conteúdo',
+      photo: '/testimonials/patricia-lima.jpg',
+      rating: 5,
+      text: 'O Canva me salvou! Agora tudo que eu posto tem cara de profissional!',
+      result: 'Conteúdo profissional'
     }
   ],
 
@@ -922,33 +1046,95 @@ const programacao = {
     'Vontade de resolver problemas lógicos'
   ],
 
+  // ✅ DADOS DE INVESTIMENTO (OBRIGATÓRIO)
+  investment: {
+    originalPrice: 1497,
+    currentPrice: 897,
+    discount: 40,
+    installments: {
+      max: 12,
+      value: 89.70,
+    },
+    paymentMethods: ['Cartão de crédito', 'PIX', 'Boleto bancário'],
+  },
+
+  // ✅ DADOS DO INSTRUTOR (OBRIGATÓRIO)
+  instructor: {
+    name: 'Code Academy Team',
+    bio: 'Equipe de desenvolvedores sênior com experiência em múltiplas linguagens e projetos de grande escala. Especialistas em formar novos programadores.',
+    photo: '/instructors/team-programacao.jpg',
+    experience: '12+ anos',
+    credentials: [
+      'Certificação em Python e Java',
+      'Experiência em startups e grandes empresas',
+      'Projetos open source reconhecidos',
+      'Formação em Ciência da Computação'
+    ],
+  },
+
   testimonials: [
     {
       id: 1,
-      name: 'Gabriel Santos',
-      role: 'Desenvolvedor Jr.',
-      photo: '/testimonials/gabriel-santos.jpg',
+      name: 'Thiago Mello',
+      role: 'Programador Java',
+      photo: '/testimonials/thiago-mello.jpg',
       rating: 5,
-      text: 'Saí do zero e consegui meu primeiro emprego como dev em 8 meses! As apostilas foram essenciais para consulta.',
-      result: 'Primeiro emprego como dev'
+      text: 'Já tinha tentado aprender Java online e não conseguia entender. Na escola habilidade com explicações claras e desafios em aula, tudo fez sentido.',
+      result: 'Java dominado'
     },
     {
       id: 2,
-      name: 'Ana Beatriz',
-      role: 'Freelancer Full-Stack',
-      photo: '/testimonials/ana-beatriz.jpg',
+      name: 'Fernanda Neves',
+      role: 'Programadora Lógica',
+      photo: '/testimonials/fernanda-neves.jpg',
       rating: 5,
-      text: 'Fiz online e foi perfeito! Hoje ganho R$ 12.000/mês como freelancer dominando Python, Java, PHP e Android.',
-      result: 'Renda de R$ 12.000/mês'
+      text: 'O módulo de lógica foi essencial. Aprender a pensar como programadora mudou a forma como eu vejo problemas no dia a dia.',
+      result: 'Mudança de perspectiva'
     },
     {
       id: 3,
-      name: 'Carlos Eduardo',
-      role: 'Desenvolvedor Android',
-      photo: '/testimonials/carlos-eduardo.jpg',
+      name: 'Murilo Galvão',
+      role: 'Desenvolvedor Iniciante',
+      photo: '/testimonials/murilo-galvao.jpg',
       rating: 5,
-      text: 'Escolhi presencial e adorei! Meu app desenvolvido no curso tem mais de 50.000 downloads na Play Store.',
-      result: 'App com 50K+ downloads'
+      text: 'Comecei do zero e estou terminando com um projeto funcional feito por mim. Gratidão define.',
+      result: 'Projeto próprio funcional'
+    },
+    {
+      id: 4,
+      name: 'Renan Souza',
+      role: 'Aluno Presencial',
+      photo: '/testimonials/renan-souza.jpg',
+      rating: 5,
+      text: 'Minha experiência na escola Habilidade esta sendo ótima, estou no curso de programação. Curso presencial, atenção total do professor, atividades totalmente práticas e divertidas que chamam minha totalmente minha atenção.',
+      result: 'Experiência ótima'
+    },
+    {
+      id: 5,
+      name: 'Sabrina Moraes',
+      role: 'Descoberta Instagram',
+      photo: '/testimonials/sabrina-moraes.jpg',
+      rating: 5,
+      text: 'Vi o curso no Instagram, me matriculei e foi a melhor decisão que tomei esse ano.',
+      result: 'Melhor decisão do ano'
+    },
+    {
+      id: 6,
+      name: 'Leandro Albuquerque',
+      role: 'Desenvolvedor Python',
+      photo: '/testimonials/leandro-albuquerque.jpg',
+      rating: 5,
+      text: 'Python foi meu módulo favorito. Consegui desenvolver um projeto completo durante o módulo. Fiquei impressionado com meu próprio resultado.',
+      result: 'Projeto Python completo'
+    },
+    {
+      id: 7,
+      name: 'Letícia Dias',
+      role: 'Desenvolvedora Confiante',
+      photo: '/testimonials/leticia-dias.jpg',
+      rating: 5,
+      text: 'O projeto final em Python me deu confiança. Eu tinha medo de errar, mas com o apoio dos professores e os exercícios em aula, consegui desenvolver muito bem.',
+      result: 'Confiança adquirida'
     }
   ],
 
@@ -1204,33 +1390,131 @@ const marketingDigital = {
     'Conhecimentos básicos de informática'
   ],
 
+  // ✅ DADOS DE INVESTIMENTO (OBRIGATÓRIO)
+  investment: {
+    originalPrice: 897,
+    currentPrice: 597,
+    discount: 33,
+    installments: {
+      max: 12,
+      value: 59.70,
+    },
+    paymentMethods: ['Cartão de crédito', 'PIX', 'Boleto bancário'],
+  },
+
+  // ✅ DADOS DO INSTRUTOR (OBRIGATÓRIO)
+  instructor: {
+    name: 'Digital Marketing Masters',
+    bio: 'Equipe de especialistas em marketing digital com experiência em agências e campanhas de grande alcance. Experts em resultados mensuráveis.',
+    photo: '/instructors/team-marketing.jpg',
+    experience: '8+ anos',
+    credentials: [
+      'Certificação Google Ads e Analytics',
+      'Facebook Blueprint Certified',
+      'Experiência em agências de publicidade',
+      'Cases de sucesso em e-commerce'
+    ],
+  },
+
   testimonials: [
     {
       id: 1,
-      name: 'Fernanda Costa',
-      role: 'E-commerce Owner',
-      photo: '/testimonials/fernanda-costa.jpg',
+      name: 'Maria Eduarda Costa',
+      role: 'Profissional Confiante',
+      photo: '/testimonials/maria-eduarda-costa.jpg',
       rating: 5,
-      text: 'Fiz presencial e foi incrível! Meu e-commerce saiu de R$ 50K para R$ 300K/mês aplicando as estratégias.',
-      result: 'Faturamento de R$ 50K → R$ 300K/mês'
+      text: 'Aprender sobre Marketing Pessoal mudou minha postura profissional. Hoje me sinto muito mais confiante para divulgar meu trabalho.',
+      result: 'Postura profissional transformada'
     },
     {
       id: 2,
-      name: 'Ricardo Mendes',
-      role: 'Gestor de Tráfego',
-      photo: '/testimonials/ricardo-mendes.jpg',
+      name: 'Isabela Freitas',
+      role: 'Criadora de Conteúdo',
+      photo: '/testimonials/isabela-freitas.jpg',
       rating: 5,
-      text: 'Optei pelo online e me tornei gestor de tráfego! Ganho R$ 12.000/mês com as apostilas sempre comigo.',
-      result: 'Renda de R$ 12.000/mês'
+      text: 'Finalmente aprendi a usar Inteligência Artificial para gerar conteúdo e criar meus posts nas redes sociais. Recomendo demais!',
+      result: 'Conteúdo com IA'
     },
     {
       id: 3,
-      name: 'Juliana Silva',
-      role: 'Agência de Marketing',
-      photo: '/testimonials/juliana-silva.jpg',
+      name: 'Natália Campos',
+      role: 'Entusiasta de Marketing',
+      photo: '/testimonials/natalia-campos.jpg',
       rating: 5,
-      text: 'Com o material impresso, abri minha agência e já faturei R$ 500K no primeiro ano!',
-      result: 'Agência faturando R$ 500K/ano'
+      text: 'Adorei como o curso conectou marketing digital com inteligência artificial. Inovador e surpreendente!',
+      result: 'Combinação inovadora'
+    },
+    {
+      id: 4,
+      name: 'Fabiola Moraes',
+      role: 'Profissional de Marketing',
+      photo: '/testimonials/fabiola-moraes.jpg',
+      rating: 5,
+      text: 'Depois do curso, consegui o emprego que tanto sonhei na área de marketing digital. Obrigada Escola Habilidade por me ajudar nesse caminho!',
+      result: 'Emprego dos sonhos'
+    },
+    {
+      id: 5,
+      name: 'Julia Ramos',
+      role: 'Gestora de Anúncios',
+      photo: '/testimonials/julia-ramos.jpg',
+      rating: 5,
+      text: 'Antes desse curso, eu tinha muito medo de mexer com os anúncios das redes sociais. As aulas sobre Facebook Business foram um divisor de águas. Hoje já consigo ter retorno real dos anúncios que crio.',
+      result: 'Retorno real dos anúncios'
+    },
+    {
+      id: 4,
+      name: 'Ana Caroline Barros',
+      role: 'Designer em Transição',
+      photo: '/testimonials/ana-caroline-barros.jpg',
+      rating: 5,
+      text: 'Sou formada em outra área e sempre quis trabalhar com design. Com esse curso, aprendi desde o Canva até a parte mais técnica como Photoshop. Me sinto finalmente no caminho certo!',
+      result: 'Transição de carreira'
+    },
+    {
+      id: 5,
+      name: 'Camila Medeiros',
+      role: 'Empreendedora',
+      photo: '/testimonials/camila-medeiros.jpg',
+      rating: 5,
+      text: 'Estou abrindo meu próprio negócio e consegui criar toda a identidade visual graças ao curso. Logo, cartão, catálogo, tudo feito por mim! Isso é liberdade criativa.',
+      result: 'Identidade visual própria'
+    },
+    {
+      id: 6,
+      name: 'Aline Silva',
+      role: 'Designer Aprendiz',
+      photo: '/testimonials/aline-silva.jpg',
+      rating: 5,
+      text: 'Achei que seria complicado aprender tantos softwares, mas a metodologia do curso facilita muito. Cada módulo é direto ao ponto, os professores ajudam muito nos exercícios - é realmente conhecimento e prática.',
+      result: 'Domínio de múltiplos softwares'
+    },
+    {
+      id: 7,
+      name: 'Yasmin Camile',
+      role: 'Designer Criativa',
+      photo: '/testimonials/yasmin-camile.jpg',
+      rating: 5,
+      text: 'O módulo de IA foi o que mais me surpreendeu. Aprender a usar inteligência artificial no processo criativo economiza tempo e abre a mente pra novas possibilidades. É um diferencial no mercado!',
+      result: 'Diferencial com IA'
+    },
+    {
+      id: 8,
+      name: 'Carlos Souza',
+      role: 'Designer Evoluído',
+      photo: '/testimonials/carlos-souza.jpg',
+      rating: 5,
+      text: 'Ver minha evolução desde o primeiro projeto até o final do curso foi gratificante. Obrigada!!',
+      result: 'Evolução visível'
+    },
+    {
+      id: 9,
+      name: 'Patrícia Lima',
+      role: 'Criadora de Conteúdo',
+      photo: '/testimonials/patricia-lima.jpg',
+      rating: 5,
+      text: 'O Canva me salvou! Agora tudo que eu posto tem cara de profissional!',
+      result: 'Conteúdo profissional'
     }
   ],
 
@@ -1463,6 +1747,32 @@ const inteligenciaArtificial = {
     'Criatividade e vontade de inovar'
   ],
 
+  // ✅ DADOS DE INVESTIMENTO (OBRIGATÓRIO)
+  investment: {
+    originalPrice: 797,
+    currentPrice: 497,
+    discount: 38,
+    installments: {
+      max: 12,
+      value: 49.70,
+    },
+    paymentMethods: ['Cartão de crédito', 'PIX', 'Boleto bancário'],
+  },
+
+  // ✅ DADOS DO INSTRUTOR (OBRIGATÓRIO)
+  instructor: {
+    name: 'AI Innovation Team',
+    bio: 'Equipe especializada em Inteligência Artificial com experiência em desenvolvimento de soluções criativas e aplicações empresariais. Experts em ferramentas de IA emergentes.',
+    photo: '/instructors/team-ia.jpg',
+    experience: '6+ anos',
+    credentials: [
+      'Especialização em Machine Learning',
+      'Experiência com ferramentas de IA generativa',
+      'Projetos em empresas de tecnologia',
+      'Formação em Ciência de Dados'
+    ],
+  },
+
   testimonials: [
     {
       id: 1,
@@ -1490,6 +1800,60 @@ const inteligenciaArtificial = {
       rating: 5,
       text: 'Com as apostilas sempre comigo, me especializei em IA e ganho R$ 20.000/mês como consultor!',
       result: 'Renda de R$ 20.000/mês'
+    },
+    {
+      id: 4,
+      name: 'Ana Caroline Barros',
+      role: 'Designer em Transição',
+      photo: '/testimonials/ana-caroline-barros.jpg',
+      rating: 5,
+      text: 'Sou formada em outra área e sempre quis trabalhar com design. Com esse curso, aprendi desde o Canva até a parte mais técnica como Photoshop. Me sinto finalmente no caminho certo!',
+      result: 'Transição de carreira'
+    },
+    {
+      id: 5,
+      name: 'Camila Medeiros',
+      role: 'Empreendedora',
+      photo: '/testimonials/camila-medeiros.jpg',
+      rating: 5,
+      text: 'Estou abrindo meu próprio negócio e consegui criar toda a identidade visual graças ao curso. Logo, cartão, catálogo, tudo feito por mim! Isso é liberdade criativa.',
+      result: 'Identidade visual própria'
+    },
+    {
+      id: 6,
+      name: 'Aline Silva',
+      role: 'Designer Aprendiz',
+      photo: '/testimonials/aline-silva.jpg',
+      rating: 5,
+      text: 'Achei que seria complicado aprender tantos softwares, mas a metodologia do curso facilita muito. Cada módulo é direto ao ponto, os professores ajudam muito nos exercícios - é realmente conhecimento e prática.',
+      result: 'Domínio de múltiplos softwares'
+    },
+    {
+      id: 7,
+      name: 'Yasmin Camile',
+      role: 'Designer Criativa',
+      photo: '/testimonials/yasmin-camile.jpg',
+      rating: 5,
+      text: 'O módulo de IA foi o que mais me surpreendeu. Aprender a usar inteligência artificial no processo criativo economiza tempo e abre a mente pra novas possibilidades. É um diferencial no mercado!',
+      result: 'Diferencial com IA'
+    },
+    {
+      id: 8,
+      name: 'Carlos Souza',
+      role: 'Designer Evoluído',
+      photo: '/testimonials/carlos-souza.jpg',
+      rating: 5,
+      text: 'Ver minha evolução desde o primeiro projeto até o final do curso foi gratificante. Obrigada!!',
+      result: 'Evolução visível'
+    },
+    {
+      id: 9,
+      name: 'Patrícia Lima',
+      role: 'Criadora de Conteúdo',
+      photo: '/testimonials/patricia-lima.jpg',
+      rating: 5,
+      text: 'O Canva me salvou! Agora tudo que eu posto tem cara de profissional!',
+      result: 'Conteúdo profissional'
     }
   ],
 
@@ -1722,33 +2086,140 @@ const businessIntelligence = {
     'Experiência empresarial (recomendado)'
   ],
 
+  // ✅ DADOS DE INVESTIMENTO (OBRIGATÓRIO)
+  investment: {
+    originalPrice: 897,
+    currentPrice: 697,
+    discount: 22,
+    installments: {
+      max: 12,
+      value: 69.70,
+    },
+    paymentMethods: ['Cartão de crédito', 'PIX', 'Boleto bancário'],
+  },
+
+  // ✅ DADOS DO INSTRUTOR (OBRIGATÓRIO)
+  instructor: {
+    name: 'Business Intelligence Experts',
+    bio: 'Equipe de analistas de dados sênior com experiência em transformação digital empresarial. Especialistas em Excel, Dashboard e BI aplicado aos negócios.',
+    photo: '/instructors/team-bi.jpg',
+    experience: '10+ anos',
+    credentials: [
+      'Certificação Microsoft Excel Expert',
+      'Especialização em Business Intelligence',
+      'Experiência em análise de dados corporativos',
+      'Projetos de transformação digital'
+    ],
+  },
+
   testimonials: [
     {
       id: 1,
-      name: 'Juliana Santos',
-      role: 'Analista de BI',
-      photo: '/testimonials/juliana-santos.jpg',
+      name: 'Paula Costa',
+      role: 'Analista Aprendiz',
+      photo: '/testimonials/paula-costa.jpg',
       rating: 5,
-      text: 'Fiz presencial e consegui promoção para Analista Sênior com aumento de 80% no salário!',
-      result: 'Promoção e aumento de 80%'
+      text: 'A didática é muito boa! O professor explica de um jeito que realmente dá vontade de continuar.',
+      result: 'Didática excelente'
     },
     {
       id: 2,
-      name: 'Ricardo Pereira',
-      role: 'Gerente de Dados',
-      photo: '/testimonials/ricardo-pereira.jpg',
+      name: 'Heitor Barbosa',
+      role: 'Profissional de Dados',
+      photo: '/testimonials/heitor-barbosa.jpg',
       rating: 5,
-      text: 'Online foi perfeito! Me tornei especialista em BI e agora lidero transformação digital.',
-      result: 'Promoção a Gerente'
+      text: 'Esse curso é um divisor de águas pra quem quer crescer na área de dados.',
+      result: 'Divisor de águas'
     },
     {
       id: 3,
-      name: 'Marina Costa',
-      role: 'Consultora BI',
-      photo: '/testimonials/marina-costa.jpg',
+      name: 'Carlos Petri',
+      role: 'Aluno Satisfeito',
+      photo: '/testimonials/carlos-petri.jpg',
       rating: 5,
-      text: 'Com as apostilas sempre comigo, ganho R$ 18.000/mês como consultora implementando soluções BI!',
-      result: 'Renda de R$ 18.000/mês'
+      text: 'Me identifiquei muito com a forma de ensinar. Já indiquei pra dois colegas!',
+      result: 'Indicação para colegas'
+    },
+    {
+      id: 4,
+      name: 'Vitor Santos',
+      role: 'Analista Recomendador',
+      photo: '/testimonials/vitor-santos.jpg',
+      rating: 5,
+      text: 'Recomendo pra qualquer pessoa que queira melhorar profissionalmente com análise de dados!',
+      result: 'Melhoria profissional'
+    },
+    {
+      id: 5,
+      name: 'Fernanda Campos',
+      role: 'Analista BI Júnior',
+      photo: '/testimonials/fernanda-campos.jpg',
+      rating: 5,
+      text: 'Entrei no curso sem saber absolutamente nada de Excel. Sempre tive dificuldade com números e achava que análise de dados era só pra quem fazia TI. Mas o jeito que o conteúdo foi organizado me deu muita segurança. Hoje, faço dashboards completos, automatizo relatórios no Power BI e uso IA pra gerar apresentações de forma rápida. O curso me ajudou a conquistar uma vaga nova com aumento salarial. Gratidão eterna!',
+      result: 'Nova vaga com aumento'
+    },
+    {
+      id: 6,
+      name: 'João Paulo',
+      role: 'Analista Evoluído',
+      photo: '/testimonials/joao-paulo.jpg',
+      rating: 5,
+      text: 'A estrutura do curso é muito bem pensada. As aulas são diretas, com exemplos práticos e desafios que te forçam a aprender de verdade. Em poucas semanas, saí do nível básico para conseguir montar gráficos dinâmicos, usar funções lógicas e até começar a explorar o VBA. Senti uma evolução real, e isso me motivou ainda mais a seguir nessa área de BI.',
+      result: 'Evolução real e motivação'
+    },
+    {
+      id: 4,
+      name: 'Ana Caroline Barros',
+      role: 'Designer em Transição',
+      photo: '/testimonials/ana-caroline-barros.jpg',
+      rating: 5,
+      text: 'Sou formada em outra área e sempre quis trabalhar com design. Com esse curso, aprendi desde o Canva até a parte mais técnica como Photoshop. Me sinto finalmente no caminho certo!',
+      result: 'Transição de carreira'
+    },
+    {
+      id: 5,
+      name: 'Camila Medeiros',
+      role: 'Empreendedora',
+      photo: '/testimonials/camila-medeiros.jpg',
+      rating: 5,
+      text: 'Estou abrindo meu próprio negócio e consegui criar toda a identidade visual graças ao curso. Logo, cartão, catálogo, tudo feito por mim! Isso é liberdade criativa.',
+      result: 'Identidade visual própria'
+    },
+    {
+      id: 6,
+      name: 'Aline Silva',
+      role: 'Designer Aprendiz',
+      photo: '/testimonials/aline-silva.jpg',
+      rating: 5,
+      text: 'Achei que seria complicado aprender tantos softwares, mas a metodologia do curso facilita muito. Cada módulo é direto ao ponto, os professores ajudam muito nos exercícios - é realmente conhecimento e prática.',
+      result: 'Domínio de múltiplos softwares'
+    },
+    {
+      id: 7,
+      name: 'Yasmin Camile',
+      role: 'Designer Criativa',
+      photo: '/testimonials/yasmin-camile.jpg',
+      rating: 5,
+      text: 'O módulo de IA foi o que mais me surpreendeu. Aprender a usar inteligência artificial no processo criativo economiza tempo e abre a mente pra novas possibilidades. É um diferencial no mercado!',
+      result: 'Diferencial com IA'
+    },
+    {
+      id: 8,
+      name: 'Carlos Souza',
+      role: 'Designer Evoluído',
+      photo: '/testimonials/carlos-souza.jpg',
+      rating: 5,
+      text: 'Ver minha evolução desde o primeiro projeto até o final do curso foi gratificante. Obrigada!!',
+      result: 'Evolução visível'
+    },
+    {
+      id: 9,
+      name: 'Patrícia Lima',
+      role: 'Criadora de Conteúdo',
+      photo: '/testimonials/patricia-lima.jpg',
+      rating: 5,
+      text: 'O Canva me salvou! Agora tudo que eu posto tem cara de profissional!',
+      result: 'Conteúdo profissional'
     }
   ],
 
@@ -1956,6 +2427,32 @@ const projetista = {
     'Conhecimento básico de desenho técnico (desejável)'
   ],
 
+  // ✅ DADOS DE INVESTIMENTO (OBRIGATÓRIO)
+  investment: {
+    originalPrice: 1297,
+    currentPrice: 997,
+    discount: 23,
+    installments: {
+      max: 12,
+      value: 99.70,
+    },
+    paymentMethods: ['Cartão de crédito', 'PIX', 'Boleto bancário'],
+  },
+
+  // ✅ DADOS DO INSTRUTOR (OBRIGATÓRIO)
+  instructor: {
+    name: '3D Architecture Masters',
+    bio: 'Equipe de arquitetos e designers certificados em SketchUp e Enscape com experiência internacional. Especialistas em projetos arquitetônicos e renderização profissional.',
+    photo: '/instructors/team-projetista.jpg',
+    experience: '12+ anos',
+    credentials: [
+      'Certificação SketchUp Pro Internacional',
+      'Enscape Certified Professional',
+      'Experiência em escritórios de arquitetura',
+      'Projetos premiados em concursos nacionais'
+    ],
+  },
+
   testimonials: [
     {
       id: 1,
@@ -1983,6 +2480,60 @@ const projetista = {
       rating: 5,
       text: 'Com o portfólio criado no curso, consegui meu primeiro emprego em escritório de arquitetura!',
       result: 'Primeiro emprego na área'
+    },
+    {
+      id: 4,
+      name: 'Ana Caroline Barros',
+      role: 'Designer em Transição',
+      photo: '/testimonials/ana-caroline-barros.jpg',
+      rating: 5,
+      text: 'Sou formada em outra área e sempre quis trabalhar com design. Com esse curso, aprendi desde o Canva até a parte mais técnica como Photoshop. Me sinto finalmente no caminho certo!',
+      result: 'Transição de carreira'
+    },
+    {
+      id: 5,
+      name: 'Camila Medeiros',
+      role: 'Empreendedora',
+      photo: '/testimonials/camila-medeiros.jpg',
+      rating: 5,
+      text: 'Estou abrindo meu próprio negócio e consegui criar toda a identidade visual graças ao curso. Logo, cartão, catálogo, tudo feito por mim! Isso é liberdade criativa.',
+      result: 'Identidade visual própria'
+    },
+    {
+      id: 6,
+      name: 'Aline Silva',
+      role: 'Designer Aprendiz',
+      photo: '/testimonials/aline-silva.jpg',
+      rating: 5,
+      text: 'Achei que seria complicado aprender tantos softwares, mas a metodologia do curso facilita muito. Cada módulo é direto ao ponto, os professores ajudam muito nos exercícios - é realmente conhecimento e prática.',
+      result: 'Domínio de múltiplos softwares'
+    },
+    {
+      id: 7,
+      name: 'Yasmin Camile',
+      role: 'Designer Criativa',
+      photo: '/testimonials/yasmin-camile.jpg',
+      rating: 5,
+      text: 'O módulo de IA foi o que mais me surpreendeu. Aprender a usar inteligência artificial no processo criativo economiza tempo e abre a mente pra novas possibilidades. É um diferencial no mercado!',
+      result: 'Diferencial com IA'
+    },
+    {
+      id: 8,
+      name: 'Carlos Souza',
+      role: 'Designer Evoluído',
+      photo: '/testimonials/carlos-souza.jpg',
+      rating: 5,
+      text: 'Ver minha evolução desde o primeiro projeto até o final do curso foi gratificante. Obrigada!!',
+      result: 'Evolução visível'
+    },
+    {
+      id: 9,
+      name: 'Patrícia Lima',
+      role: 'Criadora de Conteúdo',
+      photo: '/testimonials/patricia-lima.jpg',
+      rating: 5,
+      text: 'O Canva me salvou! Agora tudo que eu posto tem cara de profissional!',
+      result: 'Conteúdo profissional'
     }
   ],
 
@@ -2029,7 +2580,771 @@ const projetista = {
 };
 
 // ===================================================================
-// ✅ LISTA FINAL DOS CURSOS - AGORA COM 7 CURSOS DO CATÁLOGO
+// CURSO 8: EDIÇÃO DE VÍDEO (2 MÓDULOS CONFORME DEFINIDO)
+// ===================================================================
+const edicaoVideo = {
+  basicInfo: {
+    id: 'edicao-video-008',
+    title: 'Edição de Vídeo',
+    slug: 'edicao-video',
+    shortDescription: 'Domine Adobe Premiere Pro CC e After Effects CC para criar vídeos profissionais e motion graphics.',
+    longDescription: 'Aprenda edição de vídeo profissional do zero ao avançado. Domine Adobe Premiere Pro CC e After Effects CC para se tornar um editor completo e requisitado no mercado audiovisual.',
+    category: 'Audiovisual',
+    level: 'Intermediário',
+    duration: '48 horas',
+    certificate: true,
+    active: true,
+  },
+  
+  // ✅ Material didático incluso
+  materials: {
+    included: true,
+    description: 'Apostilas impressas completas de cada módulo',
+    details: [
+      'Material didático impresso dos 2 módulos',
+      'Apostilas com projetos práticos e exercícios',
+      'Referência permanente para consulta profissional',
+      'Incluído no preço do curso sem custo adicional'
+    ]
+  },
+
+  // ✅ Modalidades de ensino
+  modalities: {
+    presencial: {
+      available: true,
+      description: 'Aulas presenciais na escola com instrutores especializados'
+    },
+    online: {
+      available: true,
+      description: 'Acesso remoto às aulas com suporte online'
+    }
+  },
+
+  curriculum: [
+    {
+      id: 1,
+      title: 'Adobe Premiere Pro CC',
+      description: 'Edição profissional de vídeos com o software líder do mercado',
+      duration: '27 horas',
+      lessons: [
+        { id: 1, title: 'Introdução ao programa', duration: '90 min', type: 'video' },
+        { id: 2, title: 'Ferramentas básicas de edição', duration: '90 min', type: 'video' },
+        { id: 3, title: 'Transições de vídeo e adicionando texto', duration: '90 min', type: 'video' },
+        { id: 4, title: 'Transição Swish e Keyframes', duration: '90 min', type: 'video' },
+        { id: 5, title: 'Efeitos de vídeo', duration: '90 min', type: 'video' },
+        { id: 6, title: 'Transição RGB, Transições e Efeitos de áudio', duration: '90 min', type: 'video' },
+        { id: 7, title: 'Animação', duration: '90 min', type: 'video' },
+        { id: 8, title: 'Criando Lower Thirds (redes sociais e nome)', duration: '90 min', type: 'video' },
+        { id: 9, title: 'Criar intro para os vídeos', duration: '90 min', type: 'video' },
+        { id: 10, title: 'Frame Hold e bordas desfocadas', duration: '90 min', type: 'video' },
+        { id: 11, title: 'Smooth Transitions e Glitchs', duration: '90 min', type: 'video' },
+        { id: 12, title: 'Vídeo em preto e branco e efeito Fisheye', duration: '90 min', type: 'video' },
+        { id: 13, title: 'Transição usando pessoas e acelerar, desacelerar e reverter vídeos', duration: '90 min', type: 'video' },
+        { id: 14, title: 'Efeito Flash', duration: '90 min', type: 'video' },
+        { id: 15, title: 'Efeito mágica', duration: '90 min', type: 'video' },
+        { id: 16, title: 'Correção de cor, predefinições e adicionando Luts', duration: '90 min', type: 'video' },
+        { id: 17, title: 'Adicionar créditos a partir de gráficos essenciais', duration: '90 min', type: 'video' },
+        { id: 18, title: 'Renderizar projeto', duration: '90 min', type: 'project' },
+      ],
+    },
+    {
+      id: 2,
+      title: 'Adobe After Effects CC',
+      description: 'Motion graphics e efeitos visuais cinematográficos',
+      duration: '21 horas',
+      lessons: [
+        { id: 19, title: 'Workspace e Composições', duration: '90 min', type: 'video' },
+        { id: 20, title: 'Background e Composição', duration: '90 min', type: 'video' },
+        { id: 21, title: 'Máscara', duration: '90 min', type: 'video' },
+        { id: 22, title: 'Correção de cores', duration: '90 min', type: 'video' },
+        { id: 23, title: 'Controles de câmera', duration: '90 min', type: 'video' },
+        { id: 24, title: 'Sincronização e efeitos de áudio', duration: '90 min', type: 'video' },
+        { id: 25, title: 'Efeitos', duration: '90 min', type: 'video' },
+        { id: 26, title: 'Efeito de revelação de texto', duration: '90 min', type: 'video' },
+        { id: 27, title: 'Finalizando o projeto e renderizando', duration: '90 min', type: 'video' },
+        { id: 28, title: 'Processo de sincronização de vídeos', duration: '90 min', type: 'video' },
+        { id: 29, title: 'Transição suave (Zoom)', duration: '90 min', type: 'video' },
+        { id: 30, title: 'Editor gráfico de efeitos', duration: '90 min', type: 'video' },
+        { id: 31, title: 'Transições e Ancoragem', duration: '90 min', type: 'video' },
+        { id: 32, title: 'Projeto Final', duration: '90 min', type: 'project' },
+      ],
+    }
+  ],
+
+  // ✅ Novos campos para componentes
+  whyStudy: {
+    benefits: [
+      {
+        icon: 'BookOpen',
+        title: 'Vídeos profissionais',
+        description: 'Crie vídeos cinematográficos e motion graphics de padrão internacional'
+      },
+      {
+        icon: 'TrendUp',
+        title: 'Mercado crescente',
+        description: 'Editores de vídeo estão entre os profissionais mais procurados'
+      },
+      {
+        icon: 'Users',
+        title: 'YouTube e redes sociais',
+        description: 'Domine criação de conteúdo para todas as plataformas digitais'
+      }
+    ]
+  },
+
+  journey: {
+    steps: [
+      {
+        number: 1,
+        title: 'Premiere Básico',
+        description: 'Fundamentos de edição e ferramentas essenciais',
+        icon: 'House'
+      },
+      {
+        number: 2,
+        title: 'Premiere Avançado',
+        description: 'Efeitos, transições e correção de cor profissional',
+        icon: 'Wrench'
+      },
+      {
+        number: 3,
+        title: 'After Effects',
+        description: 'Motion graphics e efeitos visuais cinematográficos',
+        icon: 'Crown'
+      },
+      {
+        number: 4,
+        title: 'Editor Profissional',
+        description: 'Portfolio completo e projetos comerciais',
+        icon: 'Trophy'
+      }
+    ]
+  },
+
+  whatYouWillLearn: [
+    'Adobe Premiere Pro CC: edição profissional completa',
+    'Adobe After Effects CC: motion graphics e VFX',
+    'Técnicas avançadas de transições e efeitos',
+    'Correção de cor e gradação cinematográfica',
+    'Criação de intros, vinhetas e lower thirds',
+    'Sincronização perfeita de áudio e vídeo',
+    'Efeitos visuais e composição profissional',
+    'Workflow otimizado para YouTube e redes sociais',
+    'Renderização e exportação em múltiplos formatos',
+    'Material didático impresso incluso',
+    'Modalidades Presencial e Online disponíveis',
+    'Certificação profissional reconhecida'
+  ],
+
+  requirements: [
+    'Computador com Windows 10/11 ou macOS',
+    '16GB de RAM (mínimo 8GB)',
+    'Placa de vídeo dedicada (recomendado)',
+    'Adobe Creative Cloud (Premiere + After Effects)',
+    'SSD com 100GB livres',
+    'Conhecimentos básicos de informática'
+  ],
+
+  // ✅ DADOS DE INVESTIMENTO (OBRIGATÓRIO)
+  investment: {
+    originalPrice: 797,
+    currentPrice: 447,
+    discount: 44,
+    installments: {
+      max: 12,
+      value: 44.70,
+    },
+    paymentMethods: ['Cartão de crédito', 'PIX', 'Boleto bancário'],
+  },
+
+  // ✅ DADOS DO INSTRUTOR (OBRIGATÓRIO)
+  instructor: {
+    name: 'Mariana Costa',
+    bio: 'Editora de vídeo e motion designer com mais de 10 anos de experiência. Trabalhou para grandes marcas e canais do YouTube com milhões de seguidores.',
+    photo: '/instructors/mariana-costa.jpg',
+    experience: '10 anos',
+    credentials: [
+      'Especialista em Adobe Creative Suite',
+      'Certificação Adobe Premiere Pro Expert',
+      'Motion Designer profissional',
+      'Editora oficial do YouTube Creators',
+      'Mais de 1.000 vídeos editados'
+    ],
+  },
+
+  testimonials: [
+    {
+      id: 1,
+      name: 'Pedro Henrique Silva',
+      role: 'YouTuber',
+      photo: '/testimonials/pedro-henrique.jpg',
+      rating: 5,
+      text: 'Meu canal cresceu de 10K para 500K inscritos após aplicar as técnicas do curso!',
+      result: 'Canal com 500K inscritos'
+    },
+    {
+      id: 2,
+      name: 'Isabela Rodrigues',
+      role: 'Editora Freelancer',
+      photo: '/testimonials/isabela-rodrigues.jpg',
+      rating: 5,
+      text: 'Me tornei freelancer e agora ganho R$ 8.000/mês editando vídeos para empresas.',
+      result: 'Renda de R$ 8.000/mês'
+    },
+    {
+      id: 3,
+      name: 'Lucas Ferreira',
+      role: 'Motion Designer',
+      photo: '/testimonials/lucas-ferreira.jpg',
+      rating: 5,
+      text: 'Consegui trabalho em produtora de TV logo após terminar o curso. After Effects mudou minha vida!',
+      result: 'Emprego em produtora de TV'
+    },
+    {
+      id: 4,
+      name: 'Ana Caroline Barros',
+      role: 'Designer em Transição',
+      photo: '/testimonials/ana-caroline-barros.jpg',
+      rating: 5,
+      text: 'Sou formada em outra área e sempre quis trabalhar com design. Com esse curso, aprendi desde o Canva até a parte mais técnica como Photoshop. Me sinto finalmente no caminho certo!',
+      result: 'Transição de carreira'
+    },
+    {
+      id: 5,
+      name: 'Camila Medeiros',
+      role: 'Empreendedora',
+      photo: '/testimonials/camila-medeiros.jpg',
+      rating: 5,
+      text: 'Estou abrindo meu próprio negócio e consegui criar toda a identidade visual graças ao curso. Logo, cartão, catálogo, tudo feito por mim! Isso é liberdade criativa.',
+      result: 'Identidade visual própria'
+    },
+    {
+      id: 6,
+      name: 'Aline Silva',
+      role: 'Designer Aprendiz',
+      photo: '/testimonials/aline-silva.jpg',
+      rating: 5,
+      text: 'Achei que seria complicado aprender tantos softwares, mas a metodologia do curso facilita muito. Cada módulo é direto ao ponto, os professores ajudam muito nos exercícios - é realmente conhecimento e prática.',
+      result: 'Domínio de múltiplos softwares'
+    },
+    {
+      id: 7,
+      name: 'Yasmin Camile',
+      role: 'Designer Criativa',
+      photo: '/testimonials/yasmin-camile.jpg',
+      rating: 5,
+      text: 'O módulo de IA foi o que mais me surpreendeu. Aprender a usar inteligência artificial no processo criativo economiza tempo e abre a mente pra novas possibilidades. É um diferencial no mercado!',
+      result: 'Diferencial com IA'
+    },
+    {
+      id: 8,
+      name: 'Carlos Souza',
+      role: 'Designer Evoluído',
+      photo: '/testimonials/carlos-souza.jpg',
+      rating: 5,
+      text: 'Ver minha evolução desde o primeiro projeto até o final do curso foi gratificante. Obrigada!!',
+      result: 'Evolução visível'
+    },
+    {
+      id: 9,
+      name: 'Patrícia Lima',
+      role: 'Criadora de Conteúdo',
+      photo: '/testimonials/patricia-lima.jpg',
+      rating: 5,
+      text: 'O Canva me salvou! Agora tudo que eu posto tem cara de profissional!',
+      result: 'Conteúdo profissional'
+    }
+  ],
+
+  faq: [
+    {
+      id: 1,
+      question: 'Quais softwares serão utilizados no curso?',
+      answer: 'Adobe Premiere Pro CC e After Effects CC. Orientamos sobre licenciamento e oferecemos alternativas para prática.'
+    },
+    {
+      id: 2,
+      question: 'Funciona para iniciantes completos em edição?',
+      answer: 'Sim! Começamos do absoluto zero, ensinando desde os fundamentos até edições cinematográficas profissionais.'
+    },
+    {
+      id: 3,
+      question: 'Vou conseguir trabalhar como editor após o curso?',
+      answer: 'Sim! Muitos alunos conseguem trabalho em 3-6 meses. Ensinamos portfolio, precificação e como conseguir clientes.'
+    },
+    {
+      id: 4,
+      question: 'O curso serve para YouTube e redes sociais?',
+      answer: 'Perfeitamente! Ensinamos formatos específicos para YouTube, Instagram, TikTok e outras plataformas.'
+    }
+  ],
+
+  themeColors: {
+    primary: '#E91E63',
+    secondary: '#9C27B0',
+    accent: '#FF4081',
+    gradient: {
+      from: '#E91E63',
+      to: '#9C27B0',
+    },
+  },
+
+  seoMeta: {
+    title: 'Curso Edição de Vídeo Completo - Escola Habilidade | Premiere Pro CC, After Effects CC - Material Incluso',
+    description: 'Torne-se Editor de Vídeo profissional. Adobe Premiere Pro CC e After Effects CC. 48 horas, apostilas inclusas, modalidades presencial e online.',
+    keywords: ['edição de vídeo', 'premiere pro cc', 'after effects cc', 'motion graphics', 'youtube', 'editor', 'apostilas inclusas'],
+    ogImage: '/og-images/edicao-video.jpg',
+    ogType: 'website',
+  },
+};
+
+// ===================================================================
+// CURSO 9: ADMINISTRAÇÃO (9 MÓDULOS CONFORME ESPECIFICADO)
+// ===================================================================
+const administracao = {
+  basicInfo: {
+    id: 'administracao-009',
+    title: 'Administração',
+    slug: 'administracao',
+    shortDescription: 'Curso completo de administração com Windows 11, Office completo, Matemática Financeira, Departamento Pessoal e Liderança.',
+    longDescription: 'Domine as ferramentas essenciais para administração moderna. Aprenda Windows 11, Office completo (Word, Excel, PowerPoint), Matemática Financeira, Departamento Pessoal, Crédito & Cobrança e Liderança Eficaz. 9 módulos completos para formação administrativa completa.',
+    category: 'Negócios',
+    level: 'Iniciante',
+    duration: '153 horas',
+    certificate: true,
+    active: true,
+  },
+  
+  // ✅ Material didático incluso
+  materials: {
+    included: true,
+    description: 'Apostilas impressas completas de cada módulo',
+    details: [
+      'Material didático impresso de todos os 9 módulos',
+      'Apostilas detalhadas com exercícios práticos',
+      'Referência permanente para estudos administrativos',
+      'Incluído no preço do curso sem custo adicional'
+    ]
+  },
+
+  // ✅ Modalidades de ensino
+  modalities: {
+    presencial: {
+      available: true,
+      description: 'Aulas presenciais na escola com instrutores especializados'
+    },
+    online: {
+      available: true,
+      description: 'Acesso remoto às aulas com suporte online'
+    }
+  },
+
+  curriculum: [
+    {
+      id: 1,
+      title: 'Windows 11',
+      description: 'Sistema operacional moderno para administração',
+      duration: '18 horas',
+      lessons: [
+        { id: 1, title: 'Introdução ao Windows 11', duration: '90 min', type: 'video' },
+        { id: 2, title: 'Aplicativos Parte I', duration: '90 min', type: 'video' },
+        { id: 3, title: 'Microsoft Edge', duration: '90 min', type: 'video' },
+        { id: 4, title: 'Explorador de Arquivos Parte I', duration: '90 min', type: 'video' },
+        { id: 5, title: 'Explorador de Arquivos Parte II', duration: '90 min', type: 'video' },
+        { id: 6, title: 'Personalizando o Sistema', duration: '90 min', type: 'video' },
+        { id: 7, title: 'Acessibilidade Parte I', duration: '90 min', type: 'video' },
+        { id: 8, title: 'Aplicativos Parte II', duration: '90 min', type: 'video' },
+        { id: 9, title: 'Aplicativos Parte III', duration: '90 min', type: 'video' },
+        { id: 10, title: 'Aplicativos Parte IV', duration: '90 min', type: 'video' },
+        { id: 11, title: 'Barra de Tarefas', duration: '90 min', type: 'video' },
+        { id: 12, title: 'Acessibilidade Parte II', duration: '90 min', type: 'video' },
+      ],
+    },
+    {
+      id: 2,
+      title: 'Word Fundamental',
+      description: 'Processamento de texto para documentos administrativos',
+      duration: '21 horas',
+      lessons: [
+        { id: 13, title: 'Introdução ao word 2019', duration: '90 min', type: 'video' },
+        { id: 14, title: 'Iniciando um documento', duration: '90 min', type: 'video' },
+        { id: 15, title: 'Formatando texto e utilização da nova Ferramenta de Aprendizagem', duration: '90 min', type: 'video' },
+        { id: 16, title: 'Inserção de tabelas e ícones SVGs', duration: '90 min', type: 'video' },
+        { id: 17, title: 'Inserção de elementos gráficos I', duration: '90 min', type: 'video' },
+        { id: 18, title: 'Inserção de elementos gráficos e imagens 3D', duration: '90 min', type: 'video' },
+        { id: 19, title: 'Criação de estruturas de texto I', duration: '90 min', type: 'video' },
+        { id: 20, title: 'Criação de estruturas de texto II', duration: '90 min', type: 'video' },
+        { id: 21, title: 'Inserção de elementos de texto e nova sintaxe LaTeX', duration: '90 min', type: 'video' },
+        { id: 22, title: 'Layout da página', duration: '90 min', type: 'video' },
+        { id: 23, title: 'Design', duration: '90 min', type: 'video' },
+        { id: 24, title: 'Revisão', duration: '90 min', type: 'video' },
+        { id: 25, title: 'Armazenamento e compartilhamento', duration: '90 min', type: 'video' },
+        { id: 26, title: 'Impressão', duration: '90 min', type: 'video' },
+      ],
+    },
+    {
+      id: 3,
+      title: 'Excel Fundamental',
+      description: 'Planilhas eletrônicas para gestão administrativa',
+      duration: '27 horas',
+      lessons: [
+        { id: 27, title: 'Introdução, Desenvolvendo a Primeira Planilha', duration: '90 min', type: 'video' },
+        { id: 28, title: 'Formatação Básica', duration: '90 min', type: 'video' },
+        { id: 29, title: 'Menu Revisão', duration: '90 min', type: 'video' },
+        { id: 30, title: 'Operações Aritméticas Básicas', duration: '90 min', type: 'video' },
+        { id: 31, title: 'Explorando Porcentagens', duration: '90 min', type: 'video' },
+        { id: 32, title: 'Fórmulas Relativas', duration: '90 min', type: 'video' },
+        { id: 33, title: 'Funções Comuns', duration: '90 min', type: 'video' },
+        { id: 34, title: 'Gráficos Parte I', duration: '90 min', type: 'video' },
+        { id: 35, title: 'Formatação Condicional', duration: '90 min', type: 'video' },
+        { id: 36, title: 'Validação de Dados', duration: '90 min', type: 'video' },
+        { id: 37, title: 'Funções De Pesquisas Básicas', duration: '90 min', type: 'video' },
+        { id: 38, title: 'Funções Comuns II', duration: '90 min', type: 'video' },
+        { id: 39, title: 'Fórmulas de texto e AutoSoma', duration: '90 min', type: 'video' },
+        { id: 40, title: 'Funções Financeiras Básicas', duration: '90 min', type: 'video' },
+        { id: 41, title: 'Gráficos Parte II', duration: '90 min', type: 'video' },
+        { id: 42, title: 'Funções de Data e Hora Básicas', duration: '90 min', type: 'video' },
+        { id: 43, title: 'Gerenciador de Nomes', duration: '90 min', type: 'video' },
+        { id: 44, title: 'Configurações, auditoria e exibição', duration: '90 min', type: 'video' },
+      ],
+    },
+    {
+      id: 4,
+      title: 'Excel Avançado',
+      description: 'Análise avançada de dados administrativos',
+      duration: '19,5 horas',
+      lessons: [
+        { id: 45, title: 'Revisão de Fórmulas e Funções', duration: '90 min', type: 'video' },
+        { id: 46, title: 'Funções De Texto', duration: '90 min', type: 'video' },
+        { id: 47, title: 'Funções Lógicas', duration: '90 min', type: 'video' },
+        { id: 48, title: 'Funções de Matemática, Trigonometria e Funções de Estatísticas – Parte 1', duration: '90 min', type: 'video' },
+        { id: 49, title: 'Funções de Estatísticas – Parte 2', duration: '90 min', type: 'video' },
+        { id: 50, title: 'Funções de Data e Hora', duration: '90 min', type: 'video' },
+        { id: 51, title: 'Auditoria de Fórmulas, Teste de Hipóteses e Funções de Informações', duration: '90 min', type: 'video' },
+        { id: 52, title: 'Funções de Pesquisa e Referência', duration: '90 min', type: 'video' },
+        { id: 53, title: 'Tabela Dinâmica e Formatação Condicional', duration: '90 min', type: 'video' },
+        { id: 54, title: 'Gráfico Dinâmico e Classificação de dados', duration: '90 min', type: 'video' },
+        { id: 55, title: 'Utilizando Formulários', duration: '90 min', type: 'video' },
+        { id: 56, title: 'Utilizando Macros e Noções de VBA', duration: '90 min', type: 'video' },
+        { id: 57, title: 'Solver e Funções Financeiras', duration: '90 min', type: 'video' },
+      ],
+    },
+    {
+      id: 5,
+      title: 'Matemática Financeira',
+      description: 'Gestão financeira com HP12C e conceitos aplicados',
+      duration: '19,5 horas',
+      lessons: [
+        { id: 58, title: 'Introdução ao uso da HP12C', duration: '90 min', type: 'video' },
+        { id: 59, title: 'Conhecendo a Calculadora', duration: '90 min', type: 'video' },
+        { id: 60, title: 'Configurando a Calculadora', duration: '90 min', type: 'video' },
+        { id: 61, title: 'Registradores, Funções e Códigos de Erros', duration: '90 min', type: 'video' },
+        { id: 62, title: 'Introdução à Mat.Finaceira e Diagrama de Fluxo', duration: '90 min', type: 'video' },
+        { id: 63, title: 'Juros Simples e Juros Compostos', duration: '90 min', type: 'video' },
+        { id: 64, title: 'Séries Uniformes, Não-Uniformes e Amortização', duration: '90 min', type: 'video' },
+        { id: 65, title: 'Taxas de Juros e Descontos', duration: '90 min', type: 'video' },
+        { id: 66, title: 'Gestão de Custo e Formação de Preço', duration: '90 min', type: 'video' },
+        { id: 67, title: 'Mercados Financeiros', duration: '90 min', type: 'video' },
+        { id: 68, title: 'Estatística – I', duration: '90 min', type: 'video' },
+        { id: 69, title: 'Estatística – II', duration: '90 min', type: 'video' },
+        { id: 70, title: 'Noções Básicas de Contabilidade', duration: '90 min', type: 'video' },
+      ],
+    },
+    {
+      id: 6,
+      title: 'Power Point',
+      description: 'Apresentações profissionais para administração',
+      duration: '18 horas',
+      lessons: [
+        { id: 71, title: 'Introdução ao Power Point 2019', duration: '90 min', type: 'video' },
+        { id: 72, title: 'Ferramentas', duration: '90 min', type: 'video' },
+        { id: 73, title: 'Iniciando uma apresentação', duration: '90 min', type: 'video' },
+        { id: 74, title: 'Texto', duration: '90 min', type: 'video' },
+        { id: 75, title: 'Layout de slide', duration: '90 min', type: 'video' },
+        { id: 76, title: 'Elementos gráficos I', duration: '90 min', type: 'video' },
+        { id: 77, title: 'Elementos gráficos II', duration: '90 min', type: 'video' },
+        { id: 78, title: 'Multimídia', duration: '90 min', type: 'video' },
+        { id: 79, title: 'Transições', duration: '90 min', type: 'video' },
+        { id: 80, title: 'Testes de apresentação', duration: '90 min', type: 'video' },
+        { id: 81, title: 'Revisão', duration: '90 min', type: 'video' },
+        { id: 82, title: 'Projeto', duration: '90 min', type: 'project' },
+      ],
+    },
+    {
+      id: 7,
+      title: 'Departamento Pessoal',
+      description: 'Gestão de pessoas e folha de pagamento',
+      duration: '13,5 horas',
+      lessons: [
+        { id: 83, title: 'Conceitos Gerais', duration: '90 min', type: 'video' },
+        { id: 84, title: 'Importância do DP', duration: '90 min', type: 'video' },
+        { id: 85, title: 'Seguridade Social', duration: '90 min', type: 'video' },
+        { id: 86, title: 'Remuneração', duration: '90 min', type: 'video' },
+        { id: 87, title: 'Pagamentos e Descontos 1', duration: '90 min', type: 'video' },
+        { id: 88, title: 'Pagamentos e Descontos 2', duration: '90 min', type: 'video' },
+        { id: 89, title: 'Jornada de Trabalho 1', duration: '90 min', type: 'video' },
+        { id: 90, title: 'Jornada de trabalho 2', duration: '90 min', type: 'video' },
+        { id: 91, title: 'Rescisão de Contrato de Trabalho', duration: '90 min', type: 'video' },
+      ],
+    },
+    {
+      id: 8,
+      title: 'Crédito, Cobrança e Atendimento',
+      description: 'Gestão financeira e relacionamento com clientes',
+      duration: '9 horas',
+      lessons: [
+        { id: 92, title: 'Operações de Crédito – Financiamento', duration: '90 min', type: 'video' },
+        { id: 93, title: 'Operações de Crédito – Empréstimos', duration: '90 min', type: 'video' },
+        { id: 94, title: 'Análise de Crédito', duration: '90 min', type: 'video' },
+        { id: 95, title: 'Limites de Crédito', duration: '90 min', type: 'video' },
+        { id: 96, title: 'Políticas de Crédito e Cobrança', duration: '90 min', type: 'video' },
+        { id: 97, title: 'Atendimento de Cobrança', duration: '90 min', type: 'video' },
+      ],
+    },
+    {
+      id: 9,
+      title: 'Liderança Eficaz',
+      description: 'Desenvolvimento de competências de liderança',
+      duration: '7,5 horas',
+      lessons: [
+        { id: 98, title: 'Objetivos da Liderança', duration: '90 min', type: 'video' },
+        { id: 99, title: 'Comunicação e Empatia', duration: '90 min', type: 'video' },
+        { id: 100, title: 'Liderança x Chefia', duration: '90 min', type: 'video' },
+        { id: 101, title: 'Responsabilidade pelos erros', duration: '90 min', type: 'video' },
+        { id: 102, title: 'Delegando e formando sucessores', duration: '90 min', type: 'video' },
+      ],
+    }
+  ],
+
+  // ✅ Novos campos para componentes
+  whyStudy: {
+    benefits: [
+      {
+        icon: 'BookOpen',
+        title: 'Formação administrativa completa',
+        description: 'Do operacional ao estratégico: todas as ferramentas para administrar com excelência'
+      },
+      {
+        icon: 'TrendUp',
+        title: 'Mercado sempre demandando',
+        description: 'Administradores são essenciais em qualquer empresa - área com demanda constante'
+      },
+      {
+        icon: 'Users',
+        title: 'Múltiplas oportunidades',
+        description: 'Trabalhe em empresas, seja freelancer ou empreenda com conhecimento sólido'
+      }
+    ]
+  },
+
+  journey: {
+    steps: [
+      {
+        number: 1,
+        title: 'Fundamentos',
+        description: 'Domine Windows 11 e Office para administração moderna',
+        icon: 'House'
+      },
+      {
+        number: 2,
+        title: 'Análise',
+        description: 'Excel avançado e matemática financeira para decisões estratégicas',
+        icon: 'Wrench'
+      },
+      {
+        number: 3,
+        title: 'Gestão',
+        description: 'Departamento pessoal, crédito & cobrança para gestão completa',
+        icon: 'Crown'
+      },
+      {
+        number: 4,
+        title: 'Liderança',
+        description: 'Desenvolva competências de liderança e gerencie equipes',
+        icon: 'Trophy'
+      }
+    ]
+  },
+
+  whatYouWillLearn: [
+    'Windows 11: produtividade total em administração',
+    'Office completo: Word, Excel e PowerPoint profissionais',
+    'Excel Fundamental e Avançado com análise de dados',
+    'Matemática Financeira com HP12C',
+    'Departamento Pessoal e gestão de pessoas',
+    'Crédito, Cobrança e Atendimento ao cliente',
+    'Liderança Eficaz e gestão de equipes',
+    'Contabilidade básica e controles financeiros',
+    'Apresentações executivas e relatórios',
+    'Material didático impresso incluso',
+    'Modalidades Presencial e Online disponíveis',
+    'Certificação profissional reconhecida'
+  ],
+
+  requirements: [
+    'Computador com Windows 10/11 ou superior',
+    '8GB de RAM (recomendado)',
+    'Conexão estável com internet',
+    'Microsoft Office (orientações de licenciamento)',
+    'Calculadora HP12C (orientações de aquisição)',
+    'Vontade de aprender gestão administrativa'
+  ],
+
+  // ✅ DADOS DE INVESTIMENTO (OBRIGATÓRIO)
+  investment: {
+    originalPrice: 1197,
+    currentPrice: 797,
+    discount: 33,
+    installments: {
+      max: 12,
+      value: 79.70,
+    },
+    paymentMethods: ['Cartão de crédito', 'PIX', 'Boleto bancário'],
+  },
+
+  // ✅ DADOS DO INSTRUTOR (OBRIGATÓRIO)
+  instructor: {
+    name: 'Equipe de Instrutores em Administração',
+    bio: 'Nossa equipe é formada por administradores, contadores e especialistas em gestão com mais de 15 anos de experiência em ensino e prática empresarial.',
+    photo: '/instructors/team-administracao.jpg',
+    experience: '15+ anos',
+    credentials: [
+      'Graduação em Administração e Contabilidade',
+      'Certificação Microsoft Office Specialist',
+      'Especialização em Gestão de Pessoas',
+      'Experiência em Departamento Pessoal',
+      'Matemática Financeira Aplicada'
+    ],
+  },
+
+  testimonials: [
+    {
+      id: 1,
+      name: 'Sandra Oliveira',
+      role: 'Assistente Administrativa',
+      photo: '/testimonials/sandra-oliveira.jpg',
+      rating: 5,
+      text: 'Estava desempregada há 2 anos. Com o curso completo, consegui trabalho em 3 meses! O Excel avançado foi fundamental.',
+      result: 'Emprego em 3 meses'
+    },
+    {
+      id: 2,
+      name: 'Roberto Santos',
+      role: 'Supervisor Administrativo',
+      photo: '/testimonials/roberto-santos.jpg',
+      rating: 5,
+      text: 'O módulo de liderança transformou minha gestão de equipe. Recebi promoção e aumento salarial de 40%.',
+      result: 'Promoção e 40% aumento'
+    },
+    {
+      id: 3,
+      name: 'Juliana Costa',
+      role: 'Analista Financeira',
+      photo: '/testimonials/juliana-costa.jpg',
+      rating: 5,
+      text: 'Matemática financeira e Excel avançado me deram base para trabalhar no mercado financeiro. Hoje ganho R$ 6.000/mês.',
+      result: 'Renda de R$ 6.000/mês'
+    },
+    {
+      id: 4,
+      name: 'Ana Caroline Barros',
+      role: 'Designer em Transição',
+      photo: '/testimonials/ana-caroline-barros.jpg',
+      rating: 5,
+      text: 'Sou formada em outra área e sempre quis trabalhar com design. Com esse curso, aprendi desde o Canva até a parte mais técnica como Photoshop. Me sinto finalmente no caminho certo!',
+      result: 'Transição de carreira'
+    },
+    {
+      id: 5,
+      name: 'Camila Medeiros',
+      role: 'Empreendedora',
+      photo: '/testimonials/camila-medeiros.jpg',
+      rating: 5,
+      text: 'Estou abrindo meu próprio negócio e consegui criar toda a identidade visual graças ao curso. Logo, cartão, catálogo, tudo feito por mim! Isso é liberdade criativa.',
+      result: 'Identidade visual própria'
+    },
+    {
+      id: 6,
+      name: 'Aline Silva',
+      role: 'Designer Aprendiz',
+      photo: '/testimonials/aline-silva.jpg',
+      rating: 5,
+      text: 'Achei que seria complicado aprender tantos softwares, mas a metodologia do curso facilita muito. Cada módulo é direto ao ponto, os professores ajudam muito nos exercícios - é realmente conhecimento e prática.',
+      result: 'Domínio de múltiplos softwares'
+    },
+    {
+      id: 7,
+      name: 'Yasmin Camile',
+      role: 'Designer Criativa',
+      photo: '/testimonials/yasmin-camile.jpg',
+      rating: 5,
+      text: 'O módulo de IA foi o que mais me surpreendeu. Aprender a usar inteligência artificial no processo criativo economiza tempo e abre a mente pra novas possibilidades. É um diferencial no mercado!',
+      result: 'Diferencial com IA'
+    },
+    {
+      id: 8,
+      name: 'Carlos Souza',
+      role: 'Designer Evoluído',
+      photo: '/testimonials/carlos-souza.jpg',
+      rating: 5,
+      text: 'Ver minha evolução desde o primeiro projeto até o final do curso foi gratificante. Obrigada!!',
+      result: 'Evolução visível'
+    },
+    {
+      id: 9,
+      name: 'Patrícia Lima',
+      role: 'Criadora de Conteúdo',
+      photo: '/testimonials/patricia-lima.jpg',
+      rating: 5,
+      text: 'O Canva me salvou! Agora tudo que eu posto tem cara de profissional!',
+      result: 'Conteúdo profissional'
+    }
+  ],
+
+  faq: [
+    {
+      id: 1,
+      question: 'É adequado para quem não tem experiência em administração?',
+      answer: 'Sim! Começamos do básico com Windows 11 e evoluímos gradualmente até gestão avançada. Perfeito para iniciantes.'
+    },
+    {
+      id: 2,
+      question: 'Preciso ter a calculadora HP12C?',
+      answer: 'Oferecemos orientações de aquisição. Durante o curso você pode usar simuladores online até adquirir a sua.'
+    },
+    {
+      id: 3,
+      question: 'O curso prepara para qual tipo de trabalho?',
+      answer: 'Assistente/Analista Administrativo, Departamento Pessoal, Financeiro, Atendimento, Supervisão e gestão de equipes.'
+    },
+    {
+      id: 4,
+      question: 'As apostilas estão incluídas no preço?',
+      answer: 'Sim! Material didático impresso completo dos 9 módulos incluso sem custo adicional.'
+    }
+  ],
+
+  themeColors: {
+    primary: '#6366F1',
+    secondary: '#8B5CF6',
+    accent: '#A78BFA',
+    gradient: {
+      from: '#6366F1',
+      to: '#8B5CF6',
+    },
+  },
+
+  seoMeta: {
+    title: 'Curso de Administração Completo - Escola Habilidade | Office, DP, Matemática Financeira - Material Incluso',
+    description: 'Curso completo de Administração: Windows 11, Office, Excel Avançado, Matemática Financeira, DP, Liderança. 153 horas, apostilas inclusas, modalidades presencial e online.',
+    keywords: ['administração completa', 'office', 'excel avançado', 'departamento pessoal', 'matemática financeira', 'liderança', 'apostilas inclusas'],
+    ogImage: '/og-images/administracao.jpg',
+    ogType: 'website',
+  },
+};
+
+// ===================================================================
+// ✅ LISTA FINAL DOS CURSOS - AGORA COM 9 CURSOS DO CATÁLOGO
 // ===================================================================
 export const COURSES_DATA = [
   informatica,           // 1. Informática (8 módulos) ✅ CORRIGIDO
@@ -2039,6 +3354,8 @@ export const COURSES_DATA = [
   inteligenciaArtificial,// 5. Inteligência Artificial (6 módulos) ✅ CORRIGIDO
   businessIntelligence,  // 6. Business Intelligence (4 módulos) ✅ CORRIGIDO
   projetista,            // 7. Projetista (2 módulos) ✅ ADICIONADO
+  edicaoVideo,           // 8. Edição de Vídeo (2 módulos) ✅ ADICIONADO
+  administracao,         // 9. Administração (9 módulos) ✅ ADICIONADO
 ];
 
 export default COURSES_DATA; 

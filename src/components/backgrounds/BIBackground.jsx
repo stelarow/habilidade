@@ -13,7 +13,7 @@ const BIBackground = ({
   const animationRef = useRef(null);
   const dataStreamsRef = useRef([]);
   const kpiCardsRef = useRef([]);
-  const dashboardRef = useRef({ animationPhase: 0, dataUpdate: 0 });
+  // dashboardRef removido - dashboard removido conforme solicitação
 
   // Configurações baseadas na performance
   const config = useMemo(() => ({
@@ -25,8 +25,7 @@ const BIBackground = ({
     kpiCount: Math.min(performanceConfig?.particleCount || 3, 2), // Era 12/6 → 3/2 (83% redução)
     kpiSpeed: performanceConfig?.staticFallback ? 0 : 0.4, // Era 0.8 → 0.4 (50% redução)
     
-    // Dashboard - REDUZIDO
-    dashboardSpeed: performanceConfig?.staticFallback ? 0 : 0.01, // Era 0.02 → 0.01 (50% redução)
+    // Dashboard removido conforme solicitação do usuário
     
     // Cores do tema BI
     colors: {
@@ -272,108 +271,7 @@ const BIBackground = ({
     }
   }
 
-  // Desenhar dashboard principal
-  const drawMainDashboard = (ctx) => {
-    if (config.dashboardSpeed === 0) return;
-    
-    dashboardRef.current.animationPhase += config.dashboardSpeed;
-    dashboardRef.current.dataUpdate += 0.01;
-    
-    const dashX = ctx.canvas.width - 250; // Era 320 → 250 (22% redução)
-    const dashY = ctx.canvas.height - 180; // Movido para parte inferior para não atrapalhar textos
-    const dashWidth = 220; // Era 300 → 220 (27% redução)
-    const dashHeight = 140; // Era 200 → 140 (30% redução)
-    
-    // Fundo do dashboard
-    ctx.save();
-    ctx.fillStyle = config.colors.background + 'F0';
-    ctx.fillRect(dashX, dashY, dashWidth, dashHeight);
-    
-    // Borda do dashboard
-    ctx.strokeStyle = config.colors.primary;
-    ctx.lineWidth = 2;
-    ctx.strokeRect(dashX, dashY, dashWidth, dashHeight);
-    
-    // Título do dashboard
-    ctx.font = 'bold 16px Arial';
-    ctx.fillStyle = config.colors.primary;
-    ctx.textAlign = 'left';
-    ctx.fillText('BI Dashboard', dashX + 15, dashY + 25);
-    
-    // Timestamp
-    ctx.font = '10px Arial';
-    ctx.fillStyle = config.colors.accent;
-    const now = new Date();
-    ctx.fillText(`Updated: ${now.toLocaleTimeString()}`, dashX + 15, dashY + 40);
-    
-    // Gráfico de tendência principal - SIMPLIFICADO
-    ctx.strokeStyle = config.colors.success;
-    ctx.lineWidth = 1; // Era 2 → 1 (50% redução)
-    ctx.beginPath();
-    
-    const chartStartX = dashX + 15;
-    const chartStartY = dashY + 50; // Era 60 → 50 (ajuste para dashboard menor)
-    const chartWidth = dashWidth - 30;
-    const chartHeight = 40; // Era 60 → 40 (33% redução)
-    
-    for (let i = 0; i <= 10; i++) { // Era 20 → 10 pontos (50% redução)
-      const x = chartStartX + (i / 10) * chartWidth;
-      const baseY = chartStartY + chartHeight/2;
-      const trend = Math.sin((i + dashboardRef.current.dataUpdate * 5) * 0.2) * 8; // Era *10*0.3*15 → *5*0.2*8
-      const growth = Math.sin((i + dashboardRef.current.dataUpdate * 3) * 0.05) * 10; // Era *5*0.1*20 → *3*0.05*10
-      const y = baseY + trend + growth - (i * 0.4); // Era 0.8 → 0.4 (50% redução)
-      
-      if (i === 0) ctx.moveTo(x, y);
-      else ctx.lineTo(x, y);
-    }
-    ctx.stroke();
-    
-    // Área sob a curva
-    ctx.save();
-    ctx.globalAlpha = 0.2;
-    ctx.fillStyle = config.colors.success;
-    ctx.lineTo(chartStartX + chartWidth, chartStartY + chartHeight);
-    ctx.lineTo(chartStartX, chartStartY + chartHeight);
-    ctx.closePath();
-    ctx.fill();
-    ctx.restore();
-    
-    // Resumo de métricas - REDUZIDO
-    const summaryY = dashY + 110; // Era 140 → 110 (ajuste para dashboard menor)
-    const summaryMetrics = [
-      { label: 'Active Users', value: '24.8K', color: config.colors.success },
-      { label: 'Sessions', value: '156.2K', color: config.colors.primary }
-      // Removido: Bounce Rate (33% redução: 3→2 métricas)
-    ];
-    
-    ctx.font = '11px Arial';
-    summaryMetrics.forEach((metric, index) => {
-      const x = dashX + 15 + index * 90;
-      
-      ctx.fillStyle = config.colors.accent;
-      ctx.textAlign = 'left';
-      ctx.fillText(metric.label, x, summaryY);
-      
-      ctx.font = 'bold 11px Arial';
-      ctx.fillStyle = metric.color;
-      ctx.fillText(metric.value, x, summaryY + 15);
-      
-      ctx.font = '11px Arial';
-    });
-    
-    // Status indicator
-    ctx.fillStyle = config.colors.success;
-    ctx.beginPath();
-    ctx.arc(dashX + dashWidth - 25, dashY + 15, 4, 0, Math.PI * 2);
-    ctx.fill();
-    
-    ctx.font = '10px Arial';
-    ctx.fillStyle = config.colors.success;
-    ctx.textAlign = 'right';
-    ctx.fillText('Live', dashX + dashWidth - 35, dashY + 20);
-    
-    ctx.restore();
-  };
+  // drawMainDashboard removida - dashboard removido conforme solicitação
 
   // Inicializar elementos
   const initializeElements = (canvas) => {
@@ -410,9 +308,9 @@ const BIBackground = ({
       kpi.draw(ctx);
     });
     
-    drawMainDashboard(ctx);
+    // drawMainDashboard removido conforme solicitação
 
-    if (config.streamSpeed > 0 || config.kpiSpeed > 0 || config.dashboardSpeed > 0) {
+    if (config.streamSpeed > 0 || config.kpiSpeed > 0) {
       animationRef.current = requestAnimationFrame(animate);
     }
   };
@@ -466,8 +364,7 @@ const BIBackground = ({
       className="absolute inset-0 w-full h-full pointer-events-none"
       style={{ 
         background: 'transparent',
-        mixBlendMode: 'multiply',
-        zIndex: -1
+        zIndex: 1
       }}
       aria-hidden="true"
     />

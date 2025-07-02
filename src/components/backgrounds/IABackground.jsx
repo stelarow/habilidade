@@ -271,67 +271,7 @@ const IABackground = ({
     ctx.restore();
   };
 
-  // Desenhar informações da rede neural
-  const drawNetworkInfo = (ctx) => {
-    if (config.networkPulseSpeed === 0) return;
-    
-    // Ajustar posição baseado no tamanho da tela
-    const isMobile = ctx.canvas.width < 768;
-    const infoX = isMobile ? 20 : 30;
-    const infoY = isMobile ? ctx.canvas.height - 140 : 30; // Mobile: mover para baixo
-    const infoWidth = isMobile ? 160 : 200;
-    const infoHeight = isMobile ? 100 : 120;
-    
-    // Fundo
-    ctx.save();
-    ctx.fillStyle = config.colors.background + 'E6';
-    ctx.fillRect(infoX, infoY, infoWidth, infoHeight);
-    
-    // Borda
-    ctx.strokeStyle = config.colors.primary;
-    ctx.lineWidth = 2;
-    ctx.strokeRect(infoX, infoY, infoWidth, infoHeight);
-    
-    // Título
-    ctx.font = 'bold 14px Arial';
-    ctx.fillStyle = config.colors.primary;
-    ctx.textAlign = 'left';
-    ctx.fillText('Neural Network', infoX + 10, infoY + 20);
-    
-    // Status da rede
-    const activeNodes = neuralNodesRef.current.filter(node => node.lastActivation > 0.1).length;
-    const totalNodes = neuralNodesRef.current.length;
-    const networkActivity = totalNodes > 0 ? (activeNodes / totalNodes * 100).toFixed(1) : 0;
-    
-    ctx.font = '12px Arial';
-    ctx.fillStyle = config.colors.accent;
-    ctx.fillText(`Nodes: ${totalNodes}`, infoX + 10, infoY + 40);
-    ctx.fillText(`Active: ${activeNodes}`, infoX + 10, infoY + 55);
-    ctx.fillText(`Activity: ${networkActivity}%`, infoX + 10, infoY + 70);
-    
-    // Barra de atividade
-    const barWidth = infoWidth - 20;
-    const barHeight = 8;
-    const barY = infoY + 85;
-    
-    ctx.fillStyle = config.colors.background;
-    ctx.fillRect(infoX + 10, barY, barWidth, barHeight);
-    
-    ctx.fillStyle = config.colors.secondary;
-    ctx.fillRect(infoX + 10, barY, (barWidth * networkActivity / 100), barHeight);
-    
-    ctx.strokeStyle = config.colors.accent;
-    ctx.lineWidth = 1;
-    ctx.strokeRect(infoX + 10, barY, barWidth, barHeight);
-    
-    // Status do processamento
-    ctx.font = '10px Arial';
-    ctx.fillStyle = config.colors.glow;
-    const processingText = networkActivity > 50 ? 'Processing...' : networkActivity > 20 ? 'Learning...' : 'Idle';
-    ctx.fillText(processingText, infoX + 10, infoY + 110);
-    
-    ctx.restore();
-  };
+  // Informações da rede neural removidas conforme solicitação
 
   // Inicializar elementos
   const initializeElements = (canvas) => {
@@ -380,7 +320,7 @@ const IABackground = ({
       flow.draw(ctx);
     });
     
-    drawNetworkInfo(ctx);
+    // drawNetworkInfo removido conforme solicitação
 
     if (config.nodeSpeed > 0 || config.dataFlowSpeed > 0 || config.networkPulseSpeed > 0) {
       animationRef.current = requestAnimationFrame(animate);
@@ -436,8 +376,7 @@ const IABackground = ({
       className="absolute inset-0 w-full h-full pointer-events-none"
       style={{ 
         background: 'transparent',
-        mixBlendMode: 'multiply',
-        zIndex: -1
+        zIndex: 1
       }}
       aria-hidden="true"
     />

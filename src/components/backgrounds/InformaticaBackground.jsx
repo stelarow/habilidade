@@ -364,7 +364,7 @@ const InformaticaBackground = ({
       className="absolute inset-0 w-full h-full pointer-events-none"
       style={{ 
         background: 'transparent',
-        mixBlendMode: 'multiply'
+        zIndex: 1
       }}
       aria-hidden="true"
     />

@@ -6,21 +6,10 @@ function CourseHero({ course, onEnrollClick }) {
   return (
     <div 
       className="relative text-center mb-16 px-4"
-      style={{
-        background: `linear-gradient(135deg, ${course.themeColors.gradient.from}15 0%, ${course.themeColors.gradient.to}15 100%), radial-gradient(circle at top, #1a1a1a 0%, #000000 100%)`
-      }}
     >
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <div 
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `radial-gradient(circle at 25% 25%, ${course.themeColors.primary}40 0%, transparent 50%), radial-gradient(circle at 75% 75%, ${course.themeColors.secondary}40 0%, transparent 50%)`
-          }}
-        />
-      </div>
+      {/* Background Pattern - Removido para permitir backgrounds únicos */}
 
-      <div className="relative z-10 max-w-4xl mx-auto pt-20 pb-16">
+      <div className="relative z-20 max-w-4xl mx-auto pt-20 pb-16">
         
         {/* Course Badge - Versão Desktop */}
         <div 

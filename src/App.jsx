@@ -1,25 +1,93 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { Suspense, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate, useParams } from 'react-router-dom';
+
+// Componente para redirecionamento de cursos
+const CourseRedirect = () => {
+  const { courseSlug } = useParams();
+  return <Navigate to={`/cursos/${courseSlug}`} replace />;
+};
+import ErrorBoundary from './components/ErrorBoundary';
+import Loading from './components/Loading';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import ErrorBoundary from './components/ErrorBoundary';
-import Home from './pages/Home';
-import CoursePage from './pages/CoursePage';
-import NotFound from './pages/NotFound';
+import AccessibilityControls from './components/AccessibilityControls';
+
+// Importações com lazy loading para code splitting
+const Home = React.lazy(() => import('./pages/Home'));
+const CoursePage = React.lazy(() => import('./pages/CoursePage'));
+const NotFound = React.lazy(() => import('./pages/NotFound'));
+
+// Otimizações de performance
+import domOptimizer from './utils/domOptimizer';
+import usePerformanceLevel from './hooks/usePerformanceLevel';
 
 function App() {
+  const { performanceLevel } = usePerformanceLevel();
+
+  // Inicializar otimizações ao montar o App
+  useEffect(() => {
+    // DOM Optimizer já é inicializado automaticamente
+    
+    // Preconnect para recursos externos
+    const preconnectLinks = [
+      'https://fonts.googleapis.com',
+      'https://fonts.gstatic.com',
+      'https://cdn.emailjs.com',
+      'https://api.emailjs.com'
+    ];
+
+    preconnectLinks.forEach(href => {
+      const link = document.createElement('link');
+      link.rel = 'preconnect';
+      link.href = href;
+      link.crossOrigin = 'anonymous';
+      document.head.appendChild(link);
+    });
+
+    // Aplicar otimizações baseadas no nível de performance
+    if (performanceLevel === 'LOW') {
+      // Reduzir animações para dispositivos baixa performance
+      document.documentElement.style.setProperty('--animation-duration', '0.1s');
+      document.documentElement.style.setProperty('--transition-duration', '0.1s');
+    }
+
+    // Cleanup no unmount
+    return () => {
+      domOptimizer.destroy();
+    };
+  }, [performanceLevel]);
+
   return (
     <ErrorBoundary>
-      <Router basename="/habilidade">
-        <div className="App">
+      <Router future={{
+        v7_startTransition: true,
+        v7_relativeSplatPath: true
+      }}>
+        <div className="App bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 min-h-screen text-zinc-50">
+          {/* Accessibility Controls */}
+          <AccessibilityControls />
+          
+          {/* Header */}
           <Header />
-          <main id="main-content" className="pt-16" role="main">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/cursos/:slug" element={<CoursePage />} />
-              <Route path="/404" element={<NotFound />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
+          
+          {/* Main Content com lazy loading otimizado */}
+          <main id="main-content" className="relative z-10">
+            <Suspense fallback={<Loading />}>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/cursos/:courseSlug" element={<CoursePage />} />
+                <Route path="/habilidade" element={<Navigate to="/" replace />} />
+                <Route path="/habilidade/" element={<Navigate to="/" replace />} />
+                <Route 
+                  path="/habilidade/cursos/:courseSlug" 
+                  element={<CourseRedirect />} 
+                />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Suspense>
           </main>
+          
+          {/* Footer */}
           <Footer />
         </div>
       </Router>
