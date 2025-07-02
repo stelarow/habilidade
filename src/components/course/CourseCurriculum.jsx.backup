@@ -1,9 +1,7 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { CaretDown, CaretUp, Article, PuzzlePiece, RocketLaunch, Users } from 'phosphor-react';
+import { CaretDown, CaretUp, Play, Article, PuzzlePiece, RocketLaunch, Users } from 'phosphor-react';
 import { useViewportSize } from '../../hooks/useViewportSize';
-import { getLessonIconByArea } from '../../utils/lessonIcons';
-import { getLessonLabel } from '../../utils/lessonLabels';
 
 function CourseCurriculum({ course }) {
   const [expandedModules, setExpandedModules] = useState(new Set([0])); // Primeiro módulo expandido por padrão
@@ -19,8 +17,14 @@ function CourseCurriculum({ course }) {
     setExpandedModules(newExpanded);
   };
 
-  const getLessonIcon = (type, courseSlug) => {
-    return getLessonIconByArea(courseSlug, type);
+  const getLessonIcon = (type) => {
+    switch (type) {
+      case 'video': return Play;
+      case 'text': return Article;
+      case 'exercise': return PuzzlePiece;
+      case 'project': return RocketLaunch;
+      default: return Play;
+    }
   };
 
   const getLessonTypeColor = (type) => {
@@ -136,7 +140,7 @@ function CourseCurriculum({ course }) {
                 <div className={isMobile ? 'px-4 pb-4' : 'px-6 pb-4'}>
                   <div className={`mt-4 ${isMobile ? 'space-y-2 max-h-96 overflow-y-auto' : 'space-y-3 md:max-h-none'} transition-all duration-300 overflow-hidden`} style={{ WebkitOverflowScrolling: 'touch' }}>
                     {module.lessons.map((lesson, lessonIndex) => {
-                      const LessonIcon = getLessonIcon(lesson.type, course.basicInfo.slug);
+                      const LessonIcon = getLessonIcon(lesson.type);
                       const iconColor = getLessonTypeColor(lesson.type);
 
                       return (
@@ -174,7 +178,10 @@ function CourseCurriculum({ course }) {
                                     color: iconColor 
                                   }}
                                 >
-                                  {getLessonLabel(course.basicInfo.slug, lesson.type)}
+                                  {lesson.type === 'video' && 'Prática'}
+                                  {lesson.type === 'text' && 'Teoria'}
+                                  {lesson.type === 'exercise' && 'Exercício'}
+                                  {lesson.type === 'project' && 'Projeto'}
                                 </span>
                                 
                                 {/* Duration */}

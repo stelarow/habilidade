@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { CaretRight, House } from 'phosphor-react';
+import { CaretRight, House, GraduationCap } from 'phosphor-react';
 
 function CourseBreadcrumb({ course }) {
   const breadcrumbs = [
@@ -68,7 +68,7 @@ function CourseBreadcrumb({ course }) {
             <>
               <div>•</div>
               <div className="flex items-center gap-1">
-                <span>🎓</span>
+                <GraduationCap size={16} weight="duotone" className="text-purple-400" />
                 Certificado
               </div>
             </>

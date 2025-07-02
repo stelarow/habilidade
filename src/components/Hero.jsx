@@ -8,29 +8,31 @@ function Hero() {
   const text = useTypewriter(words);
 
   return (
-    <Section className="text-center bg-zinc-950 overflow-visible">
+    <Section fullHeight={true} className="flex flex-col items-center justify-center text-center bg-zinc-950 overflow-visible">
       <Starfield />
       {/* Conteúdo */}
-      <h1 className="text-white font-bold text-3xl sm:text-5xl leading-relaxed tracking-tight max-w-2xl mb-10">
-        {/* Texto fixo com efeito "lâmpada de lava" */}
-        <span className="inline-block text-6xl sm:text-8xl font-extrabold gradient-text animate-gradient">
-          Habilidade em
-        </span>
+      <div className="flex flex-col items-center justify-center max-w-4xl mx-auto px-4">
+        <h1 className="text-white font-bold text-3xl sm:text-5xl leading-relaxed tracking-tight mb-10">
+          {/* Texto fixo com efeito "lâmpada de lava" */}
+          <span className="block text-6xl sm:text-8xl font-extrabold gradient-text animate-gradient mb-4">
+            Habilidade em
+          </span>
 
-        {/* Texto dinâmico com máquina de escrever */}
-        <span className="block gradient-text text-3xl sm:text-5xl pb-2">
-          {text}
-          {/* Barra piscante estilo cursor */}
-          <span className="inline-block animate-blink text-white ml-0.5">|</span>
-        </span>
-      </h1>
-      <p className="mt-16 text-zinc-300 text-xs sm:text-sm md:text-base text-center max-w-md md:max-w-none mx-auto leading-relaxed md:whitespace-nowrap">
-        Aprenda hoje as habilidades que vão liderar o mercado de amanhã.
-      </p>
-      <div className="mt-8 flex flex-col sm:flex-row gap-4">
-        <GradientButton href="#como-funciona" className="px-6 py-3 text-sm">
-          Ver Como Funciona
-        </GradientButton>
+          {/* Texto dinâmico com máquina de escrever */}
+          <span className="block gradient-text text-3xl sm:text-5xl pb-2">
+            {text}
+            {/* Barra piscante estilo cursor */}
+            <span className="inline-block animate-blink text-white ml-0.5">|</span>
+          </span>
+        </h1>
+        <p className="text-zinc-300 text-sm md:text-base lg:text-lg text-center max-w-2xl mx-auto leading-relaxed px-4">
+          Aprenda hoje as habilidades que vão liderar o mercado de amanhã.
+        </p>
+        <div className="mt-8 flex flex-col sm:flex-row gap-4">
+          <GradientButton href="#cursos" className="px-6 py-3 text-sm">
+            Ver Cursos
+          </GradientButton>
+        </div>
       </div>
 
       {/* Seta para próxima seção */}

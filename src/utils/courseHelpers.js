@@ -192,11 +192,30 @@ export function searchCourses(searchTerm, coursesData = []) {
     
     const { title, shortDescription, category } = course.basicInfo;
     
-    return (
+    // Busca nos campos básicos
+    const basicMatch = (
       title.toLowerCase().includes(term) ||
       shortDescription.toLowerCase().includes(term) ||
       category.toLowerCase().includes(term)
     );
+    
+    // Busca no currículo (módulos e aulas)
+    const curriculumMatch = course.curriculum?.some(module => {
+      // Busca no título e descrição do módulo
+      const moduleMatch = (
+        module.title?.toLowerCase().includes(term) ||
+        module.description?.toLowerCase().includes(term)
+      );
+      
+      // Busca nas aulas do módulo
+      const lessonsMatch = module.lessons?.some(lesson => 
+        lesson.title?.toLowerCase().includes(term)
+      );
+      
+      return moduleMatch || lessonsMatch;
+    });
+    
+    return basicMatch || curriculumMatch;
   });
 }
 

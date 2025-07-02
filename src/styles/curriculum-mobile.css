@@ -1,0 +1,65 @@
+/* Mobile-specific styles for CourseCurriculum */
+@media (max-width: 768px) {
+  .curriculum-container {
+    padding: 1rem;
+  }
+  
+  .curriculum-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .curriculum-controls {
+    width: 100%;
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  .curriculum-controls button {
+    flex: 1;
+    padding: 0.5rem;
+    font-size: 0.75rem;
+  }
+  
+  .module-content-expanded {
+    max-height: 24rem; /* 384px */
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .lesson-item {
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+  }
+  
+  .lesson-icon {
+    width: 2rem;
+    height: 2rem;
+  }
+  
+  .lesson-info {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .curriculum-container {
+    padding: 0.75rem;
+  }
+  
+  .module-header {
+    padding: 0.75rem;
+    min-height: 60px;
+  }
+  
+  .module-content-expanded {
+    max-height: 20rem; /* 320px */
+  }
+  
+  .curriculum-summary {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    padding: 1rem;
+  }
+} 

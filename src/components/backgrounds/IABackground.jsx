@@ -275,10 +275,12 @@ const IABackground = ({
   const drawNetworkInfo = (ctx) => {
     if (config.networkPulseSpeed === 0) return;
     
-    const infoX = 30;
-    const infoY = 30;
-    const infoWidth = 200;
-    const infoHeight = 120;
+    // Ajustar posição baseado no tamanho da tela
+    const isMobile = ctx.canvas.width < 768;
+    const infoX = isMobile ? 20 : 30;
+    const infoY = isMobile ? ctx.canvas.height - 140 : 30; // Mobile: mover para baixo
+    const infoWidth = isMobile ? 160 : 200;
+    const infoHeight = isMobile ? 100 : 120;
     
     // Fundo
     ctx.save();
@@ -434,7 +436,8 @@ const IABackground = ({
       className="absolute inset-0 w-full h-full pointer-events-none"
       style={{ 
         background: 'transparent',
-        mixBlendMode: 'multiply'
+        mixBlendMode: 'multiply',
+        zIndex: -1
       }}
       aria-hidden="true"
     />

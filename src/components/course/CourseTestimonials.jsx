@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Star, Quotes } from 'phosphor-react';
+import { Star, Quotes, Target } from 'phosphor-react';
 
 function CourseTestimonials({ course }) {
   if (!course.testimonials || course.testimonials.length === 0) {
@@ -73,14 +73,15 @@ function CourseTestimonials({ course }) {
             {/* Result Badge */}
             {testimonial.result && (
               <div 
-                className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium"
+                className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium"
                 style={{ 
                   backgroundColor: `${course.themeColors.primary}20`,
                   color: course.themeColors.primary,
                   border: `1px solid ${course.themeColors.primary}40`
                 }}
               >
-                🎯 {testimonial.result}
+                <Target size={16} weight="duotone" className="text-orange-400" />
+                {testimonial.result}
               </div>
             )}
 

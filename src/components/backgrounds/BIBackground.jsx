@@ -280,7 +280,7 @@ const BIBackground = ({
     dashboardRef.current.dataUpdate += 0.01;
     
     const dashX = ctx.canvas.width - 250; // Era 320 → 250 (22% redução)
-    const dashY = 30; // Era ctx.canvas.height - 160 → 30 (movido para cima para caber no hero)
+    const dashY = ctx.canvas.height - 180; // Movido para parte inferior para não atrapalhar textos
     const dashWidth = 220; // Era 300 → 220 (27% redução)
     const dashHeight = 140; // Era 200 → 140 (30% redução)
     
@@ -466,7 +466,8 @@ const BIBackground = ({
       className="absolute inset-0 w-full h-full pointer-events-none"
       style={{ 
         background: 'transparent',
-        mixBlendMode: 'multiply'
+        mixBlendMode: 'multiply',
+        zIndex: -1
       }}
       aria-hidden="true"
     />

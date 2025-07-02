@@ -1,5 +1,17 @@
 @import "tailwindcss";
 @import './styles/accessibility.css';
+@import './styles/curriculum-mobile.css';
+
+/* Scroll offset para compensar header fixo */
+section[id], 
+#cursos,
+#como-funciona,
+#avaliacoes,
+#contato,
+#faq,
+#contact {
+  scroll-margin-top: 5rem; /* 80px = 64px header + 16px folga */
+}
 
 /* Mobile Performance Optimizations */
 * {
@@ -244,6 +256,35 @@ button, a, [role="button"] {
   }
   .gradient-text {
     background-image: linear-gradient(to right, #d400ff, #a000ff, #00c4ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  
+  /* Gradientes temáticos para a Logo "H" */
+  .gradient-text-ai {
+    background-image: linear-gradient(to right, #22d3ee, #06b6d4, #0891b2);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  
+  .gradient-text-design {
+    background-image: linear-gradient(to right, #f472b6, #ec4899, #db2777);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  
+  .gradient-text-programming {
+    background-image: linear-gradient(to right, #4ade80, #22c55e, #16a34a);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  
+  .gradient-text-marketing {
+    background-image: linear-gradient(to right, #f97316, #ea580c, #dc2626);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -613,4 +654,152 @@ button, a, [role="button"] {
       opacity: 1;
     }
   }
+  
+  @keyframes energyRing {
+    0%, 100% { 
+      transform: scale(1) rotate(0deg);
+      opacity: 0.8;
+    }
+    50% { 
+      transform: scale(1.5) rotate(180deg);
+      opacity: 0.2;
+    }
+  }
+}
+
+/* ✨ Classes Utilitárias para Alinhamento Consistente */
+@layer utilities {
+  /* Container centralizado com largura máxima */
+  .text-container-center {
+    @apply max-w-4xl mx-auto px-4 text-center;
+  }
+  
+  /* Conteúdo alinhado à esquerda dentro de container centralizado */
+  .text-content-left {
+    @apply text-left;
+  }
+  
+  /* Centralização total com flexbox */
+  .flex-center-both {
+    @apply flex items-center justify-center;
+  }
+  
+  /* Grid responsivo consistente */
+  .grid-responsive-cards {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 justify-items-center max-w-6xl mx-auto;
+  }
+  
+  /* Card com altura consistente e alinhamento interno */
+  .card-consistent {
+    @apply w-full min-h-[120px] flex items-center;
+  }
+  
+  /* Texto responsivo padronizado */
+  .text-responsive-sm {
+    @apply text-sm md:text-base;
+  }
+  
+  .text-responsive-md {
+    @apply text-base md:text-lg lg:text-xl;
+  }
+  
+  .text-responsive-lg {
+    @apply text-lg md:text-xl lg:text-2xl;
+  }
+  
+  /* Container flex com alinhamento consistente */
+  .flex-aligned-content {
+    @apply flex flex-col items-center justify-center gap-1 min-w-0 flex-1;
+  }
+}
+
+/* Estilos especiais para o card "Escolha seu Curso" */
+.choose-card-special {
+  position: relative;
+}
+
+.choose-card-special::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, 
+    transparent, 
+    rgba(59, 130, 246, 0.3), 
+    transparent, 
+    rgba(59, 130, 246, 0.3)
+  );
+  border-radius: 16px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.choose-card-special:hover::before {
+  opacity: 1;
+  animation: rotateGradient 2s linear infinite;
+}
+
+@keyframes rotateGradient {
+  0% {
+    background: linear-gradient(45deg, 
+      transparent, 
+      rgba(59, 130, 246, 0.4), 
+      transparent, 
+      rgba(59, 130, 246, 0.4)
+    );
+  }
+  25% {
+    background: linear-gradient(135deg, 
+      transparent, 
+      rgba(59, 130, 246, 0.4), 
+      transparent, 
+      rgba(59, 130, 246, 0.4)
+    );
+  }
+  50% {
+    background: linear-gradient(225deg, 
+      transparent, 
+      rgba(59, 130, 246, 0.4), 
+      transparent, 
+      rgba(59, 130, 246, 0.4)
+    );
+  }
+  75% {
+    background: linear-gradient(315deg, 
+      transparent, 
+      rgba(59, 130, 246, 0.4), 
+      transparent, 
+      rgba(59, 130, 246, 0.4)
+    );
+  }
+  100% {
+    background: linear-gradient(45deg, 
+      transparent, 
+      rgba(59, 130, 246, 0.4), 
+      transparent, 
+      rgba(59, 130, 246, 0.4)
+    );
+  }
+}
+
+/* Animação sutil de pulsação para indicar interatividade */
+.choose-card-special .tech-badge {
+  animation: subtlePulse 3s ease-in-out infinite;
+}
+
+@keyframes subtlePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* Efeito de brilho no hover específico para o primeiro card */
+.choose-card-special:hover .tech-card {
+  box-shadow: 
+    0 0 20px rgba(59, 130, 246, 0.3),
+    0 0 40px rgba(59, 130, 246, 0.1),
+    0 10px 30px rgba(0, 0, 0, 0.3);
 }

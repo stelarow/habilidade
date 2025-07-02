@@ -1,6 +1,20 @@
 import { useParams, Navigate } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
-import { PaperPlaneTilt, User, Envelope, Phone, BookOpen, CheckCircle } from 'phosphor-react';
+import { 
+  PaperPlaneTilt, 
+  User, 
+  Envelope, 
+  Phone, 
+  BookOpen, 
+  CheckCircle,
+  Check,
+  Trophy,
+  ChatCircle,
+  Buildings,
+  Lightning,
+  Target,
+  Briefcase
+} from 'phosphor-react';
 import emailjs from '@emailjs/browser';
 import ErrorBoundary from '../components/ErrorBoundary';
 import CourseBackground from '../components/CourseBackground';
@@ -8,6 +22,9 @@ import CourseHero from '../components/course/CourseHero';
 import CourseBreadcrumb from '../components/course/CourseBreadcrumb';
 import CourseCurriculum from '../components/course/CourseCurriculum';
 import CourseTestimonials from '../components/course/CourseTestimonials';
+import CourseWhyStudy from '../components/course/CourseWhyStudy';
+import CourseJourney from '../components/course/CourseJourney';
+import CourseEnrollCTA from '../components/course/CourseEnrollCTA';
 import Loading from '../components/Loading';
 import GradientButton from '../components/GradientButton';
 import { getCourseBySlug, validateAndSanitizeCourse, generateCourseMetadata } from '../utils/courseHelpers';
@@ -86,7 +103,7 @@ function CoursePage() {
   // Handler para botão de matrícula
   const handleEnrollClick = () => {
     // Scroll para formulário de contato
-    const contactSection = document.getElementById('contact');
+    const contactSection = document.getElementById('contato');
     if (contactSection) {
       contactSection.scrollIntoView({ behavior: 'smooth' });
     }
@@ -245,61 +262,17 @@ function CoursePage() {
           <CourseHero course={course} onEnrollClick={handleEnrollClick} />
         </div>
 
+        {/* 3. Por que estudar - NOVA SEÇÃO */}
+        <CourseWhyStudy course={course} />
+
+        {/* 4. Passo a passo - NOVA SEÇÃO */}
+        <CourseJourney course={course} />
+
+        {/* 5. CTA Matricule-se - NOVA SEÇÃO */}
+        <CourseEnrollCTA course={course} onEnrollClick={handleEnrollClick} />
+
         {/* Main Content */}
         <div className="max-w-7xl mx-auto px-4 pb-16">
-          
-          {/* What You'll Learn Section */}
-          <div className="mb-16">
-            <div className="bg-gradient-to-r from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-white/10 rounded-2xl p-8">
-              <h2 className="text-3xl font-bold text-white mb-8 text-center">O que você vai aprender</h2>
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {course.whatYouWillLearn.map((item, index) => (
-                  <div key={index} className="flex items-start gap-3 group">
-                    <div 
-                      className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-1 group-hover:scale-110 transition-transform duration-200"
-                      style={{ backgroundColor: course.themeColors.primary }}
-                    >
-                      <span className="text-white text-xs font-bold">✓</span>
-                    </div>
-                    <span className="text-gray-300 leading-relaxed group-hover:text-white transition-colors duration-200">
-                      {item}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Materials Section */}
-          {course.materials?.included && (
-            <div className="mb-16">
-              <div className="bg-gradient-to-r from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-white/10 rounded-2xl p-8">
-                <div className="text-center mb-6">
-                  <div 
-                    className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
-                    style={{ backgroundColor: `${course.themeColors.primary}20`, border: `2px solid ${course.themeColors.primary}` }}
-                  >
-                    <span className="text-3xl">📖</span>
-                  </div>
-                  <h3 className="text-2xl font-bold text-white mb-2">Material Didático Incluso</h3>
-                  <p className="text-gray-300">{course.materials.description}</p>
-                </div>
-                <div className="space-y-3">
-                  {course.materials.details?.map((detail, index) => (
-                    <div key={index} className="flex items-start gap-3">
-                      <div 
-                        className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-1"
-                        style={{ backgroundColor: course.themeColors.primary }}
-                      >
-                        <span className="text-white text-xs font-bold">✓</span>
-                      </div>
-                      <span className="text-gray-300 text-sm">{detail}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          )}
 
           {/* Course Content Grid */}
           <div className="grid lg:grid-cols-3 gap-8">
@@ -308,10 +281,14 @@ function CoursePage() {
             <div className="lg:col-span-2 space-y-16">
               
               {/* Curriculum Section */}
-              <CourseCurriculum course={course} />
+              <section id="curriculo">
+                <CourseCurriculum course={course} />
+              </section>
 
               {/* Testimonials Section */}
-              <CourseTestimonials course={course} />
+              <section id="depoimentos">
+                <CourseTestimonials course={course} />
+              </section>
             </div>
 
             {/* Sidebar */}
@@ -340,25 +317,19 @@ function CoursePage() {
                     Solicitar Informações
                   </button>
 
-                  {/* Guarantees */}
+                  {/* Quick Benefits Summary */}
                   <div className="space-y-2 text-sm text-gray-400">
                     <div className="flex items-center gap-2">
-                      <span>✅</span>
-                      <span>Certificado reconhecido</span>
-                    </div>
-                    {course.materials?.included && (
-                      <div className="flex items-center gap-2">
-                        <span>📖</span>
-                        <span>{course.materials.description}</span>
-                      </div>
-                    )}
-                    <div className="flex items-center gap-2">
-                      <span>🏫</span>
-                      <span>Modalidades: Presencial ou Online</span>
+                      <Lightning size={16} weight="duotone" className="text-yellow-400" />
+                      <span>Resposta rápida</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span>✅</span>
-                      <span>Suporte durante o curso</span>
+                      <Target size={16} weight="duotone" className="text-orange-400" />
+                      <span>Atendimento personalizado</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Briefcase size={16} weight="duotone" className="text-indigo-400" />
+                      <span>Orientação profissional</span>
                     </div>
                   </div>
                 </div>
@@ -366,23 +337,25 @@ function CoursePage() {
 
               {/* FAQ */}
               {course.faq && course.faq.length > 0 && (
-                <div className="bg-gradient-to-r from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6">
-                  <h3 className="text-xl font-bold text-white mb-6">Perguntas Frequentes</h3>
-                  <div className="space-y-4">
-                    {course.faq.map((item) => (
-                      <div key={item.id} className="border-b border-gray-700 pb-4 last:border-b-0 last:pb-0">
-                        <h4 className="text-white font-semibold mb-2 text-sm">{item.question}</h4>
-                        <p className="text-gray-400 text-sm leading-relaxed">{item.answer}</p>
-                      </div>
-                    ))}
+                <section id="faq">
+                  <div className="bg-gradient-to-r from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6">
+                    <h3 className="text-xl font-bold text-white mb-6">Perguntas Frequentes</h3>
+                    <div className="space-y-4">
+                      {course.faq.map((item) => (
+                        <div key={item.id} className="border-b border-gray-700 pb-4 last:border-b-0 last:pb-0">
+                          <h4 className="text-white font-semibold mb-2 text-sm">{item.question}</h4>
+                          <p className="text-gray-400 text-sm leading-relaxed">{item.answer}</p>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                </section>
               )}
             </div>
           </div>
 
           {/* Contact Form Section - NOVO */}
-          <section id="contact" className="mt-16">
+          <section id="contato" className="mt-16">
             <div className="max-w-4xl mx-auto">
               <div className="text-center mb-12">
                 <h2 className="text-3xl sm:text-5xl font-bold text-white mb-6">

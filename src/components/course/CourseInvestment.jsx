@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { CreditCard, Money, PiggyBank, Shield, Clock, CheckCircle } from 'phosphor-react';
+import { CreditCard, Money, PiggyBank, Shield, Clock, CheckCircle, DeviceMobile } from 'phosphor-react';
 
 function CourseInvestment({ course, onEnrollClick }) {
   const formatPrice = (price) => {
@@ -181,8 +181,9 @@ function CourseInvestment({ course, onEnrollClick }) {
               Nossa equipe está pronta para esclarecer todas as suas dúvidas sobre formas de pagamento e condições especiais.
             </p>
             <div className="space-y-2 text-sm">
-              <p className="text-gray-300">
-                📱 WhatsApp: <span className="text-white">(48) 99999-9999</span>
+              <p className="text-gray-300 flex items-center gap-2">
+                <DeviceMobile size={16} weight="duotone" className="text-blue-400" />
+                WhatsApp: <span className="text-white">(48) 99999-9999</span>
               </p>
               <p className="text-gray-300">
                 📧 E-mail: <span className="text-white">contato@escolahabilidade.com.br</span>

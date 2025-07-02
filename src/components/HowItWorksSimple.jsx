@@ -117,19 +117,16 @@ function SimpleCard({ step, index }) {
 
 function HowItWorksSimple() {
   return (
-    <Section id="como-funciona" className="px-4 py-16 bg-zinc-950 text-white items-start justify-start min-h-0">
+    <Section id="como-funciona" className="px-4 py-8 bg-zinc-950 text-white items-start justify-start min-h-0">
       <div className="relative z-10 max-w-6xl mx-auto w-full">
         {/* Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-5xl font-bold mb-6">
             Habilidades que destacam você no mercado
           </h2>
-          <p className="text-zinc-300 text-lg max-w-2xl mx-auto mb-8 leading-relaxed">
+          <p className="text-zinc-300 text-lg max-w-2xl mx-auto leading-relaxed">
             Cursos práticos e objetivos para acelerar sua carreira. Aprenda fazendo e veja resultados reais na sua vida profissional.
           </p>
-          <GradientButton href="#cursos" className="px-8 py-3">
-            VEJA COMO FUNCIONA
-          </GradientButton>
         </div>
 
         {/* Cards com Efeitos Dinâmicos */}

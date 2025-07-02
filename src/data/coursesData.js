@@ -225,17 +225,67 @@ const informatica = {
     }
   ],
 
+  // ✅ Novos campos para componentes
+  whyStudy: {
+    benefits: [
+      {
+        icon: 'BookOpen',
+        title: 'Guia de aprendizado estruturado',
+        description: 'Metodologia comprovada para acelerar seu progresso do básico ao profissional'
+      },
+      {
+        icon: 'TrendUp',
+        title: 'Do básico ao avançado',
+        description: 'Evolução gradual e consistente até dominar completamente a informática'
+      },
+      {
+        icon: 'Users',
+        title: 'Você dentro do mercado',
+        description: 'Habilidades de informática realmente demandadas pelas empresas'
+      }
+    ]
+  },
+
+  journey: {
+    steps: [
+      {
+        number: 1,
+        title: 'Fundamentos',
+        description: 'Domine Windows 11 e fundamentos da informática moderna',
+        icon: 'House'
+      },
+      {
+        number: 2,
+        title: 'Produtividade',
+        description: 'Desenvolva expertise com Office e ferramentas digitais',
+        icon: 'Wrench'
+      },
+      {
+        number: 3,
+        title: 'Especialização',
+        description: 'Avance com Excel, Canva e técnicas profissionais',
+        icon: 'Crown'
+      },
+      {
+        number: 4,
+        title: 'Inovação',
+        description: 'Domine Inteligência Artificial e destaque-se no mercado',
+        icon: 'Trophy'
+      }
+    ]
+  },
+
   whatYouWillLearn: [
-    '✅ Windows 11 completo e produtividade total',
-    '✅ Microsoft Office profissional (Word, Excel, PowerPoint)',
-    '✅ Excel Fundamental e Avançado completos',
-    '✅ Ambientes digitais e navegação na internet',
-    '✅ Design com Canva para redes sociais',
-    '✅ Inteligência Artificial aplicada ao trabalho',
-    '✅ Material didático impresso incluso',
-    '✅ Modalidades Presencial e Online disponíveis',
-    '✅ Certificação profissional reconhecida',
-    '✅ Preparação completa para o mercado de trabalho'
+    'Windows 11 completo e produtividade total',
+    'Microsoft Office profissional (Word, Excel, PowerPoint)',
+    'Excel Fundamental e Avançado completos',
+    'Ambientes digitais e navegação na internet',
+    'Design com Canva para redes sociais',
+    'Inteligência Artificial aplicada ao trabalho',
+    'Material didático impresso incluso',
+    'Modalidades Presencial e Online disponíveis',
+    'Certificação profissional reconhecida',
+    'Preparação completa para o mercado de trabalho'
   ],
 
   requirements: [
@@ -479,19 +529,69 @@ const designGrafico = {
     }
   ],
 
+  // ✅ Novos campos para componentes  
+  whyStudy: {
+    benefits: [
+      {
+        icon: 'BookOpen',
+        title: 'Guia completo de design',
+        description: 'Metodologia estruturada para dominar todas as ferramentas Adobe e design profissional'
+      },
+      {
+        icon: 'TrendUp', 
+        title: 'Do iniciante ao expert',
+        description: 'Evolução progressiva desde conceitos básicos até projetos complexos'
+      },
+      {
+        icon: 'Users',
+        title: 'Portfolio profissional',
+        description: 'Crie projetos reais que impressionam clientes e empregadores'
+      }
+    ]
+  },
+
+  journey: {
+    steps: [
+      {
+        number: 1,
+        title: 'Fundamentos',
+        description: 'Domine Photoshop e conceitos básicos de design visual',
+        icon: 'House'
+      },
+      {
+        number: 2,
+        title: 'Criação Vetorial',
+        description: 'Desenvolva expertise em Illustrator e criação de logotipos',
+        icon: 'Wrench'
+      },
+      {
+        number: 3,
+        title: 'Design Editorial',
+        description: 'Avance com InDesign, CorelDRAW e projetos complexos',
+        icon: 'Crown'
+      },
+      {
+        number: 4,
+        title: 'Profissionalização',
+        description: 'Construa portfolio completo e destaque-se no mercado',
+        icon: 'Trophy'
+      }
+    ]
+  },
+
   whatYouWillLearn: [
-    '✅ Adobe Photoshop profissional para design',
-    '✅ Adobe Illustrator para criação vetorial',
-    '✅ Adobe InDesign para design editorial',
-    '✅ Canva para design rápido e eficiente',
-    '✅ CorelDRAW para ilustração e vetorização',
-    '✅ Teoria do design e composição visual',
-    '✅ Criação de logotipos e identidade visual',
-    '✅ Design para redes sociais e marketing',
-    '✅ Material didático impresso incluso',
-    '✅ Modalidades Presencial e Online disponíveis',
-    '✅ Portfolio com projetos reais',
-    '✅ Certificação profissional reconhecida'
+    'Adobe Photoshop profissional para design',
+    'Adobe Illustrator para criação vetorial',
+    'Adobe InDesign para design editorial',
+    'Canva para design rápido e eficiente',
+    'CorelDRAW para ilustração e vetorização',
+    'Teoria do design e composição visual',
+    'Criação de logotipos e identidade visual',
+    'Design para redes sociais e marketing',
+    'Material didático impresso incluso',
+    'Modalidades Presencial e Online disponíveis',
+    'Portfolio com projetos reais',
+    'Certificação profissional reconhecida'
   ],
 
   requirements: [
@@ -748,19 +848,69 @@ const programacao = {
     }
   ],
 
+  // ✅ Novos campos para componentes
+  whyStudy: {
+    benefits: [
+      {
+        icon: 'BookOpen',
+        title: 'Do zero ao programador',
+        description: 'Metodologia comprovada que leva iniciantes ao primeiro emprego em programação'
+      },
+      {
+        icon: 'TrendUp',
+        title: 'Múltiplas linguagens',
+        description: 'Domine Python, Java, PHP e Android para ser um desenvolvedor versátil'
+      },
+      {
+        icon: 'Users',
+        title: 'Mercado em alta',
+        description: 'Programadores são os profissionais mais demandados do mercado atual'
+      }
+    ]
+  },
+
+  journey: {
+    steps: [
+      {
+        number: 1,
+        title: 'Lógica',
+        description: 'Fundamentos sólidos de lógica de programação e algoritmos',
+        icon: 'House'
+      },
+      {
+        number: 2,
+        title: 'Linguagens',
+        description: 'Domine Python, Java e PHP com projetos práticos',
+        icon: 'Wrench'
+      },
+      {
+        number: 3,
+        title: 'Mobile & Web',
+        description: 'Desenvolva aplicativos Android e sistemas web completos',
+        icon: 'Crown'
+      },
+      {
+        number: 4,
+        title: 'Carreira',
+        description: 'Portfolio profissional e preparação para oportunidades',
+        icon: 'Trophy'
+      }
+    ]
+  },
+
   whatYouWillLearn: [
-    '✅ Lógica de programação sólida para qualquer linguagem',
-    '✅ Python completo para desenvolvimento web e automação',
-    '✅ Java para aplicações empresariais robustas',
-    '✅ PHP para sistemas web dinâmicos com MySQL',
-    '✅ Desenvolvimento de aplicativos Android nativos',
-    '✅ Cursor: IDE com IA integrada (em desenvolvimento)',
-    '✅ CRUD completo e banco de dados',
-    '✅ Material didático impresso incluso',
-    '✅ Modalidades Presencial e Online disponíveis',
-    '✅ Portfolio com projetos reais',
-    '✅ Preparação completa para o mercado de trabalho',
-    '✅ Do zero ao primeiro emprego como programador'
+    'Lógica de programação sólida para qualquer linguagem',
+    'Python completo para desenvolvimento web e automação',
+    'Java para aplicações empresariais robustas',
+    'PHP para sistemas web dinâmicos com MySQL',
+    'Desenvolvimento de aplicativos Android nativos',
+    'Cursor: IDE com IA integrada (em desenvolvimento)',
+    'CRUD completo e banco de dados',
+    'Material didático impresso incluso',
+    'Modalidades Presencial e Online disponíveis',
+    'Portfolio com projetos reais',
+    'Preparação completa para o mercado de trabalho',
+    'Do zero ao primeiro emprego como programador'
   ],
 
   requirements: [
@@ -980,19 +1130,69 @@ const marketingDigital = {
     }
   ],
 
+  // ✅ Novos campos para componentes
+  whyStudy: {
+    benefits: [
+      {
+        icon: 'BookOpen',
+        title: 'Estratégias que funcionam',
+        description: 'Metodologia comprovada para gerar resultados reais em marketing digital'
+      },
+      {
+        icon: 'TrendUp',
+        title: 'Multiplique vendas',
+        description: 'Técnicas avançadas para aumentar faturamento e conquistar clientes'
+      },
+      {
+        icon: 'Users',
+        title: 'Mercado em expansão',
+        description: 'Marketing digital é essencial para qualquer negócio moderno'
+      }
+    ]
+  },
+
+  journey: {
+    steps: [
+      {
+        number: 1,
+        title: 'Fundamentos',
+        description: 'Domine os pilares do marketing digital e mídias sociais',
+        icon: 'House'
+      },
+      {
+        number: 2,
+        title: 'Estratégia',
+        description: 'Desenvolva campanhas eficazes e conteúdo atrativo',
+        icon: 'Wrench'
+      },
+      {
+        number: 3,
+        title: 'Automação',
+        description: 'Facebook Business, IA Marketing e ferramentas avançadas',
+        icon: 'Crown'
+      },
+      {
+        number: 4,
+        title: 'Resultados',
+        description: 'Portfolio com campanhas reais e marca pessoal consolidada',
+        icon: 'Trophy'
+      }
+    ]
+  },
+
   whatYouWillLearn: [
-    '✅ Marketing Digital V2: estratégias modernas e eficazes',
-    '✅ Mídias Sociais: Facebook, Instagram, Twitter, LinkedIn',
-    '✅ Armazenamento em Nuvem para produtividade',
-    '✅ IA Marketing: automação inteligente (em desenvolvimento)',
-    '✅ Marketing Pessoal: construção de marca pessoal',
-    '✅ Facebook Business: campanhas profissionais',
-    '✅ Google Analytics e métricas de desempenho',
-    '✅ Criação de conteúdo atrativo para redes',
-    '✅ Material didático impresso incluso',
-    '✅ Modalidades Presencial e Online disponíveis',
-    '✅ Portfolio com campanhas reais',
-    '✅ Certificação profissional reconhecida'
+    'Marketing Digital V2: estratégias modernas e eficazes',
+    'Mídias Sociais: Facebook, Instagram, Twitter, LinkedIn',
+    'Armazenamento em Nuvem para produtividade',
+    'IA Marketing: automação inteligente (em desenvolvimento)',
+    'Marketing Pessoal: construção de marca pessoal',
+    'Facebook Business: campanhas profissionais',
+    'Google Analytics e métricas de desempenho',
+    'Criação de conteúdo atrativo para redes',
+    'Material didático impresso incluso',
+    'Modalidades Presencial e Online disponíveis',
+    'Portfolio com campanhas reais',
+    'Certificação profissional reconhecida'
   ],
 
   requirements: [
@@ -1190,19 +1390,69 @@ const inteligenciaArtificial = {
     }
   ],
 
+  // ✅ Novos campos para componentes
+  whyStudy: {
+    benefits: [
+      {
+        icon: 'BookOpen',
+        title: 'Domine o futuro',
+        description: 'Inteligência Artificial é a tecnologia que está revolucionando todos os setores'
+      },
+      {
+        icon: 'TrendUp',
+        title: 'Multiplique produtividade',
+        description: 'Automatize tarefas e aumente eficiência com ferramentas de IA avançadas'
+      },
+      {
+        icon: 'Users',
+        title: 'Diferencial competitivo',
+        description: 'Profissionais com IA ganham 300% mais e têm acesso às melhores oportunidades'
+      }
+    ]
+  },
+
+  journey: {
+    steps: [
+      {
+        number: 1,
+        title: 'Fundamentos IA',
+        description: 'Domine conceitos básicos, prompts e ferramentas essenciais',
+        icon: 'House'
+      },
+      {
+        number: 2,
+        title: 'IA nos Negócios',
+        description: 'Aplique IA estrategicamente para crescimento empresarial',
+        icon: 'Wrench'
+      },
+      {
+        number: 3,
+        title: 'Ferramentas Avançadas',
+        description: 'Cursor, Flowlabs, ElevenLabs e HatchCanvas em desenvolvimento',
+        icon: 'Crown'
+      },
+      {
+        number: 4,
+        title: 'Especialização',
+        description: 'Torne-se especialista em IA e lidere a transformação digital',
+        icon: 'Trophy'
+      }
+    ]
+  },
+
   whatYouWillLearn: [
-    '✅ IA Fundamentos: base sólida em inteligência artificial',
-    '✅ IA for Business: aplicação empresarial estratégica',
-    '✅ Cursor: em desenvolvimento',
-    '✅ Flowlabs: em desenvolvimento',
-    '✅ ElevenLabs: em desenvolvimento',
-    '✅ HatchCanvas: em desenvolvimento',
-    '✅ Prompt Engineering e criação de conteúdo',
-    '✅ Integração de IA com negócios',
-    '✅ Material didático impresso incluso',
-    '✅ Modalidades Presencial e Online disponíveis',
-    '✅ Projetos práticos com IA',
-    '✅ Certificação profissional reconhecida'
+    'IA Fundamentos: base sólida em inteligência artificial',
+    'IA for Business: aplicação empresarial estratégica',
+    'Cursor: em desenvolvimento',
+    'Flowlabs: em desenvolvimento',
+    'ElevenLabs: em desenvolvimento',
+    'HatchCanvas: em desenvolvimento',
+    'Prompt Engineering e criação de conteúdo',
+    'Integração de IA com negócios',
+    'Material didático impresso incluso',
+    'Modalidades Presencial e Online disponíveis',
+    'Projetos práticos com IA',
+    'Certificação profissional reconhecida'
   ],
 
   requirements: [
@@ -1399,19 +1649,69 @@ const businessIntelligence = {
     }
   ],
 
+  // ✅ Novos campos para componentes
+  whyStudy: {
+    benefits: [
+      {
+        icon: 'BookOpen',
+        title: 'Dados em insights',
+        description: 'Transforme dados brutos em insights estratégicos que geram resultados'
+      },
+      {
+        icon: 'TrendUp',
+        title: 'Carreira em alta',
+        description: 'Analistas de BI estão entre os profissionais mais valorizados do mercado'
+      },
+      {
+        icon: 'Users',
+        title: 'Decisões inteligentes',
+        description: 'Dashboards e análises que orientam decisões executivas estratégicas'
+      }
+    ]
+  },
+
+  journey: {
+    steps: [
+      {
+        number: 1,
+        title: 'Excel Básico',
+        description: 'Fundamentos sólidos em planilhas e análise de dados',
+        icon: 'House'
+      },
+      {
+        number: 2,
+        title: 'Excel Avançado',
+        description: 'Fórmulas complexas, VBA e automação profissional',
+        icon: 'Wrench'
+      },
+      {
+        number: 3,
+        title: 'Dashboards',
+        description: 'Visualizações executivas e painéis de controle profissionais',
+        icon: 'Crown'
+      },
+      {
+        number: 4,
+        title: 'BI Especialista',
+        description: 'IA para análise e especialização completa em Business Intelligence',
+        icon: 'Trophy'
+      }
+    ]
+  },
+
   whatYouWillLearn: [
-    '✅ Excel Fundamental: planilhas e análises básicas',
-    '✅ Excel Avançado: fórmulas complexas e VBA',
-    '✅ Dashboard: visualizações profissionais no Excel',
-    '✅ IA para Análise: em desenvolvimento',
-    '✅ Análise de dados empresariais',
-    '✅ Tabelas dinâmicas e gráficos avançados',
-    '✅ Macros e automação no Excel',
-    '✅ Dashboards executivos profissionais',
-    '✅ Material didático impresso incluso',
-    '✅ Modalidades Presencial e Online disponíveis',
-    '✅ Portfolio com projetos empresariais',
-    '✅ Certificação profissional reconhecida'
+    'Excel Fundamental: planilhas e análises básicas',
+    'Excel Avançado: fórmulas complexas e VBA',
+    'Dashboard: visualizações profissionais no Excel',
+    'IA para Análise: em desenvolvimento',
+    'Análise de dados empresariais',
+    'Tabelas dinâmicas e gráficos avançados',
+    'Macros e automação no Excel',
+    'Dashboards executivos profissionais',
+    'Material didático impresso incluso',
+    'Modalidades Presencial e Online disponíveis',
+    'Portfolio com projetos empresariais',
+    'Certificação profissional reconhecida'
   ],
 
   requirements: [
@@ -1582,19 +1882,69 @@ const projetista = {
     }
   ],
 
+  // ✅ Novos campos para componentes
+  whyStudy: {
+    benefits: [
+      {
+        icon: 'BookOpen',
+        title: 'Projetos profissionais',
+        description: 'Crie projetos arquitetônicos 3D com padrão internacional de qualidade'
+      },
+      {
+        icon: 'TrendUp',
+        title: 'Mercado em crescimento',
+        description: 'Arquitetura e design 3D são áreas em expansão com alta demanda'
+      },
+      {
+        icon: 'Users',
+        title: 'Destaque no mercado',
+        description: 'Projetos com IA e renderização realista impressionam clientes'
+      }
+    ]
+  },
+
+  journey: {
+    steps: [
+      {
+        number: 1,
+        title: 'SketchUp Básico',
+        description: 'Fundamentos de modelagem 3D e ferramentas essenciais',
+        icon: 'House'
+      },
+      {
+        number: 2,
+        title: 'SketchUp Avançado',
+        description: 'Projetos completos, componentes dinâmicos e plugins',
+        icon: 'Wrench'
+      },
+      {
+        number: 3,
+        title: 'Enscape IA',
+        description: 'Renderização em tempo real com inteligência artificial',
+        icon: 'Crown'
+      },
+      {
+        number: 4,
+        title: 'Portfolio',
+        description: 'Projetos reais e apresentações profissionais',
+        icon: 'Trophy'
+      }
+    ]
+  },
+
   whatYouWillLearn: [
-    '✅ SketchUp: modelagem 3D profissional para arquitetura',
-    '✅ Enscape: renderização em tempo real com IA',
-    '✅ Criação de projetos arquitetônicos completos',
-    '✅ Layout técnico com normas ABNT',
-    '✅ Materiais, texturas e iluminação realista',
-    '✅ Componentes dinâmicos e plugins essenciais',
-    '✅ Animações e vídeos walkthrough',
-    '✅ Realidade virtual e panoramas 360°',
-    '✅ Portfólio com projetos reais',
-    '✅ Material didático impresso incluso',
-    '✅ Modalidades Presencial e Online disponíveis',
-    '✅ Certificação profissional reconhecida'
+    'SketchUp: modelagem 3D profissional para arquitetura',
+    'Enscape: renderização em tempo real com IA',
+    'Criação de projetos arquitetônicos completos',
+    'Layout técnico com normas ABNT',
+    'Materiais, texturas e iluminação realista',
+    'Componentes dinâmicos e plugins essenciais',
+    'Animações e vídeos walkthrough',
+    'Realidade virtual e panoramas 360°',
+    'Portfólio com projetos reais',
+    'Material didático impresso incluso',
+    'Modalidades Presencial e Online disponíveis',
+    'Certificação profissional reconhecida'
   ],
 
   requirements: [

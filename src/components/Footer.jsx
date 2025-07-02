@@ -1,5 +1,6 @@
 import { MapPin, Phone, Heart, Clock, InstagramLogo, WhatsappLogo } from "phosphor-react";
 import Section from "./Section";
+import LogoH from "./LogoH";
 
 const Footer = () => {
   return (
@@ -8,7 +9,14 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
           {/* Escola Info */}
           <div className="space-y-4">
-            <h3 className="text-xl font-bold text-fuchsia-400">Escola Habilidade</h3>
+            <div className="mb-4">
+              <LogoH 
+                size="small" 
+                animated={false}
+                showFullText={true}
+                className="mb-2"
+              />
+            </div>
             <p className="text-zinc-300 text-sm leading-relaxed">
               Transformando vidas através da educação tecnológica. 
               Cursos práticos e atualizados para o mercado de trabalho.

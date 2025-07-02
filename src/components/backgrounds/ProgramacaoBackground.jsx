@@ -198,10 +198,12 @@ const ProgramacaoBackground = ({
   const drawTerminal = (ctx) => {
     if (config.terminalSpeed === 0) return;
     
-    const terminalX = 50;
-    const terminalY = 50;
-    const terminalWidth = 400;
-    const terminalHeight = 200;
+    // Ajustar posição baseado no tamanho da tela
+    const isMobile = ctx.canvas.width < 768;
+    const terminalX = isMobile ? 20 : 50;
+    const terminalY = isMobile ? ctx.canvas.height - 250 : 50; // Mobile: mover para baixo
+    const terminalWidth = isMobile ? 280 : 400;
+    const terminalHeight = isMobile ? 150 : 200;
     const fontSize = 14;
     const lineHeight = 18;
     
@@ -348,7 +350,8 @@ const ProgramacaoBackground = ({
       className="absolute inset-0 w-full h-full pointer-events-none"
       style={{ 
         background: 'transparent',
-        mixBlendMode: 'multiply'
+        mixBlendMode: 'multiply',
+        zIndex: -1
       }}
       aria-hidden="true"
     />

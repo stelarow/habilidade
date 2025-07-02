@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { GraduationCap, Star, Trophy, Clock } from 'phosphor-react';
+import { GraduationCap, Star, Trophy, Clock, CheckCircle } from 'phosphor-react';
 
 function CourseInstructor({ course }) {
   const { instructor } = course;
@@ -126,31 +126,34 @@ function CourseInstructor({ course }) {
         </p>
         <div className="flex flex-wrap justify-center gap-2 text-sm">
           <span 
-            className="px-3 py-1 rounded-full"
+            className="px-3 py-1 rounded-full flex items-center gap-1"
             style={{ 
               backgroundColor: `${course.themeColors.primary}20`,
               color: course.themeColors.primary 
             }}
           >
-            ✅ Suporte direto com o instrutor
+            <CheckCircle size={16} weight="duotone" className="text-green-400" />
+            Suporte direto com o instrutor
           </span>
           <span 
-            className="px-3 py-1 rounded-full"
+            className="px-3 py-1 rounded-full flex items-center gap-1"
             style={{ 
               backgroundColor: `${course.themeColors.primary}20`,
               color: course.themeColors.primary 
             }}
           >
-            ✅ Metodologia comprovada
+            <CheckCircle size={16} weight="duotone" className="text-green-400" />
+            Metodologia comprovada
           </span>
           <span 
-            className="px-3 py-1 rounded-full"
+            className="px-3 py-1 rounded-full flex items-center gap-1"
             style={{ 
               backgroundColor: `${course.themeColors.primary}20`,
               color: course.themeColors.primary 
             }}
           >
-            ✅ Experiência real de mercado
+            <CheckCircle size={16} weight="duotone" className="text-green-400" />
+            Experiência real de mercado
           </span>
         </div>
       </div>

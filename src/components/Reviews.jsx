@@ -187,11 +187,11 @@ const Reviews = () => {
   }
 
   return (
-    <Section id="avaliacoes" className="px-4 py-16 bg-zinc-950 text-white items-start justify-start min-h-0">
+    <Section id="avaliacoes" className="px-4 py-8 bg-zinc-950 text-white items-start justify-start min-h-0">
       <Starfield className="opacity-10" />
       
       <div className="relative z-10 max-w-7xl mx-auto w-full">
-        <div className="text-center mb-16">
+        <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 border border-cyan-400/30 text-cyan-400 px-4 py-2 rounded-full text-sm font-medium mb-6 tech-badge">
             <Star size={16} weight="fill" className="tech-icon" />
             Avaliações

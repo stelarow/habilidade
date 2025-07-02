@@ -94,13 +94,13 @@ function CourseCard({ title, slug, icon: Icon, desc, textColor, borderGradient, 
     <Link
       ref={ref}
       to={`/cursos/${slug}`}
-      className={`card-enter ${visible ? 'in-view' : ''} relative clip-card w-full md:w-[320px] h-[120px] p-[3px] bg-gradient-to-r ${borderGradient} transition-transform duration-200 hover:-translate-y-1.5 hover:scale-[1.02] ${hoverShadow} focus-visible:ring-2 ring-fuchsia-500 focus:outline-none`}
+      className={`card-enter ${visible ? 'in-view' : ''} relative clip-card w-full h-[120px] p-[3px] bg-gradient-to-r ${borderGradient} transition-transform duration-200 hover:-translate-y-1.5 hover:scale-[1.02] ${hoverShadow} focus-visible:ring-2 ring-fuchsia-500 focus:outline-none`}
     >
       <div
         className="clip-card w-full h-full flex items-center gap-6 px-8 bg-[radial-gradient(ellipse_at_60%_40%,#181a2a_0%,#0a0a0a_100%)] hover:bg-[radial-gradient(ellipse_at_60%_40%,#1a1c2e_0%,#0a0a0a_100%)] transition"
       >
         <Icon size={32} weight="duotone" className={`${textColor} flex-shrink-0`} />
-        <div className="flex flex-col gap-1 min-w-0">
+        <div className="flex flex-col gap-1 min-w-0 flex-1">
           <h3 className={`font-semibold text-lg text-left leading-tight truncate ${textColor}`}>{title}</h3>
           <p className="text-sm text-zinc-300 leading-snug text-left line-clamp-2">{desc}</p>
         </div>
@@ -111,13 +111,13 @@ function CourseCard({ title, slug, icon: Icon, desc, textColor, borderGradient, 
 
 function Courses() {
   return (
-    <Section id="cursos" className="px-4 py-12 bg-zinc-950 text-white items-start justify-start min-h-0">
+    <Section id="cursos" className="px-4 py-8 bg-zinc-950 text-white items-start justify-start min-h-0">
       <Starfield className="opacity-20" />
 
       <div className="relative z-10 max-w-7xl mx-auto">
         <h2 className="text-center text-3xl sm:text-5xl font-bold mb-12">Nossos Cursos</h2>
 
-        <div className="grid place-content-center gap-4 md:gap-3 md:[grid-template-columns:repeat(3,max-content)]">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 justify-items-center max-w-6xl mx-auto">
           {COURSES.map((c) => (
             <CourseCard key={c.title} {...c} />
           ))}
