@@ -10,7 +10,7 @@ class BackgroundPreloader {
     this.cache = new Map();
     this.loadingPromises = new Map();
     this.priorities = new Map();
-    this.maxConcurrentLoads = 2;
+    this.maxConcurrentLoads = 1; // Reduzido de 2 para 1 para economia de memória
     this.currentLoads = 0;
     this.loadQueue = [];
     
@@ -25,6 +25,9 @@ class BackgroundPreloader {
       COURSE_SLUGS.INTELIGENCIA_ARTIFICIAL, // 7º - Avançado
       COURSE_SLUGS.BUSINESS_INTELLIGENCE    // 8º - Especializado
     ]);
+
+    // Inicializar limpeza periódica
+    this.setupPeriodicCleanup();
   }
 
   setPriorities(courseOrder) {
@@ -212,7 +215,7 @@ class BackgroundPreloader {
   }
 
   // Limpar cache se necessário (para memory management)
-  clearCache(keepRecent = 3) {
+  clearCache(keepRecent = 2) { // Reduzido de 3 para 2
     if (this.cache.size <= keepRecent) return;
 
     // Manter apenas os mais recentes (algoritmo FIFO simples)
@@ -225,6 +228,17 @@ class BackgroundPreloader {
     });
 
     console.log(`[BackgroundPreloader] Cache cleared, kept ${toKeep.length} recent items`);
+  }
+
+  // Limpeza automática periódica
+  setupPeriodicCleanup() {
+    // Limpar cache a cada 5 minutos
+    setInterval(() => {
+      if (this.cache.size > 3) {
+        this.clearCache(2);
+        console.log('[BackgroundPreloader] Periodic cache cleanup executed');
+      }
+    }, 5 * 60 * 1000); // 5 minutos
   }
 
   // Estatísticas para debugging

@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useMemo } from 'react';
+import useAnimationLifecycle from '../../hooks/useAnimationLifecycle';
+import memoryManager from '../../utils/memoryManager';
 
 /**
  * Background animado para o curso de Programação
@@ -13,6 +15,12 @@ const ProgramacaoBackground = ({
   const animationRef = useRef(null);
   const codeSnippetsRef = useRef([]);
   const terminalRef = useRef({ lines: [], cursor: 0 });
+  
+  // Gerenciamento de ciclo de vida da animação
+  const { startAnimation, stopAnimation } = useAnimationLifecycle(
+    `programacao-background-${courseSlug}`,
+    [performanceConfig]
+  );
 
   // Configurações baseadas na performance
   const config = useMemo(() => ({
@@ -279,12 +287,16 @@ const ProgramacaoBackground = ({
     }
   };
 
-  // Loop de animação
+  // Loop de animação com memory management
   const animate = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
     const ctx = canvas.getContext('2d');
+    
+    // Registrar contexto para memory management
+    memoryManager.registerCanvasContext(ctx);
+    
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // Desenhar terminal
@@ -295,10 +307,6 @@ const ProgramacaoBackground = ({
       snippet.update();
       snippet.draw(ctx);
     });
-
-    if (config.codeSpeed > 0 || config.terminalSpeed > 0) {
-      animationRef.current = requestAnimationFrame(animate);
-    }
   };
 
   // Configurar canvas e inicializar
@@ -319,18 +327,19 @@ const ProgramacaoBackground = ({
     };
 
     handleResize();
-    window.addEventListener('resize', handleResize);
+    
+    // Usar memory manager para event listeners
+    memoryManager.registerEventListener(window, 'resize', handleResize);
 
-    // Iniciar animação
-    animate();
+    // Iniciar animação apenas se não for versão estática
+    if (config.codeSpeed > 0 || config.terminalSpeed > 0) {
+      startAnimation(animate);
+    }
 
     return () => {
-      window.removeEventListener('resize', handleResize);
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
+      stopAnimation();
     };
-  }, [config, deviceCapabilities]);
+  }, [config, deviceCapabilities, startAnimation, stopAnimation]);
 
   // Se for versão estática, apenas mostrar gradiente de programação
   if (performanceConfig?.staticFallback) {

@@ -39,13 +39,26 @@ class FrameRateLimiter {
   }
 
   // FPS adaptativos baseados em performance
-  static getOptimalFPS(performanceLevel) {
+  static getOptimalFPS(performanceLevel, isTabActive = true) {
+    // Reduzir drasticamente FPS quando aba não está ativa
+    if (!isTabActive) return 1;
+    
     switch (performanceLevel) {
-      case 'LOW': return 0; // Estático
-      case 'MEDIUM': return 20; // FPS reduzido
-      case 'HIGH': return 30; // FPS otimizado (era 60)
-      default: return 20;
+      case 'low': return 0; // Estático
+      case 'medium': return 15; // FPS mais reduzido (era 20)
+      case 'high': return 24; // FPS moderado (era 30)
+      default: return 15;
     }
+  }
+
+  // Limitar FPS baseado na visibilidade da aba
+  static createAdaptiveLimiter(performanceLevel) {
+    const isTabActive = !document.hidden;
+    const targetFPS = FrameRateLimiter.getOptimalFPS(performanceLevel, isTabActive);
+    
+    if (targetFPS === 0) return null; // Sem animação
+    
+    return new FrameRateLimiter(targetFPS);
   }
 }
 
