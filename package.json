@@ -12,8 +12,7 @@
     "preview": "vite preview",
     "deploy": "npm run build:production && git add dist/ && git commit -m \"Deploy: atualização do build\" && git push origin main",
     "test:data": "node src/test-courses.js",
-    "test:routes": "node -e \"const routes = ['informatica', 'programacao', 'design-grafico', 'projetista-3d', 'edicao-video', 'marketing-digital', 'inteligencia-artificial', 'business-intelligence']; console.log('✅ Testando rotas dos cursos:'); routes.forEach(slug => console.log(`  ✓ /cursos/${slug}`)); console.log(`\\n📊 Total: ${routes.length} rotas configuradas`);\""
-,
+    "test:routes": "node -e \"const routes = ['informatica', 'programacao', 'design-grafico', 'projetista-3d', 'edicao-video', 'marketing-digital', 'inteligencia-artificial', 'business-intelligence']; console.log('✅ Testando rotas dos cursos:'); routes.forEach(slug => console.log(`  ✓ /cursos/${slug}`)); console.log(`\\n📊 Total: ${routes.length} rotas configuradas`);\"",
     "optimize:assets": "echo '🎯 Otimizando assets...' && npm run optimize:images",
     "optimize:images": "echo '🖼️ Imagens já otimizadas via Vite'",
     "analyze:bundle": "echo '📊 Análise de bundle disponível em: https://bundlephobia.com'",
@@ -37,6 +36,7 @@
     "@types/react-dom": "^19.1.6",
     "@vitejs/plugin-react": "^4.5.2",
     "autoprefixer": "^10.4.21",
+    "babel-plugin-transform-remove-console": "^6.9.4",
     "eslint": "^9.29.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
@@ -46,6 +46,7 @@
     "globals": "^16.2.0",
     "postcss": "^8.5.6",
     "tailwindcss": "^4.1.11",
+    "terser": "^5.43.1",
     "vite": "^7.0.0"
   }
 }
