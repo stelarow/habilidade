@@ -214,7 +214,7 @@ function CourseCurriculum({ course }) {
                                     color: iconColor 
                                   }}
                                 >
-                                  {getLessonLabel(course.basicInfo.slug, lesson.type)}
+                                  {lesson.label || getLessonLabel(course.basicInfo.slug, lesson.type)}
                                 </span>
                                 
                                 {/* Context 7: Duration com whitespace-nowrap */}
