@@ -3,8 +3,8 @@
   command = "npm install && npm run build:production"
 
 [build.environment]
-  NODE_ENV = "production"
   NODE_VERSION = "20"
+  NPM_CONFIG_PRODUCTION = "false"
 
 # SPA Redirect
 [[redirects]]

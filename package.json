@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "npm run build:optimize",
     "build:optimize": "vite build && npm run optimize:assets && npm run analyze:bundle",
-    "build:production": "vite build",
+    "build:production": "npx vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "deploy": "npm run build:production && git add dist/ && git commit -m \"Deploy: atualização do build\" && git push origin main",
