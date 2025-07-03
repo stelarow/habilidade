@@ -18,20 +18,28 @@ const IABackground = ({
 
   // Configurações baseadas na performance
   const config = useMemo(() => ({
-    // Nós neurais
-    nodeCount: Math.min(performanceConfig?.particleCount || 25, 12),
-    nodeSpeed: performanceConfig?.staticFallback ? 0 : 0.5,
+    // Nós neurais - REDUZIDOS DRASTICAMENTE
+    nodeCount: Math.min(performanceConfig?.particleCount || 8, 4), // Era 25/12 → 8/4 (redução 68-67%)
+    nodeSpeed: performanceConfig?.staticFallback ? 0 : 0.2, // Era 0.5 → 0.2 (redução 60%)
     
-    // Conexões
-    maxConnections: Math.min(performanceConfig?.particleCount || 15, 8),
+    // Conexões - REDUZIDAS DRASTICAMENTE
+    maxConnections: Math.min(performanceConfig?.particleCount || 5, 3), // Era 15/8 → 5/3 (redução 67-63%)
     connectionDistance: 150,
     
-    // Fluxo de dados
-    dataFlowCount: Math.min(performanceConfig?.particleCount || 20, 10),
-    dataFlowSpeed: performanceConfig?.staticFallback ? 0 : 2,
+    // Fluxo de dados - REDUZIDO DRASTICAMENTE
+    dataFlowCount: Math.min(performanceConfig?.particleCount || 6, 3), // Era 20/10 → 6/3 (redução 70%)
+    dataFlowSpeed: performanceConfig?.staticFallback ? 0 : 1, // Era 2 → 1 (redução 50%)
     
     // Pulso da rede
     networkPulseSpeed: performanceConfig?.staticFallback ? 0 : 0.04,
+    
+    // Zona de exclusão central para proteger legibilidade
+    exclusionZone: {
+      x: 0.2,      // 20% da esquerda
+      y: 0.1,      // 10% do topo
+      width: 0.6,  // 60% da largura
+      height: 0.8  // 80% da altura
+    },
     
     // Cores do tema IA
     colors: {
@@ -47,16 +55,32 @@ const IABackground = ({
     }
   }), [performanceConfig]);
 
+  // Função para verificar se elemento está na zona de exclusão
+  const isInExclusionZone = (x, y, canvas) => {
+    const zone = config.exclusionZone;
+    const zoneX = canvas.width * zone.x;
+    const zoneY = canvas.height * zone.y;
+    const zoneWidth = canvas.width * zone.width;
+    const zoneHeight = canvas.height * zone.height;
+    
+    return (x > zoneX && x < zoneX + zoneWidth && y > zoneY && y < zoneY + zoneHeight);
+  };
+
   // Classe para nós neurais
   class NeuralNode {
     constructor(canvas) {
       this.canvas = canvas;
-      this.x = Math.random() * canvas.width;
-      this.y = Math.random() * canvas.height;
+      
+      // Posicionar fora da zona de exclusão
+      do {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+      } while (isInExclusionZone(this.x, this.y, canvas));
+      
       this.vx = (Math.random() - 0.5) * config.nodeSpeed;
       this.vy = (Math.random() - 0.5) * config.nodeSpeed;
-      this.size = 8 + Math.random() * 12;
-      this.opacity = 0.6 + Math.random() * 0.4;
+      this.size = 4 + Math.random() * 6; // Era 8-20 → 4-10 (redução)
+      this.opacity = 0.2 + Math.random() * 0.2; // Era 0.6-1.0 → 0.2-0.4 (redução 63%)
       this.pulse = Math.random() * Math.PI * 2;
       this.pulseSpeed = 0.02 + Math.random() * 0.03;
       this.activation = 0;
@@ -70,8 +94,18 @@ const IABackground = ({
       if (config.nodeSpeed === 0) return;
       
       // Movimento suave
-      this.x += this.vx;
-      this.y += this.vy;
+      const newX = this.x + this.vx;
+      const newY = this.y + this.vy;
+      
+      // Verificar zona de exclusão antes de mover
+      if (!isInExclusionZone(newX, newY, this.canvas)) {
+        this.x = newX;
+        this.y = newY;
+      } else {
+        // Reverter direção se entrar na zona proibida
+        this.vx *= -1;
+        this.vy *= -1;
+      }
       
       // Bounce suave nas bordas
       if (this.x <= this.size || this.x >= this.canvas.width - this.size) {
@@ -153,8 +187,8 @@ const IABackground = ({
       this.endNode = endNode;
       this.progress = 0;
       this.speed = config.dataFlowSpeed * (0.5 + Math.random() * 0.5);
-      this.size = 2 + Math.random() * 3;
-      this.opacity = 0.8 + Math.random() * 0.2;
+      this.size = 1 + Math.random() * 1.5; // Era 2-5 → 1-2.5 (redução)
+      this.opacity = 0.3 + Math.random() * 0.2; // Era 0.8-1.0 → 0.3-0.5 (redução)
       this.color = config.colors.dataFlow;
       this.life = 1;
       this.decay = 0.01 + Math.random() * 0.01;
@@ -235,7 +269,7 @@ const IABackground = ({
         const distance = nodes[i].distanceTo(nodes[j]);
         
         if (distance < config.connectionDistance) {
-          const alpha = (1 - distance / config.connectionDistance) * pulseIntensity;
+          const alpha = (1 - distance / config.connectionDistance) * pulseIntensity * 0.1; // Era sem * 0.1 → redução opacidade
           const lineWidth = alpha * 2;
           
           // Cor baseada na ativação dos nós
@@ -362,9 +396,9 @@ const IABackground = ({
   if (performanceConfig?.staticFallback) {
     return (
       <div 
-        className="absolute inset-0 opacity-10"
+        className="absolute inset-0 opacity-5"
         style={{
-          background: `linear-gradient(135deg, ${config.colors.primary} 0%, ${config.colors.secondary} 50%, ${config.colors.accent} 100%)`
+          background: `radial-gradient(ellipse at center, ${config.colors.primary}20 0%, transparent 60%)`
         }}
       />
     );

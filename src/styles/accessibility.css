@@ -248,4 +248,47 @@
 .accessibility-high-contrast .accessibility-feedback {
   background-color: #000 !important;
   border: 2px solid #fff !important;
+}
+
+/* Redução de movimento para usuários que preferem menos animações */
+@media (prefers-reduced-motion: reduce) {
+  .hero-background-animation {
+    animation: none !important;
+    transform: none !important;
+  }
+  
+  /* Desabilitar todas as animações do canvas */
+  canvas[aria-hidden="true"] {
+    display: none !important;
+  }
+  
+  /* Fallback estático para backgrounds */
+  .hero-section {
+    background: var(--gradient-subtle, radial-gradient(ellipse at center, rgba(0, 210, 211, 0.05) 0%, transparent 60%)) !important;
+  }
+}
+
+/* Melhoria da legibilidade - zona central protegida */
+.hero-content {
+  position: relative;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(1px);
+  border-radius: 8px;
+  padding: 2rem;
+}
+
+/* Contraste melhorado para texto sobre backgrounds animados */
+.hero-title,
+.hero-subtitle {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  position: relative;
+  z-index: 15;
+}
+
+/* Performance otimizada para animações */
+canvas {
+  will-change: transform;
+  backface-visibility: hidden;
+  perspective: 1000px;
 } 
