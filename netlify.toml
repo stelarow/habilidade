@@ -1,0 +1,13 @@
+[build]
+  publish = "dist"
+  command = "npm install && npm run build:production"
+
+[build.environment]
+  NODE_ENV = "production"
+  NODE_VERSION = "18"
+
+# SPA Redirect
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200 

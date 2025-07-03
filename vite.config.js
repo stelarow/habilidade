@@ -4,16 +4,9 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
-    react({
-      // Otimização do React para produção
-      babel: {
-        plugins: process.env.NODE_ENV === 'production' ? [
-          ['transform-remove-console', { exclude: ['error', 'warn'] }]
-        ] : []
-      }
-    })
+    react()
   ],
-  base: '/habilidade/',
+  base: '/',
   
   build: {
     // Code splitting otimizado para 2025
@@ -50,20 +43,8 @@ export default defineConfig({
       }
     },
     
-    // Compressão e minificação avançada
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: true,
-        drop_debugger: true,
-        pure_funcs: ['console.log', 'console.info'],
-        unused: true,
-        dead_code: true
-      },
-      format: {
-        comments: false
-      }
-    },
+    // Compressão e minificação 
+    minify: 'esbuild',
     
     // Otimizações de tamanho
     chunkSizeWarningLimit: 1000,

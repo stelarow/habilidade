@@ -8,7 +8,7 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
-# dist - Comentado para permitir commit dos arquivos buildados
+dist
 dist-ssr
 *.local
 
