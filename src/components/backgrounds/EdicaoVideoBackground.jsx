@@ -15,18 +15,18 @@ const EdicaoVideoBackground = ({
   const timelineRef = useRef({ position: 0 });
   const cameraRef = useRef(null);
 
-  // Configurações baseadas na performance - REDUZIDAS v2.0 CONFORME PLANO
+  // Configurações baseadas na performance - REDUZIDAS v1.2
   const config = useMemo(() => ({
     // Timeline - REMOVIDA COMPLETAMENTE
     timelineHeight: 0, // Era 60 → 0 (timeline removida)
     timelineSpeed: 0, // Era 0.6 → 0 (sem timeline)
     keyframeSpacing: 180,
     
-    // Frames de filme - REDUZIDOS DRASTICAMENTE
-    frameCount: Math.min(performanceConfig?.particleCount || 4, 2), // Era 12/6 → 4/2 (redução 67%)
-    frameSpeed: performanceConfig?.staticFallback ? 0 : 0.4, // Era 0.8 → 0.4 (redução 50%)
-    frameWidth: 30, // Era 45 → 30 (redução 33%)
-    frameHeight: 20, // Era 30 → 20 (redução 33%)
+    // Frames de filme - AUMENTADOS LEVEMENTE
+    frameCount: Math.min(performanceConfig?.particleCount || 12, 6), // Era 6/2 → 12/6 (aumento 200%)
+    frameSpeed: performanceConfig?.staticFallback ? 0 : 0.8, // Era 0.4 → 0.8 (aumento 100%)
+    frameWidth: 45, // era 60
+    frameHeight: 30, // era 40
     
     // Câmera de cinema - REMOVIDA
     cameraEnabled: false, // Era true → false (câmera removida)
@@ -35,14 +35,6 @@ const EdicaoVideoBackground = ({
     // Lens flares e sparkles - REMOVIDOS
     sparkleCount: 0, // era Math.min(performanceConfig?.particleCount || 20, 6)
     flareIntensity: 0, // era performanceConfig?.staticFallback ? 0 : 0.6
-    
-    // Zona de exclusão central para proteger legibilidade
-    exclusionZone: {
-      x: 0.2,      // 20% da esquerda
-      y: 0.1,      // 10% do topo
-      width: 0.6,  // 60% da largura
-      height: 0.8  // 80% da altura
-    },
     
     // Cores do tema cinematográfico
     colors: {
@@ -56,34 +48,16 @@ const EdicaoVideoBackground = ({
     }
   }), [performanceConfig]);
 
-  // Função para verificar se elemento está na zona de exclusão
-  const isInExclusionZone = (x, y, canvas) => {
-    const zone = config.exclusionZone;
-    const zoneX = canvas.width * zone.x;
-    const zoneY = canvas.height * zone.y;
-    const zoneWidth = canvas.width * zone.width;
-    const zoneHeight = canvas.height * zone.height;
-    
-    return (x > zoneX && x < zoneX + zoneWidth && y > zoneY && y < zoneY + zoneHeight);
-  };
-
   // Classe para representar um frame de filme
   class FilmFrame {
     constructor(canvas) {
       this.canvas = canvas;
       this.width = config.frameWidth;
       this.height = config.frameHeight;
-      
-      // Posicionar preferencialmente nas bordas, evitando zona central
-      let attempts = 0;
-      do {
-        this.x = Math.random() * (canvas.width + this.width) - this.width;
-        this.y = Math.random() * (canvas.height - this.height);
-        attempts++;
-      } while (isInExclusionZone(this.x + this.width/2, this.y + this.height/2, canvas) && attempts < 10);
-      
+      this.x = Math.random() * (canvas.width + this.width) - this.width;
+      this.y = Math.random() * (canvas.height - this.height);
       this.vx = -config.frameSpeed * (0.5 + Math.random() * 0.5);
-      this.opacity = 0.15 + Math.random() * 0.15; // Era 0.3-0.7 → 0.15-0.3 (redução 55%)
+      this.opacity = 0.3 + Math.random() * 0.4;
       this.rotation = (Math.random() - 0.5) * 0.2;
       this.rotationSpeed = (Math.random() - 0.5) * 0.01;
       
@@ -95,24 +69,13 @@ const EdicaoVideoBackground = ({
     update() {
       if (config.frameSpeed === 0) return;
       
-      const newX = this.x + this.vx;
-      
-      // Movimento mais previsível, evitando zona central
-      if (!isInExclusionZone(newX + this.width/2, this.y + this.height/2, this.canvas)) {
-        this.x = newX;
-      }
-      
+      this.x += this.vx;
       this.rotation += this.rotationSpeed;
       
       // Reposicionar quando sair da tela
       if (this.x < -this.width - 50) {
         this.x = this.canvas.width + 50;
-        // Reposicionar em zona segura
-        let attempts = 0;
-        do {
-          this.y = Math.random() * (this.canvas.height - this.height);
-          attempts++;
-        } while (isInExclusionZone(this.x + this.width/2, this.y + this.height/2, this.canvas) && attempts < 10);
+        this.y = Math.random() * (this.canvas.height - this.height);
       }
     }
 
@@ -512,9 +475,9 @@ const EdicaoVideoBackground = ({
   if (performanceConfig?.staticFallback) {
     return (
       <div 
-        className="absolute inset-0 opacity-5"
+        className="absolute inset-0 opacity-10"
         style={{
-          background: `radial-gradient(ellipse at center, ${config.colors.primary}20 0%, transparent 60%)`
+          background: `linear-gradient(135deg, ${config.colors.primary} 0%, ${config.colors.secondary} 50%, ${config.colors.accent} 100%)`
         }}
       />
     );
