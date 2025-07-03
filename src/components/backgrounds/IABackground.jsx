@@ -19,16 +19,16 @@ const IABackground = ({
   // Configurações baseadas na performance
   const config = useMemo(() => ({
     // Nós neurais
-    nodeCount: Math.min(performanceConfig?.particleCount || 25, 12),
-    nodeSpeed: performanceConfig?.staticFallback ? 0 : 0.5,
+    nodeCount: Math.min(performanceConfig?.particleCount || 18, 9),
+    nodeSpeed: performanceConfig?.staticFallback ? 0 : 0.3,
     
     // Conexões
-    maxConnections: Math.min(performanceConfig?.particleCount || 15, 8),
+    maxConnections: Math.min(performanceConfig?.particleCount || 12, 6),
     connectionDistance: 150,
     
     // Fluxo de dados
-    dataFlowCount: Math.min(performanceConfig?.particleCount || 20, 10),
-    dataFlowSpeed: performanceConfig?.staticFallback ? 0 : 2,
+    dataFlowCount: Math.min(performanceConfig?.particleCount || 15, 7),
+    dataFlowSpeed: performanceConfig?.staticFallback ? 0 : 1.5,
     
     // Pulso da rede
     networkPulseSpeed: performanceConfig?.staticFallback ? 0 : 0.04,
@@ -55,8 +55,8 @@ const IABackground = ({
       this.y = Math.random() * canvas.height;
       this.vx = (Math.random() - 0.5) * config.nodeSpeed;
       this.vy = (Math.random() - 0.5) * config.nodeSpeed;
-      this.size = 8 + Math.random() * 12;
-      this.opacity = 0.6 + Math.random() * 0.4;
+      this.size = 6 + Math.random() * 8;
+      this.opacity = 0.4 + Math.random() * 0.3;
       this.pulse = Math.random() * Math.PI * 2;
       this.pulseSpeed = 0.02 + Math.random() * 0.03;
       this.activation = 0;
@@ -109,7 +109,7 @@ const IABackground = ({
       else glowColor = config.colors.accent;
       
       ctx.shadowColor = glowColor;
-      ctx.shadowBlur = this.size * 2 * intensity;
+      ctx.shadowBlur = this.size * 1.5 * intensity;
       
       // Desenhar nó principal
       ctx.fillStyle = glowColor;
@@ -153,8 +153,8 @@ const IABackground = ({
       this.endNode = endNode;
       this.progress = 0;
       this.speed = config.dataFlowSpeed * (0.5 + Math.random() * 0.5);
-      this.size = 2 + Math.random() * 3;
-      this.opacity = 0.8 + Math.random() * 0.2;
+      this.size = 1.5 + Math.random() * 2;
+      this.opacity = 0.5 + Math.random() * 0.3;
       this.color = config.colors.dataFlow;
       this.life = 1;
       this.decay = 0.01 + Math.random() * 0.01;
@@ -235,15 +235,15 @@ const IABackground = ({
         const distance = nodes[i].distanceTo(nodes[j]);
         
         if (distance < config.connectionDistance) {
-          const alpha = (1 - distance / config.connectionDistance) * pulseIntensity;
-          const lineWidth = alpha * 2;
+          const alpha = (1 - distance / config.connectionDistance) * pulseIntensity * 0.7;
+          const lineWidth = alpha * 1.5;
           
           // Cor baseada na ativação dos nós
           const nodeActivation = (nodes[i].lastActivation + nodes[j].lastActivation) / 2;
           const connectionIntensity = Math.max(alpha, nodeActivation);
           
           ctx.globalAlpha = connectionIntensity;
-          ctx.strokeStyle = config.colors.connection.replace('40', Math.floor(connectionIntensity * 255).toString(16).padStart(2, '0'));
+          ctx.strokeStyle = config.colors.connection.replace('40', Math.floor(connectionIntensity * 200).toString(16).padStart(2, '0'));
           ctx.lineWidth = lineWidth;
           
           // Linha principal
@@ -255,9 +255,9 @@ const IABackground = ({
           // Glow effect para conexões ativas
           if (nodeActivation > 0.3) {
             ctx.save();
-            ctx.globalAlpha = nodeActivation * 0.5;
+            ctx.globalAlpha = nodeActivation * 0.4;
             ctx.strokeStyle = config.colors.pulse;
-            ctx.lineWidth = lineWidth + 2;
+            ctx.lineWidth = lineWidth + 1;
             ctx.beginPath();
             ctx.moveTo(nodes[i].x, nodes[i].y);
             ctx.lineTo(nodes[j].x, nodes[j].y);

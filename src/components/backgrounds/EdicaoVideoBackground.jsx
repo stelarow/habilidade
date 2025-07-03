@@ -1,3 +1,4 @@
+// Force save
 import React, { useEffect, useRef, useMemo } from 'react';
 
 /**
@@ -22,11 +23,11 @@ const EdicaoVideoBackground = ({
     timelineSpeed: 0, // Era 0.6 → 0 (sem timeline)
     keyframeSpacing: 180,
     
-    // Frames de filme - AUMENTADOS LEVEMENTE
-    frameCount: Math.min(performanceConfig?.particleCount || 12, 6), // Era 6/2 → 12/6 (aumento 200%)
-    frameSpeed: performanceConfig?.staticFallback ? 0 : 0.8, // Era 0.4 → 0.8 (aumento 100%)
-    frameWidth: 45, // era 60
-    frameHeight: 30, // era 40
+    // Frames de filme - OTIMIZADOS
+    frameCount: Math.min(performanceConfig?.particleCount || 8, 4), // Era 12/6 -> 8/4
+    frameSpeed: performanceConfig?.staticFallback ? 0 : 0.6, // Era 0.8 -> 0.6
+    frameWidth: 38,   // Era 45 -> 38
+    frameHeight: 25,  // Era 30 -> 25
     
     // Câmera de cinema - REMOVIDA
     cameraEnabled: false, // Era true → false (câmera removida)
@@ -57,7 +58,7 @@ const EdicaoVideoBackground = ({
       this.x = Math.random() * (canvas.width + this.width) - this.width;
       this.y = Math.random() * (canvas.height - this.height);
       this.vx = -config.frameSpeed * (0.5 + Math.random() * 0.5);
-      this.opacity = 0.3 + Math.random() * 0.4;
+      this.opacity = 0.2 + Math.random() * 0.3; // Era 0.3-0.7 -> 0.2-0.5
       this.rotation = (Math.random() - 0.5) * 0.2;
       this.rotationSpeed = (Math.random() - 0.5) * 0.01;
       
