@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find:*)",
+      "mcp__supabase__search_docs",
+      "mcp__filesystem__read_multiple_files",
+      "mcp__filesystem__list_directory",
+      "Bash(npx create-next-app:*)",
+      "Bash(mkdir:*)",
+      "Bash(npm install)",
+      "Bash(npm audit fix:*)",
+      "mcp__filesystem__create_directory",
+      "mcp__filesystem__write_file"
+    ],
+    "deny": []
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "filesystem",
+    "git",
+    "github",
+    "fetch",
+    "sqlite",
+    "context7",
+    "supabase"
+  ]
+}
