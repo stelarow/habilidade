@@ -31,6 +31,9 @@ interface NeuralNodeType {
   type: 'input' | 'hidden' | 'output';
   connections: any[];
   lastActivation: number;
+  distanceTo: (other: NeuralNodeType) => number;
+  update: () => void;
+  draw: (ctx: CanvasRenderingContext2D) => void;
 }
 
 interface DataFlowType {
@@ -43,6 +46,8 @@ interface DataFlowType {
   color: string;
   life: number;
   decay: number;
+  update: () => void;
+  draw: (ctx: CanvasRenderingContext2D) => void;
 }
 
 /**

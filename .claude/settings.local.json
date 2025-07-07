@@ -1,27 +1,15 @@
 {
   "permissions": {
     "allow": [
-      "Bash(find:*)",
-      "mcp__supabase__search_docs",
-      "mcp__filesystem__read_multiple_files",
-      "mcp__filesystem__list_directory",
-      "Bash(npx create-next-app:*)",
-      "Bash(mkdir:*)",
-      "Bash(npm install)",
-      "Bash(npm audit fix:*)",
-      "mcp__filesystem__create_directory",
-      "mcp__filesystem__write_file"
+      "mcp__sequential-thinking__sequentialthinking",
+      "mcp__sentry__whoami",
+      "mcp__sentry__find_organizations",
+      "mcp__sentry__find_projects",
+      "mcp__sentry__find_teams",
+      "mcp__sentry__create_project",
+      "mcp__sentry__search_docs",
+      "WebFetch(domain:github.com)"
     ],
     "deny": []
-  },
-  "enableAllProjectMcpServers": true,
-  "enabledMcpjsonServers": [
-    "filesystem",
-    "git",
-    "github",
-    "fetch",
-    "sqlite",
-    "context7",
-    "supabase"
-  ]
+  }
 }

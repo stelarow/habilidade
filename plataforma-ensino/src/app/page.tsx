@@ -1,113 +1,155 @@
-import Image from "next/image";
+'use client';
+
+import { Header, Starfield, GradientButton } from '@/components';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 export default function Home() {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+    <div className="min-h-screen hero-gradient relative overflow-hidden">
+      <Starfield count={80} />
+      <Header />
+      
+      {/* Hero Section */}
+      <main id="main-content" className="relative z-10">
+        <section className="container-custom section-padding pt-32">
+          <div className="text-center max-w-4xl mx-auto">
+            {/* Hero Title */}
+            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 text-shadow">
+              Transforme seu Futuro com{' '}
+              <span className="gradient-text">
+                Educação de Qualidade
+              </span>
+            </h1>
+            
+            {/* Hero Subtitle */}
+            <p className="text-xl md:text-2xl text-gray-300 mb-8 leading-relaxed">
+              Aprenda com os melhores profissionais e domine as tecnologias mais demandadas do mercado
+            </p>
+            
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+              <GradientButton 
+                href="/auth/register" 
+                className="px-8 py-4 text-lg font-semibold min-w-[200px]"
+              >
+                Começar Agora
+              </GradientButton>
+              
+              <Link 
+                href="/auth/login"
+                className="px-8 py-4 text-lg font-semibold border-2 border-white/30 text-white rounded-lg hover:bg-white/10 transition-all duration-300 min-w-[200px] text-center"
+              >
+                Fazer Login
+              </Link>
+            </div>
+            
+            {/* Stats */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
+              <div className="glass-effect-dark p-6 rounded-lg text-center">
+                <div className="text-3xl font-bold gradient-text mb-2">1000+</div>
+                <div className="text-gray-300">Alunos Certificados</div>
+              </div>
+              <div className="glass-effect-dark p-6 rounded-lg text-center">
+                <div className="text-3xl font-bold gradient-text mb-2">50+</div>
+                <div className="text-gray-300">Cursos Disponíveis</div>
+              </div>
+              <div className="glass-effect-dark p-6 rounded-lg text-center">
+                <div className="text-3xl font-bold gradient-text mb-2">98%</div>
+                <div className="text-gray-300">Taxa de Satisfação</div>
+              </div>
+            </div>
+          </div>
+        </section>
 
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+        {/* Features Section */}
+        <section className="container-custom section-padding">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+              Por que escolher nossa plataforma?
+            </h2>
+            <p className="text-xl text-gray-300">
+              Oferecemos a melhor experiência de aprendizado online
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="glass-effect-dark p-8 rounded-lg text-center hover:scale-105 transition-transform duration-300">
+              <div className="text-4xl mb-4">🎓</div>
+              <h3 className="text-xl font-semibold text-white mb-3">Instrutores Especialistas</h3>
+              <p className="text-gray-300">
+                Aprenda com profissionais experientes e reconhecidos no mercado
+              </p>
+            </div>
+            
+            <div className="glass-effect-dark p-8 rounded-lg text-center hover:scale-105 transition-transform duration-300">
+              <div className="text-4xl mb-4">💻</div>
+              <h3 className="text-xl font-semibold text-white mb-3">Tecnologia Moderna</h3>
+              <p className="text-gray-300">
+                Plataforma otimizada com as melhores ferramentas de ensino
+              </p>
+            </div>
+            
+            <div className="glass-effect-dark p-8 rounded-lg text-center hover:scale-105 transition-transform duration-300">
+              <div className="text-4xl mb-4">🚀</div>
+              <h3 className="text-xl font-semibold text-white mb-3">Resultados Práticos</h3>
+              <p className="text-gray-300">
+                Projetos reais que preparam você para o mercado de trabalho
+              </p>
+            </div>
+            
+            <div className="glass-effect-dark p-8 rounded-lg text-center hover:scale-105 transition-transform duration-300">
+              <div className="text-4xl mb-4">⏰</div>
+              <h3 className="text-xl font-semibold text-white mb-3">Flexibilidade Total</h3>
+              <p className="text-gray-300">
+                Estude no seu ritmo, quando e onde quiser
+              </p>
+            </div>
+            
+            <div className="glass-effect-dark p-8 rounded-lg text-center hover:scale-105 transition-transform duration-300">
+              <div className="text-4xl mb-4">🏆</div>
+              <h3 className="text-xl font-semibold text-white mb-3">Certificação</h3>
+              <p className="text-gray-300">
+                Certificados reconhecidos pelo mercado
+              </p>
+            </div>
+            
+            <div className="glass-effect-dark p-8 rounded-lg text-center hover:scale-105 transition-transform duration-300">
+              <div className="text-4xl mb-4">💬</div>
+              <h3 className="text-xl font-semibold text-white mb-3">Suporte Completo</h3>
+              <p className="text-gray-300">
+                Suporte técnico e pedagógico disponível 24/7
+              </p>
+            </div>
+          </div>
+        </section>
 
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+        {/* CTA Final */}
+        <section className="container-custom section-padding">
+          <div className="text-center glass-effect-dark p-12 rounded-lg">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+              Pronto para começar sua jornada?
+            </h2>
+            <p className="text-xl text-gray-300 mb-8">
+              Junte-se a milhares de alunos que já transformaram suas carreiras
+            </p>
+            <GradientButton 
+              href="/auth/register"
+              className="px-12 py-4 text-xl font-semibold"
+            >
+              Inscreva-se Gratuitamente
+            </GradientButton>
+          </div>
+        </section>
+      </main>
+    </div>
   );
 }
