@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { GradientButton, Loading } from '@/components/ui';
 import { Starfield } from '@/components/ui';
+import { createClient } from '@supabase/supabase-js';
 
 export default function ForgotPasswordPage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -17,15 +18,22 @@ export default function ForgotPasswordPage() {
     setError(null);
 
     try {
-      // TODO: Implement Supabase password reset
-      console.log('Password reset request for:', email);
-      
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      const supabase = createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL as string,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string
+      );
+
+      const { error: resetError } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/auth/callback`
+      });
+
+      if (resetError) {
+        throw resetError;
+      }
+
       setIsEmailSent(true);
-    } catch (err) {
-      setError('Erro ao enviar email de recuperação. Tente novamente.');
+    } catch (err: any) {
+      setError(err?.message ?? 'Erro ao enviar email de recuperação. Tente novamente.');
     } finally {
       setIsLoading(false);
     }
