@@ -15,10 +15,27 @@ export default function DashboardPage() {
       process.env.NEXT_PUBLIC_SUPABASE_URL as string,
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string
     );
-    (async () => {
+    
+    // Get initial user
+    const getInitialUser = async () => {
       const { data } = await supabase.auth.getUser();
       setUserEmail(data.user?.email ?? null);
-    })();
+    };
+    
+    getInitialUser();
+    
+    // Listen for auth state changes (handles email confirmation callbacks)
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        if (session?.user) {
+          setUserEmail(session.user.email ?? null);
+        } else {
+          setUserEmail(null);
+        }
+      }
+    );
+    
+    return () => subscription.unsubscribe();
   }, []);
 
   const handleLogout = async () => {

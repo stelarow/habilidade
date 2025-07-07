@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { autoConfirmTestUser, deleteTestUser } from '../utils/supabase-admin';
 
 function randomEmail() {
   return `user_${Date.now()}@example.com`;
@@ -10,33 +11,44 @@ const password = 'Test1234';
 test('fluxo de registro, logout e login', async ({ page }) => {
   const email = randomEmail();
 
-  // Registro
-  await page.goto('/auth/register');
-  await page.getByLabel('Nome completo').fill('Usuário Teste');
-  await page.getByLabel('Email').fill(email);
-  await page.getByLabel('Senha', { exact: true }).fill(password);
-  await page.getByLabel('Confirmar senha').fill(password);
-  await page.locator('#terms').check();
-  await page.getByRole('button', { name: 'Criar conta' }).click();
+  try {
+    // Registro
+    await page.goto('/auth/register');
+    await page.getByLabel('Nome completo').fill('Usuário Teste');
+    await page.getByLabel('Email').fill(email);
+    await page.getByLabel('Senha', { exact: true }).fill(password);
+    await page.getByLabel('Confirmar senha').fill(password);
+    await page.locator('#terms').check();
+    await page.getByRole('button', { name: 'Criar conta' }).click();
 
-  // Aguarda término do estado de carregamento
-  await page.waitForSelector('text=Criando conta...', { state: 'detached', timeout: 15000 });
+    // Aguarda término do estado de carregamento
+    await page.waitForSelector('text=Criando conta...', { state: 'detached', timeout: 15000 });
+    
+    // Auto-confirma o usuário usando admin API
+    await autoConfirmTestUser(email);
+    
+    // Aguarda um momento para a confirmação ser processada
+    await page.waitForTimeout(2000);
 
-  // Navega para a página de login
-  await page.goto('/auth/login');
+    // Navega para a página de login
+    await page.goto('/auth/login');
 
-  // Login
-  await page.getByLabel('Email').fill(email);
-  await page.getByLabel('Senha', { exact: true }).fill(password);
-  await page.getByRole('button', { name: 'Entrar' }).click();
+    // Login
+    await page.getByLabel('Email').fill(email);
+    await page.getByLabel('Senha', { exact: true }).fill(password);
+    await page.getByRole('button', { name: 'Entrar' }).click();
 
-  // Deve redirecionar ao dashboard
-  await page.waitForURL('**/dashboard', { timeout: 15000 });
-  await expect(page).toHaveURL('/dashboard');
+    // Deve redirecionar ao dashboard
+    await page.waitForURL('**/dashboard', { timeout: 15000 });
+    await expect(page).toHaveURL('/dashboard');
 
-  // Logout
-  await page.getByRole('button', { name: 'Logout' }).click();
-  await expect(page).toHaveURL('/auth/login');
+    // Logout
+    await page.getByRole('button', { name: 'Logout' }).click();
+    await expect(page).toHaveURL('/auth/login');
+  } finally {
+    // Clean up: delete test user
+    await deleteTestUser(email);
+  }
 });
 
 // Recuperação de senha (apenas valida UI)

@@ -8,7 +8,9 @@
       "mcp__sentry__find_teams",
       "mcp__sentry__create_project",
       "mcp__sentry__search_docs",
-      "WebFetch(domain:github.com)"
+      "WebFetch(domain:github.com)",
+      "mcp__sentry__find_dsns",
+      "mcp__sentry__find_issues"
     ],
     "deny": []
   }

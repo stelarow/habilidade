@@ -42,6 +42,9 @@ export default function RegisterPage() {
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string
       );
 
+      // Clear any existing session first
+      await supabase.auth.signOut();
+
       const { error: signUpError } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
