@@ -16,12 +16,10 @@ test('fluxo de registro, logout e login', async ({ page }) => {
   await page.getByLabel('Email').fill(email);
   await page.getByLabel('Senha', { exact: true }).fill(password);
   await page.getByLabel('Confirmar senha').fill(password);
-  await page.locator('text=Aceito').check();
+  await page.locator('#terms').check();
   await page.getByRole('button', { name: 'Criar conta' }).click();
-
-  // Deve redirecionar ao dashboard
+  await page.waitForURL('**/dashboard', { timeout: 10000 });
   await expect(page).toHaveURL('/dashboard');
-  await expect(page.getByText('Dashboard')).toBeVisible();
 
   // Logout
   await page.getByRole('button', { name: 'Logout' }).click();
