@@ -2,8 +2,34 @@
 
 import { GradientButton } from '@/components/ui';
 import { Starfield } from '@/components/ui';
+import { createClient } from '@supabase/supabase-js';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 export default function DashboardPage() {
+  const router = useRouter();
+  const [userEmail, setUserEmail] = useState<string | null>(null);
+
+  useEffect(() => {
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL as string,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string
+    );
+    (async () => {
+      const { data } = await supabase.auth.getUser();
+      setUserEmail(data.user?.email ?? null);
+    })();
+  }, []);
+
+  const handleLogout = async () => {
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL as string,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string
+    );
+    await supabase.auth.signOut();
+    router.push('/auth/login');
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 relative overflow-hidden">
       <Starfield count={30} className="opacity-20" />
@@ -15,10 +41,10 @@ export default function DashboardPage() {
             <h1 className="text-3xl font-bold gradient-text bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
               Dashboard
             </h1>
-            <p className="text-gray-400 mt-2">Bem-vindo à plataforma Habilidade</p>
+            <p className="text-gray-400 mt-2">Bem-vindo{userEmail ? `, ${userEmail}` : ''} à plataforma Habilidade</p>
           </div>
           
-          <GradientButton href="/auth/login">
+          <GradientButton onClick={handleLogout}>
             Logout
           </GradientButton>
         </div>
