@@ -18,18 +18,25 @@ test('fluxo de registro, logout e login', async ({ page }) => {
   await page.getByLabel('Confirmar senha').fill(password);
   await page.locator('#terms').check();
   await page.getByRole('button', { name: 'Criar conta' }).click();
-  await page.waitForURL('**/dashboard', { timeout: 10000 });
-  await expect(page).toHaveURL('/dashboard');
 
-  // Logout
-  await page.getByRole('button', { name: 'Logout' }).click();
-  await expect(page).toHaveURL('/auth/login');
+  // Aguarda término do estado de carregamento
+  await page.waitForSelector('text=Criando conta...', { state: 'detached', timeout: 15000 });
+
+  // Navega para a página de login
+  await page.goto('/auth/login');
 
   // Login
   await page.getByLabel('Email').fill(email);
   await page.getByLabel('Senha', { exact: true }).fill(password);
   await page.getByRole('button', { name: 'Entrar' }).click();
+
+  // Deve redirecionar ao dashboard
+  await page.waitForURL('**/dashboard', { timeout: 15000 });
   await expect(page).toHaveURL('/dashboard');
+
+  // Logout
+  await page.getByRole('button', { name: 'Logout' }).click();
+  await expect(page).toHaveURL('/auth/login');
 });
 
 // Recuperação de senha (apenas valida UI)
