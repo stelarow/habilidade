@@ -5,6 +5,7 @@ import { createServerClient } from '@supabase/ssr';
 export async function GET(request: NextRequest) {
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get('code');
+  const type = searchParams.get('type');
 
   if (code) {
     const cookieStore = cookies();
@@ -29,8 +30,8 @@ export async function GET(request: NextRequest) {
     await supabase.auth.exchangeCodeForSession(code);
   }
 
-  // Redireciona ao dashboard pós-autenticação/recuperação
-  return NextResponse.redirect(`${origin}/dashboard`, {
+  const redirectPath = type === 'recovery' ? '/auth/update-password' : '/dashboard';
+  return NextResponse.redirect(`${origin}${redirectPath}`, {
     status: 302,
   });
 } 
