@@ -1,6 +1,7 @@
 'use client';
 
 import React, { Component, ErrorInfo, ReactNode } from 'react';
+import * as Sentry from '@sentry/nextjs';
 
 interface ErrorBoundaryState {
   hasError: boolean;
@@ -42,6 +43,8 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
     // Callback customizado se fornecido
     if (this.props.onError) {
       this.props.onError(error, errorInfo);
+    } else if (Sentry?.captureException) {
+      Sentry.captureException(error, { extra: { errorInfo } });
     }
   }
 
