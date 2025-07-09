@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import { AccessibleVideoPlayer } from '../ui/AccessibleVideoPlayer'
 import { VideoPlayerRef, VideoTrack } from '../ui/ReactVideoPlayer'
-import { createClient } from '@/lib/supabase/client'
+import { createClient } from '../../../lib/supabase/client'
 import { Lesson, Progress } from '@/types'
 
 export interface LessonVideoPlayerProps {

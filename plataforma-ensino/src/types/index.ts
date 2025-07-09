@@ -84,7 +84,7 @@ export interface Lesson {
 }
 
 export interface Material {
-  type: 'pdf' | 'link' | 'text' | 'image'
+  type: 'pdf' | 'link' | 'text' | 'image' | 'subtitle'
   title: string
   url?: string
   content?: string

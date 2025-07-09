@@ -9,7 +9,7 @@ import {
   VideoPlayerRef,
   VideoTrack 
 } from '@/components/ui'
-import { createClient } from '@/lib/supabase/client'
+import { createClient } from '../../../lib/supabase/client'
 
 export const VideoPlayerTestPage: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState('basic')
