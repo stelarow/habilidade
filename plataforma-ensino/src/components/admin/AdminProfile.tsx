@@ -15,12 +15,18 @@ import {
   EyeSlashIcon
 } from '@heroicons/react/24/outline'
 
+type AdminUser = User & {
+  bio?: string
+  phone?: string
+  location?: string
+}
+
 interface AdminProfileProps {
-  currentUser: User | null
+  currentUser: AdminUser | null
 }
 
 export function AdminProfile({ currentUser }: AdminProfileProps) {
-  const [user, setUser] = useState(currentUser)
+  const [user, setUser] = useState<AdminUser | null>(currentUser)
   const [loading, setLoading] = useState(false)
   const [activeTab, setActiveTab] = useState('profile')
   const [showCurrentPassword, setShowCurrentPassword] = useState(false)
@@ -28,7 +34,7 @@ export function AdminProfile({ currentUser }: AdminProfileProps) {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   
   const [profileData, setProfileData] = useState({
-    name: user?.name || '',
+    name: user?.full_name || '',
     email: user?.email || '',
     bio: user?.bio || '',
     phone: user?.phone || '',
@@ -58,7 +64,7 @@ export function AdminProfile({ currentUser }: AdminProfileProps) {
       const { error } = await supabase
         .from('users')
         .update({
-          name: profileData.name,
+          full_name: profileData.name,
           bio: profileData.bio,
           phone: profileData.phone,
           location: profileData.location
@@ -67,7 +73,7 @@ export function AdminProfile({ currentUser }: AdminProfileProps) {
 
       if (error) throw error
 
-      setUser(prev => prev ? { ...prev, ...profileData } : null)
+      setUser(prev => prev ? { ...prev, full_name: profileData.name, bio: profileData.bio, phone: profileData.phone, location: profileData.location } : null)
       alert('Perfil atualizado com sucesso!')
     } catch (error) {
       console.error('Error updating profile:', error)
@@ -146,7 +152,7 @@ export function AdminProfile({ currentUser }: AdminProfileProps) {
           <UserIcon className="h-8 w-8 text-white" />
         </div>
         <div>
-          <h1 className="text-2xl font-bold text-white">{user?.name}</h1>
+          <h1 className="text-2xl font-bold text-white">{user?.full_name}</h1>
           <p className="text-gray-400">{user?.email}</p>
           <p className="text-sm text-purple-400 capitalize">{user?.role}</p>
         </div>
