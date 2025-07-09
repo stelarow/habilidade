@@ -1,12 +1,10 @@
-# Configuração Netlify para Next.js 14
+# Netlify config for marketing site (Vite)
 [build]
-  base = "plataforma-ensino"
   command = "npm run build"
-  publish = ".next"
+  publish = "dist"
 
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
-  [plugins.inputs]
-    base = "plataforma-ensino"
-
-# (Opcional) Redirects extras podem ser adicionados abaixo 
+# SPA redirect
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200 
