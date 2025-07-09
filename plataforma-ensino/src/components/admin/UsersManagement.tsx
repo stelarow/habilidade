@@ -146,11 +146,18 @@ export function UsersManagement({ users: initialUsers, currentUser }: UsersManag
         full_name: createUserData.full_name,
         role: createUserData.role as any,
         created_at: authData.user.created_at,
-        last_login: null,
-        avatar_url: null
+        last_login: '',
+        avatar_url: '',
+        updated_at: new Date().toISOString(),
+        preferences: {
+          theme: 'dark',
+          notifications: true,
+          language: 'pt-BR',
+          reduced_motion: false
+        }
       }
 
-      setUsers([...users, newUser])
+      setUsers([...users, newUser as User])
       setShowCreateModal(false)
       setCreateUserData({
         email: '',
