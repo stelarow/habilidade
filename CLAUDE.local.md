@@ -1,0 +1,1 @@
+- pode acessar o arquivo .env

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@supabase/supabase-js';
 import { GradientButton, Loading } from '@/components/ui';
@@ -15,6 +15,28 @@ export default function UpdatePasswordPage() {
     password: '',
     confirmPassword: ''
   });
+
+  // Check if user has a valid session for password update
+  useEffect(() => {
+    const checkSession = async () => {
+      const supabase = createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL as string,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string
+      );
+      
+      const { data: { session }, error } = await supabase.auth.getSession();
+      
+      if (error || !session) {
+        console.error('No valid session for password update:', error);
+        setError('Sessão expirada. Solicite um novo link de recuperação.');
+        return;
+      }
+      
+      console.log('Valid session found for password update');
+    };
+    
+    checkSession();
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -47,7 +69,7 @@ export default function UpdatePasswordPage() {
       }
       setSuccess(true);
       setTimeout(() => {
-        router.push('/dashboard');
+        router.push('/auth/login');
       }, 1500);
     } catch (err: any) {
       setError(err?.message ?? 'Erro ao atualizar a senha.');

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef, useMemo } from 'react';
+import React, { useEffect, useRef, useMemo, useCallback } from 'react';
 
 interface BackgroundProps {
   performanceConfig?: {
@@ -92,77 +92,79 @@ const AdministracaoBackground: React.FC<BackgroundProps> = ({
     }
   }), [performanceConfig]);
 
-  // Classe para documentos flutuantes
-  class FloatingDocument implements FloatingDocumentType {
-    canvas: HTMLCanvasElement;
-    x: number = 0;
-    y: number = 0;
-    vx: number = 0;
-    vy: number = 0;
-    size: number = 0;
-    rotation: number = 0;
-    rotationSpeed: number = 0;
-    opacity: number = 0;
-    age: number = 0;
+  // Classe para documentos flutuantes (memoizada para estabilidade entre renders)
+  const FloatingDocument = useMemo(() => {
+    return class implements FloatingDocumentType {
+      canvas: HTMLCanvasElement;
+      x: number = 0;
+      y: number = 0;
+      vx: number = 0;
+      vy: number = 0;
+      size: number = 0;
+      rotation: number = 0;
+      rotationSpeed: number = 0;
+      opacity: number = 0;
+      age: number = 0;
 
-    constructor(canvas: HTMLCanvasElement) {
-      this.canvas = canvas;
-      this.reset();
-      this.age = Math.random() * 1000;
-    }
-
-    reset() {
-      this.x = Math.random() * this.canvas.width;
-      this.y = Math.random() * this.canvas.height;
-      this.vx = (Math.random() - 0.5) * 0.5;
-      this.vy = (Math.random() - 0.5) * 0.5;
-      this.size = 15 + Math.random() * 20;
-      this.rotation = Math.random() * Math.PI * 2;
-      this.rotationSpeed = (Math.random() - 0.5) * 0.01;
-      this.opacity = 0.4 + Math.random() * 0.4;
-    }
-
-    update() {
-      this.age += 1;
-      this.x += this.vx * config.animationSpeed;
-      this.y += this.vy * config.animationSpeed;
-      this.rotation += this.rotationSpeed * config.animationSpeed;
-
-      // Rebote nas bordas
-      if (this.x < 0 || this.x > this.canvas.width) this.vx *= -1;
-      if (this.y < 0 || this.y > this.canvas.height) this.vy *= -1;
-
-      // Movimento fluido
-      this.vx += (Math.random() - 0.5) * 0.01;
-      this.vy += (Math.random() - 0.5) * 0.01;
-      this.vx = Math.max(-1, Math.min(1, this.vx));
-      this.vy = Math.max(-1, Math.min(1, this.vy));
-    }
-
-    draw(ctx: CanvasRenderingContext2D) {
-      ctx.save();
-      ctx.translate(this.x, this.y);
-      ctx.rotate(this.rotation);
-      ctx.globalAlpha = this.opacity;
-
-      // Desenhar documento
-      ctx.fillStyle = config.colors.primary;
-      ctx.fillRect(-this.size/2, -this.size/2, this.size, this.size * 1.2);
-      
-      // Linhas do documento
-      ctx.strokeStyle = config.colors.light;
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      for (let i = 0; i < 3; i++) {
-        const y = -this.size/3 + (i * this.size/4);
-        ctx.moveTo(-this.size/3, y);
-        ctx.lineTo(this.size/3, y);
+      constructor(canvas: HTMLCanvasElement) {
+        this.canvas = canvas;
+        this.reset();
+        this.age = Math.random() * 1000;
       }
-      ctx.stroke();
 
-      ctx.restore();
-    }
-  }
+      reset() {
+        this.x = Math.random() * this.canvas.width;
+        this.y = Math.random() * this.canvas.height;
+        this.vx = (Math.random() - 0.5) * 0.5;
+        this.vy = (Math.random() - 0.5) * 0.5;
+        this.size = 15 + Math.random() * 20;
+        this.rotation = Math.random() * Math.PI * 2;
+        this.rotationSpeed = (Math.random() - 0.5) * 0.01;
+        this.opacity = 0.4 + Math.random() * 0.4;
+      }
+
+      update() {
+        this.age += 1;
+        this.x += this.vx * config.animationSpeed;
+        this.y += this.vy * config.animationSpeed;
+        this.rotation += this.rotationSpeed * config.animationSpeed;
+
+        // Rebote nas bordas
+        if (this.x < 0 || this.x > this.canvas.width) this.vx *= -1;
+        if (this.y < 0 || this.y > this.canvas.height) this.vy *= -1;
+
+        // Movimento fluido
+        this.vx += (Math.random() - 0.5) * 0.01;
+        this.vy += (Math.random() - 0.5) * 0.01;
+        this.vx = Math.max(-1, Math.min(1, this.vx));
+        this.vy = Math.max(-1, Math.min(1, this.vy));
+      }
+
+      draw(ctx: CanvasRenderingContext2D) {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.rotation);
+        ctx.globalAlpha = this.opacity;
+
+        // Desenhar documento
+        ctx.fillStyle = config.colors.primary;
+        ctx.fillRect(-this.size/2, -this.size/2, this.size, this.size * 1.2);
+        
+        // Linhas do documento
+        ctx.strokeStyle = config.colors.light;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        for (let i = 0; i < 3; i++) {
+          const y = -this.size/3 + (i * this.size/4);
+          ctx.moveTo(-this.size/3, y);
+          ctx.lineTo(this.size/3, y);
+        }
+        ctx.stroke();
+
+        ctx.restore();
+      }
+    };
+  }, [config.colors.primary, config.colors.light]);
 
   // Classe para gráficos flutuantes
   class FloatingChart implements FloatingChartType {
@@ -275,7 +277,7 @@ const AdministracaoBackground: React.FC<BackgroundProps> = ({
   }
 
   // Loop de animação
-  const animate = () => {
+  const animate = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -305,7 +307,7 @@ const AdministracaoBackground: React.FC<BackgroundProps> = ({
     if (config.animationSpeed > 0) {
       animationRef.current = requestAnimationFrame(animate);
     }
-  };
+  }, [config]);
 
   // Setup do canvas
   useEffect(() => {
@@ -338,7 +340,7 @@ const AdministracaoBackground: React.FC<BackgroundProps> = ({
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [config, deviceCapabilities]);
+  }, [config, deviceCapabilities, animate, FloatingDocument, FloatingChart, DataParticle]);
 
   // Fallback estático para performance baixa
   if (performanceConfig?.staticFallback) {

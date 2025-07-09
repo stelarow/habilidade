@@ -352,7 +352,7 @@ const InformaticaBackground: React.FC<BackgroundProps> = ({
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [config, deviceCapabilities]);
+  }, [config, deviceCapabilities, animate, initializeElements]);
 
   // Se for versão estática, apenas mostrar gradiente digital
   if (performanceConfig?.staticFallback) {

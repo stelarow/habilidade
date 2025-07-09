@@ -308,11 +308,12 @@ const Projetista3DBackground: React.FC<BackgroundProps> = ({
 
     return () => {
       window.removeEventListener('resize', handleResize);
-      if (animationRef.current.current) {
-        cancelAnimationFrame(animationRef.current.current);
+      const currentAnimation = animationRef.current?.current;
+      if (currentAnimation) {
+        cancelAnimationFrame(currentAnimation);
       }
     };
-  }, [config, deviceCapabilities]);
+  }, [config, deviceCapabilities, animate, initializeWireframes]);
 
   // Se for versão estática, apenas mostrar a grade
   if (performanceConfig?.staticFallback) {

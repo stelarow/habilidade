@@ -465,7 +465,7 @@ const DesignGraficoBackground: React.FC<DesignGraficoBackgroundProps> = ({
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [config, deviceCapabilities]);
+  }, [config, deviceCapabilities, animate, initializeElements]);
 
   // Se for versão estática, apenas mostrar gradiente criativo
   if (performanceConfig?.staticFallback) {

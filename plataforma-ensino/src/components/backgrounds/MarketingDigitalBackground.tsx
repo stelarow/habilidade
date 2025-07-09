@@ -254,7 +254,7 @@ const MarketingDigitalBackground: React.FC<BackgroundProps> = ({
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [config, deviceCapabilities]);
+  }, [config, deviceCapabilities, animate, initializeElements]);
 
   // Se for versão estática, apenas mostrar gradiente de marketing
   if (performanceConfig?.staticFallback) {

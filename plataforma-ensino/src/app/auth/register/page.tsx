@@ -11,6 +11,7 @@ export default function RegisterPage() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [emailSent, setEmailSent] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -45,7 +46,7 @@ export default function RegisterPage() {
       // Clear any existing session first
       await supabase.auth.signOut();
 
-      const { error: signUpError } = await supabase.auth.signUp({
+      const { data, error: signUpError } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
         options: {
@@ -54,11 +55,31 @@ export default function RegisterPage() {
         }
       });
 
+
       if (signUpError) {
         throw signUpError;
       }
 
-      router.push('/dashboard');
+      // DETECT DUPLICATE EMAIL - Based on Supabase faux data behavior
+      // When signing up with an existing email, Supabase returns faux data with:
+      // - Empty identities array []
+      // - Empty role string ''
+      // - Reduced user metadata
+      if (data.user && !signUpError) {
+        const isDuplicateEmail = (
+          // Primary indicator: No identities for faux data
+          data.user.identities?.length === 0 ||
+          // Secondary indicator: Empty role for faux data  
+          data.user.role === ''
+        );
+        
+        if (isDuplicateEmail) {
+          setError('Este email já está cadastrado. Verifique sua caixa de entrada para o link de verificação ou tente fazer login.');
+          return;
+        }
+      }
+
+      setEmailSent(true);
     } catch (err: any) {
       setError(err?.message ?? 'Erro ao criar conta. Tente novamente.');
     } finally {
@@ -94,8 +115,35 @@ export default function RegisterPage() {
             </div>
           )}
 
-          {/* Register Form */}
-          <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Email Verification Message */}
+          {emailSent ? (
+            <div className="text-center space-y-4">
+              <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-green-400 text-2xl">✓</span>
+              </div>
+              <h2 className="text-xl font-semibold text-white">Verifique seu email</h2>
+              <p className="text-gray-400 text-sm leading-relaxed">
+                Enviamos um link de verificação para <strong className="text-white">{formData.email}</strong>.
+                Clique no link para ativar sua conta e fazer login.
+              </p>
+              
+              
+              <div className="mt-6 pt-4 border-t border-gray-700">
+                <p className="text-gray-500 text-xs mb-4">
+                  Não recebeu o email? Verifique sua caixa de spam ou tente novamente.
+                </p>
+                <button
+                  onClick={() => setEmailSent(false)}
+                  className="text-primary hover:text-secondary transition-colors text-sm"
+                >
+                  Voltar ao formulário
+                </button>
+              </div>
+            </div>
+          ) : (
+            <>
+              {/* Register Form */}
+              <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
                 Nome completo
@@ -231,6 +279,8 @@ export default function RegisterPage() {
               </Link>
             </p>
           </div>
+          </>
+          )}
         </div>
       </div>
     </div>

@@ -307,7 +307,7 @@ const ProgramacaoBackground: React.FC<ProgramacaoBackgroundProps> = ({
       window.removeEventListener('resize', handleResize);
       stopAnimation();
     };
-  }, [config, deviceCapabilities, startAnimation, stopAnimation]);
+  }, [config, deviceCapabilities, initializeElements, startAnimation, stopAnimation]);
 
   // Se for versão estática, apenas mostrar gradiente de programação
   if (performanceConfig?.staticFallback) {

@@ -431,7 +431,7 @@ const IABackground: React.FC<IABackgroundProps> = ({
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [config, deviceCapabilities]);
+  }, [config, deviceCapabilities, animate, initializeElements]);
 
   // Se for versão estática, apenas mostrar gradiente de IA
   if (performanceConfig?.staticFallback) {

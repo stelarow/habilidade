@@ -242,6 +242,7 @@ export interface VideoPlayerProps {
   onStart?: () => void
   onPause?: () => void
   onPlay?: () => void
+  onReady?: (player: any) => void
   controls?: boolean
   playing?: boolean
   muted?: boolean

@@ -411,7 +411,7 @@ const EdicaoVideoBackground: React.FC<BackgroundProps> = ({
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [config, deviceCapabilities]);
+  }, [config, deviceCapabilities, animate, initializeElements]);
 
   // Se for versão estática, apenas mostrar gradiente cinematográfico
   if (performanceConfig?.staticFallback) {

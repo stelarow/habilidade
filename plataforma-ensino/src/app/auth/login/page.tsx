@@ -1,13 +1,27 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { GradientButton, Loading } from '@/components/ui';
 import { Starfield } from '@/components/ui';
-import { createClient } from '@supabase/supabase-js';
+import { createClient } from '../../../../lib/supabase/client';
 
-export default function LoginPage() {
+// Separate component for search params handling
+function LoginErrorHandler({ setError }: { setError: (error: string | null) => void }) {
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const errorParam = searchParams.get('error');
+    if (errorParam === 'callback_error') {
+      setError('Erro na verificação de email. Tente fazer login novamente.');
+    }
+  }, [searchParams, setError]);
+
+  return null;
+}
+
+function LoginForm() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -22,10 +36,7 @@ export default function LoginPage() {
     setError(null);
 
     try {
-      const supabase = createClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL as string,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string
-      );
+      const supabase = createClient();
 
       const { error: authError } = await supabase.auth.signInWithPassword({
         email: formData.email,
@@ -36,7 +47,10 @@ export default function LoginPage() {
         throw authError;
       }
 
-      router.push('/dashboard');
+      // Wait a moment for the auth state to update before redirecting
+      setTimeout(() => {
+        router.push('/dashboard');
+      }, 100);
     } catch (err: any) {
       setError(err?.message ?? 'Erro ao fazer login. Verifique suas credenciais.');
     } finally {
@@ -57,6 +71,11 @@ export default function LoginPage() {
       
       <div className="w-full max-w-md relative z-10">
         <div className="glass-effect bg-zinc-900/70 backdrop-blur-md rounded-lg border border-gray-800/50 p-8 shadow-2xl">
+          {/* Error Handler */}
+          <Suspense fallback={null}>
+            <LoginErrorHandler setError={setError} />
+          </Suspense>
+          
           {/* Logo */}
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold gradient-text bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
@@ -179,4 +198,8 @@ export default function LoginPage() {
       </div>
     </div>
   );
+}
+
+export default function LoginPage() {
+  return <LoginForm />;
 }

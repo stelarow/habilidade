@@ -6,6 +6,8 @@ export async function GET(request: NextRequest) {
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get('code');
   const type = searchParams.get('type');
+  
+  console.log('Auth callback:', { code: !!code, type, origin });
 
   if (code) {
     const cookieStore = cookies();
@@ -27,11 +29,27 @@ export async function GET(request: NextRequest) {
       }
     );
 
-    await supabase.auth.exchangeCodeForSession(code);
+    const { data, error } = await supabase.auth.exchangeCodeForSession(code);
+    
+    if (error) {
+      console.error('Error exchanging code for session:', error);
+      return NextResponse.redirect(`${origin}/auth/login?error=callback_error`, {
+        status: 302,
+      });
+    }
   }
 
-  const redirectPath = type === 'recovery' ? '/auth/update-password' : '/dashboard';
-  return NextResponse.redirect(`${origin}${redirectPath}`, {
+  // For recovery flow, redirect to update password page
+  if (type === 'recovery') {
+    console.log('Recovery flow - redirecting to update-password');
+    return NextResponse.redirect(`${origin}/auth/update-password`, {
+      status: 302,
+    });
+  }
+
+  // For email verification, redirect to dashboard
+  console.log('Email verification - redirecting to dashboard');
+  return NextResponse.redirect(`${origin}/dashboard`, {
     status: 302,
   });
 } 
