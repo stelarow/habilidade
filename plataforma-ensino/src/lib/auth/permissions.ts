@@ -18,6 +18,7 @@ export type Permission =
   | 'admin.reports.view'
   | 'admin.settings.view'
   | 'admin.settings.edit'
+  | 'admin.settings.manage'
   | 'instructor.courses.view'
   | 'instructor.courses.create'
   | 'instructor.courses.edit'
