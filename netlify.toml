@@ -6,5 +6,7 @@
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+  [plugins.inputs]
+    base = "plataforma-ensino"
 
 # (Opcional) Redirects extras podem ser adicionados abaixo 
