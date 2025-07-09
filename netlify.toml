@@ -1,7 +1,10 @@
-# Redirects for the main site. Build settings are configured in the Netlify UI.
+# Configuração Netlify para Next.js 14
+[build]
+  base = "plataforma-ensino"
+  command = "npm run build"
+  publish = ".next"
 
-# SPA Redirect
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200 
+[plugins]
+  package = "@netlify/plugin-nextjs"
+
+# (Opcional) Redirects extras podem ser adicionados abaixo 
