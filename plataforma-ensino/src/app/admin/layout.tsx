@@ -8,23 +8,38 @@ export default async function AdminLayout({
 }: {
   children: React.ReactNode
 }) {
-  const supabase = createClient()
+  console.log('[ADMIN_LAYOUT] Starting admin layout')
   
-  const { data: { user } } = await supabase.auth.getUser()
-  
-  if (!user) {
-    redirect('/auth/login')
-  }
+  try {
+    console.log('[ADMIN_LAYOUT] Creating Supabase client')
+    const supabase = createClient()
+    
+    console.log('[ADMIN_LAYOUT] Getting user')
+    const { data: { user } } = await supabase.auth.getUser()
+    
+    if (!user) {
+      console.log('[ADMIN_LAYOUT] No user found, redirecting to login')
+      redirect('/auth/login')
+    }
 
-  // Check if user has admin role
-  const { data: profile } = await supabase
-    .from('users')
-    .select('role')
-    .eq('id', user.id)
-    .single()
+    console.log(`[ADMIN_LAYOUT] User found: ${user.id}, checking admin role`)
+    // Check if user has admin role
+    const { data: profile } = await supabase
+      .from('users')
+      .select('role')
+      .eq('id', user.id)
+      .single()
 
-  if (!profile || profile.role !== 'admin') {
-    redirect('/dashboard')
+    console.log('[ADMIN_LAYOUT] Profile retrieved:', profile)
+    if (!profile || profile.role !== 'admin') {
+      console.log('[ADMIN_LAYOUT] User is not admin, redirecting to dashboard')
+      redirect('/dashboard')
+    }
+    
+    console.log('[ADMIN_LAYOUT] Admin access granted, rendering layout')
+  } catch (error) {
+    console.error('[ADMIN_LAYOUT] Error in admin layout:', error)
+    throw error
   }
 
   return (

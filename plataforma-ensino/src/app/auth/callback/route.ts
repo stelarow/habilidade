@@ -7,37 +7,54 @@ export async function GET(request: NextRequest) {
   const code = searchParams.get('code');
   const type = searchParams.get('type');
   
-  console.log('Auth callback:', { code: !!code, type, origin });
+  console.log('[AUTH_CALLBACK] Processing callback:', { code: !!code, type, origin });
 
   if (code) {
-    const cookieStore = cookies();
-    const supabase = createServerClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-      {
-        cookies: {
-          getAll() {
-            return cookieStore.getAll();
+    try {
+      console.log('[AUTH_CALLBACK] Getting cookie store');
+      const cookieStore = cookies();
+      
+      console.log('[AUTH_CALLBACK] Creating Supabase client for auth callback');
+      const supabase = createServerClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+        {
+          cookies: {
+            getAll() {
+              console.log('[AUTH_CALLBACK] getAll() called');
+              return cookieStore.getAll();
+            },
+            setAll(cookiesToSet) {
+              console.log(`[AUTH_CALLBACK] setAll() called with ${cookiesToSet?.length || 0} cookies`);
+              try {
+                cookiesToSet.forEach(({ name, value, options }) =>
+                  cookieStore.set(name, value, options)
+                );
+              } catch (error) {
+                console.error('[AUTH_CALLBACK] Error in setAll:', error);
+                // The `setAll` method was called from a Server Component.
+                // This can be ignored if you have middleware refreshing
+                // user sessions.
+              }
+            },
           },
-          setAll(cookiesToSet) {
-            try {
-              cookiesToSet.forEach(({ name, value, options }) =>
-                cookieStore.set(name, value, options)
-              );
-            } catch {
-              // The `setAll` method was called from a Server Component.
-              // This can be ignored if you have middleware refreshing
-              // user sessions.
-            }
-          },
-        },
-      }
-    );
+        }
+      );
+      
+      console.log('[AUTH_CALLBACK] Supabase client created, exchanging code for session');
 
-    const { data, error } = await supabase.auth.exchangeCodeForSession(code);
-    
-    if (error) {
-      console.error('Error exchanging code for session:', error);
+      const { data, error } = await supabase.auth.exchangeCodeForSession(code);
+      
+      if (error) {
+        console.error('[AUTH_CALLBACK] Error exchanging code for session:', error);
+        return NextResponse.redirect(`${origin}/auth/login?error=callback_error`, {
+          status: 302,
+        });
+      }
+      
+      console.log('[AUTH_CALLBACK] Session exchange successful');
+    } catch (error) {
+      console.error('[AUTH_CALLBACK] Error in auth callback:', error);
       return NextResponse.redirect(`${origin}/auth/login?error=callback_error`, {
         status: 302,
       });
