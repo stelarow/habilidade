@@ -325,75 +325,33 @@ const informatica = {
   testimonials: [
     {
       id: 1,
-      name: 'Maria Luiza Oliveira',
-      role: 'Usuária Iniciante',
-      photo: '/testimonials/maria-luiza-oliveira.jpg',
+      name: 'Arthur Menezes',
+      role: 'Informática Fundamental',
+      photo: '/testimonials/arthur-menezes.jpg', // Placeholder image
       rating: 5,
-      text: 'Antes eu tinha medo de usar o computador, mas esse curso mudou totalmente minha confiança! Agora consigo navegar, criar documentos e planilhas sem nenhuma dificuldade. Recomendo demais!',
-      result: 'Superou o medo da tecnologia'
+      text: 'A atenção individual torna o aprendizado bem mais fácil.',
+      location: 'São José - SC',
+      date: 'dez. de 2024'
     },
     {
       id: 2,
-      name: 'Guilherme Fernandes',
-      role: 'Profissional Qualificado',
-      photo: '/testimonials/guilherme-fernandes.jpg',
+      name: 'Luana Campos',
+      role: 'Informática',
+      photo: '/testimonials/luana-campos.jpg', // Placeholder image
       rating: 5,
-      text: 'Aprender sobre Inteligência Artificial foi um diferencial enorme. Sinto que agora estou à frente no mercado profissional.',
-      result: 'Diferencial no mercado'
+      text: 'O curso está excelente! Estou aprendendo coisas importantes que ajudam bastante no meu trabalho. As aulas são práticas e descontraídas, e o professor sempre disponível para tirar dúvidas.',
+      location: 'São José - SC',
+      date: 'nov. de 2024'
     },
     {
       id: 3,
-      name: 'Helena Almeida',
-      role: 'Criadora de Conteúdo',
-      photo: '/testimonials/helena-almeida.jpg',
+      name: 'Felipe Santos',
+      role: 'Informática Fundamental',
+      photo: '/testimonials/felipe-santos.jpg', // Placeholder image
       rating: 5,
-      text: 'Nunca imaginei que pudesse fazer minhas próprias artes no Canva. Agora minhas redes sociais estão bem mais bonitas e profissionais!',
-      result: 'Redes sociais profissionais'
-    },
-    {
-      id: 4,
-      name: 'Lucas Rezende',
-      role: 'Funcionário Promovido',
-      photo: '/testimonials/lucas-rezende.jpg',
-      rating: 5,
-      text: 'Consegui uma promoção no trabalho graças às habilidades em Excel que aprendi aqui. O investimento valeu muito a pena!',
-      result: 'Promoção no trabalho'
-    },
-    {
-      id: 5,
-      name: 'Paulo Henrique Ribeiro',
-      role: 'Trabalhador Remoto',
-      photo: '/testimonials/paulo-henrique-ribeiro.jpg',
-      rating: 5,
-      text: 'Este curso foi a melhor decisão que tomei esse ano. Estou conseguindo trabalhar de casa e isso mudou minha rotina.',
-      result: 'Trabalho remoto'
-    },
-    {
-      id: 6,
-      name: 'Vanessa Leite',
-      role: 'Estagiária',
-      photo: '/testimonials/vanessa-leite.jpg',
-      rating: 5,
-      text: 'Consegui uma oportunidade de estágio graças ao que aprendi nesse curso. Muito obrigada!',
-      result: 'Oportunidade de estágio'
-    },
-    {
-      id: 7,
-      name: 'Emily Vitoria',
-      role: 'Aluna Satisfeita',
-      photo: '/testimonials/emily-vitoria.jpg',
-      rating: 5,
-      text: 'Lugar ótimo e acolhedor, as turmas pequenas realmente facilitam a precisão na hora de aprender e o foco do professor para cada aluno. Recomendo!',
-      result: 'Experiência excepcional'
-    },
-    {
-      id: 8,
-      name: 'Luiza Bóz Dutra',
-      role: 'Aluna Dedicada',
-      photo: '/testimonials/luiza-boz-dutra.jpg',
-      rating: 5,
-      text: 'O espaço é muito acolhedor, e as aulas são bastante explicativas e práticas. Durante as aulas, conseguimos tirar todas as nossas dúvidas, e os professores são extremamente dedicados.',
-      result: 'Aprendizado completo'
+      text: 'Gostei bastante da dinâmica das aulas presenciais aqui na Escola Habilidade. A turma é pequena, o que facilita muito o aprendizado, e o professor é ótimo, sempre preocupado em deixar tudo bem claro.',
+      location: 'São José - SC',
+      date: 'dez. de 2024'
     }
   ],
 
