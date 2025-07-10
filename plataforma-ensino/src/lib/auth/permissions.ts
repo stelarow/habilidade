@@ -77,7 +77,7 @@ export const rolePermissions: Record<string, Permission[]> = {
 
 // Server-side functions (only for server components)
 export async function getCurrentUser(): Promise<User | null> {
-  const { createClient } = await import('../../../lib/supabase/server')
+  const { createClient } = await import('../supabase/server')
   const supabase = createClient()
   
   const { data: { user } } = await supabase.auth.getUser()
@@ -95,7 +95,7 @@ export async function getCurrentUser(): Promise<User | null> {
 
 // Client-side functions (only for client components)
 export async function getCurrentUserClient(): Promise<User | null> {
-  const { createClient } = await import('../../../lib/supabase/client')
+  const { createClient } = await import('../supabase/client')
   const supabase = createClient()
   
   const { data: { user } } = await supabase.auth.getUser()
