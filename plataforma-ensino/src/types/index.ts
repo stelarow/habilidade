@@ -375,3 +375,24 @@ export type DeepPartial<T> = {
 export type PickRequired<T, K extends keyof T> = T & Required<Pick<T, K>>
 
 export type PartialExcept<T, K extends keyof T> = Partial<T> & Pick<T, K>
+
+// Blog Types
+export interface Post {
+  id: string
+  title: string
+  slug: string
+  content: string
+  excerpt?: string
+  featured_image?: string
+  status: 'draft' | 'published' | 'archived'
+  author_id: string
+  category_id?: string
+  tags: string[]
+  meta_title?: string
+  meta_description?: string
+  published_at?: string
+  created_at: string
+  updated_at: string
+  author?: User
+  category?: Category
+}

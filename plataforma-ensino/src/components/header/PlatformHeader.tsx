@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { createClient } from '../../../lib/supabase/client'
+import { createClient } from '@/lib/supabase/client'
 import { LogoH } from '@/components/ui'
 import { 
   User, 

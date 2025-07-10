@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { createClient } from '../../../lib/supabase/client'
+import { createClient } from '@/lib/supabase/client'
 import { GradientButton, Loading } from '@/components/ui'
 // import { seedSampleCourses, enrollUserInSampleCourses } from '@/lib/seed-data'
 import { Database, BookOpen, UserPlus, CheckCircle, ArrowLeft } from 'phosphor-react'

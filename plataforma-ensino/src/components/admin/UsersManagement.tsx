@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { User } from '@/types'
 import { hasPermission } from '@/lib/auth/permissions-client'
-import { createClient } from '../../../lib/supabase/client'
+import { createClient } from '@/lib/supabase/client'
 import { 
   MagnifyingGlassIcon, 
   UserPlusIcon, 

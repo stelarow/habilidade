@@ -27,6 +27,18 @@ const Footer = () => {
             </div>
           </div>
 
+          {/* Navegação */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold text-fuchsia-400">Navegação</h3>
+            <ul className="space-y-2 text-sm">
+              <li><a href="/" className="text-zinc-300 hover:text-white transition-colors">Início</a></li>
+              <li><a href="#cursos" className="text-zinc-300 hover:text-white transition-colors">Cursos</a></li>
+              <li><a href="/blog" className="text-zinc-300 hover:text-white transition-colors">Blog</a></li>
+              <li><a href="#como-funciona" className="text-zinc-300 hover:text-white transition-colors">Como Funciona</a></li>
+              <li><a href="#contato" className="text-zinc-300 hover:text-white transition-colors">Contato</a></li>
+            </ul>
+          </div>
+
           {/* Localização com Mapa */}
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-fuchsia-400">Nossa Localização</h3>

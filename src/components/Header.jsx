@@ -59,6 +59,14 @@ function Header() {
                 Cursos
                 <CaretDown size={14} className={`transition-transform duration-200 ${megaMenuOpen ? 'rotate-180' : ''}`} />
               </button>
+
+              <a 
+                href="/blog" 
+                onClick={handleNavClick}
+                className="text-white hover:text-fuchsia-300 transition-colors focus:outline-none focus:ring-2 focus:ring-fuchsia-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-sm px-2 py-1"
+              >
+                Blog
+              </a>
               
               {/* Links adaptativos baseados no contexto da página */}
               {currentNavigation

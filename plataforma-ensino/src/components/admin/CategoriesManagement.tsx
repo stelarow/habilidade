@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { Category, User } from '@/types'
-import { createClient } from '../../../lib/supabase/client'
+import { createClient } from '@/lib/supabase/client'
 import { 
   PlusIcon, 
   PencilIcon, 

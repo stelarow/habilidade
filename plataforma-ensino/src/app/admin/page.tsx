@@ -1,4 +1,4 @@
-import { createClient } from '../../../lib/supabase/server'
+import { createClient } from '@/lib/supabase/server'
 import { AdminDashboard } from '@/components/admin/AdminDashboard'
 import { DashboardStats } from '@/types'
 

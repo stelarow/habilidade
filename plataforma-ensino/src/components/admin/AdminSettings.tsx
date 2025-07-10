@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { User } from '@/types'
-import { createClient } from '../../../lib/supabase/client'
+import { createClient } from '@/lib/supabase/client'
 import { 
   CogIcon,
   GlobeAltIcon,

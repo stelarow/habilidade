@@ -38,7 +38,7 @@ export interface VideoPlayerProps {
   height?: string | number
   pip?: boolean
   playsInline?: boolean
-  onReady?: (player: ReactPlayer) => void
+  onReady?: (player: any) => void
   onStart?: () => void
   onPlay?: () => void
   onPause?: () => void
@@ -96,7 +96,7 @@ export const ReactVideoPlayer = forwardRef<VideoPlayerRef, VideoPlayerProps>(({
   'aria-describedby': ariaDescribedBy,
   ...props
 }, ref) => {
-  const playerRef = useRef<ReactPlayer>(null)
+  const playerRef = useRef<any>(null)
   const [isReady, setIsReady] = useState(false)
   const [hasError, setHasError] = useState(false)
   const [sanitizedUrl, setSanitizedUrl] = useState('')
@@ -125,7 +125,7 @@ export const ReactVideoPlayer = forwardRef<VideoPlayerRef, VideoPlayerProps>(({
     }
   }))
 
-  const handleReady = (player: ReactPlayer) => {
+  const handleReady = (player: any) => {
     setIsReady(true)
     setHasError(false)
     onReady?.(player)

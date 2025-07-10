@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import { VideoPlayer } from '@/components/ui'
 import { useVideoProgress } from '@/hooks/useVideoProgress'
-import { createClient } from '../../../lib/supabase/client'
+import { createClient } from '@/lib/supabase/client'
 import { Lesson, Progress, User, Enrollment } from '@/types'
 import { formatDuration } from '@/lib/utils'
 import { 

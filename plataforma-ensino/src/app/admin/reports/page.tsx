@@ -1,4 +1,4 @@
-import { createClient } from '../../../../lib/supabase/server'
+import { createClient } from '@/lib/supabase/server'
 import { getCurrentUser, requirePermission } from '@/lib/auth/permissions'
 import { AdminReports } from '@/components/admin/AdminReports'
 

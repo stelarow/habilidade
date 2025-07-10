@@ -3,7 +3,7 @@
 import { Fragment, useState, useEffect, useRef } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { BellIcon, MagnifyingGlassIcon, UserCircleIcon } from '@heroicons/react/24/outline'
-import { createClient } from '../../../lib/supabase/client'
+import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 
 interface SearchResult {

@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { createClient } from '../../../lib/supabase/client'
+import { createClient } from '@/lib/supabase/client'
 import { useDashboard } from '@/hooks/useDashboard'
 import { GradientButton, Starfield, Loading } from '@/components/ui'
 import { formatDuration } from '@/lib/utils'

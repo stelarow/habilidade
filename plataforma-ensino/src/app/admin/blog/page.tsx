@@ -2,6 +2,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { Pencil, Trash } from 'phosphor-react';
 
 interface Post {
   id: string;
@@ -41,9 +43,9 @@ export default function BlogAdminPage() {
     <div className="container mx-auto p-4">
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-bold">Blog Management</h1>
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        <Link href="/admin/blog/new" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
           New Post
-        </button>
+        </Link>
       </div>
       <div className="bg-white shadow-md rounded my-6">
         <table className="min-w-max w-full table-auto">
@@ -71,10 +73,6 @@ export default function BlogAdminPage() {
                 <td className="py-3 px-6 text-center">
                   {new Date(post.created_at).toLocaleDateString()}
                 </td>
-                import { Pencil, Trash } from 'phosphor-react';
-
-// ... (rest of the component)
-
                 <td className="py-3 px-6 text-center">
                   <div className="flex item-center justify-center">
                     <button className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">

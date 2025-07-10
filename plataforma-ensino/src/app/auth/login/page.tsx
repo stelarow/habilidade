@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { GradientButton, Loading } from '@/components/ui';
 import { Starfield } from '@/components/ui';
-import { createClient } from '../../../../lib/supabase/client';
+import { createClient } from '@/lib/supabase/client';
 
 // Separate component for search params handling
 function LoginErrorHandler({ setError }: { setError: (error: string | null) => void }) {

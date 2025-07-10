@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useCallback, useRef, useEffect } from 'react'
-import { createClient } from '../../lib/supabase/client'
+import { createClient } from '@/lib/supabase/client'
 import * as Sentry from '@sentry/nextjs'
 import { VideoProgress, Progress, Lesson } from '@/types'
 import { debounce } from '@/lib/utils'

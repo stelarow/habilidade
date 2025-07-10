@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { createClient } from './supabase/client'
+import { createClient } from '@/lib/supabase/client'
 import CryptoJS from 'crypto-js'
 
 export interface SecureVideoConfig {
@@ -159,7 +159,7 @@ export class VideoSecurity {
       .eq('user_id', userId)
       .eq('fingerprint', fingerprint)
 
-    return knownDevices && knownDevices.length > 0
+    return !!(knownDevices && knownDevices.length > 0)
   }
 
   private static async triggerSecurityAlert(violation: VideoSecurityViolation): Promise<void> {
