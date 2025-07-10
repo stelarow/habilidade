@@ -1,6 +1,6 @@
 import { type NextRequest, NextResponse } from 'next/server'
-import { updateSession } from './lib/supabase/middleware'
-import { createClient } from './lib/supabase/server'
+import { updateSession } from './src/lib/supabase/middleware'
+import { createClient } from './src/lib/supabase/server'
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
