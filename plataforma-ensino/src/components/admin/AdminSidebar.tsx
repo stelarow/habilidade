@@ -7,12 +7,9 @@ import {
   HomeIcon, 
   UserGroupIcon, 
   BookOpenIcon, 
-  ChartBarIcon,
   CogIcon,
   AcademicCapIcon,
   TagIcon,
-  ChatBubbleLeftRightIcon,
-  DocumentDuplicateIcon,
   Bars3Icon,
   XMarkIcon
 } from '@heroicons/react/24/outline'
@@ -30,9 +27,6 @@ const navigation: NavItem[] = [
   { name: 'Cursos', href: '/admin/courses', icon: BookOpenIcon },
   { name: 'Categorias', href: '/admin/categories', icon: TagIcon },
   { name: 'Matrículas', href: '/admin/enrollments', icon: AcademicCapIcon },
-  { name: 'Avaliações', href: '/admin/reviews', icon: ChatBubbleLeftRightIcon },
-  { name: 'Certificados', href: '/admin/certificates', icon: DocumentDuplicateIcon },
-  { name: 'Relatórios', href: '/admin/reports', icon: ChartBarIcon },
   { name: 'Configurações', href: '/admin/settings', icon: CogIcon },
 ]
 
