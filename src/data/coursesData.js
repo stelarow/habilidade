@@ -660,57 +660,23 @@ const designGrafico = {
   testimonials: [
     {
       id: 1,
-      name: 'Ana Caroline Barros',
-      role: 'Designer em Transição',
-      photo: '/testimonials/ana-caroline-barros.jpg',
+      name: 'Larissa Almeida',
+      role: 'Designer Gráfico',
+      photo: '/testimonials/larissa-almeida.jpg', // Placeholder image
       rating: 5,
-      text: 'Sou formada em outra área e sempre quis trabalhar com design. Com esse curso, aprendi desde o Canva até a parte mais técnica como Photoshop. Me sinto finalmente no caminho certo!',
-      result: 'Transição de carreira'
+      text: 'O curso me surpreendeu positivamente! Estou gostando especialmente das atividades práticas com ferramentas digitais que eu nem imaginava que existiam. Vale muito a pena.',
+      location: 'São José - SC',
+      date: 'dez. de 2024'
     },
     {
       id: 2,
-      name: 'Camila Medeiros',
-      role: 'Empreendedora',
-      photo: '/testimonials/camila-medeiros.jpg',
+      name: 'Samuel Oliveira',
+      role: 'Designer Gráfico',
+      photo: '/testimonials/samuel-oliveira.jpg', // Placeholder image
       rating: 5,
-      text: 'Estou abrindo meu próprio negócio e consegui criar toda a identidade visual graças ao curso. Logo, cartão, catálogo, tudo feito por mim! Isso é liberdade criativa.',
-      result: 'Identidade visual própria'
-    },
-    {
-      id: 3,
-      name: 'Aline Silva',
-      role: 'Designer Aprendiz',
-      photo: '/testimonials/aline-silva.jpg',
-      rating: 5,
-      text: 'Achei que seria complicado aprender tantos softwares, mas a metodologia do curso facilita muito. Cada módulo é direto ao ponto, os professores ajudam muito nos exercícios - é realmente conhecimento e prática.',
-      result: 'Domínio de múltiplos softwares'
-    },
-    {
-      id: 4,
-      name: 'Yasmin Camile',
-      role: 'Designer Criativa',
-      photo: '/testimonials/yasmin-camile.jpg',
-      rating: 5,
-      text: 'O módulo de IA foi o que mais me surpreendeu. Aprender a usar inteligência artificial no processo criativo economiza tempo e abre a mente pra novas possibilidades. É um diferencial no mercado!',
-      result: 'Diferencial com IA'
-    },
-    {
-      id: 5,
-      name: 'Carlos Souza',
-      role: 'Designer Evoluído',
-      photo: '/testimonials/carlos-souza.jpg',
-      rating: 5,
-      text: 'Ver minha evolução desde o primeiro projeto até o final do curso foi gratificante. Obrigada!!',
-      result: 'Evolução visível'
-    },
-    {
-      id: 6,
-      name: 'Patrícia Lima',
-      role: 'Criadora de Conteúdo',
-      photo: '/testimonials/patricia-lima.jpg',
-      rating: 5,
-      text: 'O Canva me salvou! Agora tudo que eu posto tem cara de profissional!',
-      result: 'Conteúdo profissional'
+      text: 'A didática é excelente! As aulas passam voando de tão interessantes que são. O professor consegue explicar tudo com clareza, e isso está me ajudando a evoluir muito rápido.',
+      location: 'São José - SC',
+      date: 'dez. de 2024'
     }
   ],
 
@@ -1033,66 +999,23 @@ const programacao = {
   testimonials: [
     {
       id: 1,
-      name: 'Thiago Mello',
-      role: 'Programador Java',
-      photo: '/testimonials/thiago-mello.jpg',
+      name: 'Thiago Bernardes',
+      role: 'Programação',
+      photo: '/testimonials/thiago-bernardes.jpg', // Placeholder image
       rating: 5,
-      text: 'Já tinha tentado aprender Java online e não conseguia entender. Na escola habilidade com explicações claras e desafios em aula, tudo fez sentido.',
-      result: 'Java dominado'
+      text: 'A forma como o curso aborda programação, com exemplos práticos e bem objetivos, fez toda a diferença pra mim. Me sinto muito mais preparado para o mercado agora.',
+      location: 'São José - SC',
+      date: 'dez. de 2024'
     },
     {
       id: 2,
-      name: 'Fernanda Neves',
-      role: 'Programadora Lógica',
-      photo: '/testimonials/fernanda-neves.jpg',
+      name: 'Natália Pereira',
+      role: 'Programação',
+      photo: '/testimonials/natalia-pereira.jpg', // Placeholder image
       rating: 5,
-      text: 'O módulo de lógica foi essencial. Aprender a pensar como programadora mudou a forma como eu vejo problemas no dia a dia.',
-      result: 'Mudança de perspectiva'
-    },
-    {
-      id: 3,
-      name: 'Murilo Galvão',
-      role: 'Desenvolvedor Iniciante',
-      photo: '/testimonials/murilo-galvao.jpg',
-      rating: 5,
-      text: 'Comecei do zero e estou terminando com um projeto funcional feito por mim. Gratidão define.',
-      result: 'Projeto próprio funcional'
-    },
-    {
-      id: 4,
-      name: 'Renan Souza',
-      role: 'Aluno Presencial',
-      photo: '/testimonials/renan-souza.jpg',
-      rating: 5,
-      text: 'Minha experiência na escola Habilidade esta sendo ótima, estou no curso de programação. Curso presencial, atenção total do professor, atividades totalmente práticas e divertidas que chamam minha totalmente minha atenção.',
-      result: 'Experiência ótima'
-    },
-    {
-      id: 5,
-      name: 'Sabrina Moraes',
-      role: 'Descoberta Instagram',
-      photo: '/testimonials/sabrina-moraes.jpg',
-      rating: 5,
-      text: 'Vi o curso no Instagram, me matriculei e foi a melhor decisão que tomei esse ano.',
-      result: 'Melhor decisão do ano'
-    },
-    {
-      id: 6,
-      name: 'Leandro Albuquerque',
-      role: 'Desenvolvedor Python',
-      photo: '/testimonials/leandro-albuquerque.jpg',
-      rating: 5,
-      text: 'Python foi meu módulo favorito. Consegui desenvolver um projeto completo durante o módulo. Fiquei impressionado com meu próprio resultado.',
-      result: 'Projeto Python completo'
-    },
-    {
-      id: 7,
-      name: 'Letícia Dias',
-      role: 'Desenvolvedora Confiante',
-      photo: '/testimonials/leticia-dias.jpg',
-      rating: 5,
-      text: 'O projeto final em Python me deu confiança. Eu tinha medo de errar, mas com o apoio dos professores e os exercícios em aula, consegui desenvolver muito bem.',
-      result: 'Confiança adquirida'
+      text: 'O professor é muito experiente e cria um ambiente de aprendizado incrível. Estou gostando especialmente dos projetos em sala de aula, que me motivaram a aprofundar meus conhecimentos fora das aulas também.',
+      location: 'São José - SC',
+      date: 'dez. de 2024'
     }
   ],
 
