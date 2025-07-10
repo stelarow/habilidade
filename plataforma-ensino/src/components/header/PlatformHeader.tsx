@@ -70,11 +70,6 @@ export default function PlatformHeader({ user, className = '' }: PlatformHeaderP
       name: 'Cursos',
       href: '/courses',
       icon: BookOpen
-    },
-    {
-      name: 'Conquistas',
-      href: '/achievements',
-      icon: Trophy
     }
   ]
 

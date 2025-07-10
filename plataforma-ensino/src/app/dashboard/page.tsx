@@ -322,16 +322,6 @@ export default function DashboardPage() {
                   </div>
                 </button>
                 
-                <button
-                  onClick={() => router.push('/achievements')}
-                  className="w-full flex items-center gap-3 p-3 bg-white/5 hover:bg-white/10 rounded-lg transition-colors text-left"
-                >
-                  <Trophy className="w-5 h-5 text-yellow-400" />
-                  <div>
-                    <p className="text-white font-medium">Conquistas</p>
-                    <p className="text-gray-400 text-sm">Veja seus marcos</p>
-                  </div>
-                </button>
                 
                 <button
                   onClick={() => router.push('/progress')}
