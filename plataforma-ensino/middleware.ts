@@ -1,6 +1,5 @@
 import { type NextRequest, NextResponse } from 'next/server'
 import { updateSession } from './src/lib/supabase/middleware'
-import { createClient } from './src/lib/supabase/server'
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
@@ -8,9 +7,25 @@ export async function middleware(request: NextRequest) {
   // Update session first
   const response = await updateSession(request)
   
-  // Handle admin routes
+  // Handle admin routes - the user auth check is already done in updateSession
   if (pathname.startsWith('/admin')) {
-    const supabase = createClient()
+    // Create middleware-specific client
+    const { createServerClient } = await import('@supabase/ssr')
+    
+    const supabase = createServerClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      {
+        cookies: {
+          getAll() {
+            return request.cookies.getAll()
+          },
+          setAll(cookiesToSet) {
+            // In middleware, we don't need to set cookies for admin check
+          },
+        },
+      }
+    )
     
     const { data: { user } } = await supabase.auth.getUser()
     
@@ -36,7 +51,24 @@ export async function middleware(request: NextRequest) {
       pathname.startsWith('/profile') ||
       pathname.startsWith('/progress')) {
     
-    const supabase = createClient()
+    // Create middleware-specific client
+    const { createServerClient } = await import('@supabase/ssr')
+    
+    const supabase = createServerClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      {
+        cookies: {
+          getAll() {
+            return request.cookies.getAll()
+          },
+          setAll(cookiesToSet) {
+            // In middleware, we don't need to set cookies for auth check
+          },
+        },
+      }
+    )
+    
     const { data: { user } } = await supabase.auth.getUser()
     
     if (!user) {
@@ -46,7 +78,24 @@ export async function middleware(request: NextRequest) {
 
   // Handle auth routes - redirect if already logged in
   if (pathname.startsWith('/auth/') && !pathname.includes('/callback')) {
-    const supabase = createClient()
+    // Create middleware-specific client
+    const { createServerClient } = await import('@supabase/ssr')
+    
+    const supabase = createServerClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      {
+        cookies: {
+          getAll() {
+            return request.cookies.getAll()
+          },
+          setAll(cookiesToSet) {
+            // In middleware, we don't need to set cookies for auth check
+          },
+        },
+      }
+    )
+    
     const { data: { user } } = await supabase.auth.getUser()
     
     if (user) {
