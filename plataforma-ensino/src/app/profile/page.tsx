@@ -9,11 +9,6 @@ import {
   User, 
   Envelope, 
   Calendar,
-  Gear,
-  Bell,
-  Shield,
-  Palette,
-  Globe,
   ArrowLeft,
   Camera,
   FloppyDisk,
@@ -29,12 +24,6 @@ interface UserProfile {
   created_at: string
   updated_at: string
   last_login?: string
-  preferences: {
-    theme: 'light' | 'dark'
-    notifications: boolean
-    language: string
-    reduced_motion: boolean
-  }
 }
 
 export default function ProfilePage() {
@@ -45,13 +34,7 @@ export default function ProfilePage() {
   const [error, setError] = useState<string | null>(null)
   const [isEditing, setIsEditing] = useState(false)
   const [formData, setFormData] = useState({
-    full_name: '',
-    preferences: {
-      theme: 'dark' as 'light' | 'dark',
-      notifications: true,
-      language: 'pt-BR',
-      reduced_motion: false
-    }
+    full_name: ''
   })
   const supabase = createClient()
 
@@ -82,13 +65,7 @@ export default function ProfilePage() {
           id: authUser.id,
           email: authUser.email,
           full_name: authUser.user_metadata?.full_name || authUser.email?.split('@')[0] || '',
-          role: 'student' as const,
-          preferences: {
-            theme: 'dark' as const,
-            notifications: true,
-            language: 'pt-BR',
-            reduced_motion: false
-          }
+          role: 'student' as const
         }
 
         const { data: insertedProfile, error: insertError } = await supabase
@@ -101,14 +78,12 @@ export default function ProfilePage() {
         
         setUser(insertedProfile)
         setFormData({
-          full_name: insertedProfile.full_name,
-          preferences: insertedProfile.preferences
+          full_name: insertedProfile.full_name
         })
       } else {
         setUser(profileData)
         setFormData({
-          full_name: profileData.full_name,
-          preferences: profileData.preferences
+          full_name: profileData.full_name
         })
       }
     } catch (err: any) {
@@ -132,7 +107,6 @@ export default function ProfilePage() {
         .from('users')
         .update({
           full_name: formData.full_name,
-          preferences: formData.preferences,
           updated_at: new Date().toISOString()
         })
         .eq('id', user.id)
@@ -143,7 +117,6 @@ export default function ProfilePage() {
       setUser(prev => prev ? {
         ...prev,
         full_name: formData.full_name,
-        preferences: formData.preferences,
         updated_at: new Date().toISOString()
       } : null)
 
@@ -226,7 +199,7 @@ export default function ProfilePage() {
                 Meu Perfil
               </h1>
               <p className="text-gray-400 mt-2">
-                Gerencie suas informações pessoais e preferências
+                Gerencie suas informações pessoais
               </p>
             </div>
           </div>
@@ -238,8 +211,7 @@ export default function ProfilePage() {
                   onClick={() => {
                     setIsEditing(false)
                     setFormData({
-                      full_name: user.full_name,
-                      preferences: user.preferences
+                      full_name: user.full_name
                     })
                   }}
                   className="px-4 py-2 bg-white/5 hover:bg-white/10 rounded-lg transition-colors"
@@ -323,7 +295,7 @@ export default function ProfilePage() {
 
                 {user.last_login && (
                   <div className="flex items-center gap-3">
-                    <Globe className="w-5 h-5 text-gray-400" />
+                    <Calendar className="w-5 h-5 text-gray-400" />
                     <div>
                       <p className="text-sm text-gray-400">Último acesso</p>
                       <p className="text-white">
@@ -378,126 +350,6 @@ export default function ProfilePage() {
               </div>
             </div>
 
-            {/* Preferences */}
-            <div className="glass-effect bg-zinc-900/70 backdrop-blur-md rounded-lg border border-gray-800/50 p-6">
-              <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-                <Gear className="w-5 h-5 text-primary" />
-                Preferências
-              </h3>
-
-              <div className="space-y-6">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <Bell className="w-5 h-5 text-gray-400" />
-                    <div>
-                      <p className="text-white font-medium">Notificações</p>
-                      <p className="text-gray-400 text-sm">Receber notificações por email</p>
-                    </div>
-                  </div>
-                  {isEditing ? (
-                    <label className="relative inline-flex items-center cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={formData.preferences.notifications}
-                        onChange={(e) => setFormData(prev => ({
-                          ...prev,
-                          preferences: { ...prev.preferences, notifications: e.target.checked }
-                        }))}
-                        className="sr-only peer"
-                      />
-                      <div className="w-11 h-6 bg-gray-700 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/25 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
-                    </label>
-                  ) : (
-                    <span className={`px-3 py-1 rounded-full text-xs ${user.preferences.notifications ? 'text-green-400 bg-green-400/20' : 'text-red-400 bg-red-400/20'}`}>
-                      {user.preferences.notifications ? 'Ativado' : 'Desativado'}
-                    </span>
-                  )}
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <Palette className="w-5 h-5 text-gray-400" />
-                    <div>
-                      <p className="text-white font-medium">Tema</p>
-                      <p className="text-gray-400 text-sm">Aparência da interface</p>
-                    </div>
-                  </div>
-                  {isEditing ? (
-                    <select
-                      value={formData.preferences.theme}
-                      onChange={(e) => setFormData(prev => ({
-                        ...prev,
-                        preferences: { ...prev.preferences, theme: e.target.value as 'light' | 'dark' }
-                      }))}
-                      className="px-3 py-2 bg-zinc-800 border border-gray-700 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-primary"
-                    >
-                      <option value="dark">Escuro</option>
-                      <option value="light">Claro</option>
-                    </select>
-                  ) : (
-                    <span className="text-gray-300 capitalize">{user.preferences.theme === 'dark' ? 'Escuro' : 'Claro'}</span>
-                  )}
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <Globe className="w-5 h-5 text-gray-400" />
-                    <div>
-                      <p className="text-white font-medium">Idioma</p>
-                      <p className="text-gray-400 text-sm">Idioma da interface</p>
-                    </div>
-                  </div>
-                  {isEditing ? (
-                    <select
-                      value={formData.preferences.language}
-                      onChange={(e) => setFormData(prev => ({
-                        ...prev,
-                        preferences: { ...prev.preferences, language: e.target.value }
-                      }))}
-                      className="px-3 py-2 bg-zinc-800 border border-gray-700 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-primary"
-                    >
-                      <option value="pt-BR">Português (BR)</option>
-                      <option value="en-US">English (US)</option>
-                      <option value="es-ES">Español</option>
-                    </select>
-                  ) : (
-                    <span className="text-gray-300">
-                      {user.preferences.language === 'pt-BR' ? 'Português (BR)' : 
-                       user.preferences.language === 'en-US' ? 'English (US)' : 
-                       user.preferences.language === 'es-ES' ? 'Español' : user.preferences.language}
-                    </span>
-                  )}
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <Shield className="w-5 h-5 text-gray-400" />
-                    <div>
-                      <p className="text-white font-medium">Movimento Reduzido</p>
-                      <p className="text-gray-400 text-sm">Reduzir animações e efeitos</p>
-                    </div>
-                  </div>
-                  {isEditing ? (
-                    <label className="relative inline-flex items-center cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={formData.preferences.reduced_motion}
-                        onChange={(e) => setFormData(prev => ({
-                          ...prev,
-                          preferences: { ...prev.preferences, reduced_motion: e.target.checked }
-                        }))}
-                        className="sr-only peer"
-                      />
-                      <div className="w-11 h-6 bg-gray-700 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/25 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
-                    </label>
-                  ) : (
-                    <span className={`px-3 py-1 rounded-full text-xs ${user.preferences.reduced_motion ? 'text-green-400 bg-green-400/20' : 'text-red-400 bg-red-400/20'}`}>
-                      {user.preferences.reduced_motion ? 'Ativado' : 'Desativado'}
-                    </span>
-                  )}
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>

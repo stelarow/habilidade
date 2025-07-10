@@ -149,12 +149,6 @@ export function UsersManagement({ users: initialUsers, currentUser }: UsersManag
         last_login: '',
         avatar_url: '',
         updated_at: new Date().toISOString(),
-        preferences: {
-          theme: 'dark',
-          notifications: true,
-          language: 'pt-BR',
-          reduced_motion: false
-        }
       }
 
       setUsers([...users, newUser as User])

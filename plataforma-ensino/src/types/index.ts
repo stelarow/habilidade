@@ -7,12 +7,6 @@ export interface User {
   created_at: string
   updated_at: string
   last_login?: string
-  preferences: {
-    theme: 'light' | 'dark'
-    notifications: boolean
-    language: string
-    reduced_motion: boolean
-  }
 }
 
 export interface Category {

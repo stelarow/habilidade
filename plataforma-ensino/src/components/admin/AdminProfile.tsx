@@ -5,7 +5,6 @@ import { User } from '@/types'
 import { createClient } from '@/lib/supabase/client'
 import { 
   UserIcon,
-  CogIcon,
   ShieldCheckIcon,
   BellIcon,
   KeyIcon,
@@ -120,11 +119,11 @@ export function AdminProfile({ currentUser }: AdminProfileProps) {
 
     try {
       const { error } = await supabase
-        .from('user_preferences')
-        .upsert({
-          user_id: user?.id,
-          notification_settings: notificationSettings
+        .from('users')
+        .update({
+          updated_at: new Date().toISOString()
         })
+        .eq('id', user?.id)
 
       if (error) throw error
 
@@ -140,8 +139,7 @@ export function AdminProfile({ currentUser }: AdminProfileProps) {
   const tabs = [
     { id: 'profile', label: 'Perfil', icon: UserIcon },
     { id: 'security', label: 'Segurança', icon: ShieldCheckIcon },
-    { id: 'notifications', label: 'Notificações', icon: BellIcon },
-    { id: 'preferences', label: 'Preferências', icon: CogIcon }
+    { id: 'notifications', label: 'Notificações', icon: BellIcon }
   ]
 
   return (
@@ -416,49 +414,6 @@ export function AdminProfile({ currentUser }: AdminProfileProps) {
         </div>
       )}
 
-      {/* Preferences Tab */}
-      {activeTab === 'preferences' && (
-        <div className="bg-gray-800 rounded-lg border border-gray-700 p-6">
-          <h2 className="text-lg font-medium text-white mb-4">Preferências</h2>
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-white font-medium mb-2">Informações da Conta</h3>
-              <div className="grid grid-cols-2 gap-4 text-sm">
-                <div>
-                  <p className="text-gray-400">ID do Usuário</p>
-                  <p className="text-white font-mono">{user?.id}</p>
-                </div>
-                <div>
-                  <p className="text-gray-400">Função</p>
-                  <p className="text-white capitalize">{user?.role}</p>
-                </div>
-                <div>
-                  <p className="text-gray-400">Data de Criação</p>
-                  <p className="text-white">{user?.created_at ? new Date(user.created_at).toLocaleDateString('pt-BR') : 'N/A'}</p>
-                </div>
-                <div>
-                  <p className="text-gray-400">Última Atualização</p>
-                  <p className="text-white">{user?.updated_at ? new Date(user.updated_at).toLocaleDateString('pt-BR') : 'N/A'}</p>
-                </div>
-              </div>
-            </div>
-            
-            <div>
-              <h3 className="text-white font-medium mb-2">Sessão Atual</h3>
-              <div className="grid grid-cols-2 gap-4 text-sm">
-                <div>
-                  <p className="text-gray-400">Último Login</p>
-                  <p className="text-white">{new Date().toLocaleString('pt-BR')}</p>
-                </div>
-                <div>
-                  <p className="text-gray-400">Status</p>
-                  <span className="px-2 py-1 bg-green-600 text-white text-xs rounded-full">Online</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   )
 }
