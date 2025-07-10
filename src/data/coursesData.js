@@ -325,31 +325,61 @@ const informatica = {
   testimonials: [
     {
       id: 1,
-      name: 'Arthur Menezes',
+      name: 'Letícia Mendes',
       role: 'Informática Fundamental',
-      photo: '/testimonials/arthur-menezes.jpg', // Placeholder image
+      photo: '/testimonials/leticia-mendes.jpg', // Placeholder image
       rating: 5,
-      text: 'A atenção individual torna o aprendizado bem mais fácil.',
+      text: 'Estou adorando fazer o curso de Informática Fundamental na Escola Habilidade. As aulas são muito práticas e dinâmicas, e aprendi rapidamente ferramentas como Excel, Canva e até Inteligência Artificial. O professor é atencioso e esclarece todas as dúvidas!',
       location: 'São José - SC',
       date: 'dez. de 2024'
     },
     {
       id: 2,
-      name: 'Luana Campos',
-      role: 'Informática',
-      photo: '/testimonials/luana-campos.jpg', // Placeholder image
+      name: 'Mateus Oliveira',
+      role: 'Informática Fundamental',
+      photo: '/testimonials/mateus-oliveira.jpg', // Placeholder image
       rating: 5,
-      text: 'O curso está excelente! Estou aprendendo coisas importantes que ajudam bastante no meu trabalho. As aulas são práticas e descontraídas, e o professor sempre disponível para tirar dúvidas.',
+      text: 'O curso presencial é excelente, o ambiente é muito acolhedor, e as aulas são bastante claras e práticas. Aprendi muito sobre Word, PowerPoint e Windows 11. O professor é dedicado e sempre traz exemplos do dia a dia.',
+      location: 'São José - SC',
+      date: 'dez. de 2024'
+    },
+    {
+      id: 3,
+      name: 'Gabriela Costa Silva',
+      role: 'Informática Fundamental',
+      photo: '/testimonials/gabriela-costa-silva.jpg', // Placeholder image
+      rating: 5,
+      text: 'A Escola Habilidade é incrível! As turmas pequenas ajudam demais na hora de aprender, especialmente ferramentas digitais como Canva e Inteligência Artificial. Estou gostando muito das aulas presenciais e da didática do professor.',
+      location: 'São José - SC',
+      date: 'jan. de 2025'
+    },
+    {
+      id: 4,
+      name: 'Lucas Felipe Ribeiro',
+      role: 'Informática Fundamental',
+      photo: '/testimonials/lucas-felipe-ribeiro.jpg', // Placeholder image
+      rating: 5,
+      text: 'Estou impressionado com a qualidade das aulas presenciais do curso. O professor explica tudo muito bem e o conteúdo é super atualizado. Já estou aplicando o que aprendi no meu dia a dia.',
+      location: 'São José - SC',
+      date: 'dez. de 2024'
+    },
+    {
+      id: 5,
+      name: 'Carolina Almeida',
+      role: 'Informática Fundamental',
+      photo: '/testimonials/carolina-almeida.jpg', // Placeholder image
+      rating: 5,
+      text: 'As aulas são muito práticas e interessantes! Aprendi sobre ferramentas que nem sabia que existiam, e o professor sempre traz uma abordagem descontraída que facilita muito o aprendizado.',
       location: 'São José - SC',
       date: 'nov. de 2024'
     },
     {
-      id: 3,
-      name: 'Felipe Santos',
+      id: 6,
+      name: 'Pedro Henrique Soares',
       role: 'Informática Fundamental',
-      photo: '/testimonials/felipe-santos.jpg', // Placeholder image
+      photo: '/testimonials/pedro-henrique-soares.jpg', // Placeholder image
       rating: 5,
-      text: 'Gostei bastante da dinâmica das aulas presenciais aqui na Escola Habilidade. A turma é pequena, o que facilita muito o aprendizado, e o professor é ótimo, sempre preocupado em deixar tudo bem claro.',
+      text: 'Curso excelente, ambiente confortável e turmas pequenas. Já aprendi muito sobre ferramentas digitais, e o professor é sempre atento e dedicado.',
       location: 'São José - SC',
       date: 'dez. de 2024'
     }
@@ -660,21 +690,61 @@ const designGrafico = {
   testimonials: [
     {
       id: 1,
-      name: 'Larissa Almeida',
+      name: 'Julia Menezes',
       role: 'Designer Gráfico',
-      photo: '/testimonials/larissa-almeida.jpg', // Placeholder image
+      photo: '/testimonials/julia-menezes.jpg', // Placeholder image
       rating: 5,
-      text: 'O curso me surpreendeu positivamente! Estou gostando especialmente das atividades práticas com ferramentas digitais que eu nem imaginava que existiam. Vale muito a pena.',
+      text: 'Entrei no curso sem saber nada e hoje já consigo criar artes incríveis. As aulas são leves, criativas e práticas. Me surpreendi!',
       location: 'São José - SC',
       date: 'dez. de 2024'
     },
     {
       id: 2,
+      name: 'Anderson Carvalho',
+      role: 'Designer Gráfico',
+      photo: '/testimonials/anderson-carvalho.jpg', // Placeholder image
+      rating: 5,
+      text: 'O curso tem uma pegada bem atualizada, cheia de referências visuais que realmente inspiram. O professor dá atenção individualizada e isso fez toda a diferença no meu desenvolvimento.',
+      location: 'São José - SC',
+      date: 'nov. de 2024'
+    },
+    {
+      id: 3,
+      name: 'Camila Pacheco',
+      role: 'Designer Gráfico',
+      photo: '/testimonials/camila-pacheco.jpg', // Placeholder image
+      rating: 5,
+      text: 'A Escola Habilidade oferece um ambiente que realmente estimula a criação. Estou curtindo muito as aulas, principalmente pelas propostas práticas que me desafiam.',
+      location: 'São José - SC',
+      date: 'dez. de 2024'
+    },
+    {
+      id: 4,
+      name: 'Marcelo Andrade',
+      role: 'Designer Gráfico',
+      photo: '/testimonials/marcelo-andrade.jpg', // Placeholder image
+      rating: 5,
+      text: 'Estou tendo uma experiência fantástica. Além de ensinar técnicas, o curso ajuda no desenvolvimento da criatividade. Aprender aqui tem sido leve e produtivo.',
+      location: 'São José - SC',
+      date: 'jan. de 2025'
+    },
+    {
+      id: 5,
+      name: 'Larissa Almeida',
+      role: 'Designer Gráfico',
+      photo: '/testimonials/larissa-almeida.jpg', // Placeholder image
+      rating: 5,
+      text: 'Fui surpreendida positivamente! Aprendi várias ferramentas digitais que nem conhecia, e estou usando em projetos reais. Muito além do básico!',
+      location: 'São José - SC',
+      date: 'dez. de 2024'
+    },
+    {
+      id: 6,
       name: 'Samuel Oliveira',
       role: 'Designer Gráfico',
       photo: '/testimonials/samuel-oliveira.jpg', // Placeholder image
       rating: 5,
-      text: 'A didática é excelente! As aulas passam voando de tão interessantes que são. O professor consegue explicar tudo com clareza, e isso está me ajudando a evoluir muito rápido.',
+      text: 'As aulas são tão boas que passam voando. O professor é claro nas explicações, e a prática constante me ajudou a evoluir mais rápido do que eu imaginava.',
       location: 'São José - SC',
       date: 'dez. de 2024'
     }
@@ -999,21 +1069,61 @@ const programacao = {
   testimonials: [
     {
       id: 1,
-      name: 'Thiago Bernardes',
+      name: 'Paulo Henrique Santos',
       role: 'Programação',
-      photo: '/testimonials/thiago-bernardes.jpg', // Placeholder image
+      photo: '/testimonials/paulo-henrique-santos.jpg', // Placeholder image
       rating: 5,
-      text: 'A forma como o curso aborda programação, com exemplos práticos e bem objetivos, fez toda a diferença pra mim. Me sinto muito mais preparado para o mercado agora.',
+      text: 'O curso de Programação mudou minha forma de pensar. Nunca imaginei que aprender lógica e código pudesse ser tão prático. As aulas são muito bem organizadas.',
       location: 'São José - SC',
       date: 'dez. de 2024'
     },
     {
       id: 2,
+      name: 'Letícia Ribeiro',
+      role: 'Programação',
+      photo: '/testimonials/leticia-ribeiro.jpg', // Placeholder image
+      rating: 5,
+      text: 'Escolhi o curso sem saber nada de programação e já estou desenvolvendo meus primeiros projetos. O professor tem uma didática incrível e sempre nos motiva.',
+      location: 'São José - SC',
+      date: 'jan. de 2025'
+    },
+    {
+      id: 3,
+      name: 'Lucas Vinícius',
+      role: 'Programação',
+      photo: '/testimonials/lucas-vinicius.jpg', // Placeholder image
+      rating: 5,
+      text: 'As aulas são envolventes, com desafios reais que deixam tudo mais interessante. Cada aula me motiva a ir mais longe na área.',
+      location: 'São José - SC',
+      date: 'dez. de 2024'
+    },
+    {
+      id: 4,
+      name: 'Isadora Lima',
+      role: 'Programação',
+      photo: '/testimonials/isadora-lima.jpg', // Placeholder image
+      rating: 5,
+      text: 'Estou impressionada com a evolução que tive. O curso é direto ao ponto, com muita prática. O professor torna assuntos complexos fáceis de entender.',
+      location: 'São José - SC',
+      date: 'dez. de 2024'
+    },
+    {
+      id: 5,
+      name: 'Thiago Bernardes',
+      role: 'Programação',
+      photo: '/testimonials/thiago-bernardes.jpg', // Placeholder image
+      rating: 5,
+      text: 'O curso tem foco total no que é realmente útil. As atividades práticas e os projetos me deram mais confiança para pensar no mercado.',
+      location: 'São José - SC',
+      date: 'dez. de 2024'
+    },
+    {
+      id: 6,
       name: 'Natália Pereira',
       role: 'Programação',
       photo: '/testimonials/natalia-pereira.jpg', // Placeholder image
       rating: 5,
-      text: 'O professor é muito experiente e cria um ambiente de aprendizado incrível. Estou gostando especialmente dos projetos em sala de aula, que me motivaram a aprofundar meus conhecimentos fora das aulas também.',
+      text: 'O professor cria um ambiente acolhedor, onde a gente se sente à vontade pra errar e aprender. Gostei muito dos projetos em sala, me ajudaram a ver tudo na prática.',
       location: 'São José - SC',
       date: 'dez. de 2024'
     }
@@ -2337,21 +2447,61 @@ const projetista = {
   testimonials: [
     {
       id: 1,
+      name: 'Juliana Marques',
+      role: 'Projetista',
+      photo: '/testimonials/juliana-marques.jpg', // Placeholder image
+      rating: 5,
+      text: 'Estou adorando o curso de Projetista na Escola Habilidade! O professor explica tudo de um jeito fácil e traz exemplos reais que fazem toda a diferença. Sinto que evoluí bastante desde que comecei.',
+      location: 'São José - SC',
+      date: 'dez. de 2024'
+    },
+    {
+      id: 2,
+      name: 'Carlos Eduardo Oliveira',
+      role: 'Projetista',
+      photo: '/testimonials/carlos-eduardo-oliveira.jpg', // Placeholder image
+      rating: 5,
+      text: 'O curso está sendo ótimo. Aulas práticas, dinâmicas e professor super atencioso. Já estou conseguindo aplicar no meu trabalho tudo que aprendo aqui.',
+      location: 'São José - SC',
+      date: 'dez. de 2024'
+    },
+    {
+      id: 3,
+      name: 'Amanda Cristina Silva',
+      role: 'Projetista',
+      photo: '/testimonials/amanda-cristina-silva.jpg', // Placeholder image
+      rating: 5,
+      text: 'Gostei muito das aulas de SketchUp e Enscape! O ambiente da Escola Habilidade é super acolhedor, e as atividades são bem organizadas, tornando o aprendizado mais leve.',
+      location: 'São José - SC',
+      date: 'jan. de 2025'
+    },
+    {
+      id: 4,
+      name: 'Rodrigo dos Santos Pereira',
+      role: 'Projetista',
+      photo: '/testimonials/rodrigo-dos-santos-pereira.jpg', // Placeholder image
+      rating: 5,
+      text: 'Excelente curso, professor super experiente e com bastante conhecimento de mercado. Já consegui evoluir bastante na parte prática e me sinto mais preparado para projetos reais.',
+      location: 'São José - SC',
+      date: 'dez. de 2024'
+    },
+    {
+      id: 5,
       name: 'Bruna Almeida',
       role: 'Projetista',
       photo: '/testimonials/bruna-almeida.jpg', // Placeholder image
       rating: 5,
-      text: 'Ótima experiência com o curso de Projetista. As aulas são práticas e descontraídas, facilitando bastante o aprendizado. Professor sempre preocupado em deixar tudo bem claro.',
+      text: 'Estou tendo uma ótima experiência com o curso. A parte prática é muito bem feita, o professor sempre incentiva a criatividade e a aplicação dos conceitos em situações reais.',
       location: 'São José - SC',
       date: 'nov. de 2024'
     },
     {
-      id: 2,
+      id: 6,
       name: 'Thiago Henrique Lopes',
       role: 'Projetista',
-      photo: '/testimonials/thiago-lopes.jpg', // Placeholder image
+      photo: '/testimonials/thiago-henrique-lopes.jpg', // Placeholder image
       rating: 5,
-      text: 'Curso presencial maravilhoso, com aulas bem estruturadas e professor muito competente. Adorei como as atividades são relacionadas ao cotidiano do projetista, isso ajudou muito na compreensão.',
+      text: 'Curso presencial muito bom, com aulas bem organizadas. Adorei como o professor relaciona tudo com o dia a dia do projetista. Me sinto mais seguro a cada aula.',
       location: 'São José - SC',
       date: 'dez. de 2024'
     }
