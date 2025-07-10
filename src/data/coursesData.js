@@ -2414,84 +2414,23 @@ const projetista = {
   testimonials: [
     {
       id: 1,
-      name: 'Marcos Silva',
-      role: 'Arquiteto',
-      photo: '/testimonials/marcos-silva.jpg',
+      name: 'Bruna Almeida',
+      role: 'Projetista',
+      photo: '/testimonials/bruna-almeida.jpg', // Placeholder image
       rating: 5,
-      text: 'Fiz o curso presencial e foi incrível! Com SketchUp e Enscape consegui triplicar meus honorários em projetos.',
-      result: 'Honorários triplicados'
+      text: 'Ótima experiência com o curso de Projetista. As aulas são práticas e descontraídas, facilitando bastante o aprendizado. Professor sempre preocupado em deixar tudo bem claro.',
+      location: 'São José - SC',
+      date: 'nov. de 2024'
     },
     {
       id: 2,
-      name: 'Fernanda Lima',
-      role: 'Designer de Interiores',
-      photo: '/testimonials/fernanda-lima.jpg',
+      name: 'Thiago Henrique Lopes',
+      role: 'Projetista',
+      photo: '/testimonials/thiago-lopes.jpg', // Placeholder image
       rating: 5,
-      text: 'O Enscape revolucionou minha apresentação! Os clientes ficam impressionados com a qualidade das renderizações.',
-      result: 'Clientes impressionados'
-    },
-    {
-      id: 3,
-      name: 'Carlos Mendes',
-      role: 'Projetista Freelancer',
-      photo: '/testimonials/carlos-mendes.jpg',
-      rating: 5,
-      text: 'Com o portfólio criado no curso, consegui meu primeiro emprego em escritório de arquitetura!',
-      result: 'Primeiro emprego na área'
-    },
-    {
-      id: 4,
-      name: 'Ana Caroline Barros',
-      role: 'Designer em Transição',
-      photo: '/testimonials/ana-caroline-barros.jpg',
-      rating: 5,
-      text: 'Sou formada em outra área e sempre quis trabalhar com design. Com esse curso, aprendi desde o Canva até a parte mais técnica como Photoshop. Me sinto finalmente no caminho certo!',
-      result: 'Transição de carreira'
-    },
-    {
-      id: 5,
-      name: 'Camila Medeiros',
-      role: 'Empreendedora',
-      photo: '/testimonials/camila-medeiros.jpg',
-      rating: 5,
-      text: 'Estou abrindo meu próprio negócio e consegui criar toda a identidade visual graças ao curso. Logo, cartão, catálogo, tudo feito por mim! Isso é liberdade criativa.',
-      result: 'Identidade visual própria'
-    },
-    {
-      id: 6,
-      name: 'Aline Silva',
-      role: 'Designer Aprendiz',
-      photo: '/testimonials/aline-silva.jpg',
-      rating: 5,
-      text: 'Achei que seria complicado aprender tantos softwares, mas a metodologia do curso facilita muito. Cada módulo é direto ao ponto, os professores ajudam muito nos exercícios - é realmente conhecimento e prática.',
-      result: 'Domínio de múltiplos softwares'
-    },
-    {
-      id: 7,
-      name: 'Yasmin Camile',
-      role: 'Designer Criativa',
-      photo: '/testimonials/yasmin-camile.jpg',
-      rating: 5,
-      text: 'O módulo de IA foi o que mais me surpreendeu. Aprender a usar inteligência artificial no processo criativo economiza tempo e abre a mente pra novas possibilidades. É um diferencial no mercado!',
-      result: 'Diferencial com IA'
-    },
-    {
-      id: 8,
-      name: 'Carlos Souza',
-      role: 'Designer Evoluído',
-      photo: '/testimonials/carlos-souza.jpg',
-      rating: 5,
-      text: 'Ver minha evolução desde o primeiro projeto até o final do curso foi gratificante. Obrigada!!',
-      result: 'Evolução visível'
-    },
-    {
-      id: 9,
-      name: 'Patrícia Lima',
-      role: 'Criadora de Conteúdo',
-      photo: '/testimonials/patricia-lima.jpg',
-      rating: 5,
-      text: 'O Canva me salvou! Agora tudo que eu posto tem cara de profissional!',
-      result: 'Conteúdo profissional'
+      text: 'Curso presencial maravilhoso, com aulas bem estruturadas e professor muito competente. Adorei como as atividades são relacionadas ao cotidiano do projetista, isso ajudou muito na compreensão.',
+      location: 'São José - SC',
+      date: 'dez. de 2024'
     }
   ],
 
