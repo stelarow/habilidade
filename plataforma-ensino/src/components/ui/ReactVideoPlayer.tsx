@@ -27,6 +27,7 @@ export interface VideoPlayerProps {
   width?: string | number
   height?: string | number
   pip?: boolean
+  playsInline?: boolean
   onReady?: (player: ReactPlayer) => void
   onStart?: () => void
   onPlay?: () => void
@@ -67,6 +68,7 @@ export const ReactVideoPlayer = forwardRef<VideoPlayerRef, VideoPlayerProps>(({
   width = '100%',
   height = '100%',
   pip = false,
+  playsInline = true,
   onReady,
   onStart,
   onPlay,
@@ -176,7 +178,7 @@ export const ReactVideoPlayer = forwardRef<VideoPlayerRef, VideoPlayerProps>(({
         muted={muted}
         playbackRate={playbackRate}
         pip={pip}
-        playsInline={true} // Essential for good iOS experience
+        playsInline={playsInline} // Essential for good iOS experience
         onReady={handleReady}
         onStart={onStart}
         onPlay={onPlay}
