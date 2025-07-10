@@ -1,9 +1,19 @@
 'use client'
 
 import React, { forwardRef, useRef, useImperativeHandle, useEffect, useState } from 'react'
-import ReactPlayer from 'react-player/lazy'
+import dynamic from 'next/dynamic'
 import DOMPurify from 'dompurify'
 import { cn } from '@/lib/utils'
+
+// Import ReactPlayer dinamicamente para evitar problemas de SSR
+const ReactPlayer = dynamic(() => import('react-player/lazy'), {
+  ssr: false,
+  loading: () => (
+    <div className="flex items-center justify-center bg-gray-100 aspect-video">
+      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
+    </div>
+  )
+})
 
 export interface VideoTrack {
   kind: 'subtitles' | 'captions' | 'descriptions' | 'chapters' | 'metadata'

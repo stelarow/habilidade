@@ -158,7 +158,7 @@ export function AdminHeader() {
       <div className="flex h-16 items-center justify-between px-6">
         {/* Search */}
         <div className="flex flex-1 items-center justify-center px-2 lg:ml-6 lg:justify-start">
-          <div className="w-full max-w-lg lg:max-w-xs">
+          <div className="w-full max-w-lg lg:max-w-xs relative" ref={searchRef}>
             <label htmlFor="search" className="sr-only">
               Pesquisar
             </label>
@@ -169,11 +169,60 @@ export function AdminHeader() {
               <input
                 id="search"
                 name="search"
+                value={searchTerm}
+                onChange={handleSearchChange}
+                onFocus={() => setShowResults(true)}
                 className="block w-full rounded-md border-0 bg-gray-700 py-1.5 pl-10 pr-3 text-gray-300 placeholder:text-gray-400 focus:bg-gray-600 focus:text-white focus:ring-0 sm:text-sm sm:leading-6"
-                placeholder="Pesquisar..."
+                placeholder="Pesquisar usuários, cursos, categorias..."
                 type="search"
               />
             </div>
+
+            {/* Search Results Dropdown */}
+            {showResults && (searchTerm.trim() || searchResults.length > 0) && (
+              <div className="absolute top-full left-0 right-0 mt-1 bg-gray-800 border border-gray-700 rounded-md shadow-lg z-50 max-h-96 overflow-y-auto">
+                {isSearching ? (
+                  <div className="p-4 text-center text-gray-400">
+                    <div className="animate-spin inline-block w-4 h-4 border-2 border-current border-t-transparent rounded-full mr-2"></div>
+                    Pesquisando...
+                  </div>
+                ) : searchResults.length > 0 ? (
+                  <div className="py-2">
+                    {searchResults.map((result) => (
+                      <button
+                        key={`${result.type}-${result.id}`}
+                        onClick={() => handleSearchResultClick(result)}
+                        className="w-full px-4 py-3 text-left hover:bg-gray-700 transition-colors"
+                      >
+                        <div className="flex items-center space-x-3">
+                          <span className="text-xl">{getTypeIcon(result.type)}</span>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center justify-between">
+                              <p className="text-sm font-medium text-white truncate">
+                                {result.title}
+                              </p>
+                              <span className="text-xs text-gray-400 ml-2">
+                                {getTypeLabel(result.type)}
+                              </span>
+                            </div>
+                            {result.subtitle && (
+                              <p className="text-xs text-gray-400 truncate">
+                                {result.subtitle}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                ) : searchTerm.trim() && (
+                  <div className="p-4 text-center text-gray-400">
+                    <p>Nenhum resultado encontrado</p>
+                    <p className="text-xs mt-1">Tente usar termos diferentes</p>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </div>
 

@@ -12,6 +12,7 @@ export { ReactVideoPlayer } from './ReactVideoPlayer';
 export { VideoPlayerWrapper } from './VideoPlayerWrapper';
 export { LazyVideoPlayer } from './LazyVideoPlayer';
 export { AccessibleVideoPlayer } from './AccessibleVideoPlayer';
+export { SecureVideoPlayer } from './SecureVideoPlayer';
 
 // Types
 export type { VideoPlayerProps, VideoPlayerRef, VideoTrack } from './ReactVideoPlayer';
