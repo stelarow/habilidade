@@ -2,6 +2,14 @@
 [build]
   command = "npm run build"
   publish = ".next"
+  
+# Serverless function configuration
+[build.environment]
+  NODE_VERSION = "18"
 
-[[plugins]]
-  package = "@netlify/plugin-nextjs" 
+# Headers for all files
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff" 

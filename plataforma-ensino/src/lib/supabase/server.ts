@@ -1,37 +1,48 @@
-import { createServerClient } from '@supabase/ssr'
 import { createClient as createStandardClient } from '@supabase/supabase-js'
-import { cookies } from 'next/headers'
 
 export const createClient = () => {
-  console.log('[SERVER_CLIENT] Creating Netlify-compatible server client')
+  console.log('[SERVER_CLIENT] Creating Netlify-compatible cookieless client')
   
   try {
-    console.log('[SERVER_CLIENT] Using cookieless client for Netlify serverless compatibility')
-    
-    // CRITICAL FIX: Use standard client without cookies for admin queries
-    // This prevents the undici headers.split error in serverless environment
+    // CRITICAL FIX: Use completely standard client for Netlify serverless
+    // No cookies, no SSR, no complex headers - just basic HTTP calls
     return createStandardClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
       {
+        auth: {
+          persistSession: false, // Disable session persistence
+          autoRefreshToken: false, // Disable auto refresh  
+        },
         global: {
           fetch: (url: RequestInfo | URL, options?: RequestInit) => {
-            // Ensure all headers are strings
-            if (options?.headers) {
-              const cleanHeaders: Record<string, string> = {}
-              const headers = options.headers as Record<string, any>
-              for (const [key, value] of Object.entries(headers)) {
-                cleanHeaders[key] = String(value || '')
-              }
-              options.headers = cleanHeaders
+            console.log('[SERVER_CLIENT] Custom fetch interceptor')
+            
+            // Create completely clean headers object
+            const cleanHeaders: Record<string, string> = {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+              'apikey': process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
             }
-            return fetch(url, options)
+            
+            // Add authorization if present, ensuring it's a string
+            if (options?.headers) {
+              const headers = options.headers as any
+              if (headers.Authorization || headers.authorization) {
+                cleanHeaders.Authorization = String(headers.Authorization || headers.authorization)
+              }
+            }
+            
+            return fetch(url, {
+              ...options,
+              headers: cleanHeaders
+            })
           }
         }
       }
     )
   } catch (error) {
-    console.error('[SERVER_CLIENT] Error creating Netlify-compatible client:', error)
+    console.error('[SERVER_CLIENT] Error creating client:', error)
     throw error
   }
 }
