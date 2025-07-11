@@ -91,7 +91,7 @@ export async function getCurrentUser(): Promise<User | null> {
   // Return user data from middleware headers (no additional Supabase calls)
   return {
     id: userId,
-    role: userRole || 'student',
+    role: (userRole as 'admin' | 'instructor' | 'student') || 'student',
     email: userEmail || '',
     full_name: userName || '',
     created_at: new Date().toISOString(), // Not used in permissions
