@@ -2,6 +2,9 @@ import { createClient } from '@/lib/supabase/server'
 import { AdminDashboard } from '@/components/admin/AdminDashboard'
 import { DashboardStats } from '@/types'
 
+// Force dynamic rendering for admin pages that use server-side Supabase client
+export const dynamic = 'force-dynamic'
+
 export default async function AdminPage() {
   const supabase = createClient()
 

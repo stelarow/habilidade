@@ -3,6 +3,9 @@ import { getCurrentUser, requirePermission } from '@/lib/auth/permissions'
 import { UsersManagement } from '@/components/admin/UsersManagement'
 import { User } from '@/types'
 
+// Force dynamic rendering for admin pages that use server-side Supabase client
+export const dynamic = 'force-dynamic'
+
 export default async function UsersPage() {
   const supabase = createClient()
   const currentUser = await getCurrentUser()

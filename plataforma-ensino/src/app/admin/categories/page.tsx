@@ -2,6 +2,9 @@ import { createClient } from '@/lib/supabase/server'
 import { getCurrentUser, requirePermission } from '@/lib/auth/permissions'
 import { CategoriesManagement } from '@/components/admin/CategoriesManagement'
 
+// Force dynamic rendering for admin pages that use server-side Supabase client
+export const dynamic = 'force-dynamic'
+
 export default async function CategoriesPage() {
   const supabase = createClient()
   const currentUser = await getCurrentUser()
