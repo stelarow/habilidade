@@ -5,21 +5,26 @@ import { DashboardStats } from '@/types'
 // Force dynamic rendering for admin pages that use server-side Supabase client
 export const dynamic = 'force-dynamic'
 
+// Helper function to add delay between requests
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+
 export default async function AdminPage() {
   console.log('[ADMIN-DASHBOARD] 1. Iniciando AdminPage')
   
   const supabase = createClient()
   console.log('[ADMIN-DASHBOARD] 2. Cliente Supabase criado')
 
-  console.log('[ADMIN-DASHBOARD] 3. Iniciando Promise.all para estatísticas...')
+  console.log('[ADMIN-DASHBOARD] 3. Iniciando consultas sequenciais para estatísticas...')
   
-  // Get dashboard statistics - Sequential queries to avoid undici race condition
+  // Get dashboard statistics - Sequential queries with delays to prevent race conditions
   console.log('[ADMIN-DASHBOARD] 3.1. Query students count...')
   const { count: totalStudents } = await supabase
     .from('users')
     .select('*', { count: 'exact' })
     .eq('role', 'student')
     .limit(0)
+
+  await delay(100) // Small delay to prevent concurrent requests
 
   console.log('[ADMIN-DASHBOARD] 3.2. Query courses count...')
   const { count: totalCourses } = await supabase
@@ -28,11 +33,15 @@ export default async function AdminPage() {
     .eq('is_published', true)
     .limit(0)
 
+  await delay(100)
+
   console.log('[ADMIN-DASHBOARD] 3.3. Query enrollments count...')
   const { count: totalEnrollments } = await supabase
     .from('enrollments')
     .select('*', { count: 'exact' })
     .limit(0)
+
+  await delay(100)
 
   console.log('[ADMIN-DASHBOARD] 3.4. Query recent enrollments...')
   const { data: recentEnrollments } = await supabase

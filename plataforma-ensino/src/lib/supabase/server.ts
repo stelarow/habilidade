@@ -1,30 +1,33 @@
 import { createServerClient } from '@supabase/ssr'
+import { createClient as createStandardClient } from '@supabase/supabase-js'
 import { cookies } from 'next/headers'
 
 export const createClient = () => {
   console.log('[SERVER_CLIENT] Creating Netlify-compatible server client')
   
   try {
-    console.log('[SERVER_CLIENT] Using read-only cookie access for Netlify serverless')
-    const cookieStore = cookies()
-
-    // CRITICAL FIX: Simplified server client for Netlify compatibility
-    // Removes complex cookie handling that triggers undici headers.split error
-    return createServerClient(
+    console.log('[SERVER_CLIENT] Using cookieless client for Netlify serverless compatibility')
+    
+    // CRITICAL FIX: Use standard client without cookies for admin queries
+    // This prevents the undici headers.split error in serverless environment
+    return createStandardClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
       {
-        cookies: {
-          getAll() {
-            console.log('[SERVER_CLIENT] getAll() - read-only mode')
-            return cookieStore.getAll()
-          },
-          setAll() {
-            console.log('[SERVER_CLIENT] setAll() - no-op for serverless compatibility')
-            // No-op for server-side to prevent undici conflicts
-            // Cookie updates handled by middleware
-          },
-        },
+        global: {
+          fetch: (url: RequestInfo | URL, options?: RequestInit) => {
+            // Ensure all headers are strings
+            if (options?.headers) {
+              const cleanHeaders: Record<string, string> = {}
+              const headers = options.headers as Record<string, any>
+              for (const [key, value] of Object.entries(headers)) {
+                cleanHeaders[key] = String(value || '')
+              }
+              options.headers = cleanHeaders
+            }
+            return fetch(url, options)
+          }
+        }
       }
     )
   } catch (error) {
