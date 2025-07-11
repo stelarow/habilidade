@@ -2,10 +2,10 @@ import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
 export async function updateSession(request: NextRequest) {
-  // Create clean response without complex request object to prevent undici conflicts
+  // Create response ONCE and NEVER recreate it to prevent undici header corruption
   let supabaseResponse = NextResponse.next()
 
-  // Simplified Supabase client - remove complex cookie handling that corrupts headers
+  // Use simplified cookie handling pattern to prevent headers.split error  
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -15,7 +15,8 @@ export async function updateSession(request: NextRequest) {
           return request.cookies.getAll()
         },
         setAll(cookiesToSet) {
-          // Simple cookie setting without recreation - prevents headers.split error
+          // CRITICAL: Do NOT recreate NextResponse here - causes undici header corruption
+          // Simply set cookies on existing response object
           cookiesToSet.forEach(({ name, value, options }) => {
             supabaseResponse.cookies.set(name, value, options)
           })
