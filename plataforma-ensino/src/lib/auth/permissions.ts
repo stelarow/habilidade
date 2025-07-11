@@ -77,20 +77,26 @@ export const rolePermissions: Record<string, Permission[]> = {
 
 // Server-side functions (only for server components)
 export async function getCurrentUser(): Promise<User | null> {
-  const { createClient } = await import('../supabase/server')
-  const supabase = createClient()
+  // Use headers passed by middleware instead of creating new Supabase instance
+  const { headers } = await import('next/headers')
+  const headerStore = headers()
   
-  const { data: { user } } = await supabase.auth.getUser()
+  const userId = headerStore.get('x-user-id')
+  const userRole = headerStore.get('x-user-role')
+  const userEmail = headerStore.get('x-user-email')
+  const userName = headerStore.get('x-user-name')
   
-  if (!user) return null
+  if (!userId) return null
 
-  const { data: profile } = await supabase
-    .from('users')
-    .select('*')
-    .eq('id', user.id)
-    .single()
-
-  return profile
+  // Return user data from middleware headers (no additional Supabase calls)
+  return {
+    id: userId,
+    role: userRole || 'student',
+    email: userEmail || '',
+    full_name: userName || '',
+    created_at: new Date().toISOString(), // Not used in permissions
+    updated_at: new Date().toISOString()  // Not used in permissions
+  }
 }
 
 // Client-side functions (only for client components)
