@@ -8,15 +8,24 @@ export async function middleware(request: NextRequest) {
   console.log(`[MIDDLEWARE] Processing request: ${request.nextUrl.pathname}`)
   
   try {
-    // Validate request headers to prevent Sentry errors
-    const headers = request.headers
-    if (headers && typeof headers.forEach === 'function') {
-      headers.forEach((value, key) => {
-        if (typeof value !== 'string') {
-          console.warn(`[MIDDLEWARE] Non-string header value for ${key}:`, typeof value)
-        }
-      })
-    }
+    // Create a new Headers object to ensure all values are strings
+    const newHeaders = new Headers()
+    request.headers.forEach((value, key) => {
+      newHeaders.set(key, String(value))
+    })
+
+    // Clone the request with the sanitized headers
+    const newRequest = new NextRequest(request.nextUrl, {
+      headers: newHeaders,
+      method: request.method,
+      body: request.body,
+      credentials: request.credentials,
+      cache: request.cache,
+      redirect: request.redirect,
+      integrity: request.integrity,
+      keepalive: request.keepalive,
+      signal: request.signal,
+    })
 
     // updateSession now handles:
     // - User authentication
@@ -24,7 +33,7 @@ export async function middleware(request: NextRequest) {
     // - Protected route redirects
     // - Auth route redirects
     // - All redirects and session management
-    const response = await updateSession(request)
+    const response = await updateSession(newRequest)
     console.log(`[MIDDLEWARE] UpdateSession completed for: ${request.nextUrl.pathname}`)
     return response
   } catch (error) {
