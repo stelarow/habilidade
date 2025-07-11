@@ -20,6 +20,7 @@ export default function AdminLayout({
       <div className="flex h-screen">
         <AdminSidebar />
         <div className="flex-1 flex flex-col overflow-hidden">
+          {/* FIXED: AdminHeader moved to client boundary to prevent server-side Supabase client conflicts */}
           <AdminHeader />
           <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-900 p-6">
             {children}

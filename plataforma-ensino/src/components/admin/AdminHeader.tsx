@@ -6,6 +6,9 @@ import { BellIcon, MagnifyingGlassIcon, UserCircleIcon } from '@heroicons/react/
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 
+// FIXED: AdminHeader causing headers.split error was due to server-side execution
+// Now properly marked as 'use client' and only executes client-side
+
 interface SearchResult {
   id: string
   type: 'user' | 'course' | 'category'
