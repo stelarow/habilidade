@@ -1,0 +1,924 @@
+PS C:\habilidade\plataforma-ensino> npm run build
+
+> plataforma-ensino-habilidade@1.0.0 build
+> next build
+
+  ▲ Next.js 14.2.30
+  - Environments: .env.local
+
+   Creating an optimized production build ...
+
+warn  - In order to be able to deminify errors, @sentry/nextjs creates sourcemaps and uploads them to the Sentry server. Depending on your deployment setup, this means your original code may be visible in browser devtools in production. To prevent this, set hideSourceMaps to true in the sentry options in your next.config.js. To disable this warning without changing sourcemap behavior, set hideSourceMaps to false. (In @sentry/nextjs version 8.0.0 and beyond, this option will default to true.) See https://webpack.js.org/configuration/devtool/ and https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/#use-hidden-source-map for more information.
+
+error - No Sentry auth token configured. Source maps will not be uploaded.
+You can find information on how to generate a Sentry auth token here: https://docs.sentry.io/api/auth/
+After generating a Sentry auth token, set it via the SENTRY_AUTH_TOKEN environment variable during the build.
+
+ ✓ Compiled successfully
+
+./src/components/admin/AdminHeader.tsx
+106:6  Warning: React Hook useEffect has a missing dependency: 'performSearch'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/components/admin/CoursesManagement.tsx
+232:17  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./src/components/admin/EnrollmentsManagement.tsx
+211:25  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+226:25  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./src/components/admin/UsersManagement.tsx
+284:27  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./src/components/backgrounds/AdministracaoBackground.tsx
+167:6  Warning: React Hook useMemo has a missing dependency: 'config.animationSpeed'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+170:3  Warning: The 'FloatingChart' class makes the dependencies of useEffect Hook (at line 343) change on every render. Move it inside the useEffect callback. Alternatively, wrap the initialization of 'FloatingChart' in its own useMemo() Hook.  react-hooks/exhaustive-deps
+224:3  Warning: The 'DataParticle' class makes the dependencies of useEffect Hook (at line 343) change on every render. Move it inside the useEffect callback. Alternatively, wrap the initialization of 'DataParticle' in its own useMemo() Hook.  react-hooks/exhaustive-deps
+
+./src/components/backgrounds/BIBackground.tsx
+364:9  Warning: The 'initializeElements' function makes the dependencies of useEffect Hook (at line 436) change on every render. Move it inside the useEffect callback. Alternatively, wrap the definition of 'initializeElements' in its own useCallback() Hook.  react-hooks/exhaustive-deps
+380:9  Warning: The 'animate' function makes the dependencies of useEffect Hook (at line 436) change on every render. To fix this, wrap the definition of 'animate' in its own useCallback() Hook.  react-hooks/exhaustive-deps
+
+./src/components/backgrounds/DesignGraficoBackground.tsx
+391:9  Warning: The 'initializeElements' function makes the dependencies of useEffect Hook (at line 468) change on every render. Move it inside the useEffect callback. Alternatively, wrap the definition of 'initializeElements' in its own useCallback() Hook.  react-hooks/exhaustive-deps
+407:9  Warning: The 'animate' function makes the dependencies of useEffect Hook (at line 468) change on every render. To fix this, wrap the definition of 'animate' in its own useCallback() Hook.  react-hooks/exhaustive-deps
+
+./src/components/backgrounds/EdicaoVideoBackground.tsx
+343:9  Warning: The 'initializeElements' function makes the dependencies of useEffect Hook (at line 414) change on every render. Move it inside the useEffect callback. Alternatively, wrap the definition of 'initializeElements' in its own useCallback() Hook.  react-hooks/exhaustive-deps
+357:9  Warning: The 'animate' function makes the dependencies of useEffect Hook (at line 414) change on every render. To fix this, wrap the definition of 'animate' in its own useCallback() Hook.  react-hooks/exhaustive-deps
+
+./src/components/backgrounds/IABackground.tsx
+350:9  Warning: The 'initializeElements' function makes the dependencies of useEffect Hook (at line 434) change on every render. Move it inside the useEffect callback. Alternatively, wrap the definition of 'initializeElements' in its own useCallback() Hook.  react-hooks/exhaustive-deps
+374:9  Warning: The 'animate' function makes the dependencies of useEffect Hook (at line 434) change on every render. To fix this, wrap the definition of 'animate' in its own useCallback() Hook.  react-hooks/exhaustive-deps
+
+./src/components/backgrounds/InformaticaBackground.tsx
+277:9  Warning: The 'initializeElements' function makes the dependencies of useEffect Hook (at line 355) change on every render. Move it inside the useEffect callback. Alternatively, wrap the definition of 'initializeElements' in its own useCallback() Hook.  react-hooks/exhaustive-deps
+295:9  Warning: The 'animate' function makes the dependencies of useEffect Hook (at line 355) change on every render. To fix this, wrap the definition of 'animate' in its own useCallback() Hook.  react-hooks/exhaustive-deps
+
+./src/components/backgrounds/MarketingDigitalBackground.tsx
+196:9  Warning: The 'initializeElements' function makes the dependencies of useEffect Hook (at line 257) change on every render. Move it inside the useEffect callback. Alternatively, wrap the definition of 'initializeElements' in its own useCallback() Hook.  react-hooks/exhaustive-deps
+206:9  Warning: The 'animate' function makes the dependencies of useEffect Hook (at line 257) change on every render. To fix this, wrap the definition of 'animate' in its own useCallback() Hook.  react-hooks/exhaustive-deps
+
+./src/components/backgrounds/ProgramacaoBackground.tsx
+253:9  Warning: The 'initializeElements' function makes the dependencies of useEffect Hook (at line 310) change on every render. Move it inside the useEffect callback. Alternatively, wrap the definition of 'initializeElements' in its own useCallback() Hook.  react-hooks/exhaustive-deps
+
+./src/components/backgrounds/Projetista3DBackground.tsx
+243:9  Warning: The 'initializeWireframes' function makes the dependencies of useEffect Hook (at line 316) change on every render. Move it inside the useEffect callback. Alternatively, wrap the definition of 'initializeWireframes' in its own useCallback() Hook.  react-hooks/exhaustive-deps
+251:9  Warning: The 'animate' function makes the dependencies of useEffect Hook (at line 316) change on every render. To fix this, wrap the definition of 'animate' in its own useCallback() Hook.  react-hooks/exhaustive-deps
+311:45  Warning: The ref value 'animationRef.current' will likely have changed by the time this effect cleanup function runs. If this ref points to a node rendered by React, copy 'animationRef.current' to a variable inside the effect, and use that variable in the cleanup function.  react-hooks/exhaustive-deps
+
+./src/components/course/LessonVideoPlayer.tsx
+64:6  Warning: React Hook useEffect has a missing dependency: 'supabase'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/components/ui/AccessibleVideoPlayer.tsx
+71:6  Warning: React Hook useEffect has an unnecessary dependency: 'playerRef.current'. Either exclude it or remove the dependency array. Mutable values like 'playerRef.current' aren't valid dependencies because mutating them doesn't re-render the component.  react-hooks/exhaustive-deps
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules
+ ✓ Linting and checking validity of types
+ ✓ Collecting page data
+   Generating static pages (0/32)  [    ][SERVER_CLIENT] Creating server client
+[SERVER_CLIENT] Getting cookie store
+[ADMIN_LAYOUT] Starting admin layout
+[ADMIN_LAYOUT] Creating Supabase client
+[SERVER_CLIENT] Creating server client
+[SERVER_CLIENT] Getting cookie store
+[SERVER_CLIENT] Creating server client
+[SERVER_CLIENT] Getting cookie store
+[ADMIN_LAYOUT] Starting admin layout
+[ADMIN_LAYOUT] Creating Supabase client
+[SERVER_CLIENT] Creating server client
+[SERVER_CLIENT] Getting cookie store
+[SERVER_CLIENT] Error creating server client: n [Error]: Dynamic server usage: Route /admin/categories couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (C:\Habilidade\plataforma-ensino\.next\server\chunks\5836.js:1:37220)
+    at f (C:\Habilidade\plataforma-ensino\.next\server\chunks\4377.js:1:1763)
+    at n (C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:8:2169)
+    at C:\Habilidade\plataforma-ensino\.next\server\app\admin\categories\page.js:1:2002
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9797
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9790
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4007
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4002 {
+  description: "Route /admin/categories couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+[SERVER_CLIENT] Error creating server client: n [Error]: Dynamic server usage: Route /admin/categories couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (C:\Habilidade\plataforma-ensino\.next\server\chunks\5836.js:1:37220)
+    at f (C:\Habilidade\plataforma-ensino\.next\server\chunks\4377.js:1:1763)
+    at n (C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:8:2169)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:1:729
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9797
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9790
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4007
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4002 {
+  description: "Route /admin/categories couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+[ADMIN_LAYOUT] Error in admin layout: n [Error]: Dynamic server usage: Route /admin/categories couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (C:\Habilidade\plataforma-ensino\.next\server\chunks\5836.js:1:37220)
+    at f (C:\Habilidade\plataforma-ensino\.next\server\chunks\4377.js:1:1763)
+    at n (C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:8:2169)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:1:729
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9797
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9790
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4007
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4002 {
+  description: "Route /admin/categories couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+[SERVER_CLIENT] Error creating server client: n [Error]: Dynamic server usage: Route /admin/categories couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (C:\Habilidade\plataforma-ensino\.next\server\chunks\5836.js:1:37220)
+    at f (C:\Habilidade\plataforma-ensino\.next\server\chunks\4377.js:1:1763)
+    at n (C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:8:2169)
+    at C:\Habilidade\plataforma-ensino\.next\server\app\admin\categories\page.js:1:2002
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9797
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9790
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4007
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4002 {
+  description: "Route /admin/categories couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+[SERVER_CLIENT] Error creating server client: n [Error]: Dynamic server usage: Route /admin/categories couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (C:\Habilidade\plataforma-ensino\.next\server\chunks\5836.js:1:37220)
+    at f (C:\Habilidade\plataforma-ensino\.next\server\chunks\4377.js:1:1763)
+    at n (C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:8:2169)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:1:729
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9797
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9790
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4007
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4002 {
+  description: "Route /admin/categories couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+[ADMIN_LAYOUT] Error in admin layout: n [Error]: Dynamic server usage: Route /admin/categories couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (C:\Habilidade\plataforma-ensino\.next\server\chunks\5836.js:1:37220)
+    at f (C:\Habilidade\plataforma-ensino\.next\server\chunks\4377.js:1:1763)
+    at n (C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:8:2169)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:1:729
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9797
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9790
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4007
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4002 {
+  description: "Route /admin/categories couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+   Generating static pages (5/32)  [=   ][SERVER_CLIENT] Creating server client
+[SERVER_CLIENT] Getting cookie store
+[ADMIN_LAYOUT] Starting admin layout
+[ADMIN_LAYOUT] Creating Supabase client
+[SERVER_CLIENT] Creating server client
+[SERVER_CLIENT] Getting cookie store
+[SERVER_CLIENT] Creating server client
+[SERVER_CLIENT] Getting cookie store
+[ADMIN_LAYOUT] Starting admin layout
+[ADMIN_LAYOUT] Creating Supabase client
+[SERVER_CLIENT] Creating server client
+[SERVER_CLIENT] Getting cookie store
+[SERVER_CLIENT] Error creating server client: n [Error]: Dynamic server usage: Route /admin couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (C:\Habilidade\plataforma-ensino\.next\server\chunks\5836.js:1:37220)
+    at f (C:\Habilidade\plataforma-ensino\.next\server\chunks\4377.js:1:1763)
+    at s (C:\Habilidade\plataforma-ensino\.next\server\app\blog\preview\[slug]\page.js:1:11552)
+    at C:\Habilidade\plataforma-ensino\.next\server\app\admin\page.js:1:1972
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9797
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9790
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4007
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4002 {
+  description: "Route /admin couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+[SERVER_CLIENT] Error creating server client: n [Error]: Dynamic server usage: Route /admin couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (C:\Habilidade\plataforma-ensino\.next\server\chunks\5836.js:1:37220)
+    at f (C:\Habilidade\plataforma-ensino\.next\server\chunks\4377.js:1:1763)
+    at s (C:\Habilidade\plataforma-ensino\.next\server\app\blog\preview\[slug]\page.js:1:11552)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:1:729
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9797
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9790
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4007
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4002 {
+  description: "Route /admin couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+[ADMIN_LAYOUT] Error in admin layout: n [Error]: Dynamic server usage: Route /admin couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (C:\Habilidade\plataforma-ensino\.next\server\chunks\5836.js:1:37220)
+    at f (C:\Habilidade\plataforma-ensino\.next\server\chunks\4377.js:1:1763)
+    at s (C:\Habilidade\plataforma-ensino\.next\server\app\blog\preview\[slug]\page.js:1:11552)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:1:729
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9797
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9790
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4007
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4002 {
+  description: "Route /admin couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+[SERVER_CLIENT] Error creating server client: n [Error]: Dynamic server usage: Route /admin couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (C:\Habilidade\plataforma-ensino\.next\server\chunks\5836.js:1:37220)
+    at f (C:\Habilidade\plataforma-ensino\.next\server\chunks\4377.js:1:1763)
+    at s (C:\Habilidade\plataforma-ensino\.next\server\app\blog\preview\[slug]\page.js:1:11552)
+    at C:\Habilidade\plataforma-ensino\.next\server\app\admin\page.js:1:1972
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9797
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9790
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4007
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4002 {
+  description: "Route /admin couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+[SERVER_CLIENT] Error creating server client: n [Error]: Dynamic server usage: Route /admin couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (C:\Habilidade\plataforma-ensino\.next\server\chunks\5836.js:1:37220)
+    at f (C:\Habilidade\plataforma-ensino\.next\server\chunks\4377.js:1:1763)
+    at s (C:\Habilidade\plataforma-ensino\.next\server\app\blog\preview\[slug]\page.js:1:11552)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:1:729
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9797
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9790
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4007
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4002 {
+  description: "Route /admin couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+[ADMIN_LAYOUT] Error in admin layout: n [Error]: Dynamic server usage: Route /admin couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (C:\Habilidade\plataforma-ensino\.next\server\chunks\5836.js:1:37220)
+    at f (C:\Habilidade\plataforma-ensino\.next\server\chunks\4377.js:1:1763)
+    at s (C:\Habilidade\plataforma-ensino\.next\server\app\blog\preview\[slug]\page.js:1:11552)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:1:729
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9797
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9790
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4007
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4002 {
+  description: "Route /admin couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+[SERVER_CLIENT] Creating server client
+[SERVER_CLIENT] Getting cookie store
+[ADMIN_LAYOUT] Starting admin layout
+[ADMIN_LAYOUT] Creating Supabase client
+[SERVER_CLIENT] Creating server client
+[SERVER_CLIENT] Getting cookie store
+[SERVER_CLIENT] Creating server client
+[SERVER_CLIENT] Getting cookie store
+[ADMIN_LAYOUT] Starting admin layout
+[ADMIN_LAYOUT] Creating Supabase client
+[SERVER_CLIENT] Creating server client
+[SERVER_CLIENT] Getting cookie store
+[SERVER_CLIENT] Error creating server client: n [Error]: Dynamic server usage: Route /admin/enrollments couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (C:\Habilidade\plataforma-ensino\.next\server\chunks\5836.js:1:37220)
+    at f (C:\Habilidade\plataforma-ensino\.next\server\chunks\4377.js:1:1763)
+    at n (C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:8:2169)
+    at C:\Habilidade\plataforma-ensino\.next\server\app\admin\enrollments\page.js:1:2004
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9797
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9790
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4007
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4002 {
+  description: "Route /admin/enrollments couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+[SERVER_CLIENT] Error creating server client: n [Error]: Dynamic server usage: Route /admin/enrollments couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (C:\Habilidade\plataforma-ensino\.next\server\chunks\5836.js:1:37220)
+    at f (C:\Habilidade\plataforma-ensino\.next\server\chunks\4377.js:1:1763)
+    at n (C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:8:2169)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:1:729
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9797
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9790
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4007
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4002 {
+  description: "Route /admin/enrollments couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+[ADMIN_LAYOUT] Error in admin layout: n [Error]: Dynamic server usage: Route /admin/enrollments couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (C:\Habilidade\plataforma-ensino\.next\server\chunks\5836.js:1:37220)
+    at f (C:\Habilidade\plataforma-ensino\.next\server\chunks\4377.js:1:1763)
+    at n (C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:8:2169)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:1:729
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9797
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9790
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4007
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4002 {
+  description: "Route /admin/enrollments couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+[SERVER_CLIENT] Error creating server client: n [Error]: Dynamic server usage: Route /admin/enrollments couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (C:\Habilidade\plataforma-ensino\.next\server\chunks\5836.js:1:37220)
+    at f (C:\Habilidade\plataforma-ensino\.next\server\chunks\4377.js:1:1763)
+    at n (C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:8:2169)
+    at C:\Habilidade\plataforma-ensino\.next\server\app\admin\enrollments\page.js:1:2004
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9797
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9790
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4007
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4002 {
+  description: "Route /admin/enrollments couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+[SERVER_CLIENT] Error creating server client: n [Error]: Dynamic server usage: Route /admin/enrollments couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (C:\Habilidade\plataforma-ensino\.next\server\chunks\5836.js:1:37220)
+    at f (C:\Habilidade\plataforma-ensino\.next\server\chunks\4377.js:1:1763)
+    at n (C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:8:2169)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:1:729
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9797
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9790
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4007
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4002 {
+  description: "Route /admin/enrollments couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+[ADMIN_LAYOUT] Error in admin layout: n [Error]: Dynamic server usage: Route /admin/enrollments couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (C:\Habilidade\plataforma-ensino\.next\server\chunks\5836.js:1:37220)
+    at f (C:\Habilidade\plataforma-ensino\.next\server\chunks\4377.js:1:1763)
+    at n (C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:8:2169)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:1:729
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9797
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9790
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4007
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4002 {
+  description: "Route /admin/enrollments couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+[SERVER_CLIENT] Creating server client
+[SERVER_CLIENT] Getting cookie store
+[ADMIN_LAYOUT] Starting admin layout
+[ADMIN_LAYOUT] Creating Supabase client
+[SERVER_CLIENT] Creating server client
+[SERVER_CLIENT] Getting cookie store
+[SERVER_CLIENT] Creating server client
+[SERVER_CLIENT] Getting cookie store
+[ADMIN_LAYOUT] Starting admin layout
+[ADMIN_LAYOUT] Creating Supabase client
+[SERVER_CLIENT] Creating server client
+[SERVER_CLIENT] Getting cookie store
+[SERVER_CLIENT] Creating server client
+[SERVER_CLIENT] Getting cookie store
+[ADMIN_LAYOUT] Starting admin layout
+[ADMIN_LAYOUT] Creating Supabase client
+[SERVER_CLIENT] Creating server client
+[SERVER_CLIENT] Getting cookie store
+[SERVER_CLIENT] Creating server client
+[SERVER_CLIENT] Getting cookie store
+[ADMIN_LAYOUT] Starting admin layout
+[ADMIN_LAYOUT] Creating Supabase client
+[SERVER_CLIENT] Creating server client
+[SERVER_CLIENT] Getting cookie store
+[SERVER_CLIENT] Error creating server client: n [Error]: Dynamic server usage: Route /admin/settings couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (C:\Habilidade\plataforma-ensino\.next\server\chunks\5836.js:1:37220)
+    at f (C:\Habilidade\plataforma-ensino\.next\server\chunks\4377.js:1:1763)
+    at n (C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:8:2169)
+    at C:\Habilidade\plataforma-ensino\.next\server\app\admin\settings\page.js:1:1988
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9797
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9790
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4007
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4002 {
+  description: "Route /admin/settings couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+[SERVER_CLIENT] Error creating server client: n [Error]: Dynamic server usage: Route /admin/settings couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (C:\Habilidade\plataforma-ensino\.next\server\chunks\5836.js:1:37220)
+    at f (C:\Habilidade\plataforma-ensino\.next\server\chunks\4377.js:1:1763)
+    at n (C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:8:2169)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:1:729
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9797
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9790
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4007
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4002 {
+  description: "Route /admin/settings couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+[ADMIN_LAYOUT] Error in admin layout: n [Error]: Dynamic server usage: Route /admin/settings couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (C:\Habilidade\plataforma-ensino\.next\server\chunks\5836.js:1:37220)
+    at f (C:\Habilidade\plataforma-ensino\.next\server\chunks\4377.js:1:1763)
+    at n (C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:8:2169)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:1:729
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9797
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9790
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4007
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4002 {
+  description: "Route /admin/settings couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+[SERVER_CLIENT] Error creating server client: n [Error]: Dynamic server usage: Route /admin/settings couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (C:\Habilidade\plataforma-ensino\.next\server\chunks\5836.js:1:37220)
+    at f (C:\Habilidade\plataforma-ensino\.next\server\chunks\4377.js:1:1763)
+    at n (C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:8:2169)
+    at C:\Habilidade\plataforma-ensino\.next\server\app\admin\settings\page.js:1:1988
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9797
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9790
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4007
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4002 {
+  description: "Route /admin/settings couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+[SERVER_CLIENT] Error creating server client: n [Error]: Dynamic server usage: Route /admin/settings couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (C:\Habilidade\plataforma-ensino\.next\server\chunks\5836.js:1:37220)
+    at f (C:\Habilidade\plataforma-ensino\.next\server\chunks\4377.js:1:1763)
+    at n (C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:8:2169)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:1:729
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9797
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9790
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4007
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4002 {
+  description: "Route /admin/settings couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+[ADMIN_LAYOUT] Error in admin layout: n [Error]: Dynamic server usage: Route /admin/settings couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (C:\Habilidade\plataforma-ensino\.next\server\chunks\5836.js:1:37220)
+    at f (C:\Habilidade\plataforma-ensino\.next\server\chunks\4377.js:1:1763)
+    at n (C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:8:2169)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:1:729
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9797
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9790
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4007
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4002 {
+  description: "Route /admin/settings couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+[SERVER_CLIENT] Error creating server client: n [Error]: Dynamic server usage: Route /admin/users couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (C:\Habilidade\plataforma-ensino\.next\server\chunks\5836.js:1:37220)
+    at f (C:\Habilidade\plataforma-ensino\.next\server\chunks\4377.js:1:1763)
+    at n (C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:8:2169)
+    at C:\Habilidade\plataforma-ensino\.next\server\app\admin\users\page.js:1:1991
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9797
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9790
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4007
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4002 {
+  description: "Route /admin/users couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+[SERVER_CLIENT] Error creating server client: n [Error]: Dynamic server usage: Route /admin/users couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (C:\Habilidade\plataforma-ensino\.next\server\chunks\5836.js:1:37220)
+    at f (C:\Habilidade\plataforma-ensino\.next\server\chunks\4377.js:1:1763)
+    at n (C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:8:2169)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:1:729
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9797
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9790
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4007
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4002 {
+  description: "Route /admin/users couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+[ADMIN_LAYOUT] Error in admin layout: n [Error]: Dynamic server usage: Route /admin/users couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (C:\Habilidade\plataforma-ensino\.next\server\chunks\5836.js:1:37220)
+    at f (C:\Habilidade\plataforma-ensino\.next\server\chunks\4377.js:1:1763)
+    at n (C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:8:2169)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:1:729
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9797
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9790
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4007
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4002 {
+  description: "Route /admin/users couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+[SERVER_CLIENT] Error creating server client: n [Error]: Dynamic server usage: Route /admin/users couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (C:\Habilidade\plataforma-ensino\.next\server\chunks\5836.js:1:37220)
+    at f (C:\Habilidade\plataforma-ensino\.next\server\chunks\4377.js:1:1763)
+    at n (C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:8:2169)
+    at C:\Habilidade\plataforma-ensino\.next\server\app\admin\users\page.js:1:1991
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9797
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9790
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4007
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4002 {
+  description: "Route /admin/users couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+[SERVER_CLIENT] Error creating server client: n [Error]: Dynamic server usage: Route /admin/users couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (C:\Habilidade\plataforma-ensino\.next\server\chunks\5836.js:1:37220)
+    at f (C:\Habilidade\plataforma-ensino\.next\server\chunks\4377.js:1:1763)
+    at n (C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:8:2169)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:1:729
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9797
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9790
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4007
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4002 {
+  description: "Route /admin/users couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+[ADMIN_LAYOUT] Error in admin layout: n [Error]: Dynamic server usage: Route /admin/users couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (C:\Habilidade\plataforma-ensino\.next\server\chunks\5836.js:1:37220)
+    at f (C:\Habilidade\plataforma-ensino\.next\server\chunks\4377.js:1:1763)
+    at n (C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:8:2169)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:1:729
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9797
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9790
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4007
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4002 {
+  description: "Route /admin/users couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+[SERVER_CLIENT] Creating server client
+[SERVER_CLIENT] Getting cookie store
+[ADMIN_LAYOUT] Starting admin layout
+[ADMIN_LAYOUT] Creating Supabase client
+[SERVER_CLIENT] Creating server client
+[SERVER_CLIENT] Getting cookie store
+[SERVER_CLIENT] Creating server client
+[SERVER_CLIENT] Getting cookie store
+[ADMIN_LAYOUT] Starting admin layout
+[ADMIN_LAYOUT] Creating Supabase client
+[SERVER_CLIENT] Creating server client
+[SERVER_CLIENT] Getting cookie store
+[SERVER_CLIENT] Creating server client
+[SERVER_CLIENT] Getting cookie store
+[ADMIN_LAYOUT] Starting admin layout
+[ADMIN_LAYOUT] Creating Supabase client
+[SERVER_CLIENT] Creating server client
+[SERVER_CLIENT] Getting cookie store
+[SERVER_CLIENT] Creating server client
+[SERVER_CLIENT] Getting cookie store
+[ADMIN_LAYOUT] Starting admin layout
+[ADMIN_LAYOUT] Creating Supabase client
+[SERVER_CLIENT] Creating server client
+[SERVER_CLIENT] Getting cookie store
+[ADMIN_LAYOUT] Starting admin layout
+[ADMIN_LAYOUT] Creating Supabase client
+[SERVER_CLIENT] Creating server client
+[SERVER_CLIENT] Getting cookie store
+[ADMIN_LAYOUT] Starting admin layout
+[ADMIN_LAYOUT] Creating Supabase client
+[SERVER_CLIENT] Creating server client
+[SERVER_CLIENT] Getting cookie store
+[SERVER_CLIENT] Error creating server client: n [Error]: Dynamic server usage: Route /admin/courses couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (C:\Habilidade\plataforma-ensino\.next\server\chunks\5836.js:1:37220)
+    at f (C:\Habilidade\plataforma-ensino\.next\server\chunks\4377.js:1:1763)
+    at n (C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:8:2169)
+    at C:\Habilidade\plataforma-ensino\.next\server\app\admin\courses\page.js:1:1996
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9797
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9790
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4007
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4002 {
+  description: "Route /admin/courses couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+[SERVER_CLIENT] Error creating server client: n [Error]: Dynamic server usage: Route /admin/courses couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (C:\Habilidade\plataforma-ensino\.next\server\chunks\5836.js:1:37220)
+    at f (C:\Habilidade\plataforma-ensino\.next\server\chunks\4377.js:1:1763)
+    at n (C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:8:2169)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:1:729
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9797
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9790
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4007
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4002 {
+  description: "Route /admin/courses couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+[ADMIN_LAYOUT] Error in admin layout: n [Error]: Dynamic server usage: Route /admin/courses couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (C:\Habilidade\plataforma-ensino\.next\server\chunks\5836.js:1:37220)
+    at f (C:\Habilidade\plataforma-ensino\.next\server\chunks\4377.js:1:1763)
+    at n (C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:8:2169)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:1:729
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9797
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9790
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4007
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4002 {
+  description: "Route /admin/courses couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+[SERVER_CLIENT] Error creating server client: n [Error]: Dynamic server usage: Route /admin/courses couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (C:\Habilidade\plataforma-ensino\.next\server\chunks\5836.js:1:37220)
+    at f (C:\Habilidade\plataforma-ensino\.next\server\chunks\4377.js:1:1763)
+    at n (C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:8:2169)
+    at C:\Habilidade\plataforma-ensino\.next\server\app\admin\courses\page.js:1:1996
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9797
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9790
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4007
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4002 {
+  description: "Route /admin/courses couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+[SERVER_CLIENT] Error creating server client: n [Error]: Dynamic server usage: Route /admin/courses couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (C:\Habilidade\plataforma-ensino\.next\server\chunks\5836.js:1:37220)
+    at f (C:\Habilidade\plataforma-ensino\.next\server\chunks\4377.js:1:1763)
+    at n (C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:8:2169)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:1:729
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9797
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9790
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4007
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4002 {
+  description: "Route /admin/courses couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+[ADMIN_LAYOUT] Error in admin layout: n [Error]: Dynamic server usage: Route /admin/courses couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (C:\Habilidade\plataforma-ensino\.next\server\chunks\5836.js:1:37220)
+    at f (C:\Habilidade\plataforma-ensino\.next\server\chunks\4377.js:1:1763)
+    at n (C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:8:2169)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:1:729
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9797
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9790
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4007
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4002 {
+  description: "Route /admin/courses couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+[SERVER_CLIENT] Error creating server client: n [Error]: Dynamic server usage: Route /admin/profile couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (C:\Habilidade\plataforma-ensino\.next\server\chunks\5836.js:1:37220)
+    at f (C:\Habilidade\plataforma-ensino\.next\server\chunks\4377.js:1:1763)
+    at n (C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:8:2169)
+    at C:\Habilidade\plataforma-ensino\.next\server\app\admin\profile\page.js:1:1980
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9797
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9790
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4007
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4002 {
+  description: "Route /admin/profile couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+[SERVER_CLIENT] Error creating server client: n [Error]: Dynamic server usage: Route /admin/profile couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (C:\Habilidade\plataforma-ensino\.next\server\chunks\5836.js:1:37220)
+    at f (C:\Habilidade\plataforma-ensino\.next\server\chunks\4377.js:1:1763)
+    at n (C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:8:2169)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:1:729
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9797
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9790
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4007
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4002 {
+  description: "Route /admin/profile couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+[ADMIN_LAYOUT] Error in admin layout: n [Error]: Dynamic server usage: Route /admin/profile couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (C:\Habilidade\plataforma-ensino\.next\server\chunks\5836.js:1:37220)
+    at f (C:\Habilidade\plataforma-ensino\.next\server\chunks\4377.js:1:1763)
+    at n (C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:8:2169)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:1:729
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9797
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9790
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4007
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4002 {
+  description: "Route /admin/profile couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+[SERVER_CLIENT] Error creating server client: n [Error]: Dynamic server usage: Route /admin/profile couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (C:\Habilidade\plataforma-ensino\.next\server\chunks\5836.js:1:37220)
+    at f (C:\Habilidade\plataforma-ensino\.next\server\chunks\4377.js:1:1763)
+    at n (C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:8:2169)
+    at C:\Habilidade\plataforma-ensino\.next\server\app\admin\profile\page.js:1:1980
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9797
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9790
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4007
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4002 {
+  description: "Route /admin/profile couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+[SERVER_CLIENT] Error creating server client: n [Error]: Dynamic server usage: Route /admin/profile couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (C:\Habilidade\plataforma-ensino\.next\server\chunks\5836.js:1:37220)
+    at f (C:\Habilidade\plataforma-ensino\.next\server\chunks\4377.js:1:1763)
+    at n (C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:8:2169)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:1:729
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9797
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9790
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4007
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4002 {
+  description: "Route /admin/profile couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+[ADMIN_LAYOUT] Error in admin layout: n [Error]: Dynamic server usage: Route /admin/profile couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (C:\Habilidade\plataforma-ensino\.next\server\chunks\5836.js:1:37220)
+    at f (C:\Habilidade\plataforma-ensino\.next\server\chunks\4377.js:1:1763)
+    at n (C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:8:2169)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:1:729
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9797
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9790
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4007
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4002 {
+  description: "Route /admin/profile couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+[SERVER_CLIENT] Error creating server client: n [Error]: Dynamic server usage: Route /admin/blog couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (C:\Habilidade\plataforma-ensino\.next\server\chunks\5836.js:1:37220)
+    at f (C:\Habilidade\plataforma-ensino\.next\server\chunks\4377.js:1:1763)
+    at n (C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:8:2169)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:1:729
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9797
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9790
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4007
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4002 {
+  description: "Route /admin/blog couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+[ADMIN_LAYOUT] Error in admin layout: n [Error]: Dynamic server usage: Route /admin/blog couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (C:\Habilidade\plataforma-ensino\.next\server\chunks\5836.js:1:37220)
+    at f (C:\Habilidade\plataforma-ensino\.next\server\chunks\4377.js:1:1763)
+    at n (C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:8:2169)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:1:729
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9797
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9790
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4007
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4002 {
+  description: "Route /admin/blog couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+[SERVER_CLIENT] Error creating server client: n [Error]: Dynamic server usage: Route /admin/blog couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (C:\Habilidade\plataforma-ensino\.next\server\chunks\5836.js:1:37220)
+    at f (C:\Habilidade\plataforma-ensino\.next\server\chunks\4377.js:1:1763)
+    at n (C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:8:2169)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:1:729
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9797
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9790
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4007
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4002 {
+  description: "Route /admin/blog couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+[ADMIN_LAYOUT] Error in admin layout: n [Error]: Dynamic server usage: Route /admin/blog couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (C:\Habilidade\plataforma-ensino\.next\server\chunks\5836.js:1:37220)
+    at f (C:\Habilidade\plataforma-ensino\.next\server\chunks\4377.js:1:1763)
+    at n (C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:8:2169)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:1:729
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9797
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9790
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4007
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4002 {
+  description: "Route /admin/blog couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+[ADMIN_LAYOUT] Starting admin layout
+[ADMIN_LAYOUT] Creating Supabase client
+[SERVER_CLIENT] Creating server client
+[SERVER_CLIENT] Getting cookie store
+[ADMIN_LAYOUT] Starting admin layout
+[ADMIN_LAYOUT] Creating Supabase client
+[SERVER_CLIENT] Creating server client
+[SERVER_CLIENT] Getting cookie store
+[SERVER_CLIENT] Error creating server client: n [Error]: Dynamic server usage: Route /admin/blog/new couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (C:\Habilidade\plataforma-ensino\.next\server\chunks\5836.js:1:37220)
+    at f (C:\Habilidade\plataforma-ensino\.next\server\chunks\4377.js:1:1763)
+    at i (C:\Habilidade\plataforma-ensino\.next\server\app\api\posts\route.js:1:83154)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:1:729
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9797
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9790
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4007
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4002 {
+  description: "Route /admin/blog/new couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+[ADMIN_LAYOUT] Error in admin layout: n [Error]: Dynamic server usage: Route /admin/blog/new couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (C:\Habilidade\plataforma-ensino\.next\server\chunks\5836.js:1:37220)
+    at f (C:\Habilidade\plataforma-ensino\.next\server\chunks\4377.js:1:1763)
+    at i (C:\Habilidade\plataforma-ensino\.next\server\app\api\posts\route.js:1:83154)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:1:729
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9797
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9790
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4007
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4002 {
+  description: "Route /admin/blog/new couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+[SERVER_CLIENT] Error creating server client: n [Error]: Dynamic server usage: Route /admin/blog/new couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (C:\Habilidade\plataforma-ensino\.next\server\chunks\5836.js:1:37220)
+    at f (C:\Habilidade\plataforma-ensino\.next\server\chunks\4377.js:1:1763)
+    at i (C:\Habilidade\plataforma-ensino\.next\server\app\api\posts\route.js:1:83154)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:1:729
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9797
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9790
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4007
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4002 {
+  description: "Route /admin/blog/new couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+[ADMIN_LAYOUT] Error in admin layout: n [Error]: Dynamic server usage: Route /admin/blog/new couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (C:\Habilidade\plataforma-ensino\.next\server\chunks\5836.js:1:37220)
+    at f (C:\Habilidade\plataforma-ensino\.next\server\chunks\4377.js:1:1763)
+    at i (C:\Habilidade\plataforma-ensino\.next\server\app\api\posts\route.js:1:83154)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\3626.js:1:729
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9797
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\7610.js:2:9790
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4007
+    at i (C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:7479)
+    at C:\Habilidade\plataforma-ensino\.next\server\chunks\4516.js:5:4002 {
+  description: "Route /admin/blog/new couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+ ✓ Generating static pages (32/32)
+ ✓ Collecting build traces
+ ✓ Finalizing page optimization
+
+Route (app)                              Size     First Load JS
+┌ ○ /                                    2.63 kB         558 kB
+├ ○ /_not-found                          925 B           219 kB
+├ ƒ /admin                               2.72 kB         221 kB
+├ ƒ /admin/blog                          2.67 kB         223 kB
+├ ƒ /admin/blog/new                      93.4 kB         312 kB
+├ ƒ /admin/categories                    2.96 kB         261 kB
+├ ƒ /admin/courses                       4.59 kB         263 kB
+├ ƒ /admin/enrollments                   2.67 kB         261 kB
+├ ƒ /admin/profile                       3.65 kB         262 kB
+├ ƒ /admin/settings                      3.54 kB         262 kB
+├ ƒ /admin/users                         4.46 kB         263 kB
+├ ƒ /api/mux/playback-token              0 B                0 B
+├ ƒ /api/posts                           0 B                0 B
+├ ƒ /api/posts/slug/[slug]               0 B                0 B
+├ ƒ /api/preview                         0 B                0 B
+├ ƒ /api/secure-video                    0 B                0 B
+├ ƒ /api/test-error                      0 B                0 B
+├ ƒ /auth/callback                       0 B                0 B
+├ ○ /auth/forgot-password                1.99 kB         552 kB
+├ ○ /auth/login                          1.93 kB         552 kB
+├ ○ /auth/register                       2.66 kB         553 kB
+├ ○ /auth/update-password                1.85 kB         552 kB
+├ ƒ /blog/preview/[slug]                 153 B           218 kB
+├ ƒ /course/[slug]                       4.01 kB         556 kB
+├ ○ /courses                             5.87 kB         562 kB
+├ ○ /dashboard                           6.57 kB         559 kB
+├ ○ /profile                             5.69 kB         561 kB
+├ ○ /progress                            5.59 kB         558 kB
+├ ○ /test-player                         4.17 kB         554 kB
+├ ○ /test-secure-player                  2.43 kB         306 kB
+├ ○ /test-seed                           4.65 kB         555 kB
+├ ○ /test-sentry                         754 B           219 kB
+└ ○ /test-supabase                       2.21 kB         261 kB
++ First Load JS shared by all            218 kB
+  ├ chunks/396464d2-72a6bd2cd2ea2a94.js  37 kB
+  ├ chunks/8559-996275e02b98fef6.js      125 kB
+  ├ chunks/fd9d1056-5505e148288f469c.js  53.7 kB
+  └ other shared chunks (total)          2.88 kB
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand

@@ -10,7 +10,10 @@
       "mcp__sentry__search_docs",
       "WebFetch(domain:github.com)",
       "mcp__sentry__find_dsns",
-      "mcp__sentry__find_issues"
+      "mcp__sentry__find_issues",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "mcp__supabase__search_docs"
     ],
     "deny": []
   }

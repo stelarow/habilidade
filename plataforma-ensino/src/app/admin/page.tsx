@@ -13,7 +13,7 @@ export default async function AdminPage() {
 
   console.log('[ADMIN-DASHBOARD] 3. Iniciando Promise.all para estatísticas...')
   
-  // Get dashboard statistics
+  // Get dashboard statistics - Fixed to avoid undici headers.split error
   const [
     { count: totalStudents },
     { count: totalCourses },
@@ -22,15 +22,18 @@ export default async function AdminPage() {
   ] = await Promise.all([
     supabase
       .from('users')
-      .select('*', { count: 'exact', head: true })
-      .eq('role', 'student'),
+      .select('*', { count: 'exact' })
+      .eq('role', 'student')
+      .limit(0),
     supabase
       .from('courses')
-      .select('*', { count: 'exact', head: true })
-      .eq('is_published', true),
+      .select('*', { count: 'exact' })
+      .eq('is_published', true)
+      .limit(0),
     supabase
       .from('enrollments')
-      .select('*', { count: 'exact', head: true }),
+      .select('*', { count: 'exact' })
+      .limit(0),
     supabase
       .from('enrollments')
       .select(`
