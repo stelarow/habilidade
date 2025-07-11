@@ -2,48 +2,33 @@ import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 
 export const createClient = () => {
-  console.log('[SERVER_CLIENT] Creating server client with headers.split fix')
+  console.log('[SERVER_CLIENT] Creating Netlify-compatible server client')
   
   try {
-    console.log('[SERVER_CLIENT] Getting cookie store')
+    console.log('[SERVER_CLIENT] Using read-only cookie access for Netlify serverless')
     const cookieStore = cookies()
 
-    console.log('[SERVER_CLIENT] Creating Supabase server client with simplified cookie handling')
+    // CRITICAL FIX: Simplified server client for Netlify compatibility
+    // Removes complex cookie handling that triggers undici headers.split error
     return createServerClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
       {
         cookies: {
           getAll() {
-            console.log('[SERVER_CLIENT] getAll() called')
-            try {
-              const cookies = cookieStore.getAll()
-              console.log(`[SERVER_CLIENT] getAll() returning ${cookies.length} cookies`)
-              return cookies
-            } catch (error) {
-              console.error('[SERVER_CLIENT] Error in getAll():', error)
-              throw error
-            }
+            console.log('[SERVER_CLIENT] getAll() - read-only mode')
+            return cookieStore.getAll()
           },
-          setAll(cookiesToSet) {
-            console.log(`[SERVER_CLIENT] setAll() called with ${cookiesToSet?.length || 0} cookies`)
-            // CRITICAL FIX: Simplified cookie handling to prevent undici headers corruption
-            // Don't set cookies in server components - let middleware handle it
-            try {
-              // Minimal cookie setting to prevent headers.split error
-              console.log('[SERVER_CLIENT] Skipping cookie set in server component to prevent undici conflict')
-            } catch (error) {
-              console.error('[SERVER_CLIENT] Error in setAll():', error)
-              // The `setAll` method was called from a Server Component.
-              // This can be ignored if you have middleware refreshing
-              // user sessions.
-            }
+          setAll() {
+            console.log('[SERVER_CLIENT] setAll() - no-op for serverless compatibility')
+            // No-op for server-side to prevent undici conflicts
+            // Cookie updates handled by middleware
           },
         },
       }
     )
   } catch (error) {
-    console.error('[SERVER_CLIENT] Error creating server client:', error)
+    console.error('[SERVER_CLIENT] Error creating Netlify-compatible client:', error)
     throw error
   }
 }
