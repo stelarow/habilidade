@@ -2,8 +2,11 @@ import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
 export async function updateSession(request: NextRequest) {
+  console.log('[LOG-TEST] 1. Entrando em updateSession para:', request.nextUrl.pathname)
+  
   // Create response ONCE and NEVER recreate it to prevent undici header corruption
   let supabaseResponse = NextResponse.next()
+  console.log('[LOG-TEST] 2. supabaseResponse inicializado (sem request object)')
 
   // Use simplified cookie handling pattern to prevent headers.split error  
   const supabase = createServerClient(
@@ -12,9 +15,11 @@ export async function updateSession(request: NextRequest) {
     {
       cookies: {
         getAll() {
+          console.log('[LOG-TEST] 2.1. cookies.getAll() chamado')
           return request.cookies.getAll()
         },
         setAll(cookiesToSet) {
+          console.log('[LOG-TEST] 2.2. cookies.setAll() chamado com', cookiesToSet.length, 'cookies')
           // CRITICAL: Do NOT recreate NextResponse here - causes undici header corruption
           // Simply set cookies on existing response object
           cookiesToSet.forEach(({ name, value, options }) => {
@@ -24,22 +29,45 @@ export async function updateSession(request: NextRequest) {
       },
     }
   )
+  console.log('[LOG-TEST] 3. Cliente Supabase criado. Prestes a chamar getUser()')
 
-  // Single authentication call
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+  try {
+    // Single authentication call
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
+    
+    // Se chegamos aqui, a tese estava errada - getUser() funcionou
+    console.log('[LOG-TEST] 4. SUCESSO ao chamar getUser(). Usuário:', user ? user.id : 'null')
+  } catch (error) {
+    // Este log capturará erros do try/catch
+    console.error('[LOG-TEST] ERRO capturado no try/catch durante getUser():', error)
+    throw error
+  }
 
   // Get user profile if authenticated (single DB call)
   let userProfile = null
-  if (user) {
-    const { data: profile } = await supabase
-      .from('users')
-      .select('role, full_name, email')
-      .eq('id', user.id)
-      .single()
+  let user: any = null
+  
+  try {
+    const result = await supabase.auth.getUser()
+    user = result.data.user
+    console.log('[LOG-TEST] 4. SUCESSO ao chamar getUser(). Usuário:', user ? user.id : 'null')
     
-    userProfile = profile
+    if (user) {
+      console.log('[LOG-TEST] 5. Usuário autenticado, buscando perfil...')
+      const { data: profile } = await supabase
+        .from('users')
+        .select('role, full_name, email')
+        .eq('id', user.id)
+        .single()
+      
+      userProfile = profile
+      console.log('[LOG-TEST] 6. Perfil carregado:', profile?.role || 'sem role')
+    }
+  } catch (error) {
+    console.error('[LOG-TEST] ERRO capturado durante getUser() ou busca de perfil:', error)
+    // Continue sem usuário autenticado
   }
 
   // Protected routes that require authentication
@@ -80,13 +108,18 @@ export async function updateSession(request: NextRequest) {
     }
   }
 
+  console.log('[LOG-TEST] 7. Configurando headers de resposta...')
+  
   // Pass user data to the request via headers for downstream consumption
   if (user && userProfile) {
+    console.log('[LOG-TEST] 8. Adicionando headers de usuário autenticado')
     // Ensure all header values are strings to prevent Sentry errors
     supabaseResponse.headers.set('x-user-id', String(user.id || ''))
     supabaseResponse.headers.set('x-user-role', String(userProfile.role || ''))
     supabaseResponse.headers.set('x-user-email', String(userProfile.email || ''))
     supabaseResponse.headers.set('x-user-name', String(userProfile.full_name || ''))
   }
+  
+  console.log('[LOG-TEST] 9. Saindo de updateSession com sucesso')
   return supabaseResponse
 }
