@@ -14,13 +14,7 @@ if (process.env.NEXT_PUBLIC_SENTRY_DSN) {
       return event;
     },
     integrations: [
-      new Sentry.Integrations.BrowserTracing({
-        // Disable request data capture to avoid header processing issues
-        requestDataOptions: {
-          allowedHeaders: false,
-          allowedCookies: false,
-        }
-      }),
+      new Sentry.Integrations.BrowserTracing(),
     ],
   });
 }

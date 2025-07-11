@@ -1,6 +1,5 @@
-import { type NextRequest } from 'next/server'
+import { type NextRequest, NextResponse } from 'next/server'
 import { updateSession } from './src/lib/supabase/middleware'
-
 export async function middleware(request: NextRequest) {
   // SINGLE point of authentication - updateSession handles ALL auth logic
   // This eliminates multiple Supabase client instances and prevents 

@@ -16,11 +16,6 @@ if (process.env.SENTRY_DSN) {
       new Sentry.Integrations.Http({
         tracing: true,
         breadcrumbs: true,
-        // Disable request data capture to avoid header processing issues
-        requestDataOptions: {
-          allowedHeaders: false,
-          allowedCookies: false,
-        }
       }),
     ],
   });
