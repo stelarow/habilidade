@@ -38,6 +38,15 @@ const nextConfig = {
           },
         ],
       },
+      {
+        source: '/admin/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'no-store, must-revalidate',
+          },
+        ],
+      },
     ];
   },
 };
@@ -50,4 +59,7 @@ export default withBundleAnalyzer(withSentryConfig(nextConfig, {
   hideSourceMaps: true,
   disableLogger: true,
   automaticVercelMonitors: true,
+  // Disable Sentry in development to prevent header processing issues
+  disableServerWebpackPlugin: process.env.NODE_ENV === 'development',
+  disableClientWebpackPlugin: process.env.NODE_ENV === 'development',
 }));

@@ -81,11 +81,11 @@ export async function updateSession(request: NextRequest) {
 
   // Pass user data to the request via headers for downstream consumption
   if (user && userProfile) {
-    supabaseResponse.headers.set('x-user-id', user.id)
-    supabaseResponse.headers.set('x-user-role', userProfile.role)
-    supabaseResponse.headers.set('x-user-email', userProfile.email || '')
-    supabaseResponse.headers.set('x-user-name', userProfile.full_name || '')
+    // Ensure all header values are strings to prevent Sentry errors
+    supabaseResponse.headers.set('x-user-id', String(user.id || ''))
+    supabaseResponse.headers.set('x-user-role', String(userProfile.role || ''))
+    supabaseResponse.headers.set('x-user-email', String(userProfile.email || ''))
+    supabaseResponse.headers.set('x-user-name', String(userProfile.full_name || ''))
   }
-
   return supabaseResponse
 }

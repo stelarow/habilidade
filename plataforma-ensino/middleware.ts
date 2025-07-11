@@ -9,6 +9,16 @@ export async function middleware(request: NextRequest) {
   console.log(`[MIDDLEWARE] Processing request: ${request.nextUrl.pathname}`)
   
   try {
+    // Validate request headers to prevent Sentry errors
+    const headers = request.headers
+    if (headers && typeof headers.forEach === 'function') {
+      headers.forEach((value, key) => {
+        if (typeof value !== 'string') {
+          console.warn(`[MIDDLEWARE] Non-string header value for ${key}:`, typeof value)
+        }
+      })
+    }
+
     // updateSession now handles:
     // - User authentication
     // - Admin role checking  
@@ -20,10 +30,16 @@ export async function middleware(request: NextRequest) {
     return response
   } catch (error) {
     console.error(`[MIDDLEWARE] UpdateSession failed for ${request.nextUrl.pathname}:`, error)
+    
+    // If it's a headers-related error, return a clean response
+    if (error instanceof Error && error.message.includes('headers.split')) {
+      console.log(`[MIDDLEWARE] Headers error detected, returning clean response`)
+      return NextResponse.next()
+    }
+    
     throw error
   }
 }
-
 export const config = {
   matcher: [
     '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',

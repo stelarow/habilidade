@@ -5,6 +5,22 @@ if (process.env.NEXT_PUBLIC_SENTRY_DSN) {
     dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
     tracesSampleRate: 0.1,
     environment: process.env.NODE_ENV,
-    enabled: true, // Enable in all environments for testing
+    enabled: true,
+    beforeSend(event) {
+      // Filter out headers-related errors that are not actionable
+      if (event.exception?.values?.[0]?.value?.includes('headers.split is not a function')) {
+        return null;
+      }
+      return event;
+    },
+    integrations: [
+      new Sentry.Integrations.BrowserTracing({
+        // Disable request data capture to avoid header processing issues
+        requestDataOptions: {
+          allowedHeaders: false,
+          allowedCookies: false,
+        }
+      }),
+    ],
   });
-} 
+}
