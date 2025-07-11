@@ -1,4 +1,4 @@
-import { type NextRequest, NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { updateSession } from './src/lib/supabase/middleware'
 export async function middleware(request: NextRequest) {
   // SINGLE point of authentication - updateSession handles ALL auth logic
@@ -8,32 +8,13 @@ export async function middleware(request: NextRequest) {
   console.log(`[MIDDLEWARE] Processing request: ${request.nextUrl.pathname}`)
   
   try {
-    // Create a new Headers object to ensure all values are strings
-    const newHeaders = new Headers()
-    request.headers.forEach((value, key) => {
-      newHeaders.set(key, String(value))
-    })
-
-    // Clone the request with the sanitized headers
-    const newRequest = new NextRequest(request.nextUrl, {
-      headers: newHeaders,
-      method: request.method,
-      body: request.body,
-      credentials: request.credentials,
-      cache: request.cache,
-      redirect: request.redirect,
-      integrity: request.integrity,
-      keepalive: request.keepalive,
-      signal: request.signal,
-    })
-
     // updateSession now handles:
     // - User authentication
     // - Admin role checking  
     // - Protected route redirects
     // - Auth route redirects
     // - All redirects and session management
-    const response = await updateSession(newRequest)
+    const response = await updateSession(request)
     console.log(`[MIDDLEWARE] UpdateSession completed for: ${request.nextUrl.pathname}`)
     return response
   } catch (error) {
