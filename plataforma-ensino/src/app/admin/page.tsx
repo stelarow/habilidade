@@ -6,8 +6,13 @@ import { DashboardStats } from '@/types'
 export const dynamic = 'force-dynamic'
 
 export default async function AdminPage() {
+  console.log('[ADMIN-DASHBOARD] 1. Iniciando AdminPage')
+  
   const supabase = createClient()
+  console.log('[ADMIN-DASHBOARD] 2. Cliente Supabase criado')
 
+  console.log('[ADMIN-DASHBOARD] 3. Iniciando Promise.all para estatísticas...')
+  
   // Get dashboard statistics
   const [
     { count: totalStudents },
@@ -37,6 +42,9 @@ export default async function AdminPage() {
       .limit(10)
   ])
 
+  console.log('[ADMIN-DASHBOARD] 4. Promise.all completado com sucesso')
+  console.log('[ADMIN-DASHBOARD] 5. Dados:', { totalStudents, totalCourses, totalEnrollments, enrollments: recentEnrollments?.length })
+
   const stats: DashboardStats = {
     totalStudents: totalStudents || 0,
     totalCourses: totalCourses || 0,
@@ -50,6 +58,8 @@ export default async function AdminPage() {
     }
   }
 
+  console.log('[ADMIN-DASHBOARD] 6. Renderizando AdminDashboard component')
+  
   return (
     <AdminDashboard 
       stats={stats}
