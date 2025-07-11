@@ -31,20 +31,6 @@ export async function updateSession(request: NextRequest) {
   )
   console.log('[LOG-TEST] 3. Cliente Supabase criado. Prestes a chamar getUser()')
 
-  try {
-    // Single authentication call
-    const {
-      data: { user },
-    } = await supabase.auth.getUser()
-    
-    // Se chegamos aqui, a tese estava errada - getUser() funcionou
-    console.log('[LOG-TEST] 4. SUCESSO ao chamar getUser(). Usuário:', user ? user.id : 'null')
-  } catch (error) {
-    // Este log capturará erros do try/catch
-    console.error('[LOG-TEST] ERRO capturado no try/catch durante getUser():', error)
-    throw error
-  }
-
   // Get user profile if authenticated (single DB call)
   let userProfile = null
   let user: any = null
