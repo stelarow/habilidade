@@ -13,37 +13,37 @@ export default async function AdminPage() {
 
   console.log('[ADMIN-DASHBOARD] 3. Iniciando Promise.all para estatísticas...')
   
-  // Get dashboard statistics - Fixed to avoid undici headers.split error
-  const [
-    { count: totalStudents },
-    { count: totalCourses },
-    { count: totalEnrollments },
-    { data: recentEnrollments }
-  ] = await Promise.all([
-    supabase
-      .from('users')
-      .select('*', { count: 'exact' })
-      .eq('role', 'student')
-      .limit(0),
-    supabase
-      .from('courses')
-      .select('*', { count: 'exact' })
-      .eq('is_published', true)
-      .limit(0),
-    supabase
-      .from('enrollments')
-      .select('*', { count: 'exact' })
-      .limit(0),
-    supabase
-      .from('enrollments')
-      .select(`
-        *,
-        user:users(full_name, email),
-        course:courses(title, slug)
-      `)
-      .order('created_at', { ascending: false })
-      .limit(10)
-  ])
+  // Get dashboard statistics - Sequential queries to avoid undici race condition
+  console.log('[ADMIN-DASHBOARD] 3.1. Query students count...')
+  const { count: totalStudents } = await supabase
+    .from('users')
+    .select('*', { count: 'exact' })
+    .eq('role', 'student')
+    .limit(0)
+
+  console.log('[ADMIN-DASHBOARD] 3.2. Query courses count...')
+  const { count: totalCourses } = await supabase
+    .from('courses')
+    .select('*', { count: 'exact' })
+    .eq('is_published', true)
+    .limit(0)
+
+  console.log('[ADMIN-DASHBOARD] 3.3. Query enrollments count...')
+  const { count: totalEnrollments } = await supabase
+    .from('enrollments')
+    .select('*', { count: 'exact' })
+    .limit(0)
+
+  console.log('[ADMIN-DASHBOARD] 3.4. Query recent enrollments...')
+  const { data: recentEnrollments } = await supabase
+    .from('enrollments')
+    .select(`
+      *,
+      user:users(full_name, email),
+      course:courses(title, slug)
+    `)
+    .order('created_at', { ascending: false })
+    .limit(10)
 
   console.log('[ADMIN-DASHBOARD] 4. Promise.all completado com sucesso')
   console.log('[ADMIN-DASHBOARD] 5. Dados:', { totalStudents, totalCourses, totalEnrollments, enrollments: recentEnrollments?.length })
