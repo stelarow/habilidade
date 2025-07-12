@@ -18,28 +18,34 @@ export default async function AdminPage() {
   
   // Get dashboard statistics - Sequential queries with delays to prevent race conditions
   console.log('[ADMIN-DASHBOARD] 3.1. Query students count...')
-  const { count: totalStudents } = await supabase
+  const { count: totalStudents, error: studentsError } = await supabase
     .from('users')
     .select('*', { count: 'exact' })
     .eq('role', 'student')
     .limit(0)
+  
+  console.log('[ADMIN-DASHBOARD] Students result:', { count: totalStudents, error: studentsError })
 
   await delay(100) // Small delay to prevent concurrent requests
 
   console.log('[ADMIN-DASHBOARD] 3.2. Query courses count...')
-  const { count: totalCourses } = await supabase
+  const { count: totalCourses, error: coursesError } = await supabase
     .from('courses')
     .select('*', { count: 'exact' })
     .eq('is_published', true)
     .limit(0)
+  
+  console.log('[ADMIN-DASHBOARD] Courses result:', { count: totalCourses, error: coursesError })
 
   await delay(100)
 
   console.log('[ADMIN-DASHBOARD] 3.3. Query enrollments count...')
-  const { count: totalEnrollments } = await supabase
+  const { count: totalEnrollments, error: enrollmentsError } = await supabase
     .from('enrollments')
     .select('*', { count: 'exact' })
     .limit(0)
+  
+  console.log('[ADMIN-DASHBOARD] Enrollments result:', { count: totalEnrollments, error: enrollmentsError })
 
   await delay(100)
 
@@ -58,9 +64,9 @@ export default async function AdminPage() {
   console.log('[ADMIN-DASHBOARD] 5. Dados:', { totalStudents, totalCourses, totalEnrollments, enrollments: recentEnrollments?.length })
 
   const stats: DashboardStats = {
-    totalStudents: totalStudents || 0,
-    totalCourses: totalCourses || 0,
-    totalEnrollments: totalEnrollments || 0,
+    totalStudents: totalStudents ?? 0,
+    totalCourses: totalCourses ?? 0,
+    totalEnrollments: totalEnrollments ?? 0,
     totalRevenue: 0, // TODO: Calculate from enrollments
     monthlyGrowth: {
       students: 0,
