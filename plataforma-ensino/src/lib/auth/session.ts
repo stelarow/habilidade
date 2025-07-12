@@ -242,11 +242,24 @@ export async function requireInstructorOrAdmin(): Promise<AuthorizedSessionResul
   if (!session.isAuthenticated || !session.user || !session.profile) {
     const { redirect } = await import('next/navigation')
     redirect('/auth/login')
+    // This part will not be reached, but it helps TypeScript understand
+    // that execution stops here, preventing it from thinking session.user
+    // or session.profile could be null in the code that follows.
+    throw new Error("Redirecting to login");
+  }
+
+  // Explicitly check for profile to satisfy TypeScript's null-safety checks
+  if (!session.profile) {
+    const { redirect } = await import('next/navigation');
+    redirect('/auth/login');
+    throw new Error("Redirecting to login due to missing profile");
   }
 
   if (!['admin', 'instructor'].includes(session.profile.role)) {
     const { redirect } = await import('next/navigation')
     redirect('/dashboard')
+    // Similarly, ensure TypeScript knows execution stops here.
+    throw new Error("Redirecting to dashboard due to insufficient role");
   }
 
   return {
