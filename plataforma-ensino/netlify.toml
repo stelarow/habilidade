@@ -3,11 +3,16 @@
   command = "npm run build"
   publish = ".next"
   
-# Serverless function configuration
+# Environment configuration
 [build.environment]
   NODE_VERSION = "18"
+  NEXT_TELEMETRY_DISABLED = "1"
 
-# Headers for all files
+# Use Essential Next.js plugin for better compatibility
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# Headers for security
 [[headers]]
   for = "/*"
   [headers.values]

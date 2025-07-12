@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "export": "next export",
     "start": "next start",
     "lint": "next lint",
     "test": "jest",
@@ -50,6 +51,7 @@
     "zustand": "^4.5.0"
   },
   "devDependencies": {
+    "@netlify/plugin-nextjs": "^5.7.2",
     "@next/bundle-analyzer": "^15.3.5",
     "@playwright/test": "^1.40.0",
     "@testing-library/jest-dom": "^6.0.0",

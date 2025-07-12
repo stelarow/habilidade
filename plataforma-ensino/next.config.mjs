@@ -7,15 +7,15 @@ const withBundleAnalyzer = bundleAnalyzer({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Enable experimental features for better performance
-  experimental: {
-    optimizePackageImports: ['@supabase/supabase-js', 'phosphor-react'],
-  },
-  
   // Configure images
   images: {
     domains: ['localhost'],
     formats: ['image/webp', 'image/avif'],
+  },
+  
+  // Enable experimental features for better performance
+  experimental: {
+    optimizePackageImports: ['@supabase/supabase-js', 'phosphor-react'],
   },
   
   // Security headers
