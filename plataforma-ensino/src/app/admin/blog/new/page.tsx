@@ -1,5 +1,5 @@
 
-import { requireAdmin } from '@/lib/auth/server-side-protection'
+import { requireAdmin } from '@/lib/auth/session'
 import { NewPostClient } from '@/components/admin/NewPostClient'
 
 // Force dynamic rendering for admin pages that use server-side Supabase client

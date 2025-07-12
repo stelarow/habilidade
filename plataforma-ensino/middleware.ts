@@ -1,52 +1,79 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { updateSession } from './src/lib/supabase/middleware'
+import { isAuthenticated, hasRole } from './src/lib/auth/session'
+
+/**
+ * 🔥 NEXT.JS MIDDLEWARE
+ * 
+ * Focused on route protection and redirects only.
+ * No longer passes data via headers to Server Components.
+ * 
+ * Based on Next.js best practices:
+ * - Lightweight authentication checks
+ * - Immediate redirects for unauthorized access
+ * - Server Components verify sessions independently
+ */
 export async function middleware(request: NextRequest) {
-  // 🔥 CRITICAL: Unconditional middleware execution log
-  console.log('🔥🔥🔥 MIDDLEWARE IS EXECUTING FOR:', request.nextUrl.pathname, '🔥🔥🔥')
-  
   const startTime = Date.now()
   const requestId = Math.random().toString(36).substr(2, 9)
+  const pathname = request.nextUrl.pathname
   
-  console.log(`[MIDDLEWARE-${requestId}] ==================== START ====================`)
-  console.log(`[MIDDLEWARE-${requestId}] Request Details:`, {
-    pathname: request.nextUrl.pathname,
-    method: request.method,
-    userAgent: request.headers.get('user-agent')?.substring(0, 100) + '...',
-    timestamp: new Date().toISOString()
-  })
-  
-  // Log ALL cookies for debugging
-  const allCookies = request.cookies.getAll()
-  console.log(`[MIDDLEWARE-${requestId}] All Cookies (${allCookies.length}):`, 
-    allCookies.map(c => ({ name: c.name, hasValue: !!c.value, valueLength: c.value?.length || 0 }))
-  )
-  
-  // Log specific Supabase cookies
-  const supabaseCookies = allCookies.filter(c => c.name.includes('supabase') || c.name.includes('sb-'))
-  console.log(`[MIDDLEWARE-${requestId}] Supabase Cookies (${supabaseCookies.length}):`, supabaseCookies)
+  console.log(`[MIDDLEWARE-${requestId}] 🔥 Processing: ${pathname}`)
   
   try {
-    const response = await updateSession(request)
+    // Admin route protection
+    if (pathname.startsWith('/admin')) {
+      console.log(`[MIDDLEWARE-${requestId}] 🔒 Admin route detected - checking authorization`)
+      
+      // Quick authentication check
+      const authenticated = await isAuthenticated()
+      if (!authenticated) {
+        console.log(`[MIDDLEWARE-${requestId}] ❌ Not authenticated - redirecting to login`)
+        return NextResponse.redirect(new URL('/auth/login', request.url))
+      }
+
+      // Quick admin role check
+      const isAdmin = await hasRole('admin')
+      if (!isAdmin) {
+        console.log(`[MIDDLEWARE-${requestId}] ❌ Not admin - redirecting to dashboard`)
+        return NextResponse.redirect(new URL('/dashboard', request.url))
+      }
+
+      console.log(`[MIDDLEWARE-${requestId}] ✅ Admin access granted`)
+    }
+
+    // Auth route handling - redirect if already logged in
+    if (pathname.startsWith('/auth/') && !pathname.includes('/callback')) {
+      console.log(`[MIDDLEWARE-${requestId}] 🔐 Auth route detected`)
+      
+      const authenticated = await isAuthenticated()
+      if (authenticated) {
+        console.log(`[MIDDLEWARE-${requestId}] User already authenticated - checking redirect destination`)
+        
+        const isAdmin = await hasRole('admin')
+        const redirectUrl = isAdmin ? '/admin' : '/dashboard'
+        
+        console.log(`[MIDDLEWARE-${requestId}] Redirecting to: ${redirectUrl}`)
+        return NextResponse.redirect(new URL(redirectUrl, request.url))
+      }
+      
+      console.log(`[MIDDLEWARE-${requestId}] Allowing access to auth route`)
+    }
+
     const duration = Date.now() - startTime
-    console.log(`[MIDDLEWARE-${requestId}] UpdateSession completed in ${duration}ms for: ${request.nextUrl.pathname}`)
-    console.log(`[MIDDLEWARE-${requestId}] ==================== END (SUCCESS) ====================`)
-    return response
+    console.log(`[MIDDLEWARE-${requestId}] ✅ Completed in ${duration}ms`)
+    
+    return NextResponse.next()
+    
   } catch (error) {
     const duration = Date.now() - startTime
-    console.error(`[MIDDLEWARE-${requestId}] UpdateSession failed after ${duration}ms for ${request.nextUrl.pathname}:`, {
+    console.error(`[MIDDLEWARE-${requestId}] ❌ Error after ${duration}ms:`, {
       error: error instanceof Error ? error.message : error,
-      stack: error instanceof Error ? error.stack : undefined
+      pathname
     })
     
-    // If it's a headers-related error, return a clean response
-    if (error instanceof Error && error.message.includes('headers.split')) {
-      console.log(`[MIDDLEWARE-${requestId}] Headers error detected, returning clean response`)
-      console.log(`[MIDDLEWARE-${requestId}] ==================== END (HEADERS ERROR) ====================`)
-      return NextResponse.next()
-    }
-    
-    console.log(`[MIDDLEWARE-${requestId}] ==================== END (ERROR) ====================`)
-    throw error
+    // Graceful fallback - allow request to proceed
+    console.log(`[MIDDLEWARE-${requestId}] Allowing request to proceed despite error`)
+    return NextResponse.next()
   }
 }
 export const config = {

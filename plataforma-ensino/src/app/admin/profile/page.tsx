@@ -1,4 +1,4 @@
-import { requireAdmin } from '@/lib/auth/server-side-protection'
+import { requireAdmin } from '@/lib/auth/session'
 import { AdminProfile } from '@/components/admin/AdminProfile'
 
 // Force dynamic rendering for admin pages that use server-side Supabase client

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef, useMemo, useState } from 'react';
+import React, { useEffect, useRef, useMemo, useState, useCallback } from 'react';
 
 interface PerformanceConfig {
   particleCount?: number;
@@ -388,7 +388,7 @@ const DesignGraficoBackground: React.FC<DesignGraficoBackgroundProps> = ({
   }, [config.cursorInfluence]);
 
   // Inicializar elementos
-  const initializeElements = (canvas: HTMLCanvasElement) => {
+  const initializeElements = useCallback((canvas: HTMLCanvasElement) => {
     shapesRef.current = [];
     brushStrokesRef.current = [];
     
@@ -401,10 +401,10 @@ const DesignGraficoBackground: React.FC<DesignGraficoBackgroundProps> = ({
     for (let i = 0; i < config.brushCount; i++) {
       brushStrokesRef.current.push(new BrushStroke(canvas));
     }
-  };
+  }, [config.shapeCount, config.brushCount]);
 
   // Loop de animação
-  const animate = () => {
+  const animate = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -432,7 +432,7 @@ const DesignGraficoBackground: React.FC<DesignGraficoBackgroundProps> = ({
     if (config.shapeSpeed > 0 || config.brushSpeed > 0 || config.gradientSpeed > 0) {
       animationRef.current = requestAnimationFrame(animate);
     }
-  };
+  }, [config.shapeSpeed, config.brushSpeed, config.gradientSpeed, mousePosition]);
 
   // Configurar canvas e inicializar
   useEffect(() => {

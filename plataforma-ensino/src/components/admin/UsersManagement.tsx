@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { User } from '@/types'
+import { UserProfile } from '@/lib/auth/session'
 import { hasPermission } from '@/lib/auth/permissions-client'
 import { createClient } from '@/lib/supabase/client'
 import { 
@@ -17,7 +18,7 @@ import { UserCircleIcon } from '@heroicons/react/24/solid'
 
 interface UsersManagementProps {
   users: User[]
-  currentUser: User | null
+  currentUser: User | UserProfile | null
 }
 
 export function UsersManagement({ users: initialUsers, currentUser }: UsersManagementProps) {

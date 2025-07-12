@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { User } from '@/types'
+import { UserProfile } from '@/lib/auth/session'
 import { createClient } from '@/lib/supabase/client'
 import { 
   UserIcon,
@@ -14,7 +15,7 @@ import {
   EyeSlashIcon
 } from '@heroicons/react/24/outline'
 
-type AdminUser = User & {
+type AdminUser = (User | UserProfile) & {
   bio?: string
   phone?: string
   location?: string
@@ -33,7 +34,7 @@ export function AdminProfile({ currentUser }: AdminProfileProps) {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   
   const [profileData, setProfileData] = useState({
-    name: user?.full_name || '',
+    name: user?.full_name || 'Nome não definido',
     email: user?.email || '',
     bio: user?.bio || '',
     phone: user?.phone || '',
@@ -150,7 +151,7 @@ export function AdminProfile({ currentUser }: AdminProfileProps) {
           <UserIcon className="h-8 w-8 text-white" />
         </div>
         <div>
-          <h1 className="text-2xl font-bold text-white">{user?.full_name}</h1>
+          <h1 className="text-2xl font-bold text-white">{user?.full_name || 'Nome não definido'}</h1>
           <p className="text-gray-400">{user?.email}</p>
           <p className="text-sm text-purple-400 capitalize">{user?.role}</p>
         </div>

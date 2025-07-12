@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef, useMemo } from 'react';
+import React, { useEffect, useRef, useMemo, useCallback } from 'react';
 
 interface BackgroundProps {
   performanceConfig?: {
@@ -193,17 +193,17 @@ const MarketingDigitalBackground: React.FC<BackgroundProps> = ({
   }
 
   // Inicializar elementos
-  const initializeElements = (canvas: HTMLCanvasElement) => {
+  const initializeElements = useCallback((canvas: HTMLCanvasElement) => {
     metricsRef.current = [];
     
     // Criar métricas flutuantes
     for (let i = 0; i < config.metricCount; i++) {
       metricsRef.current.push(new FloatingMetric(canvas));
     }
-  };
+  }, [config]);
 
   // Loop de animação
-  const animate = () => {
+  const animate = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -221,7 +221,7 @@ const MarketingDigitalBackground: React.FC<BackgroundProps> = ({
     if (config.metricSpeed > 0) {
       animationRef.current = requestAnimationFrame(animate);
     }
-  };
+  }, [config]);
 
   // Configurar canvas e inicializar
   useEffect(() => {

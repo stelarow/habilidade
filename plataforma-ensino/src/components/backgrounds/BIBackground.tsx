@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef, useMemo } from 'react';
+import React, { useEffect, useRef, useMemo, useCallback } from 'react';
 
 interface BackgroundProps {
   performanceConfig?: {
@@ -361,7 +361,7 @@ const BIBackground: React.FC<BackgroundProps> = ({
   }
 
   // Inicializar elementos
-  const initializeElements = (canvas: HTMLCanvasElement) => {
+  const initializeElements = useCallback((canvas: HTMLCanvasElement) => {
     dataStreamsRef.current = [];
     kpiCardsRef.current = [];
     
@@ -374,10 +374,10 @@ const BIBackground: React.FC<BackgroundProps> = ({
     config.kpis.slice(0, config.kpiCount).forEach(kpi => {
       kpiCardsRef.current.push(new FloatingKPI(canvas, kpi));
     });
-  };
+  }, [config.streamCount, config.kpiCount, config.kpis]);
 
   // Loop de animação
-  const animate = () => {
+  const animate = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -400,7 +400,7 @@ const BIBackground: React.FC<BackgroundProps> = ({
     if (config.streamSpeed > 0 || config.kpiSpeed > 0) {
       animationRef.current = requestAnimationFrame(animate);
     }
-  };
+  }, [config.streamSpeed, config.kpiSpeed]);
 
   // Configurar canvas e inicializar
   useEffect(() => {

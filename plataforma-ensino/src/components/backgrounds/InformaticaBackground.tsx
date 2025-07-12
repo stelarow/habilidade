@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef, useMemo } from 'react';
+import React, { useEffect, useRef, useMemo, useCallback } from 'react';
 
 interface BackgroundProps {
   performanceConfig?: {
@@ -274,7 +274,7 @@ const InformaticaBackground: React.FC<BackgroundProps> = ({
   };
 
   // Inicializar elementos
-  const initializeElements = (canvas: HTMLCanvasElement) => {
+  const initializeElements = useCallback((canvas: HTMLCanvasElement) => {
     particlesRef.current = [];
     
     // Criar partículas
@@ -289,10 +289,10 @@ const InformaticaBackground: React.FC<BackgroundProps> = ({
       const x = i * 20;
       matrixRef.current.drops.push(new MatrixDrop(x, fontSize));
     }
-  };
+  }, [config]);
 
   // Loop de animação  
-  const animate = () => {
+  const animate = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -319,7 +319,7 @@ const InformaticaBackground: React.FC<BackgroundProps> = ({
     if (config.particleSpeed > 0 || config.gridSpeed > 0 || config.matrixSpeed > 0) {
       animationRef.current = requestAnimationFrame(animate);
     }
-  };
+  }, [config]);
 
   // Configurar canvas e inicializar
   useEffect(() => {

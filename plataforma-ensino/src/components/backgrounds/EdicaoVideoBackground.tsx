@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef, useMemo } from 'react';
+import React, { useEffect, useRef, useMemo, useCallback } from 'react';
 
 interface BackgroundProps {
   performanceConfig?: {
@@ -340,7 +340,7 @@ const EdicaoVideoBackground: React.FC<BackgroundProps> = ({
   }
 
   // Inicializar elementos
-  const initializeElements = (canvas: HTMLCanvasElement) => {
+  const initializeElements = useCallback((canvas: HTMLCanvasElement) => {
     // Film frames
     filmFramesRef.current = [];
     for (let i = 0; i < config.frameCount; i++) {
@@ -351,10 +351,10 @@ const EdicaoVideoBackground: React.FC<BackgroundProps> = ({
     if (config.cameraEnabled) {
       cameraRef.current = new CinemaCamera(canvas);
     }
-  };
+  }, [config.frameCount, config.cameraEnabled]);
 
   // Loop de animação
-  const animate = () => {
+  const animate = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -378,7 +378,7 @@ const EdicaoVideoBackground: React.FC<BackgroundProps> = ({
     if (config.frameSpeed > 0 || config.cameraSpeed > 0) {
       animationRef.current = requestAnimationFrame(animate);
     }
-  };
+  }, [config.frameSpeed, config.cameraSpeed]);
 
   // Configurar canvas e inicializar
   useEffect(() => {

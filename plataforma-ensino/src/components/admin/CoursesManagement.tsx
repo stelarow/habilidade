@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { Course, Category, Instructor, User } from '@/types'
+import { UserProfile } from '@/lib/auth/session'
 import { hasPermission } from '@/lib/auth/permissions-client'
 import { createClient } from '@/lib/supabase/client'
 import { 
@@ -21,7 +22,7 @@ interface CoursesManagementProps {
   courses: Course[]
   categories: Category[]
   instructors: Instructor[]
-  currentUser: User | null
+  currentUser: User | UserProfile | null
 }
 
 export function CoursesManagement({ 

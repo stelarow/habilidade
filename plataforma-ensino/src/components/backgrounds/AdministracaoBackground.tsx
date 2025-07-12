@@ -164,10 +164,11 @@ const AdministracaoBackground: React.FC<BackgroundProps> = ({
         ctx.restore();
       }
     };
-  }, [config.colors.primary, config.colors.light, config.animationSpeed]);
+  }, [config]);
 
-  // Classe para gráficos flutuantes
-  class FloatingChart implements FloatingChartType {
+  // Classe para gráficos flutuantes (memoizada para estabilidade entre renders)
+  const FloatingChart = useMemo(() => {
+    return class implements FloatingChartType {
     canvas: HTMLCanvasElement;
     x: number = 0;
     y: number = 0;
@@ -218,10 +219,12 @@ const AdministracaoBackground: React.FC<BackgroundProps> = ({
 
       ctx.restore();
     }
-  }
+    };
+  }, [config]);
 
-  // Classe para partículas de dados
-  class DataParticle implements DataParticleType {
+  // Classe para partículas de dados (memoizada para estabilidade entre renders)
+  const DataParticle = useMemo(() => {
+    return class implements DataParticleType {
     canvas: HTMLCanvasElement;
     x: number = 0;
     y: number = 0;
@@ -274,7 +277,8 @@ const AdministracaoBackground: React.FC<BackgroundProps> = ({
       ctx.fill();
       ctx.restore();
     }
-  }
+    };
+  }, [config]);
 
   // Loop de animação
   const animate = useCallback(() => {
@@ -307,7 +311,7 @@ const AdministracaoBackground: React.FC<BackgroundProps> = ({
     if (config.animationSpeed > 0) {
       animationRef.current = requestAnimationFrame(animate);
     }
-  }, [config]);
+  }, [config.colors.primary, config.colors.light, config.animationSpeed]);
 
   // Setup do canvas
   useEffect(() => {

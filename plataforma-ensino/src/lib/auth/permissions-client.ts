@@ -1,4 +1,5 @@
 import { User } from '@/types'
+import { UserProfile } from '@/lib/auth/session'
 import { createClient } from '@/lib/supabase/client'
 
 export type Permission = 
@@ -91,60 +92,60 @@ export async function getCurrentUserClient(): Promise<User | null> {
   return profile
 }
 
-export function hasPermission(user: User | null, permission: Permission): boolean {
+export function hasPermission(user: User | UserProfile | null, permission: Permission): boolean {
   if (!user) return false
   
   const userPermissions = rolePermissions[user.role] || []
   return userPermissions.includes(permission)
 }
 
-export function hasAnyPermission(user: User | null, permissions: Permission[]): boolean {
+export function hasAnyPermission(user: User | UserProfile | null, permissions: Permission[]): boolean {
   if (!user) return false
   
   const userPermissions = rolePermissions[user.role] || []
   return permissions.some(permission => userPermissions.includes(permission))
 }
 
-export function requirePermission(user: User | null, permission: Permission): void {
+export function requirePermission(user: User | UserProfile | null, permission: Permission): void {
   if (!hasPermission(user, permission)) {
     throw new Error(`Insufficient permissions: ${permission}`)
   }
 }
 
-export function requireRole(user: User | null, role: string): void {
+export function requireRole(user: User | UserProfile | null, role: string): void {
   if (!user || user.role !== role) {
     throw new Error(`Insufficient role: ${role}`)
   }
 }
 
-export function isAdmin(user: User | null): boolean {
+export function isAdmin(user: User | UserProfile | null): boolean {
   return user?.role === 'admin'
 }
 
-export function isInstructor(user: User | null): boolean {
+export function isInstructor(user: User | UserProfile | null): boolean {
   return user?.role === 'instructor'
 }
 
-export function isStudent(user: User | null): boolean {
+export function isStudent(user: User | UserProfile | null): boolean {
   return user?.role === 'student'
 }
 
-export function canAccessAdminPanel(user: User | null): boolean {
+export function canAccessAdminPanel(user: User | UserProfile | null): boolean {
   return hasPermission(user, 'admin.view')
 }
 
-export function canManageUsers(user: User | null): boolean {
+export function canManageUsers(user: User | UserProfile | null): boolean {
   return hasPermission(user, 'admin.users.view')
 }
 
-export function canManageCourses(user: User | null): boolean {
+export function canManageCourses(user: User | UserProfile | null): boolean {
   return hasPermission(user, 'admin.courses.view')
 }
 
-export function canViewReports(user: User | null): boolean {
+export function canViewReports(user: User | UserProfile | null): boolean {
   return hasPermission(user, 'admin.reports.view')
 }
 
-export function canEditSettings(user: User | null): boolean {
+export function canEditSettings(user: User | UserProfile | null): boolean {
   return hasPermission(user, 'admin.settings.edit')
 }

@@ -1,4 +1,4 @@
-import { requireAdmin } from '@/lib/auth/server-side-protection'
+import { requireAdmin } from '@/lib/auth/session'
 import { createClient } from '@/lib/supabase/server'
 import { AdminSettings } from '@/components/admin/AdminSettings'
 

@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { Category, User } from '@/types'
+import { UserProfile } from '@/lib/auth/session'
 import { createClient } from '@/lib/supabase/client'
 import { 
   PlusIcon, 
@@ -12,7 +13,7 @@ import {
 
 interface CategoriesManagementProps {
   categories: Category[]
-  currentUser: User | null
+  currentUser: User | UserProfile | null
 }
 
 export function CategoriesManagement({ categories: initialCategories, currentUser }: CategoriesManagementProps) {

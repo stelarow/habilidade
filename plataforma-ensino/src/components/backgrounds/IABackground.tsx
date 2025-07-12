@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef, useMemo } from 'react';
+import React, { useEffect, useRef, useMemo, useCallback } from 'react';
 
 interface PerformanceConfig {
   particleCount?: number;
@@ -347,7 +347,7 @@ const IABackground: React.FC<IABackgroundProps> = ({
   };
 
   // Inicializar elementos
-  const initializeElements = (canvas: HTMLCanvasElement) => {
+  const initializeElements = useCallback((canvas: HTMLCanvasElement) => {
     neuralNodesRef.current = [];
     dataFlowRef.current = [];
     
@@ -368,10 +368,10 @@ const IABackground: React.FC<IABackgroundProps> = ({
         ));
       }
     }
-  };
+  }, [config.nodeCount, config.dataFlowCount]);
 
   // Loop de animação
-  const animate = () => {
+  const animate = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -398,7 +398,7 @@ const IABackground: React.FC<IABackgroundProps> = ({
     if (config.nodeSpeed > 0 || config.dataFlowSpeed > 0 || config.networkPulseSpeed > 0) {
       animationRef.current = requestAnimationFrame(animate);
     }
-  };
+  }, [config.nodeSpeed, config.dataFlowSpeed, config.networkPulseSpeed]);
 
   // Configurar canvas e inicializar
   useEffect(() => {

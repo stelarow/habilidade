@@ -250,17 +250,17 @@ const ProgramacaoBackground: React.FC<ProgramacaoBackgroundProps> = ({
   }
 
   // Inicializar elementos
-  const initializeElements = (canvas: HTMLCanvasElement) => {
+  const initializeElements = useCallback((canvas: HTMLCanvasElement) => {
     codeSnippetsRef.current = [];
     
     // Criar snippets de código
     for (let i = 0; i < config.snippetCount; i++) {
       codeSnippetsRef.current.push(new FloatingCodeSnippet(canvas));
     }
-  };
+  }, [config]);
 
   // Loop de animação
-  const animate = () => {
+  const animate = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -274,7 +274,7 @@ const ProgramacaoBackground: React.FC<ProgramacaoBackgroundProps> = ({
       snippet.update();
       snippet.draw(ctx);
     });
-  };
+  }, []);
 
   // Configurar canvas e inicializar
   useEffect(() => {

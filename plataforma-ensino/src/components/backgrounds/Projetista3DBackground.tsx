@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef, useMemo } from 'react';
+import React, { useEffect, useRef, useMemo, useCallback } from 'react';
 
 interface BackgroundProps {
   performanceConfig?: {
@@ -240,15 +240,15 @@ const Projetista3DBackground: React.FC<BackgroundProps> = ({
   }
 
   // Inicializar wireframes
-  const initializeWireframes = (canvas: HTMLCanvasElement) => {
+  const initializeWireframes = useCallback((canvas: HTMLCanvasElement) => {
     wireframesRef.current = [];
     for (let i = 0; i < config.wireframeCount; i++) {
       wireframesRef.current.push(new Wireframe3D(canvas));
     }
-  };
+  }, [config.wireframeCount]);
 
   // Loop de animação com FPS limitado
-  const animate = () => {
+  const animate = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -279,7 +279,7 @@ const Projetista3DBackground: React.FC<BackgroundProps> = ({
     if (config.animationSpeed > 0) {
       animationRef.current.current = requestAnimationFrame(animate);
     }
-  };
+  }, [config]);
 
   // Configurar canvas e inicializar
   useEffect(() => {

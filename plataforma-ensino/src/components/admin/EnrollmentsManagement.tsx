@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import { User } from '@/types'
+import { UserProfile } from '@/lib/auth/session'
 import { createClient } from '@/lib/supabase/client'
 import { 
   MagnifyingGlassIcon,
@@ -36,7 +37,7 @@ interface Enrollment {
 
 interface EnrollmentsManagementProps {
   enrollments: Enrollment[]
-  currentUser: User | null
+  currentUser: User | UserProfile | null
 }
 
 export function EnrollmentsManagement({ enrollments: initialEnrollments, currentUser }: EnrollmentsManagementProps) {

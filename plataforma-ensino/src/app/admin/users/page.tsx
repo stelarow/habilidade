@@ -1,5 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
-import { requireAdmin } from '@/lib/auth/server-side-protection'
+import { requireAdmin } from '@/lib/auth/session'
 import { UsersManagement } from '@/components/admin/UsersManagement'
 import { User } from '@/types'
 

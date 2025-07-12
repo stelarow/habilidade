@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { User } from '@/types'
+import { UserProfile } from '@/lib/auth/session'
 import { createClient } from '@/lib/supabase/client'
 import { 
   CogIcon,
@@ -28,7 +29,7 @@ interface Setting {
 
 interface AdminSettingsProps {
   settings: Setting[]
-  currentUser: User | null
+  currentUser: User | UserProfile | null
 }
 
 export function AdminSettings({ settings: initialSettings, currentUser }: AdminSettingsProps) {

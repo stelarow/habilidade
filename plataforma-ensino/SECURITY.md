@@ -6,15 +6,15 @@ O sistema implementa **autenticação e autorização em múltiplas camadas** (D
 
 ## 🛡️ Camadas de Segurança
 
-### Layer 1: Middleware Inteligente
-- **Arquivo**: `src/lib/supabase/middleware.ts`
-- **Função**: Primeira linha de defesa no servidor
+### Layer 1: Middleware Simplificado
+- **Arquivo**: `middleware.ts`
+- **Função**: Primeira linha de defesa focada em redirecionamentos
 - **Características**:
   - Compatível com Netlify serverless
-  - Verifica token de autenticação
-  - Valida role de administrador
-  - Redireciona automaticamente usuários não autorizados
-  - Popula headers para componentes server-side
+  - Verificações lightweight de autenticação
+  - Redirecionamentos automáticos para usuários não autorizados
+  - Usa funções do `session.ts` para verificações rápidas
+  - Sem dependência de headers para Server Components
 
 ### Layer 2: Layout Protection
 - **Arquivo**: `src/app/admin/layout.tsx` + `src/components/admin/AdminAuthWrapper.tsx`
@@ -26,12 +26,15 @@ O sistema implementa **autenticação e autorização em múltiplas camadas** (D
   - Suspense para loading states
 
 ### Layer 3: Server-Side Verification
-- **Arquivo**: `src/lib/auth/require-admin.ts`
-- **Função**: Verificação em Server Components/Actions
+- **Arquivo**: `src/lib/auth/session.ts`
+- **Função**: Verificação centralizada em Server Components/Actions
 - **Características**:
-  - `requireAdmin()` - força autenticação ou redireciona
-  - `checkAdminAccess()` - verifica sem redirecionamento
-  - Usa headers do middleware quando disponível
+  - `requireAdmin()` - força autenticação admin ou redireciona
+  - `verifySession()` - verificação geral de sessão (cached)
+  - `verifySessionWithRole()` - verificação com role específica
+  - `requireInstructorOrAdmin()` - acesso para instrutor ou admin
+  - Verificação direta via Supabase (sem dependência de headers)
+  - Cache React para evitar verificações duplicadas
 
 ### Layer 4: Database RLS Policies
 - **Arquivo**: `database/admin-security-policies.sql`

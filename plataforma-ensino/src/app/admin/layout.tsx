@@ -1,12 +1,12 @@
 import { AdminSidebar } from '@/components/admin/AdminSidebar'
 import { AdminHeader } from '@/components/admin/AdminHeader'
 import { AdminAuthWrapper } from '@/components/admin/AdminAuthWrapper'
-import { headers } from 'next/headers'
+import { requireAdmin } from '@/lib/auth/session'
 
 // Force dynamic rendering for all admin pages to prevent SSR/static generation conflicts
 export const dynamic = 'force-dynamic'
 
-export default function AdminLayout({
+export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode
@@ -14,25 +14,18 @@ export default function AdminLayout({
   const layoutId = Math.random().toString(36).substr(2, 9)
   console.log(`[ADMIN_LAYOUT-${layoutId}] ========== ADMIN LAYOUT RENDERING ==========`)
   
-  // Check headers set by middleware
-  const headersList = headers()
-  const userHeaders = {
-    'x-user-id': headersList.get('x-user-id'),
-    'x-user-role': headersList.get('x-user-role'), 
-    'x-user-email': headersList.get('x-user-email'),
-    'x-user-name': headersList.get('x-user-name')
-  }
+  // Direct session verification - no dependency on headers
+  console.log(`[ADMIN_LAYOUT-${layoutId}] Verifying admin session directly...`)
+  const session = await requireAdmin()
   
-  console.log(`[ADMIN_LAYOUT-${layoutId}] Headers from middleware:`, userHeaders)
-  console.log(`[ADMIN_LAYOUT-${layoutId}] Header validation:`, {
-    hasUserId: !!userHeaders['x-user-id'],
-    hasUserRole: !!userHeaders['x-user-role'],
-    userRole: userHeaders['x-user-role'],
-    isAdminRole: userHeaders['x-user-role'] === 'admin',
-    hasUserEmail: !!userHeaders['x-user-email']
+  console.log(`[ADMIN_LAYOUT-${layoutId}] ✅ Session verified:`, {
+    userId: session.user.id,
+    userEmail: session.profile.email,
+    userRole: session.profile.role,
+    userName: session.profile.full_name
   })
 
-  console.log(`[ADMIN_LAYOUT-${layoutId}] Rendering AdminAuthWrapper...`)
+  console.log(`[ADMIN_LAYOUT-${layoutId}] Rendering admin interface...`)
 
   return (
     <AdminAuthWrapper>
