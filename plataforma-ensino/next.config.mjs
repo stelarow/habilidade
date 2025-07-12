@@ -51,15 +51,20 @@ const nextConfig = {
   },
 };
 
-export default withBundleAnalyzer(withSentryConfig(nextConfig, {
-  org: process.env.SENTRY_ORG,
-  project: process.env.SENTRY_PROJECT,
-  silent: !process.env.CI,
-  widenClientFileUpload: true,
-  hideSourceMaps: true,
-  disableLogger: true,
-  automaticVercelMonitors: true,
-  // Disable Sentry in development to prevent header processing issues
-  disableServerWebpackPlugin: process.env.NODE_ENV === 'development',
-  disableClientWebpackPlugin: process.env.NODE_ENV === 'development',
-}));
+// Conditionally apply Sentry config only if properly configured
+const finalConfig = process.env.SENTRY_ORG && process.env.SENTRY_PROJECT 
+  ? withSentryConfig(nextConfig, {
+      org: process.env.SENTRY_ORG,
+      project: process.env.SENTRY_PROJECT,
+      silent: !process.env.CI,
+      widenClientFileUpload: true,
+      hideSourceMaps: true,
+      disableLogger: true,
+      automaticVercelMonitors: true,
+      // Disable Sentry in development to prevent header processing issues
+      disableServerWebpackPlugin: process.env.NODE_ENV === 'development',
+      disableClientWebpackPlugin: process.env.NODE_ENV === 'development',
+    })
+  : nextConfig;
+
+export default withBundleAnalyzer(finalConfig);

@@ -31,6 +31,10 @@ export async function middleware(request: NextRequest) {
 }
 export const config = {
   matcher: [
+    // Include admin routes with higher priority
+    '/admin/:path*',
+    '/auth/:path*',
+    // General matcher (excluding static files)
     '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
   ],
 }
