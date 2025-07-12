@@ -29,16 +29,21 @@ export function ProtectedRoute({
   useEffect(() => {
     const checkAccess = async () => {
       try {
+        console.log('[PROTECTED_ROUTE] Starting access check...')
         const currentUser = await getCurrentUserClient()
+        console.log('[PROTECTED_ROUTE] User:', { hasUser: !!currentUser, role: currentUser?.role })
         setUser(currentUser)
 
         if (!currentUser) {
+          console.log('[PROTECTED_ROUTE] No user found - redirecting to login')
+          setHasAccess(false)
           router.push('/auth/login')
           return
         }
 
         // Check role if specified
         if (role && currentUser.role !== role) {
+          console.log('[PROTECTED_ROUTE] Role mismatch:', { required: role, actual: currentUser.role })
           setHasAccess(false)
           if (redirectTo) {
             router.push(redirectTo)
@@ -48,6 +53,7 @@ export function ProtectedRoute({
 
         // Check permission if specified
         if (permission && !hasPermission(currentUser, permission)) {
+          console.log('[PROTECTED_ROUTE] Permission denied:', { permission, userRole: currentUser.role })
           setHasAccess(false)
           if (redirectTo) {
             router.push(redirectTo)
@@ -55,9 +61,10 @@ export function ProtectedRoute({
           return
         }
 
+        console.log('[PROTECTED_ROUTE] Access granted')
         setHasAccess(true)
       } catch (error) {
-        console.error('Error checking access:', error)
+        console.error('[PROTECTED_ROUTE] Error checking access:', error)
         setHasAccess(false)
         if (redirectTo) {
           router.push(redirectTo)
