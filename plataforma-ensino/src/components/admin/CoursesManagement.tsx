@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Image from 'next/image'
 import { Course, Category, Instructor, User } from '@/types'
 import { hasPermission } from '@/lib/auth/permissions-client'
 import { createClient } from '@/lib/supabase/client'
@@ -229,10 +230,12 @@ export function CoursesManagement({
             {/* Course Image */}
             <div className="relative h-48 bg-gray-700">
               {course.thumbnail_url ? (
-                <img
+                <Image
                   src={course.thumbnail_url}
                   alt={course.title}
-                  className="w-full h-full object-cover"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
               ) : (
                 <div className="w-full h-full flex items-center justify-center">

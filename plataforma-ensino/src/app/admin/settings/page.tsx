@@ -1,15 +1,15 @@
+import { requireAdmin } from '@/lib/auth/server-side-protection'
 import { createClient } from '@/lib/supabase/server'
-import { getCurrentUser, requirePermission } from '@/lib/auth/permissions'
 import { AdminSettings } from '@/components/admin/AdminSettings'
 
 // Force dynamic rendering for admin pages that use server-side Supabase client
 export const dynamic = 'force-dynamic'
 
 export default async function SettingsPage() {
+  const { user: currentUser, profile } = await requireAdmin()
+  console.log(`[ADMIN-SETTINGS] Access authorized for admin: ${profile.email}`)
+
   const supabase = createClient()
-  const currentUser = await getCurrentUser()
-  
-  requirePermission(currentUser, 'admin.settings.manage')
 
   // Get system settings
   const { data: settings, error } = await supabase
@@ -26,5 +26,5 @@ export default async function SettingsPage() {
     )
   }
 
-  return <AdminSettings settings={settings || []} currentUser={currentUser} />
+  return <AdminSettings settings={settings || []} currentUser={profile} />
 }

@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { AdminDashboard } from '@/components/admin/AdminDashboard'
 import { DashboardStats } from '@/types'
+import { requireAdmin } from '@/lib/auth/server-side-protection'
 
 // Force dynamic rendering for admin pages that use server-side Supabase client
 export const dynamic = 'force-dynamic'
@@ -9,10 +10,14 @@ export const dynamic = 'force-dynamic'
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 
 export default async function AdminPage() {
-  console.log('[ADMIN-DASHBOARD] 1. Iniciando AdminPage')
+  // 🔥 CRITICAL: SERVER-SIDE PROTECTION - Execute BEFORE any other code
+  const { user, profile } = await requireAdmin()
+  
+  const pageId = Math.random().toString(36).substr(2, 9)
+  console.log(`[ADMIN-PAGE-${pageId}] 🎉 Admin page access authorized for: ${profile.email}`)
+  console.log(`[ADMIN-PAGE-${pageId}] Starting dashboard data collection...`)
   
   const supabase = createClient()
-  console.log('[ADMIN-DASHBOARD] 2. Cliente Supabase criado')
 
   console.log('[ADMIN-DASHBOARD] 3. Iniciando consultas sequenciais para estatísticas...')
   

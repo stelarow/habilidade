@@ -1,9 +1,8 @@
 
-'use client';
-
-import { useState, useEffect } from 'react';
+import { requireAdmin } from '@/lib/auth/server-side-protection'
+import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link';
-import { Pencil, Trash } from 'phosphor-react';
+import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
 
 interface Post {
   id: string;
@@ -12,32 +11,29 @@ interface Post {
   created_at: string;
 }
 
-export default function BlogAdminPage() {
-  const [posts, setPosts] = useState<Post[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+// Force dynamic rendering for admin pages that use server-side Supabase client
+export const dynamic = 'force-dynamic'
 
-  useEffect(() => {
-    async function fetchPosts() {
-      try {
-        const response = await fetch('/api/posts');
-        if (!response.ok) {
-          throw new Error('Failed to fetch posts');
-        }
-        const data = await response.json();
-        setPosts(data.posts);
-      } catch (err: any) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    }
+export default async function BlogAdminPage() {
+  const { user: currentUser, profile } = await requireAdmin()
+  console.log(`[ADMIN-BLOG] Access authorized for admin: ${profile.email}`)
 
-    fetchPosts();
-  }, []);
+  const supabase = createClient()
+  
+  // Get posts
+  const { data: posts, error } = await supabase
+    .from('posts')
+    .select('id, title, status, created_at')
+    .order('created_at', { ascending: false })
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
+  if (error) {
+    console.error('Error fetching posts:', error)
+    return (
+      <div className="text-center py-8">
+        <p className="text-red-400">Erro ao carregar posts</p>
+      </div>
+    )
+  }
 
   return (
     <div className="container mx-auto p-4">
@@ -58,7 +54,7 @@ export default function BlogAdminPage() {
             </tr>
           </thead>
           <tbody className="text-gray-600 text-sm font-light">
-            {posts.map((post) => (
+            {(posts || []).map((post) => (
               <tr key={post.id} className="border-b border-gray-200 hover:bg-gray-100">
                 <td className="py-3 px-6 text-left whitespace-nowrap">
                   {post.title}
@@ -76,10 +72,10 @@ export default function BlogAdminPage() {
                 <td className="py-3 px-6 text-center">
                   <div className="flex item-center justify-center">
                     <button className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
-                      <Pencil size={20} />
+                      <PencilIcon className="h-5 w-5" />
                     </button>
                     <button className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
-                      <Trash size={20} />
+                      <TrashIcon className="h-5 w-5" />
                     </button>
                   </div>
                 </td>

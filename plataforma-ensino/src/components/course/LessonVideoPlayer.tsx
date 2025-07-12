@@ -61,7 +61,7 @@ export const LessonVideoPlayer: React.FC<LessonVideoPlayerProps> = ({
     }
 
     loadProgress()
-  }, [lesson.id, userId, enrollmentId])
+  }, [lesson.id, userId, enrollmentId, supabase])
 
   // Save progress to database
   const saveProgress = async (progressData: { played: number; playedSeconds: number }) => {

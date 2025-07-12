@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import { User } from '@/types'
 import { createClient } from '@/lib/supabase/client'
 import { 
@@ -208,10 +209,12 @@ export function EnrollmentsManagement({ enrollments: initialEnrollments, current
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
                       <div className="flex-shrink-0 h-10 w-10">
-                        <img 
+                        <Image 
                           className="h-10 w-10 rounded-full object-cover"
                           src={enrollment.user.avatar_url || '/api/placeholder/40/40'} 
                           alt={enrollment.user.name}
+                          width={40}
+                          height={40}
                         />
                       </div>
                       <div className="ml-4">
@@ -223,10 +226,12 @@ export function EnrollmentsManagement({ enrollments: initialEnrollments, current
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
                       <div className="flex-shrink-0 h-10 w-10">
-                        <img 
+                        <Image 
                           className="h-10 w-10 rounded object-cover"
                           src={enrollment.course.thumbnail_url || '/api/placeholder/40/40'} 
                           alt={enrollment.course.title}
+                          width={40}
+                          height={40}
                         />
                       </div>
                       <div className="ml-4">

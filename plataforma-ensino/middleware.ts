@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { updateSession } from './src/lib/supabase/middleware'
 export async function middleware(request: NextRequest) {
+  // 🔥 CRITICAL: Unconditional middleware execution log
+  console.log('🔥🔥🔥 MIDDLEWARE IS EXECUTING FOR:', request.nextUrl.pathname, '🔥🔥🔥')
+  
   const startTime = Date.now()
   const requestId = Math.random().toString(36).substr(2, 9)
   
@@ -48,10 +51,8 @@ export async function middleware(request: NextRequest) {
 }
 export const config = {
   matcher: [
-    // Include admin routes with higher priority
+    // 🔥 CRITICAL: Simplified matcher focusing on admin routes
     '/admin/:path*',
-    '/auth/:path*',
-    // General matcher (excluding static files)
-    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+    '/auth/:path*'
   ],
 }

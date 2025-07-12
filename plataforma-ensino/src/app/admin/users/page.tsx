@@ -1,5 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
-import { getCurrentUser, requirePermission } from '@/lib/auth/permissions'
+import { requireAdmin } from '@/lib/auth/server-side-protection'
 import { UsersManagement } from '@/components/admin/UsersManagement'
 import { User } from '@/types'
 
@@ -7,10 +7,11 @@ import { User } from '@/types'
 export const dynamic = 'force-dynamic'
 
 export default async function UsersPage() {
-  const supabase = createClient()
-  const currentUser = await getCurrentUser()
+  // 🔥 CRITICAL: SERVER-SIDE PROTECTION - Execute BEFORE any other code
+  const { user: currentUser, profile } = await requireAdmin()
+  console.log(`[ADMIN-USERS] Access authorized for admin: ${profile.email}`)
   
-  requirePermission(currentUser, 'admin.users.view')
+  const supabase = createClient()
 
   // Get all users with pagination
   const { data: users, error } = await supabase
@@ -27,5 +28,5 @@ export default async function UsersPage() {
     )
   }
 
-  return <UsersManagement users={users || []} currentUser={currentUser} />
+  return <UsersManagement users={users || []} currentUser={profile} />
 }

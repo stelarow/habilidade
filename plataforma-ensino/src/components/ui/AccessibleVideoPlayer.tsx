@@ -68,7 +68,7 @@ export const AccessibleVideoPlayer = React.forwardRef<VideoPlayerRef, Accessible
     if (savedProgress && playerRef.current) {
       playerRef.current.seekTo(savedProgress.playedSeconds, 'seconds')
     }
-  }, [savedProgress, playerRef.current])
+  }, [savedProgress])
 
   // Keyboard shortcuts
   useEffect(() => {

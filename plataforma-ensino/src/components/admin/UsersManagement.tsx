@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Image from 'next/image'
 import { User } from '@/types'
 import { hasPermission } from '@/lib/auth/permissions-client'
 import { createClient } from '@/lib/supabase/client'
@@ -281,10 +282,12 @@ export function UsersManagement({ users: initialUsers, currentUser }: UsersManag
                     <div className="flex items-center">
                       <div className="flex-shrink-0 h-10 w-10">
                         {user.avatar_url ? (
-                          <img
+                          <Image
                             className="h-10 w-10 rounded-full"
                             src={user.avatar_url}
                             alt={user.full_name}
+                            width={40}
+                            height={40}
                           />
                         ) : (
                           <UserCircleIcon className="h-10 w-10 text-gray-400" />

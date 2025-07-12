@@ -1,15 +1,15 @@
+import { requireAdmin } from '@/lib/auth/server-side-protection'
 import { createClient } from '@/lib/supabase/server'
-import { getCurrentUser, requirePermission } from '@/lib/auth/permissions'
 import { CategoriesManagement } from '@/components/admin/CategoriesManagement'
 
 // Force dynamic rendering for admin pages that use server-side Supabase client
 export const dynamic = 'force-dynamic'
 
 export default async function CategoriesPage() {
+  const { user: currentUser, profile } = await requireAdmin()
+  console.log(`[ADMIN-CATEGORIES] Access authorized for admin: ${profile.email}`)
+
   const supabase = createClient()
-  const currentUser = await getCurrentUser()
-  
-  requirePermission(currentUser, 'admin.view')
 
   // Get categories
   const { data: categories, error } = await supabase
@@ -26,5 +26,5 @@ export default async function CategoriesPage() {
     )
   }
 
-  return <CategoriesManagement categories={categories || []} currentUser={currentUser} />
+  return <CategoriesManagement categories={categories || []} currentUser={profile} />
 }

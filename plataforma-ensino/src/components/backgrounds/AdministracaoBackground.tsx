@@ -164,7 +164,7 @@ const AdministracaoBackground: React.FC<BackgroundProps> = ({
         ctx.restore();
       }
     };
-  }, [config.colors.primary, config.colors.light]);
+  }, [config.colors.primary, config.colors.light, config.animationSpeed]);
 
   // Classe para gráficos flutuantes
   class FloatingChart implements FloatingChartType {

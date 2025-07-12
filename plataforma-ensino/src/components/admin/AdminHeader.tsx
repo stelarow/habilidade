@@ -1,6 +1,6 @@
 'use client'
 
-import { Fragment, useState, useEffect, useRef } from 'react'
+import { Fragment, useState, useEffect, useRef, useCallback } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { BellIcon, MagnifyingGlassIcon, UserCircleIcon } from '@heroicons/react/24/outline'
 import { createClient } from '@/lib/supabase/client'
@@ -31,7 +31,7 @@ export function AdminHeader() {
     router.push('/auth/login')
   }
 
-  const performSearch = async (query: string) => {
+  const performSearch = useCallback(async (query: string) => {
     if (!query.trim()) {
       setSearchResults([])
       return
@@ -98,7 +98,7 @@ export function AdminHeader() {
     } finally {
       setIsSearching(false)
     }
-  }
+  }, [supabase])
 
   useEffect(() => {
     const delayedSearch = setTimeout(() => {
@@ -106,7 +106,7 @@ export function AdminHeader() {
     }, 300)
 
     return () => clearTimeout(delayedSearch)
-  }, [searchTerm])
+  }, [searchTerm, performSearch])
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
