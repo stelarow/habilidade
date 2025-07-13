@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { GradientButton, Loading } from '@/components/ui';
 import { Starfield } from '@/components/ui';
 import { createClient } from '@/lib/supabase/client';
+import { getRedirectUrlForCurrentUser } from '@/lib/auth/redirect-helpers';
 
 // Separate component for search params handling
 function LoginErrorHandler({ setError }: { setError: (error: string | null) => void }) {
@@ -47,10 +48,18 @@ function LoginForm() {
         throw authError;
       }
 
-      // Wait a moment for the auth state to update before redirecting
-      setTimeout(() => {
-        router.push('/dashboard');
-      }, 100);
+      // Wait a moment for the auth state to update, then redirect based on user role
+      setTimeout(async () => {
+        try {
+          const redirectUrl = await getRedirectUrlForCurrentUser();
+          console.log(`[LOGIN] 🎯 Redirecting user to: ${redirectUrl}`);
+          router.push(redirectUrl);
+        } catch (error) {
+          console.error('[LOGIN] Error determining redirect URL:', error);
+          // Fallback to default dashboard
+          router.push('/dashboard');
+        }
+      }, 200); // Slightly longer timeout to ensure auth state is updated
     } catch (err: any) {
       setError(err?.message ?? 'Erro ao fazer login. Verifique suas credenciais.');
     } finally {

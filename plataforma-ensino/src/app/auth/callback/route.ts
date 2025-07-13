@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { cookies } from 'next/headers';
 import { createServerClient } from '@supabase/ssr';
+import { getRedirectUrlForCurrentUserServer } from '@/lib/auth/redirect-helpers-server';
 
 export async function GET(request: NextRequest) {
   const { searchParams, origin } = new URL(request.url);
@@ -69,9 +70,22 @@ export async function GET(request: NextRequest) {
     });
   }
 
-  // For email verification, redirect to dashboard
-  console.log('Email verification - redirecting to dashboard');
-  return NextResponse.redirect(`${origin}/dashboard`, {
-    status: 302,
-  });
+  // For email verification, redirect based on user role
+  console.log('[AUTH_CALLBACK] Email verification - determining redirect based on user role');
+  
+  try {
+    const redirectPath = await getRedirectUrlForCurrentUserServer();
+    console.log(`[AUTH_CALLBACK] 🎯 Redirecting to: ${redirectPath}`);
+    
+    return NextResponse.redirect(`${origin}${redirectPath}`, {
+      status: 302,
+    });
+  } catch (error) {
+    console.error('[AUTH_CALLBACK] Error determining redirect URL:', error);
+    // Fallback to dashboard
+    console.log('[AUTH_CALLBACK] Falling back to dashboard redirect');
+    return NextResponse.redirect(`${origin}/dashboard`, {
+      status: 302,
+    });
+  }
 } 
