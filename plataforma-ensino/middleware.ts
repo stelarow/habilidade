@@ -4,13 +4,19 @@ import { isAuthenticated, hasRole } from './src/lib/auth/session'
 /**
  * 🔥 NEXT.JS MIDDLEWARE
  * 
- * Focused on route protection and redirects only.
+ * Focused on route protection and smart redirects based on user authentication status.
  * No longer passes data via headers to Server Components.
  * 
+ * Security Features:
+ * - Admin route protection: Only authenticated admin users can access /admin/*
+ * - Auth route blocking: Authenticated users are redirected away from login/register
+ * - Role-based redirects: Admin users → /admin, Regular users → /dashboard
+ * - Lightweight checks: Fast authentication/role verification
+ * 
  * Based on Next.js best practices:
- * - Lightweight authentication checks
- * - Immediate redirects for unauthorized access
- * - Server Components verify sessions independently
+ * - Immediate redirects for unauthorized/inappropriate access
+ * - Server Components verify sessions independently for additional security
+ * - Graceful error handling with fallback behavior
  */
 export async function middleware(request: NextRequest) {
   const startTime = Date.now()
@@ -41,22 +47,34 @@ export async function middleware(request: NextRequest) {
       console.log(`[MIDDLEWARE-${requestId}] ✅ Admin access granted`)
     }
 
-    // Auth route handling - redirect if already logged in
+    // 🔐 SECURITY: Prevent authenticated users from accessing login/register pages
     if (pathname.startsWith('/auth/') && !pathname.includes('/callback')) {
-      console.log(`[MIDDLEWARE-${requestId}] 🔐 Auth route detected`)
+      console.log(`[MIDDLEWARE-${requestId}] 🔐 Auth route detected: ${pathname}`)
       
-      const authenticated = await isAuthenticated()
-      if (authenticated) {
-        console.log(`[MIDDLEWARE-${requestId}] User already authenticated - checking redirect destination`)
+      // Specific routes that should redirect authenticated users
+      const restrictedAuthRoutes = ['/auth/login', '/auth/register']
+      const isRestrictedRoute = restrictedAuthRoutes.some(route => pathname === route || pathname.startsWith(route + '/'))
+      
+      if (isRestrictedRoute) {
+        console.log(`[MIDDLEWARE-${requestId}] 🚫 Restricted auth route detected: ${pathname}`)
         
-        const isAdmin = await hasRole('admin')
-        const redirectUrl = isAdmin ? '/admin' : '/dashboard'
-        
-        console.log(`[MIDDLEWARE-${requestId}] Redirecting to: ${redirectUrl}`)
-        return NextResponse.redirect(new URL(redirectUrl, request.url))
+        const authenticated = await isAuthenticated()
+        if (authenticated) {
+          console.log(`[MIDDLEWARE-${requestId}] ✅ User already authenticated - determining redirect destination`)
+          
+          const isAdmin = await hasRole('admin')
+          const redirectUrl = isAdmin ? '/admin' : '/dashboard'
+          
+          console.log(`[MIDDLEWARE-${requestId}] 🎯 User role: ${isAdmin ? 'admin' : 'regular'} → Redirecting to: ${redirectUrl}`)
+          console.log(`[MIDDLEWARE-${requestId}] 🔒 SECURITY: Blocking authenticated user access to ${pathname}`)
+          
+          return NextResponse.redirect(new URL(redirectUrl, request.url))
+        } else {
+          console.log(`[MIDDLEWARE-${requestId}] 👤 User not authenticated - allowing access to ${pathname}`)
+        }
+      } else {
+        console.log(`[MIDDLEWARE-${requestId}] ℹ️ Non-restricted auth route: ${pathname} - allowing access`)
       }
-      
-      console.log(`[MIDDLEWARE-${requestId}] Allowing access to auth route`)
     }
 
     const duration = Date.now() - startTime
