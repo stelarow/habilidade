@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { isAuthenticated, hasRole } from './src/lib/auth/session'
+import { isAuthenticatedInMiddleware, hasRoleInMiddleware } from './src/lib/supabase/middleware-client'
 
 /**
  * 🔥 NEXT.JS MIDDLEWARE
@@ -31,14 +31,14 @@ export async function middleware(request: NextRequest) {
       console.log(`[MIDDLEWARE-${requestId}] 🔒 Admin route detected - checking authorization`)
       
       // Quick authentication check
-      const authenticated = await isAuthenticated()
+      const authenticated = await isAuthenticatedInMiddleware(request)
       if (!authenticated) {
         console.log(`[MIDDLEWARE-${requestId}] ❌ Not authenticated - redirecting to login`)
         return NextResponse.redirect(new URL('/auth/login', request.url))
       }
 
       // Quick admin role check
-      const isAdmin = await hasRole('admin')
+      const isAdmin = await hasRoleInMiddleware(request, 'admin')
       if (!isAdmin) {
         console.log(`[MIDDLEWARE-${requestId}] ❌ Not admin - redirecting to dashboard`)
         return NextResponse.redirect(new URL('/dashboard', request.url))
@@ -58,11 +58,11 @@ export async function middleware(request: NextRequest) {
       if (isRestrictedRoute) {
         console.log(`[MIDDLEWARE-${requestId}] 🚫 Restricted auth route detected: ${pathname}`)
         
-        const authenticated = await isAuthenticated()
+        const authenticated = await isAuthenticatedInMiddleware(request)
         if (authenticated) {
           console.log(`[MIDDLEWARE-${requestId}] ✅ User already authenticated - determining redirect destination`)
           
-          const isAdmin = await hasRole('admin')
+          const isAdmin = await hasRoleInMiddleware(request, 'admin')
           const redirectUrl = isAdmin ? '/admin' : '/dashboard'
           
           console.log(`[MIDDLEWARE-${requestId}] 🎯 User role: ${isAdmin ? 'admin' : 'regular'} → Redirecting to: ${redirectUrl}`)

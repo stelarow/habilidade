@@ -24,7 +24,10 @@
       "Bash(mv:*)",
       "Bash(rm:*)",
       "Bash(npm run build:*)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "mcp__supabase__list_projects",
+      "mcp__supabase__get_project",
+      "mcp__supabase__get_logs"
     ],
     "deny": []
   }
