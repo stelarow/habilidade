@@ -23,7 +23,13 @@ export async function middleware(request: NextRequest) {
   const requestId = Math.random().toString(36).substr(2, 9)
   const pathname = request.nextUrl.pathname
   
-  console.log(`[MIDDLEWARE-${requestId}] 🔥 Processing: ${pathname}`)
+  // 🔍 CRITICAL: Verify middleware is executing
+  console.log(`[MIDDLEWARE-${requestId}] 🔥 MIDDLEWARE EXECUTING - Processing: ${pathname}`)
+  console.log(`[MIDDLEWARE-${requestId}] 🌍 Environment check:`, {
+    hasSupabaseUrl: !!process.env.NEXT_PUBLIC_SUPABASE_URL,
+    hasSupabaseKey: !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    cookieCount: request.cookies.getAll().length
+  })
   
   try {
     // Admin route protection
@@ -100,4 +106,11 @@ export const config = {
     '/admin/:path*',
     '/auth/:path*'
   ],
+}
+
+// 🔍 MIDDLEWARE TEST: Export a simple test function to verify middleware is loaded
+export const MIDDLEWARE_TEST = {
+  version: '1.0.0',
+  timestamp: new Date().toISOString(),
+  message: 'Middleware module loaded successfully'
 }
