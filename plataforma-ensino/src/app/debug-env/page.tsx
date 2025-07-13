@@ -150,7 +150,7 @@ export default function DebugEnvPage() {
           <div className="bg-red-900/20 border border-red-500/30 p-6 rounded-lg">
             <h2 className="text-lg font-semibold mb-4 text-red-300">❌ If Middleware Still Not Working</h2>
             <div className="space-y-2 text-sm">
-              <p><strong>1. Check Next.js Version:</strong> Ensure you're using Next.js 13+ with App Router</p>
+              <p><strong>1. Check Next.js Version:</strong> Ensure you&apos;re using Next.js 13+ with App Router</p>
               <p><strong>2. Verify File Location:</strong> middleware.ts must be in the root of your project (same level as app/)</p>
               <p><strong>3. Check Matcher:</strong> Ensure the matcher pattern matches your routes</p>
               <p><strong>4. Environment Variables:</strong> Make sure .env.local is in the root and contains both variables</p>
