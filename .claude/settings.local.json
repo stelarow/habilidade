@@ -27,7 +27,8 @@
       "Bash(npm install:*)",
       "mcp__supabase__list_projects",
       "mcp__supabase__get_project",
-      "mcp__supabase__get_logs"
+      "mcp__supabase__get_logs",
+      "Bash(git push:*)"
     ],
     "deny": []
   }
