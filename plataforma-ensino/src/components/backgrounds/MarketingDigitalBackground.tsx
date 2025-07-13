@@ -81,124 +81,136 @@ const MarketingDigitalBackground: React.FC<BackgroundProps> = ({
     ]
   }), [performanceConfig]);
 
-  // Classe para métricas flutuantes
-  class FloatingMetric implements FloatingMetricType {
-    canvas: HTMLCanvasElement;
-    x: number;
-    y: number;
-    vx: number;
-    vy: number;
-    opacity: number;
-    scale: number;
-    rotation: number = 0;
-    rotationSpeed: number;
-    metric: {
-      label: string;
-      value: string;
-      trend: 'up' | 'down';
-    };
-    pulse: number;
-    pulseSpeed: number;
-    valueAnimation: number = 0;
-    animationSpeed: number;
+  // Use useRef to store class constructor to avoid recreating it
+  const FloatingMetricRef = useRef<any>(null);
 
-    constructor(canvas: HTMLCanvasElement) {
-      this.canvas = canvas;
-      this.x = Math.random() * canvas.width;
-      this.y = Math.random() * canvas.height;
-      this.vx = (Math.random() - 0.5) * config.metricSpeed;
-      this.vy = (Math.random() - 0.5) * config.metricSpeed;
-      this.opacity = 0.25 + Math.random() * 0.2; // Era 0.5-0.9 → 0.25-0.45 (50% redução)
-      this.scale = 0.6 + Math.random() * 0.2; // Era 0.8-1.2 → 0.6-0.8 (33% redução)
-      this.rotationSpeed = (Math.random() - 0.5) * 0.01; // Era 0.02 → 0.01 (50% redução)
-      
-      // Selecionar métrica aleatória
-      this.metric = config.metrics[Math.floor(Math.random() * config.metrics.length)];
-      this.pulse = Math.random() * Math.PI * 2;
-      this.pulseSpeed = 0.015 + Math.random() * 0.01; // Era 0.03-0.05 → 0.015-0.025 (50% redução)
-      
-      // Animação de valor - REDUZIDA
-      this.animationSpeed = 0.025 + Math.random() * 0.025; // Era 0.05-0.1 → 0.025-0.05 (50% redução)
-    }
+  // Initialize class constructor only once
+  useMemo(() => {
+    // Classe para métricas flutuantes
+    class FloatingMetric implements FloatingMetricType {
+      canvas: HTMLCanvasElement;
+      x: number;
+      y: number;
+      vx: number;
+      vy: number;
+      opacity: number;
+      scale: number;
+      rotation: number = 0;
+      rotationSpeed: number;
+      metric: {
+        label: string;
+        value: string;
+        trend: 'up' | 'down';
+      };
+      pulse: number;
+      pulseSpeed: number;
+      valueAnimation: number = 0;
+      animationSpeed: number;
+      config: typeof config;
 
-    update() {
-      if (config.metricSpeed === 0) return;
-      
-      this.x += this.vx;
-      this.y += this.vy;
-      this.rotation += this.rotationSpeed;
-      this.pulse += this.pulseSpeed;
-      this.valueAnimation += this.animationSpeed;
-      
-      // Bounce suave nas bordas
-      if (this.x <= 0 || this.x >= this.canvas.width) this.vx *= -0.8;
-      if (this.y <= 0 || this.y >= this.canvas.height) this.vy *= -0.8;
-      
-      // Manter dentro dos limites
-      this.x = Math.max(0, Math.min(this.canvas.width, this.x));
-      this.y = Math.max(0, Math.min(this.canvas.height, this.y));
-    }
-
-    draw(ctx: CanvasRenderingContext2D) {
-      ctx.save();
-      ctx.translate(this.x, this.y);
-      ctx.rotate(this.rotation);
-      ctx.scale(this.scale, this.scale);
-      ctx.globalAlpha = this.opacity * (0.8 + Math.sin(this.pulse) * 0.2);
-
-      // Card da métrica - REDUZIDO
-      const cardWidth = 90; // Era 120 → 90 (25% redução)
-      const cardHeight = 45; // Era 60 → 45 (25% redução)
-      
-      // Fundo do card com glow
-      ctx.shadowColor = this.metric.trend === 'up' ? config.colors.success : config.colors.warning;
-      ctx.shadowBlur = 15;
-      ctx.fillStyle = config.colors.background + 'CC';
-      ctx.fillRect(-cardWidth/2, -cardHeight/2, cardWidth, cardHeight);
-      
-      // Borda do card
-      ctx.strokeStyle = this.metric.trend === 'up' ? config.colors.success : config.colors.warning;
-      ctx.lineWidth = 2;
-      ctx.strokeRect(-cardWidth/2, -cardHeight/2, cardWidth, cardHeight);
-      
-      // Label da métrica
-      ctx.font = '12px Arial';
-      ctx.fillStyle = config.colors.metric;
-      ctx.textAlign = 'center';
-      ctx.fillText(this.metric.label, 0, -15);
-      
-      // Valor da métrica
-      ctx.font = 'bold 16px Arial';
-      ctx.fillStyle = this.metric.trend === 'up' ? config.colors.success : config.colors.warning;
-      ctx.fillText(this.metric.value, 0, 5);
-      
-      // Seta de tendência
-      const arrowSize = 8;
-      ctx.fillStyle = this.metric.trend === 'up' ? config.colors.success : config.colors.warning;
-      ctx.beginPath();
-      if (this.metric.trend === 'up') {
-        ctx.moveTo(-arrowSize/2, 15);
-        ctx.lineTo(0, 8);
-        ctx.lineTo(arrowSize/2, 15);
-      } else {
-        ctx.moveTo(-arrowSize/2, 8);
-        ctx.lineTo(0, 15);
-        ctx.lineTo(arrowSize/2, 8);
+      constructor(canvas: HTMLCanvasElement, configRef: typeof config) {
+        this.canvas = canvas;
+        this.config = configRef;
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.vx = (Math.random() - 0.5) * this.config.metricSpeed;
+        this.vy = (Math.random() - 0.5) * this.config.metricSpeed;
+        this.opacity = 0.25 + Math.random() * 0.2; // Era 0.5-0.9 → 0.25-0.45 (50% redução)
+        this.scale = 0.6 + Math.random() * 0.2; // Era 0.8-1.2 → 0.6-0.8 (33% redução)
+        this.rotationSpeed = (Math.random() - 0.5) * 0.01; // Era 0.02 → 0.01 (50% redução)
+        
+        // Selecionar métrica aleatória
+        this.metric = this.config.metrics[Math.floor(Math.random() * this.config.metrics.length)];
+        this.pulse = Math.random() * Math.PI * 2;
+        this.pulseSpeed = 0.015 + Math.random() * 0.01; // Era 0.03-0.05 → 0.015-0.025 (50% redução)
+        
+        // Animação de valor - REDUZIDA
+        this.animationSpeed = 0.025 + Math.random() * 0.025; // Era 0.05-0.1 → 0.025-0.05 (50% redução)
       }
-      ctx.closePath();
-      ctx.fill();
-      
-      ctx.restore();
+
+      update() {
+        if (this.config.metricSpeed === 0) return;
+        
+        this.x += this.vx;
+        this.y += this.vy;
+        this.rotation += this.rotationSpeed;
+        this.pulse += this.pulseSpeed;
+        this.valueAnimation += this.animationSpeed;
+        
+        // Bounce suave nas bordas
+        if (this.x <= 0 || this.x >= this.canvas.width) this.vx *= -0.8;
+        if (this.y <= 0 || this.y >= this.canvas.height) this.vy *= -0.8;
+        
+        // Manter dentro dos limites
+        this.x = Math.max(0, Math.min(this.canvas.width, this.x));
+        this.y = Math.max(0, Math.min(this.canvas.height, this.y));
+      }
+
+      draw(ctx: CanvasRenderingContext2D) {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.rotation);
+        ctx.scale(this.scale, this.scale);
+        ctx.globalAlpha = this.opacity * (0.8 + Math.sin(this.pulse) * 0.2);
+
+        // Card da métrica - REDUZIDO
+        const cardWidth = 90; // Era 120 → 90 (25% redução)
+        const cardHeight = 45; // Era 60 → 45 (25% redução)
+        
+        // Fundo do card com glow
+        ctx.shadowColor = this.metric.trend === 'up' ? this.config.colors.success : this.config.colors.warning;
+        ctx.shadowBlur = 15;
+        ctx.fillStyle = this.config.colors.background + 'CC';
+        ctx.fillRect(-cardWidth/2, -cardHeight/2, cardWidth, cardHeight);
+        
+        // Borda do card
+        ctx.strokeStyle = this.metric.trend === 'up' ? this.config.colors.success : this.config.colors.warning;
+        ctx.lineWidth = 2;
+        ctx.strokeRect(-cardWidth/2, -cardHeight/2, cardWidth, cardHeight);
+        
+        // Label da métrica
+        ctx.font = '12px Arial';
+        ctx.fillStyle = this.config.colors.metric;
+        ctx.textAlign = 'center';
+        ctx.fillText(this.metric.label, 0, -15);
+        
+        // Valor da métrica
+        ctx.font = 'bold 16px Arial';
+        ctx.fillStyle = this.metric.trend === 'up' ? this.config.colors.success : this.config.colors.warning;
+        ctx.fillText(this.metric.value, 0, 5);
+        
+        // Seta de tendência
+        const arrowSize = 8;
+        ctx.fillStyle = this.metric.trend === 'up' ? this.config.colors.success : this.config.colors.warning;
+        ctx.beginPath();
+        if (this.metric.trend === 'up') {
+          ctx.moveTo(-arrowSize/2, 15);
+          ctx.lineTo(0, 8);
+          ctx.lineTo(arrowSize/2, 15);
+        } else {
+          ctx.moveTo(-arrowSize/2, 8);
+          ctx.lineTo(0, 15);
+          ctx.lineTo(arrowSize/2, 8);
+        }
+        ctx.closePath();
+        ctx.fill();
+        
+        ctx.restore();
+      }
     }
-  }
+
+    FloatingMetricRef.current = FloatingMetric;
+  }, []);
 
   // Inicializar elementos
   const initializeElements = useCallback((canvas: HTMLCanvasElement) => {
     metricsRef.current = [];
     
     // Criar métricas flutuantes
-    for (let i = 0; i < config.metricCount; i++) {
-      metricsRef.current.push(new FloatingMetric(canvas));
+    if (FloatingMetricRef.current) {
+      for (let i = 0; i < config.metricCount; i++) {
+        metricsRef.current.push(new FloatingMetricRef.current(canvas, config));
+      }
     }
   }, [config]);
 

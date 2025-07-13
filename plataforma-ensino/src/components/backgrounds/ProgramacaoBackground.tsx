@@ -130,8 +130,9 @@ const ProgramacaoBackground: React.FC<ProgramacaoBackgroundProps> = ({
     ]
   }), [performanceConfig]);
 
-  // Classe para snippets de código flutuante
-  class FloatingCodeSnippet {
+  // Classe para snippets de código flutuante (memoizada)
+  const FloatingCodeSnippet = useMemo(() => {
+    return class {
     canvas: HTMLCanvasElement;
     lines: string[];
     x: number;
@@ -247,7 +248,8 @@ const ProgramacaoBackground: React.FC<ProgramacaoBackgroundProps> = ({
       
       ctx.restore();
     }
-  }
+    };
+  }, [config]);
 
   // Inicializar elementos
   const initializeElements = useCallback((canvas: HTMLCanvasElement) => {
@@ -257,7 +259,7 @@ const ProgramacaoBackground: React.FC<ProgramacaoBackgroundProps> = ({
     for (let i = 0; i < config.snippetCount; i++) {
       codeSnippetsRef.current.push(new FloatingCodeSnippet(canvas));
     }
-  }, [config]);
+  }, [config, FloatingCodeSnippet]);
 
   // Loop de animação
   const animate = useCallback(() => {
@@ -307,7 +309,7 @@ const ProgramacaoBackground: React.FC<ProgramacaoBackgroundProps> = ({
       window.removeEventListener('resize', handleResize);
       stopAnimation();
     };
-  }, [config, deviceCapabilities, initializeElements, startAnimation, stopAnimation]);
+  }, [config, deviceCapabilities, initializeElements, startAnimation, stopAnimation, animate]);
 
   // Se for versão estática, apenas mostrar gradiente de programação
   if (performanceConfig?.staticFallback) {

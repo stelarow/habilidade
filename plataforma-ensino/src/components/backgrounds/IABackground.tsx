@@ -97,254 +97,274 @@ const IABackground: React.FC<IABackgroundProps> = ({
     }
   }), [performanceConfig]);
 
-  // Classe para nós neurais
-  class NeuralNode implements NeuralNodeType {
-    canvas: HTMLCanvasElement;
-    x: number;
-    y: number;
-    vx: number;
-    vy: number;
-    size: number;
-    opacity: number;
-    pulse: number;
-    pulseSpeed: number;
-    activation: number;
-    activationSpeed: number;
-    type: 'input' | 'hidden' | 'output';
-    connections: any[];
-    lastActivation: number;
+  // Use useRef to store class constructors to avoid recreating them
+  const NeuralNodeRef = useRef<any>(null);
+  const DataFlowRef = useRef<any>(null);
 
-    constructor(canvas: HTMLCanvasElement) {
-      this.canvas = canvas;
-      this.x = Math.random() * canvas.width;
-      this.y = Math.random() * canvas.height;
-      this.vx = (Math.random() - 0.5) * config.nodeSpeed;
-      this.vy = (Math.random() - 0.5) * config.nodeSpeed;
-      this.size = 6 + Math.random() * 8;
-      this.opacity = 0.4 + Math.random() * 0.3;
-      this.pulse = Math.random() * Math.PI * 2;
-      this.pulseSpeed = 0.02 + Math.random() * 0.03;
-      this.activation = 0;
-      this.activationSpeed = 0.1 + Math.random() * 0.1;
-      this.type = Math.random() < 0.3 ? 'input' : Math.random() < 0.6 ? 'hidden' : 'output';
-      this.connections = [];
-      this.lastActivation = 0;
-    }
+  // Initialize class constructors only once
+  useMemo(() => {
+    // Classe para nós neurais
+    class NeuralNode implements NeuralNodeType {
+      canvas: HTMLCanvasElement;
+      x: number;
+      y: number;
+      vx: number;
+      vy: number;
+      size: number;
+      opacity: number;
+      pulse: number;
+      pulseSpeed: number;
+      activation: number;
+      activationSpeed: number;
+      type: 'input' | 'hidden' | 'output';
+      connections: any[];
+      lastActivation: number;
+      config: typeof config;
 
-    update() {
-      if (config.nodeSpeed === 0) return;
-      
-      // Movimento suave
-      this.x += this.vx;
-      this.y += this.vy;
-      
-      // Bounce suave nas bordas
-      if (this.x <= this.size || this.x >= this.canvas.width - this.size) {
-        this.vx *= -0.9;
-        this.x = Math.max(this.size, Math.min(this.canvas.width - this.size, this.x));
+      constructor(canvas: HTMLCanvasElement, configRef: typeof config) {
+        this.canvas = canvas;
+        this.config = configRef;
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.vx = (Math.random() - 0.5) * this.config.nodeSpeed;
+        this.vy = (Math.random() - 0.5) * this.config.nodeSpeed;
+        this.size = 6 + Math.random() * 8;
+        this.opacity = 0.4 + Math.random() * 0.3;
+        this.pulse = Math.random() * Math.PI * 2;
+        this.pulseSpeed = 0.02 + Math.random() * 0.03;
+        this.activation = 0;
+        this.activationSpeed = 0.1 + Math.random() * 0.1;
+        this.type = Math.random() < 0.3 ? 'input' : Math.random() < 0.6 ? 'hidden' : 'output';
+        this.connections = [];
+        this.lastActivation = 0;
       }
-      if (this.y <= this.size || this.y >= this.canvas.height - this.size) {
-        this.vy *= -0.9;
-        this.y = Math.max(this.size, Math.min(this.canvas.height - this.size, this.y));
-      }
-      
-      // Atualizar pulso e ativação
-      this.pulse += this.pulseSpeed;
-      this.activation = Math.sin(this.pulse) * 0.5 + 0.5;
-      
-      // Simular ativação neural
-      if (Math.random() < 0.02) {
-        this.lastActivation = 1;
-      } else {
-        this.lastActivation *= 0.95;
-      }
-    }
 
-    draw(ctx: CanvasRenderingContext2D) {
-      ctx.save();
-      
-      // Calcular intensidade baseada na ativação
-      const intensity = this.activation * this.opacity + this.lastActivation * 0.5;
-      ctx.globalAlpha = intensity;
-      
-      // Glow effect baseado no tipo
-      let glowColor = config.colors.node;
-      if (this.type === 'input') glowColor = config.colors.primary;
-      else if (this.type === 'output') glowColor = config.colors.secondary;
-      else glowColor = config.colors.accent;
-      
-      ctx.shadowColor = glowColor;
-      ctx.shadowBlur = this.size * 1.5 * intensity;
-      
-      // Desenhar nó principal
-      ctx.fillStyle = glowColor;
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-      ctx.fill();
-      
-      // Anel interno para nós ativos
-      if (this.lastActivation > 0.1) {
-        ctx.save();
-        ctx.globalAlpha = this.lastActivation;
-        ctx.strokeStyle = config.colors.glow;
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size + 4, 0, Math.PI * 2);
-        ctx.stroke();
-        ctx.restore();
-      }
-      
-      // Núcleo do nó
-      ctx.globalAlpha = 1;
-      ctx.fillStyle = config.colors.background;
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.size * 0.3, 0, Math.PI * 2);
-      ctx.fill();
-      
-      ctx.restore();
-    }
-
-    distanceTo(other: NeuralNodeType): number {
-      const dx = this.x - other.x;
-      const dy = this.y - other.y;
-      return Math.sqrt(dx * dx + dy * dy);
-    }
-  }
-
-  // Classe para fluxo de dados nas conexões
-  class DataFlow implements DataFlowType {
-    startNode: NeuralNodeType;
-    endNode: NeuralNodeType;
-    progress: number;
-    speed: number;
-    size: number;
-    opacity: number;
-    color: string;
-    life: number;
-    decay: number;
-
-    constructor(startNode: NeuralNodeType, endNode: NeuralNodeType) {
-      this.startNode = startNode;
-      this.endNode = endNode;
-      this.progress = 0;
-      this.speed = config.dataFlowSpeed * (0.5 + Math.random() * 0.5);
-      this.size = 1.5 + Math.random() * 2;
-      this.opacity = 0.5 + Math.random() * 0.3;
-      this.color = config.colors.dataFlow;
-      this.life = 1;
-      this.decay = 0.01 + Math.random() * 0.01;
-    }
-
-    update() {
-      if (config.dataFlowSpeed === 0) return;
-      
-      this.progress += this.speed * 0.01;
-      this.life -= this.decay;
-      
-      // Resetar quando chegar ao fim ou morrer
-      if (this.progress >= 1 || this.life <= 0) {
-        this.progress = 0;
-        this.life = 1;
+      update() {
+        if (this.config.nodeSpeed === 0) return;
         
-        // Ativar nó de destino
-        if (this.endNode) {
-          this.endNode.lastActivation = Math.min(1, this.endNode.lastActivation + 0.3);
+        // Movimento suave
+        this.x += this.vx;
+        this.y += this.vy;
+        
+        // Bounce suave nas bordas
+        if (this.x <= this.size || this.x >= this.canvas.width - this.size) {
+          this.vx *= -0.9;
+          this.x = Math.max(this.size, Math.min(this.canvas.width - this.size, this.x));
+        }
+        if (this.y <= this.size || this.y >= this.canvas.height - this.size) {
+          this.vy *= -0.9;
+          this.y = Math.max(this.size, Math.min(this.canvas.height - this.size, this.y));
+        }
+        
+        // Atualizar pulso e ativação
+        this.pulse += this.pulseSpeed;
+        this.activation = Math.sin(this.pulse) * 0.5 + 0.5;
+        
+        // Simular ativação neural
+        if (Math.random() < 0.02) {
+          this.lastActivation = 1;
+        } else {
+          this.lastActivation *= 0.95;
         }
       }
-    }
 
-    draw(ctx: CanvasRenderingContext2D) {
-      if (!this.startNode || !this.endNode || this.life <= 0) return;
-      
-      // Calcular posição atual
-      const x = this.startNode.x + (this.endNode.x - this.startNode.x) * this.progress;
-      const y = this.startNode.y + (this.endNode.y - this.startNode.y) * this.progress;
-      
-      ctx.save();
-      ctx.globalAlpha = this.opacity * this.life;
-      
-      // Glow effect
-      ctx.shadowColor = this.color;
-      ctx.shadowBlur = this.size * 3;
-      
-      // Desenhar partícula de dados
-      ctx.fillStyle = this.color;
-      ctx.beginPath();
-      ctx.arc(x, y, this.size, 0, Math.PI * 2);
-      ctx.fill();
-      
-      // Trail effect
-      const trailLength = 5;
-      for (let i = 1; i <= trailLength; i++) {
-        const trailProgress = Math.max(0, this.progress - (i * 0.02));
-        if (trailProgress <= 0) break;
-        
-        const trailX = this.startNode.x + (this.endNode.x - this.startNode.x) * trailProgress;
-        const trailY = this.startNode.y + (this.endNode.y - this.startNode.y) * trailProgress;
-        const trailAlpha = this.opacity * this.life * (1 - i / trailLength);
-        
+      draw(ctx: CanvasRenderingContext2D) {
         ctx.save();
-        ctx.globalAlpha = trailAlpha;
-        ctx.fillStyle = this.color;
+        
+        // Calcular intensidade baseada na ativação
+        const intensity = this.activation * this.opacity + this.lastActivation * 0.5;
+        ctx.globalAlpha = intensity;
+        
+        // Glow effect baseado no tipo
+        let glowColor = this.config.colors.node;
+        if (this.type === 'input') glowColor = this.config.colors.primary;
+        else if (this.type === 'output') glowColor = this.config.colors.secondary;
+        else glowColor = this.config.colors.accent;
+        
+        ctx.shadowColor = glowColor;
+        ctx.shadowBlur = this.size * 1.5 * intensity;
+        
+        // Desenhar nó principal
+        ctx.fillStyle = glowColor;
         ctx.beginPath();
-        ctx.arc(trailX, trailY, this.size * (1 - i / trailLength), 0, Math.PI * 2);
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
+        
+        // Anel interno para nós ativos
+        if (this.lastActivation > 0.1) {
+          ctx.save();
+          ctx.globalAlpha = this.lastActivation;
+          ctx.strokeStyle = this.config.colors.glow;
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size + 4, 0, Math.PI * 2);
+          ctx.stroke();
+          ctx.restore();
+        }
+        
+        // Núcleo do nó
+        ctx.globalAlpha = 1;
+        ctx.fillStyle = this.config.colors.background;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size * 0.3, 0, Math.PI * 2);
+        ctx.fill();
+        
         ctx.restore();
       }
-      
-      ctx.restore();
-    }
-  }
 
-  // Desenhar conexões entre nós
-  const drawConnections = (ctx: CanvasRenderingContext2D) => {
-    ctx.save();
-    
-    networkRef.current.pulse += config.networkPulseSpeed;
-    const pulseIntensity = Math.sin(networkRef.current.pulse) * 0.3 + 0.7;
-    
-    const nodes = neuralNodesRef.current;
-    
-    for (let i = 0; i < nodes.length; i++) {
-      for (let j = i + 1; j < nodes.length; j++) {
-        const distance = nodes[i].distanceTo(nodes[j]);
+      distanceTo(other: NeuralNodeType): number {
+        const dx = this.x - other.x;
+        const dy = this.y - other.y;
+        return Math.sqrt(dx * dx + dy * dy);
+      }
+    }
+
+    // Classe para fluxo de dados nas conexões
+    class DataFlow implements DataFlowType {
+      startNode: NeuralNodeType;
+      endNode: NeuralNodeType;
+      progress: number;
+      speed: number;
+      size: number;
+      opacity: number;
+      color: string;
+      life: number;
+      decay: number;
+      config: typeof config;
+
+      constructor(startNode: NeuralNodeType, endNode: NeuralNodeType, configRef: typeof config) {
+        this.startNode = startNode;
+        this.endNode = endNode;
+        this.config = configRef;
+        this.progress = 0;
+        this.speed = this.config.dataFlowSpeed * (0.5 + Math.random() * 0.5);
+        this.size = 1.5 + Math.random() * 2;
+        this.opacity = 0.5 + Math.random() * 0.3;
+        this.color = this.config.colors.dataFlow;
+        this.life = 1;
+        this.decay = 0.01 + Math.random() * 0.01;
+      }
+
+      update() {
+        if (this.config.dataFlowSpeed === 0) return;
         
-        if (distance < config.connectionDistance) {
-          const alpha = (1 - distance / config.connectionDistance) * pulseIntensity * 0.7;
-          const lineWidth = alpha * 1.5;
+        this.progress += this.speed * 0.01;
+        this.life -= this.decay;
+        
+        // Resetar quando chegar ao fim ou morrer
+        if (this.progress >= 1 || this.life <= 0) {
+          this.progress = 0;
+          this.life = 1;
           
-          // Cor baseada na ativação dos nós
-          const nodeActivation = (nodes[i].lastActivation + nodes[j].lastActivation) / 2;
-          const connectionIntensity = Math.max(alpha, nodeActivation);
+          // Ativar nó de destino
+          if (this.endNode) {
+            this.endNode.lastActivation = Math.min(1, this.endNode.lastActivation + 0.3);
+          }
+        }
+      }
+
+      draw(ctx: CanvasRenderingContext2D) {
+        if (!this.startNode || !this.endNode || this.life <= 0) return;
+        
+        // Calcular posição atual
+        const x = this.startNode.x + (this.endNode.x - this.startNode.x) * this.progress;
+        const y = this.startNode.y + (this.endNode.y - this.startNode.y) * this.progress;
+        
+        ctx.save();
+        ctx.globalAlpha = this.opacity * this.life;
+        
+        // Glow effect
+        ctx.shadowColor = this.color;
+        ctx.shadowBlur = this.size * 3;
+        
+        // Desenhar partícula de dados
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(x, y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+        
+        // Trail effect
+        const trailLength = 5;
+        for (let i = 1; i <= trailLength; i++) {
+          const trailProgress = Math.max(0, this.progress - (i * 0.02));
+          if (trailProgress <= 0) break;
           
-          ctx.globalAlpha = connectionIntensity;
-          ctx.strokeStyle = config.colors.connection.replace('40', Math.floor(connectionIntensity * 200).toString(16).padStart(2, '0'));
-          ctx.lineWidth = lineWidth;
+          const trailX = this.startNode.x + (this.endNode.x - this.startNode.x) * trailProgress;
+          const trailY = this.startNode.y + (this.endNode.y - this.startNode.y) * trailProgress;
+          const trailAlpha = this.opacity * this.life * (1 - i / trailLength);
           
-          // Linha principal
+          ctx.save();
+          ctx.globalAlpha = trailAlpha;
+          ctx.fillStyle = this.color;
           ctx.beginPath();
-          ctx.moveTo(nodes[i].x, nodes[i].y);
-          ctx.lineTo(nodes[j].x, nodes[j].y);
-          ctx.stroke();
+          ctx.arc(trailX, trailY, this.size * (1 - i / trailLength), 0, Math.PI * 2);
+          ctx.fill();
+          ctx.restore();
+        }
+        
+        ctx.restore();
+      }
+    }
+
+    NeuralNodeRef.current = NeuralNode;
+    DataFlowRef.current = DataFlow;
+  }, []);
+
+  // Store drawing functions in useRef to avoid recreating them
+  const drawConnectionsRef = useRef<((ctx: CanvasRenderingContext2D) => void) | null>(null);
+
+  // Initialize drawing functions only once
+  useMemo(() => {
+    // Desenhar conexões entre nós
+    drawConnectionsRef.current = (ctx: CanvasRenderingContext2D) => {
+      ctx.save();
+      
+      networkRef.current.pulse += config.networkPulseSpeed;
+      const pulseIntensity = Math.sin(networkRef.current.pulse) * 0.3 + 0.7;
+      
+      const nodes = neuralNodesRef.current;
+      
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const distance = nodes[i].distanceTo(nodes[j]);
           
-          // Glow effect para conexões ativas
-          if (nodeActivation > 0.3) {
-            ctx.save();
-            ctx.globalAlpha = nodeActivation * 0.4;
-            ctx.strokeStyle = config.colors.pulse;
-            ctx.lineWidth = lineWidth + 1;
+          if (distance < config.connectionDistance) {
+            const alpha = (1 - distance / config.connectionDistance) * pulseIntensity * 0.7;
+            const lineWidth = alpha * 1.5;
+            
+            // Cor baseada na ativação dos nós
+            const nodeActivation = (nodes[i].lastActivation + nodes[j].lastActivation) / 2;
+            const connectionIntensity = Math.max(alpha, nodeActivation);
+            
+            ctx.globalAlpha = connectionIntensity;
+            ctx.strokeStyle = config.colors.connection.replace('40', Math.floor(connectionIntensity * 200).toString(16).padStart(2, '0'));
+            ctx.lineWidth = lineWidth;
+            
+            // Linha principal
             ctx.beginPath();
             ctx.moveTo(nodes[i].x, nodes[i].y);
             ctx.lineTo(nodes[j].x, nodes[j].y);
             ctx.stroke();
-            ctx.restore();
+            
+            // Glow effect para conexões ativas
+            if (nodeActivation > 0.3) {
+              ctx.save();
+              ctx.globalAlpha = nodeActivation * 0.4;
+              ctx.strokeStyle = config.colors.pulse;
+              ctx.lineWidth = lineWidth + 1;
+              ctx.beginPath();
+              ctx.moveTo(nodes[i].x, nodes[i].y);
+              ctx.lineTo(nodes[j].x, nodes[j].y);
+              ctx.stroke();
+              ctx.restore();
+            }
           }
         }
       }
-    }
-    
-    ctx.restore();
-  };
+      
+      ctx.restore();
+    };
+  }, [config]);
 
   // Inicializar elementos
   const initializeElements = useCallback((canvas: HTMLCanvasElement) => {
@@ -352,23 +372,28 @@ const IABackground: React.FC<IABackgroundProps> = ({
     dataFlowRef.current = [];
     
     // Criar nós neurais
-    for (let i = 0; i < config.nodeCount; i++) {
-      neuralNodesRef.current.push(new NeuralNode(canvas));
+    if (NeuralNodeRef.current) {
+      for (let i = 0; i < config.nodeCount; i++) {
+        neuralNodesRef.current.push(new NeuralNodeRef.current(canvas, config));
+      }
     }
     
     // Criar fluxos de dados
-    for (let i = 0; i < config.dataFlowCount; i++) {
-      const startIndex = Math.floor(Math.random() * neuralNodesRef.current.length);
-      const endIndex = Math.floor(Math.random() * neuralNodesRef.current.length);
-      
-      if (startIndex !== endIndex) {
-        dataFlowRef.current.push(new DataFlow(
-          neuralNodesRef.current[startIndex],
-          neuralNodesRef.current[endIndex]
-        ));
+    if (DataFlowRef.current) {
+      for (let i = 0; i < config.dataFlowCount; i++) {
+        const startIndex = Math.floor(Math.random() * neuralNodesRef.current.length);
+        const endIndex = Math.floor(Math.random() * neuralNodesRef.current.length);
+        
+        if (startIndex !== endIndex) {
+          dataFlowRef.current.push(new DataFlowRef.current(
+            neuralNodesRef.current[startIndex],
+            neuralNodesRef.current[endIndex],
+            config
+          ));
+        }
       }
     }
-  }, [config.nodeCount, config.dataFlowCount]);
+  }, [config]);
 
   // Loop de animação
   const animate = useCallback(() => {
@@ -381,7 +406,9 @@ const IABackground: React.FC<IABackgroundProps> = ({
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // Desenhar elementos na ordem correta
-    drawConnections(ctx);
+    if (drawConnectionsRef.current) {
+      drawConnectionsRef.current(ctx);
+    }
     
     // Atualizar e desenhar nós
     neuralNodesRef.current.forEach(node => {
@@ -398,7 +425,7 @@ const IABackground: React.FC<IABackgroundProps> = ({
     if (config.nodeSpeed > 0 || config.dataFlowSpeed > 0 || config.networkPulseSpeed > 0) {
       animationRef.current = requestAnimationFrame(animate);
     }
-  }, [config.nodeSpeed, config.dataFlowSpeed, config.networkPulseSpeed]);
+  }, [config]);
 
   // Configurar canvas e inicializar
   useEffect(() => {

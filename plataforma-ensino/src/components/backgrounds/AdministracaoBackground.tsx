@@ -311,7 +311,7 @@ const AdministracaoBackground: React.FC<BackgroundProps> = ({
     if (config.animationSpeed > 0) {
       animationRef.current = requestAnimationFrame(animate);
     }
-  }, [config.colors.primary, config.colors.light, config.animationSpeed]);
+  }, [config.animationSpeed]);
 
   // Setup do canvas
   useEffect(() => {

@@ -90,204 +90,228 @@ const InformaticaBackground: React.FC<BackgroundProps> = ({
     matrixChars: '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン'
   }), [performanceConfig]);
 
-  // Classe para partículas conectadas
-  class DigitalParticle implements DigitalParticleType {
-    canvas: HTMLCanvasElement;
-    x: number;
-    y: number;
-    vx: number;
-    vy: number;
-    size: number;
-    life: number = 1;
-    decay: number;
-    glow: number;
-    glowSpeed: number;
-    trail: Array<{ x: number; y: number }> = [];
-    maxTrailLength: number = 5;
+  // Use useRef to store class constructors to avoid recreating them
+  const DigitalParticleRef = useRef<any>(null);
+  const MatrixDropRef = useRef<any>(null);
 
-    constructor(canvas: HTMLCanvasElement) {
-      this.canvas = canvas;
-      this.x = Math.random() * canvas.width;
-      this.y = Math.random() * canvas.height;
-      this.vx = (Math.random() - 0.5) * config.particleSpeed;
-      this.vy = (Math.random() - 0.5) * config.particleSpeed;
-      this.size = 1 + Math.random() * 1.5; // Era 2-5 → 1-2.5 (50% redução no tamanho)
-      this.decay = 0.002 + Math.random() * 0.003; // Era 0.001-0.003 → 0.002-0.005 (vida mais curta)
-      this.glow = Math.random() * Math.PI * 2;
-      this.glowSpeed = 0.02 + Math.random() * 0.02; // Era 0.05-0.1 → 0.02-0.04 (60% redução)
-    }
+  // Initialize class constructors only once
+  useMemo(() => {
+    // Classe para partículas conectadas
+    class DigitalParticle implements DigitalParticleType {
+      canvas: HTMLCanvasElement;
+      x: number;
+      y: number;
+      vx: number;
+      vy: number;
+      size: number;
+      life: number = 1;
+      decay: number;
+      glow: number;
+      glowSpeed: number;
+      trail: Array<{ x: number; y: number }> = [];
+      maxTrailLength: number = 5;
+      config: typeof config;
 
-    update() {
-      if (config.particleSpeed === 0) return;
-      
-      // Atualizar posição
-      this.x += this.vx;
-      this.y += this.vy;
-      
-      // Bounce nas bordas
-      if (this.x <= 0 || this.x >= this.canvas.width) this.vx *= -1;
-      if (this.y <= 0 || this.y >= this.canvas.height) this.vy *= -1;
-      
-      // Manter dentro dos limites
-      this.x = Math.max(0, Math.min(this.canvas.width, this.x));
-      this.y = Math.max(0, Math.min(this.canvas.height, this.y));
-      
-      // Atualizar trail
-      this.trail.push({ x: this.x, y: this.y });
-      if (this.trail.length > this.maxTrailLength) {
-        this.trail.shift();
+      constructor(canvas: HTMLCanvasElement, configRef: typeof config) {
+        this.canvas = canvas;
+        this.config = configRef;
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.vx = (Math.random() - 0.5) * this.config.particleSpeed;
+        this.vy = (Math.random() - 0.5) * this.config.particleSpeed;
+        this.size = 1 + Math.random() * 1.5; // Era 2-5 → 1-2.5 (50% redução no tamanho)
+        this.decay = 0.002 + Math.random() * 0.003; // Era 0.001-0.003 → 0.002-0.005 (vida mais curta)
+        this.glow = Math.random() * Math.PI * 2;
+        this.glowSpeed = 0.02 + Math.random() * 0.02; // Era 0.05-0.1 → 0.02-0.04 (60% redução)
       }
-      
-      // Efeito de glow
-      this.glow += this.glowSpeed;
-      
-      // Atualizar vida
-      this.life -= this.decay;
-      if (this.life <= 0) {
-        this.life = 1;
-        this.x = Math.random() * this.canvas.width;
-        this.y = Math.random() * this.canvas.height;
-      }
-    }
 
-    draw(ctx: CanvasRenderingContext2D) {
-      // Desenhar trail
-      this.trail.forEach((point, index) => {
-        const alpha = (index / this.trail.length) * this.life * 0.3;
-        ctx.save();
-        ctx.globalAlpha = alpha;
-        ctx.fillStyle = config.colors.glow;
-        ctx.beginPath();
-        ctx.arc(point.x, point.y, 1, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
-      });
-
-      // Desenhar partícula principal com glow
-      ctx.save();
-      ctx.globalAlpha = this.life * 0.5; // Era this.life → this.life * 0.5 (50% redução na opacidade)
-      
-      // Glow effect
-      const glowIntensity = 0.5 + Math.sin(this.glow) * 0.3;
-      ctx.shadowColor = config.colors.glow;
-      ctx.shadowBlur = this.size * 1.5 * glowIntensity; // Era *3 → *1.5 (50% redução no glow)
-      
-      ctx.fillStyle = config.colors.particle;
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-      ctx.fill();
-      
-      ctx.restore();
-    }
-
-    distanceTo(other: DigitalParticleType): number {
-      const dx = this.x - other.x;
-      const dy = this.y - other.y;
-      return Math.sqrt(dx * dx + dy * dy);
-    }
-  }
-
-  // Classe para matrix rain
-  class MatrixDrop implements MatrixDropType {
-    x: number;
-    y: number = 0;
-    fontSize: number;
-    speed: number;
-    chars: string[] = [];
-    opacity: number;
-
-    constructor(x: number, fontSize: number) {
-      this.x = x;
-      this.fontSize = fontSize;
-      this.speed = config.matrixSpeed + Math.random() * 0.8; // Era *2 → *0.8 (60% redução)
-      this.opacity = 0.4 + Math.random() * 0.2; // Era 0.8-1.0 → 0.4-0.6 (50% redução)
-      
-      // Gerar string de caracteres - REDUZIDA
-      const length = 2 + Math.floor(Math.random() * 4); // Era 5-15 → 2-6 caracteres (60% redução)
-      for (let i = 0; i < length; i++) {
-        this.chars.push(config.matrixChars[Math.floor(Math.random() * config.matrixChars.length)]);
-      }
-    }
-
-    update(canvasHeight: number) {
-      if (config.matrixSpeed === 0) return;
-      
-      this.y += this.speed;
-      
-      // Resetar quando sair da tela
-      if (this.y > canvasHeight + this.chars.length * this.fontSize) {
-        this.y = -this.chars.length * this.fontSize;
+      update() {
+        if (this.config.particleSpeed === 0) return;
         
-        // Trocar alguns caracteres aleatoriamente
-        if (Math.random() < 0.03) { // Era 0.1 → 0.03 (70% redução na frequência)
-          const index = Math.floor(Math.random() * this.chars.length);
-          this.chars[index] = config.matrixChars[Math.floor(Math.random() * config.matrixChars.length)];
+        // Atualizar posição
+        this.x += this.vx;
+        this.y += this.vy;
+        
+        // Bounce nas bordas
+        if (this.x <= 0 || this.x >= this.canvas.width) this.vx *= -1;
+        if (this.y <= 0 || this.y >= this.canvas.height) this.vy *= -1;
+        
+        // Manter dentro dos limites
+        this.x = Math.max(0, Math.min(this.canvas.width, this.x));
+        this.y = Math.max(0, Math.min(this.canvas.height, this.y));
+        
+        // Atualizar trail
+        this.trail.push({ x: this.x, y: this.y });
+        if (this.trail.length > this.maxTrailLength) {
+          this.trail.shift();
+        }
+        
+        // Efeito de glow
+        this.glow += this.glowSpeed;
+        
+        // Atualizar vida
+        this.life -= this.decay;
+        if (this.life <= 0) {
+          this.life = 1;
+          this.x = Math.random() * this.canvas.width;
+          this.y = Math.random() * this.canvas.height;
         }
       }
-    }
 
-    draw(ctx: CanvasRenderingContext2D) {
-      if (config.matrixOpacity === 0) return;
-      
-      ctx.save();
-      ctx.font = `${this.fontSize}px monospace`;
-      ctx.globalAlpha = config.matrixOpacity * this.opacity;
-      
-      this.chars.forEach((char, index) => {
-        const y = this.y + index * this.fontSize;
-        const alpha = Math.max(0, 1 - (index / this.chars.length));
-        
-        ctx.globalAlpha = config.matrixOpacity * this.opacity * alpha;
-        ctx.fillStyle = index === 0 ? config.colors.glow : config.colors.matrix;
-        ctx.fillText(char, this.x, y);
-      });
-      
-      ctx.restore();
-    }
-  }
-
-  // Desenhar conexões entre partículas
-  const drawConnections = (ctx: CanvasRenderingContext2D) => {
-    ctx.save();
-    ctx.strokeStyle = config.colors.connection;
-    ctx.lineWidth = 1;
-    
-    const particles = particlesRef.current.filter(p => p instanceof DigitalParticle);
-    
-    for (let i = 0; i < particles.length; i++) {
-      for (let j = i + 1; j < particles.length; j++) {
-        const distance = particles[i].distanceTo(particles[j]);
-        
-        if (distance < config.connectionDistance) {
-          const alpha = 1 - (distance / config.connectionDistance);
-          ctx.globalAlpha = alpha * 0.2; // Era * 0.5 → * 0.2 (60% redução na opacidade das conexões)
-          
+      draw(ctx: CanvasRenderingContext2D) {
+        // Desenhar trail
+        this.trail.forEach((point, index) => {
+          const alpha = (index / this.trail.length) * this.life * 0.3;
+          ctx.save();
+          ctx.globalAlpha = alpha;
+          ctx.fillStyle = this.config.colors.glow;
           ctx.beginPath();
-          ctx.moveTo(particles[i].x, particles[i].y);
-          ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.stroke();
-        }
+          ctx.arc(point.x, point.y, 1, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.restore();
+        });
+
+        // Desenhar partícula principal com glow
+        ctx.save();
+        ctx.globalAlpha = this.life * 0.5; // Era this.life → this.life * 0.5 (50% redução na opacidade)
+        
+        // Glow effect
+        const glowIntensity = 0.5 + Math.sin(this.glow) * 0.3;
+        ctx.shadowColor = this.config.colors.glow;
+        ctx.shadowBlur = this.size * 1.5 * glowIntensity; // Era *3 → *1.5 (50% redução no glow)
+        
+        ctx.fillStyle = this.config.colors.particle;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+        
+        ctx.restore();
+      }
+
+      distanceTo(other: DigitalParticleType): number {
+        const dx = this.x - other.x;
+        const dy = this.y - other.y;
+        return Math.sqrt(dx * dx + dy * dy);
       }
     }
-    
-    ctx.restore();
-  };
+
+    // Classe para matrix rain
+    class MatrixDrop implements MatrixDropType {
+      x: number;
+      y: number = 0;
+      fontSize: number;
+      speed: number;
+      chars: string[] = [];
+      opacity: number;
+      config: typeof config;
+
+      constructor(x: number, fontSize: number, configRef: typeof config) {
+        this.x = x;
+        this.fontSize = fontSize;
+        this.config = configRef;
+        this.speed = this.config.matrixSpeed + Math.random() * 0.8; // Era *2 → *0.8 (60% redução)
+        this.opacity = 0.4 + Math.random() * 0.2; // Era 0.8-1.0 → 0.4-0.6 (50% redução)
+        
+        // Gerar string de caracteres - REDUZIDA
+        const length = 2 + Math.floor(Math.random() * 4); // Era 5-15 → 2-6 caracteres (60% redução)
+        for (let i = 0; i < length; i++) {
+          this.chars.push(this.config.matrixChars[Math.floor(Math.random() * this.config.matrixChars.length)]);
+        }
+      }
+
+      update(canvasHeight: number) {
+        if (this.config.matrixSpeed === 0) return;
+        
+        this.y += this.speed;
+        
+        // Resetar quando sair da tela
+        if (this.y > canvasHeight + this.chars.length * this.fontSize) {
+          this.y = -this.chars.length * this.fontSize;
+          
+          // Trocar alguns caracteres aleatoriamente
+          if (Math.random() < 0.03) { // Era 0.1 → 0.03 (70% redução na frequência)
+            const index = Math.floor(Math.random() * this.chars.length);
+            this.chars[index] = this.config.matrixChars[Math.floor(Math.random() * this.config.matrixChars.length)];
+          }
+        }
+      }
+
+      draw(ctx: CanvasRenderingContext2D) {
+        if (this.config.matrixOpacity === 0) return;
+        
+        ctx.save();
+        ctx.font = `${this.fontSize}px monospace`;
+        ctx.globalAlpha = this.config.matrixOpacity * this.opacity;
+        
+        this.chars.forEach((char, index) => {
+          const y = this.y + index * this.fontSize;
+          const alpha = Math.max(0, 1 - (index / this.chars.length));
+          
+          ctx.globalAlpha = this.config.matrixOpacity * this.opacity * alpha;
+          ctx.fillStyle = index === 0 ? this.config.colors.glow : this.config.colors.matrix;
+          ctx.fillText(char, this.x, y);
+        });
+        
+        ctx.restore();
+      }
+    }
+
+    DigitalParticleRef.current = DigitalParticle;
+    MatrixDropRef.current = MatrixDrop;
+  }, []);
+
+  // Store drawing functions in useRef to avoid recreating them
+  const drawConnectionsRef = useRef<((ctx: CanvasRenderingContext2D) => void) | null>(null);
+
+  // Initialize drawing functions only once
+  useMemo(() => {
+    // Desenhar conexões entre partículas
+    drawConnectionsRef.current = (ctx: CanvasRenderingContext2D) => {
+      ctx.save();
+      ctx.strokeStyle = config.colors.connection;
+      ctx.lineWidth = 1;
+      
+      const particles = particlesRef.current.filter(p => p && typeof p.distanceTo === 'function');
+      
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const distance = particles[i].distanceTo(particles[j]);
+          
+          if (distance < config.connectionDistance) {
+            const alpha = 1 - (distance / config.connectionDistance);
+            ctx.globalAlpha = alpha * 0.2; // Era * 0.5 → * 0.2 (60% redução na opacidade das conexões)
+            
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+      
+      ctx.restore();
+    };
+  }, [config]);
 
   // Inicializar elementos
   const initializeElements = useCallback((canvas: HTMLCanvasElement) => {
     particlesRef.current = [];
     
     // Criar partículas
-    for (let i = 0; i < config.particleCount; i++) {
-      particlesRef.current.push(new DigitalParticle(canvas));
+    if (DigitalParticleRef.current) {
+      for (let i = 0; i < config.particleCount; i++) {
+        particlesRef.current.push(new DigitalParticleRef.current(canvas, config));
+      }
     }
     
     // Criar matrix drops
     matrixRef.current.drops = [];
     const fontSize = 14;
-    for (let i = 0; i < config.matrixColumns; i++) {
-      const x = i * 20;
-      matrixRef.current.drops.push(new MatrixDrop(x, fontSize));
+    if (MatrixDropRef.current) {
+      for (let i = 0; i < config.matrixColumns; i++) {
+        const x = i * 20;
+        matrixRef.current.drops.push(new MatrixDropRef.current(x, fontSize, config));
+      }
     }
   }, [config]);
 
@@ -308,7 +332,9 @@ const InformaticaBackground: React.FC<BackgroundProps> = ({
     });
     
     // Desenhar conexões primeiro
-    drawConnections(ctx);
+    if (drawConnectionsRef.current) {
+      drawConnectionsRef.current(ctx);
+    }
     
     // Atualizar e desenhar partículas
     particlesRef.current.forEach(particle => {

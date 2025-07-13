@@ -24,18 +24,26 @@ export default function RegisterPage() {
     setIsLoading(true);
     setError(null);
 
+    const registerId = Math.random().toString(36).substr(2, 9);
+
     // Validation
+    console.log(`[REGISTER-${registerId}] 🚀 Starting registration process for: ${formData.email}`);
+    
     if (formData.password !== formData.confirmPassword) {
+      console.log(`[REGISTER-${registerId}] ❌ Password confirmation mismatch`);
       setError('As senhas não coincidem');
       setIsLoading(false);
       return;
     }
 
     if (formData.password.length < 6) {
+      console.log(`[REGISTER-${registerId}] ❌ Password too short: ${formData.password.length} characters`);
       setError('A senha deve ter pelo menos 6 caracteres');
       setIsLoading(false);
       return;
     }
+
+    console.log(`[REGISTER-${registerId}] ✅ Form validation passed`);
 
     try {
       const supabase = createClient(
@@ -43,9 +51,11 @@ export default function RegisterPage() {
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string
       );
 
+      console.log(`[REGISTER-${registerId}] 🔄 Clearing any existing session...`);
       // Clear any existing session first
       await supabase.auth.signOut();
 
+      console.log(`[REGISTER-${registerId}] 📝 Attempting user registration...`);
       const { data, error: signUpError } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
@@ -55,8 +65,19 @@ export default function RegisterPage() {
         }
       });
 
+      console.log(`[REGISTER-${registerId}] 📊 Registration response:`, {
+        hasUser: !!data.user,
+        hasSession: !!data.session,
+        hasError: !!signUpError,
+        userIdentitiesCount: data.user?.identities?.length || 0,
+        userRole: data.user?.role || 'empty'
+      });
 
       if (signUpError) {
+        console.error(`[REGISTER-${registerId}] ❌ Registration error:`, {
+          message: signUpError.message,
+          status: signUpError.status
+        });
         throw signUpError;
       }
 
@@ -73,17 +94,31 @@ export default function RegisterPage() {
           data.user.role === ''
         );
         
+        console.log(`[REGISTER-${registerId}] 🔍 Duplicate email check:`, {
+          identitiesLength: data.user.identities?.length,
+          role: data.user.role,
+          isDuplicate: isDuplicateEmail
+        });
+        
         if (isDuplicateEmail) {
+          console.log(`[REGISTER-${registerId}] ⚠️ Duplicate email detected - blocking registration`);
           setError('Este email já está cadastrado. Verifique sua caixa de entrada para o link de verificação ou tente fazer login.');
           return;
         }
       }
 
+      console.log(`[REGISTER-${registerId}] ✅ Registration successful - email verification sent`);
       setEmailSent(true);
     } catch (err: any) {
+      console.error(`[REGISTER-${registerId}] ❌ Registration failed:`, {
+        error: err?.message,
+        status: err?.status,
+        code: err?.code
+      });
       setError(err?.message ?? 'Erro ao criar conta. Tente novamente.');
     } finally {
       setIsLoading(false);
+      console.log(`[REGISTER-${registerId}] 🏁 Registration process completed`);
     }
   };
 

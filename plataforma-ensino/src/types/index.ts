@@ -69,12 +69,17 @@ export interface Lesson {
   video_duration: number
   order_index: number
   materials: Material[]
+  content?: string // Rich text content for lesson materials/handouts
+  allows_file_upload: boolean // Whether students can upload files
   transcript?: string
   is_preview: boolean
   is_published: boolean
   created_at: string
   updated_at: string
   progress?: Progress
+  exercises?: Exercise[]
+  quizzes?: Quiz[]
+  submissions?: LessonSubmission[]
 }
 
 export interface Material {
@@ -222,7 +227,9 @@ export interface LessonForm {
   title: string
   description: string
   video_url?: string
+  content?: string
   materials: Material[]
+  allows_file_upload: boolean
   is_preview: boolean
   order_index: number
 }
@@ -369,6 +376,149 @@ export type DeepPartial<T> = {
 export type PickRequired<T, K extends keyof T> = T & Required<Pick<T, K>>
 
 export type PartialExcept<T, K extends keyof T> = Partial<T> & Pick<T, K>
+
+// Exercise, Quiz and Submission Types
+export interface Exercise {
+  id: string
+  lesson_id: string
+  title: string
+  description?: string
+  download_url?: string
+  order_index: number
+  created_at: string
+  updated_at: string
+  lesson?: Lesson
+}
+
+export interface Quiz {
+  id: string
+  lesson_id: string
+  title: string
+  description?: string
+  instructions?: string
+  time_limit_minutes?: number
+  attempts_allowed: number
+  passing_score: number
+  is_published: boolean
+  created_at: string
+  updated_at: string
+  lesson?: Lesson
+  questions?: QuizQuestion[]
+  attempts?: QuizAttempt[]
+}
+
+export interface QuizQuestion {
+  id: string
+  quiz_id: string
+  question: string
+  options: string[]
+  correct_answer: number
+  explanation?: string
+  points: number
+  order_index: number
+  created_at: string
+  updated_at: string
+  quiz?: Quiz
+}
+
+export interface LessonSubmission {
+  id: string
+  lesson_id: string
+  user_id: string
+  file_url: string
+  file_name: string
+  file_size: number
+  mime_type: string
+  status: 'pending' | 'approved' | 'rejected'
+  feedback?: string
+  submitted_at: string
+  reviewed_at?: string
+  reviewed_by?: string
+  created_at: string
+  updated_at: string
+  lesson?: Lesson
+  user?: User
+  reviewer?: User
+}
+
+export interface QuizAttempt {
+  id: string
+  quiz_id: string
+  user_id: string
+  answers: Record<string, number> // question_id -> selected_option_index
+  score: number
+  total_points: number
+  passed: boolean
+  attempt_number: number
+  started_at: string
+  completed_at?: string
+  time_spent_minutes?: number
+  created_at: string
+  quiz?: Quiz
+  user?: User
+}
+
+// Form Types for New Entities
+export interface ExerciseForm {
+  title: string
+  description?: string
+  download_url?: string
+  order_index: number
+}
+
+export interface QuizForm {
+  title: string
+  description?: string
+  instructions?: string
+  time_limit_minutes?: number
+  attempts_allowed: number
+  passing_score: number
+  is_published: boolean
+}
+
+export interface QuizQuestionForm {
+  question: string
+  options: string[]
+  correct_answer: number
+  explanation?: string
+  points: number
+  order_index: number
+}
+
+export interface LessonSubmissionForm {
+  file: File
+}
+
+export interface QuizAttemptForm {
+  answers: Record<string, number>
+}
+
+// Extended Lesson Form with all new features
+export interface ExtendedLessonForm {
+  // Basic lesson info
+  title: string
+  description?: string
+  video_url?: string
+  content?: string
+  allows_file_upload: boolean
+  materials: Material[]
+  is_preview: boolean
+  order_index: number
+  
+  // Exercises
+  exercises: ExerciseForm[]
+  
+  // Quiz
+  quiz?: {
+    title: string
+    description?: string
+    instructions?: string
+    time_limit_minutes?: number
+    attempts_allowed: number
+    passing_score: number
+    questions: QuizQuestionForm[]
+  }
+}
 
 // Blog Types
 export interface Post {

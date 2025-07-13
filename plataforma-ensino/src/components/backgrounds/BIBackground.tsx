@@ -109,256 +109,270 @@ const BIBackground: React.FC<BackgroundProps> = ({
     ]
   }), [performanceConfig]);
 
-  // Classe para streams de dados
-  class DataStream implements DataStreamType {
-    canvas: HTMLCanvasElement;
-    particles: Array<{
-      progress: number;
-      speed: number;
-      size: number;
+  // Use useRef to store class constructors to avoid recreating them
+  const DataStreamRef = useRef<any>(null);
+  const FloatingKPIRef = useRef<any>(null);
+
+  // Initialize class constructors only once
+  useMemo(() => {
+    // Classe para streams de dados
+    class DataStream implements DataStreamType {
+      canvas: HTMLCanvasElement;
+      particles: Array<{
+        progress: number;
+        speed: number;
+        size: number;
+        opacity: number;
+        life: number;
+        decay: number;
+      }> = [];
+      maxParticles: number;
+      spawnRate: number;
+      lastSpawn: number = 0;
+      startX: number;
+      startY: number;
+      endX: number;
+      endY: number;
+      controlX: number;
+      controlY: number;
       opacity: number;
-      life: number;
-      decay: number;
-    }> = [];
-    maxParticles: number;
-    spawnRate: number;
-    lastSpawn: number = 0;
-    startX: number;
-    startY: number;
-    endX: number;
-    endY: number;
-    controlX: number;
-    controlY: number;
-    opacity: number;
-    hue: number;
+      hue: number;
+      config: typeof config;
 
-    constructor(canvas: HTMLCanvasElement) {
-      this.canvas = canvas;
-      this.maxParticles = 8 + Math.floor(Math.random() * 6);
-      this.spawnRate = 0.1 + Math.random() * 0.1;
-      
-      // Definir path do stream
-      this.startX = Math.random() * canvas.width;
-      this.startY = canvas.height + 50;
-      this.endX = Math.random() * canvas.width;
-      this.endY = -50;
-      
-      // Curvatura do path
-      this.controlX = this.startX + (Math.random() - 0.5) * 200;
-      this.controlY = canvas.height / 2 + (Math.random() - 0.5) * 100;
-      
-      this.opacity = 0.4 + Math.random() * 0.4;
-      this.hue = Math.random() * 60; // Variação de cor
-    }
-
-    update() {
-      if (config.streamSpeed === 0) return;
-      
-      // Spawn new particles
-      this.lastSpawn += this.spawnRate;
-      if (this.lastSpawn >= 1 && this.particles.length < this.maxParticles) {
-        this.particles.push({
-          progress: 0,
-          speed: config.streamSpeed * (0.8 + Math.random() * 0.4) * 0.01,
-          size: 2 + Math.random() * 4,
-          opacity: 0.8 + Math.random() * 0.2,
-          life: 1,
-          decay: 0.005 + Math.random() * 0.005
-        });
-        this.lastSpawn = 0;
+      constructor(canvas: HTMLCanvasElement, configRef: typeof config) {
+        this.canvas = canvas;
+        this.config = configRef;
+        this.maxParticles = 8 + Math.floor(Math.random() * 6);
+        this.spawnRate = 0.1 + Math.random() * 0.1;
+        
+        // Definir path do stream
+        this.startX = Math.random() * canvas.width;
+        this.startY = canvas.height + 50;
+        this.endX = Math.random() * canvas.width;
+        this.endY = -50;
+        
+        // Curvatura do path
+        this.controlX = this.startX + (Math.random() - 0.5) * 200;
+        this.controlY = canvas.height / 2 + (Math.random() - 0.5) * 100;
+        
+        this.opacity = 0.4 + Math.random() * 0.4;
+        this.hue = Math.random() * 60; // Variação de cor
       }
-      
-      // Update particles
-      this.particles.forEach((particle, index) => {
-        particle.progress += particle.speed;
-        particle.life -= particle.decay;
-        
-        if (particle.progress >= 1 || particle.life <= 0) {
-          this.particles.splice(index, 1);
-        }
-      });
-    }
 
-    draw(ctx: CanvasRenderingContext2D) {
-      ctx.save();
-      ctx.globalAlpha = this.opacity;
-      
-      // Desenhar partículas
-      this.particles.forEach(particle => {
-        const t = particle.progress;
+      update() {
+        if (this.config.streamSpeed === 0) return;
         
-        // Posição ao longo da curva Bézier quadrática
-        const x = Math.pow(1-t, 2) * this.startX + 
-                  2 * (1-t) * t * this.controlX + 
-                  Math.pow(t, 2) * this.endX;
-        const y = Math.pow(1-t, 2) * this.startY + 
-                  2 * (1-t) * t * this.controlY + 
-                  Math.pow(t, 2) * this.endY;
+        // Spawn new particles
+        this.lastSpawn += this.spawnRate;
+        if (this.lastSpawn >= 1 && this.particles.length < this.maxParticles) {
+          this.particles.push({
+            progress: 0,
+            speed: this.config.streamSpeed * (0.8 + Math.random() * 0.4) * 0.01,
+            size: 2 + Math.random() * 4,
+            opacity: 0.8 + Math.random() * 0.2,
+            life: 1,
+            decay: 0.005 + Math.random() * 0.005
+          });
+          this.lastSpawn = 0;
+        }
         
+        // Update particles
+        this.particles.forEach((particle, index) => {
+          particle.progress += particle.speed;
+          particle.life -= particle.decay;
+          
+          if (particle.progress >= 1 || particle.life <= 0) {
+            this.particles.splice(index, 1);
+          }
+        });
+      }
+
+      draw(ctx: CanvasRenderingContext2D) {
         ctx.save();
-        ctx.globalAlpha = particle.opacity * particle.life;
+        ctx.globalAlpha = this.opacity;
         
-        // Cor baseada no progresso
-        const hue = (this.hue + t * 30) % 360;
-        ctx.fillStyle = `hsl(${hue}, 70%, 60%)`;
-        
-        // Glow effect
-        ctx.shadowColor = ctx.fillStyle;
-        ctx.shadowBlur = particle.size * 2;
-        
-        ctx.beginPath();
-        ctx.arc(x, y, particle.size, 0, Math.PI * 2);
-        ctx.fill();
+        // Desenhar partículas
+        this.particles.forEach(particle => {
+          const t = particle.progress;
+          
+          // Posição ao longo da curva Bézier quadrática
+          const x = Math.pow(1-t, 2) * this.startX + 
+                    2 * (1-t) * t * this.controlX + 
+                    Math.pow(t, 2) * this.endX;
+          const y = Math.pow(1-t, 2) * this.startY + 
+                    2 * (1-t) * t * this.controlY + 
+                    Math.pow(t, 2) * this.endY;
+          
+          ctx.save();
+          ctx.globalAlpha = particle.opacity * particle.life;
+          
+          // Cor baseada no progresso
+          const hue = (this.hue + t * 30) % 360;
+          ctx.fillStyle = `hsl(${hue}, 70%, 60%)`;
+          
+          // Glow effect
+          ctx.shadowColor = ctx.fillStyle;
+          ctx.shadowBlur = particle.size * 2;
+          
+          ctx.beginPath();
+          ctx.arc(x, y, particle.size, 0, Math.PI * 2);
+          ctx.fill();
+          
+          ctx.restore();
+        });
         
         ctx.restore();
-      });
-      
-      ctx.restore();
-    }
-  }
-
-  // Classe para KPI cards flutuantes
-  class FloatingKPI implements FloatingKPIType {
-    canvas: HTMLCanvasElement;
-    kpi: {
-      label: string;
-      value: string;
-      trend: 'up' | 'down';
-      format: 'currency' | 'number' | 'percentage';
-    };
-    x: number;
-    y: number;
-    vx: number;
-    vy: number;
-    opacity: number;
-    scale: number;
-    rotation: number = 0;
-    rotationSpeed: number;
-    pulse: number;
-    pulseSpeed: number;
-    valueAnimation: number = 0;
-    animationSpeed: number;
-    targetValue: number;
-    currentValue: number;
-
-    constructor(canvas: HTMLCanvasElement, kpi: typeof config.kpis[0]) {
-      this.canvas = canvas;
-      this.kpi = kpi;
-      this.x = Math.random() * (canvas.width - 150) + 75;
-      this.y = Math.random() * (canvas.height - 100) + 50;
-      this.vx = (Math.random() - 0.5) * config.kpiSpeed;
-      this.vy = (Math.random() - 0.5) * config.kpiSpeed;
-      this.opacity = 0.3 + Math.random() * 0.2; // Era 0.6-0.9 → 0.3-0.5 (50% redução)
-      this.scale = 0.6 + Math.random() * 0.2; // Era 0.8-1.2 → 0.6-0.8 (33% redução)
-      this.rotationSpeed = (Math.random() - 0.5) * 0.01;
-      this.pulse = Math.random() * Math.PI * 2;
-      this.pulseSpeed = 0.03 + Math.random() * 0.02;
-      
-      // Animação de valor
-      this.animationSpeed = 0.02 + Math.random() * 0.02;
-      this.targetValue = parseFloat(this.kpi.value.replace(/[$,%]/g, ''));
-      this.currentValue = this.targetValue * (0.7 + Math.random() * 0.3);
-    }
-
-    update() {
-      if (config.kpiSpeed === 0) return;
-      
-      this.x += this.vx;
-      this.y += this.vy;
-      this.rotation += this.rotationSpeed;
-      this.pulse += this.pulseSpeed;
-      this.valueAnimation += this.animationSpeed;
-      
-      // Bounce suave nas bordas
-      if (this.x <= 75 || this.x >= this.canvas.width - 75) this.vx *= -0.8;
-      if (this.y <= 50 || this.y >= this.canvas.height - 50) this.vy *= -0.8;
-      
-      // Manter dentro dos limites
-      this.x = Math.max(75, Math.min(this.canvas.width - 75, this.x));
-      this.y = Math.max(50, Math.min(this.canvas.height - 50, this.y));
-      
-      // Animar valor até o target
-      if (Math.abs(this.currentValue - this.targetValue) > 0.01) {
-        this.currentValue += (this.targetValue - this.currentValue) * 0.1;
       }
     }
 
-    draw(ctx: CanvasRenderingContext2D) {
-      ctx.save();
-      ctx.translate(this.x, this.y);
-      ctx.rotate(this.rotation);
-      ctx.scale(this.scale, this.scale);
-      ctx.globalAlpha = this.opacity * (0.8 + Math.sin(this.pulse) * 0.2);
+    // Classe para KPI cards flutuantes
+    class FloatingKPI implements FloatingKPIType {
+      canvas: HTMLCanvasElement;
+      kpi: {
+        label: string;
+        value: string;
+        trend: 'up' | 'down';
+        format: 'currency' | 'number' | 'percentage';
+      };
+      x: number;
+      y: number;
+      vx: number;
+      vy: number;
+      opacity: number;
+      scale: number;
+      rotation: number = 0;
+      rotationSpeed: number;
+      pulse: number;
+      pulseSpeed: number;
+      valueAnimation: number = 0;
+      animationSpeed: number;
+      targetValue: number;
+      currentValue: number;
+      config: typeof config;
 
-      // Card do KPI - REDUZIDO
-      const cardWidth = 100; // Era 140 → 100 (29% redução)
-      const cardHeight = 60; // Era 80 → 60 (25% redução)
-      
-      // Fundo do card com glow
-      ctx.shadowColor = this.kpi.trend === 'up' ? config.colors.success : config.colors.warning;
-      ctx.shadowBlur = 12;
-      ctx.fillStyle = config.colors.background + 'CC';
-      ctx.fillRect(-cardWidth/2, -cardHeight/2, cardWidth, cardHeight);
-      
-      // Borda do card
-      ctx.strokeStyle = this.kpi.trend === 'up' ? config.colors.success : config.colors.warning;
-      ctx.lineWidth = 2;
-      ctx.strokeRect(-cardWidth/2, -cardHeight/2, cardWidth, cardHeight);
-      
-      // Label do KPI
-      ctx.font = '12px Arial';
-      ctx.fillStyle = config.colors.kpi;
-      ctx.textAlign = 'center';
-      ctx.fillText(this.kpi.label, 0, -20);
-      
-      // Valor animado do KPI
-      let displayValue = '';
-      if (this.kpi.format === 'currency') {
-        displayValue = '$' + (this.currentValue / 1000000).toFixed(1) + 'M';
-      } else if (this.kpi.format === 'percentage') {
-        displayValue = this.currentValue.toFixed(1) + '%';
-      } else {
-        displayValue = Math.floor(this.currentValue).toLocaleString();
-      }
-      
-      ctx.font = 'bold 16px Arial';
-      ctx.fillStyle = this.kpi.trend === 'up' ? config.colors.success : config.colors.warning;
-      ctx.fillText(displayValue, 0, 0);
-      
-      // Indicador de tendência
-      const arrowSize = 10;
-      ctx.fillStyle = this.kpi.trend === 'up' ? config.colors.success : config.colors.warning;
-      ctx.beginPath();
-      if (this.kpi.trend === 'up') {
-        ctx.moveTo(-arrowSize/2, 20);
-        ctx.lineTo(0, 10);
-        ctx.lineTo(arrowSize/2, 20);
-      } else {
-        ctx.moveTo(-arrowSize/2, 10);
-        ctx.lineTo(0, 20);
-        ctx.lineTo(arrowSize/2, 10);
-      }
-      ctx.closePath();
-      ctx.fill();
-      
-      // Mini sparkline
-      ctx.strokeStyle = this.kpi.trend === 'up' ? config.colors.success : config.colors.warning;
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      
-      for (let i = 0; i < 10; i++) {
-        const x = -cardWidth/2 + 20 + (i / 9) * (cardWidth - 40);
-        const variance = Math.sin((i + this.valueAnimation) * 0.5) * 5;
-        const y = 25 + variance + (this.kpi.trend === 'up' ? -i * 0.5 : i * 0.5);
+      constructor(canvas: HTMLCanvasElement, kpi: typeof config.kpis[0], configRef: typeof config) {
+        this.canvas = canvas;
+        this.kpi = kpi;
+        this.config = configRef;
+        this.x = Math.random() * (canvas.width - 150) + 75;
+        this.y = Math.random() * (canvas.height - 100) + 50;
+        this.vx = (Math.random() - 0.5) * this.config.kpiSpeed;
+        this.vy = (Math.random() - 0.5) * this.config.kpiSpeed;
+        this.opacity = 0.3 + Math.random() * 0.2; // Era 0.6-0.9 → 0.3-0.5 (50% redução)
+        this.scale = 0.6 + Math.random() * 0.2; // Era 0.8-1.2 → 0.6-0.8 (33% redução)
+        this.rotationSpeed = (Math.random() - 0.5) * 0.01;
+        this.pulse = Math.random() * Math.PI * 2;
+        this.pulseSpeed = 0.03 + Math.random() * 0.02;
         
-        if (i === 0) ctx.moveTo(x, y);
-        else ctx.lineTo(x, y);
+        // Animação de valor
+        this.animationSpeed = 0.02 + Math.random() * 0.02;
+        this.targetValue = parseFloat(this.kpi.value.replace(/[$,%]/g, ''));
+        this.currentValue = this.targetValue * (0.7 + Math.random() * 0.3);
       }
-      ctx.stroke();
-      
-      ctx.restore();
+
+      update() {
+        if (this.config.kpiSpeed === 0) return;
+        
+        this.x += this.vx;
+        this.y += this.vy;
+        this.rotation += this.rotationSpeed;
+        this.pulse += this.pulseSpeed;
+        this.valueAnimation += this.animationSpeed;
+        
+        // Bounce suave nas bordas
+        if (this.x <= 75 || this.x >= this.canvas.width - 75) this.vx *= -0.8;
+        if (this.y <= 50 || this.y >= this.canvas.height - 50) this.vy *= -0.8;
+        
+        // Manter dentro dos limites
+        this.x = Math.max(75, Math.min(this.canvas.width - 75, this.x));
+        this.y = Math.max(50, Math.min(this.canvas.height - 50, this.y));
+        
+        // Animar valor até o target
+        if (Math.abs(this.currentValue - this.targetValue) > 0.01) {
+          this.currentValue += (this.targetValue - this.currentValue) * 0.1;
+        }
+      }
+
+      draw(ctx: CanvasRenderingContext2D) {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.rotation);
+        ctx.scale(this.scale, this.scale);
+        ctx.globalAlpha = this.opacity * (0.8 + Math.sin(this.pulse) * 0.2);
+
+        // Card do KPI - REDUZIDO
+        const cardWidth = 100; // Era 140 → 100 (29% redução)
+        const cardHeight = 60; // Era 80 → 60 (25% redução)
+        
+        // Fundo do card com glow
+        ctx.shadowColor = this.kpi.trend === 'up' ? this.config.colors.success : this.config.colors.warning;
+        ctx.shadowBlur = 12;
+        ctx.fillStyle = this.config.colors.background + 'CC';
+        ctx.fillRect(-cardWidth/2, -cardHeight/2, cardWidth, cardHeight);
+        
+        // Borda do card
+        ctx.strokeStyle = this.kpi.trend === 'up' ? this.config.colors.success : this.config.colors.warning;
+        ctx.lineWidth = 2;
+        ctx.strokeRect(-cardWidth/2, -cardHeight/2, cardWidth, cardHeight);
+        
+        // Label do KPI
+        ctx.font = '12px Arial';
+        ctx.fillStyle = this.config.colors.kpi;
+        ctx.textAlign = 'center';
+        ctx.fillText(this.kpi.label, 0, -20);
+        
+        // Valor animado do KPI
+        let displayValue = '';
+        if (this.kpi.format === 'currency') {
+          displayValue = '$' + (this.currentValue / 1000000).toFixed(1) + 'M';
+        } else if (this.kpi.format === 'percentage') {
+          displayValue = this.currentValue.toFixed(1) + '%';
+        } else {
+          displayValue = Math.floor(this.currentValue).toLocaleString();
+        }
+        
+        ctx.font = 'bold 16px Arial';
+        ctx.fillStyle = this.kpi.trend === 'up' ? this.config.colors.success : this.config.colors.warning;
+        ctx.fillText(displayValue, 0, 0);
+        
+        // Indicador de tendência
+        const arrowSize = 10;
+        ctx.fillStyle = this.kpi.trend === 'up' ? this.config.colors.success : this.config.colors.warning;
+        ctx.beginPath();
+        if (this.kpi.trend === 'up') {
+          ctx.moveTo(-arrowSize/2, 20);
+          ctx.lineTo(0, 10);
+          ctx.lineTo(arrowSize/2, 20);
+        } else {
+          ctx.moveTo(-arrowSize/2, 10);
+          ctx.lineTo(0, 20);
+          ctx.lineTo(arrowSize/2, 10);
+        }
+        ctx.closePath();
+        ctx.fill();
+        
+        // Mini sparkline
+        ctx.strokeStyle = this.kpi.trend === 'up' ? this.config.colors.success : this.config.colors.warning;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        
+        for (let i = 0; i < 10; i++) {
+          const x = -cardWidth/2 + 20 + (i / 9) * (cardWidth - 40);
+          const variance = Math.sin((i + this.valueAnimation) * 0.5) * 5;
+          const y = 25 + variance + (this.kpi.trend === 'up' ? -i * 0.5 : i * 0.5);
+          
+          if (i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+        
+        ctx.restore();
+      }
     }
-  }
+
+    DataStreamRef.current = DataStream as any;
+    FloatingKPIRef.current = FloatingKPI as any;
+  }, [config]);
 
   // Inicializar elementos
   const initializeElements = useCallback((canvas: HTMLCanvasElement) => {
@@ -366,15 +380,19 @@ const BIBackground: React.FC<BackgroundProps> = ({
     kpiCardsRef.current = [];
     
     // Criar streams de dados
-    for (let i = 0; i < config.streamCount; i++) {
-      dataStreamsRef.current.push(new DataStream(canvas));
+    if (DataStreamRef.current) {
+      for (let i = 0; i < config.streamCount; i++) {
+        dataStreamsRef.current.push(new DataStreamRef.current(canvas, config));
+      }
     }
     
     // Criar KPI cards
-    config.kpis.slice(0, config.kpiCount).forEach(kpi => {
-      kpiCardsRef.current.push(new FloatingKPI(canvas, kpi));
-    });
-  }, [config.streamCount, config.kpiCount, config.kpis]);
+    if (FloatingKPIRef.current) {
+      config.kpis.slice(0, config.kpiCount).forEach(kpi => {
+        kpiCardsRef.current.push(new FloatingKPIRef.current(canvas, kpi, config));
+      });
+    }
+  }, [config]);
 
   // Loop de animação
   const animate = useCallback(() => {
@@ -400,7 +418,7 @@ const BIBackground: React.FC<BackgroundProps> = ({
     if (config.streamSpeed > 0 || config.kpiSpeed > 0) {
       animationRef.current = requestAnimationFrame(animate);
     }
-  }, [config.streamSpeed, config.kpiSpeed]);
+  }, [config]);
 
   // Configurar canvas e inicializar
   useEffect(() => {

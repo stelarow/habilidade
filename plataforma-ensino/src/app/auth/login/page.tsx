@@ -36,34 +36,59 @@ function LoginForm() {
     setIsLoading(true);
     setError(null);
 
+    const loginId = Math.random().toString(36).substr(2, 9);
+    
     try {
+      console.log(`[LOGIN-${loginId}] 🚀 Starting login process for email: ${formData.email}`);
+      
       const supabase = createClient();
 
-      const { error: authError } = await supabase.auth.signInWithPassword({
+      console.log(`[LOGIN-${loginId}] 🔑 Attempting authentication with Supabase...`);
+      const { data, error: authError } = await supabase.auth.signInWithPassword({
         email: formData.email,
         password: formData.password
       });
 
       if (authError) {
+        console.error(`[LOGIN-${loginId}] ❌ Authentication failed:`, {
+          error: authError.message,
+          code: authError.status
+        });
         throw authError;
       }
 
+      console.log(`[LOGIN-${loginId}] ✅ Authentication successful`);
+      console.log(`[LOGIN-${loginId}] 👤 User data:`, {
+        id: data.user?.id,
+        email: data.user?.email,
+        role: data.user?.user_metadata?.role || 'not_set',
+        session_id: data.session?.access_token ? 'active' : 'none'
+      });
+
       // Wait a moment for the auth state to update, then redirect based on user role
+      console.log(`[LOGIN-${loginId}] ⏳ Waiting for auth state to update...`);
       setTimeout(async () => {
         try {
+          console.log(`[LOGIN-${loginId}] 🎯 Determining redirect URL...`);
           const redirectUrl = await getRedirectUrlForCurrentUser();
-          console.log(`[LOGIN] 🎯 Redirecting user to: ${redirectUrl}`);
+          console.log(`[LOGIN-${loginId}] ↗️ Redirecting user to: ${redirectUrl}`);
           router.push(redirectUrl);
         } catch (error) {
-          console.error('[LOGIN] Error determining redirect URL:', error);
-          // Fallback to default dashboard
+          console.error(`[LOGIN-${loginId}] ❌ Error determining redirect URL:`, error);
+          console.log(`[LOGIN-${loginId}] 🔄 Falling back to default dashboard`);
           router.push('/dashboard');
         }
       }, 200); // Slightly longer timeout to ensure auth state is updated
     } catch (err: any) {
+      console.error(`[LOGIN-${loginId}] ❌ Login process failed:`, {
+        error: err?.message,
+        status: err?.status,
+        code: err?.code
+      });
       setError(err?.message ?? 'Erro ao fazer login. Verifique suas credenciais.');
     } finally {
       setIsLoading(false);
+      console.log(`[LOGIN-${loginId}] 🏁 Login process completed`);
     }
   };
 

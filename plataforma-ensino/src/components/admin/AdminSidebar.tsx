@@ -11,7 +11,8 @@ import {
   AcademicCapIcon,
   TagIcon,
   Bars3Icon,
-  XMarkIcon
+  XMarkIcon,
+  PlayIcon
 } from '@heroicons/react/24/outline'
 
 interface NavItem {
@@ -25,6 +26,7 @@ const navigation: NavItem[] = [
   { name: 'Dashboard', href: '/admin', icon: HomeIcon },
   { name: 'Usuários', href: '/admin/users', icon: UserGroupIcon },
   { name: 'Cursos', href: '/admin/courses', icon: BookOpenIcon },
+  { name: 'Aulas', href: '/admin/lessons', icon: PlayIcon },
   { name: 'Categorias', href: '/admin/categories', icon: TagIcon },
   { name: 'Matrículas', href: '/admin/enrollments', icon: AcademicCapIcon },
   { name: 'Configurações', href: '/admin/settings', icon: CogIcon },
