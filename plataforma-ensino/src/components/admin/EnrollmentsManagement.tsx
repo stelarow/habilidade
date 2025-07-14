@@ -13,7 +13,9 @@ import {
   XCircleIcon,
   ClockIcon,
   PlusIcon,
-  TrashIcon
+  TrashIcon,
+  AcademicCapIcon,
+  ChartBarIcon
 } from '@heroicons/react/24/outline'
 import { EnrollmentForm } from './EnrollmentForm'
 
@@ -54,6 +56,9 @@ export function EnrollmentsManagement({ enrollments: initialEnrollments, current
   const [showEnrollmentForm, setShowEnrollmentForm] = useState(false)
   const [enrollmentFormMode, setEnrollmentFormMode] = useState<'create' | 'remove'>('create')
   const [selectedEnrollment, setSelectedEnrollment] = useState<EnrollmentWithPopulated | null>(null)
+  const [showProgressModal, setShowProgressModal] = useState(false)
+  const [progressData, setProgressData] = useState<any[]>([])
+  const [loadingProgress, setLoadingProgress] = useState(false)
 
   const supabase = createClient()
 
@@ -195,6 +200,98 @@ export function EnrollmentsManagement({ enrollments: initialEnrollments, current
   const handleEnrollmentCancel = () => {
     setShowEnrollmentForm(false)
     setSelectedEnrollment(null)
+  }
+
+  const handleManageProgress = async (enrollment: EnrollmentWithPopulated) => {
+    setSelectedEnrollment(enrollment)
+    setLoadingProgress(true)
+    setShowProgressModal(true)
+    
+    try {
+      // Fetch course lessons and progress
+      const { data: lessons, error: lessonsError } = await supabase
+        .from('lessons')
+        .select('*')
+        .eq('course_id', enrollment.course_id)
+        .eq('is_published', true)
+        .order('order_index')
+
+      if (lessonsError) throw lessonsError
+
+      // Fetch progress for each lesson
+      const { data: progress, error: progressError } = await supabase
+        .from('progress')
+        .select('*')
+        .eq('user_id', enrollment.user_id)
+        .eq('enrollment_id', enrollment.id)
+
+      if (progressError) throw progressError
+
+      // Combine lessons with progress
+      const progressData = lessons?.map(lesson => {
+        const lessonProgress = progress?.find(p => p.lesson_id === lesson.id)
+        return {
+          lesson,
+          progress: lessonProgress || {
+            user_id: enrollment.user_id,
+            lesson_id: lesson.id,
+            enrollment_id: enrollment.id,
+            completed: false,
+            last_position: 0,
+            watch_time: 0
+          }
+        }
+      }) || []
+
+      setProgressData(progressData)
+    } catch (error) {
+      console.error('Error loading progress:', error)
+      alert('Erro ao carregar progresso das aulas')
+    } finally {
+      setLoadingProgress(false)
+    }
+  }
+
+  const handleToggleLessonComplete = async (lessonId: string, completed: boolean) => {
+    if (!selectedEnrollment) return
+
+    try {
+      const response = await fetch('/api/admin/progress', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          user_id: selectedEnrollment.user_id,
+          lesson_id: lessonId,
+          enrollment_id: selectedEnrollment.id,
+          completed,
+          completed_at: completed ? new Date().toISOString() : null
+        })
+      })
+
+      if (!response.ok) throw new Error('Failed to update progress')
+
+      // Update local progress data
+      setProgressData(prev => prev.map(item => 
+        item.lesson.id === lessonId 
+          ? { ...item, progress: { ...item.progress, completed, completed_at: completed ? new Date().toISOString() : null } }
+          : item
+      ))
+
+      // Refresh enrollment progress percentage
+      const completedCount = progressData.filter(item => 
+        item.lesson.id === lessonId ? completed : item.progress.completed
+      ).length
+      const progressPercentage = Math.round((completedCount / progressData.length) * 100)
+
+      setEnrollments(prev => prev.map(enrollment =>
+        enrollment.id === selectedEnrollment.id
+          ? { ...enrollment, progress_percentage: progressPercentage }
+          : enrollment
+      ))
+    } catch (error) {
+      console.error('Error updating lesson progress:', error)
+      alert('Erro ao atualizar progresso da aula')
+    }
   }
 
   return (
@@ -360,6 +457,14 @@ export function EnrollmentsManagement({ enrollments: initialEnrollments, current
                         <option value="cancelled">Cancelado</option>
                       </select>
                       <button
+                        onClick={() => handleManageProgress(enrollment)}
+                        disabled={loading}
+                        className="p-1 text-blue-400 hover:text-blue-300 hover:bg-blue-900/20 rounded disabled:opacity-50"
+                        title="Gerenciar progresso das aulas"
+                      >
+                        <ChartBarIcon className="h-4 w-4" />
+                      </button>
+                      <button
                         onClick={() => handleRemoveEnrollment(enrollment)}
                         disabled={loading}
                         className="p-1 text-red-400 hover:text-red-300 hover:bg-red-900/20 rounded disabled:opacity-50"
@@ -402,6 +507,99 @@ export function EnrollmentsManagement({ enrollments: initialEnrollments, current
           onCancel={handleEnrollmentCancel}
           loading={loading}
         />
+      )}
+
+      {/* Progress Management Modal */}
+      {showProgressModal && selectedEnrollment && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-gray-900 rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto border border-gray-700">
+            <div className="p-6">
+              <div className="flex items-center justify-between mb-6">
+                <div>
+                  <h2 className="text-xl font-semibold text-white mb-2">
+                    Gerenciar Progresso das Aulas
+                  </h2>
+                  <p className="text-gray-400">
+                    {selectedEnrollment.user.full_name} - {selectedEnrollment.course.title}
+                  </p>
+                </div>
+                <button
+                  onClick={() => setShowProgressModal(false)}
+                  className="text-gray-400 hover:text-gray-300"
+                >
+                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+
+              {loadingProgress ? (
+                <div className="text-center py-8">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-500 mx-auto"></div>
+                  <p className="text-gray-400 mt-2">Carregando progresso...</p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {progressData.map((item, index) => (
+                    <div key={item.lesson.id} className="bg-gray-800 rounded-lg p-4 border border-gray-700">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center space-x-3">
+                          <div className="flex items-center justify-center w-8 h-8 bg-purple-600/20 rounded-full text-purple-400 font-semibold">
+                            {item.lesson.order_index}
+                          </div>
+                          <div>
+                            <h3 className="font-medium text-white">{item.lesson.title}</h3>
+                            <p className="text-sm text-gray-400">{item.lesson.description}</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center space-x-3">
+                          <div className="text-sm text-gray-400">
+                            {item.progress.completed && item.progress.completed_at && (
+                              <span>Concluída em {new Date(item.progress.completed_at).toLocaleDateString('pt-BR')}</span>
+                            )}
+                          </div>
+                          <label className="flex items-center space-x-2">
+                            <input
+                              type="checkbox"
+                              checked={item.progress.completed}
+                              onChange={(e) => handleToggleLessonComplete(item.lesson.id, e.target.checked)}
+                              className="rounded border-gray-600 text-purple-600 focus:ring-purple-500 focus:ring-offset-gray-800"
+                            />
+                            <span className="text-sm text-gray-300">
+                              {item.progress.completed ? 'Concluída' : 'Marcar como concluída'}
+                            </span>
+                          </label>
+                        </div>
+                      </div>
+                      
+                      {item.progress.watch_time > 0 && (
+                        <div className="mt-2 text-sm text-gray-400">
+                          Tempo assistido: {Math.floor(item.progress.watch_time / 60)}min {item.progress.watch_time % 60}s
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                  
+                  {progressData.length === 0 && (
+                    <div className="text-center py-8">
+                      <AcademicCapIcon className="h-16 w-16 text-gray-500 mx-auto mb-4" />
+                      <p className="text-gray-400">Nenhuma aula encontrada neste curso</p>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              <div className="flex justify-end mt-6 pt-4 border-t border-gray-700">
+                <button
+                  onClick={() => setShowProgressModal(false)}
+                  className="px-4 py-2 text-sm font-medium text-gray-300 bg-gray-800 border border-gray-600 rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                >
+                  Fechar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   )

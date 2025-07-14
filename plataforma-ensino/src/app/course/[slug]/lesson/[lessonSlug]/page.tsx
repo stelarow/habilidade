@@ -11,7 +11,11 @@ import {
   Clock,
   BookOpen,
   FileText,
-  Download
+  Download,
+  Question,
+  PaperPlaneRight,
+  Plus,
+  Trophy
 } from 'phosphor-react'
 
 interface Course {
@@ -31,6 +35,7 @@ interface Lesson {
   order_index: number
   content?: string
   materials: any[]
+  allows_file_upload?: boolean
   is_preview: boolean
   is_published: boolean
 }
@@ -57,6 +62,10 @@ export default function LessonPage() {
   const [error, setError] = useState<string | null>(null)
   const [userId, setUserId] = useState<string | null>(null)
   const [enrollmentId, setEnrollmentId] = useState<string | null>(null)
+  const [exercises, setExercises] = useState<any[]>([])
+  const [quizzes, setQuizzes] = useState<any[]>([])
+  const [submissions, setSubmissions] = useState<any[]>([])
+  const [uploading, setUploading] = useState(false)
   
   const supabase = createClient()
 
@@ -165,6 +174,51 @@ export default function LessonPage() {
         }
       }
 
+      // Fetch exercises, quizzes, and submissions (when tables exist)
+      try {
+        // Try to fetch exercises (handle table not existing)
+        const { data: exercisesData } = await supabase
+          .from('exercises')
+          .select('*')
+          .eq('lesson_id', lessonData.id)
+          .order('order_index')
+        
+        setExercises(exercisesData || [])
+      } catch (exerciseError) {
+        // Table doesn't exist yet
+        setExercises([])
+      }
+
+      try {
+        // Try to fetch quizzes (handle table not existing)
+        const { data: quizzesData } = await supabase
+          .from('quizzes')
+          .select('*')
+          .eq('lesson_id', lessonData.id)
+        
+        setQuizzes(quizzesData || [])
+      } catch (quizError) {
+        // Table doesn't exist yet
+        setQuizzes([])
+      }
+
+      if (enrollmentData && user) {
+        try {
+          // Try to fetch submissions (handle table not existing)
+          const { data: submissionsData } = await supabase
+            .from('lesson_submissions')
+            .select('*')
+            .eq('lesson_id', lessonData.id)
+            .eq('user_id', user.id)
+            .order('created_at', { ascending: false })
+          
+          setSubmissions(submissionsData || [])
+        } catch (submissionError) {
+          // Table doesn't exist yet
+          setSubmissions([])
+        }
+      }
+
     } catch (err: any) {
       setError(err?.message || 'Erro ao carregar aula')
     } finally {
@@ -207,6 +261,41 @@ export default function LessonPage() {
       return `${minutes}min ${remainingSeconds > 0 ? `${remainingSeconds}s` : ''}`
     }
     return `${remainingSeconds}s`
+  }
+
+  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    if (!file || !lesson || !userId) return
+
+    setUploading(true)
+    try {
+      // Create form data for file upload
+      const formData = new FormData()
+      formData.append('file', file)
+      formData.append('lesson_id', lesson.id)
+      formData.append('user_id', userId)
+
+      // Upload file (this would need a file upload API endpoint)
+      const response = await fetch('/api/lessons/upload', {
+        method: 'POST',
+        body: formData
+      })
+
+      if (!response.ok) throw new Error('Upload failed')
+
+      const result = await response.json()
+      
+      // Add to submissions list
+      setSubmissions(prev => [result.data, ...prev])
+      
+      // Reset file input
+      event.target.value = ''
+    } catch (error) {
+      console.error('Upload error:', error)
+      alert('Erro ao enviar arquivo')
+    } finally {
+      setUploading(false)
+    }
   }
 
   if (loading) {
@@ -330,6 +419,138 @@ export default function LessonPage() {
                       )}
                     </div>
                   ))}
+                </div>
+              </div>
+            )}
+
+            {/* Exercises */}
+            {exercises.length > 0 && (
+              <div className="glass-effect bg-zinc-900/70 backdrop-blur-md rounded-lg border border-gray-800/50 p-6">
+                <h3 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
+                  <BookOpen className="w-5 h-5 text-primary" />
+                  Exercícios
+                </h3>
+                
+                <div className="space-y-3">
+                  {exercises.map((exercise: any, index: number) => (
+                    <div key={exercise.id} className="flex items-center justify-between p-3 bg-zinc-800/50 rounded-lg border border-gray-700">
+                      <div className="flex items-center gap-3">
+                        <div className="flex items-center justify-center w-8 h-8 bg-primary/20 rounded-full text-primary font-semibold">
+                          {exercise.order_index}
+                        </div>
+                        <div>
+                          <p className="font-medium text-white">{exercise.title}</p>
+                          {exercise.description && (
+                            <p className="text-sm text-gray-400">{exercise.description}</p>
+                          )}
+                        </div>
+                      </div>
+                      {exercise.download_url && (
+                        <a
+                          href={exercise.download_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-3 py-1 bg-primary/20 text-primary rounded hover:bg-primary/30 transition-colors"
+                        >
+                          Download
+                        </a>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Quizzes */}
+            {quizzes.length > 0 && (
+              <div className="glass-effect bg-zinc-900/70 backdrop-blur-md rounded-lg border border-gray-800/50 p-6">
+                <h3 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
+                  <Question className="w-5 h-5 text-primary" />
+                  Questionários
+                </h3>
+                
+                <div className="space-y-3">
+                  {quizzes.map((quiz: any) => (
+                    <div key={quiz.id} className="p-4 bg-zinc-800/50 rounded-lg border border-gray-700">
+                      <div className="flex items-center justify-between mb-3">
+                        <h4 className="font-medium text-white">{quiz.title}</h4>
+                        <Trophy className="w-5 h-5 text-yellow-400" />
+                      </div>
+                      
+                      {quiz.description && (
+                        <p className="text-sm text-gray-400 mb-3">{quiz.description}</p>
+                      )}
+                      
+                      <div className="flex items-center justify-between text-sm text-gray-400">
+                        <span>Nota mínima: {quiz.passing_score}%</span>
+                        <span>Tentativas: {quiz.attempts_allowed}</span>
+                      </div>
+                      
+                      <GradientButton className="w-full mt-3">
+                        Iniciar Questionário
+                      </GradientButton>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* File Submission */}
+            {lesson.allows_file_upload && enrollmentId && (
+              <div className="glass-effect bg-zinc-900/70 backdrop-blur-md rounded-lg border border-gray-800/50 p-6">
+                <h3 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
+                  <PaperPlaneRight className="w-5 h-5 text-primary" />
+                  Envio de Arquivos
+                </h3>
+                
+                <div className="space-y-4">
+                  <div className="border-2 border-dashed border-gray-600 rounded-lg p-6 text-center">
+                    <input
+                      type="file"
+                      onChange={handleFileUpload}
+                      disabled={uploading}
+                      className="hidden"
+                      id="file-upload"
+                    />
+                    <label
+                      htmlFor="file-upload"
+                      className={`cursor-pointer flex flex-col items-center gap-2 ${
+                        uploading ? 'opacity-50 cursor-not-allowed' : ''
+                      }`}
+                    >
+                      <Plus className="w-8 h-8 text-gray-400" />
+                      <span className="text-gray-400">
+                        {uploading ? 'Enviando...' : 'Clique para enviar arquivo'}
+                      </span>
+                    </label>
+                  </div>
+                  
+                  {/* Previous Submissions */}
+                  {submissions.length > 0 && (
+                    <div className="space-y-2">
+                      <h4 className="font-medium text-white">Arquivos Enviados</h4>
+                      {submissions.map((submission: any) => (
+                        <div key={submission.id} className="flex items-center justify-between p-3 bg-zinc-800/50 rounded-lg border border-gray-700">
+                          <div>
+                            <p className="font-medium text-white">{submission.file_name}</p>
+                            <p className="text-sm text-gray-400">
+                              Enviado em {new Date(submission.created_at).toLocaleDateString('pt-BR')}
+                            </p>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className={`px-2 py-1 rounded text-xs ${
+                              submission.status === 'approved' ? 'bg-green-500/20 text-green-400' :
+                              submission.status === 'rejected' ? 'bg-red-500/20 text-red-400' :
+                              'bg-yellow-500/20 text-yellow-400'
+                            }`}>
+                              {submission.status === 'approved' ? 'Aprovado' :
+                               submission.status === 'rejected' ? 'Rejeitado' : 'Pendente'}
+                            </span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
             )}
