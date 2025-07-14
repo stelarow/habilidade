@@ -91,77 +91,101 @@ export function ProgressTracker({
 
   return (
     <div className={cn(
-      'progress-tracker',
-      'relative flex flex-col items-center space-y-4',
+      'progress-tracker relative',
       className
     )}>
-      {/* Main Progress Ring */}
-      <div className="relative">
-        <svg
-          width={config.ring}
-          height={config.ring}
-          className="transform -rotate-90"
-        >
-          {/* Background ring */}
-          <circle
-            cx={config.ring / 2}
-            cy={config.ring / 2}
-            r={radius}
-            stroke="rgba(255, 255, 255, 0.1)"
-            strokeWidth={config.stroke}
-            fill="transparent"
-          />
-          
-          {/* Progress ring */}
-          <motion.circle
-            cx={config.ring / 2}
-            cy={config.ring / 2}
-            r={radius}
-            stroke="url(#progressGradient)"
-            strokeWidth={config.stroke}
-            fill="transparent"
-            strokeLinecap="round"
-            strokeDasharray={circumference}
-            strokeDashoffset={progressOffset}
-            initial={{ strokeDashoffset: circumference }}
-            animate={{ strokeDashoffset: progressOffset }}
-            transition={{ duration: 1, ease: "easeInOut" }}
-            className={cn(
-              isAnimating && "animate-pulse",
-              progressData.isCompleted && "drop-shadow-[0_0_20px_rgba(212,0,255,0.5)]"
-            )}
-          />
-          
-          {/* Gradient definition */}
-          <defs>
-            <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#d400ff" />
-              <stop offset="50%" stopColor="#a000ff" />
-              <stop offset="100%" stopColor="#00c4ff" />
-            </linearGradient>
-          </defs>
-        </svg>
-
-        {/* Center content */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <motion.div
-            className={cn("font-bold text-white", config.text)}
-            animate={{ scale: isAnimating ? [1, 1.1, 1] : 1 }}
-            transition={{ duration: 0.5, repeat: isAnimating ? 3 : 0 }}
+      {/* Main Progress Display */}
+      <div className="flex flex-col sm:flex-row items-center gap-6 sm:gap-8 mb-6">
+        {/* Progress Ring */}
+        <div className="relative flex-shrink-0">
+          <svg
+            width={config.ring}
+            height={config.ring}
+            className="transform -rotate-90"
           >
-            {Math.round(progressData.overall)}%
-          </motion.div>
-          {progressData.isCompleted ? (
+            {/* Background ring */}
+            <circle
+              cx={config.ring / 2}
+              cy={config.ring / 2}
+              r={radius}
+              stroke="rgba(255, 255, 255, 0.1)"
+              strokeWidth={config.stroke}
+              fill="transparent"
+            />
+            
+            {/* Progress ring */}
+            <motion.circle
+              cx={config.ring / 2}
+              cy={config.ring / 2}
+              r={radius}
+              stroke="url(#progressGradient)"
+              strokeWidth={config.stroke}
+              fill="transparent"
+              strokeLinecap="round"
+              strokeDasharray={circumference}
+              strokeDashoffset={progressOffset}
+              initial={{ strokeDashoffset: circumference }}
+              animate={{ strokeDashoffset: progressOffset }}
+              transition={{ duration: 1, ease: "easeInOut" }}
+              className={cn(
+                isAnimating && "animate-pulse",
+                progressData.isCompleted && "drop-shadow-[0_0_20px_rgba(212,0,255,0.5)]"
+              )}
+            />
+            
+            {/* Gradient definition */}
+            <defs>
+              <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#d400ff" />
+                <stop offset="50%" stopColor="#a000ff" />
+                <stop offset="100%" stopColor="#00c4ff" />
+              </linearGradient>
+            </defs>
+          </svg>
+
+          {/* Center content */}
+          <div className="absolute inset-0 flex flex-col items-center justify-center">
             <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              className="text-green-400 text-xl"
+              className={cn("font-bold text-white", config.text)}
+              animate={{ scale: isAnimating ? [1, 1.1, 1] : 1 }}
+              transition={{ duration: 0.5, repeat: isAnimating ? 3 : 0 }}
             >
-              ✅
+              {Math.round(progressData.overall)}%
             </motion.div>
-          ) : (
-            <div className="text-xs text-gray-400">
-              {formatTime(progressData.estimatedTime)}
+            {progressData.isCompleted ? (
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                className="text-green-400 text-xl"
+              >
+                ✅
+              </motion.div>
+            ) : (
+              <div className="text-xs text-gray-400">
+                {formatTime(progressData.estimatedTime)}
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Progress Summary */}
+        <div className="flex-1 text-center sm:text-left space-y-2">
+          <div className="text-lg sm:text-xl font-semibold text-white">
+            {progressData.isCompleted ? (
+              <span className="text-green-400">🎉 Aula Concluída!</span>
+            ) : (
+              <span>Progresso da Aula</span>
+            )}
+          </div>
+          <div className="lesson-text-body">
+            {progressData.isCompleted 
+              ? "Parabéns! Você completou todos os componentes desta aula."
+              : `Você completou ${Math.round(progressData.overall)}% desta aula.`
+            }
+          </div>
+          {!progressData.isCompleted && (
+            <div className="lesson-text-subtitle">
+              Tempo estimado restante: {formatTime(progressData.estimatedTime)}
             </div>
           )}
         </div>
@@ -174,7 +198,7 @@ export function ProgressTracker({
             initial={{ opacity: 0, scale: 0 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0 }}
-            className="absolute inset-0 flex items-center justify-center pointer-events-none"
+            className="absolute inset-0 flex items-center justify-center pointer-events-none z-10"
           >
             <div className="text-6xl animate-bounce">🎉</div>
           </motion.div>
@@ -183,36 +207,40 @@ export function ProgressTracker({
 
       {/* Component Progress Details */}
       {showDetails && (
-        <div className="w-full space-y-2">
-          <h4 className="text-sm font-medium text-white text-center mb-3">
+        <div className="space-y-4">
+          <h4 className="lesson-text-subtitle text-center">
             Progresso por Componente
           </h4>
           
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {progressData.components.map((comp) => (
               <motion.div
                 key={comp.component}
-                className="flex items-center space-x-2 p-2 rounded-lg bg-white/5 backdrop-blur-sm"
+                className="lesson-exercise-item"
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.2 }}
               >
-                <div className="text-lg">{comp.icon}</div>
-                <div className="flex-1 min-w-0">
-                  <div className="text-xs text-white font-medium truncate">
-                    {comp.name}
+                <div className="flex items-center space-x-3">
+                  <div className="text-xl flex-shrink-0">{comp.icon}</div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="text-sm font-medium text-white truncate">
+                        {comp.name}
+                      </div>
+                      <div className="text-sm text-gray-300 font-mono ml-2">
+                        {Math.round(comp.percentage)}%
+                      </div>
+                    </div>
+                    <div className="w-full bg-white/10 rounded-full h-2">
+                      <motion.div
+                        className="h-2 rounded-full"
+                        style={{ backgroundColor: comp.color }}
+                        initial={{ width: 0 }}
+                        animate={{ width: `${comp.percentage}%` }}
+                        transition={{ duration: 0.8, delay: 0.2 }}
+                      />
+                    </div>
                   </div>
-                  <div className="w-full bg-white/20 rounded-full h-2 mt-1">
-                    <motion.div
-                      className="h-2 rounded-full"
-                      style={{ backgroundColor: comp.color }}
-                      initial={{ width: 0 }}
-                      animate={{ width: `${comp.percentage}%` }}
-                      transition={{ duration: 0.8, delay: 0.2 }}
-                    />
-                  </div>
-                </div>
-                <div className="text-xs text-gray-300 font-mono">
-                  {Math.round(comp.percentage)}%
                 </div>
               </motion.div>
             ))}
@@ -222,22 +250,28 @@ export function ProgressTracker({
 
       {/* Milestones */}
       {showDetails && (
-        <div className="flex justify-center space-x-4 mt-4">
+        <div className="flex justify-center items-center space-x-4 mt-6 pt-4 border-t border-white/10">
+          <span className="lesson-text-caption">Marcos:</span>
           {[25, 50, 75, 100].map((milestone) => (
             <motion.div
               key={milestone}
               className={cn(
-                "w-3 h-3 rounded-full border-2",
-                progressData.overall >= milestone
-                  ? "bg-gradient-to-r from-purple-500 to-blue-500 border-purple-400"
-                  : "bg-transparent border-gray-600"
+                "flex flex-col items-center space-y-1"
               )}
-              animate={{
-                scale: progressData.overall >= milestone ? [1, 1.2, 1] : 1,
-              }}
-              transition={{ duration: 0.3 }}
             >
-              <div className="sr-only">{milestone}% milestone</div>
+              <motion.div
+                className={cn(
+                  "w-3 h-3 rounded-full border-2",
+                  progressData.overall >= milestone
+                    ? "bg-gradient-to-r from-purple-500 to-blue-500 border-purple-400"
+                    : "bg-transparent border-gray-600"
+                )}
+                animate={{
+                  scale: progressData.overall >= milestone ? [1, 1.2, 1] : 1,
+                }}
+                transition={{ duration: 0.3 }}
+              />
+              <span className="lesson-text-caption">{milestone}%</span>
             </motion.div>
           ))}
         </div>

@@ -1,7 +1,11 @@
 'use client'
 
 import React, { useState, useCallback } from 'react'
-import { LessonLayoutProvider, LessonContainer } from '@/components/lesson/layout'
+import CentralizedLessonLayout, { 
+  CentralizedLessonTitle, 
+  CentralizedLessonNav,
+  useCentralizedLayout 
+} from '@/components/lesson/layout/CentralizedLessonLayout'
 import { VideoPlayer } from '@/components/lesson/video/VideoPlayer'
 import { PDFViewer } from '@/components/lesson/pdf/PDFViewer'
 import { QuizInterface } from '@/components/lesson/quiz/QuizInterface'
@@ -11,23 +15,61 @@ import { LessonProvider } from '@/contexts/LessonContext'
 import { LessonContent, LessonProgressData } from '@/types/lesson'
 
 // Import CSS
-import '@/styles/lesson-layout.css'
+import '@/styles/lesson-centralized.css'
 
 /**
  * TestLessonPage - Comprehensive test page for Phase 2 lesson components
  * 
  * Demonstrates:
- * - LessonLayout adaptive system
+ * - Centralized lesson layout (NEW)
  * - VideoPlayer with custom controls
- * - PDFViewer integration
+ * - PDFViewer with in-page reading
  * - QuizInterface with gamification
  * - ExercisePanel with file upload
- * - ProgressTracker with real-time updates
+ * - ProgressTracker with card-based design
  */
 export default function TestLessonPage() {
   // State for progress tracking
   const [progress, setProgress] = useState<LessonProgressData>(initialProgressData)
   const [completedComponents, setCompletedComponents] = useState<Set<string>>(new Set())
+  
+  // Centralized layout hooks
+  const { activeSection, scrollToSection } = useCentralizedLayout()
+
+  const updateOverallProgress = useCallback(() => {
+    setProgress(prev => {
+      const totalWeight = prev.overallProgress.componentProgress.reduce((sum, comp) => sum + comp.weight, 0)
+      const weightedProgress = prev.overallProgress.componentProgress.reduce(
+        (sum, comp) => sum + (comp.percentage * comp.weight), 0
+      )
+      const overallPercentage = totalWeight > 0 ? weightedProgress / totalWeight : 0
+      
+      return {
+        ...prev,
+        overallProgress: {
+          ...prev.overallProgress,
+          percentageComplete: Math.round(overallPercentage),
+          isCompleted: overallPercentage >= 95,
+          estimatedTimeRemaining: Math.max(0, 25 - (overallPercentage / 100) * 25) // 25 minutes total
+        }
+      }
+    })
+  }, [])
+
+  const markComponentComplete = useCallback((component: string) => {
+    setProgress(prev => ({
+      ...prev,
+      overallProgress: {
+        ...prev.overallProgress,
+        componentProgress: prev.overallProgress.componentProgress.map(comp =>
+          comp.component === component 
+            ? { ...comp, percentage: 100, isCompleted: true }
+            : comp
+        )
+      }
+    }))
+    updateOverallProgress()
+  }, [updateOverallProgress])
 
   // Progress update handlers
   const handleVideoProgress = useCallback((currentTime: number, duration: number) => {
@@ -82,201 +124,202 @@ export default function TestLessonPage() {
     markComponentComplete('quiz')
   }, [markComponentComplete])
 
-  const markComponentComplete = useCallback((component: string) => {
-    setProgress(prev => ({
-      ...prev,
-      overallProgress: {
-        ...prev.overallProgress,
-        componentProgress: prev.overallProgress.componentProgress.map(comp =>
-          comp.component === component 
-            ? { ...comp, percentage: 100, isCompleted: true }
-            : comp
-        )
-      }
-    }))
-    updateOverallProgress()
-  }, [updateOverallProgress])
-
-  const updateOverallProgress = useCallback(() => {
-    setProgress(prev => {
-      const totalWeight = prev.overallProgress.componentProgress.reduce((sum, comp) => sum + comp.weight, 0)
-      const weightedProgress = prev.overallProgress.componentProgress.reduce(
-        (sum, comp) => sum + (comp.percentage * comp.weight), 0
-      )
-      const overallPercentage = totalWeight > 0 ? weightedProgress / totalWeight : 0
-      
-      return {
-        ...prev,
-        overallProgress: {
-          ...prev.overallProgress,
-          percentageComplete: Math.round(overallPercentage),
-          isCompleted: overallPercentage >= 95,
-          estimatedTimeRemaining: Math.max(0, 25 - (overallPercentage / 100) * 25) // 25 minutes total
-        }
-      }
-    })
-  }, [])
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900">
-      <LessonProvider>
-        <LessonLayoutProvider initialContent={testLessonContent}>
-          <div className="container mx-auto px-4 py-8">
-            {/* Page Header */}
-            <div className="mb-8 text-center">
-              <h1 className="text-4xl font-bold text-white mb-2">
-                📚 Página de Teste - Sistema de Aulas
-              </h1>
-              <p className="text-xl text-gray-300 mb-6">
-                Demonstração completa dos componentes da Fase 2
-              </p>
+    <LessonProvider>
+      {/* Page Header */}
+      <div className="lesson-background py-8">
+        <div className="lesson-centralized-container">
+          <div className="text-center mb-8">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-2">
+              📚 Página de Teste - Sistema de Aulas
+            </h1>
+            <p className="lesson-text-body text-center mb-6">
+              Demonstração do novo layout centralizado com componentes da Fase 2
+            </p>
+            
+            {/* Quick Navigation */}
+            <CentralizedLessonNav 
+              lesson={testLessonContent}
+              activeSection={activeSection}
+              onSectionClick={scrollToSection}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Main Centralized Layout */}
+      <CentralizedLessonLayout
+        lesson={testLessonContent}
+        progress={{
+          overall: progress.overallProgress.percentageComplete,
+          video: progress.videoProgress.percentageWatched,
+          pdf: progress.pdfProgress.percentageRead,
+          quiz: progress.quizProgress.score,
+          exercises: progress.exerciseProgress.completionPercentage
+        }}
+      >
+        {{
+          title: (
+            <CentralizedLessonTitle
+              title={testLessonContent.title}
+              courseTitle="Curso de Desenvolvimento Web"
+              themeColors={{
+                primary: '#d400ff',
+                secondary: '#00c4ff'
+              }}
+            />
+          ),
+          
+          progress: (
+            <ProgressTracker 
+              progress={progress} 
+              size="md" 
+              showDetails={true}
+            />
+          ),
+          
+          video: testLessonContent.video && (
+            <VideoPlayer
+              video={testLessonContent.video}
+              onProgressUpdate={handleVideoProgress}
+              onComplete={handleVideoComplete}
+              startTime={progress.videoProgress.lastPosition}
+            />
+          ),
+          
+          pdf: testLessonContent.pdf && (
+            <PDFViewer 
+              pdf={testLessonContent.pdf}
+              onProgressUpdate={(progress) => {
+                setProgress(prev => ({
+                  ...prev,
+                  pdfProgress: {
+                    ...prev.pdfProgress,
+                    percentageRead: progress
+                  }
+                }))
+              }}
+            />
+          ),
+          
+          exercises: testLessonContent.exercises && (
+            <div className="space-y-4">
+              <ExercisePanel 
+                exercises={testLessonContent.exercises}
+              />
               
-              {/* Progress Overview */}
-              <div className="max-w-md mx-auto mb-8">
-                <ProgressTracker 
-                  progress={progress} 
-                  size="lg" 
-                  showDetails={true}
-                />
-              </div>
-            </div>
-
-            {/* Main Lesson Layout */}
-            <LessonContainer 
-              content={testLessonContent}
-              className="lesson-test-container"
-            >
-              {/* Video Player */}
-              {testLessonContent.video && (
-                <div className="lesson-video" data-area="main">
-                  <VideoPlayer
-                    video={testLessonContent.video}
-                    onProgressUpdate={handleVideoProgress}
-                    onComplete={handleVideoComplete}
-                    startTime={progress.videoProgress.lastPosition}
-                  />
-                </div>
-              )}
-
-              {/* PDF Viewer */}
-              {testLessonContent.pdf && (
-                <div className="lesson-pdf" data-area="main">
-                  <PDFViewer 
-                    pdf={testLessonContent.pdf}
-                  />
-                </div>
-              )}
-
-              {/* Quiz Interface */}
-              {testLessonContent.quiz && (
-                <div className="lesson-quiz" data-area="sidebar">
-                  <QuizInterface
-                    quiz={testLessonContent.quiz}
-                    onComplete={handleQuizComplete}
-                    onProgressUpdate={(questionIndex, score) => {
-                      setProgress(prev => ({
-                        ...prev,
-                        quizProgress: {
-                          ...prev.quizProgress,
-                          currentQuestion: questionIndex,
-                          score
-                        }
-                      }))
-                    }}
-                  />
-                </div>
-              )}
-
-              {/* Exercise Panel */}
-              {testLessonContent.exercises && (
-                <div className="lesson-exercises" data-area="exercises">
-                  <ExercisePanel 
-                    exercises={testLessonContent.exercises}
-                  />
-                </div>
-              )}
-
-              {/* Materials */}
+              {/* Materials Section */}
               {testLessonContent.materials && (
-                <div className="lesson-materials" data-area="sidebar">
-                  <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4">
-                    <h3 className="text-lg font-semibold text-white mb-3 flex items-center gap-2">
-                      📎 Materiais de Apoio
-                    </h3>
-                    <div className="space-y-2">
-                      {testLessonContent.materials.map((material, index) => (
-                        <div key={index} className="flex items-center gap-3 p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors">
-                          <span className="text-xl">
-                            {material.type === 'pdf' ? '📄' : 
-                             material.type === 'link' ? '🔗' : 
-                             material.type === 'image' ? '🖼️' : '📄'}
-                          </span>
-                          <div className="flex-1">
-                            <div className="text-white font-medium">{material.title}</div>
-                            {material.description && (
-                              <div className="text-sm text-gray-400">{material.description}</div>
-                            )}
-                          </div>
-                          {material.url && (
-                            <a 
-                              href={material.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-blue-400 hover:text-blue-300 transition-colors"
-                            >
-                              🔗
-                            </a>
+                <div className="lesson-exercise-item">
+                  <h4 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                    📎 Materiais de Apoio
+                  </h4>
+                  <div className="space-y-3">
+                    {testLessonContent.materials.map((material, index) => (
+                      <div key={index} className="flex items-center gap-3 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors">
+                        <span className="text-xl flex-shrink-0">
+                          {material.type === 'pdf' ? '📄' : 
+                           material.type === 'link' ? '🔗' : 
+                           material.type === 'image' ? '🖼️' : '📄'}
+                        </span>
+                        <div className="flex-1 min-w-0">
+                          <div className="text-white font-medium">{material.title}</div>
+                          {material.description && (
+                            <div className="lesson-text-caption mt-1">{material.description}</div>
                           )}
                         </div>
-                      ))}
-                    </div>
+                        {material.url && (
+                          <a 
+                            href={material.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="lesson-btn-icon"
+                            aria-label={`Abrir ${material.title}`}
+                          >
+                            🔗
+                          </a>
+                        )}
+                      </div>
+                    ))}
                   </div>
                 </div>
               )}
-            </LessonContainer>
-
-            {/* Debug Information */}
-            <div className="mt-12 max-w-4xl mx-auto">
-              <details className="bg-black/20 rounded-lg p-4">
-                <summary className="text-white font-semibold cursor-pointer mb-4">
-                  🔍 Debug Information - Fase 2 Components Status
-                </summary>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                  <div>
-                    <h4 className="text-green-400 font-semibold mb-2">✅ Componentes Implementados:</h4>
-                    <ul className="text-gray-300 space-y-1">
-                      <li>• LessonLayout (2.1) - Container adaptativo</li>
-                      <li>• VideoPlayer (2.2) - Player HTML5 customizado</li>
-                      <li>• QuizInterface (2.4) - Sistema interativo com gamificação</li>
-                      <li>• ProgressTracker (2.6) - Rastreamento visual</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h4 className="text-yellow-400 font-semibold mb-2">🔄 Componentes Placeholder:</h4>
-                    <ul className="text-gray-300 space-y-1">
-                      <li>• PDFViewer (2.3) - Visualizador básico</li>
-                      <li>• ExercisePanel (2.5) - Upload não implementado</li>
-                    </ul>
-                  </div>
-                </div>
-                <div className="mt-4 p-3 bg-purple-900/30 rounded">
-                  <p className="text-purple-200 text-sm">
-                    <strong>Progresso Atual:</strong> {progress.overallProgress.percentageComplete}% | 
-                    <strong> Componentes Concluídos:</strong> {completedComponents.size}/6 |
-                    <strong> Tempo Restante:</strong> ~{Math.round(progress.overallProgress.estimatedTimeRemaining)} min
-                  </p>
-                </div>
-              </details>
             </div>
-          </div>
-        </LessonLayoutProvider>
-      </LessonProvider>
-    </div>
+          ),
+          
+          quiz: testLessonContent.quiz && (
+            <QuizInterface
+              quiz={testLessonContent.quiz}
+              onComplete={handleQuizComplete}
+              onProgressUpdate={(questionIndex, score) => {
+                setProgress(prev => ({
+                  ...prev,
+                  quizProgress: {
+                    ...prev.quizProgress,
+                    currentQuestion: questionIndex,
+                    score
+                  }
+                }))
+              }}
+            />
+          )
+        }}
+      </CentralizedLessonLayout>
+
+      {/* Debug Information */}
+      <div className="lesson-background py-8">
+        <div className="lesson-centralized-container">
+          <details className="lesson-card-base lesson-card-padding">
+            <summary className="text-white font-semibold cursor-pointer mb-4 lesson-focusable">
+              🔍 Informações de Debug - Novo Layout Centralizado
+            </summary>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+              <div>
+                <h4 className="text-green-400 font-semibold mb-3">✅ Componentes Atualizados:</h4>
+                <ul className="text-gray-300 space-y-2">
+                  <li>• CentralizedLessonLayout - Layout linear centralizado</li>
+                  <li>• ProgressTracker - Design baseado em cards</li>
+                  <li>• PDFViewer - Leitura in-page com controles</li>
+                  <li>• VideoPlayer - Mantido com estilo atualizado</li>
+                  <li>• ExercisePanel - Layout em cards</li>
+                  <li>• QuizInterface - Design atualizado</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="text-blue-400 font-semibold mb-3">🎨 Melhorias de Design:</h4>
+                <ul className="text-gray-300 space-y-2">
+                  <li>• Estética do site principal replicada</li>
+                  <li>• Layout responsivo mobile-first</li>
+                  <li>• Navegação por seções integrada</li>
+                  <li>• Animações suaves entre seções</li>
+                  <li>• Cards com gradientes e blur</li>
+                  <li>• Sistema de cores unificado</li>
+                </ul>
+              </div>
+            </div>
+            <div className="mt-6 p-4 lesson-card-base rounded-lg">
+              <p className="text-purple-200 text-sm">
+                <strong>Progresso Atual:</strong> {progress.overallProgress.percentageComplete}% | 
+                <strong> Componentes:</strong> {completedComponents.size}/6 |
+                <strong> Tempo Restante:</strong> ~{Math.round(progress.overallProgress.estimatedTimeRemaining)} min
+              </p>
+              <p className="text-blue-200 text-sm mt-2">
+                <strong>Layout:</strong> Centralizado | 
+                <strong> Ordem:</strong> Título → Progresso → Vídeo → PDF → Exercícios → Teste |
+                <strong> Navegação:</strong> Ativa
+              </p>
+            </div>
+          </details>
+        </div>
+      </div>
+    </LessonProvider>
   )
 }
 
 // Sample lesson content data
 const testLessonContent: LessonContent = {
+  id: "lesson-cap2",
+  title: "Aula Capítulo 2: Fundamentos do Desenvolvimento Web",
   // Video with sample URL (YouTube URL converted to direct video)
   video: {
     url: "https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4", // Sample video for demo
