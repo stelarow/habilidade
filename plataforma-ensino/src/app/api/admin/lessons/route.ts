@@ -154,12 +154,41 @@ export async function POST(request: NextRequest) {
     
     const order_index = nextOrderData
     
-    // Generate slug from title
-    const slug = title
-      .toLowerCase()
-      .replace(/[^\w\s-]/g, '')
-      .replace(/\s+/g, '-')
-      .trim()
+    // Generate unique slug from title
+    const generateUniqueSlug = async (baseTitle: string, courseId: string): Promise<string> => {
+      const baseSlug = baseTitle
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '') // Remove accents
+        .replace(/[^\w\s-]/g, '') // Remove special characters
+        .replace(/\s+/g, '-') // Replace spaces with hyphens
+        .replace(/-+/g, '-') // Replace multiple hyphens with single
+        .replace(/^-|-$/g, '') // Remove leading/trailing hyphens
+        .trim()
+
+      let slug = baseSlug
+      let counter = 1
+
+      while (true) {
+        // Check if slug exists for this course
+        const { data: existingLesson } = await supabase
+          .from('lessons')
+          .select('id')
+          .eq('course_id', courseId)
+          .eq('slug', slug)
+          .single()
+
+        if (!existingLesson) {
+          return slug // Slug is unique
+        }
+
+        // Try next variation
+        counter++
+        slug = `${baseSlug}-${counter}`
+      }
+    }
+
+    const slug = await generateUniqueSlug(title, course_id)
     
     // Start transaction
     const { data: lesson, error: lessonError } = await supabase
@@ -182,8 +211,29 @@ export async function POST(request: NextRequest) {
     
     if (lessonError) {
       console.error('Error creating lesson:', lessonError)
+      
+      // Provide more specific error messages
+      if (lessonError.code === '23505') { // Unique constraint violation
+        if (lessonError.message.includes('course_id_slug')) {
+          return NextResponse.json(
+            { error: 'Uma aula com este título já existe neste curso' },
+            { status: 400 }
+          )
+        }
+        if (lessonError.message.includes('course_id_order_index')) {
+          return NextResponse.json(
+            { error: 'Erro na ordenação das aulas. Tente novamente.' },
+            { status: 400 }
+          )
+        }
+        return NextResponse.json(
+          { error: 'Esta aula já existe. Verifique o título e tente novamente.' },
+          { status: 400 }
+        )
+      }
+      
       return NextResponse.json(
-        { error: 'Failed to create lesson' },
+        { error: 'Erro ao criar aula. Verifique os dados e tente novamente.' },
         { status: 500 }
       )
     }
