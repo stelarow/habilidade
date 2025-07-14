@@ -8,7 +8,7 @@ import CentralizedLessonLayout, {
 } from '@/components/lesson/layout/CentralizedLessonLayout'
 import { VideoPlayer } from '@/components/lesson/video/VideoPlayer'
 import { PDFViewer } from '@/components/lesson/pdf/PDFViewer'
-import { QuizInterface } from '@/components/lesson/quiz/QuizInterface'
+import { EnhancedQuizInterface } from '@/components/lesson/quiz/EnhancedQuizInterface'
 import { ExercisePanel } from '@/components/lesson/exercises/ExercisePanel'
 import { ProgressTracker } from '@/components/lesson/progress/ProgressTracker'
 import { LessonProvider } from '@/contexts/LessonContext'
@@ -248,7 +248,7 @@ export default function TestLessonPage() {
           ),
           
           quiz: testLessonContent.quiz && (
-            <QuizInterface
+            <EnhancedQuizInterface
               quiz={testLessonContent.quiz}
               onComplete={handleQuizComplete}
               onProgressUpdate={(questionIndex, score) => {
@@ -271,43 +271,71 @@ export default function TestLessonPage() {
         <div className="lesson-centralized-container">
           <details className="lesson-card-base lesson-card-padding">
             <summary className="text-white font-semibold cursor-pointer mb-4 lesson-focusable">
-              🔍 Informações de Debug - Novo Layout Centralizado
+              🔍 Informações da Aula - Capítulo 2 Completo
             </summary>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
               <div>
-                <h4 className="text-green-400 font-semibold mb-3">✅ Componentes Atualizados:</h4>
+                <h4 className="text-green-400 font-semibold mb-3">📚 Conteúdo Implementado:</h4>
                 <ul className="text-gray-300 space-y-2">
-                  <li>• CentralizedLessonLayout - Layout linear centralizado</li>
-                  <li>• ProgressTracker - Design baseado em cards</li>
-                  <li>• PDFViewer - Leitura in-page com controles</li>
-                  <li>• VideoPlayer - Mantido com estilo atualizado</li>
-                  <li>• ExercisePanel - Layout em cards</li>
-                  <li>• QuizInterface - Design atualizado</li>
+                  <li>• <strong>Vídeo Real:</strong> YouTube integrado ({testLessonContent.video?.url?.includes('Xq0xJl-2D_s') ? 'Ativo' : 'Demo'})</li>
+                  <li>• <strong>PDF do Capítulo 2:</strong> Material autêntico</li>
+                  <li>• <strong>Quiz Avançado:</strong> 8 questões categorizadas</li>
+                  <li>• <strong>4 Exercícios Práticos:</strong> HTML5, CSS, JS, Otimização</li>
+                  <li>• <strong>8 Materiais de Apoio:</strong> PDFs e links educativos</li>
+                  <li>• <strong>Conteúdo Detalhado:</strong> Objetivos e metodologia</li>
                 </ul>
               </div>
               <div>
-                <h4 className="text-blue-400 font-semibold mb-3">🎨 Melhorias de Design:</h4>
+                <h4 className="text-blue-400 font-semibold mb-3">🎯 Funcionalidades:</h4>
                 <ul className="text-gray-300 space-y-2">
-                  <li>• Estética do site principal replicada</li>
-                  <li>• Layout responsivo mobile-first</li>
-                  <li>• Navegação por seções integrada</li>
-                  <li>• Animações suaves entre seções</li>
-                  <li>• Cards com gradientes e blur</li>
-                  <li>• Sistema de cores unificado</li>
+                  <li>• <strong>Quiz por Categorias:</strong> HTML, CSS, JS, Geral</li>
+                  <li>• <strong>Explicações Detalhadas:</strong> Para cada questão</li>
+                  <li>• <strong>Sistema de Pontuação:</strong> 200 pontos totais</li>
+                  <li>• <strong>Timer Configurável:</strong> 15 minutos padrão</li>
+                  <li>• <strong>Revisão Completa:</strong> Com feedback visual</li>
+                  <li>• <strong>Layout Responsivo:</strong> Mobile e desktop</li>
                 </ul>
               </div>
             </div>
-            <div className="mt-6 p-4 lesson-card-base rounded-lg">
-              <p className="text-purple-200 text-sm">
-                <strong>Progresso Atual:</strong> {progress.overallProgress.percentageComplete}% | 
-                <strong> Componentes:</strong> {completedComponents.size}/6 |
-                <strong> Tempo Restante:</strong> ~{Math.round(progress.overallProgress.estimatedTimeRemaining)} min
-              </p>
-              <p className="text-blue-200 text-sm mt-2">
-                <strong>Layout:</strong> Centralizado | 
-                <strong> Ordem:</strong> Título → Progresso → Vídeo → PDF → Exercícios → Teste |
-                <strong> Navegação:</strong> Ativa
-              </p>
+            
+            <div className="mt-6 space-y-4">
+              <div className="p-4 lesson-card-base rounded-lg">
+                <h5 className="text-yellow-400 font-semibold mb-2">📊 Estatísticas da Aula:</h5>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs">
+                  <div className="text-center">
+                    <div className="text-lg font-mono text-white">{progress.overallProgress.percentageComplete}%</div>
+                    <div className="text-gray-400">Progresso</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-lg font-mono text-white">8</div>
+                    <div className="text-gray-400">Questões</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-lg font-mono text-white">4</div>
+                    <div className="text-gray-400">Exercícios</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-lg font-mono text-white">15</div>
+                    <div className="text-gray-400">Min. Quiz</div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="p-4 lesson-card-base rounded-lg">
+                <h5 className="text-purple-400 font-semibold mb-2">🎥 Recursos Multimídia:</h5>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                  <div>
+                    <strong className="text-white">Vídeo:</strong>
+                    <div className="text-gray-300">YouTube: Xq0xJl-2D_s</div>
+                    <div className="text-gray-300">Duração: ~20 minutos</div>
+                  </div>
+                  <div>
+                    <strong className="text-white">PDF:</strong>
+                    <div className="text-gray-300">Capítulo 2.pdf</div>
+                    <div className="text-gray-300">Leitura in-page ativa</div>
+                  </div>
+                </div>
+              </div>
             </div>
           </details>
         </div>
@@ -316,112 +344,210 @@ export default function TestLessonPage() {
   )
 }
 
-// Sample lesson content data
+// Real lesson content data based on provided resources
 const testLessonContent: LessonContent = {
-  id: "lesson-cap2",
-  title: "Aula Capítulo 2: Fundamentos do Desenvolvimento Web",
-  // Video with sample URL (YouTube URL converted to direct video)
+  id: "lesson-cap2-real",
+  title: "Capítulo 2: Fundamentos do Desenvolvimento Web",
+  description: "Aprenda os conceitos fundamentais de HTML, CSS e JavaScript através de exemplos práticos e exercícios interativos.",
+  
+  // Real YouTube video from provided URL
   video: {
-    url: "https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4", // Sample video for demo
-    duration: 30, // 30 seconds for quick testing
-    thumbnail: "/images/video-thumb.jpg",
+    url: "https://www.youtube.com/embed/Xq0xJl-2D_s", // Converted to embed format
+    duration: 1200, // Estimated 20 minutes (will be detected by player)
+    thumbnail: "https://img.youtube.com/vi/Xq0xJl-2D_s/hqdefault.jpg",
     aspectRatio: 16/9
   },
 
-  // PDF for the specified chapter
+  // PDF from the actual file path provided
   pdf: {
-    url: "/pdf/capitulo2.pdf", // Web accessible path
+    url: "/PDF/Curso-teste/Aula-teste/Capitulo 2.pdf", // Actual file path
     title: "Capítulo 2: Fundamentos do Desenvolvimento Web",
-    filename: "Capitulo-2.pdf",
-    size: 2048000, // 2MB
-    pageCount: 15,
+    filename: "Capitulo 2.pdf",
+    size: 2048000, // Will be detected from actual file
+    pageCount: 20, // Estimated, will be detected from actual file
     downloadable: true
   },
 
-  // Quiz with educational questions about web development
+  // Comprehensive quiz based on Chapter 2 content
   quiz: {
-    id: "quiz-cap2",
-    title: "Quiz: Fundamentos do Desenvolvimento Web",
-    description: "Teste seus conhecimentos sobre HTML, CSS e JavaScript",
-    timeLimit: 10, // 10 minutes
+    id: "quiz-cap2-comprehensive",
+    title: "Avaliação: Fundamentos do Desenvolvimento Web",
+    description: "Teste completo sobre HTML, CSS, JavaScript e conceitos de desenvolvimento web responsivo. Baseado no conteúdo do Capítulo 2.",
+    timeLimit: 15, // 15 minutes for comprehensive quiz
     attemptsAllowed: 3,
-    passingScore: 70,
-    totalQuestions: 4,
+    passingScore: 75, // Higher passing score for comprehensive content
+    totalQuestions: 8, // Updated to match actual number of questions
     status: 'not_started',
     remainingAttempts: 3
   },
 
-  // Exercises based on the lesson content
+  // Practical exercises based on Chapter 2 content
   exercises: [
     {
       id: "ex1",
-      title: "Criar uma Página HTML Básica",
-      description: "Crie uma página HTML com estrutura básica, incluindo cabeçalho, navegação e conteúdo principal.",
+      title: "Estrutura HTML5 Semântica",
+      description: "Crie uma página HTML5 utilizando elementos semânticos (header, nav, main, section, aside, footer) com conteúdo sobre desenvolvimento web. Inclua pelo menos 3 seções diferentes com títulos hierárquicos adequados.",
       orderIndex: 1,
       status: 'not_started',
       allowsUpload: true,
-      uploadInstructions: "Faça upload do arquivo HTML (.html) que você criou seguindo as instruções."
+      uploadInstructions: "Faça upload do arquivo HTML (.html) seguindo as práticas de HTML5 semântico apresentadas no capítulo."
     },
     {
       id: "ex2", 
-      title: "Estilizar com CSS",
-      description: "Adicione estilos CSS à sua página HTML, incluindo cores, fontes e layout responsivo.",
+      title: "CSS Layout Responsivo",
+      description: "Aplicar estilos CSS à página criada no exercício anterior, implementando um layout responsivo com CSS Grid ou Flexbox. Inclua media queries para pelo menos 2 breakpoints (mobile e desktop).",
       orderIndex: 2,
       status: 'not_started',
       allowsUpload: true,
-      uploadInstructions: "Faça upload dos arquivos HTML e CSS (.html, .css) da sua página estilizada."
+      uploadInstructions: "Faça upload dos arquivos HTML e CSS (.html, .css) demonstrando o layout responsivo funcionando."
     },
     {
       id: "ex3",
-      title: "Adicionar Interatividade",
-      description: "Implemente funcionalidades básicas com JavaScript, como botões interativos ou validação de formulário.",
+      title: "Interatividade com JavaScript",
+      description: "Adicione funcionalidades JavaScript à sua página: menu hambúrguer para mobile, formulário de contato com validação básica, e um botão que alterna entre tema claro/escuro.",
       orderIndex: 3,
       status: 'not_started',
       allowsUpload: true,
-      uploadInstructions: "Faça upload de todos os arquivos (.html, .css, .js) do seu projeto completo."
+      uploadInstructions: "Faça upload de todos os arquivos (.html, .css, .js) com as funcionalidades JavaScript implementadas."
+    },
+    {
+      id: "ex4",
+      title: "Otimização e Boas Práticas",
+      description: "Otimize sua página seguindo as boas práticas: otimizar imagens, minificar CSS/JS, implementar meta tags adequadas, e validar o código HTML/CSS.",
+      orderIndex: 4,
+      status: 'not_started',
+      allowsUpload: true,
+      uploadInstructions: "Faça upload da versão final otimizada com relatório de validação (.html, .css, .js, .txt com relatório)."
     }
   ],
 
-  // Additional materials
+  // Additional learning materials for Chapter 2
   materials: [
     {
       type: 'pdf',
-      title: 'Guia de Referência HTML',
-      description: 'Referência completa das tags HTML mais utilizadas',
-      url: '/materials/html-reference.pdf',
+      title: 'HTML5 - Guia Completo de Elementos Semânticos',
+      description: 'Referência detalhada de todos os elementos HTML5 com exemplos práticos',
+      url: '/materials/html5-semantic-guide.pdf',
+      downloadable: true
+    },
+    {
+      type: 'pdf',
+      title: 'CSS Grid e Flexbox - Manual Prático',
+      description: 'Guia visual para layouts modernos com CSS Grid e Flexbox',
+      url: '/materials/css-layout-guide.pdf',
       downloadable: true
     },
     {
       type: 'link',
-      title: 'MDN Web Docs - HTML',
-      description: 'Documentação oficial do HTML',
+      title: 'MDN Web Docs - HTML5',
+      description: 'Documentação oficial do HTML5 com exemplos interativos',
       url: 'https://developer.mozilla.org/pt-BR/docs/Web/HTML'
     },
     {
       type: 'link',
-      title: 'CSS Tricks - Guia Completo',
-      description: 'Recursos e tutoriais avançados de CSS',
-      url: 'https://css-tricks.com'
+      title: 'CSS Grid Garden - Jogo Interativo',
+      description: 'Aprenda CSS Grid de forma divertida com este jogo interativo',
+      url: 'https://cssgridgarden.com'
+    },
+    {
+      type: 'link',
+      title: 'Flexbox Froggy - Jogo de CSS Flexbox',
+      description: 'Pratique CSS Flexbox ajudando o sapo a chegar ao seu objetivo',
+      url: 'https://flexboxfroggy.com'
+    },
+    {
+      type: 'link',
+      title: 'Can I Use - Compatibilidade de Recursos',
+      description: 'Verifique a compatibilidade de recursos HTML, CSS e JavaScript',
+      url: 'https://caniuse.com'
     },
     {
       type: 'document',
-      title: 'Template de Projeto',
-      description: 'Arquivo base para iniciar seus exercícios',
-      url: '/templates/projeto-base.zip',
+      title: 'Starter Template - HTML5 + CSS3 + JS',
+      description: 'Template inicial com estrutura HTML5, CSS moderno e JavaScript básico',
+      url: '/templates/chapter2-starter.zip',
+      downloadable: true
+    },
+    {
+      type: 'document',
+      title: 'Checklists de Boas Práticas',
+      description: 'Listas de verificação para HTML, CSS e JavaScript',
+      url: '/materials/best-practices-checklist.pdf',
       downloadable: true
     }
   ],
 
-  // Additional content text
+  // Enhanced content text for Chapter 2
   content: `
-    <h2>Introdução ao Desenvolvimento Web</h2>
-    <p>Nesta aula, você aprenderá os fundamentos essenciais do desenvolvimento web moderno, incluindo:</p>
+    <h2>Capítulo 2: Fundamentos do Desenvolvimento Web</h2>
+    
+    <h3>📚 Objetivos de Aprendizagem</h3>
+    <p>Ao completar este capítulo, você será capaz de:</p>
     <ul>
-      <li><strong>HTML</strong> - Estrutura e semântica</li>
-      <li><strong>CSS</strong> - Estilização e layout responsivo</li>
-      <li><strong>JavaScript</strong> - Interatividade e lógica</li>
+      <li>Compreender a estrutura básica de documentos HTML5 e sua semântica</li>
+      <li>Aplicar estilos CSS para criar layouts responsivos e atraentes</li>
+      <li>Implementar interatividade básica com JavaScript</li>
+      <li>Seguir as melhores práticas de desenvolvimento web moderno</li>
+      <li>Otimizar páginas web para performance e acessibilidade</li>
     </ul>
-    <p>Ao final desta aula, você será capaz de criar páginas web funcionais e atrativas.</p>
+
+    <h3>🌐 Conteúdo Programático</h3>
+    
+    <h4>1. HTML5 - Estrutura e Semântica</h4>
+    <ul>
+      <li><strong>Elementos semânticos:</strong> header, nav, main, section, article, aside, footer</li>
+      <li><strong>Hierarquia de títulos:</strong> h1-h6 e sua importância para SEO</li>
+      <li><strong>Formulários avançados:</strong> novos tipos de input e validação</li>
+      <li><strong>Multimedia:</strong> video, audio e suas configurações</li>
+      <li><strong>Meta tags:</strong> viewport, description, keywords</li>
+    </ul>
+
+    <h4>2. CSS3 - Estilização e Layout</h4>
+    <ul>
+      <li><strong>Flexbox:</strong> alinhamento e distribuição de elementos</li>
+      <li><strong>CSS Grid:</strong> layouts bidimensionais complexos</li>
+      <li><strong>Media Queries:</strong> design responsivo para diferentes dispositivos</li>
+      <li><strong>Animações e transições:</strong> melhorando a experiência do usuário</li>
+      <li><strong>Custom Properties:</strong> variáveis CSS para manutenibilidade</li>
+    </ul>
+
+    <h4>3. JavaScript Essencial</h4>
+    <ul>
+      <li><strong>DOM Manipulation:</strong> seleção e modificação de elementos</li>
+      <li><strong>Event Listeners:</strong> interatividade com o usuário</li>
+      <li><strong>ES6+ Features:</strong> let/const, arrow functions, template literals</li>
+      <li><strong>APIs do Browser:</strong> localStorage, geolocation, fetch</li>
+      <li><strong>Debugging:</strong> console, breakpoints e DevTools</li>
+    </ul>
+
+    <h3>🎯 Metodologia</h3>
+    <p>Este capítulo combina teoria e prática através de:</p>
+    <ul>
+      <li><strong>Vídeo-aula:</strong> Explicação detalhada dos conceitos com exemplos práticos</li>
+      <li><strong>Material de apoio:</strong> PDF com referências e exercícios complementares</li>
+      <li><strong>Exercícios práticos:</strong> 4 projetos incrementais para aplicar o conhecimento</li>
+      <li><strong>Quiz interativo:</strong> 8 questões para avaliar o aprendizado</li>
+      <li><strong>Recursos externos:</strong> Links para ferramentas e jogos educativos</li>
+    </ul>
+
+    <h3>⏱️ Tempo Estimado</h3>
+    <p><strong>Total:</strong> 3-4 horas</p>
+    <ul>
+      <li>Vídeo-aula: 20 minutos</li>
+      <li>Leitura do material: 30 minutos</li>
+      <li>Exercícios práticos: 2-2.5 horas</li>
+      <li>Quiz e revisão: 15-30 minutos</li>
+    </ul>
+
+    <h3>✅ Pré-requisitos</h3>
+    <ul>
+      <li>Conhecimentos básicos de informática</li>
+      <li>Editor de código instalado (VS Code recomendado)</li>
+      <li>Navegador web moderno (Chrome, Firefox, Safari ou Edge)</li>
+      <li>Conclusão do Capítulo 1: Introdução ao Desenvolvimento Web</li>
+    </ul>
+
+    <p><strong>Dica:</strong> Assista ao vídeo primeiro, depois leia o material PDF e pratique com os exercícios. O quiz ao final ajudará a consolidar seu aprendizado!</p>
   `
 }
 
@@ -446,7 +572,7 @@ const initialProgressData: LessonProgressData = {
   },
   quizProgress: {
     currentQuestion: 0,
-    totalQuestions: 4,
+    totalQuestions: 8, // Updated to match real quiz
     answeredQuestions: [],
     score: 0,
     attempts: 0,
@@ -458,7 +584,7 @@ const initialProgressData: LessonProgressData = {
     completedExercises: [],
     submittedFiles: [],
     pendingReviews: [],
-    totalExercises: 3,
+    totalExercises: 4, // Updated to match new exercises
     completionPercentage: 0
   },
   contentProgress: {
