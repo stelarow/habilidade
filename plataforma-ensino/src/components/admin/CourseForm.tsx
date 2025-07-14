@@ -169,9 +169,7 @@ export function CourseForm({
       newErrors.category_id = 'Categoria é obrigatória'
     }
 
-    if (!formData.instructor_id) {
-      newErrors.instructor_id = 'Instrutor é obrigatório'
-    }
+    // Instructor is now optional - no validation required
 
     if (formData.price < 0) {
       newErrors.price = 'Preço deve ser positivo'
@@ -331,23 +329,20 @@ export function CourseForm({
 
               <div>
                 <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Instrutor *
+                  Instrutor (opcional)
                 </label>
                 <select
                   value={formData.instructor_id}
                   onChange={(e) => handleInputChange('instructor_id', e.target.value)}
-                  className={`w-full px-3 py-2 bg-gray-700 border rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500 ${
-                    errors.instructor_id ? 'border-red-500' : 'border-gray-600'
-                  }`}
+                  className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
                 >
-                  <option value="">Selecionar instrutor</option>
+                  <option value="">Nenhum instrutor selecionado</option>
                   {instructors.map(instructor => (
                     <option key={instructor.id} value={instructor.id}>
                       {instructor.user?.full_name || 'Instrutor sem nome'}
                     </option>
                   ))}
                 </select>
-                {errors.instructor_id && <p className="text-red-400 text-sm mt-1">{errors.instructor_id}</p>}
               </div>
             </div>
 

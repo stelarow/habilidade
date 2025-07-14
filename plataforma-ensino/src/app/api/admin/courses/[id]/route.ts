@@ -12,7 +12,7 @@ const updateCourseSchema = z.object({
   thumbnail_url: z.string().url().optional().nullable().or(z.literal('')),
   video_preview_url: z.string().url().optional().nullable().or(z.literal('')),
   category_id: z.string().uuid('ID da categoria inválido').optional(),
-  instructor_id: z.string().uuid('ID do instrutor inválido').optional(),
+  instructor_id: z.string().uuid('ID do instrutor inválido').optional().or(z.literal('')),
   price: z.number().min(0, 'Preço deve ser positivo').optional(),
   duration_minutes: z.number().min(0, 'Duração deve ser positiva').optional(),
   level: z.enum(['beginner', 'intermediate', 'advanced']).optional(),
@@ -140,19 +140,24 @@ export async function PUT(
       }
     }
     
-    // Verify instructor exists if updating
-    if (validatedData.instructor_id) {
-      const { data: instructor } = await supabase
-        .from('instructors')
-        .select('id')
-        .eq('id', validatedData.instructor_id)
-        .single()
-      
-      if (!instructor) {
-        return NextResponse.json(
-          { error: 'Instrutor não encontrado' },
-          { status: 400 }
-        )
+    // Verify instructor exists if updating (and if provided)
+    if (validatedData.instructor_id !== undefined) {
+      if (validatedData.instructor_id && validatedData.instructor_id.trim()) {
+        const { data: instructor } = await supabase
+          .from('instructors')
+          .select('id')
+          .eq('id', validatedData.instructor_id)
+          .single()
+        
+        if (!instructor) {
+          return NextResponse.json(
+            { error: 'Instrutor não encontrado' },
+            { status: 400 }
+          )
+        }
+      } else {
+        // Set instructor_id to null if empty string provided
+        (validatedData as any).instructor_id = null
       }
     }
     

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
+import { useSearchParams, useRouter } from 'next/navigation'
 import { Course, Category, Instructor, User } from '@/types'
 import { UserProfile } from '@/lib/auth/session'
 import { hasPermission } from '@/lib/auth/permissions-client'
@@ -44,6 +45,8 @@ export function CoursesManagement({
   const [showCreateModal, setShowCreateModal] = useState(false)
 
   const supabase = createClient()
+  const searchParams = useSearchParams()
+  const router = useRouter()
 
   useEffect(() => {
     let filtered = courses
@@ -70,6 +73,18 @@ export function CoursesManagement({
 
     setFilteredCourses(filtered)
   }, [courses, searchTerm, statusFilter, categoryFilter])
+
+  // Handle URL parameter for auto-opening create modal
+  useEffect(() => {
+    const action = searchParams.get('action')
+    if (action === 'new' && hasPermission(currentUser, 'admin.courses.create')) {
+      setShowCreateModal(true)
+      // Clean up URL parameter after opening modal
+      const url = new URL(window.location.href)
+      url.searchParams.delete('action')
+      router.replace(url.pathname + url.search, { scroll: false })
+    }
+  }, [searchParams, currentUser, router])
 
   const handleTogglePublish = async (courseId: string, currentStatus: boolean) => {
     if (!hasPermission(currentUser, 'admin.courses.edit')) {

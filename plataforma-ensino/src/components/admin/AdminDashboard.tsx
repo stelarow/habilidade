@@ -168,7 +168,7 @@ export function AdminDashboard({ stats, recentEnrollments }: AdminDashboardProps
             <h3 className="text-lg font-medium text-white mb-4">Ações Rápidas</h3>
             <div className="grid grid-cols-2 gap-4">
               <a
-                href="/admin/courses/new"
+                href="/admin/courses?action=new"
                 className="p-4 bg-purple-600 hover:bg-purple-700 rounded-lg text-center transition-colors"
               >
                 <BookOpenIcon className="h-8 w-8 text-white mx-auto mb-2" />

@@ -12,7 +12,7 @@ const courseSchema = z.object({
   thumbnail_url: z.string().url().optional().or(z.literal('')),
   video_preview_url: z.string().url().optional().or(z.literal('')),
   category_id: z.string().uuid('ID da categoria inválido'),
-  instructor_id: z.string().uuid('ID do instrutor inválido'),
+  instructor_id: z.string().uuid('ID do instrutor inválido').optional().or(z.literal('')),
   price: z.number().min(0, 'Preço deve ser positivo').default(0),
   duration_minutes: z.number().min(0, 'Duração deve ser positiva').default(0),
   level: z.enum(['beginner', 'intermediate', 'advanced']).default('beginner'),
@@ -137,18 +137,23 @@ export async function POST(request: NextRequest) {
       )
     }
     
-    // Verify instructor exists
-    const { data: instructor } = await supabase
-      .from('instructors')
-      .select('id')
-      .eq('id', validatedData.instructor_id)
-      .single()
-    
-    if (!instructor) {
-      return NextResponse.json(
-        { error: 'Instrutor não encontrado' },
-        { status: 400 }
-      )
+    // Verify instructor exists (if provided)
+    if (validatedData.instructor_id && validatedData.instructor_id.trim()) {
+      const { data: instructor } = await supabase
+        .from('instructors')
+        .select('id')
+        .eq('id', validatedData.instructor_id)
+        .single()
+      
+      if (!instructor) {
+        return NextResponse.json(
+          { error: 'Instrutor não encontrado' },
+          { status: 400 }
+        )
+      }
+    } else {
+      // Set instructor_id to null if not provided
+      (validatedData as any).instructor_id = null
     }
     
     // Create course
