@@ -1,0 +1,281 @@
+'use client'
+
+import React, { useMemo, useEffect, useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { cn } from '@/lib/utils'
+import { LessonProgressData, ComponentProgress } from '@/types/lesson'
+
+interface ProgressTrackerProps {
+  progress: LessonProgressData
+  className?: string
+  size?: 'sm' | 'md' | 'lg'
+  showDetails?: boolean
+}
+
+/**
+ * ProgressTracker - Visual progress tracking component with circular rings
+ * Part of Fase 2: Desenvolvimento de Componentes (2.6)
+ * 
+ * Features:
+ * - Circular progress rings with brand colors
+ * - Component-wise progress breakdown
+ * - Animated completion states
+ * - Time estimates and milestones
+ * - Responsive design
+ */
+export function ProgressTracker({ 
+  progress, 
+  className, 
+  size = 'md',
+  showDetails = true 
+}: ProgressTrackerProps) {
+  const [isAnimating, setIsAnimating] = useState(false)
+  const [showCelebration, setShowCelebration] = useState(false)
+
+  // Calculate overall progress and component breakdowns
+  const progressData = useMemo(() => {
+    const overall = progress.overallProgress.percentageComplete
+    const components = progress.overallProgress.componentProgress
+
+    // Component icons and colors
+    const componentMeta = {
+      video: { icon: '🎬', color: '#d400ff', name: 'Vídeo' },
+      pdf: { icon: '📄', color: '#00c4ff', name: 'PDF' },
+      quiz: { icon: '🧩', color: '#22c55e', name: 'Quiz' },
+      exercises: { icon: '📋', color: '#f59e0b', name: 'Exercícios' },
+      content: { icon: '📖', color: '#a000ff', name: 'Conteúdo' },
+      materials: { icon: '📎', color: '#6b7280', name: 'Materiais' }
+    }
+
+    return {
+      overall,
+      components: components.map(comp => ({
+        ...comp,
+        ...componentMeta[comp.component],
+      })),
+      estimatedTime: progress.overallProgress.estimatedTimeRemaining,
+      isCompleted: progress.overallProgress.isCompleted
+    }
+  }, [progress])
+
+  // Size configurations
+  const sizes = {
+    sm: { ring: 80, stroke: 8, text: 'text-sm' },
+    md: { ring: 120, stroke: 12, text: 'text-base' },
+    lg: { ring: 160, stroke: 16, text: 'text-lg' }
+  }
+
+  const config = sizes[size]
+  const radius = (config.ring - config.stroke * 2) / 2
+  const circumference = radius * 2 * Math.PI
+
+  // Animation for progress ring
+  const progressOffset = circumference - (progressData.overall / 100) * circumference
+
+  // Celebration effect when 100% complete
+  useEffect(() => {
+    if (progressData.overall >= 100 && !showCelebration) {
+      setShowCelebration(true)
+      setIsAnimating(true)
+      setTimeout(() => setIsAnimating(false), 2000)
+    }
+  }, [progressData.overall, showCelebration])
+
+  // Format time estimate
+  const formatTime = (minutes: number) => {
+    if (minutes < 60) return `${Math.round(minutes)}min`
+    const hours = Math.floor(minutes / 60)
+    const mins = Math.round(minutes % 60)
+    return `${hours}h ${mins}m`
+  }
+
+  return (
+    <div className={cn(
+      'progress-tracker',
+      'relative flex flex-col items-center space-y-4',
+      className
+    )}>
+      {/* Main Progress Ring */}
+      <div className="relative">
+        <svg
+          width={config.ring}
+          height={config.ring}
+          className="transform -rotate-90"
+        >
+          {/* Background ring */}
+          <circle
+            cx={config.ring / 2}
+            cy={config.ring / 2}
+            r={radius}
+            stroke="rgba(255, 255, 255, 0.1)"
+            strokeWidth={config.stroke}
+            fill="transparent"
+          />
+          
+          {/* Progress ring */}
+          <motion.circle
+            cx={config.ring / 2}
+            cy={config.ring / 2}
+            r={radius}
+            stroke="url(#progressGradient)"
+            strokeWidth={config.stroke}
+            fill="transparent"
+            strokeLinecap="round"
+            strokeDasharray={circumference}
+            strokeDashoffset={progressOffset}
+            initial={{ strokeDashoffset: circumference }}
+            animate={{ strokeDashoffset: progressOffset }}
+            transition={{ duration: 1, ease: "easeInOut" }}
+            className={cn(
+              isAnimating && "animate-pulse",
+              progressData.isCompleted && "drop-shadow-[0_0_20px_rgba(212,0,255,0.5)]"
+            )}
+          />
+          
+          {/* Gradient definition */}
+          <defs>
+            <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#d400ff" />
+              <stop offset="50%" stopColor="#a000ff" />
+              <stop offset="100%" stopColor="#00c4ff" />
+            </linearGradient>
+          </defs>
+        </svg>
+
+        {/* Center content */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center">
+          <motion.div
+            className={cn("font-bold text-white", config.text)}
+            animate={{ scale: isAnimating ? [1, 1.1, 1] : 1 }}
+            transition={{ duration: 0.5, repeat: isAnimating ? 3 : 0 }}
+          >
+            {Math.round(progressData.overall)}%
+          </motion.div>
+          {progressData.isCompleted ? (
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              className="text-green-400 text-xl"
+            >
+              ✅
+            </motion.div>
+          ) : (
+            <div className="text-xs text-gray-400">
+              {formatTime(progressData.estimatedTime)}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Celebration Animation */}
+      <AnimatePresence>
+        {showCelebration && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0 }}
+            className="absolute inset-0 flex items-center justify-center pointer-events-none"
+          >
+            <div className="text-6xl animate-bounce">🎉</div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Component Progress Details */}
+      {showDetails && (
+        <div className="w-full space-y-2">
+          <h4 className="text-sm font-medium text-white text-center mb-3">
+            Progresso por Componente
+          </h4>
+          
+          <div className="grid grid-cols-2 gap-2">
+            {progressData.components.map((comp) => (
+              <motion.div
+                key={comp.component}
+                className="flex items-center space-x-2 p-2 rounded-lg bg-white/5 backdrop-blur-sm"
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.2 }}
+              >
+                <div className="text-lg">{comp.icon}</div>
+                <div className="flex-1 min-w-0">
+                  <div className="text-xs text-white font-medium truncate">
+                    {comp.name}
+                  </div>
+                  <div className="w-full bg-white/20 rounded-full h-2 mt-1">
+                    <motion.div
+                      className="h-2 rounded-full"
+                      style={{ backgroundColor: comp.color }}
+                      initial={{ width: 0 }}
+                      animate={{ width: `${comp.percentage}%` }}
+                      transition={{ duration: 0.8, delay: 0.2 }}
+                    />
+                  </div>
+                </div>
+                <div className="text-xs text-gray-300 font-mono">
+                  {Math.round(comp.percentage)}%
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Milestones */}
+      {showDetails && (
+        <div className="flex justify-center space-x-4 mt-4">
+          {[25, 50, 75, 100].map((milestone) => (
+            <motion.div
+              key={milestone}
+              className={cn(
+                "w-3 h-3 rounded-full border-2",
+                progressData.overall >= milestone
+                  ? "bg-gradient-to-r from-purple-500 to-blue-500 border-purple-400"
+                  : "bg-transparent border-gray-600"
+              )}
+              animate={{
+                scale: progressData.overall >= milestone ? [1, 1.2, 1] : 1,
+              }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className="sr-only">{milestone}% milestone</div>
+            </motion.div>
+          ))}
+        </div>
+      )}
+
+      <style jsx>{`
+        .progress-tracker {
+          user-select: none;
+        }
+        
+        @keyframes glow {
+          0%, 100% { filter: drop-shadow(0 0 10px rgba(212, 0, 255, 0.3)); }
+          50% { filter: drop-shadow(0 0 20px rgba(212, 0, 255, 0.6)); }
+        }
+        
+        .animate-glow {
+          animation: glow 2s infinite;
+        }
+      `}</style>
+    </div>
+  )
+}
+
+// Hook to use with LessonContext
+export function useProgressTracker() {
+  // This would integrate with LessonContext when implemented
+  return {
+    trackVideoProgress: (time: number, duration: number) => {
+      // Implementation would call context actions
+    },
+    trackPDFProgress: (page: number, totalPages: number) => {
+      // Implementation would call context actions  
+    },
+    trackQuizProgress: (questionIndex: number, answer: number) => {
+      // Implementation would call context actions
+    },
+    markComponentComplete: (component: string) => {
+      // Implementation would call context actions
+    }
+  }
+}
