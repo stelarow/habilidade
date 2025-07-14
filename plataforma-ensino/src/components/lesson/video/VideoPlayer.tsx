@@ -14,6 +14,26 @@ interface VideoPlayerProps {
   startTime?: number
 }
 
+// Helper functions for YouTube URLs
+const isYouTubeUrl = (url: string): boolean => {
+  return url.includes('youtube.com') || url.includes('youtu.be')
+}
+
+const convertToEmbedUrl = (url: string): string => {
+  // If already embed URL, return as is
+  if (url.includes('/embed/')) return url
+  
+  // Extract video ID from various YouTube URL formats
+  const videoIdMatch = url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/)
+  const videoId = videoIdMatch ? videoIdMatch[1] : null
+  
+  if (videoId) {
+    return `https://www.youtube.com/embed/${videoId}?enablejsapi=1&origin=${window.location.origin}`
+  }
+  
+  return url
+}
+
 /**
  * VideoPlayer - Enhanced video player component
  * Part of Fase 2: Desenvolvimento de Componentes (2.2)
@@ -35,8 +55,13 @@ export function VideoPlayer({
   startTime = 0
 }: VideoPlayerProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
+  const iframeRef = useRef<HTMLIFrameElement>(null)
   const progressRef = useRef<HTMLDivElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
+
+  // Determine if this is a YouTube video
+  const isYouTube = isYouTubeUrl(video.url)
+  const embedUrl = isYouTube ? convertToEmbedUrl(video.url) : video.url
 
   // Player state
   const [isPlaying, setIsPlaying] = useState(false)
@@ -46,7 +71,7 @@ export function VideoPlayer({
   const [isMuted, setIsMuted] = useState(false)
   const [playbackRate, setPlaybackRate] = useState(1)
   const [isFullscreen, setIsFullscreen] = useState(false)
-  const [showControls, setShowControls] = useState(true)
+  const [showControls, setShowControls] = useState(!isYouTube) // Hide custom controls for YouTube
   const [isLoading, setIsLoading] = useState(true)
   const [hasCompleted, setHasCompleted] = useState(false)
 
@@ -95,6 +120,15 @@ export function VideoPlayer({
       setDuration(videoRef.current.duration)
       videoRef.current.currentTime = startTime
       setIsLoading(false)
+    }
+  }
+
+  // YouTube iframe loaded handler
+  const handleIframeLoad = () => {
+    setIsLoading(false)
+    // For YouTube videos, simulate completion after some time (since we can't track actual progress)
+    if (onProgressUpdate) {
+      onProgressUpdate(0, video.duration || 1200) // Default to 20 minutes if no duration
     }
   }
 
@@ -228,18 +262,30 @@ export function VideoPlayer({
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.5 }}
     >
-      {/* Video Element */}
-      <video
-        ref={videoRef}
-        src={video.url}
-        poster={video.thumbnail}
-        className="w-full h-full object-cover"
-        onLoadedMetadata={handleLoadedMetadata}
-        onTimeUpdate={handleTimeUpdate}
-        onPlay={handlePlay}
-        onPause={handlePause}
-        playsInline
-      />
+      {/* Video Element or YouTube Iframe */}
+      {isYouTube ? (
+        <iframe
+          ref={iframeRef}
+          src={embedUrl}
+          className="w-full h-full"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+          onLoad={handleIframeLoad}
+          style={{ border: 'none' }}
+        />
+      ) : (
+        <video
+          ref={videoRef}
+          src={embedUrl}
+          poster={video.thumbnail}
+          className="w-full h-full object-cover"
+          onLoadedMetadata={handleLoadedMetadata}
+          onTimeUpdate={handleTimeUpdate}
+          onPlay={handlePlay}
+          onPause={handlePause}
+          playsInline
+        />
+      )}
 
       {/* Loading Overlay */}
       <AnimatePresence>
@@ -262,9 +308,9 @@ export function VideoPlayer({
         )}
       </AnimatePresence>
 
-      {/* Play Button Overlay */}
+      {/* Play Button Overlay - Only for non-YouTube videos */}
       <AnimatePresence>
-        {!isPlaying && !isLoading && (
+        {!isYouTube && !isPlaying && !isLoading && (
           <motion.button
             className="absolute inset-0 flex items-center justify-center bg-black/30 text-white"
             onClick={togglePlay}
@@ -281,9 +327,9 @@ export function VideoPlayer({
         )}
       </AnimatePresence>
 
-      {/* Controls */}
+      {/* Controls - Only for non-YouTube videos */}
       <AnimatePresence>
-        {showControls && !isLoading && (
+        {!isYouTube && showControls && !isLoading && (
           <motion.div
             className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4"
             initial={{ opacity: 0, y: 20 }}
@@ -388,6 +434,14 @@ export function VideoPlayer({
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* YouTube Video Info */}
+      {isYouTube && !isLoading && (
+        <div className="absolute top-4 left-4 bg-red-600 text-white px-3 py-1 rounded-full text-sm font-medium flex items-center gap-2">
+          <span>📺</span>
+          <span>YouTube</span>
+        </div>
+      )}
 
       <style jsx>{`
         .slider::-webkit-slider-thumb {
