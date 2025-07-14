@@ -79,7 +79,7 @@ export function QuizInterface({
     } else if (timeRemaining === 0) {
       handleQuizComplete()
     }
-  }, [timeRemaining, isStarted, isCompleted])
+  }, [timeRemaining, isStarted, isCompleted, handleQuizComplete])
 
   // Current question
   const currentQuestion = questions[currentQuestionIndex]
@@ -145,7 +145,7 @@ export function QuizInterface({
         setQuestionStartTime(Date.now())
       }
     }, 2000)
-  }, [selectedAnswer, currentQuestion, answers, isLastQuestion, onProgressUpdate, currentScore, questionStartTime])
+  }, [selectedAnswer, currentQuestion, answers, isLastQuestion, onProgressUpdate, currentScore, questionStartTime, currentQuestionIndex, handleQuizComplete])
 
   // Complete quiz
   const handleQuizComplete = () => {

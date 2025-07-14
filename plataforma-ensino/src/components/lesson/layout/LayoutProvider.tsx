@@ -160,7 +160,7 @@ export function LessonLayoutProvider({ children, initialContent }: LessonLayoutP
     if (state.content) {
       actions.recalculateLayout()
     }
-  }, [state.breakpoint, actions])
+  }, [state.breakpoint, state.content, actions])
 
   // Provider value
   const value: LayoutProviderState = {

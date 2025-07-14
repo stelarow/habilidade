@@ -53,15 +53,23 @@ export default function TestLessonPage() {
     
     // Update overall progress
     updateOverallProgress()
-  }, [])
+  }, [updateOverallProgress])
 
   const handleVideoComplete = useCallback(() => {
-    setCompletedComponents(prev => new Set([...prev, 'video']))
+    setCompletedComponents(prev => {
+      const newSet = new Set(prev)
+      newSet.add('video')
+      return newSet
+    })
     markComponentComplete('video')
-  }, [])
+  }, [markComponentComplete])
 
   const handleQuizComplete = useCallback((score: number) => {
-    setCompletedComponents(prev => new Set([...prev, 'quiz']))
+    setCompletedComponents(prev => {
+      const newSet = new Set(prev)
+      newSet.add('quiz')
+      return newSet
+    })
     setProgress(prev => ({
       ...prev,
       quizProgress: {
@@ -72,7 +80,7 @@ export default function TestLessonPage() {
       }
     }))
     markComponentComplete('quiz')
-  }, [])
+  }, [markComponentComplete])
 
   const markComponentComplete = useCallback((component: string) => {
     setProgress(prev => ({
@@ -87,7 +95,7 @@ export default function TestLessonPage() {
       }
     }))
     updateOverallProgress()
-  }, [])
+  }, [updateOverallProgress])
 
   const updateOverallProgress = useCallback(() => {
     setProgress(prev => {
