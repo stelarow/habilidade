@@ -16,7 +16,7 @@ export default async function EnrollmentsPage() {
     .from('enrollments')
     .select(`
       *,
-      user:users(id, name, email, avatar_url),
+      user:users(id, full_name, email, avatar_url),
       course:courses(id, title, thumbnail_url)
     `)
     .order('created_at', { ascending: false })

@@ -24,7 +24,7 @@ interface Enrollment {
   completed_at?: string
   user: {
     id: string
-    name: string
+    full_name: string
     email: string
     avatar_url?: string
   }
@@ -50,7 +50,7 @@ export function EnrollmentsManagement({ enrollments: initialEnrollments, current
 
   const filteredEnrollments = enrollments.filter(enrollment => {
     const matchesSearch = searchTerm === '' || 
-      enrollment.user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      enrollment.user.full_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       enrollment.user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
       enrollment.course.title.toLowerCase().includes(searchTerm.toLowerCase())
     
@@ -213,13 +213,13 @@ export function EnrollmentsManagement({ enrollments: initialEnrollments, current
                         <Image 
                           className="h-10 w-10 rounded-full object-cover"
                           src={enrollment.user.avatar_url || '/api/placeholder/40/40'} 
-                          alt={enrollment.user.name}
+                          alt={enrollment.user.full_name}
                           width={40}
                           height={40}
                         />
                       </div>
                       <div className="ml-4">
-                        <div className="text-sm font-medium text-white">{enrollment.user.name}</div>
+                        <div className="text-sm font-medium text-white">{enrollment.user.full_name}</div>
                         <div className="text-sm text-gray-400">{enrollment.user.email}</div>
                       </div>
                     </div>
