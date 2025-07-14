@@ -207,7 +207,7 @@ export async function POST(request: NextRequest) {
           console.error(`Error updating progress for lesson ${update.lesson_id}:`, error)
           errors.push({
             lesson_id: update.lesson_id,
-            error: error.message || 'Erro ao atualizar progresso'
+            error: error instanceof Error ? error.message : 'Erro ao atualizar progresso'
           })
         }
       }

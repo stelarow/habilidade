@@ -92,7 +92,7 @@ export function EnrollmentForm({
 
     const timeoutId = setTimeout(loadUsers, 300) // Debounce search
     return () => clearTimeout(timeoutId)
-  }, [searchUser])
+  }, [searchUser, supabase])
 
   // Load courses
   useEffect(() => {
@@ -123,7 +123,7 @@ export function EnrollmentForm({
 
     const timeoutId = setTimeout(loadCourses, 300) // Debounce search
     return () => clearTimeout(timeoutId)
-  }, [searchCourse])
+  }, [searchCourse, supabase])
 
   const handleInputChange = (field: keyof EnrollmentFormData, value: string) => {
     setFormData(prev => ({

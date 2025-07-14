@@ -24,7 +24,7 @@ export async function GET(request: Request) {
   const { data: posts, error } = await supabase.from('posts').select('*');
 
   if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ error: error instanceof Error ? error.message : 'Erro ao buscar posts' }, { status: 500 });
   }
 
   return NextResponse.json({ posts });
@@ -72,7 +72,7 @@ export async function POST(request: Request) {
     if (error.code === '23505') { // unique_violation
         return NextResponse.json({ error: 'This slug is already in use.' }, { status: 409 });
     }
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ error: error instanceof Error ? error.message : 'Erro ao criar post' }, { status: 500 });
   }
 
   return NextResponse.json({ post: data[0] }, { status: 201 });

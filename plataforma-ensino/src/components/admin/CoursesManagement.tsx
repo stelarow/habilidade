@@ -139,7 +139,7 @@ export function CoursesManagement({
       alert('Curso criado com sucesso!')
     } catch (error: any) {
       console.error('Error creating course:', error)
-      alert(error.message || 'Erro ao criar curso')
+      alert(error instanceof Error ? error.message : 'Erro ao criar curso')
     } finally {
       setLoading(false)
     }
@@ -175,7 +175,7 @@ export function CoursesManagement({
       alert('Curso atualizado com sucesso!')
     } catch (error: any) {
       console.error('Error updating course:', error)
-      alert(error.message || 'Erro ao atualizar curso')
+      alert(error instanceof Error ? error.message : 'Erro ao atualizar curso')
     } finally {
       setLoading(false)
     }
@@ -204,7 +204,7 @@ export function CoursesManagement({
       alert('Curso excluído com sucesso!')
     } catch (error: any) {
       console.error('Error deleting course:', error)
-      alert(error.message || 'Erro ao deletar curso')
+      alert(error instanceof Error ? error.message : 'Erro ao deletar curso')
     } finally {
       setLoading(false)
     }
