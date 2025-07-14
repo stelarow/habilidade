@@ -11,8 +11,11 @@ import {
   CalendarDaysIcon,
   CheckCircleIcon,
   XCircleIcon,
-  ClockIcon
+  ClockIcon,
+  PlusIcon,
+  TrashIcon
 } from '@heroicons/react/24/outline'
+import { EnrollmentForm } from './EnrollmentForm'
 
 interface Enrollment {
   id: string
@@ -45,6 +48,9 @@ export function EnrollmentsManagement({ enrollments: initialEnrollments, current
   const [searchTerm, setSearchTerm] = useState('')
   const [statusFilter, setStatusFilter] = useState<'all' | 'active' | 'completed' | 'cancelled'>('all')
   const [loading, setLoading] = useState(false)
+  const [showEnrollmentForm, setShowEnrollmentForm] = useState(false)
+  const [enrollmentFormMode, setEnrollmentFormMode] = useState<'create' | 'remove'>('create')
+  const [selectedEnrollment, setSelectedEnrollment] = useState<Enrollment | null>(null)
 
   const supabase = createClient()
 
@@ -119,12 +125,90 @@ export function EnrollmentsManagement({ enrollments: initialEnrollments, current
     }
   }
 
+  const handleAddEnrollment = () => {
+    setEnrollmentFormMode('create')
+    setSelectedEnrollment(null)
+    setShowEnrollmentForm(true)
+  }
+
+  const handleRemoveEnrollment = (enrollment: Enrollment) => {
+    setEnrollmentFormMode('remove')
+    setSelectedEnrollment(enrollment)
+    setShowEnrollmentForm(true)
+  }
+
+  const handleEnrollmentSubmit = async (enrollmentData: any) => {
+    setLoading(true)
+    
+    try {
+      if (enrollmentFormMode === 'create') {
+        // Create new enrollment
+        const response = await fetch('/api/admin/enrollments', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(enrollmentData),
+        })
+
+        if (!response.ok) {
+          const errorData = await response.json()
+          throw new Error(errorData.error || 'Erro ao criar matrícula')
+        }
+
+        const { data: newEnrollment } = await response.json()
+        
+        // Add new enrollment to list
+        setEnrollments([newEnrollment, ...enrollments])
+        alert('Matrícula criada com sucesso!')
+      } else {
+        // Remove enrollment
+        if (!selectedEnrollment) return
+
+        const response = await fetch(`/api/admin/enrollments/${selectedEnrollment.id}`, {
+          method: 'DELETE',
+        })
+
+        if (!response.ok) {
+          const errorData = await response.json()
+          throw new Error(errorData.error || 'Erro ao remover matrícula')
+        }
+
+        // Remove enrollment from list
+        setEnrollments(enrollments.filter(e => e.id !== selectedEnrollment.id))
+        alert('Matrícula removida com sucesso!')
+      }
+
+      setShowEnrollmentForm(false)
+      setSelectedEnrollment(null)
+    } catch (error) {
+      console.error('Error with enrollment:', error)
+      alert(error instanceof Error ? error.message : 'Erro ao processar matrícula')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleEnrollmentCancel = () => {
+    setShowEnrollmentForm(false)
+    setSelectedEnrollment(null)
+  }
+
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div>
-        <h1 className="text-2xl font-bold text-white">Gerenciamento de Matrículas</h1>
-        <p className="text-gray-400">Gerencie todas as matrículas dos estudantes</p>
+      <div className="flex justify-between items-center">
+        <div>
+          <h1 className="text-2xl font-bold text-white">Gerenciamento de Matrículas</h1>
+          <p className="text-gray-400">Gerencie todas as matrículas dos estudantes</p>
+        </div>
+        <button
+          onClick={handleAddEnrollment}
+          className="flex items-center space-x-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+        >
+          <PlusIcon className="h-5 w-5" />
+          <span>Adicionar Matrícula</span>
+        </button>
       </div>
 
       {/* Filters */}
@@ -272,6 +356,14 @@ export function EnrollmentsManagement({ enrollments: initialEnrollments, current
                         <option value="completed">Concluído</option>
                         <option value="cancelled">Cancelado</option>
                       </select>
+                      <button
+                        onClick={() => handleRemoveEnrollment(enrollment)}
+                        disabled={loading}
+                        className="p-1 text-red-400 hover:text-red-300 hover:bg-red-900/20 rounded disabled:opacity-50"
+                        title="Remover matrícula"
+                      >
+                        <TrashIcon className="h-4 w-4" />
+                      </button>
                     </div>
                   </td>
                 </tr>
@@ -285,6 +377,17 @@ export function EnrollmentsManagement({ enrollments: initialEnrollments, current
         <div className="text-center py-8">
           <p className="text-gray-400">Nenhuma matrícula encontrada</p>
         </div>
+      )}
+
+      {/* Enrollment Form Modal */}
+      {showEnrollmentForm && (
+        <EnrollmentForm
+          mode={enrollmentFormMode}
+          existingEnrollment={selectedEnrollment}
+          onSubmit={handleEnrollmentSubmit}
+          onCancel={handleEnrollmentCancel}
+          loading={loading}
+        />
       )}
     </div>
   )
