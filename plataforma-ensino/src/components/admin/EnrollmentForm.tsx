@@ -71,7 +71,7 @@ export function EnrollmentForm({
       try {
         let query = supabase
           .from('users')
-          .select('id, full_name, email, avatar_url, role')
+          .select('id, full_name, email, avatar_url, role, created_at, updated_at')
           .order('full_name')
           .limit(20)
 
@@ -101,7 +101,7 @@ export function EnrollmentForm({
       try {
         let query = supabase
           .from('courses')
-          .select('id, title, slug, thumbnail_url, is_published')
+          .select('id, title, slug, thumbnail_url, is_published, created_at, updated_at, description, short_description, category_id, instructor_id, price, duration_minutes, level, requirements, what_you_learn, background_theme')
           .eq('is_published', true)
           .order('title')
           .limit(20)

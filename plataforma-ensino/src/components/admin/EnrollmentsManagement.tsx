@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
-import { User } from '@/types'
+import { User, Enrollment as EnrollmentType } from '@/types'
 import { UserProfile } from '@/lib/auth/session'
 import { createClient } from '@/lib/supabase/client'
 import { 
@@ -17,14 +17,17 @@ import {
 } from '@heroicons/react/24/outline'
 import { EnrollmentForm } from './EnrollmentForm'
 
-interface Enrollment {
+interface EnrollmentWithPopulated {
   id: string
   user_id: string
   course_id: string
-  status: 'active' | 'completed' | 'cancelled'
-  progress: number
-  created_at: string
+  enrolled_at: string
   completed_at?: string
+  access_until?: string
+  status: 'active' | 'completed' | 'cancelled' | 'expired'
+  progress_percentage: number
+  created_at: string
+  updated_at: string
   user: {
     id: string
     full_name: string
@@ -39,7 +42,7 @@ interface Enrollment {
 }
 
 interface EnrollmentsManagementProps {
-  enrollments: Enrollment[]
+  enrollments: EnrollmentWithPopulated[]
   currentUser: User | UserProfile | null
 }
 
@@ -50,7 +53,7 @@ export function EnrollmentsManagement({ enrollments: initialEnrollments, current
   const [loading, setLoading] = useState(false)
   const [showEnrollmentForm, setShowEnrollmentForm] = useState(false)
   const [enrollmentFormMode, setEnrollmentFormMode] = useState<'create' | 'remove'>('create')
-  const [selectedEnrollment, setSelectedEnrollment] = useState<Enrollment | null>(null)
+  const [selectedEnrollment, setSelectedEnrollment] = useState<EnrollmentWithPopulated | null>(null)
 
   const supabase = createClient()
 
@@ -131,7 +134,7 @@ export function EnrollmentsManagement({ enrollments: initialEnrollments, current
     setShowEnrollmentForm(true)
   }
 
-  const handleRemoveEnrollment = (enrollment: Enrollment) => {
+  const handleRemoveEnrollment = (enrollment: EnrollmentWithPopulated) => {
     setEnrollmentFormMode('remove')
     setSelectedEnrollment(enrollment)
     setShowEnrollmentForm(true)
@@ -335,14 +338,14 @@ export function EnrollmentsManagement({ enrollments: initialEnrollments, current
                       <div className="w-full bg-gray-700 rounded-full h-2">
                         <div 
                           className={`h-2 rounded-full ${getStatusColor(enrollment.status)}`}
-                          style={{ width: `${enrollment.progress}%` }}
+                          style={{ width: `${enrollment.progress_percentage}%` }}
                         />
                       </div>
-                      <span className="ml-2 text-sm text-gray-300">{enrollment.progress}%</span>
+                      <span className="ml-2 text-sm text-gray-300">{enrollment.progress_percentage}%</span>
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                    {new Date(enrollment.created_at).toLocaleDateString('pt-BR')}
+                    {new Date(enrollment.enrolled_at).toLocaleDateString('pt-BR')}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                     <div className="flex space-x-2">
@@ -383,7 +386,18 @@ export function EnrollmentsManagement({ enrollments: initialEnrollments, current
       {showEnrollmentForm && (
         <EnrollmentForm
           mode={enrollmentFormMode}
-          existingEnrollment={selectedEnrollment}
+          existingEnrollment={selectedEnrollment ? {
+            id: selectedEnrollment.id,
+            user_id: selectedEnrollment.user_id,
+            course_id: selectedEnrollment.course_id,
+            enrolled_at: selectedEnrollment.enrolled_at,
+            completed_at: selectedEnrollment.completed_at,
+            access_until: selectedEnrollment.access_until,
+            status: selectedEnrollment.status,
+            progress_percentage: selectedEnrollment.progress_percentage,
+            created_at: selectedEnrollment.created_at,
+            updated_at: selectedEnrollment.updated_at
+          } : null}
           onSubmit={handleEnrollmentSubmit}
           onCancel={handleEnrollmentCancel}
           loading={loading}
