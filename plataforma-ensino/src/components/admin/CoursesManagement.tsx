@@ -17,6 +17,7 @@ import {
   XCircleIcon
 } from '@heroicons/react/24/outline'
 import { BookOpenIcon } from '@heroicons/react/24/solid'
+import { CourseForm } from './CourseForm'
 
 interface CoursesManagementProps {
   courses: Course[]
@@ -96,6 +97,75 @@ export function CoursesManagement({
     }
   }
 
+  const handleCreateCourse = async (courseData: any) => {
+    if (!hasPermission(currentUser, 'admin.courses.create')) {
+      alert('Você não tem permissão para criar cursos')
+      return
+    }
+
+    setLoading(true)
+    try {
+      const response = await fetch('/api/admin/courses', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(courseData),
+      })
+
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.error || 'Erro ao criar curso')
+      }
+
+      const { data: newCourse } = await response.json()
+      setCourses([newCourse, ...courses])
+      setShowCreateModal(false)
+      alert('Curso criado com sucesso!')
+    } catch (error: any) {
+      console.error('Error creating course:', error)
+      alert(error.message || 'Erro ao criar curso')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleUpdateCourse = async (courseData: any) => {
+    if (!hasPermission(currentUser, 'admin.courses.edit') || !selectedCourse) {
+      alert('Você não tem permissão para editar cursos')
+      return
+    }
+
+    setLoading(true)
+    try {
+      const response = await fetch(`/api/admin/courses/${selectedCourse.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(courseData),
+      })
+
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.error || 'Erro ao atualizar curso')
+      }
+
+      const { data: updatedCourse } = await response.json()
+      setCourses(courses.map(course => 
+        course.id === selectedCourse.id ? updatedCourse : course
+      ))
+      setShowEditModal(false)
+      setSelectedCourse(null)
+      alert('Curso atualizado com sucesso!')
+    } catch (error: any) {
+      console.error('Error updating course:', error)
+      alert(error.message || 'Erro ao atualizar curso')
+    } finally {
+      setLoading(false)
+    }
+  }
+
   const handleDeleteCourse = async (courseId: string) => {
     if (!hasPermission(currentUser, 'admin.courses.delete')) {
       alert('Você não tem permissão para deletar cursos')
@@ -104,19 +174,22 @@ export function CoursesManagement({
 
     setLoading(true)
     try {
-      const { error } = await supabase
-        .from('courses')
-        .delete()
-        .eq('id', courseId)
+      const response = await fetch(`/api/admin/courses/${courseId}`, {
+        method: 'DELETE',
+      })
 
-      if (error) throw error
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.error || 'Erro ao deletar curso')
+      }
 
       setCourses(courses.filter(course => course.id !== courseId))
       setShowDeleteModal(false)
       setSelectedCourse(null)
-    } catch (error) {
+      alert('Curso excluído com sucesso!')
+    } catch (error: any) {
       console.error('Error deleting course:', error)
-      alert('Erro ao deletar curso')
+      alert(error.message || 'Erro ao deletar curso')
     } finally {
       setLoading(false)
     }
@@ -401,6 +474,32 @@ export function CoursesManagement({
             </div>
           </div>
         </div>
+      )}
+
+      {/* Create Course Modal */}
+      {showCreateModal && (
+        <CourseForm
+          categories={categories}
+          instructors={instructors}
+          onSubmit={handleCreateCourse}
+          onCancel={() => setShowCreateModal(false)}
+          loading={loading}
+        />
+      )}
+
+      {/* Edit Course Modal */}
+      {showEditModal && selectedCourse && (
+        <CourseForm
+          course={selectedCourse}
+          categories={categories}
+          instructors={instructors}
+          onSubmit={handleUpdateCourse}
+          onCancel={() => {
+            setShowEditModal(false)
+            setSelectedCourse(null)
+          }}
+          loading={loading}
+        />
       )}
     </div>
   )
