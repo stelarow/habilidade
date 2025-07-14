@@ -63,6 +63,10 @@ export function VideoPlayer({
   const isYouTube = isYouTubeUrl(video.url)
   const embedUrl = isYouTube ? convertToEmbedUrl(video.url) : video.url
 
+  // Calculate responsive dimensions
+  const aspectRatio = video.aspectRatio || 16/9
+  const aspectRatioPercent = (1 / aspectRatio) * 100
+
   // Player state
   const [isPlaying, setIsPlaying] = useState(false)
   const [currentTime, setCurrentTime] = useState(startTime)
@@ -126,9 +130,32 @@ export function VideoPlayer({
   // YouTube iframe loaded handler
   const handleIframeLoad = () => {
     setIsLoading(false)
-    // For YouTube videos, simulate completion after some time (since we can't track actual progress)
+    
+    // For YouTube videos, simulate progress tracking
     if (onProgressUpdate) {
-      onProgressUpdate(0, video.duration || 1200) // Default to 20 minutes if no duration
+      const videoDuration = video.duration || 1200 // Default to 20 minutes if no duration
+      
+      // Simulate progress updates every 10 seconds
+      const progressInterval = setInterval(() => {
+        setCurrentTime(prev => {
+          const newTime = prev + 10
+          if (newTime >= videoDuration * 0.8) {
+            // Mark as completed when 80% watched
+            setHasCompleted(true)
+            onComplete?.()
+            clearInterval(progressInterval)
+            return videoDuration * 0.8
+          }
+          onProgressUpdate(newTime, videoDuration)
+          return newTime
+        })
+      }, 10000) // Update every 10 seconds
+      
+      // Initial progress update
+      onProgressUpdate(0, videoDuration)
+      
+      // Cleanup interval on unmount
+      return () => clearInterval(progressInterval)
     }
   }
 
@@ -253,9 +280,16 @@ export function VideoPlayer({
       className={cn(
         'video-player relative rounded-lg overflow-hidden bg-black group',
         'hover:shadow-[0_0_30px_rgba(212,0,255,0.3)] transition-shadow duration-300',
+        // Responsive sizing with aspect ratio
+        'w-full',
+        'min-h-[200px] sm:min-h-[300px] md:min-h-[400px] lg:min-h-[500px]',
         isFullscreen && 'fixed inset-0 z-50 rounded-none',
         className
       )}
+      style={{
+        aspectRatio: aspectRatio,
+        maxHeight: isFullscreen ? '100vh' : '80vh'
+      }}
       onMouseMove={showControlsTemporarily}
       onMouseLeave={() => setShowControls(false)}
       initial={{ opacity: 0, scale: 0.95 }}
@@ -267,18 +301,22 @@ export function VideoPlayer({
         <iframe
           ref={iframeRef}
           src={embedUrl}
-          className="w-full h-full"
+          className="absolute inset-0 w-full h-full"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
           onLoad={handleIframeLoad}
-          style={{ border: 'none' }}
+          style={{ 
+            border: 'none',
+            minHeight: '100%'
+          }}
+          title="YouTube video player"
         />
       ) : (
         <video
           ref={videoRef}
           src={embedUrl}
           poster={video.thumbnail}
-          className="w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-cover"
           onLoadedMetadata={handleLoadedMetadata}
           onTimeUpdate={handleTimeUpdate}
           onPlay={handlePlay}
@@ -291,18 +329,28 @@ export function VideoPlayer({
       <AnimatePresence>
         {isLoading && (
           <motion.div
-            className="absolute inset-0 flex items-center justify-center bg-black/80"
+            className="absolute inset-0 flex items-center justify-center bg-black/80 backdrop-blur-sm"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
             <div className="text-center text-white">
               <motion.div
-                className="w-12 h-12 border-4 border-purple-500 border-t-transparent rounded-full mx-auto mb-4"
+                className={cn(
+                  "w-12 h-12 border-4 border-t-transparent rounded-full mx-auto mb-4",
+                  isYouTube ? "border-red-500" : "border-purple-500"
+                )}
                 animate={{ rotate: 360 }}
                 transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
               />
-              <p className="text-lg font-medium">Carregando vídeo...</p>
+              <p className="text-lg font-medium">
+                {isYouTube ? "Carregando YouTube..." : "Carregando vídeo..."}
+              </p>
+              {isYouTube && (
+                <p className="text-sm text-gray-300 mt-2">
+                  Conectando com YouTube Player
+                </p>
+              )}
             </div>
           </motion.div>
         )}
@@ -437,10 +485,32 @@ export function VideoPlayer({
 
       {/* YouTube Video Info */}
       {isYouTube && !isLoading && (
-        <div className="absolute top-4 left-4 bg-red-600 text-white px-3 py-1 rounded-full text-sm font-medium flex items-center gap-2">
+        <motion.div 
+          className="absolute top-4 left-4 bg-red-600 text-white px-3 py-1 rounded-full text-sm font-medium flex items-center gap-2 shadow-lg"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.5, duration: 0.3 }}
+        >
           <span>📺</span>
           <span>YouTube</span>
-        </div>
+        </motion.div>
+      )}
+
+      {/* Aspect Ratio Fallback for older browsers */}
+      {!isFullscreen && (
+        <style jsx>{`
+          .video-player::before {
+            content: '';
+            display: block;
+            padding-top: ${aspectRatioPercent}%;
+          }
+          
+          @supports (aspect-ratio: 16 / 9) {
+            .video-player::before {
+              display: none;
+            }
+          }
+        `}</style>
       )}
 
       <style jsx>{`
