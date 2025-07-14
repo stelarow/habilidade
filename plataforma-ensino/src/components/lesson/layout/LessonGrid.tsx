@@ -2,7 +2,8 @@
 
 import React from 'react'
 import { cn } from '@/lib/utils'
-import { GridArea, LayoutState, Breakpoint } from '@/types/lesson'
+import type { GridArea, LayoutState } from '@/types/lesson'
+import { Breakpoint } from '@/types/lesson'
 
 interface LessonGridProps {
   children: React.ReactNode

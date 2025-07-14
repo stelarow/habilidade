@@ -70,21 +70,6 @@ export function QuizInterface({
     }
   }, [quiz.timeLimit, isStarted, isCompleted])
 
-  useEffect(() => {
-    if (timeRemaining !== null && timeRemaining > 0 && isStarted && !isCompleted) {
-      const timer = setTimeout(() => {
-        setTimeRemaining(timeRemaining - 1)
-      }, 1000)
-      return () => clearTimeout(timer)
-    } else if (timeRemaining === 0) {
-      handleQuizComplete()
-    }
-  }, [timeRemaining, isStarted, isCompleted, handleQuizComplete])
-
-  // Current question
-  const currentQuestion = questions[currentQuestionIndex]
-  const isLastQuestion = currentQuestionIndex === questions.length - 1
-
   // Calculate score
   const currentScore = answers.length > 0 
     ? Math.round((answers.filter(a => a.isCorrect).length / answers.length) * 100)
@@ -94,6 +79,29 @@ export function QuizInterface({
   const earnedScore = answers.reduce((sum, a) => 
     sum + (a.isCorrect ? questions.find(q => q.id === a.questionId)?.points || 0 : 0), 0
   )
+
+  // Current question e isLastQuestion
+  const currentQuestion = questions[currentQuestionIndex]
+  const isLastQuestion = currentQuestionIndex === questions.length - 1
+
+  // Complete quiz
+  const handleQuizComplete = useCallback((finalAnswers = answers) => {
+    setIsCompleted(true)
+    setShowFeedback(false)
+    const finalScore = Math.round((earnedScore / totalPossibleScore) * 100)
+    onComplete?.(finalScore, finalAnswers)
+  }, [earnedScore, totalPossibleScore, onComplete, answers]);
+
+  useEffect(() => {
+    if (timeRemaining !== null && timeRemaining > 0 && isStarted && !isCompleted) {
+      const timer = setTimeout(() => {
+        setTimeRemaining(timeRemaining - 1)
+      }, 1000)
+      return () => clearTimeout(timer)
+    } else if (timeRemaining === 0) {
+      handleQuizComplete()
+    }
+  }, [timeRemaining, isStarted, isCompleted])
 
   // Start quiz
   const handleStartQuiz = () => {
@@ -137,7 +145,8 @@ export function QuizInterface({
     // Auto-advance after showing feedback
     setTimeout(() => {
       if (isLastQuestion) {
-        handleQuizComplete()
+        // Call handleQuizComplete with final answers including current attempt
+        handleQuizComplete([...answers, attempt])
       } else {
         setCurrentQuestionIndex(prev => prev + 1)
         setSelectedAnswer(null)
@@ -146,14 +155,6 @@ export function QuizInterface({
       }
     }, 2000)
   }, [selectedAnswer, currentQuestion, answers, isLastQuestion, onProgressUpdate, currentScore, questionStartTime, currentQuestionIndex, handleQuizComplete])
-
-  // Complete quiz
-  const handleQuizComplete = () => {
-    setIsCompleted(true)
-    setShowFeedback(false)
-    const finalScore = Math.round((earnedScore / totalPossibleScore) * 100)
-    onComplete?.(finalScore, answers)
-  }
 
   // Format time
   const formatTime = (seconds: number) => {
