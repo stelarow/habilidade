@@ -18,6 +18,16 @@ const nextConfig = {
     optimizePackageImports: ['@supabase/supabase-js', 'phosphor-react'],
   },
   
+  // Configure webpack for PDF.js
+  webpack: (config) => {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      canvas: false,
+      fs: false,
+    };
+    return config;
+  },
+  
   // Security headers
   async headers() {
     return [

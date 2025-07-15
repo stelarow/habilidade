@@ -1,15 +1,26 @@
 'use client'
 
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { Document, Page, pdfjs } from 'react-pdf'
 import { PDFData } from '@/types/lesson'
 import { cn } from '@/lib/utils'
+
+// Configure PDF.js worker
+if (typeof window !== 'undefined') {
+  pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
+}
+
+import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
+import 'react-pdf/dist/esm/Page/TextLayer.css';
 
 interface PDFViewerProps {
   pdf: PDFData
   className?: string
   onProgressUpdate?: (progress: number) => void
 }
+
+type PDFFile = string | File | null;
 
 /**
  * Enhanced PDFViewer - In-page PDF reading component
@@ -31,8 +42,28 @@ export function PDFViewer({ pdf, className, onProgressUpdate }: PDFViewerProps) 
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
   const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const [numPages, setNumPages] = useState<number | null>(null)
+  const [pageWidth, setPageWidth] = useState<number>(600)
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
-  const totalPages = pdf.pageCount || 10 // Fallback for simulation
+  const totalPages = numPages || pdf.pageCount || 10
+
+  // PDF document callbacks
+  const onDocumentLoadSuccess = useCallback(({ numPages }: { numPages: number }) => {
+    setNumPages(numPages)
+    setIsLoading(false)
+    setError(null)
+  }, [])
+
+  const onDocumentLoadError = useCallback((error: Error) => {
+    setError(`Erro ao carregar PDF: ${error.message}`)
+    setIsLoading(false)
+  }, [])
+
+  const onPageLoadSuccess = useCallback(() => {
+    setIsLoading(false)
+  }, [])
 
   const handlePageChange = useCallback((page: number) => {
     if (page >= 1 && page <= totalPages) {
@@ -41,6 +72,34 @@ export function PDFViewer({ pdf, className, onProgressUpdate }: PDFViewerProps) 
       onProgressUpdate?.(progress)
     }
   }, [totalPages, onProgressUpdate])
+
+  // Update page width for responsive design
+  useEffect(() => {
+    const updatePageWidth = () => {
+      const containerWidth = window.innerWidth
+      if (containerWidth < 768) {
+        setPageWidth(containerWidth - 40)
+      } else if (containerWidth < 1024) {
+        setPageWidth(700)
+      } else {
+        setPageWidth(800)
+      }
+    }
+
+    updatePageWidth()
+    window.addEventListener('resize', updatePageWidth)
+    return () => window.removeEventListener('resize', updatePageWidth)
+  }, [])
+
+  // Download PDF function
+  const handleDownload = useCallback(() => {
+    if (pdf.downloadable && pdf.url) {
+      const link = document.createElement('a')
+      link.href = pdf.url
+      link.download = pdf.filename || 'document.pdf'
+      link.click()
+    }
+  }, [pdf])
 
   const handleZoomChange = useCallback((newZoom: number) => {
     setZoom(Math.max(50, Math.min(200, newZoom)))
@@ -73,51 +132,64 @@ export function PDFViewer({ pdf, className, onProgressUpdate }: PDFViewerProps) 
 
           {/* Right Controls */}
           <div className="flex items-center space-x-2">
-            {/* Search Toggle */}
+            {/* Search Toggle - Enhanced with Magic UI */}
             <button
               onClick={() => setIsSearchOpen(!isSearchOpen)}
-              className="lesson-btn-icon"
+              className="relative group w-10 h-10 rounded-lg bg-white/10 hover:bg-white/20 transition-all duration-300 flex items-center justify-center hover:scale-110 active:scale-95"
               aria-label="Buscar no PDF"
             >
-              🔍
+              <span className="relative z-10 text-lg">🔍</span>
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-blue-500/20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="absolute inset-0 bg-white/10 rounded-lg opacity-0 group-active:opacity-100 transition-opacity duration-100" />
             </button>
 
             {/* Zoom Controls */}
             <div className="hidden sm:flex items-center space-x-1">
               <button
                 onClick={() => handleZoomChange(zoom - 25)}
-                className="lesson-btn-icon"
+                className="relative group w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 transition-all duration-300 flex items-center justify-center hover:scale-110 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                 disabled={zoom <= 50}
                 aria-label="Diminuir zoom"
               >
-                ➖
+                <span className="relative z-10">➖</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-red-500/20 to-orange-500/20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </button>
-              <span className="lesson-text-caption min-w-12 text-center">
+              <span className="lesson-text-caption min-w-12 text-center px-2 py-1 bg-white/10 rounded-lg">
                 {zoom}%
               </span>
               <button
                 onClick={() => handleZoomChange(zoom + 25)}
-                className="lesson-btn-icon"
+                className="relative group w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 transition-all duration-300 flex items-center justify-center hover:scale-110 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                 disabled={zoom >= 200}
                 aria-label="Aumentar zoom"
               >
-                ➕
+                <span className="relative z-10">➕</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-green-500/20 to-blue-500/20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </button>
             </div>
 
-            {/* Fullscreen Toggle */}
+            {/* Fullscreen Toggle - Enhanced with Magic UI */}
             <button
               onClick={toggleFullscreen}
-              className="lesson-btn-icon"
+              className="relative group w-10 h-10 rounded-lg bg-white/10 hover:bg-white/20 transition-all duration-300 flex items-center justify-center hover:scale-110 active:scale-95"
               aria-label={isFullscreen ? "Sair da tela cheia" : "Tela cheia"}
             >
-              {isFullscreen ? '🗗' : '🗖'}
+              <span className="relative z-10 text-lg">{isFullscreen ? '🗗' : '🗖'}</span>
+              <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="absolute inset-0 bg-white/10 rounded-lg opacity-0 group-active:opacity-100 transition-opacity duration-100" />
             </button>
 
-            {/* Download Button */}
+            {/* Download Button - Enhanced with Magic UI */}
             {pdf.downloadable && (
-              <button className="lesson-btn-secondary text-sm">
-                📥 Download
+              <button 
+                onClick={handleDownload}
+                className="relative group px-4 py-2 rounded-lg bg-gradient-to-r from-purple-500 to-blue-500 text-white text-sm font-medium hover:shadow-lg transition-all duration-300 hover:scale-105 active:scale-95"
+              >
+                <span className="relative z-10 flex items-center gap-2">
+                  📥 Download
+                </span>
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-0 bg-white/20 rounded-lg opacity-0 group-active:opacity-100 transition-opacity duration-100" />
               </button>
             )}
           </div>
@@ -155,71 +227,68 @@ export function PDFViewer({ pdf, className, onProgressUpdate }: PDFViewerProps) 
       {/* PDF Content Area */}
       <div className="lesson-pdf-content">
         <div className="relative flex-1 bg-gray-100 rounded-lg overflow-hidden">
-          {/* Simulated PDF Pages */}
           <div 
             className="w-full h-full overflow-auto p-4"
             style={{ transform: `scale(${zoom / 100})`, transformOrigin: 'top left' }}
           >
-            <div className="max-w-2xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
-              {/* Simulated PDF Page */}
-              <div className="aspect-[210/297] bg-white p-8 text-gray-800">
-                <div className="space-y-4">
-                  <h1 className="text-2xl font-bold text-gray-900 mb-6">
-                    {pdf.title} - Página {currentPage}
-                  </h1>
-                  
-                  <div className="space-y-4 text-gray-700">
-                    <p className="leading-relaxed">
-                      Este é um simulador de visualização de PDF. O conteúdo real seria carregado 
-                      de {pdf.filename} usando uma biblioteca como react-pdf.
-                    </p>
-                    
-                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                      <h3 className="font-semibold text-blue-900 mb-2">
-                        📚 Implementação Necessária
-                      </h3>
-                      <p className="text-blue-800 text-sm">
-                        Para funcionalidade completa, integre com react-pdf ou pdfjs-dist:
-                      </p>
-                      <code className="block mt-2 text-xs bg-blue-100 p-2 rounded">
-                        npm install react-pdf pdfjs-dist
-                      </code>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-4 mt-6">
-                      <div className="bg-gray-50 p-4 rounded-lg">
-                        <h4 className="font-medium mb-2">📖 Características</h4>
-                        <ul className="text-sm space-y-1">
-                          <li>• Navegação por páginas</li>
-                          <li>• Controle de zoom</li>
-                          <li>• Busca no texto</li>
-                          <li>• Modo tela cheia</li>
-                        </ul>
-                      </div>
-                      <div className="bg-gray-50 p-4 rounded-lg">
-                        <h4 className="font-medium mb-2">⚡ Performance</h4>
-                        <ul className="text-sm space-y-1">
-                          <li>• Carregamento lazy</li>
-                          <li>• Cache de páginas</li>
-                          <li>• Otimização mobile</li>
-                          <li>• Progresso de leitura</li>
-                        </ul>
-                      </div>
-                    </div>
-
-                    {searchTerm && (
-                      <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-                        <p className="text-yellow-800">
-                          🔍 Buscando por: &ldquo;<strong>{searchTerm}</strong>&rdquo;
-                        </p>
-                        <p className="text-sm text-yellow-700 mt-1">
-                          Função de busca seria implementada com a biblioteca PDF real.
-                        </p>
-                      </div>
-                    )}
+            <div className="mx-auto bg-white shadow-lg rounded-lg overflow-hidden" style={{ width: 'fit-content' }}>
+              {/* Loading State */}
+              {isLoading && (
+                <div className="flex items-center justify-center h-96">
+                  <div className="text-center">
+                    <motion.div
+                      className="w-8 h-8 border-4 border-purple-500 border-t-transparent rounded-full mx-auto mb-4"
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                    />
+                    <p className="text-gray-600">Carregando PDF...</p>
                   </div>
                 </div>
-              </div>
+              )}
+
+              {/* Error State */}
+              {error && (
+                <div className="flex items-center justify-center h-96">
+                  <div className="text-center text-red-600">
+                    <div className="text-4xl mb-4">⚠️</div>
+                    <p className="text-lg font-medium mb-2">Erro ao carregar PDF</p>
+                    <p className="text-sm text-gray-600">{error}</p>
+                  </div>
+                </div>
+              )}
+
+              {/* PDF Document */}
+              {!error && (
+                <Document
+                  file={pdf.url}
+                  onLoadSuccess={onDocumentLoadSuccess}
+                  onLoadError={onDocumentLoadError}
+                  loading={null}
+                  error={null}
+                  className="pdf-document"
+                >
+                  <Page
+                    pageNumber={currentPage}
+                    width={pageWidth}
+                    onLoadSuccess={onPageLoadSuccess}
+                    loading={null}
+                    error={null}
+                    className="pdf-page"
+                  />
+                </Document>
+              )}
+
+              {/* Search Results Overlay */}
+              {searchTerm && !error && (
+                <div className="absolute top-4 left-4 right-4 bg-yellow-100 border border-yellow-300 rounded-lg p-3 z-10">
+                  <p className="text-yellow-800 text-sm">
+                    🔍 Buscando por: &ldquo;<strong>{searchTerm}</strong>&rdquo;
+                  </p>
+                  <p className="text-xs text-yellow-700 mt-1">
+                    Função de busca em desenvolvimento.
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -281,4 +350,30 @@ export function PDFViewer({ pdf, className, onProgressUpdate }: PDFViewerProps) 
       </div>
     </div>
   )
+}
+
+// Add PDF-specific styles
+const pdfStyles = `
+  .pdf-document {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .pdf-page {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+  }
+  
+  .pdf-page > div {
+    border-radius: 8px;
+    overflow: hidden;
+  }
+`
+
+// Inject styles
+if (typeof document !== 'undefined') {
+  const styleSheet = document.createElement('style')
+  styleSheet.textContent = pdfStyles
+  document.head.appendChild(styleSheet)
 }
