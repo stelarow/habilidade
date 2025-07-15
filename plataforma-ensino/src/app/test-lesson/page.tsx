@@ -9,6 +9,7 @@ import CentralizedLessonLayout, {
 import { VideoPlayer } from '@/components/lesson/video/VideoPlayer'
 import { PDFViewer } from '@/components/lesson/pdf/PDFViewer'
 import { EnhancedQuizInterface } from '@/components/lesson/quiz/EnhancedQuizInterface'
+import { FloatingProgressMenu } from '@/components/lesson/progress/FloatingProgressMenu'
 import dynamic from 'next/dynamic'
 
 // Client-side only PDF viewer to avoid SSR issues
@@ -31,7 +32,6 @@ const ClientPDFViewer = dynamic(
   }
 )
 import { ExercisePanel } from '@/components/lesson/exercises/ExercisePanel'
-import { ProgressTracker } from '@/components/lesson/progress/ProgressTracker'
 import { LessonProvider } from '@/contexts/LessonContext'
 import { LessonContent, LessonProgressData } from '@/types/lesson'
 
@@ -190,8 +190,20 @@ export default function TestLessonPage() {
         </div>
       </div>
 
-      {/* Main Centralized Layout */}
-      <CentralizedLessonLayout
+      {/* Main Layout with Floating Sidebar */}
+      <div className="relative">
+        {/* Floating Progress Menu - Sidebar */}
+        <div className="hidden xl:block fixed right-6 top-1/2 transform -translate-y-1/2 z-50">
+          <FloatingProgressMenu 
+            progress={progress}
+            onNavigate={(section) => {
+              scrollToSection(section)
+            }}
+          />
+        </div>
+
+        {/* Main Centralized Layout */}
+        <CentralizedLessonLayout
         lesson={testLessonContent}
         progress={{
           overall: progress.overallProgress.percentageComplete,
@@ -213,50 +225,47 @@ export default function TestLessonPage() {
             />
           ),
           
-          progress: (
-            <ProgressTracker 
-              progress={progress} 
-              size="md" 
-              showDetails={true}
-            />
-          ),
           
           video: testLessonContent.video && (
-            <VideoPlayer
-              video={testLessonContent.video}
-              onProgressUpdate={handleVideoProgress}
-              onComplete={handleVideoComplete}
-              startTime={progress.videoProgress.lastPosition}
-            />
+            <div id="section-video">
+              <VideoPlayer
+                video={testLessonContent.video}
+                onProgressUpdate={handleVideoProgress}
+                onComplete={handleVideoComplete}
+                startTime={progress.videoProgress.lastPosition}
+              />
+            </div>
           ),
           
           pdf: testLessonContent.pdf && (
-            <ClientPDFViewer 
-              pdf={testLessonContent.pdf}
-              onProgressUpdate={(progress) => {
-                setProgress(prev => ({
-                  ...prev,
-                  pdfProgress: {
-                    ...prev.pdfProgress,
-                    percentageRead: progress
-                  },
-                  overallProgress: {
-                    ...prev.overallProgress,
-                    componentProgress: prev.overallProgress.componentProgress.map(comp =>
-                      comp.component === 'pdf' 
-                        ? { ...comp, percentage: Math.min(progress, 100) }
-                        : comp
-                    )
-                  }
-                }))
-                // Update overall progress
-                updateOverallProgress()
-              }}
-            />
+            <div id="section-pdf">
+              <ClientPDFViewer 
+                pdf={testLessonContent.pdf}
+                onProgressUpdate={(progress) => {
+                  setProgress(prev => ({
+                    ...prev,
+                    pdfProgress: {
+                      ...prev.pdfProgress,
+                      percentageRead: progress
+                    },
+                    overallProgress: {
+                      ...prev.overallProgress,
+                      componentProgress: prev.overallProgress.componentProgress.map(comp =>
+                        comp.component === 'pdf' 
+                          ? { ...comp, percentage: Math.min(progress, 100) }
+                          : comp
+                      )
+                    }
+                  }))
+                  // Update overall progress
+                  updateOverallProgress()
+                }}
+              />
+            </div>
           ),
           
           exercises: testLessonContent.exercises && (
-            <div className="space-y-4">
+            <div id="section-exercises" className="space-y-4">
               <ExercisePanel 
                 exercises={testLessonContent.exercises}
               />
@@ -301,23 +310,37 @@ export default function TestLessonPage() {
           ),
           
           quiz: testLessonContent.quiz && (
-            <EnhancedQuizInterface
-              quiz={testLessonContent.quiz}
-              onComplete={handleQuizComplete}
-              onProgressUpdate={(questionIndex, score) => {
-                setProgress(prev => ({
-                  ...prev,
-                  quizProgress: {
-                    ...prev.quizProgress,
-                    currentQuestion: questionIndex,
-                    score
-                  }
-                }))
-              }}
-            />
+            <div id="section-quiz">
+              <EnhancedQuizInterface
+                quiz={testLessonContent.quiz}
+                onComplete={handleQuizComplete}
+                onProgressUpdate={(questionIndex, score) => {
+                  setProgress(prev => ({
+                    ...prev,
+                    quizProgress: {
+                      ...prev.quizProgress,
+                      currentQuestion: questionIndex,
+                      score
+                    }
+                  }))
+                }}
+              />
+            </div>
           )
         }}
       </CentralizedLessonLayout>
+      </div>
+
+      {/* Mobile Progress Menu - Shows on smaller screens */}
+      <div className="xl:hidden fixed bottom-6 right-6 z-50">
+        <FloatingProgressMenu 
+          progress={progress}
+          onNavigate={(section) => {
+            scrollToSection(section)
+          }}
+          className="w-80 max-h-96 overflow-y-auto"
+        />
+      </div>
 
       {/* Debug Information */}
       <div className="lesson-background py-8">
