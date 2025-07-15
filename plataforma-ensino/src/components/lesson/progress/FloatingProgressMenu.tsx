@@ -94,12 +94,13 @@ const FloatingProgressMenuComponent = ({
   }, [onNavigate])
 
   // Memoized Progress circle component to prevent unnecessary re-renders
-  const ProgressCircle = useMemo(() => memo(({ percentage, size = 50, strokeWidth = 4, color = '#d400ff' }: {
-    percentage: number
-    size?: number
-    strokeWidth?: number
-    color?: string
-  }) => {
+  const ProgressCircle = useMemo(() => {
+    const MemoizedProgressCircle = memo(({ percentage, size = 50, strokeWidth = 4, color = '#d400ff' }: {
+      percentage: number
+      size?: number
+      strokeWidth?: number
+      color?: string
+    }) => {
     const radius = (size - strokeWidth) / 2
     const circumference = radius * 2 * Math.PI
     const strokeDasharray = `${circumference} ${circumference}`
@@ -141,7 +142,10 @@ const FloatingProgressMenuComponent = ({
         </div>
       </div>
     )
-  }), [])
+    
+    MemoizedProgressCircle.displayName = 'ProgressCircle'
+    return MemoizedProgressCircle
+  }, [])
 
   // Magic card effect for the menu container
   const MagicCard = ({ children }: { children: React.ReactNode }) => (
@@ -363,7 +367,7 @@ const FloatingProgressMenuComponent = ({
 }
 
 // Export memoized component with custom comparison to prevent unnecessary re-renders
-export const FloatingProgressMenu = memo(FloatingProgressMenuComponent, (prevProps, nextProps) => {
+const MemoizedFloatingProgressMenu = memo(FloatingProgressMenuComponent, (prevProps, nextProps) => {
   // Custom comparison to only re-render when progress values actually change
   const prevProgress = prevProps.progress
   const nextProgress = nextProps.progress
@@ -379,3 +383,6 @@ export const FloatingProgressMenu = memo(FloatingProgressMenuComponent, (prevPro
     prevProps.className === nextProps.className
   )
 })
+
+MemoizedFloatingProgressMenu.displayName = 'FloatingProgressMenu'
+export const FloatingProgressMenu = MemoizedFloatingProgressMenu
