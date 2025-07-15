@@ -30,7 +30,7 @@ export async function POST(
         title,
         course_id,
         order_index,
-        course:courses(id, title, slug)
+        courses!inner(id, title, slug)
       `)
       .eq('id', lessonId)
       .single()
@@ -157,7 +157,7 @@ export async function POST(
         id: nextLesson?.id,
         title: nextLesson?.title
       } : null,
-      courseSlug: lesson.course?.slug
+      courseSlug: lesson.courses?.slug
     })
 
   } catch (error) {
