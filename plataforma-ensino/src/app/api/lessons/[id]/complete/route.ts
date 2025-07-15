@@ -29,15 +29,28 @@ export async function POST(
         id,
         title,
         course_id,
-        order_index,
-        courses!inner(id, title, slug)
+        order_index
       `)
       .eq('id', lessonId)
       .single()
-
+      
     if (lessonError || !lesson) {
       return NextResponse.json(
         { error: 'Lesson not found' },
+        { status: 404 }
+      )
+    }
+
+    // Get course info separately
+    const { data: course, error: courseError } = await supabase
+      .from('courses')
+      .select('id, title, slug')
+      .eq('id', lesson.course_id)
+      .single()
+
+    if (courseError || !course) {
+      return NextResponse.json(
+        { error: 'Course not found' },
         { status: 404 }
       )
     }
@@ -157,7 +170,7 @@ export async function POST(
         id: nextLesson?.id,
         title: nextLesson?.title
       } : null,
-      courseSlug: lesson.courses?.slug
+      courseSlug: course?.slug
     })
 
   } catch (error) {
