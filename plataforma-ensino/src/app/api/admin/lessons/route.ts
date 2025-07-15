@@ -169,7 +169,9 @@ export async function POST(request: NextRequest) {
       let slug = baseSlug
       let counter = 1
 
-      while (true) {
+      const maxAttempts = 1000 // Safety limit to prevent infinite loop
+
+      while (counter <= maxAttempts) {
         // Check if slug exists for this course
         const { data: existingLesson } = await supabase
           .from('lessons')
@@ -186,6 +188,9 @@ export async function POST(request: NextRequest) {
         counter++
         slug = `${baseSlug}-${counter}`
       }
+
+      // Fallback if we hit the limit
+      return `${baseSlug}-${Date.now()}`
     }
 
     const slug = await generateUniqueSlug(title, course_id)
