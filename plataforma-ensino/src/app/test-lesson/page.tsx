@@ -381,9 +381,9 @@ const testLessonContent: LessonContent = {
 
   // PDF from the actual file path provided
   pdf: {
-    url: "/PDF/Curso-teste/Aula-teste/Capitulo 2.pdf", // Actual file path
+    url: "/pdf/capitulo2.pdf", // Simplified path in public directory
     title: "Capítulo 2: Fundamentos do Desenvolvimento Web",
-    filename: "Capitulo 2.pdf",
+    filename: "capitulo2.pdf",
     size: 2048000, // Will be detected from actual file
     pageCount: 20, // Estimated, will be detected from actual file
     downloadable: true
