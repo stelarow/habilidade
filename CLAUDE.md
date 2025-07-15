@@ -148,3 +148,7 @@ New courses follow the schema in `src/data/coursesSchema.js`:
 
 - **Main Website**: Production-ready with 8 detailed courses
 - **Learning Platform**: MVP in development, database schema complete, UI components partially migrated
+
+## Development Best Practices
+
+- No final sempre atualize o git main para dar deploy automatico no netlify
