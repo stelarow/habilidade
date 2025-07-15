@@ -205,10 +205,12 @@ const TimeTrackerComponent = ({
             style={{
               background: 'conic-gradient(from 0deg, transparent, rgba(34, 197, 94, 0.3), transparent, rgba(34, 197, 94, 0.3), transparent)',
             }}
-            animate={{ rotate: 360 }}
+            animate={{ 
+              rotate: 360,
+              opacity: [0, 0.5, 0]
+            }}
             transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
             initial={{ opacity: 0 }}
-            animate={{ opacity: [0, 0.5, 0] }}
             exit={{ opacity: 0 }}
           />
         )}
