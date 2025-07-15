@@ -103,7 +103,7 @@ export function ExercisePanel({ exercises, className, onExerciseSubmit }: Exerci
                       <>
                         <input
                           type="file"
-                          ref={el => fileInputRefs.current[exercise.id] = el}
+                          ref={el => { fileInputRefs.current[exercise.id] = el }}
                           onChange={(e) => handleFileChange(exercise.id, e)}
                           accept="image/*,.pdf,.doc,.docx,.txt"
                           style={{ display: 'none' }}
