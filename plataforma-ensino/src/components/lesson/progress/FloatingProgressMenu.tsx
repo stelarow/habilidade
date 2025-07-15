@@ -101,47 +101,48 @@ const FloatingProgressMenuComponent = ({
       strokeWidth?: number
       color?: string
     }) => {
-    const radius = (size - strokeWidth) / 2
-    const circumference = radius * 2 * Math.PI
-    const strokeDasharray = `${circumference} ${circumference}`
-    const strokeDashoffset = circumference - (percentage / 100) * circumference
+      const radius = (size - strokeWidth) / 2
+      const circumference = radius * 2 * Math.PI
+      const strokeDasharray = `${circumference} ${circumference}`
+      const strokeDashoffset = circumference - (percentage / 100) * circumference
 
-    return (
-      <div className="relative">
-        <svg width={size} height={size} className="transform -rotate-90">
-          {/* Background circle */}
-          <circle
-            cx={size / 2}
-            cy={size / 2}
-            r={radius}
-            stroke="rgba(255,255,255,0.1)"
-            strokeWidth={strokeWidth}
-            fill="transparent"
-          />
-          {/* Progress circle */}
-          <motion.circle
-            cx={size / 2}
-            cy={size / 2}
-            r={radius}
-            stroke={color}
-            strokeWidth={strokeWidth}
-            fill="transparent"
-            strokeDasharray={strokeDasharray}
-            initial={{ strokeDashoffset: circumference }}
-            animate={{ strokeDashoffset }}
-            transition={{ duration: 1, ease: "easeInOut" }}
-            style={{
-              filter: `drop-shadow(0 0 6px ${color}40)`
-            }}
-          />
-        </svg>
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-xs font-bold text-white">
-            {Math.round(percentage)}%
-          </span>
+      return (
+        <div className="relative">
+          <svg width={size} height={size} className="transform -rotate-90">
+            {/* Background circle */}
+            <circle
+              cx={size / 2}
+              cy={size / 2}
+              r={radius}
+              stroke="rgba(255,255,255,0.1)"
+              strokeWidth={strokeWidth}
+              fill="transparent"
+            />
+            {/* Progress circle */}
+            <motion.circle
+              cx={size / 2}
+              cy={size / 2}
+              r={radius}
+              stroke={color}
+              strokeWidth={strokeWidth}
+              fill="transparent"
+              strokeDasharray={strokeDasharray}
+              initial={{ strokeDashoffset: circumference }}
+              animate={{ strokeDashoffset }}
+              transition={{ duration: 1, ease: "easeInOut" }}
+              style={{
+                filter: `drop-shadow(0 0 6px ${color}40)`
+              }}
+            />
+          </svg>
+          <div className="absolute inset-0 flex items-center justify-center">
+            <span className="text-xs font-bold text-white">
+              {Math.round(percentage)}%
+            </span>
+          </div>
         </div>
-      </div>
-    )
+      )
+    })
     
     MemoizedProgressCircle.displayName = 'ProgressCircle'
     return MemoizedProgressCircle
