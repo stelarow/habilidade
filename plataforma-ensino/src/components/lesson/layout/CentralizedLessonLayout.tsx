@@ -14,7 +14,7 @@ interface CentralizedLessonLayoutProps {
   };
   children: {
     title: React.ReactNode;
-    progress: React.ReactNode;
+    progress?: React.ReactNode;
     video?: React.ReactNode;
     pdf?: React.ReactNode;
     exercises?: React.ReactNode;
@@ -50,17 +50,19 @@ export default function CentralizedLessonLayout({
             {children.title}
           </section>
 
-          {/* Progress Section */}
-          <section className="lesson-slide-up" style={{ animationDelay: '0.1s' }}>
-            <div className="lesson-progress-card">
-              <div className="lesson-progress-header">
-                Progresso da Aula
+          {/* Progress Section - Only show if progress component is provided */}
+          {children.progress && (
+            <section className="lesson-slide-up" style={{ animationDelay: '0.1s' }}>
+              <div className="lesson-progress-card">
+                <div className="lesson-progress-header">
+                  Progresso da Aula
+                </div>
+                <div className="lesson-progress-content">
+                  {children.progress}
+                </div>
               </div>
-              <div className="lesson-progress-content">
-                {children.progress}
-              </div>
-            </div>
-          </section>
+            </section>
+          )}
 
           {/* Video Section */}
           {children.video && lesson.video && (

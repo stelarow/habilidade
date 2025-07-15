@@ -101,7 +101,7 @@ export function QuizInterface({
     } else if (timeRemaining === 0) {
       handleQuizComplete()
     }
-  }, [timeRemaining, isStarted, isCompleted])
+  }, [timeRemaining, isStarted, isCompleted, handleQuizComplete])
 
   // Start quiz
   const handleStartQuiz = () => {

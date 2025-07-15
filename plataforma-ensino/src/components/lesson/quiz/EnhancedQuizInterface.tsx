@@ -74,7 +74,7 @@ export function EnhancedQuizInterface({
     } else if (timeRemaining === 0) {
       handleQuizComplete()
     }
-  }, [timeRemaining, isStarted, isCompleted])
+  }, [timeRemaining, isStarted, isCompleted, handleQuizComplete])
 
   // Complete quiz function
   const handleQuizComplete = useCallback((finalAnswers = answers) => {
