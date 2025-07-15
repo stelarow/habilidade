@@ -166,6 +166,44 @@ export default function TestLessonPage() {
     // Update overall progress
     updateOverallProgress()
   }, [markComponentComplete, updateOverallProgress])
+  
+  const handleExerciseSubmit = useCallback(async (exerciseId: string, file: File) => {
+    try {
+      // Simulate file upload process
+      console.log(`Submitting exercise ${exerciseId} with file:`, file.name)
+      
+      // In a real implementation, this would upload to a server
+      // For now, we'll just simulate the process
+      await new Promise(resolve => setTimeout(resolve, 2000))
+      
+      // Mark exercise as completed
+      setProgress(prev => ({
+        ...prev,
+        exerciseProgress: {
+          ...prev.exerciseProgress,
+          completedExercises: [...prev.exerciseProgress.completedExercises, exerciseId],
+          submittedFiles: [...prev.exerciseProgress.submittedFiles, {
+            exerciseId,
+            fileName: file.name,
+            fileUrl: URL.createObjectURL(file), // For demo purposes
+            submittedAt: new Date().toISOString(),
+            status: 'pending' as const
+          }],
+          completionPercentage: Math.round(
+            ((prev.exerciseProgress.completedExercises.length + 1) / prev.exerciseProgress.totalExercises) * 100
+          )
+        }
+      }))
+      
+      alert(`Exercício "${exerciseId}" enviado com sucesso!`)
+      
+      // Update overall progress
+      updateOverallProgress()
+    } catch (error) {
+      console.error('Error submitting exercise:', error)
+      throw error
+    }
+  }, [updateOverallProgress])
 
   return (
     <LessonProvider>
@@ -268,6 +306,7 @@ export default function TestLessonPage() {
             <div id="section-exercises" className="space-y-4">
               <ExercisePanel 
                 exercises={testLessonContent.exercises}
+                onExerciseSubmit={handleExerciseSubmit}
               />
               
               {/* Materials Section */}

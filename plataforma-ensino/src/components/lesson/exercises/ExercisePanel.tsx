@@ -1,11 +1,12 @@
 'use client'
 
-import React from 'react'
+import React, { useState, useRef } from 'react'
 import { ExerciseData } from '@/types/lesson'
 
 interface ExercisePanelProps {
   exercises: ExerciseData[]
   className?: string
+  onExerciseSubmit?: (exerciseId: string, file: File) => void
 }
 
 /**
@@ -23,9 +24,37 @@ interface ExercisePanelProps {
  * - Instructor feedback display
  * - Progress tracking per exercise
  */
-export function ExercisePanel({ exercises, className }: ExercisePanelProps) {
+export function ExercisePanel({ exercises, className, onExerciseSubmit }: ExercisePanelProps) {
   const completedCount = exercises.filter(ex => ex.status === 'completed').length
   const inProgressCount = exercises.filter(ex => ex.status === 'in_progress').length
+  const [uploadingExercise, setUploadingExercise] = useState<string | null>(null)
+  const fileInputRefs = useRef<{ [key: string]: HTMLInputElement | null }>({})
+  
+  const handleFileUpload = (exerciseId: string) => {
+    const input = fileInputRefs.current[exerciseId]
+    if (input) {
+      input.click()
+    }
+  }
+  
+  const handleFileChange = async (exerciseId: string, event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    if (file && onExerciseSubmit) {
+      setUploadingExercise(exerciseId)
+      try {
+        await onExerciseSubmit(exerciseId, file)
+        // Reset file input
+        if (event.target) {
+          event.target.value = ''
+        }
+      } catch (error) {
+        console.error('Error submitting exercise:', error)
+        alert('Erro ao enviar exercício. Tente novamente.')
+      } finally {
+        setUploadingExercise(null)
+      }
+    }
+  }
   
   return (
     <div className={`exercise-panel-container ${className || ''}`}>
@@ -71,7 +100,26 @@ export function ExercisePanel({ exercises, className }: ExercisePanelProps) {
                       <button className="download-btn">📥 Download</button>
                     )}
                     {exercise.allowsUpload && (
-                      <button className="upload-btn">📤 Submit</button>
+                      <>
+                        <input
+                          type="file"
+                          ref={el => fileInputRefs.current[exercise.id] = el}
+                          onChange={(e) => handleFileChange(exercise.id, e)}
+                          accept="image/*,.pdf,.doc,.docx,.txt"
+                          style={{ display: 'none' }}
+                        />
+                        <button 
+                          className="upload-btn"
+                          onClick={() => handleFileUpload(exercise.id)}
+                          disabled={uploadingExercise === exercise.id}
+                        >
+                          {uploadingExercise === exercise.id ? (
+                            <span>⏳ Enviando...</span>
+                          ) : (
+                            <span>📤 Enviar imagem do exercício completo</span>
+                          )}
+                        </button>
+                      </>
                     )}
                   </div>
                 </div>
@@ -184,18 +232,23 @@ export function ExercisePanel({ exercises, className }: ExercisePanelProps) {
         .exercise-actions {
           display: flex;
           gap: 0.5rem;
+          flex-wrap: wrap;
         }
         
         .download-btn,
         .upload-btn {
-          padding: 0.25rem 0.5rem;
+          padding: 0.5rem 0.75rem;
           border: 1px solid rgba(245, 158, 11, 0.5);
           background: rgba(245, 158, 11, 0.1);
           color: #fff;
-          border-radius: 4px;
+          border-radius: 6px;
           cursor: pointer;
-          font-size: 0.75rem;
-          transition: background-color 0.2s;
+          font-size: 0.8rem;
+          transition: all 0.2s;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          max-width: 200px;
         }
         
         .download-btn:hover,
@@ -206,10 +259,17 @@ export function ExercisePanel({ exercises, className }: ExercisePanelProps) {
         .upload-btn {
           background: rgba(34, 197, 94, 0.1);
           border-color: rgba(34, 197, 94, 0.5);
+          min-width: 180px;
         }
         
-        .upload-btn:hover {
+        .upload-btn:hover:not(:disabled) {
           background: rgba(34, 197, 94, 0.2);
+          transform: translateY(-1px);
+        }
+        
+        .upload-btn:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
         }
       `}</style>
     </div>

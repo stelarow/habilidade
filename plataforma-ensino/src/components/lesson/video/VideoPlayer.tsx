@@ -179,12 +179,13 @@ export function VideoPlayer({
 
   // Manual play handler for YouTube videos
   const handleManualPlay = () => {
+    const wasManuallyStarted = hasManuallyStarted
     setHasManuallyStarted(true)
     setIsPlaying(true)
     setIsActuallyPlaying(true)
     
-    // Start progress tracking simulation only when user manually plays
-    if (onProgressUpdate && !hasManuallyStarted) {
+    // Start progress tracking simulation only when user manually plays for the first time
+    if (onProgressUpdate && !wasManuallyStarted) {
       // Use actual video duration or reasonable fallback
       const videoDuration = video.duration || 1200 // Default to 20 minutes if no duration
       setDuration(videoDuration)
