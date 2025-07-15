@@ -80,6 +80,8 @@ export function VideoPlayer({
   const [hasCompleted, setHasCompleted] = useState(false)
   const [hasManuallyStarted, setHasManuallyStarted] = useState(false) // Track if user manually started video
   const [isActuallyPlaying, setIsActuallyPlaying] = useState(false) // Track actual YouTube play state
+  const [hasLoadingError, setHasLoadingError] = useState(false)
+  const [loadingTimeout, setLoadingTimeout] = useState(false)
 
   // Control visibility timer
   const controlsTimeoutRef = useRef<NodeJS.Timeout>()
@@ -89,6 +91,9 @@ export function VideoPlayer({
   
   // Progress tracking interval for YouTube
   const progressIntervalRef = useRef<NodeJS.Timeout>()
+  
+  // Loading timeout for YouTube
+  const loadingTimeoutRef = useRef<NodeJS.Timeout>()
 
   // Format time display
   const formatTime = (seconds: number) => {
@@ -135,7 +140,41 @@ export function VideoPlayer({
   // YouTube iframe loaded handler
   const handleIframeLoad = () => {
     setIsLoading(false)
+    setHasLoadingError(false)
+    if (loadingTimeoutRef.current) {
+      clearTimeout(loadingTimeoutRef.current)
+    }
     // Don't start progress tracking automatically - wait for user to manually start
+  }
+  
+  // Retry loading
+  const retryLoading = () => {
+    setIsLoading(true)
+    setHasLoadingError(false)
+    setLoadingTimeout(false)
+    
+    // Reset timeout
+    if (loadingTimeoutRef.current) {
+      clearTimeout(loadingTimeoutRef.current)
+    }
+    
+    // Force iframe reload by updating src
+    if (iframeRef.current && isYouTube) {
+      const currentSrc = iframeRef.current.src
+      iframeRef.current.src = ''
+      setTimeout(() => {
+        if (iframeRef.current) {
+          iframeRef.current.src = currentSrc
+        }
+      }, 100)
+    }
+    
+    // Start new timeout
+    loadingTimeoutRef.current = setTimeout(() => {
+      setIsLoading(false)
+      setHasLoadingError(true)
+      setLoadingTimeout(true)
+    }, 15000) // 15 second timeout
   }
 
   // Manual play handler for YouTube videos
@@ -300,11 +339,31 @@ export function VideoPlayer({
     return () => document.removeEventListener('keydown', handleKeyDown)
   }, [togglePlay, handleSeek, progressPercentage, toggleMute, toggleFullscreen])
   
+  // Loading timeout effect for YouTube videos
+  useEffect(() => {
+    if (isYouTube && isLoading) {
+      loadingTimeoutRef.current = setTimeout(() => {
+        setIsLoading(false)
+        setHasLoadingError(true)
+        setLoadingTimeout(true)
+      }, 15000) // 15 second timeout
+    }
+    
+    return () => {
+      if (loadingTimeoutRef.current) {
+        clearTimeout(loadingTimeoutRef.current)
+      }
+    }
+  }, [isYouTube, isLoading])
+  
   // Cleanup YouTube progress interval on unmount
   useEffect(() => {
     return () => {
       if (progressIntervalRef.current) {
         clearInterval(progressIntervalRef.current)
+      }
+      if (loadingTimeoutRef.current) {
+        clearTimeout(loadingTimeoutRef.current)
       }
     }
   }, [])
@@ -352,6 +411,13 @@ export function VideoPlayer({
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
           onLoad={handleIframeLoad}
+          onError={() => {
+            setIsLoading(false)
+            setHasLoadingError(true)
+            if (loadingTimeoutRef.current) {
+              clearTimeout(loadingTimeoutRef.current)
+            }
+          }}
           style={{ 
             border: 'none',
             minHeight: '100%'
@@ -374,7 +440,7 @@ export function VideoPlayer({
 
       {/* Loading Overlay */}
       <AnimatePresence>
-        {isLoading && (
+        {(isLoading || hasLoadingError) && (
           <motion.div
             className="absolute inset-0 flex items-center justify-center bg-black/80 backdrop-blur-sm"
             initial={{ opacity: 0 }}
@@ -382,21 +448,46 @@ export function VideoPlayer({
             exit={{ opacity: 0 }}
           >
             <div className="text-center text-white">
-              <motion.div
-                className={cn(
-                  "w-12 h-12 border-4 border-t-transparent rounded-full mx-auto mb-4",
-                  isYouTube ? "border-red-500" : "border-purple-500"
-                )}
-                animate={{ rotate: 360 }}
-                transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-              />
-              <p className="text-lg font-medium">
-                {isYouTube ? "Carregando YouTube..." : "Carregando vídeo..."}
-              </p>
-              {isYouTube && (
-                <p className="text-sm text-gray-300 mt-2">
-                  Conectando com YouTube Player
-                </p>
+              {!hasLoadingError ? (
+                <>
+                  <motion.div
+                    className={cn(
+                      "w-12 h-12 border-4 border-t-transparent rounded-full mx-auto mb-4",
+                      isYouTube ? "border-red-500" : "border-purple-500"
+                    )}
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                  />
+                  <p className="text-lg font-medium">
+                    {isYouTube ? "Carregando YouTube..." : "Carregando vídeo..."}
+                  </p>
+                  {isYouTube && (
+                    <p className="text-sm text-gray-300 mt-2">
+                      Conectando com YouTube Player
+                    </p>
+                  )}
+                </>
+              ) : (
+                <>
+                  <div className="text-6xl mb-4">⚠️</div>
+                  <p className="text-lg font-medium mb-2">
+                    Erro ao carregar vídeo
+                  </p>
+                  <p className="text-sm text-gray-300 mb-4">
+                    {isYouTube 
+                      ? "Não foi possível conectar com o YouTube. Verifique sua conexão."
+                      : "Não foi possível carregar o vídeo. Tente novamente."
+                    }
+                  </p>
+                  <motion.button
+                    onClick={retryLoading}
+                    className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg transition-colors"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    🔄 Tentar Novamente
+                  </motion.button>
+                </>
               )}
             </div>
           </motion.div>
