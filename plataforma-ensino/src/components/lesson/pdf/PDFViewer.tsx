@@ -11,8 +11,9 @@ if (typeof window !== 'undefined') {
   pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
 }
 
-import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
-import 'react-pdf/dist/esm/Page/TextLayer.css';
+// CSS imports removed - will be handled via global styles or inline
+// import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
+// import 'react-pdf/dist/esm/Page/TextLayer.css';
 
 interface PDFViewerProps {
   pdf: PDFData
@@ -352,7 +353,7 @@ export function PDFViewer({ pdf, className, onProgressUpdate }: PDFViewerProps) 
   )
 }
 
-// Add PDF-specific styles
+// Add PDF-specific styles including react-pdf CSS
 const pdfStyles = `
   .pdf-document {
     display: flex;
@@ -368,6 +369,51 @@ const pdfStyles = `
   .pdf-page > div {
     border-radius: 8px;
     overflow: hidden;
+  }
+
+  /* React-PDF annotation layer styles */
+  .react-pdf__Page__annotations {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+  
+  .react-pdf__Page__annotations .linkAnnotation > a {
+    position: absolute;
+    color: transparent;
+    border: 1px solid transparent;
+    background: rgba(255, 255, 0, 0.2);
+    box-sizing: border-box;
+  }
+  
+  .react-pdf__Page__annotations .linkAnnotation > a:hover {
+    background: rgba(255, 255, 0, 0.4);
+  }
+
+  /* React-PDF text layer styles */
+  .react-pdf__Page__textContent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    opacity: 0.2;
+    line-height: 1.0;
+  }
+  
+  .react-pdf__Page__textContent span {
+    color: transparent;
+    position: absolute;
+    white-space: pre;
+    cursor: text;
+    transform-origin: 0% 0%;
+  }
+  
+  .react-pdf__Page__textContent span::selection {
+    background: rgba(0, 0, 255, 0.3);
   }
 `
 
