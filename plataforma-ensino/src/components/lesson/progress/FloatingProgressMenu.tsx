@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useCallback, useEffect } from 'react'
+import React, { useState, useCallback, useEffect, useMemo, memo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
 import { LessonProgressData } from '@/types/lesson'
@@ -31,16 +31,16 @@ interface NavigationSection {
  * - Navegação para seções da aula
  * - Backdrop blur e gradientes
  */
-export function FloatingProgressMenu({ 
+const FloatingProgressMenuComponent = ({ 
   progress, 
   className, 
   onNavigate 
-}: FloatingProgressMenuProps) {
+}: FloatingProgressMenuProps) => {
   const [hoveredSection, setHoveredSection] = useState<string | null>(null)
   const [isExpanded, setIsExpanded] = useState(false)
 
-  // Calculate navigation sections with progress
-  const sections: NavigationSection[] = [
+  // Memoize navigation sections calculation to prevent unnecessary re-renders
+  const sections: NavigationSection[] = useMemo(() => [
     {
       id: 'video',
       name: 'Vídeo',
@@ -58,22 +58,28 @@ export function FloatingProgressMenu({
       color: '#00c4ff'
     },
     {
-      id: 'quiz',
-      name: 'Quiz',
-      icon: '🧩',
-      progress: progress.quizProgress.isCompleted ? 100 : 0,
-      isCompleted: progress.quizProgress.isCompleted && progress.quizProgress.isPassed,
-      color: progress.quizProgress.isPassed ? '#22c55e' : '#ef4444'
-    },
-    {
       id: 'exercises',
       name: 'Exercícios',
       icon: '📋',
       progress: progress.exerciseProgress.completionPercentage,
       isCompleted: progress.exerciseProgress.completionPercentage >= 100,
       color: '#f59e0b'
+    },
+    {
+      id: 'quiz',
+      name: 'Quiz',
+      icon: '🧩',
+      progress: progress.quizProgress.isCompleted ? 100 : 0,
+      isCompleted: progress.quizProgress.isCompleted && progress.quizProgress.isPassed,
+      color: progress.quizProgress.isPassed ? '#22c55e' : '#ef4444'
     }
-  ]
+  ], [
+    progress.videoProgress.percentageWatched,
+    progress.pdfProgress.percentageRead,
+    progress.exerciseProgress.completionPercentage,
+    progress.quizProgress.isCompleted,
+    progress.quizProgress.isPassed
+  ])
 
   const overallProgress = progress.overallProgress.percentageComplete
 
@@ -87,8 +93,8 @@ export function FloatingProgressMenu({
     }
   }, [onNavigate])
 
-  // Progress circle component
-  const ProgressCircle = ({ percentage, size = 50, strokeWidth = 4, color = '#d400ff' }: {
+  // Memoized Progress circle component to prevent unnecessary re-renders
+  const ProgressCircle = useMemo(() => memo(({ percentage, size = 50, strokeWidth = 4, color = '#d400ff' }: {
     percentage: number
     size?: number
     strokeWidth?: number
@@ -135,7 +141,7 @@ export function FloatingProgressMenu({
         </div>
       </div>
     )
-  }
+  }), [])
 
   // Magic card effect for the menu container
   const MagicCard = ({ children }: { children: React.ReactNode }) => (
@@ -355,3 +361,21 @@ export function FloatingProgressMenu({
     </div>
   )
 }
+
+// Export memoized component with custom comparison to prevent unnecessary re-renders
+export const FloatingProgressMenu = memo(FloatingProgressMenuComponent, (prevProps, nextProps) => {
+  // Custom comparison to only re-render when progress values actually change
+  const prevProgress = prevProps.progress
+  const nextProgress = nextProps.progress
+  
+  return (
+    prevProgress.videoProgress.percentageWatched === nextProgress.videoProgress.percentageWatched &&
+    prevProgress.pdfProgress.percentageRead === nextProgress.pdfProgress.percentageRead &&
+    prevProgress.exerciseProgress.completionPercentage === nextProgress.exerciseProgress.completionPercentage &&
+    prevProgress.quizProgress.isCompleted === nextProgress.quizProgress.isCompleted &&
+    prevProgress.quizProgress.isPassed === nextProgress.quizProgress.isPassed &&
+    prevProgress.overallProgress.percentageComplete === nextProgress.overallProgress.percentageComplete &&
+    prevProgress.overallProgress.estimatedTimeRemaining === nextProgress.overallProgress.estimatedTimeRemaining &&
+    prevProps.className === nextProps.className
+  )
+})

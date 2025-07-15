@@ -79,12 +79,16 @@ export function VideoPlayer({
   const [isLoading, setIsLoading] = useState(true)
   const [hasCompleted, setHasCompleted] = useState(false)
   const [hasManuallyStarted, setHasManuallyStarted] = useState(false) // Track if user manually started video
+  const [isActuallyPlaying, setIsActuallyPlaying] = useState(false) // Track actual YouTube play state
 
   // Control visibility timer
   const controlsTimeoutRef = useRef<NodeJS.Timeout>()
 
   // Auto-save timer
   const autoSaveRef = useRef<NodeJS.Timeout>()
+  
+  // Progress tracking interval for YouTube
+  const progressIntervalRef = useRef<NodeJS.Timeout>()
 
   // Format time display
   const formatTime = (seconds: number) => {
@@ -138,32 +142,58 @@ export function VideoPlayer({
   const handleManualPlay = () => {
     setHasManuallyStarted(true)
     setIsPlaying(true)
+    setIsActuallyPlaying(true)
     
     // Start progress tracking simulation only when user manually plays
     if (onProgressUpdate && !hasManuallyStarted) {
+      // Use actual video duration or reasonable fallback
       const videoDuration = video.duration || 1200 // Default to 20 minutes if no duration
+      setDuration(videoDuration)
       
-      // Simulate progress updates every 10 seconds
-      const progressInterval = setInterval(() => {
+      // Start progress tracking that only counts when actually playing
+      startYouTubeProgressTracking(videoDuration)
+      
+      // Initial progress update
+      onProgressUpdate(0, videoDuration)
+    }
+  }
+  
+  // YouTube progress tracking that respects play/pause state
+  const startYouTubeProgressTracking = (videoDuration: number) => {
+    if (progressIntervalRef.current) {
+      clearInterval(progressIntervalRef.current)
+    }
+    
+    progressIntervalRef.current = setInterval(() => {
+      // Only increment time if video is actually playing
+      if (isActuallyPlaying && hasManuallyStarted) {
         setCurrentTime(prev => {
-          const newTime = prev + 10
+          const newTime = prev + 1 // Increment by 1 second for smoother progress
+          
           if (newTime >= videoDuration * 0.8) {
             // Mark as completed when 80% watched
             setHasCompleted(true)
             onComplete?.()
-            clearInterval(progressInterval)
+            clearInterval(progressIntervalRef.current!)
             return videoDuration * 0.8
           }
-          onProgressUpdate(newTime, videoDuration)
+          
+          // Update progress every 5 seconds to avoid too frequent updates
+          if (Math.floor(newTime) % 5 === 0) {
+            onProgressUpdate?.(newTime, videoDuration)
+          }
+          
           return newTime
         })
-      }, 10000) // Update every 10 seconds
-      
-      // Initial progress update
-      onProgressUpdate(0, videoDuration)
-      
-      // Cleanup interval on unmount
-      return () => clearInterval(progressInterval)
+      }
+    }, 1000) // Check every second
+  }
+  
+  // Toggle YouTube play/pause simulation
+  const toggleYouTubePlayback = () => {
+    if (hasManuallyStarted) {
+      setIsActuallyPlaying(prev => !prev)
+      setIsPlaying(prev => !prev)
     }
   }
 
@@ -269,6 +299,15 @@ export function VideoPlayer({
     document.addEventListener('keydown', handleKeyDown)
     return () => document.removeEventListener('keydown', handleKeyDown)
   }, [togglePlay, handleSeek, progressPercentage, toggleMute, toggleFullscreen])
+  
+  // Cleanup YouTube progress interval on unmount
+  useEffect(() => {
+    return () => {
+      if (progressIntervalRef.current) {
+        clearInterval(progressIntervalRef.current)
+      }
+    }
+  }, [])
 
   // Fullscreen change listener
   useEffect(() => {
@@ -400,7 +439,7 @@ export function VideoPlayer({
                 <div className="w-0 h-0 border-l-[20px] border-l-white border-t-[16px] border-t-transparent border-b-[16px] border-b-transparent ml-1" />
               </div>
               <p className="text-xl font-medium">Clique para iniciar o vídeo</p>
-              <p className="text-sm text-gray-300 mt-2">O progresso começará a ser rastreado quando você clicar</p>
+              <p className="text-sm text-gray-300 mt-2">O progresso será rastreado apenas enquanto o vídeo estiver em reprodução</p>
             </div>
           </motion.button>
         )}
@@ -514,17 +553,50 @@ export function VideoPlayer({
         )}
       </AnimatePresence>
 
-      {/* YouTube Video Info */}
+      {/* YouTube Video Info & Controls */}
       {isYouTube && !isLoading && (
-        <motion.div 
-          className="absolute top-4 left-4 bg-red-600 text-white px-3 py-1 rounded-full text-sm font-medium flex items-center gap-2 shadow-lg"
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.5, duration: 0.3 }}
-        >
-          <span>📺</span>
-          <span>YouTube</span>
-        </motion.div>
+        <>
+          <motion.div 
+            className="absolute top-4 left-4 bg-red-600 text-white px-3 py-1 rounded-full text-sm font-medium flex items-center gap-2 shadow-lg"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.5, duration: 0.3 }}
+          >
+            <span>📺</span>
+            <span>YouTube</span>
+          </motion.div>
+          
+          {/* YouTube Progress Control */}
+          {hasManuallyStarted && (
+            <motion.div 
+              className="absolute top-4 right-4 bg-black/60 backdrop-blur-sm text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-3 shadow-lg"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.7, duration: 0.3 }}
+            >
+              <button
+                onClick={toggleYouTubePlayback}
+                className="flex items-center gap-2 hover:text-yellow-300 transition-colors"
+                title={isActuallyPlaying ? "Pausar rastreamento" : "Retomar rastreamento"}
+              >
+                {isActuallyPlaying ? (
+                  <>
+                    <span>⏸️</span>
+                    <span>Pausar</span>
+                  </>
+                ) : (
+                  <>
+                    <span>▶️</span>
+                    <span>Retomar</span>
+                  </>
+                )}
+              </button>
+              <div className="text-xs text-gray-300">
+                {formatTime(currentTime)} / {formatTime(duration)}
+              </div>
+            </motion.div>
+          )}
+        </>
       )}
 
       {/* Aspect Ratio Fallback for older browsers */}
