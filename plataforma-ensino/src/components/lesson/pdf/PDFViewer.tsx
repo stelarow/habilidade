@@ -6,9 +6,9 @@ import { Document, Page, pdfjs } from 'react-pdf'
 import { PDFData } from '@/types/lesson'
 import { cn } from '@/lib/utils'
 
-// Configure PDF.js worker
+// Configure PDF.js worker - use local worker file instead of CDN
 if (typeof window !== 'undefined') {
-  pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
+  pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs';
 }
 
 // CSS imports removed - will be handled via global styles or inline
