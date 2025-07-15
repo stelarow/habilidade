@@ -88,7 +88,7 @@ export function useCompletionCriteria({
           : false,
         progress: progressData?.exerciseProgress.completionPercentage || 0,
         weight: 25,
-        color: progressData?.exerciseProgress.completionPercentage >= (requireAllExercises ? 100 : 80) 
+        color: (progressData?.exerciseProgress.completionPercentage || 0) >= (requireAllExercises ? 100 : 80) 
           ? '#22c55e' : '#f59e0b'
       },
       {
