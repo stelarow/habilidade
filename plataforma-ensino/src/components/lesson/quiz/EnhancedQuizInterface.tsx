@@ -64,6 +64,14 @@ export function EnhancedQuizInterface({
   }, 0)
   const currentScore = totalPossibleScore > 0 ? Math.round((earnedScore / totalPossibleScore) * 100) : 0
 
+  // Complete quiz function - moved above useEffect to avoid hoisting issues
+  const handleQuizComplete = useCallback((finalAnswers = answers) => {
+    setIsCompleted(true)
+    setShowFeedback(false)
+    const finalScore = Math.round((earnedScore / totalPossibleScore) * 100)
+    onComplete?.(finalScore, finalAnswers)
+  }, [earnedScore, totalPossibleScore, onComplete, answers])
+
   // Timer effect
   useEffect(() => {
     if (timeRemaining !== null && timeRemaining > 0 && isStarted && !isCompleted) {
@@ -75,14 +83,6 @@ export function EnhancedQuizInterface({
       handleQuizComplete()
     }
   }, [timeRemaining, isStarted, isCompleted, handleQuizComplete])
-
-  // Complete quiz function
-  const handleQuizComplete = useCallback((finalAnswers = answers) => {
-    setIsCompleted(true)
-    setShowFeedback(false)
-    const finalScore = Math.round((earnedScore / totalPossibleScore) * 100)
-    onComplete?.(finalScore, finalAnswers)
-  }, [earnedScore, totalPossibleScore, onComplete, answers])
 
   // Start quiz
   const handleStartQuiz = () => {
