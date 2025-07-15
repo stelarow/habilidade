@@ -78,6 +78,7 @@ export function VideoPlayer({
   const [showControls, setShowControls] = useState(!isYouTube) // Hide custom controls for YouTube
   const [isLoading, setIsLoading] = useState(true)
   const [hasCompleted, setHasCompleted] = useState(false)
+  const [hasManuallyStarted, setHasManuallyStarted] = useState(false) // Track if user manually started video
 
   // Control visibility timer
   const controlsTimeoutRef = useRef<NodeJS.Timeout>()
@@ -130,9 +131,16 @@ export function VideoPlayer({
   // YouTube iframe loaded handler
   const handleIframeLoad = () => {
     setIsLoading(false)
+    // Don't start progress tracking automatically - wait for user to manually start
+  }
+
+  // Manual play handler for YouTube videos
+  const handleManualPlay = () => {
+    setHasManuallyStarted(true)
+    setIsPlaying(true)
     
-    // For YouTube videos, simulate progress tracking
-    if (onProgressUpdate) {
+    // Start progress tracking simulation only when user manually plays
+    if (onProgressUpdate && !hasManuallyStarted) {
       const videoDuration = video.duration || 1200 // Default to 20 minutes if no duration
       
       // Simulate progress updates every 10 seconds
@@ -370,6 +378,29 @@ export function VideoPlayer({
           >
             <div className="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
               <div className="w-0 h-0 border-l-[16px] border-l-white border-t-[12px] border-t-transparent border-b-[12px] border-b-transparent ml-1" />
+            </div>
+          </motion.button>
+        )}
+      </AnimatePresence>
+
+      {/* Manual Play Button Overlay for YouTube videos */}
+      <AnimatePresence>
+        {isYouTube && !hasManuallyStarted && !isLoading && (
+          <motion.button
+            className="absolute inset-0 flex items-center justify-center bg-black/40 text-white"
+            onClick={handleManualPlay}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <div className="text-center">
+              <div className="w-24 h-24 bg-red-600/80 backdrop-blur-sm rounded-full flex items-center justify-center mb-4 mx-auto">
+                <div className="w-0 h-0 border-l-[20px] border-l-white border-t-[16px] border-t-transparent border-b-[16px] border-b-transparent ml-1" />
+              </div>
+              <p className="text-xl font-medium">Clique para iniciar o vídeo</p>
+              <p className="text-sm text-gray-300 mt-2">O progresso começará a ser rastreado quando você clicar</p>
             </div>
           </motion.button>
         )}

@@ -128,22 +128,44 @@ export default function TestLessonPage() {
   }, [markComponentComplete])
 
   const handleQuizComplete = useCallback((score: number) => {
-    setCompletedComponents(prev => {
-      const newSet = new Set(prev)
-      newSet.add('quiz')
-      return newSet
-    })
+    const passingScore = testLessonContent.quiz!.passingScore
+    const isPassed = score >= passingScore
+
+    if (isPassed) {
+      setCompletedComponents(prev => {
+        const newSet = new Set(prev)
+        newSet.add('quiz')
+        return newSet
+      })
+      markComponentComplete('quiz')
+    }
+
     setProgress(prev => ({
       ...prev,
       quizProgress: {
         ...prev.quizProgress,
         score,
-        isCompleted: true,
-        isPassed: score >= testLessonContent.quiz!.passingScore
+        isCompleted: isPassed,
+        isPassed,
+        attempts: prev.quizProgress.attempts + 1
+      },
+      overallProgress: {
+        ...prev.overallProgress,
+        componentProgress: prev.overallProgress.componentProgress.map(comp =>
+          comp.component === 'quiz' 
+            ? { 
+                ...comp, 
+                percentage: isPassed ? 100 : 0,
+                isCompleted: isPassed 
+              }
+            : comp
+        )
       }
     }))
-    markComponentComplete('quiz')
-  }, [markComponentComplete])
+    
+    // Update overall progress
+    updateOverallProgress()
+  }, [markComponentComplete, updateOverallProgress])
 
   return (
     <LessonProvider>
@@ -217,8 +239,18 @@ export default function TestLessonPage() {
                   pdfProgress: {
                     ...prev.pdfProgress,
                     percentageRead: progress
+                  },
+                  overallProgress: {
+                    ...prev.overallProgress,
+                    componentProgress: prev.overallProgress.componentProgress.map(comp =>
+                      comp.component === 'pdf' 
+                        ? { ...comp, percentage: Math.min(progress, 100) }
+                        : comp
+                    )
                   }
                 }))
+                // Update overall progress
+                updateOverallProgress()
               }}
             />
           ),
