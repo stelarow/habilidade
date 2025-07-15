@@ -44,18 +44,18 @@ const FloatingProgressMenuComponent = ({
   const sections: NavigationSection[] = useMemo(() => [
     {
       id: 'video',
-      name: 'Vídeo',
+      name: 'Assistir Vídeo',
       icon: '🎬',
-      progress: progress.videoProgress.percentageWatched,
-      isCompleted: progress.videoProgress.percentageWatched >= 80,
-      color: '#d400ff'
+      progress: 0, // Video no longer tracks progress
+      isCompleted: false, // Video is not part of completion
+      color: '#6b7280' // Gray color to indicate non-tracked
     },
     {
       id: 'pdf',
       name: 'Material PDF',
       icon: '📄',
       progress: progress.pdfProgress.percentageRead,
-      isCompleted: progress.pdfProgress.percentageRead >= 90,
+      isCompleted: progress.pdfProgress.percentageRead >= 100,
       color: '#00c4ff'
     },
     {
@@ -70,16 +70,16 @@ const FloatingProgressMenuComponent = ({
       id: 'quiz',
       name: 'Quiz',
       icon: '🧩',
-      progress: progress.quizProgress.isCompleted ? 100 : 0,
+      progress: progress.quizProgress.isCompleted ? progress.quizProgress.score : 0,
       isCompleted: progress.quizProgress.isCompleted && progress.quizProgress.isPassed,
       color: progress.quizProgress.isPassed ? '#22c55e' : '#ef4444'
     }
   ], [
-    progress.videoProgress.percentageWatched,
     progress.pdfProgress.percentageRead,
     progress.exerciseProgress.completionPercentage,
     progress.quizProgress.isCompleted,
-    progress.quizProgress.isPassed
+    progress.quizProgress.isPassed,
+    progress.quizProgress.score
   ])
 
   const overallProgress = progress.overallProgress.percentageComplete
@@ -265,7 +265,11 @@ const FloatingProgressMenuComponent = ({
                         {section.name}
                       </div>
                       <div className="text-xs text-gray-400">
-                        {section.isCompleted ? (
+                        {section.id === 'video' ? (
+                          <span className="text-gray-500">
+                            📺 Disponível para assistir
+                          </span>
+                        ) : section.isCompleted ? (
                           <span className="text-green-400 flex items-center gap-1">
                             ✓ Concluído
                           </span>

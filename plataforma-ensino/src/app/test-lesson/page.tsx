@@ -6,7 +6,10 @@ import CentralizedLessonLayout, {
   CentralizedLessonNav,
   useCentralizedLayout 
 } from '@/components/lesson/layout/CentralizedLessonLayout'
-import { VideoPlayer } from '@/components/lesson/video/VideoPlayer'
+import { SimpleVideoPlayer } from '@/components/lesson/video/SimpleVideoPlayer'
+import { TimeTracker } from '@/components/lesson/progress/TimeTracker'
+import { CompletionCriteria } from '@/components/lesson/progress/CompletionCriteria'
+import { LessonCompletionButton } from '@/components/lesson/completion/LessonCompletionButton'
 import { PDFViewer } from '@/components/lesson/pdf/PDFViewer'
 import { EnhancedQuizInterface } from '@/components/lesson/quiz/EnhancedQuizInterface'
 import { FloatingProgressMenu } from '@/components/lesson/progress/FloatingProgressMenu'
@@ -53,14 +56,18 @@ export default function TestLessonPage() {
   // State for progress tracking
   const [progress, setProgress] = useState<LessonProgressData>(initialProgressData)
   const [completedComponents, setCompletedComponents] = useState<Set<string>>(new Set())
+  const [timeSpent, setTimeSpent] = useState<number>(0)
+  const [canCompleteLesson, setCanCompleteLesson] = useState<boolean>(false)
   
   // Centralized layout hooks
   const { activeSection, scrollToSection } = useCentralizedLayout()
 
   const updateOverallProgress = useCallback(() => {
     setProgress(prev => {
-      const totalWeight = prev.overallProgress.componentProgress.reduce((sum, comp) => sum + comp.weight, 0)
-      const weightedProgress = prev.overallProgress.componentProgress.reduce(
+      // Exclude video from overall progress calculation
+      const relevantComponents = prev.overallProgress.componentProgress.filter(comp => comp.component !== 'video')
+      const totalWeight = relevantComponents.reduce((sum, comp) => sum + comp.weight, 0)
+      const weightedProgress = relevantComponents.reduce(
         (sum, comp) => sum + (comp.percentage * comp.weight), 0
       )
       const overallPercentage = totalWeight > 0 ? weightedProgress / totalWeight : 0
@@ -75,6 +82,16 @@ export default function TestLessonPage() {
         }
       }
     })
+  }, [])
+
+  // Time tracking callback
+  const handleTimeUpdate = useCallback((newTimeSpent: number) => {
+    setTimeSpent(newTimeSpent)
+  }, [])
+
+  // Minimum time reached callback
+  const handleMinimumTimeReached = useCallback(() => {
+    console.log('25-minute minimum time reached!')
   }, [])
 
   const markComponentComplete = useCallback((component: string) => {
@@ -92,40 +109,7 @@ export default function TestLessonPage() {
     updateOverallProgress()
   }, [updateOverallProgress])
 
-  // Progress update handlers
-  const handleVideoProgress = useCallback((currentTime: number, duration: number) => {
-    const percentage = (currentTime / duration) * 100
-    setProgress(prev => ({
-      ...prev,
-      videoProgress: {
-        ...prev.videoProgress,
-        currentTime,
-        duration,
-        percentageWatched: percentage,
-        lastPosition: currentTime
-      },
-      overallProgress: {
-        ...prev.overallProgress,
-        componentProgress: prev.overallProgress.componentProgress.map(comp =>
-          comp.component === 'video' 
-            ? { ...comp, percentage: Math.min(percentage, 100) }
-            : comp
-        )
-      }
-    }))
-    
-    // Update overall progress
-    updateOverallProgress()
-  }, [updateOverallProgress])
-
-  const handleVideoComplete = useCallback(() => {
-    setCompletedComponents(prev => {
-      const newSet = new Set(prev)
-      newSet.add('video')
-      return newSet
-    })
-    markComponentComplete('video')
-  }, [markComponentComplete])
+  // Video is no longer tracked for progress - just show the player
 
   const handleQuizComplete = useCallback((score: number) => {
     const passingScore = testLessonContent.quiz!.passingScore
@@ -231,7 +215,28 @@ export default function TestLessonPage() {
       {/* Main Layout with Floating Sidebar */}
       <div className="relative">
         {/* Floating Progress Menu - Sidebar */}
-        <div className="hidden xl:block fixed right-6 top-1/2 transform -translate-y-1/2 z-50">
+        <div className="hidden xl:block fixed right-6 top-1/2 transform -translate-y-1/2 z-50 space-y-6">
+          {/* Time Tracker */}
+          <TimeTracker 
+            onMinimumReached={handleMinimumTimeReached}
+            size="md"
+          />
+          
+          {/* Completion Criteria */}
+          <CompletionCriteria 
+            progressData={progress}
+            timeSpent={timeSpent}
+            onCriteriaChange={setCanCompleteLesson}
+          />
+          
+          {/* Lesson Completion Button */}
+          <LessonCompletionButton 
+            lessonId="test-lesson-123"
+            courseSlug="desenvolvimento-web"
+            canComplete={canCompleteLesson}
+          />
+          
+          {/* Navigation Menu */}
           <FloatingProgressMenu 
             progress={progress}
             onNavigate={(section) => {
@@ -266,11 +271,8 @@ export default function TestLessonPage() {
           
           video: testLessonContent.video && (
             <div id="section-video">
-              <VideoPlayer
+              <SimpleVideoPlayer
                 video={testLessonContent.video}
-                onProgressUpdate={handleVideoProgress}
-                onComplete={handleVideoComplete}
-                startTime={progress.videoProgress.lastPosition}
               />
             </div>
           ),
@@ -371,13 +373,20 @@ export default function TestLessonPage() {
       </div>
 
       {/* Mobile Progress Menu - Shows on smaller screens */}
-      <div className="xl:hidden fixed bottom-6 right-6 z-50">
-        <FloatingProgressMenu 
-          progress={progress}
-          onNavigate={(section) => {
-            scrollToSection(section)
-          }}
-          className="w-80 max-h-96 overflow-y-auto"
+      <div className="xl:hidden fixed bottom-6 right-6 z-50 space-y-4">
+        {/* Mobile Time Tracker */}
+        <TimeTracker 
+          onMinimumReached={handleMinimumTimeReached}
+          size="sm"
+          showLabel={false}
+        />
+        
+        {/* Mobile Completion Button */}
+        <LessonCompletionButton 
+          lessonId="test-lesson-123"
+          courseSlug="desenvolvimento-web"
+          canComplete={canCompleteLesson}
+          className="scale-90"
         />
       </div>
 
@@ -714,11 +723,11 @@ const initialProgressData: LessonProgressData = {
     lastActivity: new Date().toISOString(),
     isCompleted: false,
     componentProgress: [
-      { component: 'video', percentage: 0, timeSpent: 0, isCompleted: false, weight: 30 },
-      { component: 'pdf', percentage: 0, timeSpent: 0, isCompleted: false, weight: 25 },
-      { component: 'quiz', percentage: 0, timeSpent: 0, isCompleted: false, weight: 25 },
-      { component: 'exercises', percentage: 0, timeSpent: 0, isCompleted: false, weight: 15 },
-      { component: 'content', percentage: 0, timeSpent: 0, isCompleted: false, weight: 5 }
+      { component: 'video', percentage: 0, timeSpent: 0, isCompleted: false, weight: 0, includeInOverall: false }, // Video excluded from overall progress
+      { component: 'pdf', percentage: 0, timeSpent: 0, isCompleted: false, weight: 40 }, // Increased weight
+      { component: 'quiz', percentage: 0, timeSpent: 0, isCompleted: false, weight: 35 }, // Increased weight  
+      { component: 'exercises', percentage: 0, timeSpent: 0, isCompleted: false, weight: 25 }, // Increased weight
+      { component: 'content', percentage: 0, timeSpent: 0, isCompleted: false, weight: 0 } // Removed from calculation
     ]
   }
 }

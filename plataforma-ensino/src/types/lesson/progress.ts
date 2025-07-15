@@ -87,6 +87,26 @@ export interface ComponentProgress {
   timeSpent: number
   isCompleted: boolean
   weight: number // for calculating overall progress
+  includeInOverall?: boolean // whether to include in overall progress calculation
+}
+
+// New interface for lesson completion tracking
+export interface LessonCompletionData {
+  timeSpentMinutes: number
+  hasReachedMinimumTime: boolean
+  minimumTimeMinutes: number
+  canComplete: boolean
+  completedAt?: string
+  completionCriteria: CompletionCriterion[]
+}
+
+export interface CompletionCriterion {
+  id: string
+  name: string
+  description: string
+  isCompleted: boolean
+  progress: number
+  required: boolean
 }
 
 // Progress tracking actions
