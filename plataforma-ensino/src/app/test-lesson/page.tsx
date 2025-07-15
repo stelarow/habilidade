@@ -9,6 +9,27 @@ import CentralizedLessonLayout, {
 import { VideoPlayer } from '@/components/lesson/video/VideoPlayer'
 import { PDFViewer } from '@/components/lesson/pdf/PDFViewer'
 import { EnhancedQuizInterface } from '@/components/lesson/quiz/EnhancedQuizInterface'
+import dynamic from 'next/dynamic'
+
+// Client-side only PDF viewer to avoid SSR issues
+const ClientPDFViewer = dynamic(
+  () => import('@/components/lesson/pdf/PDFViewer').then(mod => ({ default: mod.PDFViewer })),
+  { 
+    ssr: false,
+    loading: () => (
+      <div className="lesson-pdf-content">
+        <div className="relative flex-1 bg-gray-100 rounded-lg overflow-hidden">
+          <div className="flex items-center justify-center h-96">
+            <div className="text-center">
+              <div className="w-8 h-8 border-4 border-purple-500 border-t-transparent rounded-full mx-auto mb-4 animate-spin"></div>
+              <p className="text-gray-600">Carregando visualizador PDF...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+)
 import { ExercisePanel } from '@/components/lesson/exercises/ExercisePanel'
 import { ProgressTracker } from '@/components/lesson/progress/ProgressTracker'
 import { LessonProvider } from '@/contexts/LessonContext'
@@ -188,7 +209,7 @@ export default function TestLessonPage() {
           ),
           
           pdf: testLessonContent.pdf && (
-            <PDFViewer 
+            <ClientPDFViewer 
               pdf={testLessonContent.pdf}
               onProgressUpdate={(progress) => {
                 setProgress(prev => ({
