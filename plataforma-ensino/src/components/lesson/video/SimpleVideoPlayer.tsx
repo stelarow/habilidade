@@ -20,7 +20,7 @@ const convertToEmbedUrl = (url: string): string => {
   if (url.includes('/embed/')) return url
   
   // Extract video ID from various YouTube URL formats
-  const videoIdMatch = url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\\/|.*[?&]v=)|youtu\.be\/)([^"&?\\/\\s]{11})/)
+  const videoIdMatch = url.match(/(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\//|.*[?&]v=)|youtu\.be\/)([^"&?/\s]{11})/)
   const videoId = videoIdMatch ? videoIdMatch[1] : null
   
   if (videoId) {
