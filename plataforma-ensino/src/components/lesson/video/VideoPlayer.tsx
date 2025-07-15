@@ -498,19 +498,13 @@ export function VideoPlayer({
 
       {/* Aspect Ratio Fallback for older browsers */}
       {!isFullscreen && (
-        <style jsx>{`
-          .video-player::before {
-            content: '';
-            display: block;
-            padding-top: ${aspectRatioPercent}%;
-          }
-          
-          @supports (aspect-ratio: 16 / 9) {
-            .video-player::before {
-              display: none;
-            }
-          }
-        `}</style>
+        <div 
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            paddingTop: `${aspectRatioPercent}%`,
+            display: 'block'
+          }}
+        />
       )}
 
       <style jsx>{`
