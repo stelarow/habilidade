@@ -19,9 +19,26 @@ const convertToEmbedUrl = (url: string): string => {
   // If already embed URL, return as is
   if (url.includes('/embed/')) return url
   
-  // Extract video ID from various YouTube URL formats
-  const videoIdMatch = url.match(/(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\//|.*[?&]v=)|youtu\.be\/)([^"&?/\s]{11})/)
-  const videoId = videoIdMatch ? videoIdMatch[1] : null
+  // Extract video ID from YouTube URLs using simpler regex patterns
+  let videoId: string | null = null
+  
+  // Standard YouTube URL (youtube.com/watch?v=VIDEO_ID)
+  if (url.includes('youtube.com/watch')) {
+    const match = url.match(/[?&]v=([a-zA-Z0-9_-]{11})/)
+    videoId = match ? match[1] : null
+  }
+  
+  // Short YouTube URL (youtu.be/VIDEO_ID)
+  else if (url.includes('youtu.be/')) {
+    const match = url.match(/youtu\.be\/([a-zA-Z0-9_-]{11})/)
+    videoId = match ? match[1] : null
+  }
+  
+  // YouTube embed URL (youtube.com/embed/VIDEO_ID)
+  else if (url.includes('youtube.com/embed/')) {
+    const match = url.match(/\/embed\/([a-zA-Z0-9_-]{11})/)
+    videoId = match ? match[1] : null
+  }
   
   if (videoId) {
     return `https://www.youtube.com/embed/${videoId}?enablejsapi=1&origin=${typeof window !== 'undefined' ? window.location.origin : ''}`
