@@ -84,7 +84,7 @@ export function useCompletionCriteria({
         icon: '📋',
         description: requireAllExercises ? 'Completar todos os exercícios' : 'Completar a maioria dos exercícios',
         isCompleted: progressData 
-          ? progressData.exerciseProgress.completionPercentage >= (requireAllExercises ? 100 : 80)
+          ? (progressData.exerciseProgress?.completionPercentage || 0) >= (requireAllExercises ? 100 : 80)
           : false,
         progress: progressData?.exerciseProgress.completionPercentage || 0,
         weight: 25,
@@ -97,11 +97,11 @@ export function useCompletionCriteria({
         icon: '📄',
         description: requireFullPDFRead ? 'Ler 100% do material PDF' : 'Ler pelo menos 90% do material PDF',
         isCompleted: progressData 
-          ? progressData.pdfProgress.percentageRead >= (requireFullPDFRead ? 100 : 90)
+          ? (progressData.pdfProgress?.percentageRead || 0) >= (requireFullPDFRead ? 100 : 90)
           : false,
         progress: progressData?.pdfProgress.percentageRead || 0,
         weight: 15,
-        color: progressData?.pdfProgress.percentageRead >= (requireFullPDFRead ? 100 : 90) 
+        color: (progressData?.pdfProgress.percentageRead || 0) >= (requireFullPDFRead ? 100 : 90) 
           ? '#22c55e' : '#00c4ff'
       }
     ]
