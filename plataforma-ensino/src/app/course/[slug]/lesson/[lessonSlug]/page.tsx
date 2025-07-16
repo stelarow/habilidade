@@ -20,9 +20,8 @@ import {
 
 // Import new components and hooks
 import { useCompletionCriteria } from '@/hooks/useCompletionCriteria'
-import { CompletionProgress, CompactProgressHeader } from '@/components/lesson/progress'
-import { LessonCompletionButton } from '@/components/lesson/completion/LessonCompletionButton'
 import { PDFViewer } from '@/components/lesson/pdf/PDFViewer'
+import { LessonHeader } from '@/components/lesson/header'
 
 interface Course {
   id: string
@@ -331,89 +330,46 @@ export default function LessonPageRefactored() {
     return null
   }
 
-  // Map completion criteria to header format
-  const headerCriteria = [
-    {
-      id: 'time',
-      name: 'Tempo',
-      isCompleted: completionCriteria.criteria.find(c => c.id === 'time')?.isCompleted || false,
-      progress: completionCriteria.pageTimer.timeSpent >= (25 * 60) ? 100 : (completionCriteria.pageTimer.timeSpent / (25 * 60)) * 100,
-      icon: <Clock className="w-4 h-4" />,
-      color: '#f59e0b',
-      required: true
-    },
-    {
-      id: 'pdf',
-      name: 'Material PDF',
-      isCompleted: completionCriteria.criteria.find(c => c.id === 'pdf')?.isCompleted || false,
-      progress: completionCriteria.pdfProgress.percentageRead,
-      icon: <FileText className="w-4 h-4" />,
-      color: '#00c4ff',
-      required: true
-    },
-    {
-      id: 'quiz',
-      name: 'Quiz',
-      isCompleted: completionCriteria.criteria.find(c => c.id === 'quiz')?.isCompleted || false,
-      progress: 0, // Would come from quiz component
-      icon: <Question className="w-4 h-4" />,
-      color: '#22c55e',
-      required: true
-    },
-    {
-      id: 'exercises',
-      name: 'Exercícios',
-      isCompleted: completionCriteria.criteria.find(c => c.id === 'exercises')?.isCompleted || false,
-      progress: 0, // Would come from exercises component
-      icon: <BookOpen className="w-4 h-4" />,
-      color: '#ef4444',
-      required: true
-    }
-  ]
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 relative overflow-hidden">
       <Starfield count={30} className="opacity-20" />
       
-      {/* Compact Progress Header */}
-      <CompactProgressHeader
-        criteria={headerCriteria}
-        overallProgress={completionCriteria.overallProgress}
-        canComplete={completionCriteria.canComplete}
-        completedCount={completionCriteria.completedCount}
-        totalCount={completionCriteria.totalCount}
-        timeRemaining={completionCriteria.pageTimer.formattedRemainingTime}
-        currentTime={completionCriteria.pageTimer.formattedTime}
-        onSectionClick={(sectionId) => {
-          // Handle section navigation
-          const element = document.getElementById(`section-${sectionId}`)
-          if (element) {
-            element.scrollIntoView({ behavior: 'smooth', block: 'start' })
-          }
+      {/* New Lesson Header */}
+      <LessonHeader
+        course={course}
+        lesson={lesson}
+        progress={{
+          overall: completionCriteria.overallProgress,
+          time: {
+            current: completionCriteria.pageTimer.timeSpent,
+            required: 25 * 60, // 25 minutes in seconds
+            formatted: completionCriteria.pageTimer.formattedTime,
+          },
+          pdf: {
+            percentage: completionCriteria.pdfProgress.percentageRead,
+            isCompleted: completionCriteria.criteria.find(c => c.id === 'pdf')?.isCompleted || false,
+          },
+          exercises: {
+            completed: exercises.filter(ex => submissions.some(sub => sub.exercise_id === ex.id && sub.status === 'approved')).length,
+            total: exercises.length,
+            isCompleted: completionCriteria.criteria.find(c => c.id === 'exercises')?.isCompleted || false,
+          },
+          quiz: {
+            score: 0, // Would come from quiz component
+            isCompleted: completionCriteria.criteria.find(c => c.id === 'quiz')?.isCompleted || false,
+            isPassed: completionCriteria.criteria.find(c => c.id === 'quiz')?.isCompleted || false,
+          },
         }}
+        canComplete={completionCriteria.canComplete}
+        onExit={() => {
+          console.log('Exiting lesson')
+        }}
+        onComplete={handleLessonComplete}
       />
       
       <div className="relative z-10 container mx-auto px-4 py-8">
-        {/* Header */}
-        <div className="flex items-center gap-4 mb-8">
-          <button
-            onClick={() => router.push(`/course/${courseSlug}`)}
-            className="flex items-center gap-2 px-3 py-2 bg-white/5 hover:bg-white/10 rounded-lg transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span>Voltar ao Curso</span>
-          </button>
-          
-          <div className="flex items-center gap-2 text-gray-400">
-            <span>{course.title}</span>
-            <span>/</span>
-            <span className="text-white">{lesson.title}</span>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Main Content */}
-          <div className="lg:col-span-3 space-y-6">
+        {/* Main Content - Full Width Layout (No Sidebar) */}
+        <div className="w-full max-w-6xl mx-auto space-y-6">
             {/* Video Player */}
             {lesson.video_url && (
               <div id="section-video" className="glass-effect bg-zinc-900/70 backdrop-blur-md rounded-lg border border-gray-800/50 p-6">
@@ -642,67 +598,6 @@ export default function LessonPageRefactored() {
                 </div>
               </div>
             )}
-          </div>
-
-          {/* Sidebar */}
-          <div className="space-y-6">
-            {/* Completion Progress */}
-            <CompletionProgress
-              criteria={completionCriteria.criteria}
-              overallProgress={completionCriteria.overallProgress}
-              canComplete={completionCriteria.canComplete}
-              completedCount={completionCriteria.completedCount}
-              totalCount={completionCriteria.totalCount}
-              timeRemaining={completionCriteria.pageTimer.formattedRemainingTime}
-            />
-
-            {/* Completion Button */}
-            <LessonCompletionButton
-              lessonId={lesson.id}
-              courseSlug={course.slug}
-              canComplete={completionCriteria.canComplete}
-              completedCount={completionCriteria.completedCount}
-              totalCount={completionCriteria.totalCount}
-              onComplete={handleLessonComplete}
-              completionData={{
-                timeSpent: completionCriteria.pageTimer.timeSpent,
-                pdfProgress: completionCriteria.pdfProgress.percentageRead,
-                quizScore: 0, // Would come from quiz component
-                exercisesCompleted: 0, // Would come from exercise component
-                completionCriteria: completionCriteria.criteria
-              }}
-            />
-
-            {/* Lesson Info */}
-            <div className="glass-effect bg-zinc-900/70 backdrop-blur-md rounded-lg border border-gray-800/50 p-6">
-              <h3 className="text-lg font-semibold text-white mb-4">Informações da Aula</h3>
-              
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-gray-400">Ordem</span>
-                  <span className="text-white font-semibold">#{lesson.order_index}</span>
-                </div>
-                
-                {lesson.video_duration && (
-                  <div className="flex items-center justify-between">
-                    <span className="text-gray-400">Duração</span>
-                    <span className="text-white font-semibold">{formatDuration(lesson.video_duration)}</span>
-                  </div>
-                )}
-                
-                <div className="flex items-center justify-between">
-                  <span className="text-gray-400">Tempo na página</span>
-                  <span className="text-white font-semibold">{completionCriteria.pageTimer.formattedTime}</span>
-                </div>
-                
-                {lesson.is_preview && (
-                  <div className="bg-blue-500/20 border border-blue-500/30 rounded-lg p-2 text-center">
-                    <span className="text-blue-400 text-sm font-semibold">Aula Gratuita</span>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>

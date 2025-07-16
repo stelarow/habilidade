@@ -4,7 +4,7 @@
   "description": "Automatically updates git main branch to send corrections directly to Netlify for deployment after implementation or fixes",
   "version": "1",
   "when": {
-    "type": "fileEdited",
+    "type": "userTriggered",
     "patterns": [
       "src/**/*",
       "package.json",
