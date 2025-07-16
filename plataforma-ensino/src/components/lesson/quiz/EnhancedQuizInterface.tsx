@@ -3,7 +3,7 @@
 import React, { useState, useCallback, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
-import { Code, PaintBrush, Lightning, Globe, Question } from '@phosphor-icons/react'
+import { Code, PaintBrush, Lightning, Globe, Question, Clock, Target, ArrowClockwise, ListBullets, Trophy, BookOpen, CheckCircle, X, Lightbulb } from '@phosphor-icons/react'
 import { QuizData } from '@/types/lesson'
 import { chapter2Questions, type QuizQuestion } from '@/data/quiz-questions'
 
@@ -181,7 +181,10 @@ export function EnhancedQuizInterface({
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div className="space-y-2">
                 <div className="flex justify-between">
-                  <span className="lesson-text-subtitle">📝 Questões:</span>
+                  <span className="lesson-text-subtitle flex items-center gap-1">
+                    <ListBullets size={16} weight="duotone" />
+                    Questões:
+                  </span>
                   <span className="text-white font-mono">{totalQuestions}</span>
                 </div>
                 <div className="flex justify-between">

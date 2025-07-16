@@ -28,7 +28,7 @@ function SmartCTA() {
 
       {/* Área do Aluno - Mobile Only */}
       <a
-        href="/plataforma-ensino/"
+        href="https://ead.escolahabilidade.com"
         target="_blank"
         rel="noopener noreferrer"
         className="

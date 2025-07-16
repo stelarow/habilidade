@@ -482,7 +482,7 @@ export default function TestLessonPage() {
             {exercises.length > 0 && (
               <div id="section-exercises" className="glass-effect bg-zinc-900/70 backdrop-blur-md rounded-lg border border-gray-800/50 p-6">
                 <h3 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
-                  <BookOpen className="w-5 h-5 text-primary" />
+                  <ClipboardText className="w-5 h-5 text-primary" weight="duotone" />
                   Exercícios
                 </h3>
                 
@@ -520,7 +520,7 @@ export default function TestLessonPage() {
             {quizzes.length > 0 && (
               <div id="section-quiz" className="glass-effect bg-zinc-900/70 backdrop-blur-md rounded-lg border border-gray-800/50 p-6">
                 <h3 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
-                  <Question className="w-5 h-5 text-primary" />
+                  <Target className="w-5 h-5 text-primary" weight="duotone" />
                   Questionários
                 </h3>
                 
