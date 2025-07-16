@@ -80,28 +80,28 @@ export function LessonHeaderExample() {
         isCompleted: false,
         componentProgress: [
           {
-            component: 'video',
+            component: 'video' as const,
             percentage: 33,
             timeSpent: 1200,
             isCompleted: false,
             weight: 0.25
           },
           {
-            component: 'pdf',
+            component: 'pdf' as const,
             percentage: 80,
             timeSpent: 600,
             isCompleted: false,
             weight: 0.25
           },
           {
-            component: 'quiz',
+            component: 'quiz' as const,
             percentage: 85,
             timeSpent: 300,
             isCompleted: true,
             weight: 0.25
           },
           {
-            component: 'exercises',
+            component: 'exercises' as const,
             percentage: 67,
             timeSpent: 0,
             isCompleted: false,
