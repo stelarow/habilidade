@@ -1,0 +1,21 @@
+{
+  "enabled": true,
+  "name": "Git Main Update & Deploy",
+  "description": "Automatically updates git main branch to send corrections directly to Netlify for deployment after implementation or fixes",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "src/**/*",
+      "package.json",
+      "vite.config.js",
+      "tailwind.config.js",
+      "index.html",
+      "netlify.toml"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Implementation or fix has been completed. Please update the git main branch by committing the changes and pushing to trigger automatic Netlify deployment. Make sure to: 1) Add and commit all changes with a descriptive message, 2) Push to main branch, 3) Verify the deployment was triggered successfully on Netlify."
+  }
+}

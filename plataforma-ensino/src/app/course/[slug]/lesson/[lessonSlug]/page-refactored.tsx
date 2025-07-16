@@ -20,7 +20,7 @@ import {
 
 // Import new components and hooks
 import { useCompletionCriteria } from '@/hooks/useCompletionCriteria'
-import { CompletionProgress, FloatingProgressMenu } from '@/components/lesson/progress'
+import { CompletionProgress, CompactProgressHeader } from '@/components/lesson/progress'
 import { LessonCompletionButton } from '@/components/lesson/completion/LessonCompletionButton'
 import { PDFViewer } from '@/components/lesson/pdf/PDFViewer'
 
@@ -331,9 +331,67 @@ export default function LessonPageRefactored() {
     return null
   }
 
+  // Map completion criteria to header format
+  const headerCriteria = [
+    {
+      id: 'time',
+      name: 'Tempo',
+      isCompleted: completionCriteria.criteria.find(c => c.id === 'time')?.isCompleted || false,
+      progress: completionCriteria.pageTimer.timeSpent >= (25 * 60) ? 100 : (completionCriteria.pageTimer.timeSpent / (25 * 60)) * 100,
+      icon: <Clock className="w-4 h-4" />,
+      color: '#f59e0b',
+      required: true
+    },
+    {
+      id: 'pdf',
+      name: 'Material PDF',
+      isCompleted: completionCriteria.criteria.find(c => c.id === 'pdf')?.isCompleted || false,
+      progress: completionCriteria.pdfProgress.percentageRead,
+      icon: <FileText className="w-4 h-4" />,
+      color: '#00c4ff',
+      required: true
+    },
+    {
+      id: 'quiz',
+      name: 'Quiz',
+      isCompleted: completionCriteria.criteria.find(c => c.id === 'quiz')?.isCompleted || false,
+      progress: 0, // Would come from quiz component
+      icon: <Question className="w-4 h-4" />,
+      color: '#22c55e',
+      required: true
+    },
+    {
+      id: 'exercises',
+      name: 'Exercícios',
+      isCompleted: completionCriteria.criteria.find(c => c.id === 'exercises')?.isCompleted || false,
+      progress: 0, // Would come from exercises component
+      icon: <BookOpen className="w-4 h-4" />,
+      color: '#ef4444',
+      required: true
+    }
+  ]
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 relative overflow-hidden">
       <Starfield count={30} className="opacity-20" />
+      
+      {/* Compact Progress Header */}
+      <CompactProgressHeader
+        criteria={headerCriteria}
+        overallProgress={completionCriteria.overallProgress}
+        canComplete={completionCriteria.canComplete}
+        completedCount={completionCriteria.completedCount}
+        totalCount={completionCriteria.totalCount}
+        timeRemaining={completionCriteria.pageTimer.formattedRemainingTime}
+        currentTime={completionCriteria.pageTimer.formattedTime}
+        onSectionClick={(sectionId) => {
+          // Handle section navigation
+          const element = document.getElementById(`section-${sectionId}`)
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+          }
+        }}
+      />
       
       <div className="relative z-10 container mx-auto px-4 py-8">
         {/* Header */}
@@ -358,7 +416,7 @@ export default function LessonPageRefactored() {
           <div className="lg:col-span-3 space-y-6">
             {/* Video Player */}
             {lesson.video_url && (
-              <div className="glass-effect bg-zinc-900/70 backdrop-blur-md rounded-lg border border-gray-800/50 p-6">
+              <div id="section-video" className="glass-effect bg-zinc-900/70 backdrop-blur-md rounded-lg border border-gray-800/50 p-6">
                 <div className="aspect-video bg-black rounded-lg mb-4 flex items-center justify-center">
                   <div className="text-center">
                     <Play className="w-16 h-16 text-primary mx-auto mb-2" />
@@ -394,7 +452,7 @@ export default function LessonPageRefactored() {
             </div>
 
             {/* PDF Viewer */}
-            <div className="glass-effect bg-zinc-900/70 backdrop-blur-md rounded-lg border border-gray-800/50 p-6">
+            <div id="section-pdf" className="glass-effect bg-zinc-900/70 backdrop-blur-md rounded-lg border border-gray-800/50 p-6">
               <h3 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
                 <FileText className="w-5 h-5 text-primary" />
                 Material PDF
@@ -411,8 +469,10 @@ export default function LessonPageRefactored() {
                   downloadable: true
                 }}
                 onProgressUpdate={(progress) => {
-                  // Update PDF progress
-                  completionCriteria.pdfProgress.setCurrentPage(Math.ceil(progress / 10))
+                  // Update PDF progress with debounced scroll handling
+                  // Only update current page if user stays on the same page for a moment
+                  const currentPage = Math.ceil(progress / 10)
+                  completionCriteria.pdfProgress.setCurrentPageFromScroll(currentPage)
                 }}
               />
             </div>
@@ -453,7 +513,7 @@ export default function LessonPageRefactored() {
 
             {/* Exercises */}
             {exercises.length > 0 && (
-              <div className="glass-effect bg-zinc-900/70 backdrop-blur-md rounded-lg border border-gray-800/50 p-6">
+              <div id="section-exercises" className="glass-effect bg-zinc-900/70 backdrop-blur-md rounded-lg border border-gray-800/50 p-6">
                 <h3 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
                   <BookOpen className="w-5 h-5 text-primary" />
                   Exercícios
@@ -491,7 +551,7 @@ export default function LessonPageRefactored() {
 
             {/* Quizzes */}
             {quizzes.length > 0 && (
-              <div className="glass-effect bg-zinc-900/70 backdrop-blur-md rounded-lg border border-gray-800/50 p-6">
+              <div id="section-quiz" className="glass-effect bg-zinc-900/70 backdrop-blur-md rounded-lg border border-gray-800/50 p-6">
                 <h3 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
                   <Question className="w-5 h-5 text-primary" />
                   Questionários

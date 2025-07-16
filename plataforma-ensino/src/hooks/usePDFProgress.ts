@@ -221,9 +221,9 @@ export function usePDFProgress({
     }
   }, [progressState, onProgressUpdate])
 
-  // Set current page
+  // Set current page with debouncing to prevent rapid page changes during scrolling
   const setCurrentPage = useCallback((page: number) => {
-    if (page >= 1 && page <= totalPages) {
+    if (page >= 1 && page <= totalPages && page !== currentPageRef.current) {
       // Update time for previous page
       updatePageTime()
       
@@ -238,6 +238,18 @@ export function usePDFProgress({
       }))
     }
   }, [totalPages, updatePageTime])
+
+  // Set current page with delay for scroll-based updates
+  const setCurrentPageFromScroll = useCallback((page: number) => {
+    if (page >= 1 && page <= totalPages && page !== currentPageRef.current) {
+      // Only update if user stays on the same page for a short time
+      setTimeout(() => {
+        if (currentPageRef.current !== page) {
+          setCurrentPage(page)
+        }
+      }, 1000) // 1 second delay to ensure user is actually viewing the page
+    }
+  }, [totalPages, setCurrentPage])
 
   // Mark specific page as read (for manual completion)
   const markPageAsRead = useCallback((page: number) => {
@@ -352,6 +364,7 @@ export function usePDFProgress({
     
     // Actions
     setCurrentPage,
+    setCurrentPageFromScroll,
     markPageAsRead,
     markAllPagesAsRead,
     resetProgress,
