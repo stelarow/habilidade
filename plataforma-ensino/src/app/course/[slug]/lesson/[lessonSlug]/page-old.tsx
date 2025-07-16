@@ -18,12 +18,6 @@ import {
   Trophy
 } from 'phosphor-react'
 
-// Import new components and hooks
-import { useCompletionCriteria } from '@/hooks/useCompletionCriteria'
-import { CompletionProgress, CompactProgressHeader } from '@/components/lesson/progress'
-import { LessonCompletionButton } from '@/components/lesson/completion/LessonCompletionButton'
-import { PDFViewer } from '@/components/lesson/pdf/PDFViewer'
-
 interface Course {
   id: string
   title: string
@@ -55,7 +49,7 @@ interface UserProgress {
   completed_at?: string
 }
 
-export default function LessonPageRefactored() {
+export default function LessonPage() {
   const router = useRouter()
   const params = useParams()
   const courseSlug = params?.slug as string
@@ -74,19 +68,6 @@ export default function LessonPageRefactored() {
   const [uploading, setUploading] = useState(false)
   
   const supabase = createClient()
-
-  // Initialize completion criteria hook
-  const completionCriteria = useCompletionCriteria({
-    minimumTimeMinutes: 25,
-    minimumQuizScore: 70,
-    requireAllExercises: true,
-    requireFullPDFRead: true,
-    lessonId: lesson?.id || 'default',
-    pdfTotalPages: 10, // This should come from the lesson data
-    onCompletionReady: () => {
-      console.log('All completion criteria met!')
-    }
-  })
 
   const fetchLessonData = useCallback(async () => {
     try {
@@ -193,8 +174,9 @@ export default function LessonPageRefactored() {
         }
       }
 
-      // Fetch exercises, quizzes, and submissions
+      // Fetch exercises, quizzes, and submissions (when tables exist)
       try {
+        // Try to fetch exercises (handle table not existing)
         const { data: exercisesData } = await supabase
           .from('exercises')
           .select('*')
@@ -203,10 +185,12 @@ export default function LessonPageRefactored() {
         
         setExercises(exercisesData || [])
       } catch (exerciseError) {
+        // Table doesn't exist yet
         setExercises([])
       }
 
       try {
+        // Try to fetch quizzes (handle table not existing)
         const { data: quizzesData } = await supabase
           .from('quizzes')
           .select('*')
@@ -214,11 +198,13 @@ export default function LessonPageRefactored() {
         
         setQuizzes(quizzesData || [])
       } catch (quizError) {
+        // Table doesn't exist yet
         setQuizzes([])
       }
 
       if (enrollmentData && user) {
         try {
+          // Try to fetch submissions (handle table not existing)
           const { data: submissionsData } = await supabase
             .from('lesson_submissions')
             .select('*')
@@ -228,6 +214,7 @@ export default function LessonPageRefactored() {
           
           setSubmissions(submissionsData || [])
         } catch (submissionError) {
+          // Table doesn't exist yet
           setSubmissions([])
         }
       }
@@ -243,20 +230,29 @@ export default function LessonPageRefactored() {
     fetchLessonData()
   }, [fetchLessonData])
 
-  const handleLessonComplete = useCallback(async () => {
-    if (!completionCriteria.canComplete) return
+  const handleMarkCompleted = async () => {
+    if (!progress || !enrollmentId || !userId || !lesson) return
 
-    // Prepare completion data
-    const completionData = {
-      timeSpent: completionCriteria.pageTimer.timeSpent,
-      pdfProgress: completionCriteria.pdfProgress.percentageRead,
-      quizScore: 0, // Would come from quiz component
-      exercisesCompleted: 0, // Would come from exercise component
-      completionCriteria: completionCriteria.criteria
+    try {
+      const { error } = await supabase
+        .from('progress')
+        .update({
+          completed: true,
+          completed_at: new Date().toISOString()
+        })
+        .eq('id', progress.id)
+
+      if (error) throw error
+
+      setProgress({
+        ...progress,
+        completed: true,
+        completed_at: new Date().toISOString()
+      })
+    } catch (err) {
+      console.error('Error marking lesson as completed:', err)
     }
-
-    console.log('Completing lesson with data:', completionData)
-  }, [completionCriteria])
+  }
 
   const formatDuration = (seconds: number) => {
     const minutes = Math.floor(seconds / 60)
@@ -331,67 +327,9 @@ export default function LessonPageRefactored() {
     return null
   }
 
-  // Map completion criteria to header format
-  const headerCriteria = [
-    {
-      id: 'time',
-      name: 'Tempo',
-      isCompleted: completionCriteria.criteria.find(c => c.id === 'time')?.isCompleted || false,
-      progress: completionCriteria.pageTimer.timeSpent >= (25 * 60) ? 100 : (completionCriteria.pageTimer.timeSpent / (25 * 60)) * 100,
-      icon: <Clock className="w-4 h-4" />,
-      color: '#f59e0b',
-      required: true
-    },
-    {
-      id: 'pdf',
-      name: 'Material PDF',
-      isCompleted: completionCriteria.criteria.find(c => c.id === 'pdf')?.isCompleted || false,
-      progress: completionCriteria.pdfProgress.percentageRead,
-      icon: <FileText className="w-4 h-4" />,
-      color: '#00c4ff',
-      required: true
-    },
-    {
-      id: 'quiz',
-      name: 'Quiz',
-      isCompleted: completionCriteria.criteria.find(c => c.id === 'quiz')?.isCompleted || false,
-      progress: 0, // Would come from quiz component
-      icon: <Question className="w-4 h-4" />,
-      color: '#22c55e',
-      required: true
-    },
-    {
-      id: 'exercises',
-      name: 'Exercícios',
-      isCompleted: completionCriteria.criteria.find(c => c.id === 'exercises')?.isCompleted || false,
-      progress: 0, // Would come from exercises component
-      icon: <BookOpen className="w-4 h-4" />,
-      color: '#ef4444',
-      required: true
-    }
-  ]
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 relative overflow-hidden">
       <Starfield count={30} className="opacity-20" />
-      
-      {/* Compact Progress Header */}
-      <CompactProgressHeader
-        criteria={headerCriteria}
-        overallProgress={completionCriteria.overallProgress}
-        canComplete={completionCriteria.canComplete}
-        completedCount={completionCriteria.completedCount}
-        totalCount={completionCriteria.totalCount}
-        timeRemaining={completionCriteria.pageTimer.formattedRemainingTime}
-        currentTime={completionCriteria.pageTimer.formattedTime}
-        onSectionClick={(sectionId) => {
-          // Handle section navigation
-          const element = document.getElementById(`section-${sectionId}`)
-          if (element) {
-            element.scrollIntoView({ behavior: 'smooth', block: 'start' })
-          }
-        }}
-      />
       
       <div className="relative z-10 container mx-auto px-4 py-8">
         {/* Header */}
@@ -411,12 +349,12 @@ export default function LessonPageRefactored() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Content */}
-          <div className="lg:col-span-3 space-y-6">
+          <div className="lg:col-span-2 space-y-6">
             {/* Video Player */}
             {lesson.video_url && (
-              <div id="section-video" className="glass-effect bg-zinc-900/70 backdrop-blur-md rounded-lg border border-gray-800/50 p-6">
+              <div className="glass-effect bg-zinc-900/70 backdrop-blur-md rounded-lg border border-gray-800/50 p-6">
                 <div className="aspect-video bg-black rounded-lg mb-4 flex items-center justify-center">
                   <div className="text-center">
                     <Play className="w-16 h-16 text-primary mx-auto mb-2" />
@@ -449,32 +387,6 @@ export default function LessonPageRefactored() {
                   <div dangerouslySetInnerHTML={{ __html: lesson.content }} />
                 </div>
               )}
-            </div>
-
-            {/* PDF Viewer */}
-            <div id="section-pdf" className="glass-effect bg-zinc-900/70 backdrop-blur-md rounded-lg border border-gray-800/50 p-6">
-              <h3 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
-                <FileText className="w-5 h-5 text-primary" />
-                Material PDF
-              </h3>
-              
-              <PDFViewer
-                pdf={{
-                  id: 'lesson-pdf',
-                  title: 'Material da Aula',
-                  url: '/pdf/capitulo2.pdf',
-                  filename: 'capitulo2.pdf',
-                  size: 1024 * 1024, // 1MB
-                  pageCount: 10,
-                  downloadable: true
-                }}
-                onProgressUpdate={(progress) => {
-                  // Update PDF progress with debounced scroll handling
-                  // Only update current page if user stays on the same page for a moment
-                  const currentPage = Math.ceil(progress / 10)
-                  completionCriteria.pdfProgress.setCurrentPageFromScroll(currentPage)
-                }}
-              />
             </div>
 
             {/* Materials */}
@@ -513,7 +425,7 @@ export default function LessonPageRefactored() {
 
             {/* Exercises */}
             {exercises.length > 0 && (
-              <div id="section-exercises" className="glass-effect bg-zinc-900/70 backdrop-blur-md rounded-lg border border-gray-800/50 p-6">
+              <div className="glass-effect bg-zinc-900/70 backdrop-blur-md rounded-lg border border-gray-800/50 p-6">
                 <h3 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
                   <BookOpen className="w-5 h-5 text-primary" />
                   Exercícios
@@ -551,7 +463,7 @@ export default function LessonPageRefactored() {
 
             {/* Quizzes */}
             {quizzes.length > 0 && (
-              <div id="section-quiz" className="glass-effect bg-zinc-900/70 backdrop-blur-md rounded-lg border border-gray-800/50 p-6">
+              <div className="glass-effect bg-zinc-900/70 backdrop-blur-md rounded-lg border border-gray-800/50 p-6">
                 <h3 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
                   <Question className="w-5 h-5 text-primary" />
                   Questionários
@@ -646,32 +558,38 @@ export default function LessonPageRefactored() {
 
           {/* Sidebar */}
           <div className="space-y-6">
-            {/* Completion Progress */}
-            <CompletionProgress
-              criteria={completionCriteria.criteria}
-              overallProgress={completionCriteria.overallProgress}
-              canComplete={completionCriteria.canComplete}
-              completedCount={completionCriteria.completedCount}
-              totalCount={completionCriteria.totalCount}
-              timeRemaining={completionCriteria.pageTimer.formattedRemainingTime}
-            />
+            {/* Progress Card */}
+            {progress && (
+              <div className="glass-effect bg-zinc-900/70 backdrop-blur-md rounded-lg border border-gray-800/50 p-6">
+                <h3 className="text-lg font-semibold text-white mb-4">Progresso</h3>
+                
+                <div className="space-y-4">
+                  {progress.completed ? (
+                    <div className="bg-green-400/20 border border-green-400/30 rounded-lg p-4">
+                      <div className="flex items-center gap-2 mb-2">
+                        <CheckCircle className="w-5 h-5 text-green-400" />
+                        <span className="text-green-400 font-semibold">Concluída</span>
+                      </div>
+                      <p className="text-green-200 text-sm">
+                        Concluída em {progress.completed_at ? new Date(progress.completed_at).toLocaleDateString('pt-BR') : ''}
+                      </p>
+                    </div>
+                  ) : (
+                    <GradientButton onClick={handleMarkCompleted} className="w-full">
+                      <CheckCircle className="w-4 h-4 mr-2" />
+                      Marcar como Concluída
+                    </GradientButton>
+                  )}
 
-            {/* Completion Button */}
-            <LessonCompletionButton
-              lessonId={lesson.id}
-              courseSlug={course.slug}
-              canComplete={completionCriteria.canComplete}
-              completedCount={completionCriteria.completedCount}
-              totalCount={completionCriteria.totalCount}
-              onComplete={handleLessonComplete}
-              completionData={{
-                timeSpent: completionCriteria.pageTimer.timeSpent,
-                pdfProgress: completionCriteria.pdfProgress.percentageRead,
-                quizScore: 0, // Would come from quiz component
-                exercisesCompleted: 0, // Would come from exercise component
-                completionCriteria: completionCriteria.criteria
-              }}
-            />
+                  <div className="bg-zinc-800/50 rounded-lg p-3">
+                    <div className="flex justify-between text-sm mb-1">
+                      <span className="text-gray-400">Tempo assistido</span>
+                      <span className="text-white">{formatDuration(progress.watch_time || 0)}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
 
             {/* Lesson Info */}
             <div className="glass-effect bg-zinc-900/70 backdrop-blur-md rounded-lg border border-gray-800/50 p-6">
@@ -689,11 +607,6 @@ export default function LessonPageRefactored() {
                     <span className="text-white font-semibold">{formatDuration(lesson.video_duration)}</span>
                   </div>
                 )}
-                
-                <div className="flex items-center justify-between">
-                  <span className="text-gray-400">Tempo na página</span>
-                  <span className="text-white font-semibold">{completionCriteria.pageTimer.formattedTime}</span>
-                </div>
                 
                 {lesson.is_preview && (
                   <div className="bg-blue-500/20 border border-blue-500/30 rounded-lg p-2 text-center">
