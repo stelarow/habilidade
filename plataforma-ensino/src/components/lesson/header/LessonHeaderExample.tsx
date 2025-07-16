@@ -17,29 +17,99 @@ export function LessonHeaderExample() {
       title: 'Hooks e Context API',
       slug: 'hooks-context-api',
     },
-    progress: {
-      overall: 65,
-      time: {
-        current: 1200, // 20 minutes in seconds
-        required: 1500, // 25 minutes required
-        formatted: '20min',
+    progressData: {
+      videoProgress: {
+        currentTime: 1200,
+        duration: 3600,
+        percentageWatched: 33,
+        watchTime: 1200,
+        lastPosition: 1200,
+        playbackRate: 1,
+        completedSegments: []
       },
-      pdf: {
-        percentage: 80,
-        isCompleted: false,
+      pdfProgress: {
+        currentPage: 8,
+        totalPages: 10,
+        percentageRead: 80,
+        bookmarks: [],
+        readingTime: 600,
+        lastPageViewed: 8
       },
-      exercises: {
-        completed: 2,
-        total: 3,
-        isCompleted: false,
-      },
-      quiz: {
+      quizProgress: {
+        currentQuestion: 3,
+        totalQuestions: 3,
+        answeredQuestions: [0, 1, 2],
         score: 85,
+        attempts: 1,
+        timeSpent: 300,
         isCompleted: true,
-        isPassed: true,
+        isPassed: true
       },
+      exerciseProgress: {
+        completedExercises: ['ex1', 'ex2'],
+        submittedFiles: [
+          {
+            exerciseId: 'ex1',
+            fileName: 'exercise1.pdf',
+            fileUrl: '/files/exercise1.pdf',
+            submittedAt: '2024-01-01T12:00:00Z',
+            status: 'approved'
+          },
+          {
+            exerciseId: 'ex2',
+            fileName: 'exercise2.pdf',
+            fileUrl: '/files/exercise2.pdf',
+            submittedAt: '2024-01-01T13:00:00Z',
+            status: 'approved'
+          }
+        ],
+        pendingReviews: [],
+        totalExercises: 3,
+        completionPercentage: 67
+      },
+      contentProgress: {
+        scrollPercentage: 0,
+        readingTime: 0,
+        sectionsRead: [],
+        estimatedCompletionTime: 0
+      },
+      overallProgress: {
+        percentageComplete: 65,
+        estimatedTimeRemaining: 600,
+        lastActivity: '2024-01-01T14:00:00Z',
+        isCompleted: false,
+        componentProgress: [
+          {
+            component: 'video',
+            percentage: 33,
+            timeSpent: 1200,
+            isCompleted: false,
+            weight: 0.25
+          },
+          {
+            component: 'pdf',
+            percentage: 80,
+            timeSpent: 600,
+            isCompleted: false,
+            weight: 0.25
+          },
+          {
+            component: 'quiz',
+            percentage: 85,
+            timeSpent: 300,
+            isCompleted: true,
+            weight: 0.25
+          },
+          {
+            component: 'exercises',
+            percentage: 67,
+            timeSpent: 0,
+            isCompleted: false,
+            weight: 0.25
+          }
+        ]
+      }
     },
-    canComplete: false,
     onExit: () => {
       console.log('Exit button clicked')
     },
