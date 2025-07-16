@@ -66,13 +66,14 @@ const LessonHeaderComponent = ({
   return (
     <header 
       className={cn(
-        "w-full transition-all duration-300",
+        "w-full transition-all duration-300 relative z-10",
         // Dynamic background opacity based on scroll state
         isScrolled 
           ? "bg-zinc-900/90 backdrop-blur-md border-b border-gray-800/70 shadow-lg" 
           : "bg-zinc-900/70 backdrop-blur-md border-b border-gray-800/50",
         className
       )}
+      style={{ position: 'relative' }} // Force relative positioning
       role="banner"
     >
       <div className="mx-auto max-w-7xl px-4">
@@ -150,58 +151,8 @@ const LessonHeaderComponent = ({
             />
           </div>
 
-          {/* Right side - Overall Progress and Complete Button */}
+          {/* Right side - Complete Button */}
           <div className="flex items-center gap-3">
-            {/* Overall Progress */}
-            <div className="hidden md:flex items-center gap-2">
-              <div className="text-right">
-                <div className="text-sm font-semibold text-white">
-                  {Math.round(progress.overallProgress.percentage)}%
-                </div>
-                <div className="text-xs text-gray-400">
-                  Concluído
-                </div>
-              </div>
-              <div className="w-12 h-12 relative">
-                <svg className="w-12 h-12 transform -rotate-90" viewBox="0 0 48 48">
-                  <circle
-                    cx="24"
-                    cy="24"
-                    r="20"
-                    stroke="rgba(255,255,255,0.1)"
-                    strokeWidth="3"
-                    fill="transparent"
-                  />
-                  <motion.circle
-                    cx="24"
-                    cy="24"
-                    r="20"
-                    stroke={progress.overallProgress.canComplete ? "#22c55e" : progress.visualStates.progressColor}
-                    strokeWidth="3"
-                    fill="transparent"
-                    strokeDasharray={`${2 * Math.PI * 20}`}
-                    initial={{ strokeDashoffset: 2 * Math.PI * 20 }}
-                    animate={{ 
-                      strokeDashoffset: 2 * Math.PI * 20 * (1 - progress.overallProgress.percentage / 100)
-                    }}
-                    transition={{ duration: 0.8, ease: "easeInOut" }}
-                    style={{
-                      filter: `drop-shadow(0 0 4px ${progress.overallProgress.canComplete ? "#22c55e" : progress.visualStates.progressColor}30)`
-                    }}
-                  />
-                </svg>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  {progress.overallProgress.canComplete ? (
-                    <span className="text-green-400 text-lg">✓</span>
-                  ) : (
-                    <span className="text-xs font-bold text-white">
-                      {Math.round(progress.overallProgress.percentage)}%
-                    </span>
-                  )}
-                </div>
-              </div>
-            </div>
-
             {/* Complete Button */}
             {progress.visualStates.showCompletionButton && (
               <motion.button

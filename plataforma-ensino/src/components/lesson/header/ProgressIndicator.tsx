@@ -1,6 +1,6 @@
 'use client'
 
-import React, { memo, useState, useEffect } from 'react'
+import React, { memo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
 import { 
@@ -72,60 +72,31 @@ const ProgressIndicatorComponent = ({
   showPulse = false,
   size = 'md'
 }: ProgressIndicatorProps) => {
-  const [previousProgress, setPreviousProgress] = useState(progress)
-  const [isAnimating, setIsAnimating] = useState(false)
-
   const IconComponent = ICON_MAP[icon]
   const sizeConfig = SIZE_CONFIG[size]
   const radius = (sizeConfig.circle - sizeConfig.stroke * 2) / 2
   const circumference = radius * 2 * Math.PI
-  const strokeDasharray = `${circumference} ${circumference}`
   const strokeDashoffset = circumference - (progress / 100) * circumference
-
-  // Handle progress changes with animation
-  useEffect(() => {
-    if (progress !== previousProgress) {
-      setIsAnimating(true)
-      setPreviousProgress(progress)
-      const timer = setTimeout(() => setIsAnimating(false), 800)
-      return () => clearTimeout(timer)
-    }
-  }, [progress, previousProgress])
 
   // Determine colors based on state
   const getStateColor = () => {
     if (isCompleted) return STATE_COLORS.completed
     if (state === 'failed') return STATE_COLORS.failed
     if (state === 'in_progress') return STATE_COLORS.in_progress
-    if (state === 'not_started') return STATE_COLORS.not_started
     return color
   }
 
   // Get appropriate icon based on state
   const getStateIcon = () => {
     if (isCompleted) {
-      return <CheckCircle className={cn(sizeConfig.icon, "text-green-400")} weight="duotone" />
+      return <CheckCircle className="w-4 h-4 text-green-400" weight="fill" />
     }
     if (state === 'failed') {
-      return <X className={cn(sizeConfig.icon, "text-red-400")} weight="duotone" />
-    }
-    if (state === 'in_progress' && showPulse) {
-      return (
-        <motion.div
-          animate={{ scale: [1, 1.1, 1] }}
-          transition={{ duration: 1.5, repeat: Infinity }}
-        >
-          <IconComponent 
-            className={cn(sizeConfig.icon)} 
-            weight="duotone"
-            style={{ color: getStateColor() }}
-          />
-        </motion.div>
-      )
+      return <X className="w-4 h-4 text-red-400" weight="bold" />
     }
     return (
       <IconComponent 
-        className={cn(sizeConfig.icon)} 
+        className="w-4 h-4" 
         weight="duotone"
         style={{ color: getStateColor() }}
       />
@@ -171,7 +142,7 @@ const ProgressIndicatorComponent = ({
             stroke={getStateColor()}
             strokeWidth={sizeConfig.stroke}
             fill="transparent"
-            strokeDasharray={strokeDasharray}
+            strokeDasharray={`${circumference} ${circumference}`}
             strokeLinecap="round"
             initial={{ strokeDashoffset: circumference }}
             animate={{ 
@@ -245,7 +216,7 @@ const ProgressIndicatorComponent = ({
             state === 'in_progress' && "text-amber-400",
             state === 'not_started' && "text-gray-500"
           )}
-          animate={{ opacity: isAnimating ? [1, 0.5, 1] : 1 }}
+          animate={{ opacity: 1 }}
         >
           {detail}
         </motion.span>
