@@ -11,6 +11,7 @@ export interface VideoData {
 }
 
 export interface PDFData {
+  id?: string
   url: string
   title: string
   filename: string
