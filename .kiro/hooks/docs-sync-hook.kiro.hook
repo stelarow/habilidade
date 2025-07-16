@@ -1,0 +1,30 @@
+{
+  "enabled": true,
+  "name": "Documentation Sync",
+  "description": "Monitors source files and automatically updates documentation in README.md and docs folder when code changes are detected",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "src/**/*.jsx",
+      "src/**/*.js",
+      "src/**/*.ts",
+      "src/**/*.tsx",
+      "plataforma-ensino/src/**/*.tsx",
+      "plataforma-ensino/src/**/*.ts",
+      "plataforma-ensino/middleware.ts",
+      "plataforma-ensino/next.config.mjs",
+      "plataforma-ensino/tailwind.config.ts",
+      "plataforma-ensino/tsconfig.json",
+      "package.json",
+      "plataforma-ensino/package.json",
+      "vite.config.js",
+      "tailwind.config.js",
+      "eslint.config.js"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Source code files have been modified. Please analyze the changes and update the documentation accordingly. Focus on:\n\n1. Update README.md with any new features, API changes, or setup instructions\n2. If there's a /docs folder, update relevant documentation files there\n3. Ensure technical documentation reflects current architecture and implementation\n4. Update any code examples or usage instructions that may have changed\n5. Check if any new dependencies or configuration changes need to be documented\n\nPlease review the modified files and update documentation to keep it synchronized with the current codebase."
+  }
+}

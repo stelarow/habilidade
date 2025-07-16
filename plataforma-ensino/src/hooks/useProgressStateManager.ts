@@ -196,7 +196,7 @@ export function useProgressStateManager(
       type: 'video_play',
       data: { currentTime, playbackRate: progressData.videoProgress.playbackRate }
     })
-  }, [progressData, triggerAnimation])
+  }, [progressData, triggerAnimation, trackEvent])
   
   // Update PDF progress
   const updatePDFProgress = useCallback((currentPage: number, totalPages: number) => {
@@ -224,7 +224,7 @@ export function useProgressStateManager(
       type: 'pdf_page_change',
       data: { from: progressData.pdfProgress.currentPage, to: currentPage, timeSpent: 0 }
     })
-  }, [progressData, triggerAnimation])
+  }, [progressData, triggerAnimation, trackEvent])
   
   // Update quiz progress
   const updateQuizProgress = useCallback((score: number, isCompleted: boolean, isPassed: boolean) => {
@@ -250,7 +250,7 @@ export function useProgressStateManager(
       type: 'quiz_answer',
       data: { questionId: 'quiz-complete', answer: score, timeSpent: 0 }
     })
-  }, [progressData, triggerAnimation])
+  }, [progressData, triggerAnimation, trackEvent])
   
   // Update exercise progress
   const updateExerciseProgress = useCallback((completedExercises: string[], totalExercises: number) => {

@@ -450,31 +450,97 @@ export default function LessonPageRefactored() {
       <LessonHeader
         course={course}
         lesson={lesson}
-        progress={{
-          overall: completionCriteria.overallProgress,
-          time: {
-            current: completionCriteria.pageTimer.timeSpent,
-            required: 25 * 60, // 25 minutes in seconds
-            formatted: completionCriteria.pageTimer.formattedTime,
+        progressData={{
+          videoProgress: {
+            currentTime: videoProgress.progress?.last_position || 0,
+            duration: lesson.video_duration || 0,
+            percentageWatched: videoProgress.progress?.watch_time ? (videoProgress.progress.watch_time / (lesson.video_duration || 1)) * 100 : 0,
+            watchTime: videoProgress.progress?.watch_time || 0,
+            lastPosition: videoProgress.progress?.last_position || 0,
+            playbackRate: 1,
+            completedSegments: []
           },
-          pdf: {
-            percentage: completionCriteria.pdfProgress.percentageRead,
-            isCompleted: completionCriteria.criteria.find(c => c.id === 'pdf')?.isCompleted || false,
+          pdfProgress: {
+            currentPage: completionCriteria.pdfProgress.currentPage,
+            totalPages: completionCriteria.pdfProgress.totalPages,
+            percentageRead: completionCriteria.pdfProgress.percentageRead,
+            bookmarks: [],
+            readingTime: 0,
+            lastPageViewed: completionCriteria.pdfProgress.currentPage
           },
-          exercises: {
-            completed: exercises.filter(ex => submissions.some(sub => sub.exercise_id === ex.id && sub.status === 'approved')).length,
-            total: exercises.length,
-            isCompleted: completionCriteria.criteria.find(c => c.id === 'exercises')?.isCompleted || false,
-          },
-          quiz: {
+          quizProgress: {
+            currentQuestion: 0,
+            totalQuestions: quizzes.length,
+            answeredQuestions: [],
             score: Object.values(quizProgress).reduce((max: number, quiz: any) => 
               Math.max(max, quiz.score || 0), 0
             ),
+            attempts: Object.values(quizProgress).reduce((max: number, quiz: any) => 
+              Math.max(max, quiz.attempts || 0), 0
+            ),
+            timeSpent: 0,
             isCompleted: completionCriteria.criteria.find(c => c.id === 'quiz')?.isCompleted || false,
-            isPassed: completionCriteria.criteria.find(c => c.id === 'quiz')?.isCompleted || false,
+            isPassed: completionCriteria.criteria.find(c => c.id === 'quiz')?.isCompleted || false
           },
+          exerciseProgress: {
+            completedExercises: submissions.filter(sub => sub.status === 'approved').map(sub => sub.exercise_id),
+            submittedFiles: submissions.map(sub => ({
+              exerciseId: sub.exercise_id,
+              fileName: sub.file_name,
+              fileUrl: sub.file_url || '',
+              submittedAt: sub.created_at,
+              status: sub.status,
+              feedback: sub.feedback
+            })),
+            pendingReviews: submissions.filter(sub => sub.status === 'pending').map(sub => sub.id),
+            totalExercises: exercises.length,
+            completionPercentage: exercises.length > 0 ? (submissions.filter(sub => sub.status === 'approved').length / exercises.length) * 100 : 0
+          },
+          contentProgress: {
+            scrollPercentage: 0,
+            readingTime: 0,
+            sectionsRead: [],
+            estimatedCompletionTime: 0
+          },
+          overallProgress: {
+            percentageComplete: completionCriteria.overallProgress,
+            estimatedTimeRemaining: 0,
+            lastActivity: new Date().toISOString(),
+            isCompleted: completionCriteria.canComplete,
+            componentProgress: [
+              {
+                component: 'video',
+                percentage: videoProgress.progress?.watch_time ? (videoProgress.progress.watch_time / (lesson.video_duration || 1)) * 100 : 0,
+                timeSpent: videoProgress.progress?.watch_time || 0,
+                isCompleted: false,
+                weight: 0.25
+              },
+              {
+                component: 'pdf',
+                percentage: completionCriteria.pdfProgress.percentageRead,
+                timeSpent: 0,
+                isCompleted: completionCriteria.criteria.find(c => c.id === 'pdf')?.isCompleted || false,
+                weight: 0.25
+              },
+              {
+                component: 'quiz',
+                percentage: Object.values(quizProgress).reduce((max: number, quiz: any) => 
+                  Math.max(max, quiz.score || 0), 0
+                ),
+                timeSpent: 0,
+                isCompleted: completionCriteria.criteria.find(c => c.id === 'quiz')?.isCompleted || false,
+                weight: 0.25
+              },
+              {
+                component: 'exercises',
+                percentage: exercises.length > 0 ? (submissions.filter(sub => sub.status === 'approved').length / exercises.length) * 100 : 0,
+                timeSpent: 0,
+                isCompleted: completionCriteria.criteria.find(c => c.id === 'exercises')?.isCompleted || false,
+                weight: 0.25
+              }
+            ]
+          }
         }}
-        canComplete={completionCriteria.canComplete}
         onExit={() => {
           console.log('Exiting lesson')
         }}
