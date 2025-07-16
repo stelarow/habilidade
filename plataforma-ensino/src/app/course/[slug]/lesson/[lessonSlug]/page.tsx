@@ -18,10 +18,13 @@ import {
 // Import new components and hooks
 import { useCompletionCriteria } from '@/hooks/useCompletionCriteria'
 import { useVideoProgress } from '@/hooks/useVideoProgress'
+import { QuizInterface } from '@/components/lesson/quiz/QuizInterface'
 import { PDFViewer } from '@/components/lesson/pdf/PDFViewer'
 import { LessonHeader } from '@/components/lesson/header'
 import VideoPlayer from '@/components/ui/VideoPlayer'
 import { VideoProgress } from '@/types'
+import { QuizData } from '@/types/lesson'
+import { LessonProgressData } from '@/types/lesson/progress'
 
 interface Course {
   id: string
@@ -73,6 +76,11 @@ export default function LessonPageRefactored() {
   const [uploading, setUploading] = useState(false)
   const [videoError, setVideoError] = useState<string | null>(null)
   const [videoLoading, setVideoLoading] = useState(true)
+  
+  // Quiz state management
+  const [activeQuizId, setActiveQuizId] = useState<string | null>(null)
+  const [quizProgress, setQuizProgress] = useState<{[key: string]: any}>({})
+  const [quizError, setQuizError] = useState<string | null>(null)
   
   const supabase = createClient()
 
@@ -253,20 +261,113 @@ export default function LessonPageRefactored() {
     fetchLessonData()
   }, [fetchLessonData])
 
+  // Quiz handlers
+  const handleQuizStart = useCallback((quizId: string) => {
+    setActiveQuizId(quizId)
+    setQuizError(null)
+  }, [])
+
+  const handleQuizComplete = useCallback((score: number, attempts: any[]) => {
+    const currentQuiz = quizzes.find(q => q.id === activeQuizId)
+    if (!currentQuiz) return
+
+    const isPassed = score >= currentQuiz.passing_score
+    
+    // Update quiz progress
+    setQuizProgress(prev => ({
+      ...prev,
+      [activeQuizId!]: {
+        score,
+        attempts: attempts.length,
+        isCompleted: true,
+        isPassed,
+        completedAt: new Date().toISOString()
+      }
+    }))
+
+    // Update completion criteria with quiz progress
+    const progressData: LessonProgressData = {
+      videoProgress: {
+        currentTime: 0,
+        duration: 0,
+        percentageWatched: 0,
+        watchTime: 0,
+        lastPosition: 0,
+        playbackRate: 1,
+        completedSegments: []
+      },
+      pdfProgress: {
+        currentPage: 0,
+        totalPages: 10,
+        percentageRead: completionCriteria.pdfProgress.percentageRead,
+        bookmarks: [],
+        readingTime: 0,
+        lastPageViewed: 0
+      },
+      quizProgress: {
+        currentQuestion: attempts.length,
+        totalQuestions: attempts.length,
+        answeredQuestions: attempts.map((_, i) => i),
+        score,
+        attempts: 1,
+        timeSpent: attempts.reduce((sum, a) => sum + a.timeSpent, 0),
+        isCompleted: true,
+        isPassed
+      },
+      exerciseProgress: {
+        completedExercises: [],
+        submittedFiles: [],
+        pendingReviews: [],
+        totalExercises: exercises.length,
+        completionPercentage: 0
+      },
+      contentProgress: {
+        scrollPercentage: 0,
+        readingTime: 0,
+        sectionsRead: [],
+        estimatedCompletionTime: 0
+      },
+      overallProgress: {
+        percentageComplete: 0,
+        estimatedTimeRemaining: 0,
+        lastActivity: new Date().toISOString(),
+        isCompleted: false,
+        componentProgress: []
+      }
+    }
+
+    completionCriteria.updateProgress(progressData)
+
+    // Close quiz interface after a delay
+    setTimeout(() => {
+      setActiveQuizId(null)
+    }, 3000)
+  }, [activeQuizId, quizzes, completionCriteria, exercises.length])
+
+  const handleQuizError = useCallback((error: string) => {
+    setQuizError(error)
+    console.error('Quiz error:', error)
+  }, [])
+
   const handleLessonComplete = useCallback(async () => {
     if (!completionCriteria.canComplete) return
+
+    // Get current quiz score from progress
+    const currentQuizScore = Object.values(quizProgress).reduce((max: number, quiz: any) => 
+      Math.max(max, quiz.score || 0), 0
+    )
 
     // Prepare completion data
     const completionData = {
       timeSpent: completionCriteria.pageTimer.timeSpent,
       pdfProgress: completionCriteria.pdfProgress.percentageRead,
-      quizScore: 0, // Would come from quiz component
+      quizScore: currentQuizScore,
       exercisesCompleted: 0, // Would come from exercise component
       completionCriteria: completionCriteria.criteria
     }
 
     console.log('Completing lesson with data:', completionData)
-  }, [completionCriteria])
+  }, [completionCriteria, quizProgress])
 
   const formatDuration = (seconds: number) => {
     const minutes = Math.floor(seconds / 60)
@@ -366,7 +467,9 @@ export default function LessonPageRefactored() {
             isCompleted: completionCriteria.criteria.find(c => c.id === 'exercises')?.isCompleted || false,
           },
           quiz: {
-            score: 0, // Would come from quiz component
+            score: Object.values(quizProgress).reduce((max: number, quiz: any) => 
+              Math.max(max, quiz.score || 0), 0
+            ),
             isCompleted: completionCriteria.criteria.find(c => c.id === 'quiz')?.isCompleted || false,
             isPassed: completionCriteria.criteria.find(c => c.id === 'quiz')?.isCompleted || false,
           },
@@ -600,28 +703,104 @@ export default function LessonPageRefactored() {
                   Questionários
                 </h3>
                 
-                <div className="space-y-3">
-                  {quizzes.map((quiz: any) => (
-                    <div key={quiz.id} className="p-4 bg-zinc-800/50 rounded-lg border border-gray-700">
-                      <div className="flex items-center justify-between mb-3">
-                        <h4 className="font-medium text-white">{quiz.title}</h4>
-                        <Trophy className="w-5 h-5 text-yellow-400" />
+                {/* Quiz Error Display */}
+                {quizError && (
+                  <div className="mb-4 p-4 bg-red-500/10 border border-red-500/30 rounded-lg">
+                    <div className="flex items-center gap-2">
+                      <span className="text-red-400 text-xl">⚠️</span>
+                      <div>
+                        <h4 className="text-red-400 font-semibold">Erro no Questionário</h4>
+                        <p className="text-red-300 text-sm">{quizError}</p>
                       </div>
-                      
-                      {quiz.description && (
-                        <p className="text-sm text-gray-400 mb-3">{quiz.description}</p>
-                      )}
-                      
-                      <div className="flex items-center justify-between text-sm text-gray-400">
-                        <span>Nota mínima: {quiz.passing_score}%</span>
-                        <span>Tentativas: {quiz.attempts_allowed}</span>
-                      </div>
-                      
-                      <GradientButton className="w-full mt-3">
-                        Iniciar Questionário
-                      </GradientButton>
                     </div>
-                  ))}
+                  </div>
+                )}
+                
+                <div className="space-y-3">
+                  {quizzes.map((quiz: any) => {
+                    const quizProgressData = quizProgress[quiz.id]
+                    const isActive = activeQuizId === quiz.id
+                    
+                    // Convert quiz data to QuizData format
+                    const quizData: QuizData = {
+                      id: quiz.id,
+                      title: quiz.title,
+                      description: quiz.description,
+                      timeLimit: quiz.time_limit_minutes,
+                      attemptsAllowed: quiz.attempts_allowed,
+                      passingScore: quiz.passing_score,
+                      totalQuestions: quiz.questions?.length || 3, // Default to 3 for demo
+                      status: quizProgressData?.isCompleted 
+                        ? (quizProgressData.isPassed ? 'passed' : 'failed')
+                        : 'not_started',
+                      lastScore: quizProgressData?.score,
+                      remainingAttempts: quiz.attempts_allowed - (quizProgressData?.attempts || 0)
+                    }
+                    
+                    return (
+                      <div key={quiz.id}>
+                        {isActive ? (
+                          // Show QuizInterface when quiz is active
+                          <QuizInterface
+                            quiz={quizData}
+                            onComplete={handleQuizComplete}
+                            onProgressUpdate={(questionIndex, score) => {
+                              console.log(`Quiz progress: Question ${questionIndex}, Score: ${score}%`)
+                            }}
+                            className="quiz-interface-container"
+                          />
+                        ) : (
+                          // Show quiz card when not active
+                          <div className="p-4 bg-zinc-800/50 rounded-lg border border-gray-700">
+                            <div className="flex items-center justify-between mb-3">
+                              <h4 className="font-medium text-white">{quiz.title}</h4>
+                              <div className="flex items-center gap-2">
+                                {quizProgressData?.isCompleted && (
+                                  <span className={`px-2 py-1 rounded text-xs ${
+                                    quizProgressData.isPassed 
+                                      ? 'bg-green-500/20 text-green-400' 
+                                      : 'bg-red-500/20 text-red-400'
+                                  }`}>
+                                    {quizProgressData.isPassed ? `✅ ${quizProgressData.score}%` : `❌ ${quizProgressData.score}%`}
+                                  </span>
+                                )}
+                                <Trophy className="w-5 h-5 text-yellow-400" />
+                              </div>
+                            </div>
+                            
+                            {quiz.description && (
+                              <p className="text-sm text-gray-400 mb-3">{quiz.description}</p>
+                            )}
+                            
+                            <div className="flex items-center justify-between text-sm text-gray-400 mb-3">
+                              <span>Nota mínima: {quiz.passing_score}%</span>
+                              <span>Tentativas: {quizData.remainingAttempts || quiz.attempts_allowed}</span>
+                            </div>
+                            
+                            {quizProgressData?.isCompleted && quizProgressData.isPassed ? (
+                              <div className="text-center p-3 bg-green-500/10 border border-green-500/30 rounded-lg">
+                                <span className="text-green-400 font-semibold">✅ Questionário Concluído com Sucesso!</span>
+                                <p className="text-green-300 text-sm mt-1">Pontuação: {quizProgressData.score}%</p>
+                              </div>
+                            ) : (
+                              <GradientButton 
+                                className="w-full mt-3"
+                                onClick={() => handleQuizStart(quiz.id)}
+                                disabled={(quizData.remainingAttempts || 0) === 0}
+                              >
+                                {quizProgressData?.isCompleted && !quizProgressData.isPassed
+                                  ? (quizData.remainingAttempts || 0) > 0 
+                                    ? '🔄 Tentar Novamente' 
+                                    : '❌ Sem Tentativas Restantes'
+                                  : '🚀 Iniciar Questionário'
+                                }
+                              </GradientButton>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    )
+                  })}
                 </div>
               </div>
             )}
