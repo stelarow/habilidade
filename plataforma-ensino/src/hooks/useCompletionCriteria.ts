@@ -2,6 +2,8 @@
 
 import { useState, useEffect, useCallback, useMemo } from 'react'
 import { LessonProgressData } from '@/types/lesson'
+import { usePageTimer } from './usePageTimer'
+import { usePDFProgress } from './usePDFProgress'
 
 interface CompletionCriterion {
   id: string
@@ -27,44 +29,65 @@ interface UseCompletionCriteriaOptions {
   minimumQuizScore?: number
   requireAllExercises?: boolean
   requireFullPDFRead?: boolean
-  timeSpent?: number
+  lessonId?: string
+  pdfTotalPages?: number
   onCriteriaUpdated?: (state: CompletionCriteriaState) => void
+  onCompletionReady?: () => void
 }
 
 /**
  * useCompletionCriteria - Hook for managing lesson completion criteria
  * 
  * Manages the four completion requirements:
- * 1. Time spent (25 minutes minimum)
- * 2. Quiz score (70% minimum)  
- * 3. Exercises completion (100%)
- * 4. PDF reading (100%)
+ * 1. Time spent (25 minutes minimum) - página deve estar aberta por 25 min
+ * 2. Quiz score (70% minimum) - nota mínima de 70% no quiz
+ * 3. Exercises completion (100%) - todos os exercícios devem ser concluídos
+ * 4. PDF reading (100%) - 100% do material PDF deve ser lido
+ * 
+ * Note: Video progress is NOT included in completion criteria
  */
 export function useCompletionCriteria({
   minimumTimeMinutes = 25,
   minimumQuizScore = 70,
   requireAllExercises = true,
   requireFullPDFRead = true,
-  timeSpent = 0,
-  onCriteriaUpdated
+  lessonId = 'default',
+  pdfTotalPages = 1,
+  onCriteriaUpdated,
+  onCompletionReady
 }: UseCompletionCriteriaOptions = {}) {
   
   const [progressData, setProgressData] = useState<LessonProgressData | null>(null)
+  
+  // Use the new hooks
+  const pageTimer = usePageTimer({
+    minimumTimeMinutes,
+    lessonId,
+    onMinimumReached: () => {
+      console.log('Minimum time reached!')
+    }
+  })
+  
+  const pdfProgress = usePDFProgress({
+    totalPages: pdfTotalPages,
+    lessonId,
+    onFullyRead: () => {
+      console.log('PDF fully read!')
+    }
+  })
 
   // Calculate criteria based on current progress
   const criteriaState = useMemo((): CompletionCriteriaState => {
-    const minimumTimeSeconds = minimumTimeMinutes * 60
-    
     const criteria: CompletionCriterion[] = [
       {
         id: 'time',
         name: 'Tempo na Aula',
         icon: '⏱️',
         description: `Permanecer pelo menos ${minimumTimeMinutes} minutos na aula`,
-        isCompleted: timeSpent >= minimumTimeSeconds,
-        progress: Math.min((timeSpent / minimumTimeSeconds) * 100, 100),
+        isCompleted: pageTimer.hasReachedMinimum,
+        progress: pageTimer.percentage,
         weight: 25,
-        color: timeSpent >= minimumTimeSeconds ? '#22c55e' : '#f59e0b'
+        color: pageTimer.hasReachedMinimum ? '#22c55e' : '#f59e0b'
       },
       {
         id: 'quiz',
@@ -96,13 +119,10 @@ export function useCompletionCriteria({
         name: 'Material PDF',
         icon: '📄',
         description: requireFullPDFRead ? 'Ler 100% do material PDF' : 'Ler pelo menos 90% do material PDF',
-        isCompleted: progressData 
-          ? (progressData.pdfProgress?.percentageRead || 0) >= (requireFullPDFRead ? 100 : 90)
-          : false,
-        progress: progressData?.pdfProgress.percentageRead || 0,
+        isCompleted: pdfProgress.isCompleted,
+        progress: pdfProgress.percentageRead,
         weight: 15,
-        color: (progressData?.pdfProgress.percentageRead || 0) >= (requireFullPDFRead ? 100 : 90) 
-          ? '#22c55e' : '#00c4ff'
+        color: pdfProgress.isCompleted ? '#22c55e' : '#00c4ff'
       }
     ]
 
@@ -126,7 +146,10 @@ export function useCompletionCriteria({
     }
   }, [
     progressData,
-    timeSpent,
+    pageTimer.hasReachedMinimum,
+    pageTimer.percentage,
+    pdfProgress.isCompleted,
+    pdfProgress.percentageRead,
     minimumTimeMinutes,
     minimumQuizScore,
     requireAllExercises,
@@ -144,6 +167,13 @@ export function useCompletionCriteria({
       onCriteriaUpdated(criteriaState)
     }
   }, [criteriaState, onCriteriaUpdated])
+
+  // Call callback when completion is ready
+  useEffect(() => {
+    if (criteriaState.canComplete && onCompletionReady) {
+      onCompletionReady()
+    }
+  }, [criteriaState.canComplete, onCompletionReady])
 
   // Get specific criterion
   const getCriterion = useCallback((id: string): CompletionCriterion | undefined => {
@@ -197,6 +227,10 @@ export function useCompletionCriteria({
     canComplete: criteriaState.canComplete,
     completedCount: criteriaState.completedCount,
     totalCount: criteriaState.totalCount,
+    
+    // Timer state
+    pageTimer,
+    pdfProgress,
     
     // Actions
     updateProgress,

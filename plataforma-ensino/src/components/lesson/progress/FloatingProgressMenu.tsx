@@ -46,9 +46,9 @@ const FloatingProgressMenuComponent = ({
       id: 'video',
       name: 'Assistir Vídeo',
       icon: '🎬',
-      progress: 0, // Video no longer tracks progress
-      isCompleted: false, // Video is not part of completion
-      color: '#6b7280' // Gray color to indicate non-tracked
+      progress: progress.videoProgress.percentageWatched,
+      isCompleted: false, // Video is not part of completion criteria
+      color: '#6b7280' // Gray color to indicate non-tracked for completion
     },
     {
       id: 'pdf',
@@ -75,6 +75,7 @@ const FloatingProgressMenuComponent = ({
       color: progress.quizProgress.isPassed ? '#22c55e' : '#ef4444'
     }
   ], [
+    progress.videoProgress.percentageWatched,
     progress.pdfProgress.percentageRead,
     progress.exerciseProgress.completionPercentage,
     progress.quizProgress.isCompleted,
@@ -169,7 +170,7 @@ const FloatingProgressMenuComponent = ({
     </div>
   )
 
-  // Shimmer button component
+  // Shimmer button component - More compact
   const ShimmerButton = ({ 
     children, 
     onClick, 
@@ -185,7 +186,7 @@ const FloatingProgressMenuComponent = ({
       onClick={onClick}
       disabled={disabled}
       className={cn(
-        "relative w-full p-3 rounded-xl text-left transition-all duration-300 overflow-hidden group",
+        "relative w-full p-2 rounded-lg text-left transition-all duration-300 overflow-hidden group",
         disabled ? "opacity-50 cursor-not-allowed" : "hover:scale-105 cursor-pointer"
       )}
       style={{
@@ -207,40 +208,40 @@ const FloatingProgressMenuComponent = ({
   )
 
   return (
-    <div className={cn("sticky top-24 z-40", className)}>
+    <div className={cn("sticky top-20 z-30", className)}>
       <MagicCard>
-        <div className="p-6 space-y-6">
-          {/* Header */}
+        <div className="p-4 space-y-4">
+          {/* Header - More compact */}
           <div className="text-center">
-            <h3 className="text-xl font-bold text-white mb-2">
+            <h3 className="text-lg font-bold text-white mb-1">
               Progresso da Aula
             </h3>
-            <p className="text-gray-300 text-sm">
-              Acompanhe seu avanço e navegue pelas seções
+            <p className="text-gray-400 text-xs">
+              Acompanhe seu avanço
             </p>
           </div>
 
-          {/* Overall Progress */}
+          {/* Overall Progress - More compact */}
           <div className="text-center">
             <ProgressCircle 
               percentage={overallProgress} 
-              size={80} 
-              strokeWidth={6}
+              size={60} 
+              strokeWidth={5}
               color="#d400ff"
             />
-            <div className="mt-3">
-              <div className="text-lg font-bold text-white">
-                Progresso Geral
-              </div>
-              <div className="text-sm text-gray-400">
+            <div className="mt-2">
+              <div className="text-md font-bold text-white">
                 {Math.round(overallProgress)}% concluído
+              </div>
+              <div className="text-xs text-gray-400">
+                Progresso geral
               </div>
             </div>
           </div>
 
-          {/* Sections Navigation */}
-          <div className="space-y-3">
-            <h4 className="text-sm font-semibold text-gray-300 mb-3">Navegar para:</h4>
+          {/* Sections Navigation - More compact */}
+          <div className="space-y-2">
+            <h4 className="text-xs font-semibold text-gray-300 mb-2">Navegar para:</h4>
             
             {sections.map((section, index) => (
               <div key={section.id}>
@@ -249,25 +250,28 @@ const FloatingProgressMenuComponent = ({
                   color={section.color}
                   disabled={false}
                 >
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2">
                     <div className="flex items-center gap-2">
-                      <span className="text-lg">{section.icon}</span>
+                      <span className="text-sm">{section.icon}</span>
                       <ProgressCircle 
                         percentage={section.progress} 
-                        size={32} 
-                        strokeWidth={3}
+                        size={24} 
+                        strokeWidth={2}
                         color={section.color}
                       />
                     </div>
                     
                     <div className="flex-1 min-w-0">
-                      <div className="text-white font-medium text-sm">
+                      <div className="text-white font-medium text-xs">
                         {section.name}
                       </div>
                       <div className="text-xs text-gray-400">
                         {section.id === 'video' ? (
                           <span className="text-gray-500">
-                            📺 Disponível para assistir
+                            {section.progress > 0 ? `${Math.round(section.progress)}% assistido` : 'Disponível'}
+                            <span className="block text-xs text-gray-600">
+                              • Não conta para conclusão
+                            </span>
                           </span>
                         ) : section.isCompleted ? (
                           <span className="text-green-400 flex items-center gap-1">
@@ -296,17 +300,17 @@ const FloatingProgressMenuComponent = ({
             ))}
           </div>
 
-          {/* Quick Stats */}
-          <div className="pt-4 border-t border-gray-700/50">
-            <div className="grid grid-cols-2 gap-4 text-center">
+          {/* Quick Stats - More compact */}
+          <div className="pt-3 border-t border-gray-700/50">
+            <div className="grid grid-cols-2 gap-3 text-center">
               <div>
-                <div className="text-lg font-bold text-white">
+                <div className="text-sm font-bold text-white">
                   {sections.filter(s => s.isCompleted).length}
                 </div>
                 <div className="text-xs text-gray-400">Concluídos</div>
               </div>
               <div>
-                <div className="text-lg font-bold text-white">
+                <div className="text-sm font-bold text-white">
                   {Math.round(progress.overallProgress.estimatedTimeRemaining)}min
                 </div>
                 <div className="text-xs text-gray-400">Restante</div>
@@ -359,6 +363,7 @@ const MemoizedFloatingProgressMenu = memo(FloatingProgressMenuComponent, (prevPr
     prevProgress.exerciseProgress.completionPercentage === nextProgress.exerciseProgress.completionPercentage &&
     prevProgress.quizProgress.isCompleted === nextProgress.quizProgress.isCompleted &&
     prevProgress.quizProgress.isPassed === nextProgress.quizProgress.isPassed &&
+    prevProgress.quizProgress.score === nextProgress.quizProgress.score &&
     prevProgress.overallProgress.percentageComplete === nextProgress.overallProgress.percentageComplete &&
     prevProgress.overallProgress.estimatedTimeRemaining === nextProgress.overallProgress.estimatedTimeRemaining &&
     prevProps.className === nextProps.className

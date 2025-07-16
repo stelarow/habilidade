@@ -12,6 +12,16 @@ export async function POST(
     const cookieStore = cookies()
     const supabase = createClient()
 
+    // Get completion criteria from request body
+    const body = await request.json()
+    const { 
+      timeSpent, 
+      pdfProgress, 
+      quizScore, 
+      exercisesCompleted,
+      completionCriteria 
+    } = body
+
     // Get current user
     const { data: { user }, error: authError } = await supabase.auth.getUser()
     
@@ -86,6 +96,18 @@ export async function POST(
       })
     }
 
+    // Validate completion criteria
+    const validationResult = validateCompletionCriteria(completionCriteria || {})
+    if (!validationResult.isValid) {
+      return NextResponse.json(
+        { 
+          error: 'Completion criteria not met',
+          details: validationResult.errors
+        },
+        { status: 400 }
+      )
+    }
+
     // Start transaction to mark lesson complete and unlock next lesson
     const completedAt = new Date().toISOString()
 
@@ -98,7 +120,13 @@ export async function POST(
         is_completed: true,
         completed_at: completedAt,
         last_accessed_at: completedAt,
-        updated_at: completedAt
+        updated_at: completedAt,
+        // New completion criteria data
+        time_spent_minutes: Math.floor((timeSpent || 0) / 60),
+        pdf_progress_percentage: pdfProgress || 0,
+        quiz_score: quizScore || 0,
+        exercises_completed: exercisesCompleted || 0,
+        completion_criteria: completionCriteria || {}
       }, {
         onConflict: 'user_id,lesson_id'
       })
@@ -214,5 +242,60 @@ async function updateCourseProgress(supabase: any, userId: string, courseId: str
     }
   } catch (error) {
     console.error('Error updating course progress:', error)
+  }
+}
+
+// Helper function to validate completion criteria
+function validateCompletionCriteria(criteria: any): { isValid: boolean; errors: string[] } {
+  const errors: string[] = []
+  
+  // Default requirements
+  const requirements = {
+    minimumTimeMinutes: 25,
+    minimumQuizScore: 70,
+    requireFullPDFRead: true,
+    requireAllExercises: true
+  }
+  
+  // Validate time spent (if provided)
+  if (criteria.timeSpent !== undefined) {
+    const timeMinutes = Math.floor(criteria.timeSpent / 60)
+    if (timeMinutes < requirements.minimumTimeMinutes) {
+      errors.push(`Minimum time requirement not met (${timeMinutes}/${requirements.minimumTimeMinutes} minutes)`)
+    }
+  }
+  
+  // Validate quiz score (if provided)
+  if (criteria.quizScore !== undefined) {
+    if (criteria.quizScore < requirements.minimumQuizScore) {
+      errors.push(`Quiz score requirement not met (${criteria.quizScore}/${requirements.minimumQuizScore}%)`)
+    }
+  }
+  
+  // Validate PDF reading (if provided)
+  if (criteria.pdfProgress !== undefined && requirements.requireFullPDFRead) {
+    if (criteria.pdfProgress < 100) {
+      errors.push(`PDF reading requirement not met (${criteria.pdfProgress}/100%)`)
+    }
+  }
+  
+  // Validate exercises completion (if provided)
+  if (criteria.exercisesCompleted !== undefined && requirements.requireAllExercises) {
+    if (criteria.exercisesCompleted < 100) {
+      errors.push(`Exercises completion requirement not met (${criteria.exercisesCompleted}/100%)`)
+    }
+  }
+  
+  // Check if all criteria are completed
+  if (criteria.criteria && Array.isArray(criteria.criteria)) {
+    const allCompleted = criteria.criteria.every((criterion: any) => criterion.isCompleted)
+    if (!allCompleted) {
+      errors.push('Not all completion criteria have been met')
+    }
+  }
+  
+  return {
+    isValid: errors.length === 0,
+    errors
   }
 }

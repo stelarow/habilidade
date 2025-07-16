@@ -9,8 +9,17 @@ interface LessonCompletionButtonProps {
   lessonId: string
   courseSlug: string
   canComplete: boolean
+  completedCount?: number
+  totalCount?: number
   className?: string
   onComplete?: () => void
+  completionData?: {
+    timeSpent?: number
+    pdfProgress?: number
+    quizScore?: number
+    exercisesCompleted?: number
+    completionCriteria?: any[]
+  }
 }
 
 /**
@@ -27,8 +36,11 @@ export function LessonCompletionButton({
   lessonId,
   courseSlug,
   canComplete,
+  completedCount = 0,
+  totalCount = 4,
   className,
-  onComplete
+  onComplete,
+  completionData
 }: LessonCompletionButtonProps) {
   const [isCompleting, setIsCompleting] = useState(false)
   const [isCompleted, setIsCompleted] = useState(false)
@@ -49,7 +61,14 @@ export function LessonCompletionButton({
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
-        }
+        },
+        body: JSON.stringify({
+          timeSpent: completionData?.timeSpent,
+          pdfProgress: completionData?.pdfProgress,
+          quizScore: completionData?.quizScore,
+          exercisesCompleted: completionData?.exercisesCompleted,
+          completionCriteria: completionData?.completionCriteria
+        })
       })
 
       if (!response.ok) {
@@ -216,7 +235,7 @@ export function LessonCompletionButton({
           transition={{ delay: 0.3 }}
         >
           <div className={cn(
-            "text-xs",
+            "text-xs mb-2",
             canComplete ? "text-green-300" : "text-gray-400"
           )}>
             {canComplete ? (
@@ -224,6 +243,18 @@ export function LessonCompletionButton({
             ) : (
               "Complete todos os critérios de conclusão para finalizar esta aula."
             )}
+          </div>
+          
+          {/* Progress indicator */}
+          <div className="flex items-center justify-center gap-2 text-xs text-gray-500">
+            <span>Progresso:</span>
+            <span className={cn(
+              "font-medium",
+              canComplete ? "text-green-400" : "text-gray-400"
+            )}>
+              {completedCount} de {totalCount}
+            </span>
+            <span>critérios</span>
           </div>
         </motion.div>
       )}
