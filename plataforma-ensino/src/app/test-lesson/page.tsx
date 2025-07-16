@@ -12,7 +12,7 @@ import { CompletionCriteria } from '@/components/lesson/progress/CompletionCrite
 import { LessonCompletionButton } from '@/components/lesson/completion/LessonCompletionButton'
 import { PDFViewer } from '@/components/lesson/pdf/PDFViewer'
 import { EnhancedQuizInterface } from '@/components/lesson/quiz/EnhancedQuizInterface'
-import { FloatingProgressMenu } from '@/components/lesson/progress/FloatingProgressMenu'
+import { CompactProgressHeader } from '@/components/lesson/progress/CompactProgressHeader'
 import dynamic from 'next/dynamic'
 
 // Client-side only PDF viewer to avoid SSR issues
@@ -191,6 +191,50 @@ export default function TestLessonPage() {
 
   return (
     <LessonProvider>
+      {/* Compact Progress Header */}
+      <CompactProgressHeader
+        criteria={[
+          {
+            id: 'pdf',
+            name: 'PDF',
+            isCompleted: progress.pdfProgress.percentageRead >= 100,
+            progress: progress.pdfProgress.percentageRead,
+            icon: '📄',
+            color: '#00c4ff',
+            required: true
+          },
+          {
+            id: 'quiz',
+            name: 'Quiz',
+            isCompleted: progress.quizProgress.isCompleted,
+            progress: progress.quizProgress.isCompleted ? 100 : 0,
+            icon: '🧩',
+            color: '#22c55e',
+            required: true
+          },
+          {
+            id: 'exercises',
+            name: 'Exercícios',
+            isCompleted: progress.exerciseProgress.completionPercentage >= 100,
+            progress: progress.exerciseProgress.completionPercentage,
+            icon: '📋',
+            color: '#ef4444',
+            required: true
+          }
+        ]}
+        overallProgress={progress.overallProgress.percentageComplete}
+        canComplete={canCompleteLesson}
+        completedCount={[
+          progress.pdfProgress.percentageRead >= 100,
+          progress.quizProgress.isCompleted,
+          progress.exerciseProgress.completionPercentage >= 100
+        ].filter(Boolean).length}
+        totalCount={3}
+        onSectionClick={(section) => {
+          scrollToSection(section)
+        }}
+      />
+
       {/* Page Header */}
       <div className="lesson-background py-8">
         <div className="lesson-centralized-container">
@@ -236,13 +280,6 @@ export default function TestLessonPage() {
             canComplete={canCompleteLesson}
           />
           
-          {/* Navigation Menu */}
-          <FloatingProgressMenu 
-            progress={progress}
-            onNavigate={(section) => {
-              scrollToSection(section)
-            }}
-          />
         </div>
 
         {/* Main Centralized Layout */}
