@@ -153,3 +153,7 @@ New courses follow the schema in `src/data/coursesSchema.js`:
 
 - No final sempre atualize o git main para dar deploy automatico no netlify
 - Sempre atualize o git main
+
+## Performance and Development Tips
+
+- Aumente o timeout de comandos NPM * para 10 min

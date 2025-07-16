@@ -7,8 +7,7 @@ export {
 } from './useEnhancedProgressCalculation'
 
 export { 
-  useProgressStateManager,
-  type ProgressStateManager
+  useProgressStateManager
 } from './useProgressStateManager'
 
 // Existing hooks

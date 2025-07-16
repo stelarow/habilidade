@@ -46,6 +46,8 @@ export type {
   TimeSegment,
   ExerciseSubmission,
   ComponentProgress,
+  LessonCompletionData,
+  CompletionCriterion,
   ProgressActions,
   ProgressPersistence,
   ProgressAnalytics,

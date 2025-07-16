@@ -78,7 +78,7 @@
   - Update progress calculation logic for all components
   - _Requirements: 6.1, 6.2, 6.3, 6.4, 6.5, 2.8_
 
-- [ ] 6. Upgrade icon system throughout lesson page
+- [x] 6. Upgrade icon system throughout lesson page
 
 
 

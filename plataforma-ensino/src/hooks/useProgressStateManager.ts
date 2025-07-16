@@ -153,6 +153,11 @@ export function useProgressStateManager(
     }
   }, [enhancedProgress.visualStates.showCelebration, showCelebration, finalConfig.celebrationDuration])
   
+  // Track progress events
+  const trackEvent = useCallback((event: ProgressEvent) => {
+    setProgressHistory(prev => [...prev, event])
+  }, [])
+
   // Smooth animation trigger
   const triggerAnimation = useCallback(() => {
     if (!finalConfig.enableAnimations) return
@@ -335,11 +340,6 @@ export function useProgressStateManager(
     setShowCelebration(false)
     setIsAnimating(false)
   }, [initializeProgressData])
-  
-  // Track progress events
-  const trackEvent = useCallback((event: ProgressEvent) => {
-    setProgressHistory(prev => [...prev, event])
-  }, [])
   
   // Get progress history
   const getProgressHistory = useCallback(() => progressHistory, [progressHistory])
