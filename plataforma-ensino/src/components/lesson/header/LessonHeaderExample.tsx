@@ -53,14 +53,14 @@ export function LessonHeaderExample() {
             fileName: 'exercise1.pdf',
             fileUrl: '/files/exercise1.pdf',
             submittedAt: '2024-01-01T12:00:00Z',
-            status: 'approved'
+            status: 'approved' as const
           },
           {
             exerciseId: 'ex2',
             fileName: 'exercise2.pdf',
             fileUrl: '/files/exercise2.pdf',
             submittedAt: '2024-01-01T13:00:00Z',
-            status: 'approved'
+            status: 'approved' as const
           }
         ],
         pendingReviews: [],
