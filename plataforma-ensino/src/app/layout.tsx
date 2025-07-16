@@ -9,6 +9,12 @@ export const metadata: Metadata = {
   description: "Transforme seu futuro com educação de qualidade. Aprenda com os melhores profissionais e domine as tecnologias mais demandadas do mercado.",
   keywords: "educação online, cursos, tecnologia, programação, design, marketing digital",
   authors: [{ name: "Habilidade" }],
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", type: "image/x-icon" }
+    ],
+  },
   openGraph: {
     title: "Habilidade - Plataforma de Ensino Online",
     description: "Transforme seu futuro com educação de qualidade",

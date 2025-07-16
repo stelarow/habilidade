@@ -1,12 +1,13 @@
 'use client'
 
-import React, { memo, useMemo } from 'react'
+import React, { memo } from 'react'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
-import { ArrowLeft } from '@phosphor-icons/react'
+import { ArrowLeft } from '@phosphor-icons/react/dist/ssr'
 import { ProgressIndicator } from './ProgressIndicator'
 import { useEnhancedProgressCalculation } from '@/hooks/useEnhancedProgressCalculation'
+import { useScrollBehavior } from '@/hooks/useScrollBehavior'
 import { LessonProgressData } from '@/types/lesson'
 
 interface LessonHeaderProps {
@@ -48,6 +49,9 @@ const LessonHeaderComponent = ({
   // Use enhanced progress calculation
   const progress = useEnhancedProgressCalculation(progressData)
   
+  // Use scroll behavior hook for scroll-following behavior
+  const { isScrolled } = useScrollBehavior(10)
+  
   const handleExit = () => {
     onExit()
     router.push(`/course/${course.slug}`)
@@ -62,7 +66,11 @@ const LessonHeaderComponent = ({
   return (
     <header 
       className={cn(
-        "w-full bg-zinc-900/70 backdrop-blur-md border-b border-gray-800/50 transition-all duration-300",
+        "w-full transition-all duration-300",
+        // Dynamic background opacity based on scroll state
+        isScrolled 
+          ? "bg-zinc-900/90 backdrop-blur-md border-b border-gray-800/70 shadow-lg" 
+          : "bg-zinc-900/70 backdrop-blur-md border-b border-gray-800/50",
         className
       )}
       role="banner"
