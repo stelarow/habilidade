@@ -76,6 +76,21 @@ export function usePDFProgress({
   const hasCalledFullyReadRef = useRef<boolean>(false)
   const fullStorageKey = `${storageKey}-${lessonId}`
 
+  // Calculate percentage read based on pages visited
+  const calculatePercentageRead = useCallback((pagesVisited: number[], totalPages: number): number => {
+    if (totalPages === 0) return 0
+    return (pagesVisited.length / totalPages) * 100
+  }, [])
+
+  // Calculate estimated time remaining
+  const calculateEstimatedTimeRemaining = useCallback(
+    (pagesVisited: number[], averageTimePerPage: number, totalPages: number): number => {
+      const pagesRemaining = totalPages - pagesVisited.length
+      return pagesRemaining * averageTimePerPage
+    },
+    []
+  )
+
   // Load saved progress from localStorage
   useEffect(() => {
     const savedData = localStorage.getItem(fullStorageKey)
@@ -107,22 +122,7 @@ export function usePDFProgress({
         console.error('Failed to parse saved PDF progress:', error)
       }
     }
-  }, [fullStorageKey, totalPages])
-
-  // Calculate percentage read based on pages visited
-  const calculatePercentageRead = useCallback((pagesVisited: number[], totalPages: number): number => {
-    if (totalPages === 0) return 0
-    return (pagesVisited.length / totalPages) * 100
-  }, [])
-
-  // Calculate estimated time remaining
-  const calculateEstimatedTimeRemaining = useCallback(
-    (pagesVisited: number[], averageTimePerPage: number, totalPages: number): number => {
-      const pagesRemaining = totalPages - pagesVisited.length
-      return pagesRemaining * averageTimePerPage
-    },
-    []
-  )
+  }, [fullStorageKey, totalPages, calculatePercentageRead, calculateEstimatedTimeRemaining])
 
   // Save progress to localStorage
   const saveProgress = useCallback((state: PDFProgressState) => {

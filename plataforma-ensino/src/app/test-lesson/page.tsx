@@ -1,6 +1,9 @@
 'use client'
 
 import React, { useEffect, useState, useCallback } from 'react'
+
+// Force dynamic rendering to prevent SSR issues with DOM APIs
+export const dynamic = 'force-dynamic'
 import { useRouter } from 'next/navigation'
 import { GradientButton, Starfield, Loading } from '@/components/ui'
 import { 

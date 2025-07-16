@@ -3,6 +3,9 @@ import { createClient } from '@/lib/supabase/server'
 import { requireAdmin } from '@/lib/auth/session'
 import { z } from 'zod'
 
+// Force dynamic rendering for admin routes that require authentication
+export const dynamic = 'force-dynamic'
+
 // Validation schema for course updates (all fields optional)
 const updateCourseSchema = z.object({
   title: z.string().min(1, 'Título é obrigatório').optional(),

@@ -3,6 +3,9 @@ import { createClient } from '@/lib/supabase/server'
 import { requireAdmin } from '@/lib/auth/session'
 import { z } from 'zod'
 
+// Force dynamic rendering for admin routes that require authentication
+export const dynamic = 'force-dynamic'
+
 // Validation schema for enrollment update
 const enrollmentUpdateSchema = z.object({
   status: z.enum(['active', 'completed', 'cancelled', 'expired']).optional(),

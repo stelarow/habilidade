@@ -2,14 +2,61 @@
 
 import React, { useState, useCallback, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Document, Page, pdfjs } from 'react-pdf'
+import dynamic from 'next/dynamic'
 import { PDFData } from '@/types/lesson'
 import { cn } from '@/lib/utils'
 
-// Configure PDF.js worker - use local worker file instead of CDN
-if (typeof window !== 'undefined') {
-  pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs';
-}
+// PDF Fallback Component for SSR and error states
+const PDFViewerFallback = ({ pdf, onDownload }: { pdf: PDFData; onDownload: () => void }) => (
+  <div className="flex items-center justify-center h-96 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
+    <div className="text-center p-8">
+      <div className="text-6xl mb-4">📄</div>
+      <h3 className="text-xl font-semibold text-gray-800 mb-2">{pdf.title}</h3>
+      <p className="text-gray-600 mb-4">
+        {(pdf.size / 1024 / 1024).toFixed(1)} MB • {pdf.pageCount} páginas
+      </p>
+      <p className="text-sm text-gray-500 mb-6">
+        Visualizador PDF não disponível no servidor. Use o botão abaixo para baixar o arquivo.
+      </p>
+      {pdf.downloadable && (
+        <button 
+          onClick={onDownload}
+          className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors font-medium"
+        >
+          📥 Download PDF
+        </button>
+      )}
+    </div>
+  </div>
+)
+
+// Dynamically import react-pdf components with enhanced error handling
+const Document = dynamic(
+  () => import('react-pdf').then(mod => ({ default: mod.Document })),
+  { 
+    ssr: false,
+    loading: () => (
+      <div className="flex items-center justify-center h-96">
+        <div className="text-center">
+          <div className="w-8 h-8 border-4 border-purple-500 border-t-transparent rounded-full mx-auto mb-4 animate-spin" />
+          <p className="text-gray-600">Carregando visualizador PDF...</p>
+        </div>
+      </div>
+    )
+  }
+)
+
+const Page = dynamic(
+  () => import('react-pdf').then(mod => ({ default: mod.Page })),
+  { 
+    ssr: false,
+    loading: () => (
+      <div className="flex items-center justify-center h-64">
+        <div className="w-6 h-6 border-4 border-purple-500 border-t-transparent rounded-full animate-spin" />
+      </div>
+    )
+  }
+)
 
 // CSS imports removed - will be handled via global styles or inline
 // import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
@@ -47,8 +94,25 @@ export function PDFViewer({ pdf, className, onProgressUpdate }: PDFViewerProps) 
   const [pageWidth, setPageWidth] = useState<number>(600)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [isClient, setIsClient] = useState(false)
 
   const totalPages = numPages || pdf.pageCount || 10
+
+  // Configure PDF.js worker only on client side
+  useEffect(() => {
+    setIsClient(true)
+    const configurePDFWorker = async () => {
+      if (typeof window !== 'undefined') {
+        try {
+          const { pdfjs } = await import('react-pdf')
+          pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs'
+        } catch (error) {
+          console.error('Failed to configure PDF worker:', error)
+        }
+      }
+    }
+    configurePDFWorker()
+  }, [])
 
   // PDF document callbacks
   const onDocumentLoadSuccess = useCallback(({ numPages }: { numPages: number }) => {
@@ -258,8 +322,8 @@ export function PDFViewer({ pdf, className, onProgressUpdate }: PDFViewerProps) 
                 </div>
               )}
 
-              {/* PDF Document */}
-              {!error && (
+              {/* PDF Document - Only render on client side */}
+              {!error && isClient && (
                 <Document
                   file={pdf.url}
                   onLoadSuccess={onDocumentLoadSuccess}
@@ -277,6 +341,16 @@ export function PDFViewer({ pdf, className, onProgressUpdate }: PDFViewerProps) 
                     className="pdf-page"
                   />
                 </Document>
+              )}
+
+              {/* Server-side fallback using dedicated component */}
+              {!isClient && !error && (
+                <PDFViewerFallback pdf={pdf} onDownload={handleDownload} />
+              )}
+
+              {/* Enhanced error fallback */}
+              {error && isClient && (
+                <PDFViewerFallback pdf={pdf} onDownload={handleDownload} />
               )}
 
               {/* Search Results Overlay */}

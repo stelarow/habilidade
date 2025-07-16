@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { requireAdmin } from '@/lib/auth/session'
 
+// Force dynamic rendering for admin routes that require authentication
+export const dynamic = 'force-dynamic'
+
 // GET /api/admin/lessons/next-order?courseId=uuid - Get next order index for a course
 export async function GET(request: NextRequest) {
   try {

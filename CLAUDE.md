@@ -152,3 +152,4 @@ New courses follow the schema in `src/data/coursesSchema.js`:
 ## Development Best Practices
 
 - No final sempre atualize o git main para dar deploy automatico no netlify
+- Sempre atualize o git main

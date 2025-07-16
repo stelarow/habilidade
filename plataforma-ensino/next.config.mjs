@@ -16,15 +16,26 @@ const nextConfig = {
   // Enable experimental features for better performance
   experimental: {
     optimizePackageImports: ['@supabase/supabase-js', 'phosphor-react'],
+    serverComponentsExternalPackages: ['pdfjs-dist'],
   },
   
-  // Configure webpack for PDF.js
-  webpack: (config) => {
+  // Configure webpack for PDF.js compatibility
+  webpack: (config, { isServer }) => {
+    // Prevent PDF.js from being bundled on server to avoid DOMMatrix errors
     config.resolve.alias = {
       ...config.resolve.alias,
       canvas: false,
       fs: false,
     };
+    
+    // Server-specific configuration for PDF.js
+    if (isServer) {
+      config.resolve.alias = {
+        ...config.resolve.alias,
+        'pdfjs-dist/build/pdf.worker.min.mjs': false,
+      };
+    }
+    
     return config;
   },
   
@@ -66,11 +77,22 @@ const finalConfig = process.env.SENTRY_ORG && process.env.SENTRY_PROJECT
   ? withSentryConfig(nextConfig, {
       org: process.env.SENTRY_ORG,
       project: process.env.SENTRY_PROJECT,
+      
+      // Make auth token optional - only upload source maps if token is available
+      authToken: process.env.SENTRY_AUTH_TOKEN,
       silent: !process.env.CI,
+      
+      // Source map configuration
       widenClientFileUpload: true,
-      hideSourceMaps: true,
+      hideSourceMaps: true, // Hide source maps from browser devtools in production
       disableLogger: true,
+      
+      // Upload source maps only if auth token is available
+      dryRun: !process.env.SENTRY_AUTH_TOKEN, // Skip upload if no auth token
+      
+      // Vercel integration
       automaticVercelMonitors: true,
+      
       // Disable Sentry in development to prevent header processing issues
       disableServerWebpackPlugin: process.env.NODE_ENV === 'development',
       disableClientWebpackPlugin: process.env.NODE_ENV === 'development',
