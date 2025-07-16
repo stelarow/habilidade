@@ -87,6 +87,8 @@
 
 
 
+
+
   - Replace all icons with Phosphor React duotone variants
   - Apply consistent sizing (16px, 20px, 24px, 32px) based on context
   - Use brand colors (#d400ff, #00c4ff, #a000ff) for icon styling

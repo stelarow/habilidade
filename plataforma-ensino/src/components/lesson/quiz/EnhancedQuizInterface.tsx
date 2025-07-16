@@ -3,7 +3,7 @@
 import React, { useState, useCallback, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
-import { Code, PaintBrush, Lightning, Globe, Question, Clock, Target, ArrowClockwise, ListBullets, Trophy, BookOpen, CheckCircle, X, Lightbulb } from '@phosphor-icons/react'
+import { Code, PaintBrush, Lightning, Globe, Question, Clock, Target, ArrowClockwise, ListBullets, Trophy, BookOpen, CheckCircle, X, Lightbulb, Play } from '@phosphor-icons/react'
 import { QuizData } from '@/types/lesson'
 import { chapter2Questions, type QuizQuestion } from '@/data/quiz-questions'
 
@@ -188,28 +188,43 @@ export function EnhancedQuizInterface({
                   <span className="text-white font-mono">{totalQuestions}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="lesson-text-subtitle">⏱️ Tempo:</span>
+                  <span className="lesson-text-subtitle flex items-center gap-1">
+                    <Clock size={16} weight="duotone" />
+                    Tempo:
+                  </span>
                   <span className="text-white font-mono">
                     {quiz.timeLimit ? `${quiz.timeLimit} min` : 'Ilimitado'}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="lesson-text-subtitle">🎯 Aprovação:</span>
+                  <span className="lesson-text-subtitle flex items-center gap-1">
+                    <Target size={16} weight="duotone" />
+                    Aprovação:
+                  </span>
                   <span className="text-white font-mono">{quiz.passingScore}%</span>
                 </div>
               </div>
               
               <div className="space-y-2">
                 <div className="flex justify-between">
-                  <span className="lesson-text-subtitle">🔄 Tentativas:</span>
+                  <span className="lesson-text-subtitle flex items-center gap-1">
+                    <ArrowClockwise size={16} weight="duotone" />
+                    Tentativas:
+                  </span>
                   <span className="text-white font-mono">{quiz.attemptsAllowed}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="lesson-text-subtitle">📋 Categorias:</span>
+                  <span className="lesson-text-subtitle flex items-center gap-1">
+                    <ListBullets size={16} weight="duotone" />
+                    Categorias:
+                  </span>
                   <span className="text-white font-mono">4</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="lesson-text-subtitle">🏆 Pontos:</span>
+                  <span className="lesson-text-subtitle flex items-center gap-1">
+                    <Trophy size={16} weight="duotone" />
+                    Pontos:
+                  </span>
                   <span className="text-white font-mono">{totalPossibleScore}</span>
                 </div>
               </div>
@@ -240,7 +255,8 @@ export function EnhancedQuizInterface({
             onClick={handleStartQuiz}
             className="lesson-btn-primary text-lg px-8 py-4"
           >
-            🚀 Iniciar Quiz
+            <Play size={16} weight="duotone" />
+            Iniciar Quiz
           </button>
         </div>
       </div>
@@ -274,7 +290,11 @@ export function EnhancedQuizInterface({
             animate={{ scale: 1 }}
             className={`text-6xl ${passed ? 'text-green-400' : 'text-orange-400'}`}
           >
-            {passed ? '🎉' : '📚'}
+{passed ? (
+              <Trophy size={64} weight="duotone" style={{ color: '#22c55e' }} />
+            ) : (
+              <BookOpen size={64} weight="duotone" style={{ color: '#f59e0b' }} />
+            )}
           </motion.div>
 
           <div className="space-y-2">
@@ -330,7 +350,7 @@ export function EnhancedQuizInterface({
               onClick={() => setShowReview(!showReview)}
               className="lesson-btn-secondary"
             >
-              {showReview ? '👁️ Ocultar' : '👁️ Ver'} Revisão
+              {showReview ? 'Ocultar' : 'Ver'} Revisão
             </button>
             
             {!passed && quiz.remainingAttempts && quiz.remainingAttempts > 1 && (
@@ -338,7 +358,8 @@ export function EnhancedQuizInterface({
                 onClick={handleStartQuiz}
                 className="lesson-btn-primary"
               >
-                🔄 Tentar Novamente
+                <ArrowClockwise size={16} weight="duotone" />
+                Tentar Novamente
               </button>
             )}
           </div>
@@ -372,7 +393,7 @@ export function EnhancedQuizInterface({
                               {getCategoryIcon(question.category)}
                             </span>
                             <span className={isCorrect ? 'text-green-400' : 'text-red-400'}>
-                              {isCorrect ? '✅' : '❌'}
+                              {isCorrect ? <CheckCircle size={16} weight="duotone" style={{ color: '#22c55e' }} /> : <X size={16} weight="duotone" style={{ color: '#ef4444' }} />}
                             </span>
                           </div>
                         </div>
@@ -396,7 +417,7 @@ export function EnhancedQuizInterface({
                         </div>
                         
                         <div className="text-sm text-blue-200 bg-blue-500/10 p-3 rounded-lg">
-                          <strong>💡 Explicação:</strong> {question.explanation}
+                          <strong><Lightbulb size={16} weight="duotone" style={{ color: '#00c4ff' }} /> Explicação:</strong> {question.explanation}
                         </div>
                       </div>
                     </div>
@@ -431,7 +452,7 @@ export function EnhancedQuizInterface({
         <div className="text-right space-y-1">
           {timeRemaining !== null && (
             <div className={`font-mono ${timeRemaining <= 60 ? 'text-red-400' : 'text-white'}`}>
-              ⏱️ {formatTime(timeRemaining)}
+              <Clock size={16} weight="duotone" /> {formatTime(timeRemaining)}
             </div>
           )}
           <div className="text-xs text-gray-400">
@@ -488,7 +509,10 @@ export function EnhancedQuizInterface({
             >
               <div className="flex items-start gap-3">
                 <span className="text-2xl">
-                  {selectedAnswer === currentQuestion.correctAnswer ? '✅' : '❌'}
+                  {selectedAnswer === currentQuestion.correctAnswer ? 
+                    <CheckCircle size={24} weight="duotone" style={{ color: '#22c55e' }} /> : 
+                    <X size={24} weight="duotone" style={{ color: '#ef4444' }} />
+                  }
                 </span>
                 <div>
                   <div className="font-semibold text-white mb-2">
@@ -517,7 +541,7 @@ export function EnhancedQuizInterface({
                 selectedAnswer === null && 'opacity-50 cursor-not-allowed'
               )}
             >
-              {isLastQuestion ? '🏁 Finalizar Quiz' : '➡️ Próxima Questão'}
+              {isLastQuestion ? 'Finalizar Quiz' : 'Próxima Questão'}
             </button>
           </div>
         )}

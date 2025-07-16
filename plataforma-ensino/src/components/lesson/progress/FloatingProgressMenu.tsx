@@ -3,7 +3,7 @@
 import React, { useState, useCallback, useEffect, useMemo, memo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
-import { Play, FileText, ClipboardText, PuzzlePiece } from '@phosphor-icons/react'
+import { Play, FileText, ClipboardText, PuzzlePiece, Trophy } from '@phosphor-icons/react'
 import { LessonProgressData } from '@/types/lesson'
 
 interface FloatingProgressMenuProps {
@@ -338,7 +338,7 @@ const FloatingProgressMenuComponent = ({
                     transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
                     className="text-6xl mb-4"
                   >
-                    🎉
+                    <Trophy size={64} weight="duotone" style={{ color: '#22c55e' }} />
                   </motion.div>
                   <div className="text-xl font-bold text-white mb-2">
                     Parabéns!

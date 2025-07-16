@@ -3,7 +3,7 @@
 import React, { useMemo, useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
-import { Clock, FileText, ClipboardText, Target } from '@phosphor-icons/react'
+import { Clock, FileText, ClipboardText, Target, CheckCircle, Trophy } from '@phosphor-icons/react'
 import { LessonProgressData, ComponentProgress } from '@/types/lesson'
 import { useEnhancedProgressCalculation, EnhancedProgressData } from '@/hooks/useEnhancedProgressCalculation'
 
@@ -191,7 +191,7 @@ export function ProgressTracker({
                 animate={{ scale: 1 }}
                 className="text-green-400 text-xl"
               >
-                ✅
+                <CheckCircle size={20} weight="duotone" style={{ color: '#22c55e' }} />
               </motion.div>
             ) : (
               <div className="text-xs text-gray-400">
@@ -205,7 +205,10 @@ export function ProgressTracker({
         <div className="flex-1 text-center sm:text-left space-y-2">
           <div className="text-lg sm:text-xl font-semibold text-white">
             {progressData.isCompleted ? (
-              <span className="text-green-400">🎉 Aula Concluída!</span>
+              <span className="text-green-400 flex items-center gap-2">
+                <Trophy size={20} weight="duotone" style={{ color: '#22c55e' }} />
+                Aula Concluída!
+              </span>
             ) : (
               <span>Progresso da Aula</span>
             )}
@@ -233,7 +236,9 @@ export function ProgressTracker({
             exit={{ opacity: 0, scale: 0 }}
             className="absolute inset-0 flex items-center justify-center pointer-events-none z-10"
           >
-            <div className="text-6xl animate-bounce">🎉</div>
+            <div className="text-6xl animate-bounce">
+              <Trophy size={64} weight="duotone" style={{ color: '#22c55e' }} />
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
