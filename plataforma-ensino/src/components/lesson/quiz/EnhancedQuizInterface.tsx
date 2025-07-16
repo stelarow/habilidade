@@ -3,6 +3,7 @@
 import React, { useState, useCallback, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
+import { Code, PaintBrush, Lightning, Globe, Question } from '@phosphor-icons/react'
 import { QuizData } from '@/types/lesson'
 import { chapter2Questions, type QuizQuestion } from '@/data/quiz-questions'
 
@@ -157,13 +158,14 @@ export function EnhancedQuizInterface({
 
   // Get category icon
   const getCategoryIcon = (category: QuizQuestion['category']) => {
-    const icons = {
-      html: '🏗️',
-      css: '🎨',
-      javascript: '⚡',
-      general: '🌐'
-    }
-    return icons[category] || '❓'
+    const IconComponent = {
+      html: Code,
+      css: PaintBrush,
+      javascript: Lightning,
+      general: Globe
+    }[category] || Question
+    
+    return <IconComponent size={16} weight="duotone" />
   }
 
   if (!isStarted) {

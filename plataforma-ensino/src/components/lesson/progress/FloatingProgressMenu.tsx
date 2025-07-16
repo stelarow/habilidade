@@ -3,6 +3,7 @@
 import React, { useState, useCallback, useEffect, useMemo, memo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
+import { Play, FileText, ClipboardText, PuzzlePiece } from '@phosphor-icons/react'
 import { LessonProgressData } from '@/types/lesson'
 
 interface FloatingProgressMenuProps {
@@ -14,7 +15,7 @@ interface FloatingProgressMenuProps {
 interface NavigationSection {
   id: string
   name: string
-  icon: string
+  icon: React.ComponentType<any>
   progress: number
   isCompleted: boolean
   color: string
@@ -45,7 +46,7 @@ const FloatingProgressMenuComponent = ({
     {
       id: 'video',
       name: 'Assistir Vídeo',
-      icon: '🎬',
+      icon: Play,
       progress: progress.videoProgress.percentageWatched,
       isCompleted: false, // Video is not part of completion criteria
       color: '#6b7280' // Gray color to indicate non-tracked for completion
@@ -53,7 +54,7 @@ const FloatingProgressMenuComponent = ({
     {
       id: 'pdf',
       name: 'Material PDF',
-      icon: '📄',
+      icon: FileText,
       progress: progress.pdfProgress.percentageRead,
       isCompleted: progress.pdfProgress.percentageRead >= 100,
       color: '#00c4ff'
@@ -61,7 +62,7 @@ const FloatingProgressMenuComponent = ({
     {
       id: 'exercises',
       name: 'Exercícios',
-      icon: '📋',
+      icon: ClipboardText,
       progress: progress.exerciseProgress.completionPercentage,
       isCompleted: progress.exerciseProgress.completionPercentage >= 100,
       color: '#f59e0b'
@@ -69,7 +70,7 @@ const FloatingProgressMenuComponent = ({
     {
       id: 'quiz',
       name: 'Quiz',
-      icon: '🧩',
+      icon: PuzzlePiece,
       progress: progress.quizProgress.isCompleted ? progress.quizProgress.score : 0,
       isCompleted: progress.quizProgress.isCompleted && progress.quizProgress.isPassed,
       color: progress.quizProgress.isPassed ? '#22c55e' : '#ef4444'
@@ -252,7 +253,11 @@ const FloatingProgressMenuComponent = ({
                 >
                   <div className="flex items-center gap-2">
                     <div className="flex items-center gap-2">
-                      <span className="text-sm">{section.icon}</span>
+                      <section.icon 
+                        size={16} 
+                        weight="duotone" 
+                        style={{ color: section.color }}
+                      />
                       <ProgressCircle 
                         percentage={section.progress} 
                         size={24} 

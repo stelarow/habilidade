@@ -3,7 +3,9 @@
 import React, { useMemo, useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
+import { Clock, FileText, ClipboardText, Target } from '@phosphor-icons/react'
 import { LessonProgressData, ComponentProgress } from '@/types/lesson'
+import { useEnhancedProgressCalculation, EnhancedProgressData } from '@/hooks/useEnhancedProgressCalculation'
 
 interface ProgressTrackerProps {
   progress: LessonProgressData
@@ -32,31 +34,62 @@ export function ProgressTracker({
   const [isAnimating, setIsAnimating] = useState(false)
   const [showCelebration, setShowCelebration] = useState(false)
 
-  // Calculate overall progress and component breakdowns
-  const progressData = useMemo(() => {
-    const overall = progress.overallProgress.percentageComplete
-    const components = progress.overallProgress.componentProgress
+  // Use enhanced progress calculation
+  const enhancedProgress = useEnhancedProgressCalculation(progress)
 
-    // Component icons and colors
-    const componentMeta = {
-      video: { icon: '🎬', color: '#d400ff', name: 'Vídeo' },
-      pdf: { icon: '📄', color: '#00c4ff', name: 'PDF' },
-      quiz: { icon: '🧩', color: '#22c55e', name: 'Quiz' },
-      exercises: { icon: '📋', color: '#f59e0b', name: 'Exercícios' },
-      content: { icon: '📖', color: '#a000ff', name: 'Conteúdo' },
-      materials: { icon: '📎', color: '#6b7280', name: 'Materiais' }
-    }
+  // Calculate display data with enhanced progress
+  const progressData = useMemo(() => {
+    const overall = enhancedProgress.overallProgress.percentage
+    
+    // Component data with enhanced states
+    const components = [
+      {
+        component: 'time',
+        icon: Clock,
+        color: '#f59e0b',
+        name: 'Tempo',
+        percentage: enhancedProgress.timeProgress.percentage,
+        isCompleted: enhancedProgress.timeProgress.isCompleted,
+        state: enhancedProgress.timeProgress.state
+      },
+      {
+        component: 'pdf',
+        icon: FileText,
+        color: '#00c4ff',
+        name: 'PDF',
+        percentage: enhancedProgress.pdfProgress.percentage,
+        isCompleted: enhancedProgress.pdfProgress.isCompleted,
+        state: enhancedProgress.pdfProgress.state
+      },
+      {
+        component: 'exercises',
+        icon: ClipboardText,
+        color: '#ef4444',
+        name: 'Exercícios',
+        percentage: enhancedProgress.exerciseProgress.percentage,
+        isCompleted: enhancedProgress.exerciseProgress.isCompleted,
+        state: enhancedProgress.exerciseProgress.state
+      },
+      {
+        component: 'quiz',
+        icon: Target,
+        color: '#22c55e',
+        name: 'Quiz',
+        percentage: enhancedProgress.quizProgress.score,
+        isCompleted: enhancedProgress.quizProgress.isPassed,
+        state: enhancedProgress.quizProgress.state
+      }
+    ]
 
     return {
       overall,
-      components: components.map(comp => ({
-        ...comp,
-        ...componentMeta[comp.component],
-      })),
-      estimatedTime: progress.overallProgress.estimatedTimeRemaining,
-      isCompleted: progress.overallProgress.isCompleted
+      components,
+      estimatedTime: 0, // Will be calculated based on remaining criteria
+      isCompleted: enhancedProgress.overallProgress.isCompleted,
+      canComplete: enhancedProgress.overallProgress.canComplete,
+      visualStates: enhancedProgress.visualStates
     }
-  }, [progress])
+  }, [enhancedProgress])
 
   // Size configurations
   const sizes = {
@@ -221,7 +254,13 @@ export function ProgressTracker({
                 transition={{ duration: 0.2 }}
               >
                 <div className="flex items-center space-x-3">
-                  <div className="text-xl flex-shrink-0">{comp.icon}</div>
+                  <div className="flex-shrink-0">
+                    <comp.icon 
+                      size={20} 
+                      weight="duotone" 
+                      style={{ color: comp.color }}
+                    />
+                  </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between mb-2">
                       <div className="text-sm font-medium text-white truncate">

@@ -4,11 +4,12 @@ import { useState, useEffect, useCallback, useMemo } from 'react'
 import { LessonProgressData } from '@/types/lesson'
 import { usePageTimer } from './usePageTimer'
 import { usePDFProgress } from './usePDFProgress'
+import { getCompletionIcon } from '@/utils/completionIcons'
 
-interface CompletionCriterion {
+export interface CompletionCriterion {
   id: string
   name: string
-  icon: string
+  icon: React.ReactNode
   description: string
   isCompleted: boolean
   progress: number
@@ -82,7 +83,7 @@ export function useCompletionCriteria({
       {
         id: 'time',
         name: 'Tempo na Aula',
-        icon: '⏱️',
+        icon: getCompletionIcon('time', pageTimer.hasReachedMinimum ? '#22c55e' : '#f59e0b'),
         description: `Permanecer pelo menos ${minimumTimeMinutes} minutos na aula`,
         isCompleted: pageTimer.hasReachedMinimum,
         progress: pageTimer.percentage,
@@ -92,7 +93,7 @@ export function useCompletionCriteria({
       {
         id: 'quiz',
         name: 'Quiz',
-        icon: '🧩',
+        icon: getCompletionIcon('quiz', progressData?.quizProgress.isPassed ? '#22c55e' : '#ef4444'),
         description: `Obter pelo menos ${minimumQuizScore}% de acerto no quiz`,
         isCompleted: progressData 
           ? progressData.quizProgress.isPassed && progressData.quizProgress.score >= minimumQuizScore
@@ -104,7 +105,7 @@ export function useCompletionCriteria({
       {
         id: 'exercises',
         name: 'Exercícios',
-        icon: '📋',
+        icon: getCompletionIcon('exercises', (progressData?.exerciseProgress.completionPercentage || 0) >= (requireAllExercises ? 100 : 80) ? '#22c55e' : '#f59e0b'),
         description: requireAllExercises ? 'Completar todos os exercícios' : 'Completar a maioria dos exercícios',
         isCompleted: progressData 
           ? (progressData.exerciseProgress?.completionPercentage || 0) >= (requireAllExercises ? 100 : 80)
@@ -117,7 +118,7 @@ export function useCompletionCriteria({
       {
         id: 'pdf',
         name: 'Material PDF',
-        icon: '📄',
+        icon: getCompletionIcon('pdf', pdfProgress.isCompleted ? '#22c55e' : '#00c4ff'),
         description: requireFullPDFRead ? 'Ler 100% do material PDF' : 'Ler pelo menos 90% do material PDF',
         isCompleted: pdfProgress.isCompleted,
         progress: pdfProgress.percentageRead,

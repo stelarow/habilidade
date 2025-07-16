@@ -3,6 +3,7 @@
 import React, { memo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
+import { Clock, CheckCircle } from '@phosphor-icons/react'
 import { useTimeTracker } from '@/hooks/useTimeTracker'
 
 interface TimeTrackerProps {
@@ -173,7 +174,7 @@ const TimeTrackerComponent = ({
       {showLabel && (
         <div className="text-center">
           <div className="flex items-center gap-2 text-white font-medium">
-            <span>⏱️</span>
+            <Clock size={16} weight="duotone" style={{ color: hasReachedMinimum ? '#22c55e' : '#d400ff' }} />
             <span>Tempo na Aula</span>
           </div>
           
@@ -187,7 +188,7 @@ const TimeTrackerComponent = ({
           >
             {hasReachedMinimum ? (
               <span className="flex items-center gap-1">
-                <span>✅</span>
+                <CheckCircle size={12} weight="duotone" style={{ color: '#22c55e' }} />
                 <span>Tempo mínimo atingido!</span>
               </span>
             ) : (

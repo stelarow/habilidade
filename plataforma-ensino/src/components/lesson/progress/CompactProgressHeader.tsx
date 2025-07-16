@@ -3,7 +3,7 @@
 import React, { useState, useCallback, useMemo, memo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
-import { Clock, CheckCircle, BookOpen, FileText, Play, Question } from 'phosphor-react'
+import { Clock, CheckCircle, ClipboardText, FileText, Play, Target } from '@phosphor-icons/react'
 
 interface CompletionCriterion {
   id: string

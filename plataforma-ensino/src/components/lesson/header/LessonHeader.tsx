@@ -1,11 +1,13 @@
 'use client'
 
-import React, { memo } from 'react'
+import React, { memo, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
-import { ArrowLeft } from 'phosphor-react'
+import { ArrowLeft } from '@phosphor-icons/react'
 import { ProgressIndicator } from './ProgressIndicator'
+import { useEnhancedProgressCalculation } from '@/hooks/useEnhancedProgressCalculation'
+import { LessonProgressData } from '@/types/lesson'
 
 interface LessonHeaderProps {
   course: {
@@ -16,29 +18,7 @@ interface LessonHeaderProps {
     title: string
     slug: string
   }
-  progress: {
-    overall: number
-    time: {
-      current: number
-      required: number
-      formatted: string
-    }
-    pdf: {
-      percentage: number
-      isCompleted: boolean
-    }
-    exercises: {
-      completed: number
-      total: number
-      isCompleted: boolean
-    }
-    quiz: {
-      score: number
-      isCompleted: boolean
-      isPassed: boolean
-    }
-  }
-  canComplete: boolean
+  progressData: LessonProgressData | null
   onExit: () => void
   onComplete: () => void
   className?: string
@@ -58,21 +38,23 @@ interface LessonHeaderProps {
 const LessonHeaderComponent = ({
   course,
   lesson,
-  progress,
-  canComplete,
+  progressData,
   onExit,
   onComplete,
   className
 }: LessonHeaderProps) => {
   const router = useRouter()
-
+  
+  // Use enhanced progress calculation
+  const progress = useEnhancedProgressCalculation(progressData)
+  
   const handleExit = () => {
     onExit()
     router.push(`/course/${course.slug}`)
   }
 
   const handleComplete = () => {
-    if (canComplete) {
+    if (progress.overallProgress.canComplete) {
       onComplete()
     }
   }
@@ -118,37 +100,45 @@ const LessonHeaderComponent = ({
             <ProgressIndicator
               icon="time"
               label="Tempo"
-              progress={progress.time.current >= progress.time.required ? 100 : (progress.time.current / progress.time.required) * 100}
-              isCompleted={progress.time.current >= progress.time.required}
+              progress={progress.timeProgress.percentage}
+              isCompleted={progress.timeProgress.isCompleted}
               color="#f59e0b"
-              detail={progress.time.formatted}
+              detail={progress.timeProgress.formatted}
+              state={progress.timeProgress.state}
+              showPulse={progress.timeProgress.state === 'in_progress'}
             />
             
             <ProgressIndicator
               icon="pdf"
               label="PDF"
-              progress={progress.pdf.percentage}
-              isCompleted={progress.pdf.isCompleted}
+              progress={progress.pdfProgress.percentage}
+              isCompleted={progress.pdfProgress.isCompleted}
               color="#00c4ff"
-              detail={`${Math.round(progress.pdf.percentage)}%`}
+              detail={`${Math.round(progress.pdfProgress.percentage)}%`}
+              state={progress.pdfProgress.state}
+              showPulse={progress.pdfProgress.state === 'in_progress'}
             />
             
             <ProgressIndicator
               icon="exercises"
               label="Exercícios"
-              progress={progress.exercises.total > 0 ? (progress.exercises.completed / progress.exercises.total) * 100 : 0}
-              isCompleted={progress.exercises.isCompleted}
+              progress={progress.exerciseProgress.percentage}
+              isCompleted={progress.exerciseProgress.isCompleted}
               color="#ef4444"
-              detail={`${progress.exercises.completed}/${progress.exercises.total}`}
+              detail={`${progress.exerciseProgress.completed}/${progress.exerciseProgress.total}`}
+              state={progress.exerciseProgress.state}
+              showPulse={progress.exerciseProgress.state === 'in_progress'}
             />
             
             <ProgressIndicator
               icon="quiz"
               label="Quiz"
-              progress={progress.quiz.isPassed ? 100 : progress.quiz.score}
-              isCompleted={progress.quiz.isCompleted && progress.quiz.isPassed}
+              progress={progress.quizProgress.score}
+              isCompleted={progress.quizProgress.isPassed}
               color="#22c55e"
-              detail={progress.quiz.score > 0 ? `${progress.quiz.score}%` : '-'}
+              detail={progress.quizProgress.score > 0 ? `${progress.quizProgress.score}%` : '-'}
+              state={progress.quizProgress.state}
+              showPulse={progress.quizProgress.state === 'in_progress'}
             />
           </div>
 
@@ -158,7 +148,7 @@ const LessonHeaderComponent = ({
             <div className="hidden md:flex items-center gap-2">
               <div className="text-right">
                 <div className="text-sm font-semibold text-white">
-                  {Math.round(progress.overall)}%
+                  {Math.round(progress.overallProgress.percentage)}%
                 </div>
                 <div className="text-xs text-gray-400">
                   Concluído
@@ -178,26 +168,26 @@ const LessonHeaderComponent = ({
                     cx="24"
                     cy="24"
                     r="20"
-                    stroke={canComplete ? "#22c55e" : "#d400ff"}
+                    stroke={progress.overallProgress.canComplete ? "#22c55e" : progress.visualStates.progressColor}
                     strokeWidth="3"
                     fill="transparent"
                     strokeDasharray={`${2 * Math.PI * 20}`}
                     initial={{ strokeDashoffset: 2 * Math.PI * 20 }}
                     animate={{ 
-                      strokeDashoffset: 2 * Math.PI * 20 * (1 - progress.overall / 100)
+                      strokeDashoffset: 2 * Math.PI * 20 * (1 - progress.overallProgress.percentage / 100)
                     }}
                     transition={{ duration: 0.8, ease: "easeInOut" }}
                     style={{
-                      filter: `drop-shadow(0 0 4px ${canComplete ? "#22c55e" : "#d400ff"}30)`
+                      filter: `drop-shadow(0 0 4px ${progress.overallProgress.canComplete ? "#22c55e" : progress.visualStates.progressColor}30)`
                     }}
                   />
                 </svg>
                 <div className="absolute inset-0 flex items-center justify-center">
-                  {canComplete ? (
+                  {progress.overallProgress.canComplete ? (
                     <span className="text-green-400 text-lg">✓</span>
                   ) : (
                     <span className="text-xs font-bold text-white">
-                      {Math.round(progress.overall)}%
+                      {Math.round(progress.overallProgress.percentage)}%
                     </span>
                   )}
                 </div>
@@ -205,7 +195,7 @@ const LessonHeaderComponent = ({
             </div>
 
             {/* Complete Button */}
-            {canComplete && (
+            {progress.visualStates.showCompletionButton && (
               <motion.button
                 onClick={handleComplete}
                 className="px-4 py-2 bg-gradient-to-r from-[#22c55e] to-[#16a34a] text-white font-semibold rounded-lg hover:from-[#16a34a] hover:to-[#15803d] transition-all focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2 focus:ring-offset-gray-900"
@@ -226,13 +216,16 @@ const LessonHeaderComponent = ({
         <div className="md:hidden pb-3">
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs text-gray-400">Progresso Geral</span>
-            <span className="text-xs font-semibold text-white">{Math.round(progress.overall)}%</span>
+            <span className="text-xs font-semibold text-white">{Math.round(progress.overallProgress.percentage)}%</span>
           </div>
           <div className="w-full bg-gray-800 rounded-full h-2">
             <motion.div
-              className="h-2 rounded-full bg-gradient-to-r from-[#d400ff] to-[#00c4ff]"
+              className="h-2 rounded-full"
+              style={{
+                background: `linear-gradient(to right, ${progress.visualStates.progressColor}, #00c4ff)`
+              }}
               initial={{ width: 0 }}
-              animate={{ width: `${progress.overall}%` }}
+              animate={{ width: `${progress.overallProgress.percentage}%` }}
               transition={{ duration: 0.8, ease: "easeInOut" }}
             />
           </div>

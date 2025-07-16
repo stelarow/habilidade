@@ -3,6 +3,7 @@
 import React, { useState, useCallback, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import dynamic from 'next/dynamic'
+import { FileText, MagnifyingGlass, Minus, Plus, ArrowsOut, ArrowsIn, Download, Warning, CaretLeft, CaretRight, CaretUp, CaretDown } from '@phosphor-icons/react'
 import { PDFData } from '@/types/lesson'
 import { cn } from '@/lib/utils'
 
@@ -10,7 +11,9 @@ import { cn } from '@/lib/utils'
 const PDFViewerFallback = ({ pdf, onDownload }: { pdf: PDFData; onDownload: () => void }) => (
   <div className="flex items-center justify-center h-96 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
     <div className="text-center p-8">
-      <div className="text-6xl mb-4">📄</div>
+      <div className="mb-4">
+        <FileText size={64} weight="duotone" style={{ color: '#00c4ff' }} />
+      </div>
       <h3 className="text-xl font-semibold text-gray-800 mb-2">{pdf.title}</h3>
       <p className="text-gray-600 mb-4">
         {(pdf.size / 1024 / 1024).toFixed(1)} MB • {pdf.pageCount} páginas
@@ -23,7 +26,8 @@ const PDFViewerFallback = ({ pdf, onDownload }: { pdf: PDFData; onDownload: () =
           onClick={onDownload}
           className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors font-medium"
         >
-          📥 Download PDF
+          <Download size={16} weight="duotone" />
+          Download PDF
         </button>
       )}
     </div>
@@ -203,7 +207,7 @@ export function PDFViewer({ pdf, className, onProgressUpdate }: PDFViewerProps) 
               className="relative group w-10 h-10 rounded-lg bg-white/10 hover:bg-white/20 transition-all duration-300 flex items-center justify-center hover:scale-110 active:scale-95"
               aria-label="Buscar no PDF"
             >
-              <span className="relative z-10 text-lg">🔍</span>
+              <MagnifyingGlass size={16} weight="duotone" className="relative z-10" />
               <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-blue-500/20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               <div className="absolute inset-0 bg-white/10 rounded-lg opacity-0 group-active:opacity-100 transition-opacity duration-100" />
             </button>
@@ -216,7 +220,7 @@ export function PDFViewer({ pdf, className, onProgressUpdate }: PDFViewerProps) 
                 disabled={zoom <= 50}
                 aria-label="Diminuir zoom"
               >
-                <span className="relative z-10">➖</span>
+                <Minus size={12} weight="duotone" className="relative z-10" />
                 <div className="absolute inset-0 bg-gradient-to-r from-red-500/20 to-orange-500/20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </button>
               <span className="lesson-text-caption min-w-12 text-center px-2 py-1 bg-white/10 rounded-lg">
@@ -228,7 +232,7 @@ export function PDFViewer({ pdf, className, onProgressUpdate }: PDFViewerProps) 
                 disabled={zoom >= 200}
                 aria-label="Aumentar zoom"
               >
-                <span className="relative z-10">➕</span>
+                <Plus size={12} weight="duotone" className="relative z-10" />
                 <div className="absolute inset-0 bg-gradient-to-r from-green-500/20 to-blue-500/20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </button>
             </div>
@@ -239,7 +243,11 @@ export function PDFViewer({ pdf, className, onProgressUpdate }: PDFViewerProps) 
               className="relative group w-10 h-10 rounded-lg bg-white/10 hover:bg-white/20 transition-all duration-300 flex items-center justify-center hover:scale-110 active:scale-95"
               aria-label={isFullscreen ? "Sair da tela cheia" : "Tela cheia"}
             >
-              <span className="relative z-10 text-lg">{isFullscreen ? '🗗' : '🗖'}</span>
+              {isFullscreen ? (
+                <ArrowsIn size={16} weight="duotone" className="relative z-10" />
+              ) : (
+                <ArrowsOut size={16} weight="duotone" className="relative z-10" />
+              )}
               <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               <div className="absolute inset-0 bg-white/10 rounded-lg opacity-0 group-active:opacity-100 transition-opacity duration-100" />
             </button>
@@ -251,7 +259,8 @@ export function PDFViewer({ pdf, className, onProgressUpdate }: PDFViewerProps) 
                 className="relative group px-4 py-2 rounded-lg bg-gradient-to-r from-purple-500 to-blue-500 text-white text-sm font-medium hover:shadow-lg transition-all duration-300 hover:scale-105 active:scale-95"
               >
                 <span className="relative z-10 flex items-center gap-2">
-                  📥 Download
+                  <Download size={16} weight="duotone" />
+                  Download
                 </span>
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <div className="absolute inset-0 bg-white/20 rounded-lg opacity-0 group-active:opacity-100 transition-opacity duration-100" />
@@ -278,10 +287,10 @@ export function PDFViewer({ pdf, className, onProgressUpdate }: PDFViewerProps) 
                   className="flex-1 bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 />
                 <button className="lesson-btn-icon">
-                  ⬆️
+                  <CaretUp size={12} weight="duotone" />
                 </button>
                 <button className="lesson-btn-icon">
-                  ⬇️
+                  <CaretDown size={12} weight="duotone" />
                 </button>
               </div>
             </motion.div>
@@ -315,7 +324,9 @@ export function PDFViewer({ pdf, className, onProgressUpdate }: PDFViewerProps) 
               {error && (
                 <div className="flex items-center justify-center h-96">
                   <div className="text-center text-red-600">
-                    <div className="text-4xl mb-4">⚠️</div>
+                    <div className="mb-4">
+                      <Warning size={48} weight="duotone" style={{ color: '#ef4444' }} />
+                    </div>
                     <p className="text-lg font-medium mb-2">Erro ao carregar PDF</p>
                     <p className="text-sm text-gray-600">{error}</p>
                   </div>
@@ -380,7 +391,7 @@ export function PDFViewer({ pdf, className, onProgressUpdate }: PDFViewerProps) 
               className="lesson-btn-icon"
               aria-label="Página anterior"
             >
-              ⬅️
+              <CaretLeft size={16} weight="duotone" />
             </button>
             
             <div className="flex items-center space-x-2">
@@ -402,7 +413,7 @@ export function PDFViewer({ pdf, className, onProgressUpdate }: PDFViewerProps) 
               className="lesson-btn-icon"
               aria-label="Próxima página"
             >
-              ➡️
+              <CaretRight size={16} weight="duotone" />
             </button>
           </div>
 

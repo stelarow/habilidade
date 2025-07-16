@@ -11,14 +11,14 @@ import {
   Play,
   CheckCircle,
   Clock,
-  BookOpen,
+  ClipboardText,
   FileText,
   Download,
-  Question,
+  Target,
   PaperPlaneRight,
   Plus,
   Trophy
-} from 'phosphor-react'
+} from '@phosphor-icons/react'
 
 // Import new components and hooks
 import { useCompletionCriteria } from '@/hooks/useCompletionCriteria'
@@ -300,7 +300,7 @@ export default function TestLessonPage() {
       name: 'Tempo',
       isCompleted: completionCriteria.criteria.find(c => c.id === 'time')?.isCompleted || false,
       progress: completionCriteria.pageTimer.timeSpent >= (25 * 60) ? 100 : (completionCriteria.pageTimer.timeSpent / (25 * 60)) * 100,
-      icon: <Clock className="w-4 h-4" />,
+      icon: <Clock className="w-4 h-4" weight="duotone" />,
       color: '#f59e0b',
       required: true
     },
@@ -309,7 +309,7 @@ export default function TestLessonPage() {
       name: 'Material PDF',
       isCompleted: completionCriteria.criteria.find(c => c.id === 'pdf')?.isCompleted || false,
       progress: completionCriteria.pdfProgress.percentageRead,
-      icon: <FileText className="w-4 h-4" />,
+      icon: <FileText className="w-4 h-4" weight="duotone" />,
       color: '#00c4ff',
       required: true
     },
@@ -318,7 +318,7 @@ export default function TestLessonPage() {
       name: 'Quiz',
       isCompleted: completionCriteria.criteria.find(c => c.id === 'quiz')?.isCompleted || false,
       progress: 0, // Would come from quiz component
-      icon: <Question className="w-4 h-4" />,
+      icon: <Target className="w-4 h-4" weight="duotone" />,
       color: '#22c55e',
       required: true
     },
@@ -327,7 +327,7 @@ export default function TestLessonPage() {
       name: 'Exercícios',
       isCompleted: completionCriteria.criteria.find(c => c.id === 'exercises')?.isCompleted || false,
       progress: 0, // Would come from exercises component
-      icon: <BookOpen className="w-4 h-4" />,
+      icon: <ClipboardText className="w-4 h-4" weight="duotone" />,
       color: '#ef4444',
       required: true
     }

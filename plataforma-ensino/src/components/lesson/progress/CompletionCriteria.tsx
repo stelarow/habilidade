@@ -3,6 +3,7 @@
 import React, { memo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
+import { Target } from '@phosphor-icons/react'
 import { useCompletionCriteria } from '@/hooks/useCompletionCriteria'
 import { LessonProgressData } from '@/types/lesson'
 
@@ -115,7 +116,7 @@ const CompletionCriteriaComponent = ({
       <div className="mb-6">
         <div className="flex items-center justify-between mb-2">
           <h3 className="text-lg font-bold text-white flex items-center gap-2">
-            <span>🎯</span>
+            <Target size={20} weight="duotone" style={{ color: '#d400ff' }} />
             <span>Critérios de Conclusão</span>
           </h3>
           <div className="text-sm text-gray-300">
@@ -168,7 +169,9 @@ const CompletionCriteriaComponent = ({
               {/* Header */}
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
-                  <span className="text-lg">{criterion.icon}</span>
+                  <div className="flex-shrink-0">
+                    {criterion.icon}
+                  </div>
                   <div>
                     <div className="text-sm font-medium text-white">
                       {criterion.name}

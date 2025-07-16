@@ -1,13 +1,15 @@
 'use client'
 
 import React, { useMemo } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
+import { useEnhancedProgressCalculation, EnhancedProgressData } from '@/hooks/useEnhancedProgressCalculation'
+import { LessonProgressData } from '@/types/lesson'
 
 interface CompletionCriterion {
   id: string
   name: string
-  icon: string
+  icon: React.ReactNode
   description: string
   isCompleted: boolean
   progress: number
@@ -175,7 +177,9 @@ export function CompletionProgress({
           >
             {/* Icon and Progress */}
             <div className="flex items-center gap-2">
-              <span className="text-lg">{criterion.icon}</span>
+              <div className="flex-shrink-0">
+                {criterion.icon}
+              </div>
               <ProgressCircle 
                 percentage={criterion.progress} 
                 size={32} 

@@ -3,6 +3,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
+import { Play, Lightbulb } from '@phosphor-icons/react'
 import { VideoData } from '@/types/lesson'
 
 interface SimpleVideoPlayerProps {
@@ -89,7 +90,7 @@ export function SimpleVideoPlayer({ video, className }: SimpleVideoPlayerProps) 
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
         >
-          <span>🎬</span>
+          <Play size={16} weight="duotone" style={{ color: '#d400ff' }} />
           <span>Vídeo da Aula</span>
         </motion.div>
       </div>
@@ -125,7 +126,7 @@ export function SimpleVideoPlayer({ video, className }: SimpleVideoPlayerProps) 
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
         >
-          <span>💡</span>
+          <Lightbulb size={12} weight="duotone" style={{ color: '#00c4ff' }} />
           <span>Assista com atenção</span>
         </motion.div>
       </div>
