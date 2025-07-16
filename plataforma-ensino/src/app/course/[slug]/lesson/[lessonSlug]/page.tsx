@@ -5,9 +5,6 @@ import { useRouter, useParams } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { GradientButton, Starfield, Loading } from '@/components/ui'
 import { 
-  ArrowLeft,
-  Play,
-  CheckCircle,
   Clock,
   BookOpen,
   FileText,
@@ -20,8 +17,11 @@ import {
 
 // Import new components and hooks
 import { useCompletionCriteria } from '@/hooks/useCompletionCriteria'
+import { useVideoProgress } from '@/hooks/useVideoProgress'
 import { PDFViewer } from '@/components/lesson/pdf/PDFViewer'
 import { LessonHeader } from '@/components/lesson/header'
+import VideoPlayer from '@/components/ui/VideoPlayer'
+import { VideoProgress } from '@/types'
 
 interface Course {
   id: string
@@ -71,8 +71,19 @@ export default function LessonPageRefactored() {
   const [quizzes, setQuizzes] = useState<any[]>([])
   const [submissions, setSubmissions] = useState<any[]>([])
   const [uploading, setUploading] = useState(false)
+  const [videoError, setVideoError] = useState<string | null>(null)
+  const [videoLoading, setVideoLoading] = useState(true)
   
   const supabase = createClient()
+
+  // Initialize video progress hook
+  const videoProgress = useVideoProgress({
+    lessonId: lesson?.id || '',
+    userId: userId || '',
+    enrollmentId: enrollmentId || '',
+    autoSaveInterval: 5000,
+    completionThreshold: 0.9
+  })
 
   // Initialize completion criteria hook
   const completionCriteria = useCompletionCriteria({
@@ -373,18 +384,94 @@ export default function LessonPageRefactored() {
             {/* Video Player */}
             {lesson.video_url && (
               <div id="section-video" className="glass-effect bg-zinc-900/70 backdrop-blur-md rounded-lg border border-gray-800/50 p-6">
-                <div className="aspect-video bg-black rounded-lg mb-4 flex items-center justify-center">
-                  <div className="text-center">
-                    <Play className="w-16 h-16 text-primary mx-auto mb-2" />
-                    <p className="text-gray-400">Player de vídeo será integrado aqui</p>
-                    <p className="text-sm text-gray-500 mt-1">URL: {lesson.video_url}</p>
+{videoError ? (
+                  <div className="aspect-video bg-red-900/20 rounded-lg flex items-center justify-center border border-red-500/30">
+                    <div className="text-center">
+                      <div className="w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span className="text-red-400 text-2xl">⚠</span>
+                      </div>
+                      <h3 className="text-lg font-semibold text-white mb-2">Erro no Player de Vídeo</h3>
+                      <p className="text-red-400 mb-4">{videoError}</p>
+                      <button
+                        onClick={() => {
+                          setVideoError(null)
+                          setVideoLoading(true)
+                        }}
+                        className="px-4 py-2 bg-red-500/20 text-red-400 rounded hover:bg-red-500/30 transition-colors"
+                      >
+                        Tentar Novamente
+                      </button>
+                    </div>
                   </div>
-                </div>
+                ) : (
+                  <VideoPlayer
+                    url={lesson.video_url}
+                    controls={true}
+                    width="100%"
+                    height="100%"
+                    className="aspect-video rounded-lg overflow-hidden"
+                    lesson={{
+                      id: lesson.id,
+                      title: lesson.title,
+                      video_duration: lesson.video_duration || 0
+                    }}
+                    onProgressUpdate={videoProgress.handleProgress}
+                    onLessonComplete={() => {
+                      console.log('Video completed - 90% watched')
+                    }}
+                    onProgress={(progress) => {
+                      // Handle video progress for UI updates
+                      console.log('Video progress:', progress)
+                    }}
+                    onPlay={() => {
+                      console.log('Video started playing')
+                      setVideoLoading(false)
+                    }}
+                    onPause={() => {
+                      console.log('Video paused')
+                    }}
+                    onEnded={() => {
+                      console.log('Video ended')
+                    }}
+                    onReady={(player) => {
+                      console.log('Video player ready')
+                      setVideoLoading(false)
+                      setVideoError(null)
+                      
+                      // Seek to last saved position if available
+                      if (progress?.last_position && progress.last_position > 0) {
+                        player.seekTo(progress.last_position, 'seconds')
+                      }
+                    }}
+                    onError={(error) => {
+                      console.error('Video player error:', error)
+                      setVideoError('Não foi possível carregar o vídeo. Verifique sua conexão.')
+                      setVideoLoading(false)
+                    }}
+                  />
+                )}
                 
                 {lesson.video_duration && (
-                  <div className="flex items-center gap-2 text-gray-400">
+                  <div className="flex items-center gap-2 text-gray-400 mt-4">
                     <Clock className="w-4 h-4" />
                     <span>Duração: {formatDuration(lesson.video_duration)}</span>
+                  </div>
+                )}
+                
+                {/* Video Progress Info */}
+                {videoProgress.progress && (
+                  <div className="mt-4 p-3 bg-zinc-800/50 rounded-lg border border-gray-700">
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-gray-400">Progresso do vídeo:</span>
+                      <span className="text-white">
+                        {formatDuration(videoProgress.progress.watch_time)} assistidos
+                      </span>
+                    </div>
+                    {videoProgress.progress.last_position > 0 && (
+                      <div className="text-xs text-gray-500 mt-1">
+                        Última posição: {formatDuration(videoProgress.progress.last_position)}
+                      </div>
+                    )}
                   </div>
                 )}
               </div>

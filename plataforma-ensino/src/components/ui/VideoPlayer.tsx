@@ -11,6 +11,7 @@ interface CustomVideoPlayerProps extends VideoPlayerProps {
   onProgressUpdate?: (progress: VideoProgress) => void
   onLessonComplete?: () => void
   onReady?: (player: any) => void
+  onError?: (error: any) => void
   lesson?: {
     id: string
     title: string
@@ -32,6 +33,7 @@ export default function VideoPlayer({
   onStart,
   onPause,
   onPlay,
+  onError,
   controls = false,
   playing: externalPlaying,
   muted: externalMuted,
@@ -217,7 +219,10 @@ export default function VideoPlayer({
         duration
       }
     })
-  }, [lesson, url, playedSeconds, played, duration])
+    
+    // Call external error handler
+    onError?.(error)
+  }, [lesson, url, playedSeconds, played, duration, onError])
 
   // Keyboard shortcuts
   useEffect(() => {

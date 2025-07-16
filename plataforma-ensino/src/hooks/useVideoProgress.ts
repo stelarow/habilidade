@@ -217,10 +217,11 @@ export function useVideoProgress({
   }, [saveProgress])
 
   // Get completion percentage
-  const getCompletionPercentage = useCallback(() => {
+  const getCompletionPercentage = useCallback((videoDuration?: number) => {
     if (!progress) return 0
     // Based on time watched vs lesson duration or completion status
-    return isCompleted ? 100 : Math.min((progress.last_position / (progress.lesson?.video_duration || 1)) * 100, 99)
+    const duration = videoDuration || progress.lesson?.video_duration || 1
+    return isCompleted ? 100 : Math.min((progress.last_position / duration) * 100, 99)
   }, [progress, isCompleted])
 
   return {
