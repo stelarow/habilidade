@@ -42,7 +42,6 @@ const CompletionCriteriaComponent = ({
   } = useCompletionCriteria({
     minimumTimeMinutes,
     minimumQuizScore,
-    timeSpent,
     onCriteriaUpdated: (state) => {
       onCriteriaChange?.(state.canComplete)
     }
