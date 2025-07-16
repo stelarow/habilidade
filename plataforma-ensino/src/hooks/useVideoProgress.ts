@@ -39,6 +39,19 @@ export function useVideoProgress({
         setLoading(true)
         setError(null)
 
+        // Validate required parameters before making database query
+        if (!lessonId || !userId || !enrollmentId) {
+          setLoading(false)
+          return
+        }
+
+        // Validate enrollment ID format (should be UUID, not end with :1)
+        if (enrollmentId.endsWith(':1') || enrollmentId.includes(':')) {
+          setError('Invalid enrollment ID format')
+          setLoading(false)
+          return
+        }
+
         const { data, error: fetchError } = await supabase
           .from('progress')
           .select('*')
@@ -79,6 +92,16 @@ export function useVideoProgress({
     completed: boolean = false
   ) => {
     try {
+      // Validate required parameters before saving
+      if (!lessonId || !userId || !enrollmentId) {
+        throw new Error('Missing required parameters for progress save')
+      }
+
+      // Validate enrollment ID format
+      if (enrollmentId.endsWith(':1') || enrollmentId.includes(':')) {
+        throw new Error('Invalid enrollment ID format')
+      }
+
       const progressData = {
         user_id: userId,
         lesson_id: lessonId,
