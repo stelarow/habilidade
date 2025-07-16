@@ -1,770 +1,672 @@
 'use client'
 
-import React, { useState, useCallback } from 'react'
-import CentralizedLessonLayout, { 
-  CentralizedLessonTitle, 
-  CentralizedLessonNav,
-  useCentralizedLayout 
-} from '@/components/lesson/layout/CentralizedLessonLayout'
-import { SimpleVideoPlayer } from '@/components/lesson/video/SimpleVideoPlayer'
-import { TimeTracker } from '@/components/lesson/progress/TimeTracker'
-import { CompletionCriteria } from '@/components/lesson/progress/CompletionCriteria'
+import React, { useEffect, useState, useCallback } from 'react'
+import { useRouter } from 'next/navigation'
+import { GradientButton, Starfield, Loading } from '@/components/ui'
+import { 
+  ArrowLeft,
+  Play,
+  CheckCircle,
+  Clock,
+  BookOpen,
+  FileText,
+  Download,
+  Question,
+  PaperPlaneRight,
+  Plus,
+  Trophy
+} from 'phosphor-react'
+
+// Import new components and hooks
+import { useCompletionCriteria } from '@/hooks/useCompletionCriteria'
+import { CompletionProgress, CompactProgressHeader } from '@/components/lesson/progress'
 import { LessonCompletionButton } from '@/components/lesson/completion/LessonCompletionButton'
 import { PDFViewer } from '@/components/lesson/pdf/PDFViewer'
-import { EnhancedQuizInterface } from '@/components/lesson/quiz/EnhancedQuizInterface'
-import { CompactProgressHeader } from '@/components/lesson/progress/CompactProgressHeader'
-import dynamic from 'next/dynamic'
 
-// Client-side only PDF viewer to avoid SSR issues
-const ClientPDFViewer = dynamic(
-  () => import('@/components/lesson/pdf/PDFViewer').then(mod => ({ default: mod.PDFViewer })),
-  { 
-    ssr: false,
-    loading: () => (
-      <div className="lesson-pdf-content">
-        <div className="relative flex-1 bg-gray-100 rounded-lg overflow-hidden">
-          <div className="flex items-center justify-center h-96">
-            <div className="text-center">
-              <div className="w-8 h-8 border-4 border-purple-500 border-t-transparent rounded-full mx-auto mb-4 animate-spin"></div>
-              <p className="text-gray-600">Carregando visualizador PDF...</p>
-            </div>
+interface Course {
+  id: string
+  title: string
+  slug: string
+}
+
+interface Lesson {
+  id: string
+  course_id: string
+  title: string
+  slug: string
+  description?: string
+  video_url?: string
+  video_duration?: number
+  order_index: number
+  content?: string
+  materials: any[]
+  allows_file_upload?: boolean
+  is_preview: boolean
+  is_published: boolean
+}
+
+interface UserProgress {
+  id?: string
+  lesson_id: string
+  completed: boolean
+  last_position: number
+  watch_time: number
+  completed_at?: string
+}
+
+export default function TestLessonPage() {
+  const router = useRouter()
+  
+  // Mock data for test lesson - mirrors regular lesson structure
+  const [course] = useState<Course>({
+    id: 'test-course-123',
+    title: 'Curso de Desenvolvimento Web',
+    slug: 'desenvolvimento-web'
+  })
+  
+  const [lesson] = useState<Lesson>({
+    id: 'test-lesson-123',
+    course_id: 'test-course-123',
+    title: 'Capítulo 2: Fundamentos do Desenvolvimento Web',
+    slug: 'test-lesson',
+    description: 'Aprenda os conceitos fundamentais de HTML, CSS e JavaScript através de exemplos práticos e exercícios interativos.',
+    video_url: 'https://www.youtube.com/embed/Xq0xJl-2D_s',
+    video_duration: 1200,
+    order_index: 2,
+    content: `
+      <h2>Capítulo 2: Fundamentos do Desenvolvimento Web</h2>
+      
+      <h3>📚 Objetivos de Aprendizagem</h3>
+      <p>Ao completar este capítulo, você será capaz de:</p>
+      <ul>
+        <li>Compreender a estrutura básica de documentos HTML5 e sua semântica</li>
+        <li>Aplicar estilos CSS para criar layouts responsivos e atraentes</li>
+        <li>Implementar interatividade básica com JavaScript</li>
+        <li>Seguir as melhores práticas de desenvolvimento web moderno</li>
+        <li>Otimizar páginas web para performance e acessibilidade</li>
+      </ul>
+
+      <h3>🌐 Conteúdo Programático</h3>
+      
+      <h4>1. HTML5 - Estrutura e Semântica</h4>
+      <ul>
+        <li><strong>Elementos semânticos:</strong> header, nav, main, section, article, aside, footer</li>
+        <li><strong>Hierarquia de títulos:</strong> h1-h6 e sua importância para SEO</li>
+        <li><strong>Formulários avançados:</strong> novos tipos de input e validação</li>
+        <li><strong>Multimedia:</strong> video, audio e suas configurações</li>
+        <li><strong>Meta tags:</strong> viewport, description, keywords</li>
+      </ul>
+
+      <h4>2. CSS3 - Estilização e Layout</h4>
+      <ul>
+        <li><strong>Flexbox:</strong> alinhamento e distribuição de elementos</li>
+        <li><strong>CSS Grid:</strong> layouts bidimensionais complexos</li>
+        <li><strong>Media Queries:</strong> design responsivo para diferentes dispositivos</li>
+        <li><strong>Animações e transições:</strong> melhorando a experiência do usuário</li>
+        <li><strong>Custom Properties:</strong> variáveis CSS para manutenibilidade</li>
+      </ul>
+
+      <h4>3. JavaScript Essencial</h4>
+      <ul>
+        <li><strong>DOM Manipulation:</strong> seleção e modificação de elementos</li>
+        <li><strong>Event Listeners:</strong> interatividade com o usuário</li>
+        <li><strong>ES6+ Features:</strong> let/const, arrow functions, template literals</li>
+        <li><strong>APIs do Browser:</strong> localStorage, geolocation, fetch</li>
+        <li><strong>Debugging:</strong> console, breakpoints e DevTools</li>
+      </ul>
+
+      <h3>⏱️ Tempo Estimado</h3>
+      <p><strong>Total:</strong> 3-4 horas</p>
+      <ul>
+        <li>Vídeo-aula: 20 minutos</li>
+        <li>Leitura do material: 30 minutos</li>
+        <li>Exercícios práticos: 2-2.5 horas</li>
+        <li>Quiz e revisão: 15-30 minutos</li>
+      </ul>
+    `,
+    materials: [
+      {
+        type: 'pdf',
+        title: 'HTML5 - Guia Completo de Elementos Semânticos',
+        description: 'Referência detalhada de todos os elementos HTML5 com exemplos práticos',
+        url: '/materials/html5-semantic-guide.pdf'
+      },
+      {
+        type: 'pdf',
+        title: 'CSS Grid e Flexbox - Manual Prático',
+        description: 'Guia visual para layouts modernos com CSS Grid e Flexbox',
+        url: '/materials/css-layout-guide.pdf'
+      },
+      {
+        type: 'link',
+        title: 'MDN Web Docs - HTML5',
+        description: 'Documentação oficial do HTML5 com exemplos interativos',
+        url: 'https://developer.mozilla.org/pt-BR/docs/Web/HTML'
+      }
+    ],
+    allows_file_upload: true,
+    is_preview: false,
+    is_published: true
+  })
+  
+  const [progress] = useState<UserProgress>({
+    lesson_id: 'test-lesson-123',
+    completed: false,
+    last_position: 0,
+    watch_time: 0
+  })
+  
+  const [loading] = useState(false)
+  const [error] = useState<string | null>(null)
+  const [userId] = useState<string>('test-user-123')
+  const [enrollmentId] = useState<string>('test-enrollment-123')
+  
+  // Mock exercises data
+  const [exercises] = useState([
+    {
+      id: 'ex1',
+      title: 'Estrutura HTML5 Semântica',
+      description: 'Crie uma página HTML5 utilizando elementos semânticos (header, nav, main, section, aside, footer) com conteúdo sobre desenvolvimento web.',
+      order_index: 1,
+      download_url: '/exercises/exercise1.html'
+    },
+    {
+      id: 'ex2',
+      title: 'CSS Layout Responsivo',
+      description: 'Aplicar estilos CSS à página criada no exercício anterior, implementando um layout responsivo com CSS Grid ou Flexbox.',
+      order_index: 2,
+      download_url: '/exercises/exercise2.css'
+    },
+    {
+      id: 'ex3',
+      title: 'Interatividade com JavaScript',
+      description: 'Adicione funcionalidades JavaScript à sua página: menu hambúrguer para mobile, formulário de contato com validação básica.',
+      order_index: 3,
+      download_url: '/exercises/exercise3.js'
+    }
+  ])
+  
+  // Mock quizzes data
+  const [quizzes] = useState([
+    {
+      id: 'quiz1',
+      title: 'Avaliação: Fundamentos do Desenvolvimento Web',
+      description: 'Teste completo sobre HTML, CSS, JavaScript e conceitos de desenvolvimento web responsivo.',
+      passing_score: 70,
+      attempts_allowed: 3
+    }
+  ])
+  
+  const [submissions] = useState([])
+  const [uploading, setUploading] = useState(false)
+
+  // Initialize completion criteria hook
+  const completionCriteria = useCompletionCriteria({
+    minimumTimeMinutes: 25,
+    minimumQuizScore: 70,
+    requireAllExercises: true,
+    requireFullPDFRead: true,
+    lessonId: lesson.id,
+    pdfTotalPages: 10,
+    onCompletionReady: () => {
+      console.log('All completion criteria met!')
+    }
+  })
+
+  const handleLessonComplete = useCallback(async () => {
+    if (!completionCriteria.canComplete) return
+
+    // Prepare completion data
+    const completionData = {
+      timeSpent: completionCriteria.pageTimer.timeSpent,
+      pdfProgress: completionCriteria.pdfProgress.percentageRead,
+      quizScore: 0, // Would come from quiz component
+      exercisesCompleted: 0, // Would come from exercise component
+      completionCriteria: completionCriteria.criteria
+    }
+
+    console.log('Completing lesson with data:', completionData)
+    
+    // Simulate API call
+    alert('Aula concluída com sucesso! (Página de Teste)')
+  }, [completionCriteria])
+
+  const formatDuration = (seconds: number) => {
+    const minutes = Math.floor(seconds / 60)
+    const remainingSeconds = seconds % 60
+    if (minutes > 0) {
+      return `${minutes}min ${remainingSeconds > 0 ? `${remainingSeconds}s` : ''}`
+    }
+    return `${remainingSeconds}s`
+  }
+
+  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    if (!file || !lesson || !userId) return
+
+    setUploading(true)
+    try {
+      // Simulate file upload
+      await new Promise(resolve => setTimeout(resolve, 2000))
+      
+      alert(`Arquivo "${file.name}" enviado com sucesso! (Página de Teste)`)
+      
+      // Reset file input
+      event.target.value = ''
+    } catch (error) {
+      console.error('Upload error:', error)
+      alert('Erro ao enviar arquivo')
+    } finally {
+      setUploading(false)
+    }
+  }
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 flex items-center justify-center">
+        <Loading />
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+            <span className="text-red-400 text-2xl">⚠</span>
           </div>
+          <h3 className="text-lg font-semibold text-white mb-2">Erro ao carregar aula</h3>
+          <p className="text-white/60 mb-4">{error}</p>
+          <GradientButton onClick={() => router.push('/test-lesson')}>
+            Recarregar Página
+          </GradientButton>
         </div>
       </div>
     )
   }
-)
-import { ExercisePanel } from '@/components/lesson/exercises/ExercisePanel'
-import { LessonProvider } from '@/contexts/LessonContext'
-import { LessonContent, LessonProgressData } from '@/types/lesson'
 
-// Import CSS
-import '@/styles/lesson-centralized.css'
+  if (!lesson || !course) {
+    return null
+  }
 
-/**
- * TestLessonPage - Comprehensive test page for Phase 2 lesson components
- * 
- * Demonstrates:
- * - Centralized lesson layout (NEW)
- * - VideoPlayer with custom controls
- * - PDFViewer with in-page reading
- * - QuizInterface with gamification
- * - ExercisePanel with file upload
- * - ProgressTracker with card-based design
- */
-export default function TestLessonPage() {
-  // State for progress tracking
-  const [progress, setProgress] = useState<LessonProgressData>(initialProgressData)
-  const [completedComponents, setCompletedComponents] = useState<Set<string>>(new Set())
-  const [timeSpent, setTimeSpent] = useState<number>(0)
-  const [canCompleteLesson, setCanCompleteLesson] = useState<boolean>(false)
-  
-  // Centralized layout hooks
-  const { activeSection, scrollToSection } = useCentralizedLayout()
-
-  const updateOverallProgress = useCallback(() => {
-    setProgress(prev => {
-      // Exclude video from overall progress calculation
-      const relevantComponents = prev.overallProgress.componentProgress.filter(comp => comp.component !== 'video')
-      const totalWeight = relevantComponents.reduce((sum, comp) => sum + comp.weight, 0)
-      const weightedProgress = relevantComponents.reduce(
-        (sum, comp) => sum + (comp.percentage * comp.weight), 0
-      )
-      const overallPercentage = totalWeight > 0 ? weightedProgress / totalWeight : 0
-      
-      return {
-        ...prev,
-        overallProgress: {
-          ...prev.overallProgress,
-          percentageComplete: Math.round(overallPercentage),
-          isCompleted: overallPercentage >= 95,
-          estimatedTimeRemaining: Math.max(0, 25 - (overallPercentage / 100) * 25) // 25 minutes total
-        }
-      }
-    })
-  }, [])
-
-  // Time tracking callback
-  const handleTimeUpdate = useCallback((newTimeSpent: number) => {
-    setTimeSpent(newTimeSpent)
-  }, [])
-
-  // Minimum time reached callback
-  const handleMinimumTimeReached = useCallback(() => {
-    console.log('25-minute minimum time reached!')
-  }, [])
-
-  const markComponentComplete = useCallback((component: string) => {
-    setProgress(prev => ({
-      ...prev,
-      overallProgress: {
-        ...prev.overallProgress,
-        componentProgress: prev.overallProgress.componentProgress.map(comp =>
-          comp.component === component 
-            ? { ...comp, percentage: 100, isCompleted: true }
-            : comp
-        )
-      }
-    }))
-    updateOverallProgress()
-  }, [updateOverallProgress])
-
-  // Video is no longer tracked for progress - just show the player
-
-  const handleQuizComplete = useCallback((score: number) => {
-    const passingScore = testLessonContent.quiz!.passingScore
-    const isPassed = score >= passingScore
-
-    if (isPassed) {
-      setCompletedComponents(prev => {
-        const newSet = new Set(prev)
-        newSet.add('quiz')
-        return newSet
-      })
-      markComponentComplete('quiz')
+  // Map completion criteria to header format
+  const headerCriteria = [
+    {
+      id: 'time',
+      name: 'Tempo',
+      isCompleted: completionCriteria.criteria.find(c => c.id === 'time')?.isCompleted || false,
+      progress: completionCriteria.pageTimer.timeSpent >= (25 * 60) ? 100 : (completionCriteria.pageTimer.timeSpent / (25 * 60)) * 100,
+      icon: <Clock className="w-4 h-4" />,
+      color: '#f59e0b',
+      required: true
+    },
+    {
+      id: 'pdf',
+      name: 'Material PDF',
+      isCompleted: completionCriteria.criteria.find(c => c.id === 'pdf')?.isCompleted || false,
+      progress: completionCriteria.pdfProgress.percentageRead,
+      icon: <FileText className="w-4 h-4" />,
+      color: '#00c4ff',
+      required: true
+    },
+    {
+      id: 'quiz',
+      name: 'Quiz',
+      isCompleted: completionCriteria.criteria.find(c => c.id === 'quiz')?.isCompleted || false,
+      progress: 0, // Would come from quiz component
+      icon: <Question className="w-4 h-4" />,
+      color: '#22c55e',
+      required: true
+    },
+    {
+      id: 'exercises',
+      name: 'Exercícios',
+      isCompleted: completionCriteria.criteria.find(c => c.id === 'exercises')?.isCompleted || false,
+      progress: 0, // Would come from exercises component
+      icon: <BookOpen className="w-4 h-4" />,
+      color: '#ef4444',
+      required: true
     }
-
-    setProgress(prev => ({
-      ...prev,
-      quizProgress: {
-        ...prev.quizProgress,
-        score,
-        isCompleted: isPassed,
-        isPassed,
-        attempts: prev.quizProgress.attempts + 1
-      },
-      overallProgress: {
-        ...prev.overallProgress,
-        componentProgress: prev.overallProgress.componentProgress.map(comp =>
-          comp.component === 'quiz' 
-            ? { 
-                ...comp, 
-                percentage: isPassed ? 100 : 0,
-                isCompleted: isPassed 
-              }
-            : comp
-        )
-      }
-    }))
-    
-    // Update overall progress
-    updateOverallProgress()
-  }, [markComponentComplete, updateOverallProgress])
-  
-  const handleExerciseSubmit = useCallback(async (exerciseId: string, file: File) => {
-    try {
-      // Simulate file upload process
-      console.log(`Submitting exercise ${exerciseId} with file:`, file.name)
-      
-      // In a real implementation, this would upload to a server
-      // For now, we'll just simulate the process
-      await new Promise(resolve => setTimeout(resolve, 2000))
-      
-      // Mark exercise as completed
-      setProgress(prev => ({
-        ...prev,
-        exerciseProgress: {
-          ...prev.exerciseProgress,
-          completedExercises: [...prev.exerciseProgress.completedExercises, exerciseId],
-          submittedFiles: [...prev.exerciseProgress.submittedFiles, {
-            exerciseId,
-            fileName: file.name,
-            fileUrl: URL.createObjectURL(file), // For demo purposes
-            submittedAt: new Date().toISOString(),
-            status: 'pending' as const
-          }],
-          completionPercentage: Math.round(
-            ((prev.exerciseProgress.completedExercises.length + 1) / prev.exerciseProgress.totalExercises) * 100
-          )
-        }
-      }))
-      
-      alert(`Exercício "${exerciseId}" enviado com sucesso!`)
-      
-      // Update overall progress
-      updateOverallProgress()
-    } catch (error) {
-      console.error('Error submitting exercise:', error)
-      throw error
-    }
-  }, [updateOverallProgress])
+  ]
 
   return (
-    <LessonProvider>
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 relative overflow-hidden">
+      <Starfield count={30} className="opacity-20" />
+      
       {/* Compact Progress Header */}
       <CompactProgressHeader
-        criteria={[
-          {
-            id: 'pdf',
-            name: 'PDF',
-            isCompleted: progress.pdfProgress.percentageRead >= 100,
-            progress: progress.pdfProgress.percentageRead,
-            icon: '📄',
-            color: '#00c4ff',
-            required: true
-          },
-          {
-            id: 'quiz',
-            name: 'Quiz',
-            isCompleted: progress.quizProgress.isCompleted,
-            progress: progress.quizProgress.isCompleted ? 100 : 0,
-            icon: '🧩',
-            color: '#22c55e',
-            required: true
-          },
-          {
-            id: 'exercises',
-            name: 'Exercícios',
-            isCompleted: progress.exerciseProgress.completionPercentage >= 100,
-            progress: progress.exerciseProgress.completionPercentage,
-            icon: '📋',
-            color: '#ef4444',
-            required: true
+        criteria={headerCriteria}
+        overallProgress={completionCriteria.overallProgress}
+        canComplete={completionCriteria.canComplete}
+        completedCount={completionCriteria.completedCount}
+        totalCount={completionCriteria.totalCount}
+        timeRemaining={completionCriteria.pageTimer.formattedRemainingTime}
+        currentTime={completionCriteria.pageTimer.formattedTime}
+        onSectionClick={(sectionId) => {
+          // Handle section navigation
+          const element = document.getElementById(`section-${sectionId}`)
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' })
           }
-        ]}
-        overallProgress={progress.overallProgress.percentageComplete}
-        canComplete={canCompleteLesson}
-        completedCount={[
-          progress.pdfProgress.percentageRead >= 100,
-          progress.quizProgress.isCompleted,
-          progress.exerciseProgress.completionPercentage >= 100
-        ].filter(Boolean).length}
-        totalCount={3}
-        onSectionClick={(section) => {
-          scrollToSection(section)
         }}
       />
-
-      {/* Page Header */}
-      <div className="lesson-background py-8">
-        <div className="lesson-centralized-container">
-          <div className="text-center mb-8">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-2">
-              📚 Página de Teste - Sistema de Aulas
-            </h1>
-            <p className="lesson-text-body text-center mb-6">
-              Demonstração do novo layout centralizado com componentes da Fase 2
-            </p>
-            
-            {/* Quick Navigation */}
-            <CentralizedLessonNav 
-              lesson={testLessonContent}
-              activeSection={activeSection}
-              onSectionClick={scrollToSection}
-            />
+      
+      <div className="relative z-10 container mx-auto px-4 py-8">
+        {/* Header */}
+        <div className="flex items-center gap-4 mb-8">
+          <button
+            onClick={() => router.push('/')}
+            className="flex items-center gap-2 px-3 py-2 bg-white/5 hover:bg-white/10 rounded-lg transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            <span>Voltar</span>
+          </button>
+          
+          <div className="flex items-center gap-2 text-gray-400">
+            <span>{course.title}</span>
+            <span>/</span>
+            <span className="text-white">{lesson.title}</span>
+          </div>
+          
+          <div className="ml-auto">
+            <span className="px-3 py-1 bg-blue-500/20 text-blue-400 rounded-full text-sm font-medium">
+              📚 Página de Teste
+            </span>
           </div>
         </div>
-      </div>
 
-      {/* Main Layout with Floating Sidebar */}
-      <div className="relative">
-        {/* Floating Progress Menu - Sidebar */}
-        <div className="hidden xl:block fixed right-6 top-1/2 transform -translate-y-1/2 z-50 space-y-6">
-          {/* Time Tracker */}
-          <TimeTracker 
-            onMinimumReached={handleMinimumTimeReached}
-            size="md"
-          />
-          
-          {/* Completion Criteria */}
-          <CompletionCriteria 
-            progressData={progress}
-            timeSpent={timeSpent}
-            onCriteriaChange={setCanCompleteLesson}
-          />
-          
-          {/* Lesson Completion Button */}
-          <LessonCompletionButton 
-            lessonId="test-lesson-123"
-            courseSlug="desenvolvimento-web"
-            canComplete={canCompleteLesson}
-          />
-          
-        </div>
-
-        {/* Main Centralized Layout */}
-        <CentralizedLessonLayout
-        lesson={testLessonContent}
-        progress={{
-          overall: progress.overallProgress.percentageComplete,
-          video: progress.videoProgress.percentageWatched,
-          pdf: progress.pdfProgress.percentageRead,
-          quiz: progress.quizProgress.score,
-          exercises: progress.exerciseProgress.completionPercentage
-        }}
-      >
-        {{
-          title: (
-            <CentralizedLessonTitle
-              title={testLessonContent.title}
-              courseTitle="Curso de Desenvolvimento Web"
-              themeColors={{
-                primary: '#d400ff',
-                secondary: '#00c4ff'
-              }}
-            />
-          ),
-          
-          
-          video: testLessonContent.video && (
-            <div id="section-video">
-              <SimpleVideoPlayer
-                video={testLessonContent.video}
-              />
-            </div>
-          ),
-          
-          pdf: testLessonContent.pdf && (
-            <div id="section-pdf">
-              <ClientPDFViewer 
-                pdf={testLessonContent.pdf}
-                onProgressUpdate={(progress) => {
-                  setProgress(prev => ({
-                    ...prev,
-                    pdfProgress: {
-                      ...prev.pdfProgress,
-                      percentageRead: progress
-                    },
-                    overallProgress: {
-                      ...prev.overallProgress,
-                      componentProgress: prev.overallProgress.componentProgress.map(comp =>
-                        comp.component === 'pdf' 
-                          ? { ...comp, percentage: Math.min(progress, 100) }
-                          : comp
-                      )
-                    }
-                  }))
-                  // Update overall progress
-                  updateOverallProgress()
-                }}
-              />
-            </div>
-          ),
-          
-          exercises: testLessonContent.exercises && (
-            <div id="section-exercises" className="space-y-4">
-              <ExercisePanel 
-                exercises={testLessonContent.exercises}
-                onExerciseSubmit={handleExerciseSubmit}
-              />
-              
-              {/* Materials Section */}
-              {testLessonContent.materials && (
-                <div className="lesson-exercise-item">
-                  <h4 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                    📎 Materiais de Apoio
-                  </h4>
-                  <div className="space-y-3">
-                    {testLessonContent.materials.map((material, index) => (
-                      <div key={index} className="flex items-center gap-3 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors">
-                        <span className="text-xl flex-shrink-0">
-                          {material.type === 'pdf' ? '📄' : 
-                           material.type === 'link' ? '🔗' : 
-                           material.type === 'image' ? '🖼️' : '📄'}
-                        </span>
-                        <div className="flex-1 min-w-0">
-                          <div className="text-white font-medium">{material.title}</div>
-                          {material.description && (
-                            <div className="lesson-text-caption mt-1">{material.description}</div>
-                          )}
-                        </div>
-                        {material.url && (
-                          <a 
-                            href={material.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="lesson-btn-icon"
-                            aria-label={`Abrir ${material.title}`}
-                          >
-                            🔗
-                          </a>
-                        )}
-                      </div>
-                    ))}
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          {/* Main Content */}
+          <div className="lg:col-span-3 space-y-6">
+            {/* Video Player */}
+            {lesson.video_url && (
+              <div id="section-video" className="glass-effect bg-zinc-900/70 backdrop-blur-md rounded-lg border border-gray-800/50 p-6">
+                <div className="aspect-video bg-black rounded-lg mb-4 flex items-center justify-center">
+                  <div className="text-center">
+                    <Play className="w-16 h-16 text-primary mx-auto mb-2" />
+                    <p className="text-gray-400">Player de vídeo será integrado aqui</p>
+                    <p className="text-sm text-gray-500 mt-1">URL: {lesson.video_url}</p>
                   </div>
+                </div>
+                
+                {lesson.video_duration && (
+                  <div className="flex items-center gap-2 text-gray-400">
+                    <Clock className="w-4 h-4" />
+                    <span>Duração: {formatDuration(lesson.video_duration)}</span>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Lesson Content */}
+            <div className="glass-effect bg-zinc-900/70 backdrop-blur-md rounded-lg border border-gray-800/50 p-6">
+              <h1 className="text-3xl font-bold gradient-text bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent mb-4">
+                {lesson.title}
+              </h1>
+              
+              {lesson.description && (
+                <p className="text-gray-300 text-lg mb-6">{lesson.description}</p>
+              )}
+
+              {lesson.content && (
+                <div className="prose prose-invert max-w-none">
+                  <div dangerouslySetInnerHTML={{ __html: lesson.content }} />
                 </div>
               )}
             </div>
-          ),
-          
-          quiz: testLessonContent.quiz && (
-            <div id="section-quiz">
-              <EnhancedQuizInterface
-                quiz={testLessonContent.quiz}
-                onComplete={handleQuizComplete}
-                onProgressUpdate={(questionIndex, score) => {
-                  setProgress(prev => ({
-                    ...prev,
-                    quizProgress: {
-                      ...prev.quizProgress,
-                      currentQuestion: questionIndex,
-                      score
-                    }
-                  }))
+
+            {/* PDF Viewer */}
+            <div id="section-pdf" className="glass-effect bg-zinc-900/70 backdrop-blur-md rounded-lg border border-gray-800/50 p-6">
+              <h3 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
+                <FileText className="w-5 h-5 text-primary" />
+                Material PDF
+              </h3>
+              
+              <PDFViewer
+                pdf={{
+                  id: 'lesson-pdf',
+                  title: 'Material da Aula',
+                  url: '/pdf/capitulo2.pdf',
+                  filename: 'capitulo2.pdf',
+                  size: 1024 * 1024, // 1MB
+                  pageCount: 10,
+                  downloadable: true
+                }}
+                onProgressUpdate={(progress) => {
+                  // Update PDF progress with debounced scroll handling
+                  const currentPage = Math.ceil(progress / 10)
+                  completionCriteria.pdfProgress.setCurrentPageFromScroll(currentPage)
                 }}
               />
             </div>
-          )
-        }}
-      </CentralizedLessonLayout>
-      </div>
 
-      {/* Mobile Progress Menu - Shows on smaller screens */}
-      <div className="xl:hidden fixed bottom-6 right-6 z-50 space-y-4">
-        {/* Mobile Time Tracker */}
-        <TimeTracker 
-          onMinimumReached={handleMinimumTimeReached}
-          size="sm"
-          showLabel={false}
-        />
-        
-        {/* Mobile Completion Button */}
-        <LessonCompletionButton 
-          lessonId="test-lesson-123"
-          courseSlug="desenvolvimento-web"
-          canComplete={canCompleteLesson}
-          className="scale-90"
-        />
-      </div>
-
-      {/* Debug Information */}
-      <div className="lesson-background py-8">
-        <div className="lesson-centralized-container">
-          <details className="lesson-card-base lesson-card-padding">
-            <summary className="text-white font-semibold cursor-pointer mb-4 lesson-focusable">
-              🔍 Informações da Aula - Capítulo 2 Completo
-            </summary>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
-              <div>
-                <h4 className="text-green-400 font-semibold mb-3">📚 Conteúdo Implementado:</h4>
-                <ul className="text-gray-300 space-y-2">
-                  <li>• <strong>Vídeo Real:</strong> YouTube integrado ({testLessonContent.video?.url?.includes('Xq0xJl-2D_s') ? 'Ativo' : 'Demo'})</li>
-                  <li>• <strong>PDF do Capítulo 2:</strong> Material autêntico</li>
-                  <li>• <strong>Quiz Avançado:</strong> 8 questões categorizadas</li>
-                  <li>• <strong>4 Exercícios Práticos:</strong> HTML5, CSS, JS, Otimização</li>
-                  <li>• <strong>8 Materiais de Apoio:</strong> PDFs e links educativos</li>
-                  <li>• <strong>Conteúdo Detalhado:</strong> Objetivos e metodologia</li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="text-blue-400 font-semibold mb-3">🎯 Funcionalidades:</h4>
-                <ul className="text-gray-300 space-y-2">
-                  <li>• <strong>Quiz por Categorias:</strong> HTML, CSS, JS, Geral</li>
-                  <li>• <strong>Explicações Detalhadas:</strong> Para cada questão</li>
-                  <li>• <strong>Sistema de Pontuação:</strong> 200 pontos totais</li>
-                  <li>• <strong>Timer Configurável:</strong> 15 minutos padrão</li>
-                  <li>• <strong>Revisão Completa:</strong> Com feedback visual</li>
-                  <li>• <strong>Layout Responsivo:</strong> Mobile e desktop</li>
-                </ul>
-              </div>
-            </div>
-            
-            <div className="mt-6 space-y-4">
-              <div className="p-4 lesson-card-base rounded-lg">
-                <h5 className="text-yellow-400 font-semibold mb-2">📊 Estatísticas da Aula:</h5>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs">
-                  <div className="text-center">
-                    <div className="text-lg font-mono text-white">{progress.overallProgress.percentageComplete}%</div>
-                    <div className="text-gray-400">Progresso</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-lg font-mono text-white">8</div>
-                    <div className="text-gray-400">Questões</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-lg font-mono text-white">4</div>
-                    <div className="text-gray-400">Exercícios</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-lg font-mono text-white">15</div>
-                    <div className="text-gray-400">Min. Quiz</div>
-                  </div>
+            {/* Materials */}
+            {lesson.materials && lesson.materials.length > 0 && (
+              <div className="glass-effect bg-zinc-900/70 backdrop-blur-md rounded-lg border border-gray-800/50 p-6">
+                <h3 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
+                  <FileText className="w-5 h-5 text-primary" />
+                  Materiais da Aula
+                </h3>
+                
+                <div className="space-y-3">
+                  {lesson.materials.map((material: any, index: number) => (
+                    <div key={index} className="flex items-center justify-between p-3 bg-zinc-800/50 rounded-lg border border-gray-700">
+                      <div className="flex items-center gap-3">
+                        <Download className="w-4 h-4 text-primary" />
+                        <div>
+                          <p className="font-medium text-white">{material.title}</p>
+                          <p className="text-sm text-gray-400">{material.description}</p>
+                        </div>
+                      </div>
+                      {material.url && (
+                        <a
+                          href={material.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-3 py-1 bg-primary/20 text-primary rounded hover:bg-primary/30 transition-colors"
+                        >
+                          {material.type === 'link' ? 'Acessar' : 'Download'}
+                        </a>
+                      )}
+                    </div>
+                  ))}
                 </div>
               </div>
+            )}
+
+            {/* Exercises */}
+            {exercises.length > 0 && (
+              <div id="section-exercises" className="glass-effect bg-zinc-900/70 backdrop-blur-md rounded-lg border border-gray-800/50 p-6">
+                <h3 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
+                  <BookOpen className="w-5 h-5 text-primary" />
+                  Exercícios
+                </h3>
+                
+                <div className="space-y-3">
+                  {exercises.map((exercise: any, index: number) => (
+                    <div key={exercise.id} className="flex items-center justify-between p-3 bg-zinc-800/50 rounded-lg border border-gray-700">
+                      <div className="flex items-center gap-3">
+                        <div className="flex items-center justify-center w-8 h-8 bg-primary/20 rounded-full text-primary font-semibold">
+                          {exercise.order_index}
+                        </div>
+                        <div>
+                          <p className="font-medium text-white">{exercise.title}</p>
+                          {exercise.description && (
+                            <p className="text-sm text-gray-400">{exercise.description}</p>
+                          )}
+                        </div>
+                      </div>
+                      {exercise.download_url && (
+                        <a
+                          href={exercise.download_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-3 py-1 bg-primary/20 text-primary rounded hover:bg-primary/30 transition-colors"
+                        >
+                          Download
+                        </a>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Quizzes */}
+            {quizzes.length > 0 && (
+              <div id="section-quiz" className="glass-effect bg-zinc-900/70 backdrop-blur-md rounded-lg border border-gray-800/50 p-6">
+                <h3 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
+                  <Question className="w-5 h-5 text-primary" />
+                  Questionários
+                </h3>
+                
+                <div className="space-y-3">
+                  {quizzes.map((quiz: any) => (
+                    <div key={quiz.id} className="p-4 bg-zinc-800/50 rounded-lg border border-gray-700">
+                      <div className="flex items-center justify-between mb-3">
+                        <h4 className="font-medium text-white">{quiz.title}</h4>
+                        <Trophy className="w-5 h-5 text-yellow-400" />
+                      </div>
+                      
+                      {quiz.description && (
+                        <p className="text-sm text-gray-400 mb-3">{quiz.description}</p>
+                      )}
+                      
+                      <div className="flex items-center justify-between text-sm text-gray-400">
+                        <span>Nota mínima: {quiz.passing_score}%</span>
+                        <span>Tentativas: {quiz.attempts_allowed}</span>
+                      </div>
+                      
+                      <GradientButton className="w-full mt-3">
+                        Iniciar Questionário
+                      </GradientButton>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* File Submission */}
+            {lesson.allows_file_upload && enrollmentId && (
+              <div className="glass-effect bg-zinc-900/70 backdrop-blur-md rounded-lg border border-gray-800/50 p-6">
+                <h3 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
+                  <PaperPlaneRight className="w-5 h-5 text-primary" />
+                  Envio de Arquivos
+                </h3>
+                
+                <div className="space-y-4">
+                  <div className="border-2 border-dashed border-gray-600 rounded-lg p-6 text-center">
+                    <input
+                      type="file"
+                      onChange={handleFileUpload}
+                      disabled={uploading}
+                      className="hidden"
+                      id="file-upload"
+                    />
+                    <label
+                      htmlFor="file-upload"
+                      className={`cursor-pointer flex flex-col items-center gap-2 ${
+                        uploading ? 'opacity-50 cursor-not-allowed' : ''
+                      }`}
+                    >
+                      <Plus className="w-8 h-8 text-gray-400" />
+                      <span className="text-gray-400">
+                        {uploading ? 'Enviando...' : 'Clique para enviar arquivo'}
+                      </span>
+                    </label>
+                  </div>
+                  
+                  {/* Previous Submissions */}
+                  {submissions.length > 0 && (
+                    <div className="space-y-2">
+                      <h4 className="font-medium text-white">Arquivos Enviados</h4>
+                      {submissions.map((submission: any) => (
+                        <div key={submission.id} className="flex items-center justify-between p-3 bg-zinc-800/50 rounded-lg border border-gray-700">
+                          <div>
+                            <p className="font-medium text-white">{submission.file_name}</p>
+                            <p className="text-sm text-gray-400">
+                              Enviado em {new Date(submission.created_at).toLocaleDateString('pt-BR')}
+                            </p>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className={`px-2 py-1 rounded text-xs ${
+                              submission.status === 'approved' ? 'bg-green-500/20 text-green-400' :
+                              submission.status === 'rejected' ? 'bg-red-500/20 text-red-400' :
+                              'bg-yellow-500/20 text-yellow-400'
+                            }`}>
+                              {submission.status === 'approved' ? 'Aprovado' :
+                               submission.status === 'rejected' ? 'Rejeitado' : 'Pendente'}
+                            </span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Sidebar */}
+          <div className="space-y-6">
+            {/* Completion Progress */}
+            <CompletionProgress
+              criteria={completionCriteria.criteria}
+              overallProgress={completionCriteria.overallProgress}
+              canComplete={completionCriteria.canComplete}
+              completedCount={completionCriteria.completedCount}
+              totalCount={completionCriteria.totalCount}
+              timeRemaining={completionCriteria.pageTimer.formattedRemainingTime}
+            />
+
+            {/* Completion Button */}
+            <LessonCompletionButton
+              lessonId={lesson.id}
+              courseSlug={course.slug}
+              canComplete={completionCriteria.canComplete}
+              completedCount={completionCriteria.completedCount}
+              totalCount={completionCriteria.totalCount}
+              onComplete={handleLessonComplete}
+              completionData={{
+                timeSpent: completionCriteria.pageTimer.timeSpent,
+                pdfProgress: completionCriteria.pdfProgress.percentageRead,
+                quizScore: 0, // Would come from quiz component
+                exercisesCompleted: 0, // Would come from exercise component
+                completionCriteria: completionCriteria.criteria
+              }}
+            />
+
+            {/* Lesson Info */}
+            <div className="glass-effect bg-zinc-900/70 backdrop-blur-md rounded-lg border border-gray-800/50 p-6">
+              <h3 className="text-lg font-semibold text-white mb-4">Informações da Aula</h3>
               
-              <div className="p-4 lesson-card-base rounded-lg">
-                <h5 className="text-purple-400 font-semibold mb-2">🎥 Recursos Multimídia:</h5>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-                  <div>
-                    <strong className="text-white">Vídeo:</strong>
-                    <div className="text-gray-300">YouTube: Xq0xJl-2D_s</div>
-                    <div className="text-gray-300">Duração: ~20 minutos</div>
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-400">Ordem</span>
+                  <span className="text-white font-semibold">#{lesson.order_index}</span>
+                </div>
+                
+                {lesson.video_duration && (
+                  <div className="flex items-center justify-between">
+                    <span className="text-gray-400">Duração</span>
+                    <span className="text-white font-semibold">{formatDuration(lesson.video_duration)}</span>
                   </div>
-                  <div>
-                    <strong className="text-white">PDF:</strong>
-                    <div className="text-gray-300">Capítulo 2.pdf</div>
-                    <div className="text-gray-300">Leitura in-page ativa</div>
-                  </div>
+                )}
+                
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-400">Tempo na página</span>
+                  <span className="text-white font-semibold">{completionCriteria.pageTimer.formattedTime}</span>
+                </div>
+                
+                <div className="bg-blue-500/20 border border-blue-500/30 rounded-lg p-2 text-center">
+                  <span className="text-blue-400 text-sm font-semibold">📚 Página de Teste - Layout Espelho</span>
                 </div>
               </div>
             </div>
-          </details>
+          </div>
         </div>
       </div>
-    </LessonProvider>
+    </div>
   )
-}
-
-// Real lesson content data based on provided resources
-const testLessonContent: LessonContent = {
-  id: "lesson-cap2-real",
-  title: "Capítulo 2: Fundamentos do Desenvolvimento Web",
-  description: "Aprenda os conceitos fundamentais de HTML, CSS e JavaScript através de exemplos práticos e exercícios interativos.",
-  
-  // Real YouTube video from provided URL
-  video: {
-    url: "https://www.youtube.com/embed/Xq0xJl-2D_s", // Converted to embed format
-    duration: 1200, // Estimated 20 minutes (will be detected by player)
-    thumbnail: "https://img.youtube.com/vi/Xq0xJl-2D_s/hqdefault.jpg",
-    aspectRatio: 16/9
-  },
-
-  // PDF from the actual file path provided
-  pdf: {
-    url: "/pdf/capitulo2.pdf", // Simplified path in public directory
-    title: "Capítulo 2: Fundamentos do Desenvolvimento Web",
-    filename: "capitulo2.pdf",
-    size: 2048000, // Will be detected from actual file
-    pageCount: 20, // Estimated, will be detected from actual file
-    downloadable: true
-  },
-
-  // Comprehensive quiz based on Chapter 2 content
-  quiz: {
-    id: "quiz-cap2-comprehensive",
-    title: "Avaliação: Fundamentos do Desenvolvimento Web",
-    description: "Teste completo sobre HTML, CSS, JavaScript e conceitos de desenvolvimento web responsivo. Baseado no conteúdo do Capítulo 2.",
-    timeLimit: 15, // 15 minutes for comprehensive quiz
-    attemptsAllowed: 3,
-    passingScore: 75, // Higher passing score for comprehensive content
-    totalQuestions: 8, // Updated to match actual number of questions
-    status: 'not_started',
-    remainingAttempts: 3
-  },
-
-  // Practical exercises based on Chapter 2 content
-  exercises: [
-    {
-      id: "ex1",
-      title: "Estrutura HTML5 Semântica",
-      description: "Crie uma página HTML5 utilizando elementos semânticos (header, nav, main, section, aside, footer) com conteúdo sobre desenvolvimento web. Inclua pelo menos 3 seções diferentes com títulos hierárquicos adequados.",
-      orderIndex: 1,
-      status: 'not_started',
-      allowsUpload: true,
-      uploadInstructions: "Faça upload do arquivo HTML (.html) seguindo as práticas de HTML5 semântico apresentadas no capítulo."
-    },
-    {
-      id: "ex2", 
-      title: "CSS Layout Responsivo",
-      description: "Aplicar estilos CSS à página criada no exercício anterior, implementando um layout responsivo com CSS Grid ou Flexbox. Inclua media queries para pelo menos 2 breakpoints (mobile e desktop).",
-      orderIndex: 2,
-      status: 'not_started',
-      allowsUpload: true,
-      uploadInstructions: "Faça upload dos arquivos HTML e CSS (.html, .css) demonstrando o layout responsivo funcionando."
-    },
-    {
-      id: "ex3",
-      title: "Interatividade com JavaScript",
-      description: "Adicione funcionalidades JavaScript à sua página: menu hambúrguer para mobile, formulário de contato com validação básica, e um botão que alterna entre tema claro/escuro.",
-      orderIndex: 3,
-      status: 'not_started',
-      allowsUpload: true,
-      uploadInstructions: "Faça upload de todos os arquivos (.html, .css, .js) com as funcionalidades JavaScript implementadas."
-    },
-    {
-      id: "ex4",
-      title: "Otimização e Boas Práticas",
-      description: "Otimize sua página seguindo as boas práticas: otimizar imagens, minificar CSS/JS, implementar meta tags adequadas, e validar o código HTML/CSS.",
-      orderIndex: 4,
-      status: 'not_started',
-      allowsUpload: true,
-      uploadInstructions: "Faça upload da versão final otimizada com relatório de validação (.html, .css, .js, .txt com relatório)."
-    }
-  ],
-
-  // Additional learning materials for Chapter 2
-  materials: [
-    {
-      type: 'pdf',
-      title: 'HTML5 - Guia Completo de Elementos Semânticos',
-      description: 'Referência detalhada de todos os elementos HTML5 com exemplos práticos',
-      url: '/materials/html5-semantic-guide.pdf',
-      downloadable: true
-    },
-    {
-      type: 'pdf',
-      title: 'CSS Grid e Flexbox - Manual Prático',
-      description: 'Guia visual para layouts modernos com CSS Grid e Flexbox',
-      url: '/materials/css-layout-guide.pdf',
-      downloadable: true
-    },
-    {
-      type: 'link',
-      title: 'MDN Web Docs - HTML5',
-      description: 'Documentação oficial do HTML5 com exemplos interativos',
-      url: 'https://developer.mozilla.org/pt-BR/docs/Web/HTML'
-    },
-    {
-      type: 'link',
-      title: 'CSS Grid Garden - Jogo Interativo',
-      description: 'Aprenda CSS Grid de forma divertida com este jogo interativo',
-      url: 'https://cssgridgarden.com'
-    },
-    {
-      type: 'link',
-      title: 'Flexbox Froggy - Jogo de CSS Flexbox',
-      description: 'Pratique CSS Flexbox ajudando o sapo a chegar ao seu objetivo',
-      url: 'https://flexboxfroggy.com'
-    },
-    {
-      type: 'link',
-      title: 'Can I Use - Compatibilidade de Recursos',
-      description: 'Verifique a compatibilidade de recursos HTML, CSS e JavaScript',
-      url: 'https://caniuse.com'
-    },
-    {
-      type: 'document',
-      title: 'Starter Template - HTML5 + CSS3 + JS',
-      description: 'Template inicial com estrutura HTML5, CSS moderno e JavaScript básico',
-      url: '/templates/chapter2-starter.zip',
-      downloadable: true
-    },
-    {
-      type: 'document',
-      title: 'Checklists de Boas Práticas',
-      description: 'Listas de verificação para HTML, CSS e JavaScript',
-      url: '/materials/best-practices-checklist.pdf',
-      downloadable: true
-    }
-  ],
-
-  // Enhanced content text for Chapter 2
-  content: `
-    <h2>Capítulo 2: Fundamentos do Desenvolvimento Web</h2>
-    
-    <h3>📚 Objetivos de Aprendizagem</h3>
-    <p>Ao completar este capítulo, você será capaz de:</p>
-    <ul>
-      <li>Compreender a estrutura básica de documentos HTML5 e sua semântica</li>
-      <li>Aplicar estilos CSS para criar layouts responsivos e atraentes</li>
-      <li>Implementar interatividade básica com JavaScript</li>
-      <li>Seguir as melhores práticas de desenvolvimento web moderno</li>
-      <li>Otimizar páginas web para performance e acessibilidade</li>
-    </ul>
-
-    <h3>🌐 Conteúdo Programático</h3>
-    
-    <h4>1. HTML5 - Estrutura e Semântica</h4>
-    <ul>
-      <li><strong>Elementos semânticos:</strong> header, nav, main, section, article, aside, footer</li>
-      <li><strong>Hierarquia de títulos:</strong> h1-h6 e sua importância para SEO</li>
-      <li><strong>Formulários avançados:</strong> novos tipos de input e validação</li>
-      <li><strong>Multimedia:</strong> video, audio e suas configurações</li>
-      <li><strong>Meta tags:</strong> viewport, description, keywords</li>
-    </ul>
-
-    <h4>2. CSS3 - Estilização e Layout</h4>
-    <ul>
-      <li><strong>Flexbox:</strong> alinhamento e distribuição de elementos</li>
-      <li><strong>CSS Grid:</strong> layouts bidimensionais complexos</li>
-      <li><strong>Media Queries:</strong> design responsivo para diferentes dispositivos</li>
-      <li><strong>Animações e transições:</strong> melhorando a experiência do usuário</li>
-      <li><strong>Custom Properties:</strong> variáveis CSS para manutenibilidade</li>
-    </ul>
-
-    <h4>3. JavaScript Essencial</h4>
-    <ul>
-      <li><strong>DOM Manipulation:</strong> seleção e modificação de elementos</li>
-      <li><strong>Event Listeners:</strong> interatividade com o usuário</li>
-      <li><strong>ES6+ Features:</strong> let/const, arrow functions, template literals</li>
-      <li><strong>APIs do Browser:</strong> localStorage, geolocation, fetch</li>
-      <li><strong>Debugging:</strong> console, breakpoints e DevTools</li>
-    </ul>
-
-    <h3>🎯 Metodologia</h3>
-    <p>Este capítulo combina teoria e prática através de:</p>
-    <ul>
-      <li><strong>Vídeo-aula:</strong> Explicação detalhada dos conceitos com exemplos práticos</li>
-      <li><strong>Material de apoio:</strong> PDF com referências e exercícios complementares</li>
-      <li><strong>Exercícios práticos:</strong> 4 projetos incrementais para aplicar o conhecimento</li>
-      <li><strong>Quiz interativo:</strong> 8 questões para avaliar o aprendizado</li>
-      <li><strong>Recursos externos:</strong> Links para ferramentas e jogos educativos</li>
-    </ul>
-
-    <h3>⏱️ Tempo Estimado</h3>
-    <p><strong>Total:</strong> 3-4 horas</p>
-    <ul>
-      <li>Vídeo-aula: 20 minutos</li>
-      <li>Leitura do material: 30 minutos</li>
-      <li>Exercícios práticos: 2-2.5 horas</li>
-      <li>Quiz e revisão: 15-30 minutos</li>
-    </ul>
-
-    <h3>✅ Pré-requisitos</h3>
-    <ul>
-      <li>Conhecimentos básicos de informática</li>
-      <li>Editor de código instalado (VS Code recomendado)</li>
-      <li>Navegador web moderno (Chrome, Firefox, Safari ou Edge)</li>
-      <li>Conclusão do Capítulo 1: Introdução ao Desenvolvimento Web</li>
-    </ul>
-
-    <p><strong>Dica:</strong> Assista ao vídeo primeiro, depois leia o material PDF e pratique com os exercícios. O quiz ao final ajudará a consolidar seu aprendizado!</p>
-  `
-}
-
-// Initial progress data
-const initialProgressData: LessonProgressData = {
-  videoProgress: {
-    currentTime: 0,
-    duration: 30,
-    percentageWatched: 0,
-    watchTime: 0,
-    lastPosition: 0,
-    playbackRate: 1,
-    completedSegments: []
-  },
-  pdfProgress: {
-    currentPage: 1,
-    totalPages: 15,
-    percentageRead: 0,
-    bookmarks: [],
-    readingTime: 0,
-    lastPageViewed: 1
-  },
-  quizProgress: {
-    currentQuestion: 0,
-    totalQuestions: 8, // Updated to match real quiz
-    answeredQuestions: [],
-    score: 0,
-    attempts: 0,
-    timeSpent: 0,
-    isCompleted: false,
-    isPassed: false
-  },
-  exerciseProgress: {
-    completedExercises: [],
-    submittedFiles: [],
-    pendingReviews: [],
-    totalExercises: 4, // Updated to match new exercises
-    completionPercentage: 0
-  },
-  contentProgress: {
-    scrollPercentage: 0,
-    readingTime: 0,
-    sectionsRead: [],
-    estimatedCompletionTime: 25
-  },
-  overallProgress: {
-    percentageComplete: 0,
-    estimatedTimeRemaining: 25,
-    lastActivity: new Date().toISOString(),
-    isCompleted: false,
-    componentProgress: [
-      { component: 'video', percentage: 0, timeSpent: 0, isCompleted: false, weight: 0, includeInOverall: false }, // Video excluded from overall progress
-      { component: 'pdf', percentage: 0, timeSpent: 0, isCompleted: false, weight: 40 }, // Increased weight
-      { component: 'quiz', percentage: 0, timeSpent: 0, isCompleted: false, weight: 35 }, // Increased weight  
-      { component: 'exercises', percentage: 0, timeSpent: 0, isCompleted: false, weight: 25 }, // Increased weight
-      { component: 'content', percentage: 0, timeSpent: 0, isCompleted: false, weight: 0 } // Removed from calculation
-    ]
-  }
 }
