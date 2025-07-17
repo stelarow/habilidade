@@ -463,12 +463,17 @@ export default function VideoPlayer({
         {...props}
       />
 
+      {/* Always visible time counter */}
+      <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-sm text-white px-3 py-1 rounded-lg text-sm font-mono shadow-lg">
+        {formatTime(playedSeconds)} / {formatTime(duration)}
+      </div>
+
       {/* Custom Controls Overlay */}
       {controls && (
         <div 
           className={cn(
             "absolute inset-0 flex flex-col justify-end transition-opacity duration-300",
-            playing ? (showControls ? "opacity-100" : "opacity-0 pointer-events-none") : "opacity-0 pointer-events-none"
+            showControls ? "opacity-100" : "opacity-0 pointer-events-none"
           )}
         >
           {/* Progress Bar */}
@@ -551,11 +556,6 @@ export default function VideoPlayer({
                            [&::-webkit-slider-thumb]:cursor-pointer"
                 />
               </div>
-
-              {/* Time */}
-              <span className="text-sm text-white font-mono">
-                {formatTime(playedSeconds)} / {formatTime(duration)}
-              </span>
 
               {/* Spacer */}
               <div className="flex-1" />

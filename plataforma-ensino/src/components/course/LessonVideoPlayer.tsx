@@ -241,10 +241,10 @@ export const LessonVideoPlayer: React.FC<LessonVideoPlayerProps> = ({
             </span>
           </div>
           
-          {/* Progress bar */}
+          {/* Progress bar - last position indicator hidden */}
           <div className="mt-2 w-full bg-gray-700 rounded-full h-2">
             <div 
-              className="bg-purple-600 h-2 rounded-full transition-all duration-300"
+              className="bg-purple-600 h-2 rounded-full transition-all duration-300 opacity-0"
               style={{ 
                 width: `${(currentProgress.last_position / (lesson.video_duration || 1)) * 100}%` 
               }}
