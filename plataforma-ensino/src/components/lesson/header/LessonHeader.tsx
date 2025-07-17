@@ -39,7 +39,7 @@ interface LessonHeaderProps {
  */
 const LessonHeaderComponent = ({
   course,
-  lesson,
+  lesson: _lesson,
   progressData,
   onExit,
   onComplete,
@@ -50,8 +50,8 @@ const LessonHeaderComponent = ({
   // Use enhanced progress calculation
   const progress = useEnhancedProgressCalculation(progressData)
   
-  // Use scroll behavior hook for scroll-following behavior
-  const { isScrolled } = useScrollBehavior(10)
+  // Use enhanced scroll behavior hook for smooth scroll-following behavior
+  const { isScrolled, scrollDirection, isScrollingFast } = useScrollBehavior(10)
   
   const handleExit = () => {
     onExit()
@@ -65,14 +65,10 @@ const LessonHeaderComponent = ({
   }
 
   return (
-    <header 
+    <motion.header 
       className={cn(
-        "w-full transition-all duration-300 relative z-10",
+        "w-full relative z-10",
         styles.lessonHeader,
-        // Dynamic background opacity based on scroll state
-        isScrolled 
-          ? "bg-zinc-900/95 backdrop-blur-md border-b border-gray-800/70 shadow-lg" 
-          : "bg-zinc-900/80 backdrop-blur-md border-b border-gray-800/50",
         className
       )}
       style={{ 
@@ -82,6 +78,28 @@ const LessonHeaderComponent = ({
       }}
       role="banner"
       data-lesson-header="true"
+      // Smooth scroll-following animations based on scroll state
+      animate={{
+        backgroundColor: isScrolled 
+          ? 'rgba(24, 24, 27, 0.95)' // zinc-900/95
+          : 'rgba(24, 24, 27, 0.80)', // zinc-900/80
+        backdropFilter: 'blur(12px)',
+        borderBottomColor: isScrolled 
+          ? 'rgba(31, 41, 55, 0.7)' // gray-800/70
+          : 'rgba(31, 41, 55, 0.5)', // gray-800/50
+        boxShadow: isScrolled 
+          ? '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+          : '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
+        // Subtle transform based on scroll direction for enhanced feel
+        y: isScrollingFast && scrollDirection === 'down' ? -2 : 0,
+      }}
+      transition={{
+        backgroundColor: { duration: 0.3, ease: "easeOut" },
+        borderBottomColor: { duration: 0.3, ease: "easeOut" },
+        boxShadow: { duration: 0.3, ease: "easeOut" },
+        y: { duration: 0.2, ease: "easeOut" }
+      }}
+      initial={false}
     >
       <div className="mx-auto max-w-7xl px-4">
         <div className="flex items-center justify-between h-14">
@@ -251,7 +269,7 @@ const LessonHeaderComponent = ({
           </div>
         </div>
       </div>
-    </header>
+    </motion.header>
   )
 }
 

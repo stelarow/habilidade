@@ -1,9 +1,12 @@
-/* LessonHeader Module CSS */
+/* LessonHeader Module CSS - Enhanced for smooth scroll behavior */
 .lessonHeader {
   /* Ensure header follows scroll behavior and is not fixed */
   position: relative !important;
   transform: translateZ(0);
-  will-change: transform;
+  will-change: transform, background-color, border-color, box-shadow;
+  /* Enable hardware acceleration for smooth animations */
+  backface-visibility: hidden;
+  perspective: 1000px;
 }
 
 /* Ensure progress indicators are properly contained */
@@ -26,9 +29,10 @@
   z-index: 10;
 }
 
-/* Smooth transitions for scroll-based changes */
+/* Enhanced smooth transitions for scroll-based changes */
 .lessonHeader {
-  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  /* Remove CSS transitions since we're using Framer Motion for better performance */
+  border-bottom: 1px solid transparent;
 }
 
 /* Ensure icons are properly sized and aligned */
@@ -36,10 +40,51 @@
   flex-shrink: 0;
 }
 
+/* Performance optimizations for scroll animations */
+.lessonHeader * {
+  /* Optimize rendering performance */
+  transform: translateZ(0);
+}
+
 /* Responsive adjustments */
 @media (max-width: 640px) {
   .lessonHeader .progress-indicator {
     max-height: 28px;
     max-width: 28px;
+  }
+}
+
+/* Tablet adjustments */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .lessonHeader {
+    /* Ensure proper spacing on tablets */
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Desktop optimizations */
+@media (min-width: 1025px) {
+  .lessonHeader {
+    /* Enhanced backdrop blur for desktop */
+    backdrop-filter: blur(16px);
+  }
+}
+
+/* High DPI display optimizations */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .lessonHeader {
+    /* Ensure crisp rendering on high DPI displays */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .lessonHeader {
+    /* Disable animations for users who prefer reduced motion */
+    will-change: auto;
+    transform: none;
   }
 }

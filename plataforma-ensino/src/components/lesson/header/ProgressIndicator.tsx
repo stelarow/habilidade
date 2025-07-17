@@ -4,13 +4,13 @@ import React, { memo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
 import { 
-  Clock, 
-  FileText, 
-  ClipboardText, 
+  Timer, 
+  File, 
+  Clipboard, 
   Target, 
   CheckCircle,
   X
-} from '@phosphor-icons/react/dist/ssr'
+} from '@phosphor-icons/react'
 import { ProgressState } from '@/hooks/useEnhancedProgressCalculation'
 
 interface ProgressIndicatorProps {
@@ -28,9 +28,9 @@ interface ProgressIndicatorProps {
 }
 
 const ICON_MAP = {
-  time: Clock,
-  pdf: FileText,
-  exercises: ClipboardText,
+  time: Timer,
+  pdf: File,
+  exercises: Clipboard,
   quiz: Target
 }
 

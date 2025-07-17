@@ -1,7 +1,7 @@
 'use client'
 
 import { useMemo, useCallback } from 'react'
-import { LessonProgressData, ComponentProgress, CompletionCriterion } from '@/types/lesson'
+import { LessonProgressData, ComponentProgress, CompletionCriterion } from '@/types/lesson/progress'
 
 // Enhanced progress calculation configuration
 interface ProgressCalculationConfig {
