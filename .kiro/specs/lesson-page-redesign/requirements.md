@@ -43,6 +43,9 @@ Esta especificação define a refatoração completa da página de aulas da plat
 2. WHEN ícones forem exibidos THEN o sistema SHALL aplicar cores consistentes com a paleta da marca (#d400ff, #00c4ff, #a000ff)
 3. WHEN ícones forem exibidos THEN o sistema SHALL usar tamanhos apropriados (16px, 20px, 24px, 32px) conforme o contexto
 4. WHEN ícones forem usados THEN o sistema SHALL manter consistência visual com os ícones dos cards de cursos da página inicial
+5. WHEN indicadores de progresso forem exibidos THEN as bordas ao redor dos ícones e porcentagens SHALL caber completamente dentro do header
+6. WHEN indicadores de progresso forem exibidos THEN o sistema SHALL usar o mesmo tamanho e qualidade dos ícones dos cards de cursos da página inicial
+7. WHEN bordas dos indicadores forem renderizadas THEN elas SHALL ter proporções adequadas e não sair para fora do header
 
 ### Requirement 4
 
@@ -78,3 +81,15 @@ Esta especificação define a refatoração completa da página de aulas da plat
 3. WHEN critérios estiverem pendentes THEN o sistema SHALL exibir o progresso parcial com cores apropriadas
 4. WHEN todos os critérios forem atendidos THEN o sistema SHALL habilitar o botão de conclusão da aula
 5. WHEN o progresso for atualizado THEN o sistema SHALL usar animações suaves para transições visuais
+
+### Requirement 7
+
+**User Story:** Como um desenvolvedor, eu quero utilizar MCPs (Model Context Protocol) para acessar documentação e componentes de UI durante o desenvolvimento, para que eu possa implementar soluções mais eficientes e consistentes.
+
+#### Acceptance Criteria
+
+1. WHEN implementando componentes de UI THEN o sistema SHALL usar Context7 MCP para acessar documentação do Next.js, React e Tailwind CSS
+2. WHEN criando elementos visuais THEN o sistema SHALL usar MagicUI MCP para acessar componentes de animação e efeitos especiais
+3. WHEN implementando indicadores de progresso THEN o sistema SHALL consultar MagicUI para componentes de progress bars e circular progress
+4. WHEN implementando animações de transição THEN o sistema SHALL usar MagicUI para efeitos de fade, slide e scale
+5. WHEN resolvendo problemas técnicos THEN o sistema SHALL consultar Context7 para documentação oficial das tecnologias utilizadas

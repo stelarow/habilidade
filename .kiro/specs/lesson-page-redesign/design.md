@@ -6,6 +6,13 @@ Esta especificação de design define a refatoração completa da página de aul
 
 ## Architecture
 
+### MCP Integration Strategy
+
+This design incorporates Model Context Protocol (MCP) tools to enhance development efficiency:
+
+- **Context7 MCP**: Used for accessing up-to-date documentation for Next.js, React, TypeScript, and Tailwind CSS
+- **MagicUI MCP**: Used for accessing modern UI components, animations, and visual effects
+
 ### Layout Structure
 
 ```
@@ -42,8 +49,30 @@ O header será baseado no design da página inicial, mas adaptado para o context
 
 - **Posicionamento**: Não fixo, acompanha o scroll da página
 - **Background**: `bg-zinc-900/70 backdrop-blur-md` com `border-b border-gray-800/50`
-- **Height**: `h-16` (64px) para consistência com o header principal
+- **Height**: `h-14` (56px) para manter compacto e proporcional
 - **Layout**: Flexbox com `justify-between` para distribuir elementos
+
+### Progress Indicators Design
+
+Os indicadores de progresso devem seguir o mesmo padrão visual dos cards de cursos da página inicial:
+
+- **Tamanho dos ícones**: 20px (consistente com course cards)
+- **Bordas**: Devem caber completamente dentro do header (altura máxima de 32px)
+- **Formato**: Circular com borda de 2px
+- **Espaçamento**: gap-1 (4px) entre indicadores para layout compacto
+- **Estados visuais**:
+  - **Não iniciado**: Borda cinza, ícone cinza
+  - **Em progresso**: Borda colorida, ícone colorido, possível pulse animation
+  - **Concluído**: Borda verde, ícone verde, checkmark overlay
+
+### MCP Usage Guidelines
+
+Durante o desenvolvimento, os MCPs devem ser utilizados nos seguintes momentos:
+
+- **Context7**: Para consultar documentação do Next.js sobre otimização de componentes
+- **MagicUI**: Para implementar animações de progresso e transições suaves
+- **Context7**: Para verificar melhores práticas de TypeScript em interfaces
+- **MagicUI**: Para componentes de circular progress e animated indicators
 
 ## Components and Interfaces
 

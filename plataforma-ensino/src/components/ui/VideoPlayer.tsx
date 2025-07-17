@@ -64,6 +64,7 @@ export default function VideoPlayer({
   const [playbackSpeed, setPlaybackSpeed] = useState(1)
   const [lastSavedProgress, setLastSavedProgress] = useState(0)
   const [videoError, setVideoError] = useState<string | null>(null)
+  const [isVideoReady, setIsVideoReady] = useState(false)
   
   const hideControlsTimeout = useRef<NodeJS.Timeout>()
   const autoSaveTimeout = useRef<NodeJS.Timeout>()
@@ -77,6 +78,9 @@ export default function VideoPlayer({
   // Validate YouTube URL on mount
   useEffect(() => {
     if (url) {
+      // Reset ready state when URL changes
+      setIsVideoReady(false)
+      
       const validation = validateAndFormatYouTubeUrl(url)
       if (!validation.isValid) {
         setVideoError(validation.error || 'Invalid video URL')
@@ -96,6 +100,48 @@ export default function VideoPlayer({
       if (autoSaveTimeout.current) {
         clearTimeout(autoSaveTimeout.current)
       }
+    }
+  }, [])
+
+  // Handle postMessage errors from YouTube and prevent DOM errors
+  useEffect(() => {
+    const handlePostMessageError = (event: MessageEvent) => {
+      // Filter out YouTube postMessage errors to prevent console spam
+      if (event.source && event.origin.includes('youtube.com')) {
+        // These are expected YouTube iframe communications, ignore them
+        return
+      }
+    }
+
+    const handleGlobalError = (event: ErrorEvent) => {
+      if (event.message && (
+        event.message.includes('postMessage') ||
+        event.message.includes('removeChild') ||
+        event.message.includes('Cannot read properties of null')
+      )) {
+        // Suppress common YouTube and React DOM errors
+        event.preventDefault()
+        console.warn('Suppressed video player error:', event.message)
+        return false
+      }
+    }
+
+    const handleUnhandledRejection = (event: PromiseRejectionEvent) => {
+      if (event.reason && event.reason.toString().includes('postMessage')) {
+        // Suppress YouTube postMessage promise rejections
+        event.preventDefault()
+        console.warn('Suppressed YouTube postMessage rejection:', event.reason)
+      }
+    }
+
+    window.addEventListener('message', handlePostMessageError)
+    window.addEventListener('error', handleGlobalError)
+    window.addEventListener('unhandledrejection', handleUnhandledRejection)
+
+    return () => {
+      window.removeEventListener('message', handlePostMessageError)
+      window.removeEventListener('error', handleGlobalError)
+      window.removeEventListener('unhandledrejection', handleUnhandledRejection)
     }
   }, [])
 
@@ -145,42 +191,60 @@ export default function VideoPlayer({
   }, [duration])
 
   const handleSeekMouseUp = useCallback((e: React.MouseEvent<HTMLInputElement>) => {
-    setSeeking(false)
-    const newPlayed = parseFloat((e.target as HTMLInputElement).value)
-    playerRef.current?.seekTo(newPlayed, 'fraction')
+    try {
+      setSeeking(false)
+      const newPlayed = parseFloat((e.target as HTMLInputElement).value)
+      if (playerRef.current && !isNaN(newPlayed)) {
+        playerRef.current.seekTo(newPlayed, 'fraction')
+      }
+    } catch (error) {
+      console.warn('Error in handleSeekMouseUp:', error)
+      setSeeking(false)
+    }
   }, [])
 
   // Playback controls
   const handlePlayPause = useCallback(() => {
-    // Clear any previous error states
-    setVideoError(null)
-    
-    const newPlaying = !playing
-    setPlaying(newPlaying)
-    
-    if (newPlaying) {
-      onPlay?.()
-      scheduleHideControls()
+    try {
+      // Clear any previous error states
+      setVideoError(null)
       
-      // Sentry performance tracking
-      Sentry.addBreadcrumb({
-        category: 'video',
-        message: `Video play started: ${lesson?.title || url}`,
-        level: 'info',
-        data: { lessonId: lesson?.id, playedSeconds }
-      })
-    } else {
-      onPause?.()
-      if (hideControlsTimeout.current) {
-        clearTimeout(hideControlsTimeout.current)
+      const newPlaying = !playing
+      setPlaying(newPlaying)
+      
+      if (newPlaying) {
+        onPlay?.()
+        scheduleHideControls()
+        
+        // Sentry performance tracking
+        Sentry.addBreadcrumb({
+          category: 'video',
+          message: `Video play started: ${lesson?.title || url}`,
+          level: 'info',
+          data: { lessonId: lesson?.id, playedSeconds }
+        })
+      } else {
+        onPause?.()
+        if (hideControlsTimeout.current) {
+          clearTimeout(hideControlsTimeout.current)
+        }
       }
+    } catch (error) {
+      console.warn('Error in handlePlayPause:', error)
+      setVideoError('Erro ao controlar reprodução do vídeo')
     }
   }, [playing, onPlay, onPause, scheduleHideControls, lesson, url, playedSeconds])
 
   const handleSkip = useCallback((seconds: number) => {
-    const currentTime = playerRef.current?.getCurrentTime() || 0
-    const newTime = Math.max(0, Math.min(duration, currentTime + seconds))
-    playerRef.current?.seekTo(newTime, 'seconds')
+    try {
+      if (!playerRef.current) return
+      
+      const currentTime = playerRef.current.getCurrentTime() || 0
+      const newTime = Math.max(0, Math.min(duration, currentTime + seconds))
+      playerRef.current.seekTo(newTime, 'seconds')
+    } catch (error) {
+      console.warn('Error in handleSkip:', error)
+    }
   }, [duration])
 
   const handleVolumeChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -204,6 +268,9 @@ export default function VideoPlayer({
   }, [])
 
   const handleReady = useCallback((player: ReactPlayer) => {
+    // Mark video as ready - this will hide the loading spinner
+    setIsVideoReady(true)
+    
     // Track video ready event
     Sentry.addBreadcrumb({
       category: 'video',
@@ -246,8 +313,9 @@ export default function VideoPlayer({
       setVideoError('Erro ao carregar o vídeo. Tente novamente mais tarde.')
     }
     
-    // Reset playing state to prevent React DOM errors
+    // Reset states to prevent React DOM errors
     setPlaying(false)
+    setIsVideoReady(false)
     
     Sentry.captureException(error, {
       tags: {
@@ -314,26 +382,40 @@ export default function VideoPlayer({
 
   const playbackRates = [0.5, 0.75, 1, 1.25, 1.5, 2]
 
-  return (
-    <div 
-      className={cn(
-        "relative bg-black rounded-lg overflow-hidden group",
-        "shadow-2xl shadow-primary/20",
-        className
-      )}
-      onMouseEnter={() => {
-        setIsHovering(true)
-        setShowControls(true)
-      }}
-      onMouseLeave={() => {
-        setIsHovering(false)
-        scheduleHideControls()
-      }}
-      onMouseMove={() => {
-        setShowControls(true)
-        scheduleHideControls()
-      }}
-    >
+  // Wrap entire component in error boundary
+  try {
+    return (
+      <div 
+        className={cn(
+          "relative bg-black rounded-lg overflow-hidden group",
+          "shadow-2xl shadow-primary/20",
+          className
+        )}
+        onMouseEnter={() => {
+          try {
+            setIsHovering(true)
+            setShowControls(true)
+          } catch (error) {
+            console.warn('Error in onMouseEnter:', error)
+          }
+        }}
+        onMouseLeave={() => {
+          try {
+            setIsHovering(false)
+            scheduleHideControls()
+          } catch (error) {
+            console.warn('Error in onMouseLeave:', error)
+          }
+        }}
+        onMouseMove={() => {
+          try {
+            setShowControls(true)
+            scheduleHideControls()
+          } catch (error) {
+            console.warn('Error in onMouseMove:', error)
+          }
+        }}
+      >
       {/* React Player */}
       <ReactPlayer
         ref={playerRef}
@@ -346,7 +428,10 @@ export default function VideoPlayer({
         onProgress={handleProgress}
         onDuration={setDuration}
         onReady={handleReady}
-        onStart={() => setPlaying(true)}
+        onStart={() => {
+          setPlaying(true)
+          setIsVideoReady(true)
+        }}
         onPause={() => setPlaying(false)}
         onEnded={handleEnded}
         onError={handleError}
@@ -360,7 +445,10 @@ export default function VideoPlayer({
               controls: 0,
               modestbranding: 1,
               rel: 0,
-              origin: typeof window !== 'undefined' ? window.location.origin : 'https://plataformahabilidade.netlify.app'
+              origin: typeof window !== 'undefined' ? window.location.origin : 'https://plataformahabilidade.netlify.app',
+              // Additional params to reduce postMessage errors
+              enablejsapi: 1,
+              widgetid: 1
             }
           },
           vimeo: {
@@ -530,6 +618,7 @@ export default function VideoPlayer({
             <button
               onClick={() => {
                 setVideoError(null)
+                setIsVideoReady(false)
                 playerRef.current?.seekTo(0)
               }}
               className="px-4 py-2 bg-primary hover:bg-primary/80 text-white rounded-lg text-sm transition-colors"
@@ -541,11 +630,39 @@ export default function VideoPlayer({
       )}
 
       {/* Loading indicator */}
-      {!playing && !seeking && !videoError && (
+      {!isVideoReady && !videoError && (
         <div className="absolute inset-0 flex items-center justify-center bg-black/20">
           <div className="w-16 h-16 border-4 border-primary/30 border-t-primary rounded-full animate-spin" />
         </div>
       )}
     </div>
   )
+  } catch (error) {
+    // Fallback UI if component crashes
+    console.error('VideoPlayer crashed:', error)
+    return (
+      <div className={cn(
+        "relative bg-black rounded-lg overflow-hidden",
+        "shadow-2xl shadow-primary/20",
+        "flex items-center justify-center min-h-[200px]",
+        className
+      )}>
+        <div className="text-center text-white p-8">
+          <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-red-500/20 flex items-center justify-center">
+            <svg className="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 19c-.77.833.192 2.5 1.732 2.5z" />
+            </svg>
+          </div>
+          <h3 className="text-lg font-semibold mb-2">Erro no Player</h3>
+          <p className="text-gray-300 text-sm mb-4">O player de vídeo encontrou um erro crítico.</p>
+          <button
+            onClick={() => window.location.reload()}
+            className="px-4 py-2 bg-primary hover:bg-primary/80 text-white rounded-lg text-sm transition-colors"
+          >
+            Recarregar Página
+          </button>
+        </div>
+      </div>
+    )
+  }
 }

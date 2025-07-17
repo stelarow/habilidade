@@ -43,9 +43,9 @@ const STATE_COLORS = {
 }
 
 const SIZE_CONFIG = {
-  sm: { circle: 24, stroke: 2, icon: 'w-3 h-3' },
-  md: { circle: 32, stroke: 2, icon: 'w-4 h-4' },
-  lg: { circle: 40, stroke: 3, icon: 'w-5 h-5' }
+  sm: { circle: 32, stroke: 1.5, icon: 'w-5 h-5' },
+  md: { circle: 32, stroke: 1.5, icon: 'w-5 h-5' },
+  lg: { circle: 32, stroke: 1.5, icon: 'w-5 h-5' }
 }
 
 /**
@@ -89,14 +89,14 @@ const ProgressIndicatorComponent = ({
   // Get appropriate icon based on state
   const getStateIcon = () => {
     if (isCompleted) {
-      return <CheckCircle className="w-4 h-4 text-green-400" weight="fill" />
+      return <CheckCircle className="w-5 h-5 text-green-400" weight="fill" />
     }
     if (state === 'failed') {
-      return <X className="w-4 h-4 text-red-400" weight="bold" />
+      return <X className="w-5 h-5 text-red-400" weight="bold" />
     }
     return (
       <IconComponent 
-        className="w-4 h-4" 
+        className="w-5 h-5" 
         weight="duotone"
         style={{ color: getStateColor() }}
       />
@@ -106,7 +106,7 @@ const ProgressIndicatorComponent = ({
   return (
     <motion.div
       className={cn(
-        "flex flex-col items-center gap-1 p-2 rounded-lg transition-all duration-300",
+        "flex flex-col items-center gap-0.5 p-1 rounded-lg transition-all duration-300 max-h-12",
         onClick && "cursor-pointer hover:bg-white/5",
         isCompleted && "bg-green-500/10 border border-green-500/20",
         state === 'failed' && "bg-red-500/10 border border-red-500/20",

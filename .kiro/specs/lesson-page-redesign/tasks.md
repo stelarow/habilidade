@@ -110,9 +110,48 @@
   - Ensure smooth scrolling performance
   - _Requirements: 2.9, 2.10_
 
-- [ ] 8. Add completion flow and final integration
-  - Wire completion button to lesson completion logic
-  - Test complete lesson flow from start to finish
+- [ ] 8. Fix header visual issues and icon consistency
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  - **MCP Context7**: Consult Next.js documentation for CSS-in-JS best practices and component optimization
+  - Fix progress indicator borders to fit completely within header bounds (max height 32px for 56px header)
+  - **MCP MagicUI**: Use circular progress components for consistent sizing and animations
+  - Update icon sizes to match homepage course cards exactly (20px standard)
+  - Ensure all borders and visual elements are proportional and contained within header
+  - **MCP Context7**: Review Tailwind CSS documentation for responsive design patterns
+  - _Requirements: 3.5, 3.6, 3.7, 2.9_
+
+- [ ] 9. Implement proper header scroll behavior
+  - **MCP Context7**: Research Next.js scroll behavior patterns and performance optimization
+  - Remove any fixed positioning that prevents scroll-following behavior
+  - Implement smooth scroll-following animation matching homepage header
+  - **MCP MagicUI**: Use scroll-based animations for header background opacity changes
+  - Test scroll behavior across desktop, tablet, and mobile viewports
+  - Ensure header performance during scroll events
+  - _Requirements: 2.9, 2.10_
+
+- [ ] 10. Complete lesson completion flow integration
+  - **MCP Context7**: Consult React documentation for state management best practices
+  - Wire completion button to lesson completion logic in database
+  - **MCP MagicUI**: Add completion celebration animations and visual feedback
+  - Test complete lesson flow from start to finish with all criteria
   - Verify all progress criteria work together correctly
-  - Add error handling and edge case management
+  - **MCP Context7**: Review error handling patterns for async operations
+  - Add comprehensive error handling and edge case management
   - _Requirements: 2.8, 6.4_
