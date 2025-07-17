@@ -69,24 +69,28 @@ const LessonHeaderComponent = ({
         "w-full transition-all duration-300 relative z-10",
         // Dynamic background opacity based on scroll state
         isScrolled 
-          ? "bg-zinc-900/90 backdrop-blur-md border-b border-gray-800/70 shadow-lg" 
-          : "bg-zinc-900/70 backdrop-blur-md border-b border-gray-800/50",
+          ? "bg-zinc-900/95 backdrop-blur-md border-b border-gray-800/70 shadow-lg" 
+          : "bg-zinc-900/80 backdrop-blur-md border-b border-gray-800/50",
         className
       )}
-      style={{ position: 'relative' }} // Force relative positioning
+      style={{ 
+        position: 'relative',
+        // Force override any global CSS that might apply position: fixed
+        transform: 'translateZ(0)'
+      }}
       role="banner"
     >
       <div className="mx-auto max-w-7xl px-4">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-14">
           
           {/* Left side - Logo and Exit */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             {/* Logo */}
-            <div className="flex items-center gap-2 sm:gap-3">
-              <span className="font-extrabold text-2xl sm:text-4xl gradient-text bg-gradient-to-r from-[#d400ff] via-[#00c4ff] to-[#a000ff] bg-clip-text text-transparent animate-gradient">
+            <div className="flex items-center gap-2">
+              <span className="font-extrabold text-xl gradient-text bg-gradient-to-r from-[#d400ff] via-[#00c4ff] to-[#a000ff] bg-clip-text text-transparent">
                 H
               </span>
-              <span className="hidden sm:block text-white font-semibold text-base sm:text-lg">
+              <span className="hidden sm:block text-white font-semibold text-sm">
                 Escola Habilidade
               </span>
             </div>
@@ -94,18 +98,18 @@ const LessonHeaderComponent = ({
             {/* Exit Button */}
             <motion.button
               onClick={handleExit}
-              className="flex items-center gap-2 px-3 py-2 bg-white/5 hover:bg-white/10 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-[#d400ff] focus:ring-offset-2 focus:ring-offset-gray-900"
+              className="flex items-center gap-1 px-2 py-1 bg-white/5 hover:bg-white/10 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-[#d400ff]"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               aria-label="Voltar ao curso"
             >
-              <ArrowLeft className="w-4 h-4" weight="duotone" />
-              <span className="hidden sm:inline text-sm">Sair</span>
+              <ArrowLeft className="w-3 h-3" weight="duotone" />
+              <span className="hidden sm:inline text-xs">Sair</span>
             </motion.button>
           </div>
 
-          {/* Center - Progress Indicators */}
-          <div className="flex items-center gap-2 sm:gap-4">
+          {/* Center - Compact Progress Indicators */}
+          <div className="flex items-center gap-1 sm:gap-2">
             <ProgressIndicator
               icon="time"
               label="Tempo"
@@ -115,6 +119,7 @@ const LessonHeaderComponent = ({
               detail={progress.timeProgress.formatted}
               state={progress.timeProgress.state}
               showPulse={progress.timeProgress.state === 'in_progress'}
+              size="sm"
             />
             
             <ProgressIndicator
@@ -126,6 +131,7 @@ const LessonHeaderComponent = ({
               detail={`${Math.round(progress.pdfProgress.percentage)}%`}
               state={progress.pdfProgress.state}
               showPulse={progress.pdfProgress.state === 'in_progress'}
+              size="sm"
             />
             
             <ProgressIndicator
@@ -137,6 +143,7 @@ const LessonHeaderComponent = ({
               detail={`${progress.exerciseProgress.completed}/${progress.exerciseProgress.total}`}
               state={progress.exerciseProgress.state}
               showPulse={progress.exerciseProgress.state === 'in_progress'}
+              size="sm"
             />
             
             <ProgressIndicator
@@ -148,38 +155,89 @@ const LessonHeaderComponent = ({
               detail={progress.quizProgress.score > 0 ? `${progress.quizProgress.score}%` : '-'}
               state={progress.quizProgress.state}
               showPulse={progress.quizProgress.state === 'in_progress'}
+              size="sm"
             />
           </div>
 
-          {/* Right side - Complete Button */}
-          <div className="flex items-center gap-3">
-            {/* Complete Button */}
+          {/* Right side - Overall Progress and Complete Button */}
+          <div className="flex items-center gap-2">
+            {/* Overall Progress - Compact */}
+            <div className="hidden md:flex items-center gap-2">
+              <div className="text-right">
+                <div className="text-xs font-semibold text-white">
+                  {Math.round(progress.overallProgress.percentage)}%
+                </div>
+                <div className="text-[10px] text-gray-400">
+                  Geral
+                </div>
+              </div>
+              <div className="w-8 h-8 relative">
+                <svg className="w-8 h-8 transform -rotate-90" viewBox="0 0 32 32">
+                  <circle
+                    cx="16"
+                    cy="16"
+                    r="12"
+                    stroke="rgba(255,255,255,0.1)"
+                    strokeWidth="2"
+                    fill="transparent"
+                  />
+                  <motion.circle
+                    cx="16"
+                    cy="16"
+                    r="12"
+                    stroke={progress.overallProgress.canComplete ? "#22c55e" : progress.visualStates.progressColor}
+                    strokeWidth="2"
+                    fill="transparent"
+                    strokeDasharray={`${2 * Math.PI * 12}`}
+                    initial={{ strokeDashoffset: 2 * Math.PI * 12 }}
+                    animate={{ 
+                      strokeDashoffset: 2 * Math.PI * 12 * (1 - progress.overallProgress.percentage / 100)
+                    }}
+                    transition={{ duration: 0.8, ease: "easeInOut" }}
+                    style={{
+                      filter: `drop-shadow(0 0 3px ${progress.overallProgress.canComplete ? "#22c55e" : progress.visualStates.progressColor}30)`
+                    }}
+                  />
+                </svg>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  {progress.overallProgress.canComplete ? (
+                    <span className="text-green-400 text-xs">✓</span>
+                  ) : (
+                    <span className="text-[10px] font-bold text-white">
+                      {Math.round(progress.overallProgress.percentage)}
+                    </span>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Complete Button - Compact */}
             {progress.visualStates.showCompletionButton && (
               <motion.button
                 onClick={handleComplete}
-                className="px-4 py-2 bg-gradient-to-r from-[#22c55e] to-[#16a34a] text-white font-semibold rounded-lg hover:from-[#16a34a] hover:to-[#15803d] transition-all focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2 focus:ring-offset-gray-900"
+                className="px-3 py-1 bg-gradient-to-r from-[#22c55e] to-[#16a34a] text-white font-semibold rounded-md hover:from-[#16a34a] hover:to-[#15803d] transition-all focus:outline-none focus:ring-2 focus:ring-green-400 text-xs"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.3 }}
               >
-                <span className="hidden sm:inline">Concluir Aula</span>
-                <span className="sm:hidden">Concluir</span>
+                <span className="hidden sm:inline">Concluir</span>
+                <span className="sm:hidden">✓</span>
               </motion.button>
             )}
           </div>
         </div>
 
-        {/* Mobile Progress Bar */}
-        <div className="md:hidden pb-3">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs text-gray-400">Progresso Geral</span>
-            <span className="text-xs font-semibold text-white">{Math.round(progress.overallProgress.percentage)}%</span>
+        {/* Mobile Progress Bar - More Compact */}
+        <div className="md:hidden pb-2">
+          <div className="flex items-center justify-between mb-1">
+            <span className="text-[10px] text-gray-400">Progresso Geral</span>
+            <span className="text-[10px] font-semibold text-white">{Math.round(progress.overallProgress.percentage)}%</span>
           </div>
-          <div className="w-full bg-gray-800 rounded-full h-2">
+          <div className="w-full bg-gray-800 rounded-full h-1.5">
             <motion.div
-              className="h-2 rounded-full"
+              className="h-1.5 rounded-full"
               style={{
                 background: `linear-gradient(to right, ${progress.visualStates.progressColor}, #00c4ff)`
               }}

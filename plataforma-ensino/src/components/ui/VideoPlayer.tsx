@@ -6,6 +6,7 @@ import { Play, Pause, SkipBack, SkipForward, SpeakerHigh, SpeakerSlash, CornersO
 import * as Sentry from '@sentry/nextjs'
 import { VideoPlayerProps, VideoProgress } from '@/types'
 import { cn } from '@/lib/utils'
+import { validateAndFormatYouTubeUrl } from '@/lib/youtube-utils'
 
 interface CustomVideoPlayerProps extends VideoPlayerProps {
   onProgressUpdate?: (progress: VideoProgress) => void
@@ -62,6 +63,7 @@ export default function VideoPlayer({
   const [showSettings, setShowSettings] = useState(false)
   const [playbackSpeed, setPlaybackSpeed] = useState(1)
   const [lastSavedProgress, setLastSavedProgress] = useState(0)
+  const [videoError, setVideoError] = useState<string | null>(null)
   
   const hideControlsTimeout = useRef<NodeJS.Timeout>()
   const autoSaveTimeout = useRef<NodeJS.Timeout>()
@@ -71,6 +73,19 @@ export default function VideoPlayer({
     loaded: 0,
     loadedSeconds: 0
   })
+
+  // Validate YouTube URL on mount
+  useEffect(() => {
+    if (url) {
+      const validation = validateAndFormatYouTubeUrl(url)
+      if (!validation.isValid) {
+        setVideoError(validation.error || 'Invalid video URL')
+        console.error('Invalid YouTube URL:', url, validation.error)
+      } else {
+        setVideoError(null)
+      }
+    }
+  }, [url])
 
   // Auto-hide controls
   const scheduleHideControls = useCallback(() => {
@@ -207,6 +222,13 @@ export default function VideoPlayer({
   }, [onLessonComplete, onEnded, lesson, url, playedSeconds, played])
 
   const handleError = useCallback((error: any) => {
+    // Set user-friendly error message
+    if (error?.message?.includes('Invalid video id')) {
+      setVideoError('Este vídeo não está disponível ou foi removido do YouTube.')
+    } else {
+      setVideoError('Erro ao carregar o vídeo. Tente novamente mais tarde.')
+    }
+    
     Sentry.captureException(error, {
       tags: {
         component: 'VideoPlayer',
@@ -216,7 +238,8 @@ export default function VideoPlayer({
       extra: {
         playedSeconds,
         played,
-        duration
+        duration,
+        errorMessage: error?.message
       }
     })
     
@@ -471,8 +494,32 @@ export default function VideoPlayer({
         </div>
       )}
 
+      {/* Error Display */}
+      {videoError && (
+        <div className="absolute inset-0 flex items-center justify-center bg-black/80 rounded-lg">
+          <div className="text-center p-8 max-w-md">
+            <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-red-500/20 flex items-center justify-center">
+              <svg className="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 19c-.77.833.192 2.5 1.732 2.5z" />
+              </svg>
+            </div>
+            <h3 className="text-lg font-semibold text-white mb-2">Erro no Vídeo</h3>
+            <p className="text-gray-300 text-sm mb-4">{videoError}</p>
+            <button
+              onClick={() => {
+                setVideoError(null)
+                playerRef.current?.seekTo(0)
+              }}
+              className="px-4 py-2 bg-primary hover:bg-primary/80 text-white rounded-lg text-sm transition-colors"
+            >
+              Tentar Novamente
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Loading indicator */}
-      {!playing && !seeking && (
+      {!playing && !seeking && !videoError && (
         <div className="absolute inset-0 flex items-center justify-center bg-black/20">
           <div className="w-16 h-16 border-4 border-primary/30 border-t-primary rounded-full animate-spin" />
         </div>

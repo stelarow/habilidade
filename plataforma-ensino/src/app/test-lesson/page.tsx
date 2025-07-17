@@ -73,7 +73,7 @@ export default function TestLessonPage() {
     title: 'Capítulo 2: Fundamentos do Desenvolvimento Web',
     slug: 'test-lesson',
     description: 'Aprenda os conceitos fundamentais de HTML, CSS e JavaScript através de exemplos práticos e exercícios interativos.',
-    video_url: 'https://www.youtube.com/embed/Xq0xJl-2D_s',
+    video_url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
     video_duration: 1200,
     order_index: 2,
     content: `
