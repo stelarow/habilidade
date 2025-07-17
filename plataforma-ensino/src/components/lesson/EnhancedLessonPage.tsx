@@ -156,10 +156,10 @@ export const EnhancedLessonPage: React.FC<EnhancedLessonPageProps> = ({
                     {progressData && (
                       <div className="mt-2 pt-2 border-t border-gray-600">
                         <div className="text-[10px] space-y-1">
-                          <div>Time: {Math.floor((progressData.timeSpent || 0) / 60)}min</div>
-                          <div>PDF: {progressData.pdfProgress || 0}%</div>
-                          <div>Quiz: {progressData.quizScore || 0}%</div>
-                          <div>Exercises: {progressData.exercisesCompleted || 0}%</div>
+                          <div>Time: {Math.floor((progressData.videoProgress?.watchTime || 0) / 60)}min</div>
+                          <div>PDF: {Math.round(progressData.pdfProgress?.percentageRead || 0)}%</div>
+                          <div>Quiz: {Math.round(progressData.quizProgress?.score || 0)}%</div>
+                          <div>Exercises: {Math.round(progressData.exerciseProgress?.completionPercentage || 0)}%</div>
                         </div>
                       </div>
                     )}
