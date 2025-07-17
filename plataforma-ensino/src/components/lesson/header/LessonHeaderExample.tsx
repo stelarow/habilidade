@@ -113,7 +113,7 @@ export function LessonHeaderExample() {
     onExit: () => {
       console.log('Exit button clicked')
     },
-    onComplete: () => {
+    onComplete: async () => {
       console.log('Complete button clicked')
     },
   }
