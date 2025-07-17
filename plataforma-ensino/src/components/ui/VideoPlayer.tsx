@@ -338,7 +338,8 @@ export default function VideoPlayer({
               showinfo: 0,
               controls: 0,
               modestbranding: 1,
-              rel: 0
+              rel: 0,
+              origin: typeof window !== 'undefined' ? window.location.origin : 'https://plataformahabilidade.netlify.app'
             }
           },
           vimeo: {

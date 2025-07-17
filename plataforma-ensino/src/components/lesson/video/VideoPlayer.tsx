@@ -28,7 +28,7 @@ const convertToEmbedUrl = (url: string): string => {
   const videoId = videoIdMatch ? videoIdMatch[1] : null
   
   if (videoId) {
-    return `https://www.youtube.com/embed/${videoId}?enablejsapi=1&origin=${window.location.origin}`
+    return `https://www.youtube.com/embed/${videoId}?enablejsapi=1&origin=${typeof window !== 'undefined' ? window.location.origin : 'https://plataformahabilidade.netlify.app'}`
   }
   
   return url

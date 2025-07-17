@@ -49,7 +49,7 @@ export function convertToYouTubeEmbed(url: string): string {
   const videoId = extractYouTubeVideoId(url)
   if (!videoId) return url
   
-  return `https://www.youtube.com/embed/${videoId}?enablejsapi=1&origin=${typeof window !== 'undefined' ? window.location.origin : 'https://localhost:3000'}`
+  return `https://www.youtube.com/embed/${videoId}?enablejsapi=1&origin=${typeof window !== 'undefined' ? window.location.origin : 'https://plataformahabilidade.netlify.app'}`
 }
 
 /**
