@@ -10,8 +10,10 @@ import {
   QuestionMarkCircleIcon,
   PaperClipIcon,
   PlayIcon,
-  CloudArrowUpIcon
+  CloudArrowUpIcon,
+  ExclamationTriangleIcon
 } from '@heroicons/react/24/outline'
+import { validateAndFormatYouTubeUrl } from '@/lib/youtube-utils'
 
 interface LessonFormProps {
   lesson?: Lesson
@@ -44,6 +46,7 @@ export function LessonForm({
   const [selectedCourseId, setSelectedCourseId] = useState(lesson?.course_id || '')
   const [nextOrderIndex, setNextOrderIndex] = useState<number | null>(null)
   const [activeTab, setActiveTab] = useState<'basic' | 'content' | 'exercises' | 'quiz'>('basic')
+  const [videoUrlError, setVideoUrlError] = useState<string | null>(null)
 
   // Fetch next order index when course is selected
   useEffect(() => {
@@ -307,10 +310,36 @@ export function LessonForm({
                   <input
                     type="url"
                     value={formData.video_url}
-                    onChange={(e) => setFormData(prev => ({ ...prev, video_url: e.target.value }))}
-                    className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
-                    placeholder="https://example.com/video"
+                    onChange={(e) => {
+                      const url = e.target.value
+                      setFormData(prev => ({ ...prev, video_url: url }))
+                      
+                      // Validate YouTube URL
+                      if (url) {
+                        const validation = validateAndFormatYouTubeUrl(url)
+                        if (!validation.isValid) {
+                          setVideoUrlError(validation.error || 'URL do YouTube inválida')
+                        } else {
+                          setVideoUrlError(null)
+                        }
+                      } else {
+                        setVideoUrlError(null)
+                      }
+                    }}
+                    className={`w-full px-4 py-3 bg-slate-800 border rounded-lg text-white focus:outline-none focus:ring-2 ${
+                      videoUrlError ? 'border-red-500 focus:ring-red-500' : 'border-slate-700 focus:ring-purple-500'
+                    }`}
+                    placeholder="https://www.youtube.com/watch?v=..."
                   />
+                  {videoUrlError && (
+                    <div className="mt-2 flex items-center gap-2 text-red-400 text-sm">
+                      <ExclamationTriangleIcon className="w-4 h-4" />
+                      <span>{videoUrlError}</span>
+                    </div>
+                  )}
+                  <div className="mt-2 text-xs text-slate-400">
+                    Suporte para URLs do YouTube (youtube.com/watch?v=, youtu.be/, youtube.com/embed/)
+                  </div>
                 </div>
 
                 {/* Options */}
