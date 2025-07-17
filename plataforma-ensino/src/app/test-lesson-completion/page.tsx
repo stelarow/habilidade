@@ -89,7 +89,7 @@ export default function TestLessonCompletionPage() {
               <div className="font-semibold text-gray-300 mb-1">Instructions:</div>
               <ul className="space-y-1">
                 <li>• Change scenario to test different states</li>
-                <li>• Click "Concluir" when criteria are met</li>
+                <li>• Click &quot;Concluir&quot; when criteria are met</li>
                 <li>• Watch for celebration animation</li>
                 <li>• Check browser console for logs</li>
               </ul>

@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils'
 import { useLessonCompletion } from '@/hooks/useLessonCompletion'
 import { LessonCompletionCelebration } from './LessonCompletionCelebration'
 import { LessonProgressData } from '@/types/lesson'
-import { AlertTriangle, RefreshCw, X } from '@phosphor-icons/react'
+import { Warning, ArrowClockwise, X } from '@phosphor-icons/react'
 
 interface EnhancedLessonCompletionProps {
   lessonId: string
@@ -115,7 +115,7 @@ export const EnhancedLessonCompletion: React.FC<EnhancedLessonCompletionProps> =
           >
             <div className="bg-red-900/90 backdrop-blur-sm border border-red-500/50 rounded-lg p-4 shadow-lg">
               <div className="flex items-start gap-3">
-                <AlertTriangle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" weight="fill" />
+                <Warning className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" weight="fill" />
                 
                 <div className="flex-1 min-w-0">
                   <h4 className="text-sm font-semibold text-red-200 mb-1">
@@ -144,7 +144,7 @@ export const EnhancedLessonCompletion: React.FC<EnhancedLessonCompletionProps> =
                       disabled={isCompleting}
                       className="flex items-center gap-1 px-3 py-1 bg-red-600 hover:bg-red-700 disabled:bg-red-800 text-white text-xs rounded-md transition-colors"
                     >
-                      <RefreshCw className={cn(
+                      <ArrowClockwise className={cn(
                         "w-3 h-3",
                         isCompleting && "animate-spin"
                       )} />
