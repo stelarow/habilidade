@@ -214,7 +214,9 @@ export const LessonVideoPlayer: React.FC<LessonVideoPlayerProps> = ({
             playerVars: {
               showinfo: 1,
               modestbranding: 1,
-              rel: 0,
+              rel: 0
+            },
+            embedOptions: {
               origin: typeof window !== 'undefined' ? window.location.origin : 'https://plataformahabilidade.netlify.app'
             }
           },

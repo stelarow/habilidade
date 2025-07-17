@@ -332,13 +332,16 @@ export default function VideoPlayer({
         onError={handleError}
         light={poster}
         controls={false}
+        onClickPreview={handlePlayPause}
         config={{
           youtube: {
             playerVars: {
               showinfo: 0,
               controls: 0,
               modestbranding: 1,
-              rel: 0,
+              rel: 0
+            },
+            embedOptions: {
               origin: typeof window !== 'undefined' ? window.location.origin : 'https://plataformahabilidade.netlify.app'
             }
           },
@@ -359,7 +362,7 @@ export default function VideoPlayer({
         <div 
           className={cn(
             "absolute inset-0 flex flex-col justify-end transition-opacity duration-300",
-            showControls || !playing ? "opacity-100" : "opacity-0 pointer-events-none"
+            playing ? (showControls ? "opacity-100" : "opacity-0 pointer-events-none") : "opacity-0 pointer-events-none"
           )}
         >
           {/* Progress Bar */}
