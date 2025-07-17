@@ -174,27 +174,27 @@ const LessonHeaderComponent = ({
                   Geral
                 </div>
               </div>
-              <div className="w-7 h-7 relative">
-                <svg className="w-7 h-7 transform -rotate-90" viewBox="0 0 28 28">
+              <div className="w-6 h-6 relative">
+                <svg className="w-6 h-6 transform -rotate-90" viewBox="0 0 24 24">
                   <circle
-                    cx="14"
-                    cy="14"
-                    r="10"
+                    cx="12"
+                    cy="12"
+                    r="9"
                     stroke="rgba(255,255,255,0.1)"
                     strokeWidth="1.5"
                     fill="transparent"
                   />
                   <motion.circle
-                    cx="14"
-                    cy="14"
-                    r="10"
+                    cx="12"
+                    cy="12"
+                    r="9"
                     stroke={progress.overallProgress.canComplete ? "#22c55e" : progress.visualStates.progressColor}
                     strokeWidth="1.5"
                     fill="transparent"
-                    strokeDasharray={`${2 * Math.PI * 10}`}
-                    initial={{ strokeDashoffset: 2 * Math.PI * 10 }}
+                    strokeDasharray={`${2 * Math.PI * 9}`}
+                    initial={{ strokeDashoffset: 2 * Math.PI * 9 }}
                     animate={{ 
-                      strokeDashoffset: 2 * Math.PI * 10 * (1 - progress.overallProgress.percentage / 100)
+                      strokeDashoffset: 2 * Math.PI * 9 * (1 - progress.overallProgress.percentage / 100)
                     }}
                     transition={{ duration: 0.8, ease: "easeInOut" }}
                     style={{
@@ -204,9 +204,9 @@ const LessonHeaderComponent = ({
                 </svg>
                 <div className="absolute inset-0 flex items-center justify-center">
                   {progress.overallProgress.canComplete ? (
-                    <span className="text-green-400 text-[10px]">✓</span>
+                    <span className="text-green-400 text-[9px]">✓</span>
                   ) : (
-                    <span className="text-[9px] font-bold text-white">
+                    <span className="text-[8px] font-bold text-white">
                       {Math.round(progress.overallProgress.percentage)}
                     </span>
                   )}

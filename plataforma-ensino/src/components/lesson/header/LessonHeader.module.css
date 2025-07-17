@@ -1,9 +1,45 @@
-/* LessonHeader specific styles to override any global CSS */
+/* LessonHeader Module CSS */
 .lessonHeader {
+  /* Ensure header follows scroll behavior and is not fixed */
+  position: relative !important;
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Ensure progress indicators are properly contained */
+.lessonHeader .progress-indicator {
+  max-height: 32px;
+  max-width: 32px;
+}
+
+/* Override any global styles that might make the header fixed */
+.lessonHeader[data-lesson-header="true"] {
   position: relative !important;
   top: auto !important;
   left: auto !important;
   right: auto !important;
   bottom: auto !important;
-  transform: translateZ(0) !important;
+}
+
+/* Ensure proper z-index stacking */
+.lessonHeader {
+  z-index: 10;
+}
+
+/* Smooth transitions for scroll-based changes */
+.lessonHeader {
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Ensure icons are properly sized and aligned */
+.lessonHeader svg {
+  flex-shrink: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .lessonHeader .progress-indicator {
+    max-height: 28px;
+    max-width: 28px;
+  }
 }

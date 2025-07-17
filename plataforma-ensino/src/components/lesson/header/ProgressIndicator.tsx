@@ -225,18 +225,18 @@ const ProgressIndicatorComponent = ({
         </motion.span>
       )}
 
-      {/* Enhanced Mobile tooltip */}
-      <div className="sm:hidden absolute -top-14 left-1/2 transform -translate-x-1/2 bg-gray-800/90 backdrop-blur-sm text-white text-xs px-3 py-2 rounded-lg opacity-0 pointer-events-none group-hover:opacity-100 transition-all duration-200 z-10">
+      {/* Enhanced Mobile tooltip - positioned to not overflow header */}
+      <div className="sm:hidden absolute -top-12 left-1/2 transform -translate-x-1/2 bg-gray-800/90 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-md opacity-0 pointer-events-none group-hover:opacity-100 transition-all duration-200 z-20 whitespace-nowrap">
         <div className="text-center">
-          <div className="font-medium">{label}</div>
-          <div className="text-gray-300">
+          <div className="font-medium text-[10px]">{label}</div>
+          <div className="text-gray-300 text-[9px]">
             {isCompleted ? 'Concluído' : 
              state === 'failed' ? 'Falhou' :
-             state === 'in_progress' ? `${Math.round(progress)}% - Em progresso` :
+             state === 'in_progress' ? `${Math.round(progress)}%` :
              detail || `${Math.round(progress)}%`}
           </div>
         </div>
-        <div className="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-gray-800/90"></div>
+        <div className="absolute top-full left-1/2 transform -translate-x-1/2 border-2 border-transparent border-t-gray-800/90"></div>
       </div>
     </motion.div>
   )
