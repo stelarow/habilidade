@@ -109,7 +109,7 @@ export const ResponsiveScrollTest = () => {
     console.log('Exit clicked - would navigate to course page')
   }
 
-  const handleComplete = () => {
+  const handleComplete = async () => {
     console.log('Complete clicked - would mark lesson as completed')
   }
 
