@@ -345,12 +345,6 @@ export default function LessonViewer({
                     <span className="text-white">{formatDuration(progress.watch_time)}</span>
                   </div>
                   
-                  {!isCompleted && (
-                    <div className="flex justify-between">
-                      <span className="text-white/60">Última posição</span>
-                      <span className="text-white">{formatDuration(progress.last_position)}</span>
-                    </div>
-                  )}
                 </div>
               )}
             </div>

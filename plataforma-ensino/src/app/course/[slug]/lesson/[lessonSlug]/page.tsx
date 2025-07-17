@@ -637,11 +637,6 @@ export default function LessonPageRefactored() {
                         {formatDuration(videoProgress.progress.watch_time)} assistidos
                       </span>
                     </div>
-                    {videoProgress.progress.last_position > 0 && (
-                      <div className="text-xs text-gray-500 mt-1">
-                        Última posição: {formatDuration(videoProgress.progress.last_position)}
-                      </div>
-                    )}
                   </div>
                 )}
               </div>
