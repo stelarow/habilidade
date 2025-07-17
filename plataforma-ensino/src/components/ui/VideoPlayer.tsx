@@ -87,6 +87,18 @@ export default function VideoPlayer({
     }
   }, [url])
 
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (hideControlsTimeout.current) {
+        clearTimeout(hideControlsTimeout.current)
+      }
+      if (autoSaveTimeout.current) {
+        clearTimeout(autoSaveTimeout.current)
+      }
+    }
+  }, [])
+
   // Auto-hide controls
   const scheduleHideControls = useCallback(() => {
     if (hideControlsTimeout.current) {
@@ -140,6 +152,9 @@ export default function VideoPlayer({
 
   // Playback controls
   const handlePlayPause = useCallback(() => {
+    // Clear any previous error states
+    setVideoError(null)
+    
     const newPlaying = !playing
     setPlaying(newPlaying)
     
@@ -225,9 +240,14 @@ export default function VideoPlayer({
     // Set user-friendly error message
     if (error?.message?.includes('Invalid video id')) {
       setVideoError('Este vídeo não está disponível ou foi removido do YouTube.')
+    } else if (error?.message?.includes('postMessage')) {
+      setVideoError('Erro de comunicação com o YouTube. Recarregue a página.')
     } else {
       setVideoError('Erro ao carregar o vídeo. Tente novamente mais tarde.')
     }
+    
+    // Reset playing state to prevent React DOM errors
+    setPlaying(false)
     
     Sentry.captureException(error, {
       tags: {
@@ -339,9 +359,7 @@ export default function VideoPlayer({
               showinfo: 0,
               controls: 0,
               modestbranding: 1,
-              rel: 0
-            },
-            embedOptions: {
+              rel: 0,
               origin: typeof window !== 'undefined' ? window.location.origin : 'https://plataformahabilidade.netlify.app'
             }
           },
