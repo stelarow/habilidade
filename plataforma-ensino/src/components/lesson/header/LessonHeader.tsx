@@ -22,7 +22,7 @@ interface LessonHeaderProps {
   }
   progressData: LessonProgressData | null
   onExit: () => void
-  onComplete: () => void
+  onComplete: () => Promise<void>
   className?: string
 }
 
@@ -58,9 +58,15 @@ const LessonHeaderComponent = ({
     router.push(`/course/${course.slug}`)
   }
 
-  const handleComplete = () => {
+  const handleComplete = async () => {
     if (progress.overallProgress.canComplete) {
-      onComplete()
+      try {
+        // Call the completion handler with all progress data
+        await onComplete()
+      } catch (error) {
+        console.error('Error completing lesson:', error)
+        // Error handling is managed by the parent component
+      }
     }
   }
 
@@ -232,16 +238,18 @@ const LessonHeaderComponent = ({
               </div>
             </div>
 
-            {/* Complete Button - Compact */}
+            {/* Complete Button - Enhanced with Loading State */}
             {progress.visualStates.showCompletionButton && (
               <motion.button
                 onClick={handleComplete}
-                className="px-3 py-1 bg-gradient-to-r from-[#22c55e] to-[#16a34a] text-white font-semibold rounded-md hover:from-[#16a34a] hover:to-[#15803d] transition-all focus:outline-none focus:ring-2 focus:ring-green-400 text-xs"
+                disabled={false} // Will be controlled by parent component
+                className="px-3 py-1 bg-gradient-to-r from-[#22c55e] to-[#16a34a] text-white font-semibold rounded-md hover:from-[#16a34a] hover:to-[#15803d] transition-all focus:outline-none focus:ring-2 focus:ring-green-400 text-xs disabled:opacity-50 disabled:cursor-not-allowed"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.3 }}
+                aria-label="Concluir aula"
               >
                 <span className="hidden sm:inline">Concluir</span>
                 <span className="sm:hidden">✓</span>

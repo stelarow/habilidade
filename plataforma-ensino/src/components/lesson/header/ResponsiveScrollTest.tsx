@@ -126,26 +126,28 @@ export const ResponsiveScrollTest = () => {
       
       {/* Test content sections */}
       <div className="px-4 py-8 max-w-6xl mx-auto">
-        {/* Test info panel */}
-        <div className="bg-gray-800 p-6 rounded-lg mb-8 sticky top-20 z-10">
-          <h2 className="text-xl font-bold text-white mb-4">Teste de Comportamento do Header</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-            <div>
-              <span className="text-gray-400">Tamanho da Tela:</span>
-              <span className="ml-2 text-white font-semibold capitalize">{screenSize}</span>
-            </div>
-            <div>
-              <span className="text-gray-400">Posição do Scroll:</span>
-              <span className="ml-2 text-white font-semibold">{Math.round(scrollPosition)}px</span>
-            </div>
-            <div>
-              <span className="text-gray-400">Resolução:</span>
-              <span className="ml-2 text-white font-semibold">
-                {typeof window !== 'undefined' ? `${window.innerWidth}x${window.innerHeight}` : 'N/A'}
-              </span>
+        {/* Debug info panel - hidden in production */}
+        {process.env.NODE_ENV === 'development' && (
+          <div className="bg-gray-800 p-6 rounded-lg mb-8 sticky top-20 z-10">
+            <h2 className="text-xl font-bold text-white mb-4">Debug: Teste de Comportamento do Header</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+              <div>
+                <span className="text-gray-400">Tamanho da Tela:</span>
+                <span className="ml-2 text-white font-semibold capitalize">{screenSize}</span>
+              </div>
+              <div>
+                <span className="text-gray-400">Posição do Scroll:</span>
+                <span className="ml-2 text-white font-semibold">{Math.round(scrollPosition)}px</span>
+              </div>
+              <div>
+                <span className="text-gray-400">Resolução:</span>
+                <span className="ml-2 text-white font-semibold">
+                  {typeof window !== 'undefined' ? `${window.innerWidth}x${window.innerHeight}` : 'N/A'}
+                </span>
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
         {/* Content sections to test scroll behavior */}
         <div className="space-y-8">
