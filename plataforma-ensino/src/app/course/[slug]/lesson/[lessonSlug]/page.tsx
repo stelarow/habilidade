@@ -25,6 +25,7 @@ import VideoPlayer from '@/components/ui/VideoPlayer'
 import { VideoProgress } from '@/types'
 import { QuizData } from '@/types/lesson'
 import { LessonProgressData } from '@/types/lesson/progress'
+import { validateAndFormatYouTubeUrl } from '@/lib/youtube-utils'
 
 interface Course {
   id: string
@@ -574,7 +575,7 @@ export default function LessonPageRefactored() {
                   </div>
                 ) : (
                   <VideoPlayer
-                    url={lesson.video_url}
+                    url={lesson.video_url ? validateAndFormatYouTubeUrl(lesson.video_url).embedUrl || lesson.video_url : lesson.video_url}
                     controls={true}
                     width="100%"
                     height="100%"

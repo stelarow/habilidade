@@ -9,6 +9,7 @@ import { ProgressIndicator } from './ProgressIndicator'
 import { useEnhancedProgressCalculation } from '@/hooks/useEnhancedProgressCalculation'
 import { useScrollBehavior } from '@/hooks/useScrollBehavior'
 import { LessonProgressData } from '@/types/lesson'
+import styles from './LessonHeader.module.css'
 
 interface LessonHeaderProps {
   course: {
@@ -67,6 +68,7 @@ const LessonHeaderComponent = ({
     <header 
       className={cn(
         "w-full transition-all duration-300 relative z-10",
+        styles.lessonHeader,
         // Dynamic background opacity based on scroll state
         isScrolled 
           ? "bg-zinc-900/95 backdrop-blur-md border-b border-gray-800/70 shadow-lg" 
@@ -79,6 +81,7 @@ const LessonHeaderComponent = ({
         transform: 'translateZ(0)'
       }}
       role="banner"
+      data-lesson-header="true"
     >
       <div className="mx-auto max-w-7xl px-4">
         <div className="flex items-center justify-between h-14">
