@@ -43,15 +43,58 @@ export default function TestLessonCompletionPage() {
 
   // Mock progress data based on selected scenario
   const mockProgressData: LessonProgressData = {
-    lessonId: 'test-lesson-123',
-    userId: 'test-user-789',
-    timeSpent: currentScenario.timeSpent,
-    pdfProgress: currentScenario.pdfProgress,
-    quizScore: currentScenario.quizScore,
-    exercisesCompleted: currentScenario.exercisesCompleted,
-    isCompleted: false,
-    lastAccessedAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
+    videoProgress: {
+      currentTime: 900,
+      duration: 1500,
+      percentageWatched: 60,
+      watchTime: currentScenario.timeSpent,
+      lastPosition: 900,
+      playbackRate: 1.0,
+      completedSegments: [{ start: 0, end: 900, watchCount: 1 }]
+    },
+    pdfProgress: {
+      currentPage: Math.floor((currentScenario.pdfProgress / 100) * 10),
+      totalPages: 10,
+      percentageRead: currentScenario.pdfProgress,
+      bookmarks: [3, 6, 8],
+      readingTime: 1200,
+      lastPageViewed: Math.floor((currentScenario.pdfProgress / 100) * 10)
+    },
+    quizProgress: {
+      currentQuestion: 3,
+      totalQuestions: 5,
+      answeredQuestions: [0, 1, 2],
+      score: currentScenario.quizScore,
+      attempts: 1,
+      timeSpent: 300,
+      isCompleted: currentScenario.quizScore >= 70,
+      isPassed: currentScenario.quizScore >= 70
+    },
+    exerciseProgress: {
+      completedExercises: ['ex1', 'ex2', 'ex3'],
+      submittedFiles: [],
+      pendingReviews: [],
+      totalExercises: 4,
+      completionPercentage: currentScenario.exercisesCompleted
+    },
+    contentProgress: {
+      scrollPercentage: 65,
+      readingTime: 800,
+      sectionsRead: ['intro', 'section1', 'section2'],
+      estimatedCompletionTime: 600
+    },
+    overallProgress: {
+      percentageComplete: Math.round((currentScenario.timeSpent + currentScenario.pdfProgress + currentScenario.quizScore + currentScenario.exercisesCompleted) / 4),
+      estimatedTimeRemaining: 300,
+      lastActivity: new Date().toISOString(),
+      isCompleted: false,
+      componentProgress: [
+        { component: 'video', percentage: 60, timeSpent: currentScenario.timeSpent, isCompleted: false, weight: 0.4 },
+        { component: 'pdf', percentage: currentScenario.pdfProgress, timeSpent: 1200, isCompleted: currentScenario.pdfProgress === 100, weight: 0.3 },
+        { component: 'exercises', percentage: currentScenario.exercisesCompleted, timeSpent: 600, isCompleted: currentScenario.exercisesCompleted === 100, weight: 0.2 },
+        { component: 'quiz', percentage: currentScenario.quizScore, timeSpent: 300, isCompleted: currentScenario.quizScore >= 70, weight: 0.1 }
+      ]
+    }
   }
 
   return (
