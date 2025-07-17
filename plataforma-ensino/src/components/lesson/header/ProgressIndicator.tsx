@@ -9,9 +9,8 @@ import {
   ClipboardText, 
   Target, 
   CheckCircle,
-  Warning,
   X
-} from '@phosphor-icons/react'
+} from '@phosphor-icons/react/dist/ssr'
 import { ProgressState } from '@/hooks/useEnhancedProgressCalculation'
 
 interface ProgressIndicatorProps {
@@ -43,9 +42,9 @@ const STATE_COLORS = {
 }
 
 const SIZE_CONFIG = {
-  sm: { circle: 32, stroke: 1.5, icon: 'w-5 h-5' },
-  md: { circle: 32, stroke: 1.5, icon: 'w-5 h-5' },
-  lg: { circle: 32, stroke: 1.5, icon: 'w-5 h-5' }
+  sm: { circle: 24, stroke: 1.5, icon: 'w-4 h-4' },
+  md: { circle: 28, stroke: 2, icon: 'w-5 h-5' },
+  lg: { circle: 32, stroke: 2, icon: 'w-5 h-5' }
 }
 
 /**
@@ -89,14 +88,14 @@ const ProgressIndicatorComponent = ({
   // Get appropriate icon based on state
   const getStateIcon = () => {
     if (isCompleted) {
-      return <CheckCircle className="w-5 h-5 text-green-400" weight="fill" />
+      return <CheckCircle className={sizeConfig.icon} style={{ color: STATE_COLORS.completed }} weight="fill" />
     }
     if (state === 'failed') {
-      return <X className="w-5 h-5 text-red-400" weight="bold" />
+      return <X className={sizeConfig.icon} style={{ color: STATE_COLORS.failed }} weight="bold" />
     }
     return (
       <IconComponent 
-        className="w-5 h-5" 
+        className={sizeConfig.icon} 
         weight="duotone"
         style={{ color: getStateColor() }}
       />
@@ -106,7 +105,11 @@ const ProgressIndicatorComponent = ({
   return (
     <motion.div
       className={cn(
-        "flex flex-col items-center gap-0.5 p-1 rounded-lg transition-all duration-300 max-h-12",
+        "group relative flex flex-col items-center justify-center gap-0.5 p-1 rounded-lg transition-all duration-300",
+        // Ensure container fits within header height (56px) with proper bounds - max 32px for indicators
+        size === 'sm' && "h-8 w-8",
+        size === 'md' && "h-9 w-9", 
+        size === 'lg' && "h-10 w-10",
         onClick && "cursor-pointer hover:bg-white/5",
         isCompleted && "bg-green-500/10 border border-green-500/20",
         state === 'failed' && "bg-red-500/10 border border-red-500/20",
@@ -177,21 +180,21 @@ const ProgressIndicatorComponent = ({
           </AnimatePresence>
         </div>
 
-        {/* Completion celebration effect */}
+        {/* Completion celebration effect - contained within bounds */}
         {isCompleted && (
           <motion.div
-            className="absolute -inset-2 rounded-full border-2 border-green-400/30"
+            className="absolute inset-0 rounded-full border border-green-400/30"
             initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1.2, opacity: [0, 1, 0] }}
+            animate={{ scale: 1, opacity: [0, 1, 0] }}
             transition={{ duration: 1, delay: 0.5 }}
           />
         )}
       </div>
 
-      {/* Enhanced Label with state indication */}
+      {/* Enhanced Label with state indication - Hidden for compact header */}
       <motion.span 
         className={cn(
-          "hidden sm:block text-xs font-medium text-center transition-colors duration-300",
+          "hidden text-[10px] font-medium text-center transition-colors duration-300",
           isCompleted && "text-green-300",
           state === 'failed' && "text-red-300",
           state === 'in_progress' && "text-amber-300",
@@ -206,11 +209,11 @@ const ProgressIndicatorComponent = ({
         {label}
       </motion.span>
 
-      {/* Enhanced Detail with progress indication */}
+      {/* Enhanced Detail with progress indication - Hidden for compact header */}
       {detail && (
         <motion.span 
           className={cn(
-            "hidden lg:block text-xs text-center transition-colors duration-300",
+            "hidden text-[9px] text-center transition-colors duration-300",
             isCompleted && "text-green-400",
             state === 'failed' && "text-red-400", 
             state === 'in_progress' && "text-amber-400",

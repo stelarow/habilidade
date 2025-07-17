@@ -49,6 +49,7 @@ export default function VideoPlayer({
   ...props
 }: CustomVideoPlayerProps) {
   const playerRef = useRef<ReactPlayer>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
   const [playing, setPlaying] = useState(false)
   const [played, setPlayed] = useState(0)
   const [loaded, setLoaded] = useState(0)
@@ -257,13 +258,26 @@ export default function VideoPlayer({
     setMuted(!muted)
   }, [muted])
 
-  const toggleFullscreen = useCallback(() => {
-    if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen()
-      setIsFullscreen(true)
-    } else {
-      document.exitFullscreen()
-      setIsFullscreen(false)
+  const toggleFullscreen = useCallback(async () => {
+    try {
+      if (!document.fullscreenElement && containerRef.current) {
+        await containerRef.current.requestFullscreen()
+        setIsFullscreen(true)
+      } else {
+        await document.exitFullscreen()
+        setIsFullscreen(false)
+      }
+    } catch (error) {
+      console.warn('Error toggling fullscreen:', error)
+      // Fallback to document fullscreen if container fails
+      if (!document.fullscreenElement) {
+        try {
+          await document.documentElement.requestFullscreen()
+          setIsFullscreen(true)
+        } catch (fallbackError) {
+          console.warn('Fallback fullscreen also failed:', fallbackError)
+        }
+      }
     }
   }, [])
 
@@ -368,6 +382,16 @@ export default function VideoPlayer({
     return () => document.removeEventListener('keydown', handleKeyPress)
   }, [handlePlayPause, handleSkip, toggleFullscreen, toggleMute])
 
+  // Fullscreen change listener
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement)
+    }
+
+    document.addEventListener('fullscreenchange', handleFullscreenChange)
+    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange)
+  }, [])
+
   // Format time display
   const formatTime = (seconds: number) => {
     const h = Math.floor(seconds / 3600)
@@ -386,9 +410,11 @@ export default function VideoPlayer({
   try {
     return (
       <div 
+        ref={containerRef}
         className={cn(
-          "relative bg-black rounded-lg overflow-hidden group",
-          "shadow-2xl shadow-primary/20",
+          "relative bg-black overflow-hidden group",
+          isFullscreen ? "rounded-none" : "rounded-lg",
+          isFullscreen ? "shadow-none" : "shadow-2xl shadow-primary/20",
           className
         )}
         onMouseEnter={() => {
@@ -464,7 +490,10 @@ export default function VideoPlayer({
       />
 
       {/* Always visible time counter */}
-      <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-sm text-white px-3 py-1 rounded-lg text-sm font-mono shadow-lg">
+      <div className={cn(
+        "absolute top-4 right-4 bg-black/60 backdrop-blur-sm text-white px-3 py-1 rounded-lg font-mono shadow-lg",
+        isFullscreen ? "text-base" : "text-sm"
+      )}>
         {formatTime(playedSeconds)} / {formatTime(duration)}
       </div>
 
@@ -495,11 +524,6 @@ export default function VideoPlayer({
                 style={{
                   background: `linear-gradient(to right, #d400ff 0%, #d400ff ${played * 100}%, rgba(255,255,255,0.2) ${played * 100}%, rgba(255,255,255,0.2) 100%)`
                 }}
-              />
-              {/* Loaded progress */}
-              <div 
-                className="absolute top-0 left-0 h-1 bg-white/40 rounded-full pointer-events-none"
-                style={{ width: `${loaded * 100}%` }}
               />
             </div>
           </div>

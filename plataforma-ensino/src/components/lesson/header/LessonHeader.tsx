@@ -106,13 +106,13 @@ const LessonHeaderComponent = ({
               whileTap={{ scale: 0.98 }}
               aria-label="Voltar ao curso"
             >
-              <ArrowLeft className="w-3 h-3" weight="duotone" />
+              <ArrowLeft className="w-4 h-4" weight="duotone" />
               <span className="hidden sm:inline text-xs">Sair</span>
             </motion.button>
           </div>
 
           {/* Center - Compact Progress Indicators */}
-          <div className="flex items-center gap-1 sm:gap-2">
+          <div className="flex items-center justify-center gap-1 sm:gap-1.5">
             <ProgressIndicator
               icon="time"
               label="Tempo"
@@ -174,39 +174,39 @@ const LessonHeaderComponent = ({
                   Geral
                 </div>
               </div>
-              <div className="w-8 h-8 relative">
-                <svg className="w-8 h-8 transform -rotate-90" viewBox="0 0 32 32">
+              <div className="w-7 h-7 relative">
+                <svg className="w-7 h-7 transform -rotate-90" viewBox="0 0 28 28">
                   <circle
-                    cx="16"
-                    cy="16"
-                    r="12"
+                    cx="14"
+                    cy="14"
+                    r="10"
                     stroke="rgba(255,255,255,0.1)"
-                    strokeWidth="2"
+                    strokeWidth="1.5"
                     fill="transparent"
                   />
                   <motion.circle
-                    cx="16"
-                    cy="16"
-                    r="12"
+                    cx="14"
+                    cy="14"
+                    r="10"
                     stroke={progress.overallProgress.canComplete ? "#22c55e" : progress.visualStates.progressColor}
-                    strokeWidth="2"
+                    strokeWidth="1.5"
                     fill="transparent"
-                    strokeDasharray={`${2 * Math.PI * 12}`}
-                    initial={{ strokeDashoffset: 2 * Math.PI * 12 }}
+                    strokeDasharray={`${2 * Math.PI * 10}`}
+                    initial={{ strokeDashoffset: 2 * Math.PI * 10 }}
                     animate={{ 
-                      strokeDashoffset: 2 * Math.PI * 12 * (1 - progress.overallProgress.percentage / 100)
+                      strokeDashoffset: 2 * Math.PI * 10 * (1 - progress.overallProgress.percentage / 100)
                     }}
                     transition={{ duration: 0.8, ease: "easeInOut" }}
                     style={{
-                      filter: `drop-shadow(0 0 3px ${progress.overallProgress.canComplete ? "#22c55e" : progress.visualStates.progressColor}30)`
+                      filter: `drop-shadow(0 0 2px ${progress.overallProgress.canComplete ? "#22c55e" : progress.visualStates.progressColor}30)`
                     }}
                   />
                 </svg>
                 <div className="absolute inset-0 flex items-center justify-center">
                   {progress.overallProgress.canComplete ? (
-                    <span className="text-green-400 text-xs">✓</span>
+                    <span className="text-green-400 text-[10px]">✓</span>
                   ) : (
-                    <span className="text-[10px] font-bold text-white">
+                    <span className="text-[9px] font-bold text-white">
                       {Math.round(progress.overallProgress.percentage)}
                     </span>
                   )}
