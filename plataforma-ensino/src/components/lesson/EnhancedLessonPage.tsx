@@ -190,15 +190,58 @@ export const EnhancedLessonPageExample: React.FC = () => {
 
   // Mock progress data - you can modify these values to test different states
   const mockProgressData: LessonProgressData = {
-    lessonId: 'lesson-123',
-    userId: 'user-789',
-    timeSpent: 1800, // 30 minutes (meets requirement)
-    pdfProgress: 100, // 100% (meets requirement)
-    quizScore: 85, // 85% (meets requirement)
-    exercisesCompleted: 100, // 100% (meets requirement)
-    isCompleted: false,
-    lastAccessedAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
+    videoProgress: {
+      currentTime: 900,
+      duration: 1500,
+      percentageWatched: 60,
+      watchTime: 1800, // 30 minutes (meets requirement)
+      lastPosition: 900,
+      playbackRate: 1.0,
+      completedSegments: [{ start: 0, end: 900, watchCount: 1 }]
+    },
+    pdfProgress: {
+      currentPage: 10,
+      totalPages: 10,
+      percentageRead: 100, // 100% (meets requirement)
+      bookmarks: [3, 6, 8],
+      readingTime: 1200,
+      lastPageViewed: 10
+    },
+    quizProgress: {
+      currentQuestion: 5,
+      totalQuestions: 5,
+      answeredQuestions: [0, 1, 2, 3, 4],
+      score: 85, // 85% (meets requirement)
+      attempts: 1,
+      timeSpent: 300,
+      isCompleted: true,
+      isPassed: true
+    },
+    exerciseProgress: {
+      completedExercises: ['ex1', 'ex2', 'ex3', 'ex4'],
+      submittedFiles: [],
+      pendingReviews: [],
+      totalExercises: 4,
+      completionPercentage: 100 // 100% (meets requirement)
+    },
+    contentProgress: {
+      scrollPercentage: 100,
+      readingTime: 800,
+      sectionsRead: ['intro', 'section1', 'section2', 'conclusion'],
+      estimatedCompletionTime: 0
+    },
+    overallProgress: {
+      percentageComplete: 92,
+      estimatedTimeRemaining: 0,
+      lastActivity: new Date().toISOString(),
+      isCompleted: false,
+      componentProgress: [
+        { component: 'video', percentage: 60, timeSpent: 1800, isCompleted: false, weight: 0.4 },
+        { component: 'pdf', percentage: 100, timeSpent: 1200, isCompleted: true, weight: 0.3 },
+        { component: 'exercises', percentage: 100, timeSpent: 600, isCompleted: true, weight: 0.2 },
+        { component: 'quiz', percentage: 85, timeSpent: 300, isCompleted: true, weight: 0.1 }
+      ]
+    }
   }
 
   const handleLessonComplete = () => {
