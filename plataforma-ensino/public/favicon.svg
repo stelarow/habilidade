@@ -8,11 +8,11 @@
   </defs>
   
   <!-- Left vertical bar -->
-  <rect x="4" y="4" width="4" height="24" fill="url(#grad1)" />
+  <rect x="6" y="6" width="6" height="20" fill="url(#grad1)" />
   
   <!-- Right vertical bar -->
-  <rect x="24" y="4" width="4" height="24" fill="url(#grad1)" />
+  <rect x="20" y="6" width="6" height="20" fill="url(#grad1)" />
   
   <!-- Horizontal connecting bar -->
-  <rect x="8" y="14" width="16" height="4" fill="url(#grad1)" />
+  <rect x="6" y="13" width="20" height="6" fill="url(#grad1)" />
 </svg>
