@@ -490,7 +490,7 @@ const PDFSection: React.FC<PDFSectionProps> = ({
               </div>
 
               {/* Fullscreen PDF Content */}
-              <div className="mt-16 flex justify-center">
+              <div className="mt-16 mb-32 flex justify-center">
                 {!error && typeof window !== 'undefined' && (
                   <Document
                     file={pdfUrl}
@@ -518,7 +518,7 @@ const PDFSection: React.FC<PDFSectionProps> = ({
                       scale={scale}
                       width={Math.min(pageWidth * 1.5, window.innerWidth - 100)}
                       onClick={handlePageClick}
-                      className="shadow-lg max-w-full mx-auto"
+                      className="shadow-lg max-w-full mx-auto mb-24"
                       loading={
                         <div className="flex items-center justify-center h-96">
                           <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
