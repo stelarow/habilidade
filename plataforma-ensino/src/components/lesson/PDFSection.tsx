@@ -19,16 +19,10 @@ if (typeof window !== 'undefined') {
     Page = reactPdf.Page
     pdfjs = reactPdf.pdfjs
     
-    // Set up PDF.js worker
-    pdfjs.GlobalWorkerOptions.workerSrc = `/pdf.worker.min.mjs`
-  }).catch(() => {
-    // Fallback to CDN if local worker fails
-    import('react-pdf').then((reactPdf) => {
-      Document = reactPdf.Document
-      Page = reactPdf.Page
-      pdfjs = reactPdf.pdfjs
-      pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`
-    })
+    // Set up PDF.js worker - use CDN for better compatibility
+    pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`
+  }).catch((error) => {
+    console.error('Failed to load PDF.js:', error)
   })
 }
 
@@ -205,7 +199,7 @@ const PDFSection: React.FC<PDFSectionProps> = ({
       </div>
 
       {/* PDF Viewer */}
-      <div className="bg-muted rounded-lg min-h-96 mb-4 overflow-auto">
+      <div className="bg-muted rounded-lg h-[600px] mb-4 overflow-auto">
         {isLoading && (
           <div className="flex items-center justify-center h-96">
             <div className="text-center text-muted-foreground">

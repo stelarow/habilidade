@@ -131,7 +131,7 @@ const LessonPageRedesigned: React.FC<LessonPageRedesignedProps> = ({
             <VideoSection
               videoTitle={`Vídeo: ${lesson.title}`}
               videoDescription="Assista ao conteúdo principal desta aula"
-              videoUrl="https://vimeo.com/1095312387"
+              videoUrl="https://vimeo.com/76979871"
               lessonId={lesson.id}
               onProgressUpdate={handleVideoProgress}
             />
@@ -150,7 +150,7 @@ const LessonPageRedesigned: React.FC<LessonPageRedesignedProps> = ({
               title="Quiz de Avaliação"
               passingScore={70}
               onProgressUpdate={(progress) => {
-                console.log('Quiz progress:', progress)
+                // console.log('Quiz progress:', progress) // Removed to prevent excessive logging
               }}
               onQuizComplete={handleQuizComplete}
               initialScore={currentProgressData?.quizProgress?.score || 0}
@@ -162,7 +162,7 @@ const LessonPageRedesigned: React.FC<LessonPageRedesignedProps> = ({
               title="Exercícios Práticos"
               onProgressUpdate={handleExercisesProgress}
               onFilesUploaded={(files) => {
-                console.log('Files uploaded:', files)
+                // console.log('Files uploaded:', files) // Removed to prevent excessive logging
               }}
             />
 
@@ -177,7 +177,7 @@ const LessonPageRedesigned: React.FC<LessonPageRedesignedProps> = ({
               completionError={error}
               canComplete={canComplete}
               onProgressUpdate={(progress) => {
-                console.log('Overall completion progress:', progress)
+                // console.log('Overall completion progress:', progress) // Removed to prevent infinite logging
               }}
             />
           </main>

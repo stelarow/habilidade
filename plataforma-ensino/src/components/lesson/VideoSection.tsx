@@ -21,7 +21,7 @@ interface VideoSectionProps {
 const VideoSection: React.FC<VideoSectionProps> = ({
   videoTitle,
   videoDescription,
-  videoUrl = "https://vimeo.com/1095312387", // Default test URL - public Vimeo URL
+  videoUrl = "https://vimeo.com/76979871", // Default test URL - public Vimeo URL
   lessonId = "test-lesson",
   onProgressUpdate
 }) => {
