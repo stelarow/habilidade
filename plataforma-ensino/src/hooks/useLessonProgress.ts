@@ -155,7 +155,7 @@ export const useLessonProgress = ({ lessonId, initialProgressData }: UseLessonPr
             fileUrl: '',
             submittedAt: new Date().toISOString(),
             status: 'pending' as const,
-            feedback: null
+            feedback: undefined
           })) : prev.exerciseProgress.submittedFiles
         }
       }

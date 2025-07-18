@@ -53,6 +53,12 @@ Uma plataforma de ensino moderna desenvolvida com Next.js 14, TypeScript, Tailwi
 - **Jest + Playwright** - Testes unitários e E2E (configurado)
 - **ESLint + TypeScript** - Qualidade de código
 
+### TypeScript Conventions
+- **Strict Mode**: Enabled for maximum type safety
+- **Optional Properties**: Use `undefined` over `null` for optional properties
+- **Type Definitions**: Comprehensive types for all entities and components
+- **Interface Design**: Prefer interfaces over types for object shapes
+
 ### Componentes
 - **React Player** - Player de vídeo
 - **Mux** - Streaming de vídeo profissional
