@@ -45,6 +45,7 @@ const PDFSection: React.FC<PDFSectionProps> = ({
   const [progress, setProgress] = useState<number>(initialProgress)
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [error, setError] = useState<string | null>(null)
+  const [pageWidth, setPageWidth] = useState<number>(600)
 
   const progressManagerRef = useRef<LessonProgressManager | null>(null)
   const pageStartTimeRef = useRef<number>(Date.now())
@@ -57,6 +58,24 @@ const PDFSection: React.FC<PDFSectionProps> = ({
     const savedProgress = progressManagerRef.current.getProgress()
     setProgress(savedProgress.pdfProgress)
   }, [lessonId])
+
+  // Handle responsive page width
+  useEffect(() => {
+    const updatePageWidth = () => {
+      const containerWidth = window.innerWidth
+      if (containerWidth < 768) {
+        setPageWidth(containerWidth - 80) // Account for padding and margins
+      } else if (containerWidth < 1024) {
+        setPageWidth(700)
+      } else {
+        setPageWidth(800)
+      }
+    }
+
+    updatePageWidth()
+    window.addEventListener('resize', updatePageWidth)
+    return () => window.removeEventListener('resize', updatePageWidth)
+  }, [])
 
   const markPageAsRead = useCallback((pageNumber: number) => {
     setPagesRead(prev => {
@@ -157,6 +176,22 @@ const PDFSection: React.FC<PDFSectionProps> = ({
 
   return (
     <Card className="p-6 border-border/50">
+      <style jsx global>{`
+        .react-pdf__Page {
+          margin: 0 auto !important;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+        }
+        .react-pdf__Page__canvas {
+          max-width: 100% !important;
+          height: auto !important;
+          display: block !important;
+        }
+        .react-pdf__Document {
+          display: flex !important;
+          flex-direction: column !important;
+          align-items: center !important;
+        }
+      `}</style>
       <h3 className="text-xl font-bold mb-4 gradient-text">{title}</h3>
 
       {/* PDF Controls */}
@@ -209,7 +244,7 @@ const PDFSection: React.FC<PDFSectionProps> = ({
       </div>
 
       {/* PDF Viewer */}
-      <div className="bg-muted rounded-lg h-[600px] mb-4 overflow-auto">
+      <div className="bg-muted rounded-lg min-h-[600px] mb-4 overflow-auto flex items-start justify-center">
         {isLoading && (
           <div className="flex items-center justify-center h-96">
             <div className="text-center text-muted-foreground">
@@ -229,7 +264,7 @@ const PDFSection: React.FC<PDFSectionProps> = ({
         )}
 
         {!error && typeof window !== 'undefined' && (
-          <div className="flex justify-center p-4">
+          <div className="w-full p-4">
             <Document
               file={pdfUrl}
               onLoadSuccess={onDocumentLoadSuccess}
@@ -254,13 +289,16 @@ const PDFSection: React.FC<PDFSectionProps> = ({
               <Page
                 pageNumber={currentPage}
                 scale={scale}
+                width={pageWidth}
                 onClick={handlePageClick}
-                className="shadow-lg"
+                className="shadow-lg max-w-full mx-auto"
                 loading={
                   <div className="flex items-center justify-center h-96">
                     <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"></div>
                   </div>
                 }
+                renderTextLayer={false}
+                renderAnnotationLayer={true}
               />
             </Document>
           </div>
