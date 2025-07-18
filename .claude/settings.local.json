@@ -32,7 +32,12 @@
       "Bash(ls:*)",
       "mcp__context7__resolve-library-id",
       "mcp__supabase__execute_sql",
-      "mcp__puppeteer__puppeteer_navigate"
+      "mcp__puppeteer__puppeteer_navigate",
+      "mcp__puppeteer__puppeteer_screenshot",
+      "WebFetch(domain:app.netlify.com)",
+      "mcp__puppeteer__puppeteer_fill",
+      "mcp__puppeteer__puppeteer_click",
+      "mcp__puppeteer__puppeteer_evaluate"
     ],
     "deny": []
   }

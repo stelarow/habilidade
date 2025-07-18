@@ -7,20 +7,17 @@ import { Progress } from '@/components/ui/progress'
 import { ChevronLeft, ChevronRight, ZoomIn, ZoomOut, AlertCircle } from 'lucide-react'
 import { calculatePDFProgress, LessonProgressManager } from '@/utils/lessonProgressUtils'
 
-// Components that will be dynamically loaded
-let Document: any = null
-let Page: any = null
-let pdfjs: any = null
+// Dynamic import for PDF components
+import dynamic from 'next/dynamic'
 
-// Initialize PDF.js only on the client side
+const Document = dynamic(() => import('react-pdf').then(mod => mod.Document), { ssr: false })
+const Page = dynamic(() => import('react-pdf').then(mod => mod.Page), { ssr: false })
+
+// Initialize PDF.js worker on client side
 if (typeof window !== 'undefined') {
   import('react-pdf').then((reactPdf) => {
-    Document = reactPdf.Document
-    Page = reactPdf.Page
-    pdfjs = reactPdf.pdfjs
-    
-    // Set up PDF.js worker - use CDN for better compatibility
-    pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`
+    // Set up PDF.js worker
+    reactPdf.pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${reactPdf.pdfjs.version}/build/pdf.worker.min.js`
   }).catch((error) => {
     console.error('Failed to load PDF.js:', error)
   })
@@ -218,14 +215,28 @@ const PDFSection: React.FC<PDFSectionProps> = ({
           </div>
         )}
 
-        {!error && typeof window !== 'undefined' && Document && Page && (
+        {!error && typeof window !== 'undefined' && (
           <div className="flex justify-center p-4">
             <Document
               file={pdfUrl}
               onLoadSuccess={onDocumentLoadSuccess}
               onLoadError={onDocumentLoadError}
-              loading={null}
-              error={null}
+              loading={
+                <div className="flex items-center justify-center h-96">
+                  <div className="text-center text-muted-foreground">
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-2"></div>
+                    <p>Carregando PDF...</p>
+                  </div>
+                </div>
+              }
+              error={
+                <div className="flex items-center justify-center h-96">
+                  <div className="text-center text-muted-foreground">
+                    <AlertCircle className="h-8 w-8 mx-auto mb-2" />
+                    <p className="text-sm">Erro ao carregar PDF</p>
+                  </div>
+                </div>
+              }
             >
               <Page
                 pageNumber={currentPage}
@@ -239,16 +250,6 @@ const PDFSection: React.FC<PDFSectionProps> = ({
                 }
               />
             </Document>
-          </div>
-        )}
-
-        {/* Show loading state until PDF components are loaded */}
-        {!error && typeof window !== 'undefined' && (!Document || !Page) && (
-          <div className="flex items-center justify-center h-96">
-            <div className="text-center text-muted-foreground">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-2"></div>
-              <p>Carregando visualizador PDF...</p>
-            </div>
           </div>
         )}
 

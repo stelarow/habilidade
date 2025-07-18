@@ -153,12 +153,12 @@ const VideoSection: React.FC<VideoSectionProps> = ({
             onDuration={handleDuration}
             onPlay={handlePlay}
             onPause={handlePause}
-            controls={false}
+            controls={true}
             config={{
               vimeo: {
                 playerOptions: {
                   responsive: true,
-                  controls: false,
+                  controls: true,
                   title: false,
                   byline: false,
                   portrait: false
@@ -178,8 +178,8 @@ const VideoSection: React.FC<VideoSectionProps> = ({
           </div>
         )}
         
-        {/* Custom controls overlay */}
-        {isReady && !error && (
+        {/* Custom controls overlay - commented out to use native Vimeo controls */}
+        {/* {isReady && !error && (
           <>
             <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
               <button
@@ -206,7 +206,7 @@ const VideoSection: React.FC<VideoSectionProps> = ({
               </div>
             </div>
           </>
-        )}
+        )} */}
       </div>
       
       <div className="space-y-2">
