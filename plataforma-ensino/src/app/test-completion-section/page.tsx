@@ -67,7 +67,7 @@ export default function TestCompletionSectionPage() {
   const simulateProgress = (type: 'pdf' | 'quiz' | 'exercises') => {
     setProgressData(prev => {
       const newData = { ...prev }
-      
+
       switch (type) {
         case 'pdf':
           newData.pdfProgress.percentageRead = Math.min(100, prev.pdfProgress.percentageRead + 25)
@@ -81,7 +81,7 @@ export default function TestCompletionSectionPage() {
           newData.exerciseProgress.completionPercentage = Math.min(100, prev.exerciseProgress.completionPercentage + 33.33)
           break
       }
-      
+
       return newData
     })
   }

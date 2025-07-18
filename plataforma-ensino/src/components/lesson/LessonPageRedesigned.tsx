@@ -10,6 +10,8 @@ import ExercisesSection from './ExercisesSection'
 import PDFSection from './PDFSection'
 import QuizSection from './QuizSection'
 import CompletionSection from './CompletionSection'
+import LessonErrorBoundary from './LessonErrorBoundary'
+import { useLessonInteractionTracking } from '@/hooks/useLessonPerformance'
 
 interface LessonPageRedesignedProps {
   lesson: {
@@ -33,6 +35,18 @@ const LessonPageRedesigned: React.FC<LessonPageRedesignedProps> = ({
   onExit,
   onLessonComplete
 }) => {
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  
+  // Performance monitoring
+  const {
+    trackVideoInteraction,
+    trackQuizInteraction,
+    trackFileUpload,
+    trackCompletion,
+    trackError,
+    getPerformanceReport
+  } = useLessonInteractionTracking()
   // State for tracking progress across all sections
   const [currentProgressData, setCurrentProgressData] = useState<LessonProgressData | null>(progressData)
   const [timeSpent, setTimeSpent] = useState(0)
@@ -52,11 +66,20 @@ const LessonPageRedesigned: React.FC<LessonPageRedesignedProps> = ({
     setCurrentProgressData(progressData)
   }, [progressData])
 
-  const handleExit = () => {
-    if (onExit) {
-      onExit()
+  const handleExit = useCallback(() => {
+    try {
+      setIsLoading(true)
+      setError(null)
+      if (onExit) {
+        onExit()
+      }
+    } catch (err) {
+      setError('Erro ao sair da aula. Tente novamente.')
+      console.error('Exit error:', err)
+    } finally {
+      setIsLoading(false)
     }
-  }
+  }, [onExit])
 
   // Handle progress updates from individual sections
   const handleVideoProgress = useCallback((progress: number) => {
@@ -114,15 +137,16 @@ const LessonPageRedesigned: React.FC<LessonPageRedesignedProps> = ({
   }, [])
 
   return (
-    <EnhancedLessonCompletion
-      lessonId={lesson.id}
-      courseSlug={lesson.course.slug}
-      lessonTitle={lesson.title}
-      courseTitle={lesson.course.title}
-      progressData={currentProgressData}
-      onSuccess={onLessonComplete}
-    >
-      {({ completeLesson, isCompleting, error, canComplete }) => (
+    <LessonErrorBoundary>
+      <EnhancedLessonCompletion
+        lessonId={lesson.id}
+        courseSlug={lesson.course.slug}
+        lessonTitle={lesson.title}
+        courseTitle={lesson.course.title}
+        progressData={currentProgressData}
+        onSuccess={onLessonComplete}
+      >
+        {({ completeLesson, isCompleting, error, canComplete }) => (
         <div className="min-h-screen bg-background">
           {/* Header redesigned component */}
           <LessonHeaderRedesigned
@@ -196,8 +220,9 @@ const LessonPageRedesigned: React.FC<LessonPageRedesignedProps> = ({
             />
           </main>
         </div>
-      )}
-    </EnhancedLessonCompletion>
+        )}
+      </EnhancedLessonCompletion>
+    </LessonErrorBoundary>
   )
 }
 
