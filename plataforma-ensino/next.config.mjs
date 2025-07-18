@@ -7,6 +7,9 @@ const withBundleAnalyzer = bundleAnalyzer({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Exclude example folder from build
+  pageExtensions: ['js', 'jsx', 'ts', 'tsx'],
+  
   // Configure images
   images: {
     domains: ['localhost'],
@@ -21,6 +24,12 @@ const nextConfig = {
   
   // Configure webpack for PDF.js compatibility
   webpack: (config, { isServer }) => {
+    // Exclude example folder from compilation
+    config.module.rules.push({
+      test: /\.(js|jsx|ts|tsx)$/,
+      exclude: /Exemplo-pagina-aula/,
+    });
+    
     // Prevent PDF.js from being bundled on server to avoid DOMMatrix errors
     config.resolve.alias = {
       ...config.resolve.alias,

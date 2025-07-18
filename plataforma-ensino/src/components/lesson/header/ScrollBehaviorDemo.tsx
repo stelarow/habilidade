@@ -81,7 +81,7 @@ export const ScrollBehaviorDemo = () => {
     console.log('Exit clicked')
   }
 
-  const handleComplete = () => {
+  const handleComplete = async () => {
     console.log('Complete clicked')
   }
 

@@ -1,6 +1,16 @@
 // Lesson Components Export
 // Part of Fase 1: Setup da Estrutura Base
 
+// Main Lesson Page Components
+export { default as LessonPageRedesigned } from './LessonPageRedesigned'
+export { default as LessonPageIntegration } from './LessonPageIntegration'
+export { default as LessonHeaderRedesigned } from './LessonHeaderRedesigned'
+export { default as VideoSection } from './VideoSection'
+export { default as PDFSection } from './PDFSection'
+export { default as ExercisesSection } from './ExercisesSection'
+export { default as QuizSection } from './QuizSection'
+export { default as CompletionSection } from './CompletionSection'
+
 // Layout Components (Implemented in Fase 1)
 export * from './layout'
 

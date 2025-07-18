@@ -59,33 +59,33 @@ export const useLessonCompletion = ({
     }
 
     return {
-      timeSpent: progressData.timeSpent || 0,
-      pdfProgress: progressData.pdfProgress || 0,
-      quizScore: progressData.quizScore || 0,
-      exercisesCompleted: progressData.exercisesCompleted || 0,
+      timeSpent: progressData.videoProgress?.watchTime || 0,
+      pdfProgress: progressData.pdfProgress?.percentageRead || 0,
+      quizScore: progressData.quizProgress?.score || 0,
+      exercisesCompleted: progressData.exerciseProgress?.completedExercises.length || 0,
       completionCriteria: [
         {
           type: 'time',
-          isCompleted: (progressData.timeSpent || 0) >= 1500, // 25 minutes
-          value: progressData.timeSpent || 0,
+          isCompleted: (progressData.videoProgress?.watchTime || 0) >= 1500, // 25 minutes
+          value: progressData.videoProgress?.watchTime || 0,
           required: 1500
         },
         {
           type: 'pdf',
-          isCompleted: (progressData.pdfProgress || 0) >= 100,
-          value: progressData.pdfProgress || 0,
+          isCompleted: (progressData.pdfProgress?.percentageRead || 0) >= 100,
+          value: progressData.pdfProgress?.percentageRead || 0,
           required: 100
         },
         {
           type: 'exercises',
-          isCompleted: (progressData.exercisesCompleted || 0) >= 100,
-          value: progressData.exercisesCompleted || 0,
+          isCompleted: (progressData.exerciseProgress?.completionPercentage || 0) >= 100,
+          value: progressData.exerciseProgress?.completionPercentage || 0,
           required: 100
         },
         {
           type: 'quiz',
-          isCompleted: (progressData.quizScore || 0) >= 70,
-          value: progressData.quizScore || 0,
+          isCompleted: (progressData.quizProgress?.score || 0) >= 70,
+          value: progressData.quizProgress?.score || 0,
           required: 70
         }
       ]

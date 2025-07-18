@@ -20,6 +20,11 @@ Uma plataforma de ensino moderna desenvolvida com Next.js 14, TypeScript, Tailwi
 - **Player de Vídeo**: React Player + Mux integration
 - **Dashboard Enhancement**: Interface do aluno com dados reais
 - **Navigation System**: Sistema de rotas e menus protegidos
+- **Lesson Page Redesign**: Nova interface de aulas com componentes modulares
+  - ✅ **Completion Integration**: Integração com sistema de conclusão existente
+  - ✅ **Core Components**: VideoSection, PDFSection, QuizSection, ExercisesSection, CompletionSection
+  - ✅ **Integration Component**: LessonPageIntegration para bridge entre dados existentes e nova UI
+  - 🔄 **Responsive Design**: Otimização mobile e tablet em progresso
 
 ### Próximo 📋
 - **Admin Panel**: Gerenciamento de cursos e usuários
@@ -54,11 +59,28 @@ Uma plataforma de ensino moderna desenvolvida com Next.js 14, TypeScript, Tailwi
 
 ## 🎨 Design System
 
-### Cores
-- **Primary**: `#d400ff` (Magenta Habilidade)
-- **Secondary**: `#00c4ff` (Ciano)
-- **Accent**: `#a000ff` (Roxo)
-- **Background**: `#0a0a0a` (Preto), `#181a2a` (Azul escuro)
+### Sistema de Cores (Design Tokens)
+O projeto utiliza um sistema de design tokens baseado em CSS custom properties para máxima flexibilidade e manutenibilidade:
+
+#### Cores Principais
+- **Primary**: `#d400ff` (Magenta Habilidade) - `hsl(var(--primary))`
+- **Secondary**: `#00c4ff` (Ciano) - `hsl(var(--secondary))`
+- **Accent**: `#a000ff` (Roxo) - `hsl(var(--accent))`
+
+#### Cores Semânticas
+- **Background**: `hsl(var(--background))` - Fundo principal
+- **Foreground**: `hsl(var(--foreground))` - Texto principal
+- **Card**: `hsl(var(--card))` - Fundos de cards
+- **Muted**: `hsl(var(--muted))` - Elementos secundários
+- **Border**: `hsl(var(--border))` - Bordas e divisores
+- **Success**: `hsl(var(--success))` - Estados de sucesso
+- **Warning**: `hsl(var(--warning))` - Estados de aviso
+- **Destructive**: `hsl(var(--destructive))` - Estados de erro
+
+#### Cores Específicas
+- **Header**: `hsl(var(--header-bg))` / `hsl(var(--header-foreground))`
+- **Input**: `hsl(var(--input))` - Campos de entrada
+- **Ring**: `hsl(var(--ring))` - Anéis de foco
 
 ### Tipografia
 - **Fonte**: Montserrat (Google Fonts)
@@ -70,6 +92,12 @@ Uma plataforma de ensino moderna desenvolvida com Next.js 14, TypeScript, Tailwi
 - **Corner Cut**: Cantos cortados característicos
 - **Starfield**: Background animado com partículas
 
+### Vantagens do Sistema de Tokens
+- **Consistência**: Cores centralizadas e reutilizáveis
+- **Manutenibilidade**: Mudanças globais com alterações mínimas
+- **Temas**: Suporte nativo para temas claro/escuro
+- **Acessibilidade**: Contraste e legibilidade otimizados
+
 ## 📁 Estrutura do Projeto
 
 ```
@@ -80,6 +108,9 @@ plataforma-ensino/
 │   │   ├── layout.tsx      # Layout principal
 │   │   └── page.tsx        # Página inicial
 │   ├── components/         # Componentes React
+│   │   ├── lesson/        # Componentes da página de aula
+│   │   │   ├── LessonPageIntegration.tsx  # Bridge entre dados existentes e nova UI
+│   │   │   └── LessonPageRedesigned.tsx   # Nova interface redesenhada
 │   │   └── ui/            # Componentes do Design System
 │   ├── lib/               # Utilitários
 │   │   └── supabase/      # Configuração Supabase
@@ -176,6 +207,98 @@ npm run lint         # Verificar código
 npm run test         # Executar testes (quando configurado)
 npm run test:e2e     # Testes E2E (quando configurado)
 ```
+
+## 🧪 Páginas de Teste e Desenvolvimento
+
+### Lesson Page Redesign Test Pages
+
+#### CompletionSection Test Page
+**URL**: `/test-completion-section`
+
+Página de teste dedicada para o componente `CompletionSection`, parte do projeto de redesign da página de aulas.
+
+**Funcionalidades**:
+- ✅ Simulação de progresso em tempo real
+- ✅ Controles para testar critérios de conclusão
+- ✅ Interface visual para validação de estados
+- ✅ Timer automático para teste de tempo mínimo
+
+**Como usar**:
+1. Acesse `http://localhost:3000/test-completion-section`
+2. Use os botões de simulação para avançar o progresso:
+   - **Advance PDF (+25%)**: Simula leitura do material
+   - **Complete Quiz (85%)**: Marca quiz como concluído
+   - **Advance Exercises (+33%)**: Simula envio de exercícios
+3. Aguarde 2+ minutos para critério de tempo
+4. Observe a habilitação do botão de conclusão
+
+**Critérios testados**:
+- ⏱️ Tempo mínimo na aula (2 min para teste)
+- 📄 Leitura completa do PDF (100%)
+- 🏆 Aprovação no quiz (≥70%)
+- 📝 Conclusão dos exercícios (100%)
+
+#### Redesigned Lesson Page Test
+**URL**: `/test-lesson-redesigned`
+
+Página de teste para a nova interface de aulas redesenhada com integração completa do sistema de conclusão.
+
+**Funcionalidades**:
+- ✅ Interface redesenhada com header fixo e progresso visual
+- ✅ Seções modulares: Vídeo, PDF, Exercícios, Quiz, Conclusão
+- ✅ Integração com `EnhancedLessonCompletion` para celebração
+- ✅ Simulação completa de progresso e conclusão de aula
+- ✅ Design responsivo para desktop, tablet e mobile
+
+**Componentes integrados**:
+- **LessonHeaderRedesigned**: Header com logo e indicadores de progresso
+- **VideoSection**: Player simulado com controles e progresso
+- **PDFSection**: Visualizador de apostila com simulação de leitura
+- **ExercisesSection**: Upload de arquivos com drag-and-drop
+- **QuizSection**: Sistema de perguntas com pontuação e explicações
+- **CompletionSection**: Validação de critérios e botão de conclusão
+
+## 🔗 Integração de Componentes
+
+### LessonPageIntegration Component
+
+**Localização**: `/src/components/lesson/LessonPageIntegration.tsx`
+
+Componente de integração que faz a ponte entre a estrutura de dados existente da página de aula e a nova interface redesenhada.
+
+**Funcionalidades**:
+- ✅ **Data Transformation**: Converte dados existentes para o formato da nova UI
+- ✅ **Progress Mapping**: Mapeia progresso existente para LessonProgressData
+- ✅ **Navigation Handling**: Gerencia navegação e callbacks de conclusão
+- ✅ **Backward Compatibility**: Mantém compatibilidade com estrutura existente
+
+**Uso**:
+```typescript
+import LessonPageIntegration from '@/components/lesson/LessonPageIntegration'
+
+<LessonPageIntegration
+  course={course}
+  lesson={lesson}
+  progress={progress}
+  exercises={exercises}
+  quizzes={quizzes}
+  submissions={submissions}
+  quizProgress={quizProgress}
+  onLessonComplete={handleComplete}
+  onExit={handleExit}
+/>
+```
+
+**Data Transformation**:
+- **Video Progress**: Calcula percentual baseado em watch_time/duration
+- **Quiz Progress**: Extrai melhor pontuação e status de conclusão
+- **Exercise Progress**: Calcula baseado em submissões aprovadas
+- **Overall Progress**: Combina todos os componentes com pesos específicos
+
+**Integration Points**:
+- Conecta com `LessonPageRedesigned` para renderização
+- Mantém callbacks existentes para navegação
+- Preserva lógica de conclusão de aula existente
 
 ## 📋 Progresso de Desenvolvimento
 

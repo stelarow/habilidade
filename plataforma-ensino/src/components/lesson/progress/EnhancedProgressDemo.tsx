@@ -62,7 +62,7 @@ export function EnhancedProgressDemo() {
     progressManager.updateQuizProgress(newScore, isCompleted, isPassed)
   }
   
-  const handleCompleteLesson = () => {
+  const handleCompleteLesson = async () => {
     console.log('Lesson completed!', progressManager.enhancedProgress)
     alert('🎉 Parabéns! Aula concluída com sucesso!')
   }

@@ -20,6 +20,8 @@ const config: Config = {
           700: '#8000d4',
           800: '#6000a0',
           900: '#40006c',
+          DEFAULT: 'hsl(var(--primary))',
+          foreground: 'hsl(var(--primary-foreground))',
         },
         secondary: {
           50: '#e6f9ff',
@@ -32,6 +34,8 @@ const config: Config = {
           700: '#007699',
           800: '#004f66',
           900: '#002833',
+          DEFAULT: 'hsl(var(--secondary))',
+          foreground: 'hsl(var(--secondary-foreground))',
         },
         accent: {
           50: '#f5f0ff',
@@ -44,11 +48,44 @@ const config: Config = {
           700: '#600099',
           800: '#400066',
           900: '#200033',
+          DEFAULT: 'hsl(var(--accent))',
+          foreground: 'hsl(var(--accent-foreground))',
         },
         background: {
           dark: '#0a0a0a',
           blue: '#181a2a',
+          DEFAULT: 'hsl(var(--background))',
         },
+        foreground: 'hsl(var(--foreground))',
+        card: {
+          DEFAULT: 'hsl(var(--card))',
+          foreground: 'hsl(var(--card-foreground))',
+        },
+        popover: {
+          DEFAULT: 'hsl(var(--popover))',
+          foreground: 'hsl(var(--popover-foreground))',
+        },
+        muted: {
+          DEFAULT: 'hsl(var(--muted))',
+          foreground: 'hsl(var(--muted-foreground))',
+        },
+        destructive: {
+          DEFAULT: 'hsl(var(--destructive))',
+          foreground: 'hsl(var(--destructive-foreground))',
+        },
+        border: 'hsl(var(--border))',
+        input: 'hsl(var(--input))',
+        ring: 'hsl(var(--ring))',
+        success: {
+          DEFAULT: 'hsl(var(--success))',
+          foreground: 'hsl(var(--success-foreground))',
+        },
+        warning: {
+          DEFAULT: 'hsl(var(--warning))',
+          foreground: 'hsl(var(--warning-foreground))',
+        },
+        'header-bg': 'hsl(var(--header-bg))',
+        'header-foreground': 'hsl(var(--header-foreground))',
       },
       fontFamily: {
         'montserrat': ['Montserrat', 'sans-serif'],

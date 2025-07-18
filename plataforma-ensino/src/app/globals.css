@@ -12,6 +12,41 @@
   --background-blue: #181a2a;
   --text-primary: #ffffff;
   --text-secondary: #d4d4d8;
+
+  /* Lesson Page Design System - matching example */
+  --background: 0 0% 8%;
+  --foreground: 0 0% 98%;
+  --card: 240 10% 12%;
+  --card-foreground: 0 0% 98%;
+  --popover: 240 10% 12%;
+  --popover-foreground: 0 0% 98%;
+  --primary: 263 85% 63%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 240 10% 15%;
+  --secondary-foreground: 0 0% 98%;
+  --muted: 240 10% 15%;
+  --muted-foreground: 240 5% 65%;
+  --accent: 263 85% 63%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 240 10% 20%;
+  --input: 240 10% 15%;
+  --ring: 263 85% 63%;
+  --success: 142 76% 36%;
+  --success-foreground: 0 0% 98%;
+  --warning: 38 92% 50%;
+  --warning-foreground: 0 0% 98%;
+  --header-bg: 0 0% 8%;
+  --header-foreground: 0 0% 98%;
+  --progress-bg: 240 10% 15%;
+  --progress-fill: 263 85% 63%;
+  --radius: 0.5rem;
+
+  /* Gradients for lesson page */
+  --gradient-primary: linear-gradient(135deg, hsl(220 100% 70%), hsl(263 85% 63%));
+  --gradient-text: linear-gradient(135deg, #60A5FA, #A855F7);
+  --gradient-button: linear-gradient(135deg, hsl(220 100% 70%), hsl(263 85% 63%));
 }
 
 * {
@@ -254,5 +289,96 @@ body {
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+
+  /* Lesson Page Specific Utilities - matching example exactly */
+  .gradient-text {
+    background: var(--gradient-text);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .gradient-bg {
+    background: var(--gradient-primary);
+  }
+  
+  .gradient-button {
+    background: var(--gradient-button);
+    @apply text-white font-medium transition-all duration-300;
+  }
+
+  .gradient-button:hover {
+    @apply shadow-lg transform scale-105;
+    box-shadow: 0 4px 20px rgba(96, 165, 250, 0.4);
+  }
+
+  .gradient-button:focus {
+    @apply outline-none ring-2 ring-primary ring-offset-2;
+  }
+
+  .gradient-button:disabled {
+    @apply opacity-50 cursor-not-allowed transform-none shadow-none;
+    background: hsl(var(--muted));
+  }
+
+  /* Header specific styles */
+  .bg-header-bg {
+    background-color: hsl(var(--header-bg));
+  }
+
+  .text-header-foreground {
+    color: hsl(var(--header-foreground));
+  }
+
+  /* Card border styling */
+  .border-border\/50 {
+    border-color: hsl(var(--border) / 0.5);
+  }
+
+  /* Background utilities */
+  .bg-background {
+    background-color: hsl(var(--background));
+  }
+
+  .bg-muted {
+    background-color: hsl(var(--muted));
+  }
+
+  .text-muted-foreground {
+    color: hsl(var(--muted-foreground));
+  }
+
+  /* Success/Warning/Destructive colors */
+  .text-success {
+    color: hsl(var(--success));
+  }
+
+  .text-success-foreground {
+    color: hsl(var(--success-foreground));
+  }
+
+  .text-warning-foreground {
+    color: hsl(var(--warning-foreground));
+  }
+
+  .text-destructive {
+    color: hsl(var(--destructive));
+  }
+
+  .bg-success\/10 {
+    background-color: hsl(var(--success) / 0.1);
+  }
+
+  .bg-warning\/10 {
+    background-color: hsl(var(--warning) / 0.1);
+  }
+
+  .border-success\/30 {
+    border-color: hsl(var(--success) / 0.3);
+  }
+
+  .border-warning\/30 {
+    border-color: hsl(var(--warning) / 0.3);
   }
 }
