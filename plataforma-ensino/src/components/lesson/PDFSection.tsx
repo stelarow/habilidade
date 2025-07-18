@@ -5,11 +5,32 @@ import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Progress } from '@/components/ui/progress'
 import { ChevronLeft, ChevronRight, ZoomIn, ZoomOut, AlertCircle } from 'lucide-react'
-import { Document, Page, pdfjs } from 'react-pdf'
 import { calculatePDFProgress, LessonProgressManager } from '@/utils/lessonProgressUtils'
 
-// Set up PDF.js worker
-pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`
+// Components that will be dynamically loaded
+let Document: any = null
+let Page: any = null
+let pdfjs: any = null
+
+// Initialize PDF.js only on the client side
+if (typeof window !== 'undefined') {
+  import('react-pdf').then((reactPdf) => {
+    Document = reactPdf.Document
+    Page = reactPdf.Page
+    pdfjs = reactPdf.pdfjs
+    
+    // Set up PDF.js worker
+    pdfjs.GlobalWorkerOptions.workerSrc = `/pdf.worker.min.mjs`
+  }).catch(() => {
+    // Fallback to CDN if local worker fails
+    import('react-pdf').then((reactPdf) => {
+      Document = reactPdf.Document
+      Page = reactPdf.Page
+      pdfjs = reactPdf.pdfjs
+      pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`
+    })
+  })
+}
 
 interface PDFSectionProps {
   title?: string
@@ -203,7 +224,7 @@ const PDFSection: React.FC<PDFSectionProps> = ({
           </div>
         )}
 
-        {!error && (
+        {!error && typeof window !== 'undefined' && Document && Page && (
           <div className="flex justify-center p-4">
             <Document
               file={pdfUrl}
@@ -224,6 +245,26 @@ const PDFSection: React.FC<PDFSectionProps> = ({
                 }
               />
             </Document>
+          </div>
+        )}
+
+        {/* Show loading state until PDF components are loaded */}
+        {!error && typeof window !== 'undefined' && (!Document || !Page) && (
+          <div className="flex items-center justify-center h-96">
+            <div className="text-center text-muted-foreground">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-2"></div>
+              <p>Carregando visualizador PDF...</p>
+            </div>
+          </div>
+        )}
+
+        {/* SSR placeholder */}
+        {typeof window === 'undefined' && (
+          <div className="flex items-center justify-center h-96">
+            <div className="text-center text-muted-foreground">
+              <AlertCircle className="h-8 w-8 mx-auto mb-2" />
+              <p className="text-sm">PDF será carregado no cliente</p>
+            </div>
           </div>
         )}
       </div>

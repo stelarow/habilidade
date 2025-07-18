@@ -2,6 +2,7 @@
 export * from './ui';
 export * from './backgrounds';
 export * from './header';
+export * from './lesson';
 
 // Course Components
 export { LessonVideoPlayer } from './course/LessonVideoPlayer';

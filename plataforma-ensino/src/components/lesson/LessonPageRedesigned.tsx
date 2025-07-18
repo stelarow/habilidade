@@ -7,7 +7,7 @@ import { EnhancedLessonCompletion } from './completion/EnhancedLessonCompletion'
 import LessonHeaderRedesigned from './LessonHeaderRedesigned'
 import VideoSection from './VideoSection'
 import ExercisesSection from './ExercisesSection'
-import PDFSection from './PDFSection'
+import PDFSectionWrapper from './PDFSectionWrapper'
 import QuizSection from './QuizSection'
 import CompletionSection from './CompletionSection'
 import LessonErrorBoundary from './LessonErrorBoundary'
@@ -137,7 +137,7 @@ const LessonPageRedesigned: React.FC<LessonPageRedesignedProps> = ({
             />
 
             {/* PDF Section */}
-            <PDFSection
+            <PDFSectionWrapper
               title="Material Didático - Apostila"
               pdfUrl="/PDF/Curso-teste/Aula-teste/Capitulo 2.pdf"
               lessonId={lesson.id}

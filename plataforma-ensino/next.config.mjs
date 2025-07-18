@@ -42,6 +42,8 @@ const nextConfig = {
       config.resolve.alias = {
         ...config.resolve.alias,
         'pdfjs-dist/build/pdf.worker.min.mjs': false,
+        'react-pdf': false,
+        'pdfjs-dist': false,
       };
     }
     
