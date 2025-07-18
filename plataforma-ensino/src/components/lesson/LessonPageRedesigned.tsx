@@ -131,7 +131,7 @@ const LessonPageRedesigned: React.FC<LessonPageRedesignedProps> = ({
             <VideoSection
               videoTitle={`Vídeo: ${lesson.title}`}
               videoDescription="Assista ao conteúdo principal desta aula"
-              videoUrl="https://vimeo.com/manage/videos/1095312387/8519cef8f3"
+              videoUrl="https://vimeo.com/1095312387"
               lessonId={lesson.id}
               onProgressUpdate={handleVideoProgress}
             />
@@ -139,7 +139,7 @@ const LessonPageRedesigned: React.FC<LessonPageRedesignedProps> = ({
             {/* PDF Section */}
             <PDFSectionWrapper
               title="Material Didático - Apostila"
-              pdfUrl="/PDF/Curso-teste/Aula-teste/Capitulo 2.pdf"
+              pdfUrl="/pdf/capitulo2.pdf"
               lessonId={lesson.id}
               onProgressUpdate={handlePDFProgress}
               initialProgress={currentProgressData?.pdfProgress?.percentageRead || 0}

@@ -42,7 +42,7 @@ interface PDFSectionProps {
 
 const PDFSection: React.FC<PDFSectionProps> = ({
   title = "Material Didático - Apostila",
-  pdfUrl = "/PDF/Curso-teste/Aula-teste/Capitulo 2.pdf", // Default test PDF
+  pdfUrl = "/pdf/capitulo2.pdf", // Default test PDF
   lessonId = "test-lesson",
   onProgressUpdate,
   initialProgress = 0
