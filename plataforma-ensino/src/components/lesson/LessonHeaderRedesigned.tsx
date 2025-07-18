@@ -27,8 +27,6 @@ interface LessonHeaderRedesignedProps {
 }
 
 const LessonHeaderRedesigned: React.FC<LessonHeaderRedesignedProps> = ({
-  course,
-  lesson,
   progressData,
   onExit
 }) => {

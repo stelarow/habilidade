@@ -25,7 +25,7 @@ interface UploadedFile {
 interface ExercisesSectionProps {
   title?: string
   exerciseFiles?: ExerciseFile[]
-  onProgressUpdate?: (progress: number) => void
+  onProgressUpdate?: (progress: number, uploadedFiles?: string[]) => void
   onFilesUploaded?: (files: UploadedFile[]) => void
   maxFileSize?: number // in MB
   allowedFileTypes?: string[]
@@ -154,10 +154,10 @@ const ExercisesSection: React.FC<ExercisesSectionProps> = ({
       const updatedFiles = [...uploadedFiles, ...newUploadedFiles]
       setUploadedFiles(updatedFiles)
       
-      // Calculate progress based on uploaded files
-      const progress = Math.min((updatedFiles.length / exerciseFiles.length) * 100, 100)
+      // Calculate progress based on uploaded files (100% when at least 1 file is uploaded)
+      const progress = updatedFiles.length > 0 ? 100 : 0
       if (onProgressUpdate) {
-        onProgressUpdate(progress)
+        onProgressUpdate(progress, updatedFiles.map(f => f.name))
       }
 
       if (onFilesUploaded) {
@@ -207,10 +207,10 @@ const ExercisesSection: React.FC<ExercisesSectionProps> = ({
     const updatedFiles = uploadedFiles.filter(file => file.id !== fileId)
     setUploadedFiles(updatedFiles)
     
-    // Update progress
-    const progress = Math.min((updatedFiles.length / exerciseFiles.length) * 100, 100)
+    // Update progress (100% when at least 1 file is uploaded)
+    const progress = updatedFiles.length > 0 ? 100 : 0
     if (onProgressUpdate) {
-      onProgressUpdate(progress)
+      onProgressUpdate(progress, updatedFiles.map(f => f.name))
     }
 
     if (onFilesUploaded) {

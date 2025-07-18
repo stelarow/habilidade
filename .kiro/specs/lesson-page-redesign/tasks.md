@@ -156,3 +156,43 @@
   - Add loading states and proper user feedback
   - Test performance with simulated user interactions
   - _Requirements: 2.1, 2.2, 2.3, 2.4, 3.1, 3.2, 3.3, 3.4_
+
+- [x] 13. Implement real Vimeo video player integration
+  - Replace video simulation with actual Vimeo player embed
+  - Integrate Vimeo Player SDK for progress tracking
+  - Implement real-time progress updates to header
+  - Add video URL configuration support
+  - Handle video loading states and errors
+  - Test with provided Vimeo URL: https://vimeo.com/manage/videos/1095312387/8519cef8f3
+  - _Requirements: 2.1_
+
+- [x] 14. Implement real PDF reader functionality
+  - Replace PDF simulation with actual PDF.js integration
+  - Load PDF files from local file system path
+  - Implement page navigation and progress tracking
+  - Track actual page reading progress
+  - Update header progress indicators in real-time
+  - Test with provided PDF: C:\Habilidade\plataforma-ensino\PDF\Curso-teste\Aula-teste\Capitulo 2.pdf
+  - _Requirements: 2.2_
+
+- [x] 15. Implement real progress persistence and calculation
+  - Create progress tracking utilities for video, PDF, exercises, and quiz
+  - Implement progress persistence to database/localStorage
+  - Update header progress indicators in real-time
+  - Calculate overall lesson completion percentage
+  - Integrate with existing progress tracking hooks
+  - _Requirements: 1.2, 2.1, 2.2, 2.3, 2.4_
+
+- [x] 16. Enhance exercise upload functionality
+  - Implement real file upload with validation
+  - Add progress tracking based on uploaded files
+  - Update header progress when files are uploaded
+  - Integrate with existing file upload system
+  - _Requirements: 2.3_
+
+- [x] 17. Integrate real quiz scoring and progress
+  - Connect quiz component with actual quiz data
+  - Implement real scoring calculation
+  - Update header progress based on quiz completion
+  - Persist quiz results and progress
+  - _Requirements: 2.4_

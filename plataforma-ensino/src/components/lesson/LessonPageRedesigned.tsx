@@ -11,7 +11,8 @@ import PDFSection from './PDFSection'
 import QuizSection from './QuizSection'
 import CompletionSection from './CompletionSection'
 import LessonErrorBoundary from './LessonErrorBoundary'
-import { useLessonInteractionTracking } from '@/hooks/useLessonPerformance'
+
+import { useLessonProgress } from '@/hooks/useLessonProgress'
 
 interface LessonPageRedesignedProps {
   lesson: {
@@ -37,18 +38,19 @@ const LessonPageRedesigned: React.FC<LessonPageRedesignedProps> = ({
 }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  
-  // Performance monitoring
+
+  // Real-time progress tracking
   const {
-    trackVideoInteraction,
-    trackQuizInteraction,
-    trackFileUpload,
-    trackCompletion,
-    trackError,
-    getPerformanceReport
-  } = useLessonInteractionTracking()
-  // State for tracking progress across all sections
-  const [currentProgressData, setCurrentProgressData] = useState<LessonProgressData | null>(progressData)
+    progressData: currentProgressData,
+    updateVideoProgress,
+    updatePDFProgress,
+    updateQuizProgress,
+    updateExerciseProgress
+  } = useLessonProgress({
+    lessonId: lesson.id,
+    initialProgressData: progressData
+  })
+
   const [timeSpent, setTimeSpent] = useState(0)
 
   // Timer for tracking time spent on page
@@ -60,11 +62,6 @@ const LessonPageRedesigned: React.FC<LessonPageRedesignedProps> = ({
 
     return () => clearInterval(interval)
   }, [])
-
-  // Update progress data when prop changes
-  useEffect(() => {
-    setCurrentProgressData(progressData)
-  }, [progressData])
 
   const handleExit = useCallback(() => {
     try {
@@ -81,60 +78,22 @@ const LessonPageRedesigned: React.FC<LessonPageRedesignedProps> = ({
     }
   }, [onExit])
 
-  // Handle progress updates from individual sections
-  const handleVideoProgress = useCallback((progress: number) => {
-    setCurrentProgressData(prev => {
-      if (!prev) return null
-      return {
-        ...prev,
-        videoProgress: {
-          ...prev.videoProgress,
-          percentageWatched: progress
-        }
-      }
-    })
-  }, [])
+  // Handle progress updates from individual sections using the new hook
+  const handleVideoProgress = useCallback((progress: number, currentTime?: number, duration?: number) => {
+    updateVideoProgress(progress, currentTime, duration)
+  }, [updateVideoProgress])
 
-  const handlePDFProgress = useCallback((progress: number) => {
-    setCurrentProgressData(prev => {
-      if (!prev) return null
-      return {
-        ...prev,
-        pdfProgress: {
-          ...prev.pdfProgress,
-          percentageRead: progress
-        }
-      }
-    })
-  }, [])
+  const handlePDFProgress = useCallback((progress: number, currentPage?: number, totalPages?: number) => {
+    updatePDFProgress(progress, currentPage, totalPages)
+  }, [updatePDFProgress])
 
   const handleQuizComplete = useCallback((score: number, passed: boolean) => {
-    setCurrentProgressData(prev => {
-      if (!prev) return null
-      return {
-        ...prev,
-        quizProgress: {
-          ...prev.quizProgress,
-          score,
-          isPassed: passed,
-          isCompleted: true
-        }
-      }
-    })
-  }, [])
+    updateQuizProgress(score, true, passed)
+  }, [updateQuizProgress])
 
-  const handleExercisesProgress = useCallback((progress: number) => {
-    setCurrentProgressData(prev => {
-      if (!prev) return null
-      return {
-        ...prev,
-        exerciseProgress: {
-          ...prev.exerciseProgress,
-          completionPercentage: progress
-        }
-      }
-    })
-  }, [])
+  const handleExercisesProgress = useCallback((progress: number, uploadedFiles?: string[]) => {
+    updateExerciseProgress(progress, uploadedFiles)
+  }, [updateExerciseProgress])
 
   return (
     <LessonErrorBoundary>
@@ -152,7 +111,7 @@ const LessonPageRedesigned: React.FC<LessonPageRedesignedProps> = ({
           <LessonHeaderRedesigned
             course={lesson.course}
             lesson={lesson}
-            progressData={progressData}
+            progressData={currentProgressData}
             onExit={handleExit}
           />
 
@@ -172,13 +131,16 @@ const LessonPageRedesigned: React.FC<LessonPageRedesignedProps> = ({
             <VideoSection
               videoTitle={`Vídeo: ${lesson.title}`}
               videoDescription="Assista ao conteúdo principal desta aula"
+              videoUrl="https://vimeo.com/manage/videos/1095312387/8519cef8f3"
+              lessonId={lesson.id}
               onProgressUpdate={handleVideoProgress}
             />
 
             {/* PDF Section */}
             <PDFSection
               title="Material Didático - Apostila"
-              totalPages={20}
+              pdfUrl="/PDF/Curso-teste/Aula-teste/Capitulo 2.pdf"
+              lessonId={lesson.id}
               onProgressUpdate={handlePDFProgress}
               initialProgress={currentProgressData?.pdfProgress?.percentageRead || 0}
             />
