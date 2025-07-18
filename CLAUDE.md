@@ -149,11 +149,36 @@ New courses follow the schema in `src/data/coursesSchema.js`:
 - **Main Website**: Production-ready with 8 detailed courses
 - **Learning Platform**: MVP in development, database schema complete, UI components partially migrated
 
-## Development Best Practices
+## Important Development Notes
 
-- No final sempre atualize o git main para dar deploy automatico no netlify
-- Sempre atualize o git main
+### Learning Platform Current Status (Mid-Development)
+- **Lesson Page Redesign**: Advanced redesigned lesson interface with modular components
+- **Key Components**: VideoSection, PDFSection, QuizSection, ExercisesSection, CompletionSection
+- **Integration System**: LessonPageIntegration bridges existing data with new UI
+- **Test Pages**: Multiple test pages for validation (`/test-lesson-redesigned`, `/test-completion-section`, etc.)
+- **Performance Hooks**: useLessonProgress, useLessonPerformance for optimized lesson experience
 
-## Performance and Development Tips
+### Current Implementation Focus
+- **Page**: `/src/app/course/[slug]/lesson/[lessonSlug]/page-redesigned.tsx`
+- **Integration**: `/src/components/lesson/LessonPageIntegration.tsx`
+- **Core Components**: `/src/components/lesson/` directory with modular lesson sections
+- **Utilities**: `/src/utils/lessonProgressUtils.ts` and `/src/utils/lessonTestUtils.ts`
 
-- Aumente o timeout de comandos NPM * para 10 min
+### Environment Configuration
+- **Supabase**: Database schema in `database/schema.sql` with complete RLS policies
+- **Authentication**: Middleware-based auth with role-based redirects
+- **Environment**: `.env.local` required for Supabase configuration
+- **Error Tracking**: Sentry integration with client/server/edge configs
+
+### Development Best Practices
+- Always update git main after completion for automatic Netlify deployment
+- Use TypeScript strictly in learning platform - no `any` types
+- Test lesson functionality using dedicated test pages
+- Validate lesson progress calculations with utility functions
+- Use performance hooks for optimized lesson loading
+
+### Performance and Development Tips
+- Increase NPM command timeout to 10 minutes
+- Use `npm run build:optimize` for bundle analysis on main website
+- Test lesson components individually before integration
+- Monitor lesson performance metrics with useLessonPerformance hook

@@ -33,23 +33,47 @@ const PDFSection: React.FC<PDFSectionProps> = ({
   const [progress, setProgress] = useState<number>(initialProgress)
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [error, setError] = useState<string | null>(null)
-  
+
   const progressManagerRef = useRef<LessonProgressManager | null>(null)
   const pageStartTimeRef = useRef<number>(Date.now())
 
   // Initialize progress manager
   useEffect(() => {
     progressManagerRef.current = new LessonProgressManager(lessonId)
-    
+
     // Load saved progress
     const savedProgress = progressManagerRef.current.getProgress()
     setProgress(savedProgress.pdfProgress)
   }, [lessonId])
 
+  const markPageAsRead = useCallback((pageNumber: number) => {
+    setPagesRead(prev => {
+      if (!prev.includes(pageNumber)) {
+        const newPagesRead = [...prev, pageNumber]
+        const newProgress = calculatePDFProgress(newPagesRead, numPages)
+
+        setProgress(newProgress)
+
+        // Save progress
+        if (progressManagerRef.current) {
+          progressManagerRef.current.updatePDFProgress(newPagesRead, numPages)
+        }
+
+        // Call progress update callback
+        if (onProgressUpdate) {
+          onProgressUpdate(newProgress)
+        }
+
+        return newPagesRead
+      }
+      return prev
+    })
+  }, [numPages, onProgressUpdate])
+
   // Track page view time
   useEffect(() => {
     pageStartTimeRef.current = Date.now()
-    
+
     return () => {
       // Record time spent on page when leaving
       const timeSpent = Date.now() - pageStartTimeRef.current
@@ -70,30 +94,6 @@ const PDFSection: React.FC<PDFSectionProps> = ({
     setError('Erro ao carregar o PDF. Verifique se o arquivo existe.')
     setIsLoading(false)
   }
-
-  const markPageAsRead = useCallback((pageNumber: number) => {
-    setPagesRead(prev => {
-      if (!prev.includes(pageNumber)) {
-        const newPagesRead = [...prev, pageNumber]
-        const newProgress = calculatePDFProgress(newPagesRead, numPages)
-        
-        setProgress(newProgress)
-        
-        // Save progress
-        if (progressManagerRef.current) {
-          progressManagerRef.current.updatePDFProgress(newPagesRead, numPages)
-        }
-        
-        // Call progress update callback
-        if (onProgressUpdate) {
-          onProgressUpdate(newProgress)
-        }
-        
-        return newPagesRead
-      }
-      return prev
-    })
-  }, [numPages, onProgressUpdate])
 
   const goToPrevPage = () => {
     if (currentPage > 1) {
@@ -133,7 +133,7 @@ const PDFSection: React.FC<PDFSectionProps> = ({
   return (
     <Card className="p-6 border-border/50">
       <h3 className="text-xl font-bold mb-4 gradient-text">{title}</h3>
-      
+
       {/* PDF Controls */}
       <div className="flex items-center justify-between mb-4 p-3 bg-muted rounded-lg">
         <div className="flex items-center gap-2">
@@ -145,11 +145,11 @@ const PDFSection: React.FC<PDFSectionProps> = ({
           >
             <ChevronLeft className="h-4 w-4" />
           </Button>
-          
+
           <span className="text-sm font-medium">
             Página {currentPage} de {numPages}
           </span>
-          
+
           <Button
             variant="outline"
             size="sm"
@@ -159,7 +159,7 @@ const PDFSection: React.FC<PDFSectionProps> = ({
             <ChevronRight className="h-4 w-4" />
           </Button>
         </div>
-        
+
         <div className="flex items-center gap-2">
           <Button
             variant="outline"
@@ -169,9 +169,9 @@ const PDFSection: React.FC<PDFSectionProps> = ({
           >
             <ZoomOut className="h-4 w-4" />
           </Button>
-          
+
           <span className="text-sm">{Math.round(scale * 100)}%</span>
-          
+
           <Button
             variant="outline"
             size="sm"
@@ -182,7 +182,7 @@ const PDFSection: React.FC<PDFSectionProps> = ({
           </Button>
         </div>
       </div>
-      
+
       {/* PDF Viewer */}
       <div className="bg-muted rounded-lg min-h-96 mb-4 overflow-auto">
         {isLoading && (
@@ -193,7 +193,7 @@ const PDFSection: React.FC<PDFSectionProps> = ({
             </div>
           </div>
         )}
-        
+
         {error && (
           <div className="flex items-center justify-center h-96">
             <div className="text-center text-muted-foreground">
@@ -202,7 +202,7 @@ const PDFSection: React.FC<PDFSectionProps> = ({
             </div>
           </div>
         )}
-        
+
         {!error && (
           <div className="flex justify-center p-4">
             <Document
@@ -227,7 +227,7 @@ const PDFSection: React.FC<PDFSectionProps> = ({
           </div>
         )}
       </div>
-      
+
       {/* Progress Information */}
       <div className="space-y-3">
         <div className="flex items-center gap-2">
@@ -235,17 +235,17 @@ const PDFSection: React.FC<PDFSectionProps> = ({
           <Progress value={progress} className="flex-1" />
           <span className="text-sm font-medium">{Math.round(progress)}%</span>
         </div>
-        
+
         <div className="flex justify-between items-center text-sm text-muted-foreground">
           <span>Páginas lidas: {pagesRead.length}/{numPages}</span>
           <span>
-            {pagesRead.length === numPages ? 
-              "✅ Leitura concluída!" : 
+            {pagesRead.length === numPages ?
+              "✅ Leitura concluída!" :
               `${numPages - pagesRead.length} páginas restantes`
             }
           </span>
         </div>
-        
+
         {/* Reading tip */}
         <div className="text-xs text-muted-foreground bg-muted/50 p-2 rounded">
           💡 Dica: Passe pelo menos 3 segundos em cada página para que seja marcada como lida.
