@@ -49,9 +49,11 @@ const PDFSection: React.FC<PDFSectionProps> = ({
   const [pageWidth, setPageWidth] = useState<number>(600)
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false)
   const [showFloatingControls, setShowFloatingControls] = useState<boolean>(false)
+  const [isPDFSectionVisible, setIsPDFSectionVisible] = useState<boolean>(false)
 
   const progressManagerRef = useRef<LessonProgressManager | null>(null)
   const pageStartTimeRef = useRef<number>(Date.now())
+  const pdfSectionRef = useRef<HTMLDivElement | null>(null)
 
   // Initialize progress manager
   useEffect(() => {
@@ -78,6 +80,26 @@ const PDFSection: React.FC<PDFSectionProps> = ({
     updatePageWidth()
     window.addEventListener('resize', updatePageWidth)
     return () => window.removeEventListener('resize', updatePageWidth)
+  }, [])
+
+  // Intersection Observer for PDF section visibility
+  useEffect(() => {
+    const currentPdfSection = pdfSectionRef.current
+    if (!currentPdfSection) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries
+        setIsPDFSectionVisible(entry.isIntersecting && entry.intersectionRatio > 0.1)
+      },
+      {
+        threshold: [0.1, 0.9],
+        rootMargin: '-20px'
+      }
+    )
+
+    observer.observe(currentPdfSection)
+    return () => observer.disconnect()
   }, [])
 
   const markPageAsRead = useCallback((pageNumber: number) => {
@@ -290,6 +312,7 @@ const PDFSection: React.FC<PDFSectionProps> = ({
 
       {/* PDF Viewer */}
       <div 
+        ref={pdfSectionRef}
         className="relative bg-muted rounded-lg min-h-[600px] mb-4 overflow-auto flex items-start justify-center"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
@@ -365,13 +388,16 @@ const PDFSection: React.FC<PDFSectionProps> = ({
 
         {/* Floating Controls */}
         <AnimatePresence>
-          {showFloatingControls && !isFullscreen && (
+          {showFloatingControls && !isFullscreen && isPDFSectionVisible && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
               transition={{ duration: 0.2 }}
-              className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-50"
+              className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50"
+              style={{
+                pointerEvents: 'auto'
+              }}
             >
               <div className="flex items-center gap-2 bg-black/80 backdrop-blur-sm rounded-full px-4 py-2 text-white shadow-lg">
                 <Button
@@ -449,7 +475,7 @@ const PDFSection: React.FC<PDFSectionProps> = ({
             transition={{ duration: 0.3 }}
             className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center"
           >
-            <div className="max-w-6xl max-h-full overflow-auto p-8 relative">
+            <div className="max-w-6xl max-h-full overflow-auto p-8 pb-32 relative">
               {/* Fullscreen Header */}
               <div className="absolute top-4 left-4 right-4 z-10 flex justify-between items-center">
                 <h3 className="text-xl font-bold text-white">{title}</h3>
@@ -506,7 +532,7 @@ const PDFSection: React.FC<PDFSectionProps> = ({
               </div>
 
               {/* Fullscreen Controls */}
-              <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+              <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-[110]">
                 <div className="flex items-center gap-4 bg-black/80 backdrop-blur-sm rounded-full px-6 py-3 text-white shadow-lg">
                   <Button
                     variant="ghost"
