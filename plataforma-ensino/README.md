@@ -64,6 +64,8 @@ Uma plataforma de ensino moderna desenvolvida com Next.js 14, TypeScript, Tailwi
 - **Mux** - Streaming de vídeo profissional
 - **Phosphor React** - Ícones
 - **Radix UI** - Componentes headless
+- **React PDF** - Visualização de documentos PDF
+- **Framer Motion** - Animações e transições
 
 ## 🎨 Design System
 
@@ -266,7 +268,55 @@ Página de teste para a nova interface de aulas redesenhada com integração com
 - **QuizSection**: Sistema de perguntas com pontuação e explicações
 - **CompletionSection**: Validação de critérios e botão de conclusão
 
-## 🔗 Integração de Componentes
+## 🔗 Arquitetura de Componentes
+
+### Sistema de Exportação Modular
+
+O projeto utiliza um sistema de exportação explícita para evitar conflitos e melhorar a organização dos componentes:
+
+```typescript
+// Importações explícitas dos componentes principais
+import { 
+  LessonPageRedesigned,
+  LessonPageIntegration,
+  VideoSection,
+  PDFSection,
+  QuizSection,
+  ExercisesSection,
+  CompletionSection 
+} from '@/components'
+
+// Componentes com nomes específicos para evitar conflitos
+import { 
+  LessonVideoPlayerComponent,
+  LessonPDFViewer,
+  LessonQuizInterface,
+  LessonExercisePanel 
+} from '@/components'
+```
+
+### Componentes Principais
+
+#### Core Lesson Components
+- **LessonPageRedesigned**: Interface principal redesenhada
+- **LessonPageIntegration**: Bridge entre dados existentes e nova UI
+- **LessonHeaderRedesigned**: Header com logo e indicadores de progresso
+- **VideoSection**: Player de vídeo com controles customizados
+- **PDFSection**: Visualizador de PDF com tracking de progresso
+- **PDFSectionWrapper**: Wrapper para integração com react-pdf
+- **QuizSection**: Sistema de quiz interativo com gamificação
+- **ExercisesSection**: Upload de arquivos com drag-and-drop
+- **CompletionSection**: Validação de critérios e conclusão de aula
+
+#### Sub-Components (Especializados)
+- **VideoPlayer**: Player HTML5 customizado (renomeado como LessonVideoPlayerComponent)
+- **PDFViewer**: Visualizador de documentos (renomeado como LessonPDFViewer)
+- **QuizInterface**: Interface de quiz (renomeado como LessonQuizInterface)
+- **ExercisePanel**: Painel de exercícios (renomeado como LessonExercisePanel)
+
+#### Layout e Progress Components
+- **Layout Components**: Sistema de layout adaptativo
+- **Progress Components**: Tracking e visualização de progresso
 
 ### LessonPageIntegration Component
 
@@ -282,7 +332,7 @@ Componente de integração que faz a ponte entre a estrutura de dados existente 
 
 **Uso**:
 ```typescript
-import LessonPageIntegration from '@/components/lesson/LessonPageIntegration'
+import { LessonPageIntegration } from '@/components'
 
 <LessonPageIntegration
   course={course}
@@ -307,6 +357,18 @@ import LessonPageIntegration from '@/components/lesson/LessonPageIntegration'
 - Conecta com `LessonPageRedesigned` para renderização
 - Mantém callbacks existentes para navegação
 - Preserva lógica de conclusão de aula existente
+
+### Vantagens da Nova Arquitetura
+
+#### Organização Melhorada
+- **Exportações Explícitas**: Evita conflitos de nomes entre componentes
+- **Namespacing**: Componentes específicos têm prefixos claros (Lesson*)
+- **Modularidade**: Cada componente tem responsabilidade bem definida
+
+#### Manutenibilidade
+- **Imports Claros**: Desenvolvedores sabem exatamente o que estão importando
+- **Conflitos Evitados**: Nomes únicos previnem problemas de namespace
+- **Estrutura Consistente**: Padrão uniforme em todo o projeto
 
 ## 📋 Progresso de Desenvolvimento
 
