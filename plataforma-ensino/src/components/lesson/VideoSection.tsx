@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { Card } from '@/components/ui/card'
 import { Progress } from '@/components/ui/progress'
 import { Play, Pause, AlertCircle } from 'lucide-react'
-import ReactPlayer from 'react-player/vimeo'
+import ReactPlayer from 'react-player'
 import { extractVimeoId, formatTime, LessonProgressManager } from '@/utils/lessonProgressUtils'
 
 interface VideoSectionProps {
@@ -152,13 +152,15 @@ const VideoSection: React.FC<VideoSectionProps> = ({
           controls={false}
           config={{
             vimeo: {
-              responsive: true,
-              controls: false,
-              title: false,
-              byline: false,
-              portrait: false
+              playerOptions: {
+                responsive: true,
+                controls: false,
+                title: false,
+                byline: false,
+                portrait: false
+              }
             }
-          }}
+          } as any}
         />
         
         {/* Custom controls overlay */}

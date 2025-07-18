@@ -208,6 +208,7 @@ export const useLessonProgress = ({ lessonId, initialProgressData }: UseLessonPr
       updateOverallProgress()
     }
   }, [
+    progressData,
     progressData?.videoProgress.percentageWatched,
     progressData?.pdfProgress.percentageRead,
     progressData?.exerciseProgress.completionPercentage,

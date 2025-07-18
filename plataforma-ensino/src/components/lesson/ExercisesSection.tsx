@@ -135,7 +135,7 @@ const ExercisesSection: React.FC<ExercisesSectionProps> = ({
       }
 
       const uploadedFile: UploadedFile = {
-        id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
+        id: Date.now().toString() + Math.random().toString(36).substring(2, 11),
         file,
         name: file.name,
         size: file.size,
@@ -164,7 +164,7 @@ const ExercisesSection: React.FC<ExercisesSectionProps> = ({
         onFilesUploaded(updatedFiles)
       }
     }
-  }, [uploadedFiles, exerciseFiles.length, onProgressUpdate, onFilesUploaded, validateFile])
+  }, [uploadedFiles, onProgressUpdate, onFilesUploaded, validateFile])
 
   // Handle drag events
   const handleDragOver = useCallback((e: React.DragEvent) => {

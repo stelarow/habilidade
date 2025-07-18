@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Progress } from '@/components/ui/progress'
@@ -57,7 +57,7 @@ const PDFSection: React.FC<PDFSectionProps> = ({
         markPageAsRead(currentPage)
       }
     }
-  }, [currentPage])
+  }, [currentPage, markPageAsRead])
 
   const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
     setNumPages(numPages)
@@ -71,7 +71,7 @@ const PDFSection: React.FC<PDFSectionProps> = ({
     setIsLoading(false)
   }
 
-  const markPageAsRead = (pageNumber: number) => {
+  const markPageAsRead = useCallback((pageNumber: number) => {
     setPagesRead(prev => {
       if (!prev.includes(pageNumber)) {
         const newPagesRead = [...prev, pageNumber]
@@ -93,7 +93,7 @@ const PDFSection: React.FC<PDFSectionProps> = ({
       }
       return prev
     })
-  }
+  }, [numPages, onProgressUpdate])
 
   const goToPrevPage = () => {
     if (currentPage > 1) {
