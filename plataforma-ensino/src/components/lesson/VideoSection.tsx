@@ -33,7 +33,7 @@ const VideoSection: React.FC<VideoSectionProps> = ({
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   
-  const playerRef = useRef<ReactPlayer>(null)
+  const playerRef = useRef<any>(null)
   const progressManagerRef = useRef<LessonProgressManager | null>(null)
 
   // Initialize progress manager
