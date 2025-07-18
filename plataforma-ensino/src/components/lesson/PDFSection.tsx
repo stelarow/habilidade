@@ -157,17 +157,17 @@ const PDFSection: React.FC<PDFSectionProps> = ({
     setIsLoading(false)
   }
 
-  const goToPrevPage = () => {
+  const goToPrevPage = useCallback(() => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1)
     }
-  }
+  }, [currentPage])
 
-  const goToNextPage = () => {
+  const goToNextPage = useCallback(() => {
     if (currentPage < numPages) {
       setCurrentPage(currentPage + 1)
     }
-  }
+  }, [currentPage, numPages])
 
   const zoomIn = () => {
     setScale(prev => Math.min(prev + 0.2, 2.0))
@@ -182,13 +182,13 @@ const PDFSection: React.FC<PDFSectionProps> = ({
     markPageAsRead(currentPage)
   }
 
-  const toggleFullscreen = () => {
+  const toggleFullscreen = useCallback(() => {
     setIsFullscreen(!isFullscreen)
-  }
+  }, [isFullscreen])
 
-  const exitFullscreen = () => {
+  const exitFullscreen = useCallback(() => {
     setIsFullscreen(false)
-  }
+  }, [])
 
   // Keyboard shortcuts
   useEffect(() => {

@@ -60,7 +60,7 @@ export const useLessonCompletion = ({
 
     return {
       timeSpent: progressData.videoProgress?.watchTime || 0,
-      pdfProgress: progressData.pdfProgress || 0,
+      pdfProgress: progressData.pdfProgress?.percentageRead || 0,
       quizScore: progressData.quizProgress?.score || 0,
       exercisesCompleted: progressData.exerciseProgress?.completedExercises.length || 0,
       completionCriteria: [
@@ -72,8 +72,8 @@ export const useLessonCompletion = ({
         },
         {
           type: 'pdf',
-          isCompleted: (progressData.pdfProgress || 0) >= 100,
-          value: progressData.pdfProgress || 0,
+          isCompleted: (progressData.pdfProgress?.percentageRead || 0) >= 100,
+          value: progressData.pdfProgress?.percentageRead || 0,
           required: 100
         },
         {
