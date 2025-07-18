@@ -182,3 +182,8 @@ New courses follow the schema in `src/data/coursesSchema.js`:
 - Use `npm run build:optimize` for bundle analysis on main website
 - Test lesson components individually before integration
 - Monitor lesson performance metrics with useLessonPerformance hook
+
+## Development Notes
+
+### NPM Configuration
+- Aumente o timeout dos comandos npm para 10 minutos para evitar interrupções em builds e instalações complexas

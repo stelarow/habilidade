@@ -16,8 +16,8 @@ const Page = dynamic(() => import('react-pdf').then(mod => mod.Page), { ssr: fal
 // Initialize PDF.js worker on client side
 if (typeof window !== 'undefined') {
   import('react-pdf').then((reactPdf) => {
-    // Set up PDF.js worker
-    reactPdf.pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${reactPdf.pdfjs.version}/build/pdf.worker.min.js`
+    // Set up PDF.js worker using local file to avoid CORS issues
+    reactPdf.pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs'
   }).catch((error) => {
     console.error('Failed to load PDF.js:', error)
   })
@@ -33,7 +33,7 @@ interface PDFSectionProps {
 
 const PDFSection: React.FC<PDFSectionProps> = ({
   title = "Material Didático - Apostila",
-  pdfUrl = "/pdf/capitulo2.pdf", // Default test PDF
+  pdfUrl = "https://drive.google.com/uc?export=download&id=1olJNk4502nTBjqaipihJS48lLO-VR4N0", // Google Drive PDF
   lessonId = "test-lesson",
   onProgressUpdate,
   initialProgress = 0
@@ -103,7 +103,20 @@ const PDFSection: React.FC<PDFSectionProps> = ({
 
   const onDocumentLoadError = (error: Error) => {
     console.error('PDF load error:', error)
-    setError('Erro ao carregar o PDF. Verifique se o arquivo existe.')
+    let errorMessage = 'Erro ao carregar o PDF.'
+    
+    // Check for specific error types
+    if (error.message.includes('CORS') || error.message.includes('Access-Control-Allow-Origin')) {
+      errorMessage = 'Erro de CORS: Não foi possível carregar o PDF devido a restrições de segurança.'
+    } else if (error.message.includes('Network')) {
+      errorMessage = 'Erro de rede: Verifique sua conexão com a internet.'
+    } else if (error.message.includes('404') || error.message.includes('Not Found')) {
+      errorMessage = 'PDF não encontrado. Verifique se o arquivo existe.'
+    } else if (error.message.includes('Invalid PDF')) {
+      errorMessage = 'Arquivo PDF inválido ou corrompido.'
+    }
+    
+    setError(errorMessage)
     setIsLoading(false)
   }
 
