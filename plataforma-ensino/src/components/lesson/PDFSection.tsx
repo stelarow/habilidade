@@ -199,7 +199,7 @@ const PDFSection: React.FC<PDFSectionProps> = ({
 
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [showFloatingControls, isFullscreen, currentPage, numPages])
+  }, [showFloatingControls, isFullscreen, currentPage, numPages, goToPrevPage, goToNextPage, toggleFullscreen, exitFullscreen])
 
   // Handle mouse enter/leave for floating controls
   const handleMouseEnter = () => {
@@ -435,7 +435,7 @@ const PDFSection: React.FC<PDFSectionProps> = ({
 
         {/* Reading tip */}
         <div className="text-xs text-muted-foreground bg-muted/50 p-2 rounded">
-          💡 Dica: Use as setas ← → para navegar, 'F' para modo foco ou passe o mouse sobre o PDF para ver os controles.
+          💡 Dica: Use as setas ← → para navegar, &lsquo;F&rsquo; para modo foco ou passe o mouse sobre o PDF para ver os controles.
         </div>
       </div>
 
