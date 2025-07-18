@@ -4,8 +4,11 @@ import React, { useState, useEffect, useRef } from 'react'
 import { Card } from '@/components/ui/card'
 import { Progress } from '@/components/ui/progress'
 import { Play, Pause, AlertCircle } from 'lucide-react'
-import ReactPlayer from 'react-player'
+import dynamic from 'next/dynamic'
 import { extractVimeoId, formatTime, LessonProgressManager } from '@/utils/lessonProgressUtils'
+
+// Dynamic import for ReactPlayer to avoid SSR issues
+const ReactPlayer = dynamic(() => import('react-player'), { ssr: false })
 
 interface VideoSectionProps {
   videoTitle: string
@@ -18,7 +21,7 @@ interface VideoSectionProps {
 const VideoSection: React.FC<VideoSectionProps> = ({
   videoTitle,
   videoDescription,
-  videoUrl = "https://vimeo.com/manage/videos/1095312387/8519cef8f3", // Default test URL
+  videoUrl = "https://vimeo.com/1095312387", // Default test URL - public Vimeo URL
   lessonId = "test-lesson",
   onProgressUpdate
 }) => {
@@ -137,31 +140,43 @@ const VideoSection: React.FC<VideoSectionProps> = ({
           </div>
         )}
         
-        <ReactPlayer
-          ref={playerRef}
-          url={playerUrl}
-          width="100%"
-          height="100%"
-          playing={isPlaying}
-          onReady={handleReady}
-          onError={handleError}
-          onProgress={handleProgress}
-          onDuration={handleDuration}
-          onPlay={handlePlay}
-          onPause={handlePause}
-          controls={false}
-          config={{
-            vimeo: {
-              playerOptions: {
-                responsive: true,
-                controls: false,
-                title: false,
-                byline: false,
-                portrait: false
+        {typeof window !== 'undefined' && (
+          <ReactPlayer
+            ref={playerRef}
+            url={playerUrl}
+            width="100%"
+            height="100%"
+            playing={isPlaying}
+            onReady={handleReady}
+            onError={handleError}
+            onProgress={handleProgress}
+            onDuration={handleDuration}
+            onPlay={handlePlay}
+            onPause={handlePause}
+            controls={false}
+            config={{
+              vimeo: {
+                playerOptions: {
+                  responsive: true,
+                  controls: false,
+                  title: false,
+                  byline: false,
+                  portrait: false
+                }
               }
-            }
-          } as any}
-        />
+            } as any}
+          />
+        )}
+        
+        {/* SSR placeholder */}
+        {typeof window === 'undefined' && (
+          <div className="absolute inset-0 flex items-center justify-center bg-black/80">
+            <div className="text-white text-center">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto mb-2"></div>
+              <p>Carregando player...</p>
+            </div>
+          </div>
+        )}
         
         {/* Custom controls overlay */}
         {isReady && !error && (
