@@ -475,7 +475,7 @@ const PDFSection: React.FC<PDFSectionProps> = ({
             transition={{ duration: 0.3 }}
             className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center"
           >
-            <div className="max-w-6xl max-h-full overflow-auto p-8 pb-32 relative">
+            <div className="max-w-6xl max-h-full overflow-auto p-8 relative">
               {/* Fullscreen Header */}
               <div className="absolute top-4 left-4 right-4 z-10 flex justify-between items-center">
                 <h3 className="text-xl font-bold text-white">{title}</h3>
@@ -490,7 +490,7 @@ const PDFSection: React.FC<PDFSectionProps> = ({
               </div>
 
               {/* Fullscreen PDF Content */}
-              <div className="mt-16 mb-32 flex justify-center">
+              <div className="mt-16 mb-24 flex justify-center">
                 {!error && typeof window !== 'undefined' && (
                   <Document
                     file={pdfUrl}
@@ -518,7 +518,7 @@ const PDFSection: React.FC<PDFSectionProps> = ({
                       scale={scale}
                       width={Math.min(pageWidth * 1.5, window.innerWidth - 100)}
                       onClick={handlePageClick}
-                      className="shadow-lg max-w-full mx-auto mb-24"
+                      className="shadow-lg max-w-full mx-auto"
                       loading={
                         <div className="flex items-center justify-center h-96">
                           <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
