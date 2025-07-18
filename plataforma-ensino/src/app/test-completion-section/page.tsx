@@ -150,9 +150,9 @@ export default function TestCompletionSectionPage() {
           </h3>
           <ul className="text-sm text-yellow-700 dark:text-yellow-300 space-y-1">
             <li>• Wait 2+ minutes for time criterion to complete</li>
-            <li>• Click "Complete Quiz" to pass the quiz criterion</li>
-            <li>• Click "Advance Exercises" 3 times to complete exercises</li>
-            <li>• Click "Advance PDF" 4 times to complete PDF reading</li>
+            <li>• Click &quot;Complete Quiz&quot; to pass the quiz criterion</li>
+            <li>• Click &quot;Advance Exercises&quot; 3 times to complete exercises</li>
+            <li>• Click &quot;Advance PDF&quot; 4 times to complete PDF reading</li>
             <li>• Once all criteria are met, the completion button will be enabled</li>
           </ul>
         </div>

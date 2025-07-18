@@ -94,15 +94,15 @@ export default function VideoPlayer({
 
   // Cleanup on unmount
   useEffect(() => {
+    const saveTimeoutRef = autoSaveTimeout.current
     return () => {
       const hideTimeout = hideControlsTimeout.current
-      const saveTimeout = autoSaveTimeout.current
       
       if (hideTimeout) {
         clearTimeout(hideTimeout)
       }
-      if (saveTimeout) {
-        clearTimeout(saveTimeout)
+      if (saveTimeoutRef) {
+        clearTimeout(saveTimeoutRef)
       }
     }
   }, [])

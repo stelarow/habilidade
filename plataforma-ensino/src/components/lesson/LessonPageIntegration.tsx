@@ -51,9 +51,9 @@ interface LessonPageIntegrationProps {
   onLessonComplete?: () => void
   onExit?: () => void
 
-  // Additional props for integration (reserved for future use)
-  // userId?: string
-  // enrollmentId?: string
+  // Additional props for integration
+  userId?: string | null
+  enrollmentId?: string | null
 }
 
 /**

@@ -95,7 +95,7 @@ const ExercisesSection: React.FC<ExercisesSectionProps> = ({
   }
 
   // Validate file
-  const validateFile = (file: File): string | null => {
+  const validateFile = useCallback((file: File): string | null => {
     // Check file size
     if (file.size > maxFileSize * 1024 * 1024) {
       return `Arquivo muito grande. Tamanho máximo: ${maxFileSize}MB`
@@ -107,7 +107,7 @@ const ExercisesSection: React.FC<ExercisesSectionProps> = ({
     }
 
     return null
-  }
+  }, [maxFileSize, allowedFileTypes])
 
   // Handle file upload
   const handleFileUpload = useCallback((files: FileList | null) => {
@@ -164,7 +164,7 @@ const ExercisesSection: React.FC<ExercisesSectionProps> = ({
         onFilesUploaded(updatedFiles)
       }
     }
-  }, [uploadedFiles, maxFileSize, allowedFileTypes, exerciseFiles.length, onProgressUpdate, onFilesUploaded])
+  }, [uploadedFiles, exerciseFiles.length, onProgressUpdate, onFilesUploaded, validateFile])
 
   // Handle drag events
   const handleDragOver = useCallback((e: React.DragEvent) => {

@@ -18,35 +18,53 @@ const mockLesson = {
 
 // Mock progress data for testing
 const mockProgressData: LessonProgressData = {
-  lessonId: 'test-lesson-responsive',
   videoProgress: {
+    currentTime: 180,
+    duration: 400,
     percentageWatched: 45,
-    lastWatchedAt: new Date(),
-    totalWatchTime: 180
+    watchTime: 180,
+    lastPosition: 180,
+    playbackRate: 1,
+    completedSegments: []
   },
   pdfProgress: {
+    currentPage: 15,
+    totalPages: 20,
     percentageRead: 75,
-    lastReadAt: new Date(),
-    pagesRead: 15,
-    totalPages: 20
+    bookmarks: [],
+    readingTime: 300,
+    lastPageViewed: 15
   },
   exerciseProgress: {
-    completionPercentage: 60,
-    completedExercises: 2,
+    completedExercises: ['ex1', 'ex2'],
+    submittedFiles: [],
+    pendingReviews: [],
     totalExercises: 3,
-    lastCompletedAt: new Date()
+    completionPercentage: 60
   },
   quizProgress: {
+    currentQuestion: 0,
+    totalQuestions: 5,
+    answeredQuestions: [0, 1, 2, 3, 4],
     score: 85,
-    isPassed: true,
-    isCompleted: true,
     attempts: 1,
-    lastAttemptAt: new Date()
+    timeSpent: 300,
+    isCompleted: true,
+    isPassed: true
   },
-  overallProgress: 66,
-  timeSpent: 1800, // 30 minutes
-  lastAccessedAt: new Date(),
-  isCompleted: false
+  contentProgress: {
+    scrollPercentage: 80,
+    readingTime: 600,
+    sectionsRead: ['intro', 'main'],
+    estimatedCompletionTime: 300
+  },
+  overallProgress: {
+    percentageComplete: 66,
+    estimatedTimeRemaining: 600,
+    lastActivity: 'video',
+    isCompleted: false,
+    componentProgress: []
+  }
 }
 
 export default function TestResponsiveLessonPage() {
