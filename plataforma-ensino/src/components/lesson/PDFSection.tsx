@@ -4,7 +4,8 @@ import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Progress } from '@/components/ui/progress'
-import { ChevronLeft, ChevronRight, ZoomIn, ZoomOut, AlertCircle } from 'lucide-react'
+import { ChevronLeft, ChevronRight, ZoomIn, ZoomOut, AlertCircle, Maximize2, X, Minimize2 } from 'lucide-react'
+import { AnimatePresence, motion } from 'framer-motion'
 import { calculatePDFProgress, LessonProgressManager } from '@/utils/lessonProgressUtils'
 
 // Dynamic import for PDF components
@@ -46,6 +47,8 @@ const PDFSection: React.FC<PDFSectionProps> = ({
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [error, setError] = useState<string | null>(null)
   const [pageWidth, setPageWidth] = useState<number>(600)
+  const [isFullscreen, setIsFullscreen] = useState<boolean>(false)
+  const [showFloatingControls, setShowFloatingControls] = useState<boolean>(false)
 
   const progressManagerRef = useRef<LessonProgressManager | null>(null)
   const pageStartTimeRef = useRef<number>(Date.now())
@@ -101,17 +104,10 @@ const PDFSection: React.FC<PDFSectionProps> = ({
     })
   }, [numPages, onProgressUpdate])
 
-  // Track page view time
+  // Mark page as read when navigating
   useEffect(() => {
-    pageStartTimeRef.current = Date.now()
-
-    return () => {
-      // Record time spent on page when leaving
-      const timeSpent = Date.now() - pageStartTimeRef.current
-      if (timeSpent > 3000) { // Only count if spent more than 3 seconds
-        markPageAsRead(currentPage)
-      }
-    }
+    // Mark current page as read immediately when page loads
+    markPageAsRead(currentPage)
   }, [currentPage, markPageAsRead])
 
   const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
@@ -141,22 +137,12 @@ const PDFSection: React.FC<PDFSectionProps> = ({
 
   const goToPrevPage = () => {
     if (currentPage > 1) {
-      // Mark current page as read before leaving
-      const timeSpent = Date.now() - pageStartTimeRef.current
-      if (timeSpent > 3000) {
-        markPageAsRead(currentPage)
-      }
       setCurrentPage(currentPage - 1)
     }
   }
 
   const goToNextPage = () => {
     if (currentPage < numPages) {
-      // Mark current page as read before leaving
-      const timeSpent = Date.now() - pageStartTimeRef.current
-      if (timeSpent > 3000) {
-        markPageAsRead(currentPage)
-      }
       setCurrentPage(currentPage + 1)
     }
   }
@@ -172,6 +158,56 @@ const PDFSection: React.FC<PDFSectionProps> = ({
   const handlePageClick = () => {
     // Mark page as read when clicked/interacted with
     markPageAsRead(currentPage)
+  }
+
+  const toggleFullscreen = () => {
+    setIsFullscreen(!isFullscreen)
+  }
+
+  const exitFullscreen = () => {
+    setIsFullscreen(false)
+  }
+
+  // Keyboard shortcuts
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Only handle shortcuts when PDF section is in focus or fullscreen
+      if (showFloatingControls || isFullscreen) {
+        switch (e.key) {
+          case 'ArrowLeft':
+            e.preventDefault()
+            goToPrevPage()
+            break
+          case 'ArrowRight':
+            e.preventDefault()
+            goToNextPage()
+            break
+          case 'f':
+          case 'F':
+            e.preventDefault()
+            toggleFullscreen()
+            break
+          case 'Escape':
+            if (isFullscreen) {
+              e.preventDefault()
+              exitFullscreen()
+            }
+            break
+        }
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [showFloatingControls, isFullscreen, currentPage, numPages])
+
+  // Handle mouse enter/leave for floating controls
+  const handleMouseEnter = () => {
+    setShowFloatingControls(true)
+  }
+
+  const handleMouseLeave = () => {
+    setShowFloatingControls(false)
   }
 
   return (
@@ -240,11 +276,24 @@ const PDFSection: React.FC<PDFSectionProps> = ({
           >
             <ZoomIn className="h-4 w-4" />
           </Button>
+
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={toggleFullscreen}
+            title="Modo Foco (F)"
+          >
+            <Maximize2 className="h-4 w-4" />
+          </Button>
         </div>
       </div>
 
       {/* PDF Viewer */}
-      <div className="bg-muted rounded-lg min-h-[600px] mb-4 overflow-auto flex items-start justify-center">
+      <div 
+        className="relative bg-muted rounded-lg min-h-[600px] mb-4 overflow-auto flex items-start justify-center"
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
         {isLoading && (
           <div className="flex items-center justify-center h-96">
             <div className="text-center text-muted-foreground">
@@ -313,6 +362,57 @@ const PDFSection: React.FC<PDFSectionProps> = ({
             </div>
           </div>
         )}
+
+        {/* Floating Controls */}
+        <AnimatePresence>
+          {showFloatingControls && !isFullscreen && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+              transition={{ duration: 0.2 }}
+              className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-50"
+            >
+              <div className="flex items-center gap-2 bg-black/80 backdrop-blur-sm rounded-full px-4 py-2 text-white shadow-lg">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={goToPrevPage}
+                  disabled={currentPage <= 1}
+                  className="text-white hover:bg-white/20 h-8 w-8 p-0"
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                </Button>
+                
+                <span className="text-sm font-medium px-2">
+                  {currentPage} / {numPages}
+                </span>
+                
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={goToNextPage}
+                  disabled={currentPage >= numPages}
+                  className="text-white hover:bg-white/20 h-8 w-8 p-0"
+                >
+                  <ChevronRight className="h-4 w-4" />
+                </Button>
+
+                <div className="w-px h-4 bg-white/30 mx-1" />
+
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={toggleFullscreen}
+                  className="text-white hover:bg-white/20 h-8 w-8 p-0"
+                  title="Modo Foco (F)"
+                >
+                  <Maximize2 className="h-4 w-4" />
+                </Button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       {/* Progress Information */}
@@ -335,9 +435,159 @@ const PDFSection: React.FC<PDFSectionProps> = ({
 
         {/* Reading tip */}
         <div className="text-xs text-muted-foreground bg-muted/50 p-2 rounded">
-          💡 Dica: Passe pelo menos 3 segundos em cada página para que seja marcada como lida.
+          💡 Dica: Use as setas ← → para navegar, 'F' para modo foco ou passe o mouse sobre o PDF para ver os controles.
         </div>
       </div>
+
+      {/* Fullscreen Modal */}
+      <AnimatePresence>
+        {isFullscreen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center"
+          >
+            <div className="max-w-6xl max-h-full overflow-auto p-8 relative">
+              {/* Fullscreen Header */}
+              <div className="absolute top-4 left-4 right-4 z-10 flex justify-between items-center">
+                <h3 className="text-xl font-bold text-white">{title}</h3>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={exitFullscreen}
+                  className="text-white hover:bg-white/20"
+                >
+                  <X className="h-5 w-5" />
+                </Button>
+              </div>
+
+              {/* Fullscreen PDF Content */}
+              <div className="mt-16 flex justify-center">
+                {!error && typeof window !== 'undefined' && (
+                  <Document
+                    file={pdfUrl}
+                    onLoadSuccess={onDocumentLoadSuccess}
+                    onLoadError={onDocumentLoadError}
+                    loading={
+                      <div className="flex items-center justify-center h-96">
+                        <div className="text-center text-white">
+                          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto mb-2"></div>
+                          <p>Carregando PDF...</p>
+                        </div>
+                      </div>
+                    }
+                    error={
+                      <div className="flex items-center justify-center h-96">
+                        <div className="text-center text-white">
+                          <AlertCircle className="h-8 w-8 mx-auto mb-2" />
+                          <p className="text-sm">Erro ao carregar PDF</p>
+                        </div>
+                      </div>
+                    }
+                  >
+                    <Page
+                      pageNumber={currentPage}
+                      scale={scale}
+                      width={Math.min(pageWidth * 1.5, window.innerWidth - 100)}
+                      onClick={handlePageClick}
+                      className="shadow-lg max-w-full mx-auto"
+                      loading={
+                        <div className="flex items-center justify-center h-96">
+                          <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
+                        </div>
+                      }
+                      renderTextLayer={false}
+                      renderAnnotationLayer={true}
+                    />
+                  </Document>
+                )}
+              </div>
+
+              {/* Fullscreen Controls */}
+              <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+                <div className="flex items-center gap-4 bg-black/80 backdrop-blur-sm rounded-full px-6 py-3 text-white shadow-lg">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={goToPrevPage}
+                    disabled={currentPage <= 1}
+                    className="text-white hover:bg-white/20"
+                  >
+                    <ChevronLeft className="h-5 w-5" />
+                  </Button>
+                  
+                  <span className="text-lg font-medium px-4">
+                    {currentPage} / {numPages}
+                  </span>
+                  
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={goToNextPage}
+                    disabled={currentPage >= numPages}
+                    className="text-white hover:bg-white/20"
+                  >
+                    <ChevronRight className="h-5 w-5" />
+                  </Button>
+
+                  <div className="w-px h-6 bg-white/30 mx-2" />
+
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={zoomOut}
+                    disabled={scale <= 0.5}
+                    className="text-white hover:bg-white/20"
+                  >
+                    <ZoomOut className="h-5 w-5" />
+                  </Button>
+
+                  <span className="text-sm px-2">{Math.round(scale * 100)}%</span>
+
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={zoomIn}
+                    disabled={scale >= 2.0}
+                    className="text-white hover:bg-white/20"
+                  >
+                    <ZoomIn className="h-5 w-5" />
+                  </Button>
+
+                  <div className="w-px h-6 bg-white/30 mx-2" />
+
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={exitFullscreen}
+                    className="text-white hover:bg-white/20"
+                  >
+                    <Minimize2 className="h-5 w-5" />
+                  </Button>
+                </div>
+
+                {/* Progress bar in fullscreen */}
+                <div className="mt-4 w-64 mx-auto">
+                  <div className="flex items-center gap-2 text-white text-sm">
+                    <span>Progresso:</span>
+                    <div className="flex-1 bg-white/20 rounded-full h-2">
+                      <motion.div
+                        className="h-2 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full"
+                        initial={{ width: 0 }}
+                        animate={{ width: `${progress}%` }}
+                        transition={{ duration: 0.3 }}
+                      />
+                    </div>
+                    <span>{Math.round(progress)}%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </Card>
   )
 }
