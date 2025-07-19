@@ -118,13 +118,13 @@ export default function CoursePage() {
       if (lessonsError) throw lessonsError
       setLessons(lessonsData || [])
 
-      // Check enrollment
+      // Check enrollment (both active and completed)
       const { data: enrollmentData, error: enrollmentError } = await supabase
         .from('enrollments')
         .select('*')
         .eq('user_id', user.id)
         .eq('course_id', courseData.id)
-        .eq('status', 'active')
+        .in('status', ['active', 'completed'])
         .single()
 
       if (enrollmentError && enrollmentError.code !== 'PGRST116') {

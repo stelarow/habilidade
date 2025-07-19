@@ -99,7 +99,7 @@ export default function CoursesPage() {
 
   // Function to check if user is enrolled in a course
   const isEnrolled = (courseId: string) => {
-    return enrollments.some(e => e.course_id === courseId && e.status === 'active')
+    return enrollments.some(e => e.course_id === courseId && ['active', 'completed'].includes(e.status))
   }
 
   // Function to handle course enrollment

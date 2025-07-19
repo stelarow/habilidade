@@ -117,7 +117,7 @@ export default function LessonPageRefactored() {
         .select('id')
         .eq('user_id', user.id)
         .eq('course_id', courseData.id)
-        .eq('status', 'active')
+        .in('status', ['active', 'completed'])
         .single()
 
       if (enrollmentError && enrollmentError.code !== 'PGRST116') {

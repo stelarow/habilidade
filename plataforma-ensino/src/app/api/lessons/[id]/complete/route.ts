@@ -72,7 +72,7 @@ export async function POST(
       .eq('course_id', lesson.course_id)
       .single()
 
-    if (enrollmentError || !enrollment || enrollment.status !== 'active') {
+    if (enrollmentError || !enrollment || !['active', 'completed'].includes(enrollment.status)) {
       return NextResponse.json(
         { error: 'Not enrolled in this course' },
         { status: 403 }

@@ -75,7 +75,7 @@ export function useDashboard(userId?: string) {
           )
         `)
         .eq('user_id', userId)
-        .eq('status', 'active')
+        .in('status', ['active', 'completed'])
         .order('enrolled_at', { ascending: false })
 
       if (enrollmentsError) throw enrollmentsError
