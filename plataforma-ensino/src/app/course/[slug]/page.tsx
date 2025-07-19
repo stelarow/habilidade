@@ -439,15 +439,26 @@ export default function CoursePage() {
                 return (
                   <div
                     key={lesson.id}
-                    className={`flex items-center justify-between p-4 rounded-lg border ${
-                      canAccess 
+                    className={`relative flex items-center justify-between p-4 rounded-lg border transition-all duration-300 ${
+                      isCompleted
+                        ? 'bg-green-950/30 border-green-500/30 hover:bg-green-950/40 cursor-pointer shadow-lg shadow-green-500/10' 
+                        : canAccess 
                         ? 'bg-zinc-800/50 border-gray-700 hover:bg-zinc-800/70 cursor-pointer' 
                         : 'bg-zinc-800/30 border-gray-800 opacity-60'
-                    } transition-colors`}
+                    }`}
                     onClick={() => canAccess && handleStartLesson(lesson.slug)}
                   >
-                    <div className="flex items-center gap-3">
-                      <div className="flex items-center justify-center w-8 h-8 bg-primary/20 rounded-full">
+                    {/* Completion shine effect */}
+                    {isCompleted && (
+                      <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-transparent via-green-500/10 to-transparent animate-pulse" />
+                    )}
+                    
+                    <div className="relative flex items-center gap-3">
+                      <div className={`flex items-center justify-center w-8 h-8 rounded-full transition-colors ${
+                        isCompleted 
+                          ? 'bg-green-500/20 ring-2 ring-green-400/30' 
+                          : 'bg-primary/20'
+                      }`}>
                         {isCompleted ? (
                           <CheckCircle className="w-4 h-4 text-green-400" />
                         ) : canAccess ? (
@@ -457,17 +468,28 @@ export default function CoursePage() {
                         )}
                       </div>
                       <div>
-                        <h4 className="font-semibold text-white">{lesson.title}</h4>
-                        <p className="text-gray-400 text-sm">{lesson.description}</p>
+                        <div className="flex items-center gap-2">
+                          <h4 className={`font-semibold ${isCompleted ? 'text-green-100' : 'text-white'}`}>
+                            {lesson.title}
+                          </h4>
+                          {isCompleted && (
+                            <span className="text-xs px-2 py-1 bg-green-500/20 text-green-400 rounded-full border border-green-500/30">
+                              ✓ Concluída
+                            </span>
+                          )}
+                        </div>
+                        <p className={`text-sm ${isCompleted ? 'text-green-200' : 'text-gray-400'}`}>
+                          {lesson.description}
+                        </p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-3">
+                    <div className="relative flex items-center gap-3">
                       {lesson.is_preview && (
                         <span className="text-xs px-2 py-1 bg-blue-500/20 text-blue-400 rounded-full">
                           Preview
                         </span>
                       )}
-                      <span className="text-gray-400 text-sm">
+                      <span className={`text-sm ${isCompleted ? 'text-green-300' : 'text-gray-400'}`}>
                         {formatDuration(lesson.video_duration || 60)}
                       </span>
                     </div>

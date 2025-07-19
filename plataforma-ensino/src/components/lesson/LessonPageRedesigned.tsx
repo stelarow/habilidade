@@ -95,7 +95,7 @@ const LessonPageRedesigned: React.FC<LessonPageRedesignedProps> = ({
         progressData={currentProgressData}
         onSuccess={onLessonComplete}
       >
-        {({ completeLesson, isCompleting, error, canComplete }) => (
+        {({ completeLesson, isCompleting, isCompleted, error, canComplete, navigateToCourse }) => (
         <div className="min-h-screen bg-background">
           {/* Header redesigned component */}
           <LessonHeaderRedesigned
@@ -157,18 +157,41 @@ const LessonPageRedesigned: React.FC<LessonPageRedesignedProps> = ({
             />
 
             {/* Completion Section */}
-            <CompletionSection
-              progressData={currentProgressData}
-              minimumQuizScore={70}
-              minimumPDFPercentage={75}
-              onComplete={completeLesson}
-              isCompleting={isCompleting}
-              completionError={error}
-              canComplete={canComplete}
-              onProgressUpdate={(progress) => {
-                // console.log('Overall completion progress:', progress) // Removed to prevent infinite logging
-              }}
-            />
+            {isCompleted ? (
+              <Card className="p-6 border-green-500/20 bg-green-950/20">
+                <div className="text-center space-y-4">
+                  <div className="text-6xl mb-4">🎉</div>
+                  <h2 className="text-2xl font-bold text-green-400">Aula Concluída com Sucesso!</h2>
+                  <p className="text-green-200">
+                    Parabéns! Você completou todos os critérios e finalizou esta aula.
+                  </p>
+                  <div className="space-y-3 pt-4">
+                    <button
+                      onClick={navigateToCourse}
+                      className="w-full px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition-colors"
+                    >
+                      Voltar ao Curso
+                    </button>
+                    <p className="text-sm text-green-300">
+                      Esta aula permanecerá disponível para revisão a qualquer momento.
+                    </p>
+                  </div>
+                </div>
+              </Card>
+            ) : (
+              <CompletionSection
+                progressData={currentProgressData}
+                minimumQuizScore={70}
+                minimumPDFPercentage={75}
+                onComplete={completeLesson}
+                isCompleting={isCompleting}
+                completionError={error}
+                canComplete={canComplete}
+                onProgressUpdate={(progress) => {
+                  // console.log('Overall completion progress:', progress) // Removed to prevent infinite logging
+                }}
+              />
+            )}
           </main>
         </div>
         )}

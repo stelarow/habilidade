@@ -80,10 +80,8 @@ export function LessonCompletionButton({
       // Success animation
       setIsCompleted(true)
       
-      // Wait for animation then redirect
-      setTimeout(() => {
-        router.push(`/course/${courseSlug}`)
-      }, 2000)
+      // Let parent component handle navigation
+      // No automatic redirect - user controls when to leave
 
     } catch (error) {
       console.error('Error completing lesson:', error)

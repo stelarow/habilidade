@@ -221,33 +221,19 @@ export default function LessonPageRefactored() {
     fetchLessonData()
   }, [fetchLessonData])
 
-  // Handle lesson completion
+  // Handle lesson completion (callback for enhanced completion system)
   const handleLessonComplete = useCallback(async () => {
     try {
-      if (!lesson || !userId || !enrollmentId) return
-
-      // Update progress to completed
-      const { error: updateError } = await supabase
-        .from('progress')
-        .update({
-          completed: true,
-          completed_at: new Date().toISOString()
-        })
-        .eq('user_id', userId)
-        .eq('lesson_id', lesson.id)
-        .eq('enrollment_id', enrollmentId)
-
-      if (updateError) {
-        console.error('Error updating progress:', updateError)
-        return
-      }
-
-      // Navigate back to course
-      router.push(`/course/${course?.slug}`)
+      console.log('Lesson completion success callback triggered')
+      // The enhanced completion system handles the database update via API
+      // This callback is just for additional actions if needed
+      
+      // Refresh the lesson data to update the progress state
+      await fetchLessonData()
     } catch (error) {
-      console.error('Error completing lesson:', error)
+      console.error('Error in completion callback:', error)
     }
-  }, [lesson, userId, enrollmentId, supabase, router, course])
+  }, [fetchLessonData])
 
   // Handle exit
   const handleExit = useCallback(() => {

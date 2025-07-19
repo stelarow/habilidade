@@ -17,8 +17,10 @@ interface EnhancedLessonCompletionProps {
   children: (props: {
     completeLesson: () => Promise<void>
     isCompleting: boolean
+    isCompleted: boolean
     error: string | null
     canComplete: boolean
+    navigateToCourse: () => void
   }) => React.ReactNode
   onSuccess?: () => void
   onError?: (error: Error) => void
@@ -58,6 +60,7 @@ export const EnhancedLessonCompletion: React.FC<EnhancedLessonCompletionProps> =
     completeLesson,
     retryCompletion,
     dismissError,
+    navigateToCourse,
     validateCompletion
   } = useLessonCompletion({
     lessonId,
@@ -99,8 +102,10 @@ export const EnhancedLessonCompletion: React.FC<EnhancedLessonCompletionProps> =
       {children({
         completeLesson: handleCompleteLesson,
         isCompleting,
+        isCompleted,
         error,
-        canComplete
+        canComplete,
+        navigateToCourse
       })}
 
       {/* Error Notification */}

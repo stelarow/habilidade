@@ -157,11 +157,6 @@ export const useLessonCompletion = ({
       // Call success callback
       onSuccess?.()
 
-      // Wait for celebration animation then navigate
-      setTimeout(() => {
-        router.push(`/course/${courseSlug}`)
-      }, 3000) // 3 seconds for celebration
-
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido'
       
@@ -197,6 +192,11 @@ export const useLessonCompletion = ({
     setState(prev => ({ ...prev, error: null }))
   }, [])
 
+  // Manual navigation to course page
+  const navigateToCourse = useCallback((): void => {
+    router.push(`/course/${courseSlug}`)
+  }, [router, courseSlug])
+
   return {
     // State
     isCompleting: state.isCompleting,
@@ -209,6 +209,7 @@ export const useLessonCompletion = ({
     retryCompletion,
     resetCompletion,
     dismissError,
+    navigateToCourse,
     
     // Validation
     validateCompletion,
