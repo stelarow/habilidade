@@ -5,7 +5,6 @@ import { CompletionSection } from '@/components/lesson'
 import { LessonProgressData } from '@/types/lesson'
 
 export default function TestCompletionSectionPage() {
-  const [timeSpent, setTimeSpent] = useState(0)
   const [progressData, setProgressData] = useState<LessonProgressData>({
     videoProgress: {
       currentTime: 0,
@@ -56,13 +55,6 @@ export default function TestCompletionSectionPage() {
     }
   })
 
-  // Simulate time progression
-  React.useEffect(() => {
-    const interval = setInterval(() => {
-      setTimeSpent(prev => prev + 1)
-    }, 1000)
-    return () => clearInterval(interval)
-  }, [])
 
   const simulateProgress = (type: 'pdf' | 'quiz' | 'exercises') => {
     setProgressData(prev => {
@@ -124,7 +116,6 @@ export default function TestCompletionSectionPage() {
             </button>
           </div>
           <div className="mt-4 text-sm text-muted-foreground">
-            <p>Time spent: {Math.floor(timeSpent / 60)}:{(timeSpent % 60).toString().padStart(2, '0')}</p>
             <p>PDF Progress: {progressData.pdfProgress.percentageRead}%</p>
             <p>Quiz Score: {progressData.quizProgress.score}% (Completed: {progressData.quizProgress.isCompleted ? 'Yes' : 'No'})</p>
             <p>Exercises: {progressData.exerciseProgress.completionPercentage.toFixed(1)}%</p>
@@ -134,9 +125,8 @@ export default function TestCompletionSectionPage() {
         {/* CompletionSection Component */}
         <CompletionSection
           progressData={progressData}
-          timeSpent={timeSpent}
-          minimumTimeMinutes={2} // Reduced for testing
           minimumQuizScore={70}
+          minimumPDFPercentage={75}
           onComplete={handleComplete}
           onProgressUpdate={(progress) => {
             console.log('Overall progress:', progress)
@@ -149,10 +139,9 @@ export default function TestCompletionSectionPage() {
             Test Instructions:
           </h3>
           <ul className="text-sm text-yellow-700 dark:text-yellow-300 space-y-1">
-            <li>• Wait 2+ minutes for time criterion to complete</li>
-            <li>• Click &quot;Complete Quiz&quot; to pass the quiz criterion</li>
-            <li>• Click &quot;Advance Exercises&quot; 3 times to complete exercises</li>
-            <li>• Click &quot;Advance PDF&quot; 4 times to complete PDF reading</li>
+            <li>• Click &quot;Complete Quiz&quot; to pass the quiz criterion (70% required)</li>
+            <li>• Click &quot;Advance Exercises&quot; 3 times to complete exercises (100% required)</li>
+            <li>• Click &quot;Advance PDF&quot; 3 times to reach 75% PDF reading</li>
             <li>• Once all criteria are met, the completion button will be enabled</li>
           </ul>
         </div>

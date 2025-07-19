@@ -10,9 +10,8 @@ import { useCompletionCriteria } from '@/hooks/useCompletionCriteria'
 interface CompletionSectionProps {
   title?: string
   progressData: LessonProgressData | null
-  timeSpent: number
-  minimumTimeMinutes?: number
   minimumQuizScore?: number
+  minimumPDFPercentage?: number
   onComplete?: () => Promise<void>
   isCompleting?: boolean
   completionError?: string | null
@@ -23,9 +22,8 @@ interface CompletionSectionProps {
 const CompletionSection: React.FC<CompletionSectionProps> = ({
   title = "Conclusão da Aula",
   progressData,
-  timeSpent,
-  minimumTimeMinutes = 25,
   minimumQuizScore = 70,
+  minimumPDFPercentage = 75,
   onComplete,
   isCompleting: externalIsCompleting,
   completionError,
@@ -45,8 +43,8 @@ const CompletionSection: React.FC<CompletionSectionProps> = ({
     totalCount,
     updateProgress
   } = useCompletionCriteria({
-    minimumTimeMinutes,
     minimumQuizScore,
+    minimumPDFPercentage,
     onCriteriaUpdated: (state) => {
       if (onProgressUpdate) {
         onProgressUpdate(state.overallProgress)
@@ -91,8 +89,6 @@ const CompletionSection: React.FC<CompletionSectionProps> = ({
     const iconClass = `h-5 w-5 ${isCompleted ? 'text-green-500' : 'text-muted-foreground'}`
     
     switch (id) {
-      case 'time':
-        return <Clock className={iconClass} />
       case 'pdf':
         return <FileText className={iconClass} />
       case 'exercises':
@@ -107,14 +103,12 @@ const CompletionSection: React.FC<CompletionSectionProps> = ({
   // Get criterion description
   const getCriterionDescription = (criterion: any) => {
     switch (criterion.id) {
-      case 'time':
-        return `Permanecer pelo menos ${minimumTimeMinutes} minutos na aula (${Math.floor(timeSpent / 60)}/${minimumTimeMinutes} min)`
       case 'quiz':
         return `Obter pelo menos ${minimumQuizScore}% no quiz (${Math.round(criterion.progress)}%)`
       case 'exercises':
         return `Completar todos os exercícios (${Math.round(criterion.progress)}%)`
       case 'pdf':
-        return `Ler todo o material PDF (${Math.round(criterion.progress)}%)`
+        return `Ler pelo menos ${minimumPDFPercentage}% do material PDF (${Math.round(criterion.progress)}%)`
       default:
         return criterion.description
     }

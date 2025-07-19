@@ -205,10 +205,9 @@ export default function TestLessonPage() {
 
   // Initialize completion criteria hook
   const completionCriteria = useCompletionCriteria({
-    minimumTimeMinutes: 25,
     minimumQuizScore: 70,
     requireAllExercises: true,
-    requireFullPDFRead: true,
+    minimumPDFPercentage: 75,
     lessonId: lesson.id,
     pdfTotalPages: 10,
     onCompletionReady: () => {
@@ -221,7 +220,6 @@ export default function TestLessonPage() {
 
     // Prepare completion data
     const completionData = {
-      timeSpent: completionCriteria.pageTimer.timeSpent,
       pdfProgress: completionCriteria.pdfProgress.percentageRead,
       quizScore: 0, // Would come from quiz component
       exercisesCompleted: 0, // Would come from exercise component
@@ -296,15 +294,6 @@ export default function TestLessonPage() {
   // Map completion criteria to header format
   const headerCriteria = [
     {
-      id: 'time',
-      name: 'Tempo',
-      isCompleted: completionCriteria.criteria.find(c => c.id === 'time')?.isCompleted || false,
-      progress: completionCriteria.pageTimer.timeSpent >= (25 * 60) ? 100 : (completionCriteria.pageTimer.timeSpent / (25 * 60)) * 100,
-      icon: <Clock className="w-4 h-4" weight="duotone" />,
-      color: '#f59e0b',
-      required: true
-    },
-    {
       id: 'pdf',
       name: 'Material PDF',
       isCompleted: completionCriteria.criteria.find(c => c.id === 'pdf')?.isCompleted || false,
@@ -344,8 +333,6 @@ export default function TestLessonPage() {
         canComplete={completionCriteria.canComplete}
         completedCount={completionCriteria.completedCount}
         totalCount={completionCriteria.totalCount}
-        timeRemaining={completionCriteria.pageTimer.formattedRemainingTime}
-        currentTime={completionCriteria.pageTimer.formattedTime}
         onSectionClick={(sectionId) => {
           // Handle section navigation
           const element = document.getElementById(`section-${sectionId}`)
@@ -620,7 +607,6 @@ export default function TestLessonPage() {
               canComplete={completionCriteria.canComplete}
               completedCount={completionCriteria.completedCount}
               totalCount={completionCriteria.totalCount}
-              timeRemaining={completionCriteria.pageTimer.formattedRemainingTime}
             />
 
             {/* Completion Button */}
@@ -632,7 +618,6 @@ export default function TestLessonPage() {
               totalCount={completionCriteria.totalCount}
               onComplete={handleLessonComplete}
               completionData={{
-                timeSpent: completionCriteria.pageTimer.timeSpent,
                 pdfProgress: completionCriteria.pdfProgress.percentageRead,
                 quizScore: 0, // Would come from quiz component
                 exercisesCompleted: 0, // Would come from exercise component
@@ -657,10 +642,6 @@ export default function TestLessonPage() {
                   </div>
                 )}
                 
-                <div className="flex items-center justify-between">
-                  <span className="text-gray-400">Tempo na página</span>
-                  <span className="text-white font-semibold">{completionCriteria.pageTimer.formattedTime}</span>
-                </div>
                 
                 <div className="bg-blue-500/20 border border-blue-500/30 rounded-lg p-2 text-center">
                   <span className="text-blue-400 text-sm font-semibold">📚 Página de Teste - Layout Espelho</span>

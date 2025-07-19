@@ -7,6 +7,18 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    screens: {
+      'xs': '475px',
+      'sm': '640px',
+      'md': '768px',
+      'lg': '1024px',
+      'xl': '1280px',
+      '2xl': '1536px',
+      // Header-specific responsive breakpoints
+      'header-sm': '640px',
+      'header-md': '768px',
+      'header-lg': '1024px',
+    },
     extend: {
       colors: {
         primary: {
@@ -116,6 +128,19 @@ const config: Config = {
       },
       clipPath: {
         'corner-cut': 'polygon(0 0, calc(100% - 1rem) 0, 100% 1rem, 100% 100%, 1rem 100%, 0 calc(100% - 1rem))',
+      },
+      spacing: {
+        'header-xs': 'var(--header-spacing-xs)',
+        'header-sm': 'var(--header-spacing-sm)',
+        'header-md': 'var(--header-spacing-md)',
+        'header-lg': 'var(--header-spacing-lg)',
+        'header-xl': 'var(--header-spacing-xl)',
+      },
+      fontSize: {
+        'header-xs': ['var(--header-text-xs)', { lineHeight: 'var(--header-line-height-xs)' }],
+        'header-sm': ['var(--header-text-sm)', { lineHeight: 'var(--header-line-height-sm)' }],
+        'header-md': ['var(--header-text-md)', { lineHeight: 'var(--header-line-height-md)' }],
+        'header-lg': ['var(--header-text-lg)', { lineHeight: 'var(--header-line-height-lg)' }],
       },
     },
   },
