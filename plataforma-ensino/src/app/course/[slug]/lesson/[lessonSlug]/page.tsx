@@ -55,6 +55,7 @@ export default function LessonPageRefactored() {
   const [error, setError] = useState<string | null>(null)
   const [userId, setUserId] = useState<string | null>(null)
   const [enrollmentId, setEnrollmentId] = useState<string | null>(null)
+  const [isInitialLoad, setIsInitialLoad] = useState(true) // Track initial load to prevent brief errors
   const [exercises, setExercises] = useState<any[]>([])
   const [quizzes, setQuizzes] = useState<any[]>([])
   const [submissions, setSubmissions] = useState<any[]>([])
@@ -64,15 +65,23 @@ export default function LessonPageRefactored() {
 
   const fetchLessonData = useCallback(async () => {
     try {
-      // Get user authentication
-      const { data: { user } } = await supabase.auth.getUser()
+      setError(null) // Clear any previous errors
+      
+      // Get user authentication with timeout for mobile networks
+      const { data: { user }, error: authError } = await supabase.auth.getUser()
+      if (authError) {
+        console.error('Auth error:', authError)
+        setError('Erro de autenticação. Tente novamente.')
+        return
+      }
+      
       if (!user) {
         router.push('/auth/login')
         return
       }
       setUserId(user.id)
 
-      // Fetch course by slug
+      // Fetch course by slug with error handling
       const { data: courseData, error: courseError } = await supabase
         .from('courses')
         .select('id, title, slug')
@@ -81,17 +90,18 @@ export default function LessonPageRefactored() {
         .single()
 
       if (courseError) {
+        console.error('Course fetch error:', courseError)
         if (courseError.code === 'PGRST116') {
           setError('Curso não encontrado')
         } else {
-          throw courseError
+          setError('Erro ao carregar curso. Tente novamente.')
         }
         return
       }
 
       setCourse(courseData)
 
-      // Fetch lesson by slug and course
+      // Fetch lesson by slug and course with error handling
       const { data: lessonData, error: lessonError } = await supabase
         .from('lessons')
         .select('*')
@@ -101,17 +111,18 @@ export default function LessonPageRefactored() {
         .single()
 
       if (lessonError) {
+        console.error('Lesson fetch error:', lessonError)
         if (lessonError.code === 'PGRST116') {
           setError('Aula não encontrada')
         } else {
-          throw lessonError
+          setError('Erro ao carregar aula. Tente novamente.')
         }
         return
       }
 
       setLesson(lessonData)
 
-      // Check enrollment
+      // Check enrollment with error handling
       const { data: enrollmentData, error: enrollmentError } = await supabase
         .from('enrollments')
         .select('id')
@@ -121,7 +132,9 @@ export default function LessonPageRefactored() {
         .single()
 
       if (enrollmentError && enrollmentError.code !== 'PGRST116') {
-        throw enrollmentError
+        console.error('Enrollment fetch error:', enrollmentError)
+        setError('Erro ao verificar matrícula. Tente novamente.')
+        return
       }
 
       if (!enrollmentData && !lessonData.is_preview) {
@@ -211,9 +224,20 @@ export default function LessonPageRefactored() {
 
     } catch (err: any) {
       console.error('Error loading lesson data:', err)
-      setError(err?.message || 'Erro ao carregar aula')
+      // Only set error if it's not the initial load or if it's been more than 2 seconds
+      if (!isInitialLoad) {
+        setError(err?.message || 'Erro ao carregar aula')
+      } else {
+        // On initial load, add a small delay to prevent brief error flashes on mobile
+        setTimeout(() => {
+          if (isInitialLoad) {
+            setError(err?.message || 'Erro ao carregar aula')
+          }
+        }, 2000)
+      }
     } finally {
       setLoading(false)
+      setIsInitialLoad(false)
     }
   }, [courseSlug, lessonSlug, supabase, router])
 
@@ -248,21 +272,34 @@ export default function LessonPageRefactored() {
     )
   }
 
-  if (error) {
+  if (error && !isInitialLoad) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-center">
+      <div className="min-h-screen bg-background flex items-center justify-center px-4">
+        <div className="text-center max-w-md mx-auto">
           <div className="w-16 h-16 bg-destructive/20 rounded-full flex items-center justify-center mx-auto mb-4">
             <span className="text-destructive text-2xl">⚠</span>
           </div>
           <h3 className="text-lg font-semibold text-foreground mb-2">Erro ao carregar aula</h3>
           <p className="text-muted-foreground mb-4">{error}</p>
-          <button
-            onClick={() => router.push(`/course/${courseSlug}`)}
-            className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
-          >
-            Voltar ao Curso
-          </button>
+          <div className="space-y-2">
+            <button
+              onClick={() => {
+                setError(null)
+                setIsInitialLoad(true)
+                setLoading(true)
+                fetchLessonData()
+              }}
+              className="w-full px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
+            >
+              Tentar Novamente
+            </button>
+            <button
+              onClick={() => router.push(`/course/${courseSlug}`)}
+              className="w-full px-4 py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/90 transition-colors"
+            >
+              Voltar ao Curso
+            </button>
+          </div>
         </div>
       </div>
     )
