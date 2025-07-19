@@ -6,6 +6,8 @@ export { default as Loading } from './Loading';
 export { default as ErrorBoundary } from './ErrorBoundary';
 export { default as VideoPlayer } from './VideoPlayer';
 export { default as MuxVideoPlayer } from './MuxVideoPlayer';
+export { TruncatedText } from './TruncatedText';
+export { default as ProgressIndicator } from './ProgressIndicator';
 
 // React Video Player Components
 export { ReactVideoPlayer } from './ReactVideoPlayer';
@@ -19,3 +21,5 @@ export type { VideoPlayerProps, VideoPlayerRef, VideoTrack } from './ReactVideoP
 export type { VideoPlayerWrapperProps } from './VideoPlayerWrapper';
 export type { LazyVideoPlayerProps } from './LazyVideoPlayer';
 export type { AccessibleVideoPlayerProps } from './AccessibleVideoPlayer';
+export type { TruncatedTextProps } from './TruncatedText';
+export type { ProgressIndicatorProps } from './ProgressIndicator';

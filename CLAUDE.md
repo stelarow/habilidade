@@ -33,11 +33,13 @@ npm run deploy          # Build + commit + push (auto-deploy)
 ```bash
 cd plataforma-ensino
 npm run dev             # Next.js dev server
-npm run build          # Next.js production build
+npm run build          # Next.js production build  
 npm run start          # Start production server
 npm run lint           # ESLint + TypeScript checking
 npm run test           # Jest tests (configured but not implemented)
 npm run test:e2e       # Playwright E2E tests (configured)
+npm run analyze         # Bundle analyzer for optimization
+npm run test:auth       # Test authentication flow
 ```
 
 ## Architecture Patterns
@@ -158,6 +160,10 @@ New courses follow the schema in `src/data/coursesSchema.js`:
 - **Test Pages**: Multiple test pages for validation (`/test-lesson-redesigned`, `/test-completion-section`, etc.)
 - **Performance Hooks**: useLessonProgress, useLessonPerformance for optimized lesson experience
 
+### Path Aliases
+- `@/*` maps to `./src/*` - Use for all internal imports
+- Example: `import { Button } from '@/components/ui/button'`
+
 ### Current Implementation Focus
 - **Page**: `/src/app/course/[slug]/lesson/[lessonSlug]/page-redesigned.tsx`
 - **Integration**: `/src/components/lesson/LessonPageIntegration.tsx`
@@ -166,9 +172,17 @@ New courses follow the schema in `src/data/coursesSchema.js`:
 
 ### Environment Configuration
 - **Supabase**: Database schema in `database/schema.sql` with complete RLS policies
-- **Authentication**: Middleware-based auth with role-based redirects
+- **Authentication**: Middleware-based auth with role-based redirects (`middleware.ts`)
 - **Environment**: `.env.local` required for Supabase configuration
 - **Error Tracking**: Sentry integration with client/server/edge configs
+- **Admin Routes**: Protected by middleware, require admin role
+
+### Middleware Configuration
+The project uses Next.js middleware for:
+- Admin route protection (`/admin/*`)
+- Auth route blocking for authenticated users  
+- Role-based redirects (admin → `/admin`, users → `/dashboard`)
+- Located in `middleware.ts` at project root
 
 ### Development Best Practices
 - Always update git main after completion for automatic Netlify deployment

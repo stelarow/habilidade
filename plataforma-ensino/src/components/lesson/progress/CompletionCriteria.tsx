@@ -9,10 +9,9 @@ import { LessonProgressData } from '@/types/lesson'
 
 interface CompletionCriteriaProps {
   progressData: LessonProgressData | null
-  timeSpent: number
   className?: string
-  minimumTimeMinutes?: number
   minimumQuizScore?: number
+  minimumPDFPercentage?: number
   onCriteriaChange?: (canComplete: boolean) => void
 }
 
@@ -28,10 +27,9 @@ interface CompletionCriteriaProps {
  */
 const CompletionCriteriaComponent = ({
   progressData,
-  timeSpent,
   className,
-  minimumTimeMinutes = 25,
   minimumQuizScore = 70,
+  minimumPDFPercentage = 75,
   onCriteriaChange
 }: CompletionCriteriaProps) => {
   const {
@@ -41,8 +39,8 @@ const CompletionCriteriaComponent = ({
     completedCount,
     totalCount
   } = useCompletionCriteria({
-    minimumTimeMinutes,
     minimumQuizScore,
+    minimumPDFPercentage,
     onCriteriaUpdated: (state) => {
       onCriteriaChange?.(state.canComplete)
     }
@@ -206,9 +204,6 @@ const CompletionCriteriaComponent = ({
                   "font-medium",
                   criterion.isCompleted ? "text-green-400" : "text-gray-300"
                 )}>
-                  {criterion.id === 'time' && (
-                    <span>{Math.floor(timeSpent / 60)}min de {minimumTimeMinutes}min</span>
-                  )}
                   {criterion.id === 'quiz' && (
                     <span>{Math.round(criterion.progress)}% de {minimumQuizScore}%</span>
                   )}
@@ -216,7 +211,7 @@ const CompletionCriteriaComponent = ({
                     <span>{Math.round(criterion.progress)}% completo</span>
                   )}
                   {criterion.id === 'pdf' && (
-                    <span>{Math.round(criterion.progress)}% lido</span>
+                    <span>{Math.round(criterion.progress)}% de {minimumPDFPercentage}% lido</span>
                   )}
                 </span>
                 

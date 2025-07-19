@@ -51,17 +51,7 @@ const LessonPageRedesigned: React.FC<LessonPageRedesignedProps> = ({
     initialProgressData: progressData
   })
 
-  const [timeSpent, setTimeSpent] = useState(0)
 
-  // Timer for tracking time spent on page
-  useEffect(() => {
-    const startTime = Date.now()
-    const interval = setInterval(() => {
-      setTimeSpent(Math.floor((Date.now() - startTime) / 1000))
-    }, 1000)
-
-    return () => clearInterval(interval)
-  }, [])
 
   const handleExit = useCallback(() => {
     try {
@@ -169,9 +159,8 @@ const LessonPageRedesigned: React.FC<LessonPageRedesignedProps> = ({
             {/* Completion Section */}
             <CompletionSection
               progressData={currentProgressData}
-              timeSpent={timeSpent}
-              minimumTimeMinutes={25}
               minimumQuizScore={70}
+              minimumPDFPercentage={75}
               onComplete={completeLesson}
               isCompleting={isCompleting}
               completionError={error}

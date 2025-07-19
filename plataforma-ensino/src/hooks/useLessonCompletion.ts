@@ -12,7 +12,6 @@ interface CompletionState {
 }
 
 interface CompletionData {
-  timeSpent?: number
   pdfProgress?: number
   quizScore?: number
   exercisesCompleted?: number
@@ -59,22 +58,15 @@ export const useLessonCompletion = ({
     }
 
     return {
-      timeSpent: progressData.videoProgress?.watchTime || 0,
       pdfProgress: progressData.pdfProgress?.percentageRead || 0,
       quizScore: progressData.quizProgress?.score || 0,
-      exercisesCompleted: progressData.exerciseProgress?.completedExercises.length || 0,
+      exercisesCompleted: progressData.exerciseProgress?.completionPercentage || 0,
       completionCriteria: [
         {
-          type: 'time',
-          isCompleted: (progressData.videoProgress?.watchTime || 0) >= 1500, // 25 minutes
-          value: progressData.videoProgress?.watchTime || 0,
-          required: 1500
-        },
-        {
           type: 'pdf',
-          isCompleted: (progressData.pdfProgress?.percentageRead || 0) >= 100,
+          isCompleted: (progressData.pdfProgress?.percentageRead || 0) >= 75,
           value: progressData.pdfProgress?.percentageRead || 0,
-          required: 100
+          required: 75
         },
         {
           type: 'exercises',
@@ -97,22 +89,17 @@ export const useLessonCompletion = ({
     const data = prepareCompletionData()
     const errors: string[] = []
 
-    // Check time requirement
-    if ((data.timeSpent || 0) < 1500) {
-      errors.push('Tempo mínimo de 25 minutos não atingido')
+    // Check PDF requirement (75% minimum)
+    if ((data.pdfProgress || 0) < 75) {
+      errors.push('PDF deve ser lido pelo menos 75%')
     }
 
-    // Check PDF requirement
-    if ((data.pdfProgress || 0) < 100) {
-      errors.push('PDF não foi lido completamente')
-    }
-
-    // Check exercises requirement
+    // Check exercises requirement (100% completion)
     if ((data.exercisesCompleted || 0) < 100) {
-      errors.push('Nem todos os exercícios foram completados')
+      errors.push('Todos os exercícios devem ser completados (100%)')
     }
 
-    // Check quiz requirement
+    // Check quiz requirement (70% minimum score)
     if ((data.quizScore || 0) < 70) {
       errors.push('Nota do quiz deve ser pelo menos 70%')
     }
