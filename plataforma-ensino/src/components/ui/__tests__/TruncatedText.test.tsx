@@ -249,7 +249,7 @@ describe('TruncatedText', () => {
     it('should have proper cursor styling for interactive elements', () => {
       render(<TruncatedText text={longText} maxLength={20} />)
       
-      const truncatedElement = screen.getByText(/This is a very long\.\.\./)
+      const truncatedElement = screen.getByText('This is a very long ...')
       expect(truncatedElement).toHaveClass('cursor-help')
     })
 
