@@ -26,10 +26,9 @@ interface CompletionCriteriaState {
 }
 
 interface UseCompletionCriteriaOptions {
-  minimumTimeMinutes?: number
   minimumQuizScore?: number
   requireAllExercises?: boolean
-  requireFullPDFRead?: boolean
+  minimumPDFPercentage?: number
   lessonId?: string
   pdfTotalPages?: number
   onCriteriaUpdated?: (state: CompletionCriteriaState) => void
@@ -39,19 +38,17 @@ interface UseCompletionCriteriaOptions {
 /**
  * useCompletionCriteria - Hook for managing lesson completion criteria
  * 
- * Manages the four completion requirements:
- * 1. Time spent (25 minutes minimum) - página deve estar aberta por 25 min
- * 2. Quiz score (70% minimum) - nota mínima de 70% no quiz
- * 3. Exercises completion (100%) - todos os exercícios devem ser concluídos
- * 4. PDF reading (100%) - 100% do material PDF deve ser lido
+ * Manages the three completion requirements:
+ * 1. Quiz score (70% minimum) - nota mínima de 70% no quiz
+ * 2. Exercises completion (100%) - todos os exercícios devem ser concluídos
+ * 3. PDF reading (75%) - 75% do material PDF deve ser lido
  * 
- * Note: Video progress is NOT included in completion criteria
+ * Note: Video progress and time are NOT included in completion criteria
  */
 export function useCompletionCriteria({
-  minimumTimeMinutes = 25,
   minimumQuizScore = 70,
   requireAllExercises = true,
-  requireFullPDFRead = true,
+  minimumPDFPercentage = 75,
   lessonId = 'default',
   pdfTotalPages = 1,
   onCriteriaUpdated,
@@ -59,15 +56,6 @@ export function useCompletionCriteria({
 }: UseCompletionCriteriaOptions = {}) {
   
   const [progressData, setProgressData] = useState<LessonProgressData | null>(null)
-  
-  // Use the new hooks
-  const pageTimer = usePageTimer({
-    minimumTimeMinutes,
-    lessonId,
-    onMinimumReached: () => {
-      console.log('Minimum time reached!')
-    }
-  })
   
   const pdfProgress = usePDFProgress({
     totalPages: pdfTotalPages,
@@ -81,16 +69,6 @@ export function useCompletionCriteria({
   const criteriaState = useMemo((): CompletionCriteriaState => {
     const criteria: CompletionCriterion[] = [
       {
-        id: 'time',
-        name: 'Tempo na Aula',
-        icon: getCompletionIcon('time', pageTimer.hasReachedMinimum ? '#22c55e' : '#f59e0b'),
-        description: `Permanecer pelo menos ${minimumTimeMinutes} minutos na aula`,
-        isCompleted: pageTimer.hasReachedMinimum,
-        progress: pageTimer.percentage,
-        weight: 25,
-        color: pageTimer.hasReachedMinimum ? '#22c55e' : '#f59e0b'
-      },
-      {
         id: 'quiz',
         name: 'Quiz',
         icon: getCompletionIcon('quiz', progressData?.quizProgress.isPassed ? '#22c55e' : '#ef4444'),
@@ -99,7 +77,7 @@ export function useCompletionCriteria({
           ? progressData.quizProgress.isPassed && progressData.quizProgress.score >= minimumQuizScore
           : false,
         progress: progressData?.quizProgress.score || 0,
-        weight: 35,
+        weight: 40,
         color: progressData?.quizProgress.isPassed ? '#22c55e' : '#ef4444'
       },
       {
@@ -111,19 +89,19 @@ export function useCompletionCriteria({
           ? (progressData.exerciseProgress?.completionPercentage || 0) >= (requireAllExercises ? 100 : 80)
           : false,
         progress: progressData?.exerciseProgress.completionPercentage || 0,
-        weight: 25,
+        weight: 35,
         color: (progressData?.exerciseProgress.completionPercentage || 0) >= (requireAllExercises ? 100 : 80) 
           ? '#22c55e' : '#f59e0b'
       },
       {
         id: 'pdf',
         name: 'Material PDF',
-        icon: getCompletionIcon('pdf', pdfProgress.isCompleted ? '#22c55e' : '#00c4ff'),
-        description: requireFullPDFRead ? 'Ler 100% do material PDF' : 'Ler pelo menos 90% do material PDF',
-        isCompleted: pdfProgress.isCompleted,
+        icon: getCompletionIcon('pdf', pdfProgress.percentageRead >= minimumPDFPercentage ? '#22c55e' : '#00c4ff'),
+        description: `Ler pelo menos ${minimumPDFPercentage}% do material PDF`,
+        isCompleted: pdfProgress.percentageRead >= minimumPDFPercentage,
         progress: pdfProgress.percentageRead,
-        weight: 15,
-        color: pdfProgress.isCompleted ? '#22c55e' : '#00c4ff'
+        weight: 25,
+        color: pdfProgress.percentageRead >= minimumPDFPercentage ? '#22c55e' : '#00c4ff'
       }
     ]
 
@@ -147,14 +125,10 @@ export function useCompletionCriteria({
     }
   }, [
     progressData,
-    pageTimer.hasReachedMinimum,
-    pageTimer.percentage,
-    pdfProgress.isCompleted,
     pdfProgress.percentageRead,
-    minimumTimeMinutes,
     minimumQuizScore,
     requireAllExercises,
-    requireFullPDFRead
+    minimumPDFPercentage
   ])
 
   // Update progress data
@@ -229,8 +203,7 @@ export function useCompletionCriteria({
     completedCount: criteriaState.completedCount,
     totalCount: criteriaState.totalCount,
     
-    // Timer state
-    pageTimer,
+    // PDF progress state
     pdfProgress,
     
     // Actions
