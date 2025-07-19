@@ -9,7 +9,6 @@ export async function POST(
 ) {
   try {
     const lessonId = params.id
-    const cookieStore = cookies()
     const supabase = createClient()
 
     // Get completion criteria from request body
@@ -82,7 +81,7 @@ export async function POST(
 
     // Check if lesson is already completed
     const { data: existingProgress, error: progressError } = await supabase
-      .from('lesson_progress')
+      .from('progress')
       .select('id, is_completed, completed_at')
       .eq('user_id', user.id)
       .eq('lesson_id', lessonId)
@@ -113,16 +112,19 @@ export async function POST(
 
     // Update or create lesson progress
     const { error: updateError } = await supabase
-      .from('lesson_progress')
+      .from('progress')
       .upsert({
         user_id: user.id,
         lesson_id: lessonId,
+        enrollment_id: enrollment.id,
+        completed: true,
         is_completed: true,
         completed_at: completedAt,
         last_accessed_at: completedAt,
         updated_at: completedAt,
         // New completion criteria data
         time_spent_minutes: Math.floor((timeSpent || 0) / 60),
+        watch_time: timeSpent || 0,
         pdf_progress_percentage: pdfProgress || 0,
         quiz_score: quizScore || 0,
         exercises_completed: exercisesCompleted || 0,
@@ -154,10 +156,11 @@ export async function POST(
     if (nextLesson && !nextLessonError) {
       // Create progress entry for next lesson to unlock it
       const { error: unlockError } = await supabase
-        .from('lesson_progress')
+        .from('progress')
         .upsert({
           user_id: user.id,
           lesson_id: nextLesson.id,
+          enrollment_id: enrollment.id,
           is_unlocked: true,
           unlocked_at: completedAt,
           last_accessed_at: completedAt,
@@ -220,8 +223,8 @@ async function updateCourseProgress(supabase: any, userId: string, courseId: str
         course_uuid: courseId
       })
 
-    if (lessonStats) {
-      const { total_lessons, completed_lessons } = lessonStats
+    if (lessonStats && lessonStats.length > 0) {
+      const { total_lessons, completed_lessons } = lessonStats[0]
       const progressPercentage = total_lessons > 0 
         ? Math.round((completed_lessons / total_lessons) * 100) 
         : 0
