@@ -39,7 +39,7 @@ jest.mock('react-pdf', () => ({
       }, 50);
       
       return () => clearTimeout(timer);
-    }, [pageNumber, onLoadSuccess, onLoadError]);
+    }, [pageNumber, width, onLoadSuccess, onLoadError]);
     
     return (
       <div 

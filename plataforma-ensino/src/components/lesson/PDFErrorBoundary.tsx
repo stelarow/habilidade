@@ -185,7 +185,7 @@ export class PDFErrorBoundary extends Component<PDFErrorBoundaryProps, PDFErrorB
       }
     };
 
-    return errorMessages[errorType] || errorMessages.unknown;
+    return errorMessages[errorType as keyof typeof errorMessages] || errorMessages.unknown;
   };
 
   render() {
