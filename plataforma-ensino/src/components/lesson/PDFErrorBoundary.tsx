@@ -199,6 +199,24 @@ export class PDFErrorBoundary extends Component<PDFErrorBoundaryProps, PDFErrorB
       const { maxRetries = 3 } = this.props;
       const canRetry = this.state.retryCount < maxRetries;
 
+      // Fallback if errorDetails is null
+      if (!errorDetails) {
+        return (
+          <div className="flex flex-col items-center justify-center p-8 bg-red-50 rounded-lg border border-red-200">
+            <AlertTriangle className="w-8 h-8 text-red-500 mb-3" />
+            <p className="text-red-700 text-center mb-4">An unexpected error occurred</p>
+            {canRetry && (
+              <button
+                onClick={this.handleRetry}
+                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
+              >
+                Try Again
+              </button>
+            )}
+          </div>
+        );
+      }
+
       return (
         <div className="flex flex-col items-center justify-center p-8 bg-gradient-to-br from-red-50 to-orange-50 rounded-lg border border-red-200 shadow-lg min-h-[400px]">
           <div className="flex items-center mb-6">
