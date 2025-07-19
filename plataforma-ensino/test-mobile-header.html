@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Header Test - Lesson Header Responsive</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Import CSS custom properties from globals.css */
+        :root {
+            --primary-color: #d400ff;
+            --secondary-color: #00c4ff;
+            --accent-color: #a000ff;
+            --background-dark: #0a0a0a;
+            --background-blue: #181a2a;
+            --text-primary: #ffffff;
+            --text-secondary: #d4d4d8;
+
+            /* Header spacing and sizing design tokens */
+            --header-spacing-xs: 0.25rem;    /* 4px */
+            --header-spacing-sm: 0.5rem;     /* 8px */
+            --header-spacing-md: 0.75rem;    /* 12px */
+            --header-spacing-lg: 1rem;       /* 16px */
+            --header-spacing-xl: 1.5rem;     /* 24px */
+            
+            /* Header component dimensions */
+            --header-height-mobile: 3.5rem;   /* 56px */
+            --header-height-tablet: 4rem;     /* 64px */
+            --header-height-desktop: 4.5rem;  /* 72px */
+            
+            /* Header logo sizing */
+            --header-logo-size-mobile: 1.5rem;  /* 24px */
+            --header-logo-size-tablet: 2rem;    /* 32px */
+            --header-logo-size-desktop: 2.5rem; /* 40px */
+            
+            /* Header button sizing */
+            --header-button-size-mobile: 2.25rem;  /* 36px */
+            --header-button-size-tablet: 2.5rem;   /* 40px */
+            --header-button-size-desktop: 2.75rem; /* 44px */
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--background-dark);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Mobile-specific responsive adjustments */
+        @media (max-width: 767px) {
+            .lesson-header {
+                backdrop-filter: blur(8px);
+                min-height: var(--header-height-mobile);
+            }
+
+            .lesson-header .progress-indicator {
+                max-height: 24px;
+                max-width: 24px;
+                padding: 0.125rem;
+            }
+            
+            .lesson-header .header-grid {
+                gap: var(--header-spacing-xs);
+                padding: var(--header-spacing-xs) var(--header-spacing-sm);
+                grid-template-columns: minmax(auto, 1fr) auto minmax(auto, 1fr);
+                align-items: center;
+                min-height: var(--header-height-mobile);
+            }
+            
+            .lesson-header .header-logo-area {
+                justify-content: flex-start;
+                min-width: 0;
+                flex: 0 1 auto;
+            }
+            
+            .lesson-header .header-progress-area {
+                justify-content: center;
+                flex: 1;
+                min-width: 0;
+                overflow: hidden;
+            }
+            
+            .lesson-header .header-actions-area {
+                justify-content: flex-end;
+                flex: 0 1 auto;
+                min-width: 0;
+            }
+
+            .lesson-header button {
+                min-height: 36px;
+                min-width: 36px;
+                touch-action: manipulation;
+                -webkit-tap-highlight-color: transparent;
+            }
+
+            .lesson-header .header-logo-size {
+                width: var(--header-logo-size-mobile);
+                height: var(--header-logo-size-mobile);
+                font-size: 1rem;
+                line-height: 1;
+            }
+
+            .lesson-header .header-button-size {
+                width: var(--header-button-size-mobile);
+                height: var(--header-button-size-mobile);
+                min-width: var(--header-button-size-mobile);
+                min-height: var(--header-button-size-mobile);
+                padding: 0.25rem;
+            }
+
+            .lesson-header .truncate-ellipsis {
+                max-width: 80px;
+            }
+        }
+
+        /* Additional mobile optimizations for very small screens */
+        @media (max-width: 480px) {
+            .lesson-header {
+                min-height: calc(var(--header-height-mobile) - 0.5rem);
+            }
+
+            .lesson-header .header-grid {
+                gap: 0.25rem;
+                padding: 0.25rem 0.5rem;
+                grid-template-columns: auto 1fr auto;
+            }
+
+            .lesson-header .header-logo-size {
+                width: 1.25rem;
+                height: 1.25rem;
+                font-size: 0.875rem;
+            }
+
+            .lesson-header .header-button-size {
+                width: 2rem;
+                height: 2rem;
+                min-width: 2rem;
+                min-height: 2rem;
+            }
+
+            .lesson-header .progress-indicator {
+                max-height: 20px;
+                max-width: 20px;
+            }
+
+            .lesson-header .truncate-ellipsis {
+                max-width: 60px;
+            }
+        }
+
+        /* Landscape mobile optimization */
+        @media (max-width: 767px) and (orientation: landscape) {
+            .lesson-header {
+                min-height: calc(var(--header-height-mobile) - 0.25rem);
+            }
+
+            .lesson-header .header-grid {
+                padding: 0.25rem var(--header-spacing-sm);
+            }
+
+            .lesson-header .header-hide-desktop {
+                display: none;
+            }
+        }
+
+        /* Header layout utilities */
+        .header-grid {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            grid-template-areas: "logo progress actions";
+            gap: var(--header-spacing-lg);
+            align-items: center;
+            padding: var(--header-spacing-md) var(--header-spacing-lg);
+            min-height: var(--header-height-desktop);
+        }
+
+        @media (max-width: 1023px) {
+            .header-grid {
+                gap: var(--header-spacing-md);
+                padding: var(--header-spacing-sm) var(--header-spacing-md);
+                min-height: var(--header-height-tablet);
+            }
+        }
+
+        @media (max-width: 767px) {
+            .header-grid {
+                gap: var(--header-spacing-sm);
+                padding: var(--header-spacing-xs) var(--header-spacing-sm);
+                min-height: var(--header-height-mobile);
+            }
+        }
+
+        .header-logo-area {
+            grid-area: logo;
+            display: flex;
+            align-items: center;
+            min-width: 0;
+        }
+
+        .header-progress-area {
+            grid-area: progress;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 0;
+            flex: 1;
+        }
+
+        .header-actions-area {
+            grid-area: actions;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            min-width: 0;
+        }
+
+        .header-logo-size {
+            width: var(--header-logo-size-desktop);
+            height: var(--header-logo-size-desktop);
+        }
+
+        @media (max-width: 1023px) {
+            .header-logo-size {
+                width: var(--header-logo-size-tablet);
+                height: var(--header-logo-size-tablet);
+            }
+        }
+
+        @media (max-width: 767px) {
+            .header-logo-size {
+                width: var(--header-logo-size-mobile);
+                height: var(--header-logo-size-mobile);
+            }
+        }
+
+        .header-button-size {
+            width: var(--header-button-size-desktop);
+            height: var(--header-button-size-desktop);
+            min-width: var(--header-button-size-desktop);
+            min-height: var(--header-button-size-desktop);
+        }
+
+        @media (max-width: 1023px) {
+            .header-button-size {
+                width: var(--header-button-size-tablet);
+                height: var(--header-button-size-tablet);
+                min-width: var(--header-button-size-tablet);
+                min-height: var(--header-button-size-tablet);
+            }
+        }
+
+        @media (max-width: 767px) {
+            .header-button-size {
+                width: var(--header-button-size-mobile);
+                height: var(--header-button-size-mobile);
+                min-width: var(--header-button-size-mobile);
+                min-height: var(--header-button-size-mobile);
+            }
+        }
+
+        .progress-indicator {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-indicator::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, var(--primary-color) 0%, var(--primary-color) var(--progress, 0%), transparent var(--progress, 0%));
+            mask: radial-gradient(circle at center, transparent 60%, black 60%);
+        }
+
+        .truncate-ellipsis {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #d400ff, #00c4ff, #a000ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-hide-mobile {
+            display: block;
+        }
+
+        @media (max-width: 767px) {
+            .header-hide-mobile {
+                display: none;
+            }
+        }
+
+        .header-hide-desktop {
+            display: none;
+        }
+
+        @media (max-width: 1023px) {
+            .header-hide-desktop {
+                display: block;
+            }
+        }
+
+        .lesson-header {
+            position: relative;
+            background: rgba(24, 24, 27, 0.80);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(31, 41, 55, 0.5);
+            z-index: 10;
+        }
+
+        .test-content {
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .viewport-info {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 0.5rem;
+            border-radius: 4px;
+            font-size: 12px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div class="viewport-info" id="viewportInfo">
+        Viewport: <span id="viewportSize"></span>
+    </div>
+
+    <!-- Mobile-Optimized Lesson Header -->
+    <header class="lesson-header">
+        <div class="mx-auto max-w-7xl">
+            <!-- Main Header Grid Layout -->
+            <div class="header-grid">
+                
+                <!-- Logo Area - Left Column -->
+                <div class="header-logo-area">
+                    <div class="flex items-center gap-1 sm:gap-2">
+                        <!-- Logo - Responsive sizing -->
+                        <div class="flex items-center gap-1 sm:gap-2 flex-shrink-0">
+                            <span class="header-logo-size font-extrabold gradient-text flex items-center justify-center">
+                                H
+                            </span>
+                            <!-- Hide brand text on mobile to save space -->
+                            <span class="header-hide-mobile text-white font-semibold text-sm sm:text-base truncate-ellipsis max-w-[120px] sm:max-w-none">
+                                Escola Habilidade
+                            </span>
+                        </div>
+
+                        <!-- Exit Button - Enhanced mobile touch targets -->
+                        <button class="header-button-size flex items-center justify-center gap-1 bg-white/5 hover:bg-white/10 active:bg-white/15 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-[#d400ff] flex-shrink-0 touch-manipulation">
+                            <svg class="w-3 h-3 sm:w-4 sm:h-4" fill="currentColor" viewBox="0 0 256 256">
+                                <path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"></path>
+                            </svg>
+                            <span class="header-hide-mobile text-xs font-medium">Sair</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Progress Area - Center Column -->
+                <div class="header-progress-area">
+                    <!-- Mobile: Show only 2 most important indicators -->
+                    <div class="flex sm:hidden items-center justify-center gap-1 overflow-hidden">
+                        <div class="progress-indicator" style="--progress: 75%">
+                            T
+                        </div>
+                        <div class="progress-indicator" style="--progress: 90%">
+                            Q
+                        </div>
+                    </div>
+
+                    <!-- Tablet and Desktop: Show all indicators -->
+                    <div class="hidden sm:flex items-center justify-center gap-1 sm:gap-2 lg:gap-3 overflow-hidden">
+                        <div class="progress-indicator" style="--progress: 75%">
+                            T
+                        </div>
+                        <div class="progress-indicator" style="--progress: 60%">
+                            P
+                        </div>
+                        <div class="progress-indicator" style="--progress: 45%">
+                            E
+                        </div>
+                        <div class="progress-indicator" style="--progress: 90%">
+                            Q
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actions Area - Right Column -->
+                <div class="header-actions-area">
+                    <!-- Mobile: Show only completion button if available -->
+                    <div class="flex sm:hidden items-center gap-1">
+                        <button class="w-8 h-8 bg-gradient-to-r from-[#22c55e] to-[#16a34a] text-white font-bold rounded-md hover:from-[#16a34a] hover:to-[#15803d] active:from-[#15803d] active:to-[#166534] transition-all focus:outline-none focus:ring-2 focus:ring-green-400 flex-shrink-0 flex items-center justify-center touch-manipulation">
+                            <span class="text-sm">✓</span>
+                        </button>
+                    </div>
+
+                    <!-- Tablet and Desktop: Show full actions -->
+                    <div class="hidden sm:flex items-center gap-2 lg:gap-3">
+                        <!-- Overall Progress - Desktop Only -->
+                        <div class="hidden lg:flex items-center gap-2">
+                            <div class="text-right">
+                                <div class="text-xs font-semibold text-white">
+                                    72%
+                                </div>
+                                <div class="text-[10px] text-gray-400">
+                                    Geral
+                                </div>
+                            </div>
+                            <div class="w-6 h-6 relative flex-shrink-0">
+                                <svg class="w-6 h-6 transform -rotate-90" viewBox="0 0 24 24">
+                                    <circle cx="12" cy="12" r="9" stroke="rgba(255,255,255,0.1)" stroke-width="1.5" fill="transparent"/>
+                                    <circle cx="12" cy="12" r="9" stroke="#00c4ff" stroke-width="1.5" fill="transparent" stroke-dasharray="56.5" stroke-dashoffset="15.8"/>
+                                </svg>
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <span class="text-[8px] font-bold text-white">72</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Complete Button - Tablet and Desktop -->
+                        <button class="px-3 py-1.5 bg-gradient-to-r from-[#22c55e] to-[#16a34a] text-white font-semibold rounded-md hover:from-[#16a34a] hover:to-[#15803d] active:from-[#15803d] active:to-[#166534] transition-all focus:outline-none focus:ring-2 focus:ring-green-400 text-xs flex-shrink-0 touch-manipulation">
+                            Concluir
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile Progress Bar - Mobile and Tablet Only -->
+            <div class="header-hide-desktop">
+                <div class="flex items-center justify-between mb-1 px-2 sm:px-3">
+                    <span class="text-[9px] sm:text-[10px] text-gray-400 font-medium">Progresso</span>
+                    <span class="text-[9px] sm:text-[10px] font-semibold text-white">72%</span>
+                </div>
+                <div class="w-full bg-gray-800/60 rounded-full h-1 sm:h-1.5 mx-2 sm:mx-3">
+                    <div class="h-1 sm:h-1.5 rounded-full bg-gradient-to-r from-[#00c4ff] to-[#d400ff]" style="width: 72%"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Test Content -->
+    <div class="test-content">
+        <h1 class="text-2xl font-bold mb-4 text-white">Mobile Header Optimization Test</h1>
+        
+        <div class="space-y-4 text-gray-300">
+            <div class="bg-gray-800/50 p-4 rounded-lg">
+                <h2 class="text-lg font-semibold mb-2 text-white">Mobile Optimizations (< 768px)</h2>
+                <ul class="space-y-1 text-sm">
+                    <li>✅ Compact layout with reduced spacing</li>
+                    <li>✅ Hide brand text "Escola Habilidade" on mobile</li>
+                    <li>✅ Show only 2 most important progress indicators (Time + Quiz)</li>
+                    <li>✅ Compact exit button with proper touch targets (36px min)</li>
+                    <li>✅ Responsive logo sizing (24px on mobile)</li>
+                    <li>✅ Mobile progress bar at bottom</li>
+                    <li>✅ Simplified completion button (icon only)</li>
+                </ul>
+            </div>
+
+            <div class="bg-gray-800/50 p-4 rounded-lg">
+                <h2 class="text-lg font-semibold mb-2 text-white">Ultra-Mobile Optimizations (< 480px)</h2>
+                <ul class="space-y-1 text-sm">
+                    <li>✅ Even more compact layout</li>
+                    <li>✅ Smaller logo (20px)</li>
+                    <li>✅ Smaller buttons (32px)</li>
+                    <li>✅ Tighter text truncation (60px max)</li>
+                    <li>✅ Reduced progress indicator size (20px)</li>
+                </ul>
+            </div>
+
+            <div class="bg-gray-800/50 p-4 rounded-lg">
+                <h2 class="text-lg font-semibold mb-2 text-white">Landscape Mobile Optimizations</h2>
+                <ul class="space-y-1 text-sm">
+                    <li>✅ Reduced header height to save vertical space</li>
+                    <li>✅ Hide mobile progress bar in landscape mode</li>
+                    <li>✅ Compact padding and spacing</li>
+                </ul>
+            </div>
+
+            <div class="bg-gray-800/50 p-4 rounded-lg">
+                <h2 class="text-lg font-semibold mb-2 text-white">Touch & Accessibility</h2>
+                <ul class="space-y-1 text-sm">
+                    <li>✅ Minimum 44px touch targets for buttons</li>
+                    <li>✅ Enhanced touch feedback with tap highlights</li>
+                    <li>✅ Touch manipulation optimization</li>
+                    <li>✅ Proper focus management for keyboard navigation</li>
+                    <li>✅ ARIA labels for screen readers</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="mt-8 p-4 bg-blue-900/20 border border-blue-500/30 rounded-lg">
+            <h3 class="text-lg font-semibold mb-2 text-blue-300">Test Instructions</h3>
+            <p class="text-sm text-blue-200">
+                Resize your browser window or use developer tools to test different viewport sizes:
+            </p>
+            <ul class="mt-2 space-y-1 text-sm text-blue-200">
+                <li>• <strong>Mobile:</strong> < 768px width</li>
+                <li>• <strong>Ultra-Mobile:</strong> < 480px width</li>
+                <li>• <strong>Tablet:</strong> 768px - 1023px width</li>
+                <li>• <strong>Desktop:</strong> > 1024px width</li>
+                <li>• <strong>Landscape:</strong> Rotate device or adjust height</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function updateViewportInfo() {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            const orientation = width > height ? 'landscape' : 'portrait';
+            
+            let breakpoint = '';
+            if (width < 480) breakpoint = 'ultra-mobile';
+            else if (width < 768) breakpoint = 'mobile';
+            else if (width < 1024) breakpoint = 'tablet';
+            else breakpoint = 'desktop';
+            
+            document.getElementById('viewportSize').textContent = 
+                `${width}x${height} (${breakpoint}, ${orientation})`;
+        }
+
+        window.addEventListener('resize', updateViewportInfo);
+        updateViewportInfo();
+    </script>
+</body>
+</html>

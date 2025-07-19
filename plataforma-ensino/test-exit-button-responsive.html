@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exit Button Responsive Test</title>
+    <style>
+        /* CSS Custom Properties from globals.css */
+        :root {
+            --primary-color: #d400ff;
+            --header-button-size-mobile: 2.25rem;
+            --header-button-size-tablet: 2.5rem;
+            --header-button-size-desktop: 2.75rem;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Montserrat', sans-serif;
+            background: #0a0a0a;
+            color: white;
+        }
+
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .test-section {
+            margin-bottom: 40px;
+            padding: 20px;
+            border: 1px solid #333;
+            border-radius: 8px;
+        }
+
+        .test-section h2 {
+            color: #d400ff;
+            margin-top: 0;
+        }
+
+        /* Exit Button Styles */
+        .header-exit-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.25rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: none;
+            border-radius: 6px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            position: relative;
+            z-index: 20;
+            flex-shrink: 0;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: rgba(212, 0, 255, 0.2);
+            white-space: nowrap;
+            overflow: visible;
+            padding: 0.25rem;
+        }
+
+        .header-exit-button:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: scale(1.02);
+        }
+
+        .header-exit-button:active {
+            background: rgba(255, 255, 255, 0.15);
+            transform: scale(0.98);
+        }
+
+        .header-exit-button:focus {
+            outline: 2px solid #d400ff;
+            outline-offset: 2px;
+            box-shadow: 0 0 0 4px rgba(212, 0, 255, 0.2);
+        }
+
+        .header-exit-button svg {
+            width: 12px;
+            height: 12px;
+            flex-shrink: 0;
+        }
+
+        .header-exit-button .button-text {
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        /* Mobile styles */
+        @media (max-width: 767px) {
+            .header-exit-button {
+                width: var(--header-button-size-mobile);
+                height: var(--header-button-size-mobile);
+                min-width: var(--header-button-size-mobile);
+                min-height: var(--header-button-size-mobile);
+                z-index: 25;
+                padding: 0.125rem;
+                -webkit-tap-highlight-color: rgba(212, 0, 255, 0.3);
+            }
+
+            .header-exit-button .button-text {
+                display: none;
+            }
+        }
+
+        /* Tablet styles */
+        @media (min-width: 768px) and (max-width: 1023px) {
+            .header-exit-button {
+                width: var(--header-button-size-tablet);
+                height: var(--header-button-size-tablet);
+                min-width: var(--header-button-size-tablet);
+                min-height: var(--header-button-size-tablet);
+                z-index: 20;
+                padding: 0.375rem;
+            }
+        }
+
+        /* Desktop styles */
+        @media (min-width: 1024px) {
+            .header-exit-button {
+                width: var(--header-button-size-desktop);
+                height: var(--header-button-size-desktop);
+                min-width: var(--header-button-size-desktop);
+                min-height: var(--header-button-size-desktop);
+                z-index: 20;
+                padding: 0.5rem;
+            }
+
+            .header-exit-button:hover {
+                box-shadow: 0 2px 8px rgba(212, 0, 255, 0.3);
+            }
+        }
+
+        /* Test layout */
+        .test-header {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 1rem;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            background: rgba(24, 24, 27, 0.80);
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .test-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .test-progress {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .test-progress-item {
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .test-actions {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .viewport-indicator {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: rgba(212, 0, 255, 0.8);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            z-index: 1000;
+        }
+
+        .test-info {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+
+        .test-info ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .test-info li {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="viewport-indicator" id="viewportIndicator">
+        Desktop
+    </div>
+
+    <div class="test-container">
+        <h1>Exit Button Responsive Positioning Test</h1>
+        
+        <div class="test-info">
+            <h3>Test Instructions:</h3>
+            <ul>
+                <li>Resize your browser window to test different breakpoints</li>
+                <li>Check that the exit button maintains proper size and positioning</li>
+                <li>Verify touch targets are appropriate for mobile devices</li>
+                <li>Test keyboard navigation (Tab to focus, Enter/Space to activate)</li>
+                <li>Ensure button doesn't overlap with other content</li>
+            </ul>
+        </div>
+
+        <div class="test-section">
+            <h2>Desktop Layout (≥ 1024px)</h2>
+            <div class="test-header">
+                <div class="test-logo">
+                    <span style="font-weight: bold; color: #d400ff;">H</span>
+                    <span>Escola Habilidade</span>
+                    <button class="header-exit-button" onclick="handleExitClick()" onkeydown="handleExitKeyDown(event)" type="button" aria-label="Voltar ao curso - Pressione Enter ou Espaço para ativar">
+                        <svg viewBox="0 0 256 256" fill="currentColor">
+                            <path d="M216,120H120V56a8,8,0,0,0-13.66-5.66l-72,72a8,8,0,0,0,0,11.32l72,72A8,8,0,0,0,120,200V136h96a8,8,0,0,0,0-16ZM104,180.69,51.31,128,104,75.31Z"/>
+                        </svg>
+                        <span class="button-text">Sair</span>
+                    </button>
+                </div>
+                <div class="test-progress">
+                    <div class="test-progress-item">Tempo: 75%</div>
+                    <div class="test-progress-item">PDF: 50%</div>
+                    <div class="test-progress-item">Quiz: 85%</div>
+                </div>
+                <div class="test-actions">
+                    <button style="padding: 0.5rem 1rem; background: #22c55e; border: none; border-radius: 4px; color: white;">Concluir</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>Tablet Layout (768px - 1023px)</h2>
+            <div class="test-header" style="max-width: 800px;">
+                <div class="test-logo">
+                    <span style="font-weight: bold; color: #d400ff;">H</span>
+                    <span>Escola Habilidade</span>
+                    <button class="header-exit-button" onclick="handleExitClick()" onkeydown="handleExitKeyDown(event)" type="button" aria-label="Voltar ao curso - Pressione Enter ou Espaço para ativar">
+                        <svg viewBox="0 0 256 256" fill="currentColor">
+                            <path d="M216,120H120V56a8,8,0,0,0-13.66-5.66l-72,72a8,8,0,0,0,0,11.32l72,72A8,8,0,0,0,120,200V136h96a8,8,0,0,0,0-16ZM104,180.69,51.31,128,104,75.31Z"/>
+                        </svg>
+                        <span class="button-text">Sair</span>
+                    </button>
+                </div>
+                <div class="test-progress">
+                    <div class="test-progress-item">T: 75%</div>
+                    <div class="test-progress-item">P: 50%</div>
+                    <div class="test-progress-item">Q: 85%</div>
+                </div>
+                <div class="test-actions">
+                    <button style="padding: 0.5rem 1rem; background: #22c55e; border: none; border-radius: 4px; color: white;">Concluir</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>Mobile Layout (< 768px)</h2>
+            <div class="test-header" style="max-width: 400px;">
+                <div class="test-logo">
+                    <span style="font-weight: bold; color: #d400ff;">H</span>
+                    <span style="display: none;">Escola Habilidade</span>
+                    <button class="header-exit-button" onclick="handleExitClick()" onkeydown="handleExitKeyDown(event)" type="button" aria-label="Voltar ao curso - Pressione Enter ou Espaço para ativar">
+                        <svg viewBox="0 0 256 256" fill="currentColor">
+                            <path d="M216,120H120V56a8,8,0,0,0-13.66-5.66l-72,72a8,8,0,0,0,0,11.32l72,72A8,8,0,0,0,120,200V136h96a8,8,0,0,0,0-16ZM104,180.69,51.31,128,104,75.31Z"/>
+                        </svg>
+                        <span class="button-text">Sair</span>
+                    </button>
+                </div>
+                <div class="test-progress">
+                    <div class="test-progress-item" style="font-size: 12px;">75%</div>
+                </div>
+                <div class="test-actions">
+                    <button style="padding: 0.25rem 0.5rem; background: #22c55e; border: none; border-radius: 4px; color: white; font-size: 12px;">✓</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>Accessibility Test</h2>
+            <p>Use Tab key to navigate to the exit button, then press Enter or Space to activate it.</p>
+            <button class="header-exit-button" onclick="handleExitClick()" onkeydown="handleExitKeyDown(event)" type="button" aria-label="Voltar ao curso - Pressione Enter ou Espaço para ativar" style="margin: 20px;">
+                <svg viewBox="0 0 256 256" fill="currentColor">
+                    <path d="M216,120H120V56a8,8,0,0,0-13.66-5.66l-72,72a8,8,0,0,0,0,11.32l72,72A8,8,0,0,0,120,200V136h96a8,8,0,0,0,0-16ZM104,180.69,51.31,128,104,75.31Z"/>
+                </svg>
+                <span class="button-text">Sair</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function handleExitClick() {
+            alert('Exit button clicked! Navigation would occur here.');
+        }
+
+        function handleExitKeyDown(event) {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                handleExitClick();
+            }
+        }
+
+        function updateViewportIndicator() {
+            const indicator = document.getElementById('viewportIndicator');
+            const width = window.innerWidth;
+            
+            if (width < 768) {
+                indicator.textContent = `Mobile (${width}px)`;
+            } else if (width < 1024) {
+                indicator.textContent = `Tablet (${width}px)`;
+            } else {
+                indicator.textContent = `Desktop (${width}px)`;
+            }
+        }
+
+        // Update viewport indicator on load and resize
+        updateViewportIndicator();
+        window.addEventListener('resize', updateViewportIndicator);
+
+        // Test keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Tab') {
+                console.log('Tab navigation active');
+            }
+        });
+    </script>
+</body>
+</html>

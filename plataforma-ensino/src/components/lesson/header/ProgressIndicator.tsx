@@ -25,6 +25,9 @@ interface ProgressIndicatorProps {
   state?: ProgressState
   showPulse?: boolean
   size?: 'sm' | 'md' | 'lg'
+  showLabel?: boolean
+  showDetail?: boolean
+  compact?: boolean
 }
 
 const ICON_MAP = {
@@ -69,7 +72,10 @@ const ProgressIndicatorComponent = ({
   className,
   state = 'not_started',
   showPulse = false,
-  size = 'md'
+  size = 'md',
+  showLabel = false,
+  showDetail = false,
+  compact = false
 }: ProgressIndicatorProps) => {
   const IconComponent = ICON_MAP[icon]
   const sizeConfig = SIZE_CONFIG[size]
@@ -191,29 +197,33 @@ const ProgressIndicatorComponent = ({
         )}
       </div>
 
-      {/* Enhanced Label with state indication - Hidden for compact header */}
-      <motion.span 
-        className={cn(
-          "hidden text-[10px] font-medium text-center transition-colors duration-300",
-          isCompleted && "text-green-300",
-          state === 'failed' && "text-red-300",
-          state === 'in_progress' && "text-amber-300",
-          state === 'not_started' && "text-gray-400"
-        )}
-        animate={{ 
-          color: isCompleted ? '#86efac' : 
-                state === 'failed' ? '#fca5a5' :
-                state === 'in_progress' ? '#fcd34d' : '#9ca3af'
-        }}
-      >
-        {label}
-      </motion.span>
-
-      {/* Enhanced Detail with progress indication - Hidden for compact header */}
-      {detail && (
+      {/* Enhanced Label with state indication - Responsive visibility */}
+      {showLabel && (
         <motion.span 
           className={cn(
-            "hidden text-[9px] text-center transition-colors duration-300",
+            "text-[10px] font-medium text-center transition-colors duration-300 whitespace-nowrap",
+            compact && "text-[9px]",
+            isCompleted && "text-green-300",
+            state === 'failed' && "text-red-300",
+            state === 'in_progress' && "text-amber-300",
+            state === 'not_started' && "text-gray-400"
+          )}
+          animate={{ 
+            color: isCompleted ? '#86efac' : 
+                  state === 'failed' ? '#fca5a5' :
+                  state === 'in_progress' ? '#fcd34d' : '#9ca3af'
+          }}
+        >
+          {label}
+        </motion.span>
+      )}
+
+      {/* Enhanced Detail with progress indication - Responsive visibility */}
+      {showDetail && detail && (
+        <motion.span 
+          className={cn(
+            "text-[9px] text-center transition-colors duration-300 whitespace-nowrap",
+            compact && "text-[8px]",
             isCompleted && "text-green-400",
             state === 'failed' && "text-red-400", 
             state === 'in_progress' && "text-amber-400",
