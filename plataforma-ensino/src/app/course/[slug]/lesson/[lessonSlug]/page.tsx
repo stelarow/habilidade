@@ -274,14 +274,22 @@ export default function LessonPageRefactored() {
         await router.push(`/course/${course.slug}`)
         console.log('Navigation to course completed successfully')
         
-        // Force page reload as fallback
+        // Immediate check and force navigation if needed
         setTimeout(() => {
           console.log('Current URL after navigation:', window.location.href)
-          if (!window.location.pathname.includes(`/course/${course.slug}`)) {
-            console.log('URL did not change, forcing reload...')
-            window.location.href = `/course/${course.slug}`
+          const expectedPath = `/course/${course.slug}`
+          const currentPath = window.location.pathname
+          
+          if (currentPath !== expectedPath && !currentPath.includes(expectedPath)) {
+            console.log(`URL mismatch detected:`)
+            console.log(`Expected: ${expectedPath}`)
+            console.log(`Current: ${currentPath}`)
+            console.log('Forcing immediate redirect...')
+            window.location.href = expectedPath
+          } else {
+            console.log('✅ Navigation successful - URL changed correctly')
           }
-        }, 100)
+        }, 50)
       } else {
         console.log('No course slug available, navigating to dashboard')
         await router.push('/dashboard')
