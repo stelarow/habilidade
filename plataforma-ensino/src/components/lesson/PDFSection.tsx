@@ -348,10 +348,9 @@ const PDFSection: React.FC<PDFSectionProps> = ({
       {/* PDF Viewer */}
       <div 
         ref={pdfSectionRef}
-        className="relative bg-muted rounded-lg min-h-[600px] mb-4 overflow-hidden flex items-start justify-center"
+        className="relative bg-muted rounded-lg min-h-[600px] mb-4 overflow-hidden flex items-start justify-center max-w-full"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        style={{ maxWidth: '100%' }}
       >
         {isLoading && (
           <div className="flex items-center justify-center h-96">
@@ -372,7 +371,7 @@ const PDFSection: React.FC<PDFSectionProps> = ({
         )}
 
         {!error && typeof window !== 'undefined' && (
-          <div className="w-full p-4 flex justify-center" style={{ maxWidth: '100%', overflow: 'hidden' }}>
+          <div className="w-full p-4 flex justify-center max-w-full overflow-hidden">
             <Document
               file={pdfUrl}
               onLoadSuccess={onDocumentLoadSuccess}
@@ -431,10 +430,7 @@ const PDFSection: React.FC<PDFSectionProps> = ({
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
               transition={{ duration: 0.2 }}
-              className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50"
-              style={{
-                pointerEvents: 'auto'
-              }}
+              className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 pointer-events-auto"
             >
               <div className="flex items-center gap-2 bg-black/80 backdrop-blur-sm rounded-full px-4 py-2 text-white shadow-lg">
                 <Button
@@ -556,13 +552,7 @@ const PDFSection: React.FC<PDFSectionProps> = ({
                       width={Math.min(pageWidth * 1.2, window.innerWidth - 100, 1000)} // Controlled fullscreen sizing
                       height={Math.min(pageHeight * 1.2, window.innerHeight - 200, 900)} // Controlled fullscreen height - KEY FIX!
                       onClick={handlePageClick}
-                      className="shadow-lg"
-                      style={{ 
-                        maxWidth: '100%', 
-                        maxHeight: '90vh',
-                        objectFit: 'contain',
-                        height: 'auto' 
-                      }}
+                      className="shadow-lg max-w-full max-h-[90vh] h-auto object-contain"
                       loading={
                         <div className="flex items-center justify-center h-96">
                           <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
