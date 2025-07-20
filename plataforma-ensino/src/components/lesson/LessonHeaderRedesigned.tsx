@@ -1,11 +1,19 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { LogoH } from '@/components/ui'
 import { 
   Home, 
-  LogOut
+  LogOut,
+  Play,
+  FileText,
+  PenTool,
+  Trophy,
+  Menu,
+  ChevronDown
 } from 'lucide-react'
 import { LessonProgressData } from '@/types/lesson'
 
@@ -20,43 +28,204 @@ interface LessonHeaderRedesignedProps {
   }
   progressData: LessonProgressData | null
   onExit: () => void
+  // Dynamic navigation data
+  videoUrl?: string
+  materials?: any[]
+  exercises?: any[]
+  quizzes?: any[]
 }
 
 const LessonHeaderRedesigned: React.FC<LessonHeaderRedesignedProps> = ({
   course,
   lesson,
   progressData,
-  onExit
+  onExit,
+  videoUrl,
+  materials = [],
+  exercises = [],
+  quizzes = []
 }) => {
-  // Simplified header - no progress indicators needed
+  const router = useRouter()
+  const [isNavigating, setIsNavigating] = useState(false)
+  const [showMobileNav, setShowMobileNav] = useState(false)
+
+  // Count available lesson sections for mobile dropdown
+  const availableSections = [
+    videoUrl && { id: 'video-section', label: 'Vídeo', icon: Play },
+    materials.some(m => m.type === 'pdf') && { id: 'pdf-section', label: 'Material', icon: FileText },
+    exercises.length > 0 && { id: 'exercises-section', label: 'Exercícios', icon: PenTool },
+    quizzes.length > 0 && { id: 'quiz-section', label: 'Quiz', icon: Trophy }
+  ].filter(Boolean)
+
+  // Handle home navigation
+  const handleHomeClick = async () => {
+    setIsNavigating(true)
+    try {
+      await router.push('/dashboard')
+    } catch (error) {
+      console.error('Navigation error:', error)
+    } finally {
+      setIsNavigating(false)
+    }
+  }
+
+  // Handle section navigation with smooth scroll
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId)
+    if (element) {
+      element.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      })
+    }
+  }
+
+  // Close mobile nav when clicking outside
+  React.useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (showMobileNav && !(event.target as Element).closest('.relative')) {
+        setShowMobileNav(false)
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [showMobileNav])
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-header-bg text-header-foreground shadow-lg">
       <div className="container mx-auto px-4 py-3">
         <div className="flex items-center justify-between">
-          {/* Logo e navegação */}
+          {/* Enhanced Logo - Consistent with main site */}
           <div className="flex items-center gap-3 md:gap-6">
-            {/* Logo da Escola Habilidade - Consistent with main site */}
-            <div className="flex items-center gap-2 flex-shrink-0">
-              <LogoH 
-                size="small"
-                animated={true}
-                showFullText={true}
-                className="transition-all duration-300 hover:scale-105"
-              />
-            </div>
+            <Link 
+              href="/"
+              className="logo-container group flex items-center gap-3 focus:outline-none"
+            >
+              <div className="logo-wrapper relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-fuchsia-500 to-cyan-400 rounded-lg opacity-0 group-hover:opacity-20 group-focus:opacity-20 transition-opacity duration-300 transform scale-110" />
+                <LogoH 
+                  size="small"
+                  animated={true}
+                  showFullText={true}
+                  className="relative transition-all duration-300 group-hover:scale-105 group-focus:scale-105"
+                />
+              </div>
+              <div className="logo-text-container hidden lg:block">
+                <span className="tagline block text-xs text-gray-400 group-hover:text-gray-300 transition-colors duration-300">
+                  Plataforma de Ensino
+                </span>
+              </div>
+            </Link>
           </div>
           
-          {/* Navigation Actions - Enhanced */}
-          <div className="flex items-center gap-3">
+          {/* Dynamic Lesson Navigation */}
+          <div className="flex items-center gap-2">
+            {/* Mobile Lesson Navigation Dropdown */}
+            {availableSections.length > 0 && (
+              <div className="relative md:hidden">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setShowMobileNav(!showMobileNav)}
+                  className="text-header-foreground hover:bg-white/10 transition-all duration-200 px-2 py-1"
+                  aria-label="Menu de navegação da aula"
+                >
+                  <Menu className="h-4 w-4" />
+                  <ChevronDown className={`h-3 w-3 ml-1 transition-transform ${showMobileNav ? 'rotate-180' : ''}`} />
+                </Button>
+                
+                {showMobileNav && (
+                  <div className="absolute top-full right-0 mt-2 w-48 bg-background border border-border rounded-md shadow-lg z-50">
+                    {availableSections.map((section: any) => {
+                      const IconComponent = section.icon
+                      return (
+                        <button
+                          key={section.id}
+                          onClick={() => {
+                            scrollToSection(section.id)
+                            setShowMobileNav(false)
+                          }}
+                          className="w-full flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted transition-colors text-left"
+                        >
+                          <IconComponent className="h-4 w-4" />
+                          {section.label}
+                        </button>
+                      )
+                    })}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Desktop Lesson Content Quick Access */}
+            <div className="hidden md:flex items-center gap-1 mr-3">
+              {videoUrl && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => scrollToSection('video-section')}
+                  className="text-header-foreground hover:bg-white/10 transition-all duration-200 px-2 py-1"
+                  title="Ir para o vídeo"
+                >
+                  <Play className="h-4 w-4" />
+                  <span className="ml-1 text-xs hidden lg:inline">Vídeo</span>
+                </Button>
+              )}
+              
+              {materials.some(m => m.type === 'pdf') && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => scrollToSection('pdf-section')}
+                  className="text-header-foreground hover:bg-white/10 transition-all duration-200 px-2 py-1"
+                  title="Ir para o material"
+                >
+                  <FileText className="h-4 w-4" />
+                  <span className="ml-1 text-xs hidden lg:inline">PDF</span>
+                </Button>
+              )}
+              
+              {exercises.length > 0 && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => scrollToSection('exercises-section')}
+                  className="text-header-foreground hover:bg-white/10 transition-all duration-200 px-2 py-1"
+                  title="Ir para os exercícios"
+                >
+                  <PenTool className="h-4 w-4" />
+                  <span className="ml-1 text-xs hidden lg:inline">Exercícios</span>
+                </Button>
+              )}
+              
+              {quizzes.length > 0 && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => scrollToSection('quiz-section')}
+                  className="text-header-foreground hover:bg-white/10 transition-all duration-200 px-2 py-1"
+                  title="Ir para o quiz"
+                >
+                  <Trophy className="h-4 w-4" />
+                  <span className="ml-1 text-xs hidden lg:inline">Quiz</span>
+                </Button>
+              )}
+            </div>
+
+            {/* Main Navigation Actions */}
             <Button 
               variant="ghost" 
               size="sm" 
+              onClick={handleHomeClick}
+              disabled={isNavigating}
               className="text-header-foreground hover:bg-white/10 hover:scale-105 transition-all duration-200 px-3 py-2"
               aria-label="Ir para página inicial"
             >
               <Home className="h-4 w-4 sm:h-5 sm:w-5 sm:mr-2" />
-              <span className="hidden sm:inline">Início</span>
+              <span className="hidden sm:inline">
+                {isNavigating ? 'Carregando...' : 'Início'}
+              </span>
             </Button>
             
             <Button 

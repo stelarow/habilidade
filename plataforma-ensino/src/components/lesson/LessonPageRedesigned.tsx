@@ -113,6 +113,10 @@ const LessonPageRedesigned: React.FC<LessonPageRedesignedProps> = ({
             lesson={lesson}
             progressData={currentProgressData}
             onExit={handleExit}
+            videoUrl={videoUrl}
+            materials={materials}
+            exercises={exercises}
+            quizzes={quizzes}
           />
 
           {/* Conteúdo principal */}
@@ -129,57 +133,65 @@ const LessonPageRedesigned: React.FC<LessonPageRedesignedProps> = ({
 
             {/* Video Section */}
             {videoUrl && (
-              <VideoSection
-                videoTitle={`Vídeo: ${lesson.title}`}
-                videoDescription={lesson.description || "Assista ao conteúdo principal desta aula"}
-                videoUrl={videoUrl}
-                lessonId={lesson.id}
-                onProgressUpdate={handleVideoProgress}
-              />
+              <div id="video-section">
+                <VideoSection
+                  videoTitle={`Vídeo: ${lesson.title}`}
+                  videoDescription={lesson.description || "Assista ao conteúdo principal desta aula"}
+                  videoUrl={videoUrl}
+                  lessonId={lesson.id}
+                  onProgressUpdate={handleVideoProgress}
+                />
+              </div>
             )}
 
             {/* PDF Section */}
             {materials.length > 0 && materials.find(m => m.type === 'pdf') && (
-              <PDFSectionWrapper
-                title={materials.find(m => m.type === 'pdf')?.title || "Material Didático"}
-                pdfUrl={materials.find(m => m.type === 'pdf')?.url}
-                lessonId={lesson.id}
-                onProgressUpdate={handlePDFProgress}
-                initialProgress={currentProgressData?.pdfProgress?.percentageRead || 0}
-              />
+              <div id="pdf-section">
+                <PDFSectionWrapper
+                  title={materials.find(m => m.type === 'pdf')?.title || "Material Didático"}
+                  pdfUrl={materials.find(m => m.type === 'pdf')?.url}
+                  lessonId={lesson.id}
+                  onProgressUpdate={handlePDFProgress}
+                  initialProgress={currentProgressData?.pdfProgress?.percentageRead || 0}
+                />
+              </div>
             )}
 
             {/* Quiz Section */}
             {quizzes.length > 0 && (
-              <QuizSection
-                title={quizzes[0]?.title || "Quiz de Avaliação"}
-                questions={quizzes[0]?.questions?.map((q: any, index: number) => ({
-                  id: index + 1,
-                  question: q.question,
-                  options: q.options,
-                  correctAnswer: q.correct_answer,
-                  explanation: q.explanation
-                })) || []}
-                passingScore={quizzes[0]?.passing_score || 70}
-                onProgressUpdate={(progress) => {
-                  // console.log('Quiz progress:', progress) // Removed to prevent excessive logging
-                }}
-                onQuizComplete={handleQuizComplete}
-                initialScore={currentProgressData?.quizProgress?.score || 0}
-                initialCompleted={currentProgressData?.quizProgress?.isCompleted || false}
-              />
+              <div id="quiz-section">
+                <QuizSection
+                  title={quizzes[0]?.title || "Quiz de Avaliação"}
+                  questions={quizzes[0]?.questions?.map((q: any, index: number) => ({
+                    id: index + 1,
+                    question: q.question,
+                    options: q.options,
+                    correctAnswer: q.correct_answer,
+                    explanation: q.explanation
+                  })) || []}
+                  passingScore={quizzes[0]?.passing_score || 70}
+                  onProgressUpdate={(progress) => {
+                    // console.log('Quiz progress:', progress) // Removed to prevent excessive logging
+                  }}
+                  onQuizComplete={handleQuizComplete}
+                  initialScore={currentProgressData?.quizProgress?.score || 0}
+                  initialCompleted={currentProgressData?.quizProgress?.isCompleted || false}
+                />
+              </div>
             )}
 
             {/* Exercises Section */}
             {exercises.length > 0 && (
-              <ExercisesSection
-                title="Exercícios Práticos"
-                exercises={exercises}
-                onProgressUpdate={handleExercisesProgress}
-                onFilesUploaded={(files) => {
-                  // console.log('Files uploaded:', files) // Removed to prevent excessive logging
-                }}
-              />
+              <div id="exercises-section">
+                <ExercisesSection
+                  title="Exercícios Práticos"
+                  exercises={exercises}
+                  onProgressUpdate={handleExercisesProgress}
+                  onFilesUploaded={(files) => {
+                    // console.log('Files uploaded:', files) // Removed to prevent excessive logging
+                  }}
+                />
+              </div>
             )}
 
             {/* Completion Section */}
