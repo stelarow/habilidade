@@ -39,19 +39,27 @@ const PDFSection: React.FC<PDFSectionProps> = ({
   onProgressUpdate,
   initialProgress = 0
 }) => {
-  // Convert Google Drive URLs to direct download format
-  const convertGoogleDriveUrl = (url: string): string => {
-    // Check if it's a Google Drive share URL
-    const match = url.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)\/view/);
-    if (match) {
-      const fileId = match[1];
-      return `https://drive.google.com/uc?export=download&id=${fileId}`;
+  // Convert Google Drive URLs to viewer format (CORS-free)
+  const convertGoogleDriveUrl = (url: string): { viewerUrl: string, isGoogleDrive: boolean } => {
+    // Check if it's a Google Drive URL (either share or download format)
+    const shareMatch = url.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/);
+    const downloadMatch = url.match(/drive\.google\.com\/uc\?.*id=([a-zA-Z0-9_-]+)/);
+    
+    if (shareMatch || downloadMatch) {
+      const fileId = shareMatch?.[1] || downloadMatch?.[1];
+      return {
+        viewerUrl: `https://drive.google.com/file/d/${fileId}/preview`,
+        isGoogleDrive: true
+      };
     }
-    return url; // Return original URL if not a Google Drive share URL
+    return {
+      viewerUrl: url,
+      isGoogleDrive: false
+    };
   };
 
   // Use converted URL for PDF loading
-  const processedPdfUrl = pdfUrl ? convertGoogleDriveUrl(pdfUrl) : pdfUrl;
+  const { viewerUrl, isGoogleDrive } = pdfUrl ? convertGoogleDriveUrl(pdfUrl) : { viewerUrl: pdfUrl, isGoogleDrive: false };
   const [numPages, setNumPages] = useState<number>(0)
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [scale, setScale] = useState<number>(1.0)
@@ -383,12 +391,33 @@ const PDFSection: React.FC<PDFSectionProps> = ({
           </div>
         )}
 
-        {!error && typeof window !== 'undefined' && (
-          <div className="w-full p-4 flex justify-center max-w-full overflow-hidden">
-            <Document
-              file={processedPdfUrl}
-              onLoadSuccess={onDocumentLoadSuccess}
-              onLoadError={onDocumentLoadError}
+        {!error && isGoogleDrive ? (
+          // Google Drive iframe viewer (CORS-free)
+          <div className="w-full h-[600px] rounded-lg overflow-hidden">
+            <iframe
+              src={viewerUrl}
+              className="w-full h-full border-0"
+              title={title}
+              onLoad={() => {
+                setIsLoading(false)
+                setError(null)
+                // Simulate progress for Google Drive PDFs
+                setProgress(100)
+                if (onProgressUpdate) onProgressUpdate(100)
+              }}
+              onError={() => {
+                setError('Erro ao carregar o PDF do Google Drive')
+                setIsLoading(false)
+              }}
+            />
+          </div>
+        ) : (
+          !error && typeof window !== 'undefined' && (
+            <div className="w-full p-4 flex justify-center max-w-full overflow-hidden">
+              <Document
+                file={viewerUrl}
+                onLoadSuccess={onDocumentLoadSuccess}
+                onLoadError={onDocumentLoadError}
               loading={
                 <div className="flex items-center justify-center h-96">
                   <div className="text-center text-muted-foreground">
@@ -423,6 +452,7 @@ const PDFSection: React.FC<PDFSectionProps> = ({
               />
             </Document>
           </div>
+        )
         )}
 
         {/* SSR placeholder */}
@@ -537,11 +567,21 @@ const PDFSection: React.FC<PDFSectionProps> = ({
 
               {/* Fullscreen PDF Content */}
               <div className="mt-16 mb-24 flex justify-center">
-                {!error && typeof window !== 'undefined' && (
-                  <Document
-                    file={processedPdfUrl}
-                    onLoadSuccess={onDocumentLoadSuccess}
-                    onLoadError={onDocumentLoadError}
+                {!error && isGoogleDrive ? (
+                  // Google Drive iframe in fullscreen
+                  <div className="w-full max-w-4xl h-[calc(100vh-200px)] rounded-lg overflow-hidden">
+                    <iframe
+                      src={viewerUrl}
+                      className="w-full h-full border-0"
+                      title={title}
+                    />
+                  </div>
+                ) : (
+                  !error && typeof window !== 'undefined' && (
+                    <Document
+                      file={viewerUrl}
+                      onLoadSuccess={onDocumentLoadSuccess}
+                      onLoadError={onDocumentLoadError}
                     loading={
                       <div className="flex items-center justify-center h-96">
                         <div className="text-center text-white">
@@ -575,29 +615,31 @@ const PDFSection: React.FC<PDFSectionProps> = ({
                       renderAnnotationLayer={true}
                     />
                   </Document>
+                )
                 )}
               </div>
 
-              {/* Fullscreen Controls */}
-              <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-[110]">
-                <div className="flex items-center gap-4 bg-black/80 backdrop-blur-sm rounded-full px-6 py-3 text-white shadow-lg">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={goToPrevPage}
-                    disabled={currentPage <= 1}
-                    className="text-white hover:bg-white/20"
-                  >
-                    <ChevronLeft className="h-5 w-5" />
-                  </Button>
-                  
-                  <span className="text-lg font-medium px-4">
-                    {currentPage} / {numPages}
-                  </span>
-                  
-                  <Button
-                    variant="ghost"
-                    size="sm"
+              {/* Fullscreen Controls - Hide for Google Drive PDFs */}
+              {!isGoogleDrive && (
+                <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-[110]">
+                  <div className="flex items-center gap-4 bg-black/80 backdrop-blur-sm rounded-full px-6 py-3 text-white shadow-lg">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={goToPrevPage}
+                      disabled={currentPage <= 1}
+                      className="text-white hover:bg-white/20"
+                    >
+                      <ChevronLeft className="h-5 w-5" />
+                    </Button>
+                    
+                    <span className="text-lg font-medium px-4">
+                      {currentPage} / {numPages}
+                    </span>
+                    
+                    <Button
+                      variant="ghost"
+                      size="sm"
                     onClick={goToNextPage}
                     disabled={currentPage >= numPages}
                     className="text-white hover:bg-white/20"
@@ -656,7 +698,8 @@ const PDFSection: React.FC<PDFSectionProps> = ({
                     <span>{Math.round(progress)}%</span>
                   </div>
                 </div>
-              </div>
+              )}
+            </div>
             </div>
           </motion.div>
         )}
