@@ -16,7 +16,6 @@ export async function POST(
     const { 
       timeSpent, 
       quizScore, 
-      hasQuiz,
       completionCriteria 
     } = body
 
