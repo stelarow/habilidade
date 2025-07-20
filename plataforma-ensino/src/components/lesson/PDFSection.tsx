@@ -39,6 +39,19 @@ const PDFSection: React.FC<PDFSectionProps> = ({
   onProgressUpdate,
   initialProgress = 0
 }) => {
+  // Convert Google Drive URLs to direct download format
+  const convertGoogleDriveUrl = (url: string): string => {
+    // Check if it's a Google Drive share URL
+    const match = url.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)\/view/);
+    if (match) {
+      const fileId = match[1];
+      return `https://drive.google.com/uc?export=download&id=${fileId}`;
+    }
+    return url; // Return original URL if not a Google Drive share URL
+  };
+
+  // Use converted URL for PDF loading
+  const processedPdfUrl = pdfUrl ? convertGoogleDriveUrl(pdfUrl) : pdfUrl;
   const [numPages, setNumPages] = useState<number>(0)
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [scale, setScale] = useState<number>(1.0)
@@ -373,7 +386,7 @@ const PDFSection: React.FC<PDFSectionProps> = ({
         {!error && typeof window !== 'undefined' && (
           <div className="w-full p-4 flex justify-center max-w-full overflow-hidden">
             <Document
-              file={pdfUrl}
+              file={processedPdfUrl}
               onLoadSuccess={onDocumentLoadSuccess}
               onLoadError={onDocumentLoadError}
               loading={
@@ -526,7 +539,7 @@ const PDFSection: React.FC<PDFSectionProps> = ({
               <div className="mt-16 mb-24 flex justify-center">
                 {!error && typeof window !== 'undefined' && (
                   <Document
-                    file={pdfUrl}
+                    file={processedPdfUrl}
                     onLoadSuccess={onDocumentLoadSuccess}
                     onLoadError={onDocumentLoadError}
                     loading={
