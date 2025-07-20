@@ -74,7 +74,7 @@ export const useLessonCompletion = ({
     }
   }, [progressData])
 
-  // SIMPLIFIED validation - only check quiz score if quiz exists
+  // SIMPLIFIED validation - only check quiz score if quiz exists (NO LOGS TO PREVENT LOOPS)
   const validateCompletion = useCallback((): { isValid: boolean; errors: string[] } => {
     if (!progressData) {
       return { isValid: true, errors: [] } // Allow completion if no progress data
@@ -91,7 +91,7 @@ export const useLessonCompletion = ({
       errors.push('Complete o quiz com pelo menos 70% de acerto para concluir a aula')
     }
 
-    console.log('Simplified validation:', { hasQuiz, quizScore, isValid: errors.length === 0 })
+    // NO CONSOLE.LOG HERE - causes infinite loops!
 
     return {
       isValid: errors.length === 0,

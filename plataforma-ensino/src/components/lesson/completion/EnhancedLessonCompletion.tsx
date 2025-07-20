@@ -70,9 +70,18 @@ export const EnhancedLessonCompletion: React.FC<EnhancedLessonCompletionProps> =
     onError
   })
 
-  // Check if completion criteria are met - memoized to avoid loops
-  const validation = useMemo(() => validateCompletion(), [validateCompletion])
-  const canComplete = validation.isValid
+  // SIMPLIFIED validation directly here to break loops
+  const canComplete = useMemo(() => {
+    if (!progressData) return true // Allow if no data
+    
+    const quizScore = progressData.quizProgress?.score || 0
+    const hasQuiz = progressData.quizProgress?.totalQuestions > 0
+    
+    // Simple rule: if has quiz, need 70%+
+    return hasQuiz ? quizScore >= 70 : true
+  }, [progressData])
+  
+  const validation = { isValid: canComplete, errors: [] }
 
   // Handle completion with additional error handling
   const handleCompleteLesson = useCallback(async (): Promise<void> => {
