@@ -47,6 +47,7 @@ const PDFSection: React.FC<PDFSectionProps> = ({
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [error, setError] = useState<string | null>(null)
   const [pageWidth, setPageWidth] = useState<number>(600)
+  const [pageHeight, setPageHeight] = useState<number>(800) // Add height control
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false)
   const [showFloatingControls, setShowFloatingControls] = useState<boolean>(false)
   const [isPDFSectionVisible, setIsPDFSectionVisible] = useState<boolean>(false)
@@ -64,22 +65,42 @@ const PDFSection: React.FC<PDFSectionProps> = ({
     setProgress(savedProgress.pdfProgress)
   }, [lessonId])
 
-  // Handle responsive page width
+  // Handle responsive page dimensions with proper constraints
   useEffect(() => {
-    const updatePageWidth = () => {
+    const updatePageDimensions = () => {
       const containerWidth = window.innerWidth
+      const containerHeight = window.innerHeight
+      const containerElement = pdfSectionRef.current
+      const availableWidth = containerElement ? containerElement.clientWidth - 32 : containerWidth - 80 // 32px for padding
+      
+      // Set max width constraints to prevent oversizing
+      let newWidth = 600
       if (containerWidth < 768) {
-        setPageWidth(containerWidth - 80) // Account for padding and margins
+        newWidth = Math.min(availableWidth, 600) // Mobile: max 600px
       } else if (containerWidth < 1024) {
-        setPageWidth(700)
+        newWidth = Math.min(availableWidth, 700) // Tablet: max 700px  
       } else {
-        setPageWidth(800)
+        newWidth = Math.min(availableWidth, 800) // Desktop: max 800px
       }
+      
+      // Set height constraints to prevent oversizing (key fix!)
+      // Height should be proportional to width but capped
+      const maxHeight = Math.min(containerHeight * 0.8, 800) // Max 80% of viewport or 800px
+      const proportionalHeight = (newWidth * 4) / 3 // 4:3 aspect ratio as base
+      const newHeight = Math.min(proportionalHeight, maxHeight)
+      
+      setPageWidth(newWidth)
+      setPageHeight(newHeight)
     }
 
-    updatePageWidth()
-    window.addEventListener('resize', updatePageWidth)
-    return () => window.removeEventListener('resize', updatePageWidth)
+    // Add delay to ensure container is rendered
+    const timeoutId = setTimeout(updatePageDimensions, 100)
+    
+    window.addEventListener('resize', updatePageDimensions)
+    return () => {
+      clearTimeout(timeoutId)
+      window.removeEventListener('resize', updatePageDimensions)
+    }
   }, [])
 
   // Intersection Observer for PDF section visibility
@@ -238,16 +259,30 @@ const PDFSection: React.FC<PDFSectionProps> = ({
         .react-pdf__Page {
           margin: 0 auto !important;
           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+          max-width: 100% !important;
+          max-height: 800px !important;
+          overflow: hidden !important;
         }
         .react-pdf__Page__canvas {
           max-width: 100% !important;
+          max-height: 800px !important;
           height: auto !important;
+          width: auto !important;
           display: block !important;
+          margin: 0 auto !important;
+          object-fit: contain !important;
         }
         .react-pdf__Document {
           display: flex !important;
           flex-direction: column !important;
           align-items: center !important;
+          max-width: 100% !important;
+          overflow: hidden !important;
+        }
+        .react-pdf__Page > div {
+          max-width: 100% !important;
+          max-height: 800px !important;
+          overflow: hidden !important;
         }
       `}</style>
       <h3 className="text-xl font-bold mb-4 gradient-text">{title}</h3>
@@ -313,9 +348,10 @@ const PDFSection: React.FC<PDFSectionProps> = ({
       {/* PDF Viewer */}
       <div 
         ref={pdfSectionRef}
-        className="relative bg-muted rounded-lg min-h-[600px] mb-4 overflow-auto flex items-start justify-center"
+        className="relative bg-muted rounded-lg min-h-[600px] mb-4 overflow-hidden flex items-start justify-center"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        style={{ maxWidth: '100%' }}
       >
         {isLoading && (
           <div className="flex items-center justify-center h-96">
@@ -336,7 +372,7 @@ const PDFSection: React.FC<PDFSectionProps> = ({
         )}
 
         {!error && typeof window !== 'undefined' && (
-          <div className="w-full p-4">
+          <div className="w-full p-4 flex justify-center" style={{ maxWidth: '100%', overflow: 'hidden' }}>
             <Document
               file={pdfUrl}
               onLoadSuccess={onDocumentLoadSuccess}
@@ -361,9 +397,16 @@ const PDFSection: React.FC<PDFSectionProps> = ({
               <Page
                 pageNumber={currentPage}
                 scale={scale}
-                width={pageWidth}
+                width={Math.min(pageWidth, 800)} // Ensure maximum width constraint
+                height={Math.min(pageHeight, 800)} // Ensure maximum height constraint - KEY FIX!
                 onClick={handlePageClick}
-                className="shadow-lg max-w-full mx-auto"
+                className="shadow-lg"
+                style={{ 
+                  maxWidth: '100%', 
+                  maxHeight: '800px',
+                  objectFit: 'contain',
+                  height: 'auto' 
+                }}
                 loading={
                   <div className="flex items-center justify-center h-96">
                     <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"></div>
@@ -516,9 +559,16 @@ const PDFSection: React.FC<PDFSectionProps> = ({
                     <Page
                       pageNumber={currentPage}
                       scale={scale}
-                      width={Math.min(pageWidth * 1.5, window.innerWidth - 100)}
+                      width={Math.min(pageWidth * 1.2, window.innerWidth - 100, 1000)} // Controlled fullscreen sizing
+                      height={Math.min(pageHeight * 1.2, window.innerHeight - 200, 900)} // Controlled fullscreen height - KEY FIX!
                       onClick={handlePageClick}
-                      className="shadow-lg max-w-full mx-auto"
+                      className="shadow-lg"
+                      style={{ 
+                        maxWidth: '100%', 
+                        maxHeight: '90vh',
+                        objectFit: 'contain',
+                        height: 'auto' 
+                      }}
                       loading={
                         <div className="flex items-center justify-center h-96">
                           <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
