@@ -266,15 +266,32 @@ export default function LessonPageRefactored() {
   const handleExit = useCallback(async () => {
     console.log('Main lesson page handleExit called')
     console.log('Course data:', course)
+    console.log('Current URL before exit:', window.location.href)
     console.log('Attempting to navigate to:', `/course/${course?.slug}`)
     
     try {
       if (course?.slug) {
         await router.push(`/course/${course.slug}`)
         console.log('Navigation to course completed successfully')
+        
+        // Force page reload as fallback
+        setTimeout(() => {
+          console.log('Current URL after navigation:', window.location.href)
+          if (!window.location.pathname.includes(`/course/${course.slug}`)) {
+            console.log('URL did not change, forcing reload...')
+            window.location.href = `/course/${course.slug}`
+          }
+        }, 100)
       } else {
         console.log('No course slug available, navigating to dashboard')
         await router.push('/dashboard')
+        
+        setTimeout(() => {
+          if (window.location.pathname !== '/dashboard') {
+            console.log('Dashboard navigation failed, forcing reload...')
+            window.location.href = '/dashboard'
+          }
+        }, 100)
       }
     } catch (error) {
       console.error('Navigation error:', error)
@@ -283,6 +300,8 @@ export default function LessonPageRefactored() {
         await router.push('/dashboard')
       } catch (fallbackError) {
         console.error('Dashboard fallback failed:', fallbackError)
+        console.log('All navigation failed, forcing dashboard reload...')
+        window.location.href = '/dashboard'
       }
     }
   }, [router, course])

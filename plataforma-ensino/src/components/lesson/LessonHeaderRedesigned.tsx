@@ -60,11 +60,21 @@ const LessonHeaderRedesigned: React.FC<LessonHeaderRedesignedProps> = ({
   // Handle dashboard navigation
   const handleDashboardClick = async () => {
     console.log('Dashboard button clicked')
+    console.log('Current URL before navigation:', window.location.href)
     setIsNavigating(true)
     try {
       console.log('Attempting to navigate to /dashboard')
       await router.push('/dashboard')
       console.log('Navigation to dashboard completed')
+      
+      // Force page reload as fallback
+      setTimeout(() => {
+        console.log('Current URL after navigation:', window.location.href)
+        if (window.location.pathname !== '/dashboard') {
+          console.log('URL did not change, forcing reload...')
+          window.location.href = '/dashboard'
+        }
+      }, 100)
     } catch (error) {
       console.error('Dashboard navigation error:', error)
     } finally {
