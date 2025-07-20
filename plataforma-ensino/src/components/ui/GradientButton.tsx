@@ -20,7 +20,7 @@ function GradientButton({
   disabled = false,
   ...props 
 }: GradientButtonProps) {
-  const base = 'btn-neon bg-zinc-900/70 text-white font-semibold rounded-md hover:bg-zinc-900 transition disabled:opacity-50 disabled:cursor-not-allowed';
+  const base = 'btn-neon bg-zinc-900/70 text-white font-semibold rounded-md hover:bg-zinc-900 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center';
   const classes = `${base} ${className}`;
 
   if (href) {

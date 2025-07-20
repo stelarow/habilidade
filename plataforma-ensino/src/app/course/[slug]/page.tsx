@@ -351,19 +351,6 @@ export default function CoursePage() {
           <div className="space-y-6">
             {/* Enrollment Card */}
             <div className="glass-effect bg-zinc-900/70 backdrop-blur-md rounded-lg border border-gray-800/50 p-6">
-              <div className="text-center mb-6">
-                {course.price > 0 ? (
-                  <div className="text-3xl font-bold text-primary mb-2">
-                    R$ {course.price.toFixed(2)}
-                  </div>
-                ) : (
-                  <div className="text-3xl font-bold text-green-400 mb-2">
-                    Gratuito
-                  </div>
-                )}
-                <p className="text-gray-400 text-sm">Acesso completo ao curso</p>
-              </div>
-
               {isEnrolled ? (
                 <div className="space-y-4">
                   <div className="bg-green-400/20 border border-green-400/30 rounded-lg p-4">
