@@ -1,0 +1,270 @@
+================================================================================
+                        📝 CRIAÇÃO DE NOVA AULA - INPUT DO USUÁRIO
+================================================================================
+
+INSTRUÇÕES:
+- Preencha os campos abaixo com as informações da sua aula
+- PELO MENOS 1 tipo de conteúdo é obrigatório (vídeo, PDF, texto ou quiz)
+- Envie este arquivo preenchido para a IA criar automaticamente
+- Deixe em branco os campos que não usar
+
+================================================================================
+                                🎯 DADOS BÁSICOS (OBRIGATÓRIO)
+================================================================================
+
+TÍTULO: 
+
+DESCRIÇÃO: 
+
+COURSE_SLUG: 
+(Exemplos: "programacao-web", "design-grafico", "inteligencia-artificial")
+
+POSIÇÃO_NO_CURSO: 
+(Número da aula: 1, 2, 3, etc.)
+
+SLUG_PERSONALIZADO: 
+(Deixe vazio para gerar automaticamente do título)
+
+================================================================================
+                                📹 VÍDEO (OPCIONAL)
+================================================================================
+
+URL_DO_VIDEO: 
+
+DURAÇÃO_EM_SEGUNDOS: 
+(Exemplo: 1800 = 30 minutos, 3600 = 1 hora)
+
+URL_THUMBNAIL: 
+(Opcional - imagem de capa do vídeo)
+
+================================================================================
+                            📄 MATERIAIS/PDFs (OPCIONAL)
+================================================================================
+
+MATERIAL_1_TITULO: 
+
+MATERIAL_1_URL: 
+
+MATERIAL_1_TIPO: 
+(pdf ou link)
+
+MATERIAL_1_DESCRIÇÃO: 
+
+MATERIAL_1_PERMITE_DOWNLOAD: 
+(sim ou não)
+
+---
+
+MATERIAL_2_TITULO: 
+
+MATERIAL_2_URL: 
+
+MATERIAL_2_TIPO: 
+(pdf ou link)
+
+MATERIAL_2_DESCRIÇÃO: 
+
+MATERIAL_2_PERMITE_DOWNLOAD: 
+(sim ou não)
+
+================================================================================
+                            📝 CONTEÚDO TEXTO (OPCIONAL)
+================================================================================
+
+TEXTO_DA_AULA:
+(Cole aqui o conteúdo textual da aula em HTML ou texto simples)
+
+
+
+================================================================================
+                            ✏️ EXERCÍCIOS (OPCIONAL)
+================================================================================
+
+EXERCICIO_1_TITULO: 
+
+EXERCICIO_1_DESCRIÇÃO: 
+
+EXERCICIO_1_PERMITE_UPLOAD: 
+(sim ou não)
+
+EXERCICIO_1_INSTRUÇÕES_UPLOAD: 
+
+---
+
+EXERCICIO_2_TITULO: 
+
+EXERCICIO_2_DESCRIÇÃO: 
+
+EXERCICIO_2_PERMITE_UPLOAD: 
+(sim ou não)
+
+EXERCICIO_2_INSTRUÇÕES_UPLOAD: 
+
+================================================================================
+                            🧠 QUIZ DE VERIFICAÇÃO (OPCIONAL)
+================================================================================
+
+QUIZ_TITULO: 
+
+QUIZ_DESCRIÇÃO: 
+
+TEMPO_LIMITE_MINUTOS: 
+(Deixe vazio para sem limite)
+
+TENTATIVAS_PERMITIDAS: 
+(Exemplo: 3)
+
+NOTA_MÍNIMA: 70
+(OBRIGATÓRIO: Sempre 70% para aprovação)
+
+---
+
+QUESTÃO_1: 
+
+ALTERNATIVAS_1:
+A) 
+B) 
+C) 
+D) 
+
+RESPOSTA_CORRETA_1: 
+(A, B, C ou D)
+
+PONTOS_1: 25
+
+---
+
+QUESTÃO_2: 
+
+ALTERNATIVAS_2:
+A) 
+B) 
+C) 
+D) 
+
+RESPOSTA_CORRETA_2: 
+(A, B, C ou D)
+
+PONTOS_2: 25
+
+---
+
+QUESTÃO_3: 
+
+ALTERNATIVAS_3:
+A) 
+B) 
+C) 
+D) 
+
+RESPOSTA_CORRETA_3: 
+(A, B, C ou D)
+
+PONTOS_3: 25
+
+---
+
+QUESTÃO_4: 
+
+ALTERNATIVAS_4:
+A) 
+B) 
+C) 
+D) 
+
+RESPOSTA_CORRETA_4: 
+(A, B, C ou D)
+
+PONTOS_4: 25
+
+================================================================================
+                                ✅ CHECKLIST FINAL
+================================================================================
+
+Antes de enviar, verifique:
+
+[ ] Título e descrição preenchidos
+[ ] Course_slug correto (curso existe na plataforma)
+[ ] Pelo menos 1 conteúdo fornecido (vídeo, PDF, texto ou quiz)
+[ ] Se tem quiz: nota mínima é 70% e questões somam 100 pontos
+[ ] URLs são válidas e acessíveis
+
+================================================================================
+                                📋 EXEMPLO PREENCHIDO
+================================================================================
+
+TÍTULO: Introdução aos React Hooks
+
+DESCRIÇÃO: Aprenda a usar useState e useEffect para gerenciar estado e efeitos colaterais em componentes funcionais do React
+
+COURSE_SLUG: programacao-web
+
+POSIÇÃO_NO_CURSO: 3
+
+URL_DO_VIDEO: https://storage.empresa.com/react-curso/aula-03-hooks.mp4
+
+DURAÇÃO_EM_SEGUNDOS: 3600
+
+MATERIAL_1_TITULO: Cheat Sheet - React Hooks
+
+MATERIAL_1_URL: https://storage.empresa.com/pdfs/react-hooks-cheatsheet.pdf
+
+MATERIAL_1_TIPO: pdf
+
+MATERIAL_1_PERMITE_DOWNLOAD: sim
+
+EXERCICIO_1_TITULO: Contador com useState
+
+EXERCICIO_1_DESCRIÇÃO: Crie um contador que incrementa e decrementa usando useState
+
+EXERCICIO_1_PERMITE_UPLOAD: sim
+
+EXERCICIO_1_INSTRUÇÕES_UPLOAD: Envie o arquivo .jsx do componente criado
+
+QUIZ_TITULO: Quiz - React Hooks Básicos
+
+QUIZ_DESCRIÇÃO: Verifique seu entendimento sobre useState e useEffect
+
+TEMPO_LIMITE_MINUTOS: 20
+
+TENTATIVAS_PERMITIDAS: 3
+
+NOTA_MÍNIMA: 70
+
+QUESTÃO_1: Qual hook é usado para gerenciar estado local em componentes funcionais?
+
+ALTERNATIVAS_1:
+A) useState
+B) useEffect  
+C) useContext
+D) useReducer
+
+RESPOSTA_CORRETA_1: A
+
+PONTOS_1: 50
+
+QUESTÃO_2: Quando o useEffect é executado por padrão?
+
+ALTERNATIVAS_2:
+A) Antes da renderização
+B) Após a renderização
+C) Durante a renderização
+D) Só na primeira renderização
+
+RESPOSTA_CORRETA_2: B
+
+PONTOS_2: 50
+
+================================================================================
+                                🚀 COMO USAR
+================================================================================
+
+1. PREENCHA os campos acima com os dados da sua aula
+2. REMOVA as seções que não usar (deixe os campos vazios)
+3. ENVIE este arquivo preenchido para a IA
+4. AGUARDE a criação automática da aula
+5. ACESSE em: /course/{course_slug}/lesson/{lesson_slug}
+
+RESULTADO: Aula criada automaticamente com sistema v2.1 otimizado!
+
+Template v2.1 - Sistema Otimizado | Conclusão: Quiz 70%+ OU sem quiz
