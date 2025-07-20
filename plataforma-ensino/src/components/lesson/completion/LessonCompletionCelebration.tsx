@@ -265,7 +265,10 @@ export const LessonCompletionCelebration: React.FC<LessonCompletionCelebrationPr
 
               {/* Fallback Button - appears after 2 seconds */}
               <motion.button
-                onClick={onNavigate}
+                onClick={() => {
+                  console.log('Manual navigation button clicked')
+                  onNavigate?.()
+                }}
                 className="px-4 py-2 bg-[#d400ff] hover:bg-[#b000dd] text-white rounded-lg text-sm font-medium transition-colors"
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
