@@ -57,15 +57,54 @@ const LessonHeaderRedesigned: React.FC<LessonHeaderRedesignedProps> = ({
     quizzes.length > 0 && { id: 'quiz-section', label: 'Quiz', icon: Trophy }
   ].filter(Boolean)
 
-  // Handle home navigation
-  const handleHomeClick = async () => {
+  // Handle dashboard navigation
+  const handleDashboardClick = async () => {
     setIsNavigating(true)
     try {
       await router.push('/dashboard')
     } catch (error) {
-      console.error('Navigation error:', error)
+      console.error('Dashboard navigation error:', error)
     } finally {
       setIsNavigating(false)
+    }
+  }
+
+  // Handle scroll to top
+  const handleScrollToTop = () => {
+    window.scrollTo({ 
+      top: 0, 
+      behavior: 'smooth' 
+    })
+  }
+
+  // Enhanced exit handler with debugging and fallback
+  const handleExitLesson = async () => {
+    console.log('Exit button clicked')
+    console.log('Course data:', course)
+    console.log('Course slug:', course?.slug)
+    
+    try {
+      // First try the onExit callback
+      if (onExit) {
+        console.log('Calling onExit callback')
+        onExit()
+      } else if (course?.slug) {
+        // Fallback: direct navigation to course
+        console.log('Fallback: navigating to course', course.slug)
+        await router.push(`/course/${course.slug}`)
+      } else {
+        // Final fallback: navigate to dashboard
+        console.log('Final fallback: navigating to dashboard')
+        await router.push('/dashboard')
+      }
+    } catch (error) {
+      console.error('Exit navigation error:', error)
+      // Ultimate fallback: try dashboard
+      try {
+        await router.push('/dashboard')
+      } catch (fallbackError) {
+        console.error('Dashboard fallback failed:', fallbackError)
+      }
     }
   }
 
@@ -99,7 +138,9 @@ const LessonHeaderRedesigned: React.FC<LessonHeaderRedesignedProps> = ({
           {/* Enhanced Logo - Consistent with main site */}
           <div className="flex items-center gap-3 md:gap-6">
             <Link 
-              href="/"
+              href="https://www.escolahabilidade.com"
+              target="_blank"
+              rel="noopener noreferrer"
               className="logo-container group flex items-center gap-3 focus:outline-none"
             >
               <div className="logo-wrapper relative">
@@ -111,12 +152,21 @@ const LessonHeaderRedesigned: React.FC<LessonHeaderRedesignedProps> = ({
                   className="relative transition-all duration-300 group-hover:scale-105 group-focus:scale-105"
                 />
               </div>
-              <div className="logo-text-container hidden lg:block">
-                <span className="tagline block text-xs text-gray-400 group-hover:text-gray-300 transition-colors duration-300">
-                  Plataforma de Ensino
-                </span>
-              </div>
             </Link>
+            
+            {/* Plataforma de Ensino Button */}
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={handleDashboardClick}
+              disabled={isNavigating}
+              className="hidden lg:flex text-header-foreground hover:bg-white/10 transition-all duration-200 px-3 py-1"
+              aria-label="Ir para o dashboard"
+            >
+              <span className="text-xs text-gray-400 hover:text-gray-300">
+                {isNavigating ? 'Carregando...' : 'Plataforma de Ensino'}
+              </span>
+            </Button>
           </div>
           
           {/* Dynamic Lesson Navigation */}
@@ -217,22 +267,19 @@ const LessonHeaderRedesigned: React.FC<LessonHeaderRedesignedProps> = ({
             <Button 
               variant="ghost" 
               size="sm" 
-              onClick={handleHomeClick}
-              disabled={isNavigating}
+              onClick={handleScrollToTop}
               className="text-header-foreground hover:bg-white/10 hover:scale-105 transition-all duration-200 px-3 py-2"
-              aria-label="Ir para página inicial"
+              aria-label="Rolar para o topo da página"
             >
               <Home className="h-4 w-4 sm:h-5 sm:w-5 sm:mr-2" />
-              <span className="hidden sm:inline">
-                {isNavigating ? 'Carregando...' : 'Início'}
-              </span>
+              <span className="hidden sm:inline">Início</span>
             </Button>
             
             <Button 
               variant="outline" 
               size="sm" 
               className="border-primary text-primary hover:bg-primary hover:text-primary-foreground hover:scale-105 hover:shadow-lg transition-all duration-200 px-3 py-2"
-              onClick={onExit}
+              onClick={handleExitLesson}
               aria-label="Sair da aula atual"
             >
               <LogOut className="h-4 w-4 sm:h-5 sm:w-5 sm:mr-2" />
