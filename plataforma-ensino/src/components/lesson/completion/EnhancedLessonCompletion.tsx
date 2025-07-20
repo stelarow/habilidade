@@ -83,15 +83,28 @@ export const EnhancedLessonCompletion: React.FC<EnhancedLessonCompletionProps> =
   
   const validation = { isValid: canComplete, errors: [] }
 
-  // Handle completion with additional error handling
+  // Handle completion with DETAILED LOGGING
   const handleCompleteLesson = useCallback(async (): Promise<void> => {
+    console.log('🎯 COMPLETE LESSON BUTTON CLICKED')
+    console.log('📊 Current state before completion:', { 
+      isCompleting, isCompleted, error, canComplete, showCelebration 
+    })
+    console.log('📚 Lesson/Course info:', { lessonId, courseSlug, lessonTitle, courseTitle })
+    
     try {
+      console.log('📞 Calling completeLesson hook function...')
       await completeLesson()
+      console.log('✅ completeLesson hook function completed successfully')
     } catch (error) {
-      console.error('Completion failed:', error)
+      console.error('💥 Completion failed in handleCompleteLesson:', error)
+      console.log('🔍 Error details:', {
+        name: error?.name,
+        message: error?.message,
+        stack: error?.stack
+      })
       // Error is already handled by the hook
     }
-  }, [completeLesson])
+  }, [completeLesson, isCompleting, isCompleted, error, canComplete, showCelebration, lessonId, courseSlug, lessonTitle, courseTitle])
 
   // Handle error retry
   const handleRetry = useCallback(async (): Promise<void> => {
@@ -228,12 +241,17 @@ export const EnhancedLessonCompletion: React.FC<EnhancedLessonCompletionProps> =
         courseTitle={courseTitle}
         onComplete={() => {
           // Celebration completed, prepare for navigation
-          console.log('Celebration completed, preparing to navigate...')
+          console.log('🎉 CELEBRATION COMPLETED - onComplete called')
+          console.log('🔄 Current completion state:', { isCompleted, showCelebration })
+          console.log('📚 Course slug for navigation:', courseSlug)
         }}
         onNavigate={() => {
           // Navigate to course page
-          console.log('Navigating to course:', courseSlug)
+          console.log('🧭 NAVIGATION CALLBACK TRIGGERED - onNavigate called')
+          console.log('📚 Navigating to course:', courseSlug)
+          console.log('🚀 Calling navigateToCourse function...')
           navigateToCourse()
+          console.log('✅ navigateToCourse function called')
         }}
       />
 

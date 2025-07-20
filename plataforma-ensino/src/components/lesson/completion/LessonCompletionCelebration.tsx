@@ -34,35 +34,60 @@ export const LessonCompletionCelebration: React.FC<LessonCompletionCelebrationPr
 }) => {
   const confettiRef = useRef<HTMLDivElement>(null)
 
-  // IMMEDIATE NAVIGATION - No delays, no loops
+  // NAVIGATION WITH DETAILED LOGGING
   useEffect(() => {
+    console.log('🎉 LessonCompletionCelebration useEffect triggered, isVisible:', isVisible)
+    
     if (isVisible) {
+      console.log('✅ Celebration is visible, setting timer for navigation...')
+      
       // Show celebration for just 1.5 seconds then redirect IMMEDIATELY
       const timer = setTimeout(() => {
-        console.log('IMMEDIATE redirection starting...')
-        onComplete?.()
+        console.log('⏰ Timer fired! Starting navigation sequence...')
+        console.log('📊 Current location before navigation:', window.location.href)
+        console.log('🔄 onComplete callback present:', !!onComplete)
+        console.log('🧭 onNavigate callback present:', !!onNavigate)
         
-        // DIRECT window.location - most reliable approach
         try {
+          // Call completion callback first
+          if (onComplete) {
+            console.log('📞 Calling onComplete callback...')
+            onComplete()
+            console.log('✅ onComplete callback executed')
+          }
+          
+          // DIRECT window.location - most reliable approach
           if (onNavigate) {
-            console.log('Using provided navigation callback')
+            console.log('🚀 Using provided navigation callback...')
             onNavigate()
-            // Add immediate fallback in case callback fails
+            console.log('✅ onNavigate callback executed')
+            
+            // Add fallback check
             setTimeout(() => {
-              console.log('Fallback redirection to dashboard')
-              window.location.href = '/dashboard'
-            }, 500)
+              console.log('🔍 Checking if navigation worked after 800ms...')
+              console.log('📍 Current location:', window.location.href)
+              if (window.location.pathname.includes('/lesson/')) {
+                console.log('❌ Still on lesson page, using fallback to dashboard')
+                window.location.href = '/dashboard'
+              } else {
+                console.log('✅ Navigation successful!')
+              }
+            }, 800)
           } else {
-            console.log('Direct redirection to dashboard')
+            console.log('🏠 No onNavigate provided, going directly to dashboard')
             window.location.href = '/dashboard'
           }
         } catch (error) {
-          console.error('All navigation failed, going home:', error)
+          console.error('💥 Navigation error occurred:', error)
+          console.log('🆘 Using emergency fallback to home page')
           window.location.href = '/'
         }
       }, 1500) // Reduced to 1.5 seconds for faster experience
       
-      return () => clearTimeout(timer)
+      return () => {
+        console.log('🧹 Cleanup: clearing navigation timer')
+        clearTimeout(timer)
+      }
     }
   }, [isVisible, onComplete, onNavigate])
 

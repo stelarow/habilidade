@@ -99,27 +99,34 @@ export const useLessonCompletion = ({
     }
   }, [progressData])
 
-  // Complete lesson with comprehensive error handling
+  // Complete lesson with DETAILED LOGGING
   const completeLesson = useCallback(async (): Promise<void> => {
+    console.log('🚀 LESSON COMPLETION STARTED')
+    console.log('📝 Lesson ID:', lessonId)
+    console.log('📚 Course Slug:', courseSlug)
+    console.log('🔄 Current state:', state)
+    
     // Prevent multiple simultaneous executions
     if (state.isCompleting) {
-      console.log('Already completing lesson, ignoring duplicate call')
+      console.log('⚠️ Already completing lesson, ignoring duplicate call')
       return
     }
 
-    console.log('Starting lesson completion process...')
+    console.log('✅ Starting lesson completion process...')
     
     // Validate completion criteria first
     const validation = validateCompletion()
+    console.log('🔍 Validation result:', validation)
+    
     if (!validation.isValid) {
       const error = new Error(`Critérios não atendidos: ${validation.errors.join(', ')}`)
-      console.log('Validation failed:', validation.errors)
+      console.log('❌ Validation failed:', validation.errors)
       setState(prev => ({ ...prev, error: error.message }))
       onError?.(error)
       return
     }
 
-    console.log('Validation passed, setting completing state...')
+    console.log('✅ Validation passed, setting completing state...')
     setState(prev => ({ 
       ...prev, 
       isCompleting: true, 
@@ -128,9 +135,10 @@ export const useLessonCompletion = ({
 
     try {
       const completionData = prepareCompletionData()
-      console.log('Sending completion data:', completionData)
+      console.log('📦 Sending completion data:', JSON.stringify(completionData, null, 2))
 
       // Call the lesson completion API
+      console.log('📡 Calling API: /api/lessons/' + lessonId + '/complete')
       const response = await fetch(`/api/lessons/${lessonId}/complete`, {
         method: 'POST',
         headers: {
@@ -139,31 +147,41 @@ export const useLessonCompletion = ({
         body: JSON.stringify(completionData)
       })
 
-      console.log('API response status:', response.status)
+      console.log('📊 API response status:', response.status)
+      console.log('📋 API response headers:', Object.fromEntries(response.headers.entries()))
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}))
-        console.log('API error response:', errorData)
+        console.log('❌ API error response:', errorData)
         throw new Error(errorData.error || `HTTP ${response.status}: ${response.statusText}`)
       }
 
       const result = await response.json()
-      console.log('API success response:', result)
+      console.log('✅ API success response:', JSON.stringify(result, null, 2))
 
       // Success - trigger celebration
-      console.log('Lesson completion successful, triggering celebration')
+      console.log('🎉 Lesson completion successful, triggering celebration')
       setState(prev => ({ 
         ...prev, 
         isCompleting: false,
         isCompleted: true,
         showCelebration: true
       }))
+      console.log('🎊 State updated with showCelebration: true')
 
       // Call success callback
-      onSuccess?.()
+      if (onSuccess) {
+        console.log('📞 Calling onSuccess callback...')
+        onSuccess()
+        console.log('✅ onSuccess callback executed')
+      } else {
+        console.log('ℹ️ No onSuccess callback provided')
+      }
 
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido'
+      console.log('💥 Lesson completion error:', errorMessage)
+      console.log('🔍 Full error object:', error)
       
       setState(prev => ({ 
         ...prev, 
@@ -172,9 +190,12 @@ export const useLessonCompletion = ({
       }))
 
       // Call error callback
-      onError?.(error instanceof Error ? error : new Error(errorMessage))
+      if (onError) {
+        console.log('📞 Calling onError callback...')
+        onError(error instanceof Error ? error : new Error(errorMessage))
+      }
     }
-  }, [lessonId, validateCompletion, prepareCompletionData, onSuccess, onError, state.isCompleting])
+  }, [lessonId, courseSlug, validateCompletion, prepareCompletionData, onSuccess, onError, state.isCompleting])
 
   // Retry completion
   const retryCompletion = useCallback(async (): Promise<void> => {
@@ -197,18 +218,42 @@ export const useLessonCompletion = ({
     setState(prev => ({ ...prev, error: null }))
   }, [])
 
-  // IMMEDIATE RELIABLE navigation to course page
+  // NAVIGATION WITH DETAILED LOGGING
   const navigateToCourse = useCallback((): void => {
-    console.log('DIRECT navigation to course page:', `/course/${courseSlug}`)
+    console.log('🧭 NAVIGATION TO COURSE STARTED')
+    console.log('📚 Target course slug:', courseSlug)
+    console.log('📍 Current location before navigation:', window.location.href)
+    console.log('🔗 Target URL will be:', `/course/${courseSlug}`)
     
     // Use direct window.location for most reliable navigation
     try {
-      console.log('Using window.location.href for immediate navigation')
-      window.location.href = `/course/${courseSlug}`
+      console.log('🚀 Using window.location.href for immediate navigation...')
+      const targetUrl = `/course/${courseSlug}`
+      console.log('🎯 Navigating to:', targetUrl)
+      
+      // Log before navigation
+      console.log('⏰ Navigation starting at:', new Date().toISOString())
+      window.location.href = targetUrl
+      
+      // This code might not execute due to navigation
+      console.log('✅ window.location.href called successfully')
+      
     } catch (error) {
-      console.error('Course navigation failed, going to dashboard:', error)
-      // Ultimate fallback
-      window.location.href = '/dashboard'
+      console.error('💥 Course navigation failed:', error)
+      console.log('🔍 Error details:', {
+        name: error?.name,
+        message: error?.message,
+        stack: error?.stack
+      })
+      console.log('🏠 Using dashboard fallback...')
+      
+      try {
+        window.location.href = '/dashboard'
+        console.log('✅ Dashboard navigation called')
+      } catch (fallbackError) {
+        console.error('💥 Dashboard navigation also failed:', fallbackError)
+        console.log('🆘 This should never happen - window.location.href failed')
+      }
     }
   }, [courseSlug])
 
