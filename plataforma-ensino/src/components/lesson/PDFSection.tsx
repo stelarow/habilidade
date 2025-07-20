@@ -400,13 +400,7 @@ const PDFSection: React.FC<PDFSectionProps> = ({
                 width={Math.min(pageWidth, 800)} // Ensure maximum width constraint
                 height={Math.min(pageHeight, 800)} // Ensure maximum height constraint - KEY FIX!
                 onClick={handlePageClick}
-                className="shadow-lg"
-                style={{ 
-                  maxWidth: '100%', 
-                  maxHeight: '800px',
-                  objectFit: 'contain',
-                  height: 'auto' 
-                }}
+                className="shadow-lg max-w-full max-h-[800px] h-auto object-contain"
                 loading={
                   <div className="flex items-center justify-center h-96">
                     <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"></div>
