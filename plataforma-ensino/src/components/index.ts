@@ -8,7 +8,7 @@ export { default as LessonPageRedesigned } from './lesson/LessonPageRedesigned'
 export { default as LessonPageIntegration } from './lesson/LessonPageIntegration'
 export { default as LessonHeaderRedesigned } from './lesson/LessonHeaderRedesigned'
 export { default as VideoSection } from './lesson/VideoSection'
-// export { default as PDFSection } from './lesson/PDFSection' // DISABLED: Build errors
+export { default as PDFSection } from './lesson/PDFSection'
 export { default as PDFSectionWrapper } from './lesson/PDFSectionWrapper'
 export { default as ExercisesSection } from './lesson/ExercisesSection'
 export { default as QuizSection } from './lesson/QuizSection'
