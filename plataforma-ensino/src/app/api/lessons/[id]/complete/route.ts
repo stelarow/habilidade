@@ -11,13 +11,12 @@ export async function POST(
     const lessonId = params.id
     const supabase = createClient()
 
-    // Get completion criteria from request body
+    // Get simplified completion data from request body
     const body = await request.json()
     const { 
       timeSpent, 
-      pdfProgress, 
       quizScore, 
-      exercisesCompleted,
+      hasQuiz,
       completionCriteria 
     } = body
 
@@ -95,15 +94,21 @@ export async function POST(
       })
     }
 
-    // Validate completion criteria - temporary relaxed validation
-    console.log('Received completion data:', { pdfProgress, quizScore, exercisesCompleted, completionCriteria })
+    // SIMPLIFIED validation - only check quiz if exists
+    console.log('Received completion data:', { quizScore, completionCriteria })
     
-    const validationResult = validateCompletionCriteria(completionCriteria || {})
-    if (!validationResult.isValid) {
-      console.log('Validation failed:', validationResult.errors)
-      // For debugging - allow completion but log the error
-      console.warn('Allowing completion despite validation errors for debugging:', validationResult.errors)
+    // Ultra simple validation
+    const hasQuiz = completionCriteria?.hasQuiz || false
+    const passesValidation = completionCriteria?.passesValidation || false
+    
+    if (hasQuiz && !passesValidation) {
+      return NextResponse.json(
+        { error: 'Quiz score of 70% required to complete lesson with quiz' },
+        { status: 400 }
+      )
     }
+    
+    console.log('Simplified validation passed:', { hasQuiz, passesValidation })
 
     // Start transaction to mark lesson complete and unlock next lesson
     const completedAt = new Date().toISOString()
@@ -120,13 +125,16 @@ export async function POST(
         completed_at: completedAt,
         last_accessed_at: completedAt,
         updated_at: completedAt,
-        // New completion criteria data
+        // Simplified completion data
         time_spent_minutes: Math.floor((timeSpent || 0) / 60),
         watch_time: timeSpent || 0,
-        pdf_progress_percentage: pdfProgress || 0,
         quiz_score: quizScore || 0,
-        exercises_completed: exercisesCompleted || 0,
-        completion_criteria: completionCriteria || {}
+        completion_criteria: {
+          hasQuiz: hasQuiz,
+          quizScore: quizScore || 0,
+          completedAt: completedAt,
+          validationMethod: 'simplified'
+        }
       }, {
         onConflict: 'user_id,lesson_id'
       })

@@ -13,9 +13,8 @@ interface CompletionState {
 
 interface CompletionData {
   timeSpent?: number
-  pdfProgress?: number
   quizScore?: number
-  exercisesCompleted?: number
+  hasQuiz?: boolean
   completionCriteria?: any
 }
 
@@ -52,73 +51,47 @@ export const useLessonCompletion = ({
     showCelebration: false
   })
 
-  // Prepare completion data from progress
+  // SIMPLIFIED completion data - only send essential info
   const prepareCompletionData = useCallback((): CompletionData => {
     if (!progressData) {
-      return {}
+      return { quizScore: 0, hasQuiz: false }
     }
 
-    const timeSpent = progressData.videoProgress?.watchTime || 0
-    const pdfProgress = progressData.pdfProgress?.percentageRead || 0
     const quizScore = progressData.quizProgress?.score || 0
-    const exercisesCompleted = progressData.exerciseProgress?.completionPercentage || 0
-
-    const criteriaArray = [
-      {
-        type: 'pdf',
-        isCompleted: pdfProgress >= 75,
-        value: pdfProgress,
-        required: 75
-      },
-      {
-        type: 'exercises',
-        isCompleted: exercisesCompleted >= 100,
-        value: exercisesCompleted,
-        required: 100
-      },
-      {
-        type: 'quiz',
-        isCompleted: quizScore >= 70,
-        value: quizScore,
-        required: 70
-      }
-    ]
+    const hasQuiz = progressData.quizProgress?.totalQuestions > 0
+    const timeSpent = progressData.videoProgress?.watchTime || 0
 
     return {
       timeSpent,
-      pdfProgress,
       quizScore,
-      exercisesCompleted,
+      hasQuiz,
+      // Simple criteria for API
       completionCriteria: {
-        timeSpent,
-        pdfProgress,
+        hasQuiz,
         quizScore,
-        exercisesCompleted,
-        criteria: criteriaArray
+        passesValidation: hasQuiz ? quizScore >= 70 : true
       }
     }
   }, [progressData])
 
-  // Validate completion criteria - optimized to avoid loops
+  // SIMPLIFIED validation - only check quiz score if quiz exists
   const validateCompletion = useCallback((): { isValid: boolean; errors: string[] } => {
     if (!progressData) {
-      return { isValid: false, errors: ['Dados de progresso não disponíveis'] }
+      return { isValid: true, errors: [] } // Allow completion if no progress data
     }
 
     const errors: string[] = []
-    
-    // Direct validation without calling prepareCompletionData to avoid loops
-    const pdfProgress = progressData.pdfProgress?.percentageRead || 0
     const quizScore = progressData.quizProgress?.score || 0
-    const exercisesCompleted = progressData.exerciseProgress?.completionPercentage || 0
-
-    // Relaxed criteria - only require quiz OR significant progress
-    const hasQuizScore = quizScore >= 70
-    const hasSignificantProgress = pdfProgress >= 50 || exercisesCompleted >= 50
+    const hasQuiz = progressData.quizProgress?.totalQuestions > 0
     
-    if (!hasQuizScore && !hasSignificantProgress) {
-      errors.push('Complete pelo menos 70% do quiz OU 50% dos materiais/exercícios')
+    // ULTRA SIMPLE RULE:
+    // - If lesson has quiz: require 70% score
+    // - If lesson has no quiz: always allow completion
+    if (hasQuiz && quizScore < 70) {
+      errors.push('Complete o quiz com pelo menos 70% de acerto para concluir a aula')
     }
+
+    console.log('Simplified validation:', { hasQuiz, quizScore, isValid: errors.length === 0 })
 
     return {
       isValid: errors.length === 0,
