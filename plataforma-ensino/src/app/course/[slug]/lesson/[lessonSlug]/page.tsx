@@ -280,11 +280,16 @@ export default function LessonPageRefactored() {
           const expectedPath = `/course/${course.slug}`
           const currentPath = window.location.pathname
           
-          if (currentPath !== expectedPath && !currentPath.includes(expectedPath)) {
-            console.log(`URL mismatch detected:`)
-            console.log(`Expected: ${expectedPath}`)
-            console.log(`Current: ${currentPath}`)
-            console.log('Forcing immediate redirect...')
+          console.log(`🔍 Checking navigation:`)
+          console.log(`Expected path: ${expectedPath}`)
+          console.log(`Current path: ${currentPath}`)
+          console.log(`Paths match: ${currentPath === expectedPath}`)
+          console.log(`Current includes expected: ${currentPath.includes(expectedPath)}`)
+          
+          // Fixed logic: URL should be EXACTLY the expected path
+          if (currentPath !== expectedPath) {
+            console.log(`❌ URL did NOT change correctly!`)
+            console.log('🔧 Forcing immediate redirect...')
             window.location.href = expectedPath
           } else {
             console.log('✅ Navigation successful - URL changed correctly')
