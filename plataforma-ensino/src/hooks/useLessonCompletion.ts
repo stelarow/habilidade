@@ -99,31 +99,41 @@ export const useLessonCompletion = ({
     }
   }, [progressData])
 
-  // Validate completion criteria - relaxed for testing
+  // Validate completion criteria - optimized to avoid loops
   const validateCompletion = useCallback((): { isValid: boolean; errors: string[] } => {
-    const data = prepareCompletionData()
+    if (!progressData) {
+      return { isValid: false, errors: ['Dados de progresso não disponíveis'] }
+    }
+
     const errors: string[] = []
+    
+    // Direct validation without calling prepareCompletionData to avoid loops
+    const pdfProgress = progressData.pdfProgress?.percentageRead || 0
+    const quizScore = progressData.quizProgress?.score || 0
+    const exercisesCompleted = progressData.exerciseProgress?.completionPercentage || 0
 
-    console.log('Validating completion with data:', data)
-
-    // For now, let's be more lenient - only require quiz OR significant progress
-    const hasQuizScore = (data.quizScore || 0) >= 70
-    const hasSignificantProgress = (data.pdfProgress || 0) >= 50 || (data.exercisesCompleted || 0) >= 50
+    // Relaxed criteria - only require quiz OR significant progress
+    const hasQuizScore = quizScore >= 70
+    const hasSignificantProgress = pdfProgress >= 50 || exercisesCompleted >= 50
     
     if (!hasQuizScore && !hasSignificantProgress) {
       errors.push('Complete pelo menos 70% do quiz OU 50% dos materiais/exercícios')
     }
 
-    console.log('Validation result:', { isValid: errors.length === 0, errors })
-
     return {
       isValid: errors.length === 0,
       errors
     }
-  }, [prepareCompletionData])
+  }, [progressData])
 
   // Complete lesson with comprehensive error handling
   const completeLesson = useCallback(async (): Promise<void> => {
+    // Prevent multiple simultaneous executions
+    if (state.isCompleting) {
+      console.log('Already completing lesson, ignoring duplicate call')
+      return
+    }
+
     console.log('Starting lesson completion process...')
     
     // Validate completion criteria first
@@ -191,7 +201,7 @@ export const useLessonCompletion = ({
       // Call error callback
       onError?.(error instanceof Error ? error : new Error(errorMessage))
     }
-  }, [lessonId, courseSlug, validateCompletion, prepareCompletionData, router, onSuccess, onError])
+  }, [lessonId, validateCompletion, prepareCompletionData, onSuccess, onError, state.isCompleting])
 
   // Retry completion
   const retryCompletion = useCallback(async (): Promise<void> => {

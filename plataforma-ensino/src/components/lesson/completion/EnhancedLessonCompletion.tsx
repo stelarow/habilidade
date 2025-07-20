@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
 import { useLessonCompletion } from '@/hooks/useLessonCompletion'
@@ -70,8 +70,8 @@ export const EnhancedLessonCompletion: React.FC<EnhancedLessonCompletionProps> =
     onError
   })
 
-  // Check if completion criteria are met
-  const validation = validateCompletion()
+  // Check if completion criteria are met - memoized to avoid loops
+  const validation = useMemo(() => validateCompletion(), [validateCompletion])
   const canComplete = validation.isValid
 
   // Handle completion with additional error handling
