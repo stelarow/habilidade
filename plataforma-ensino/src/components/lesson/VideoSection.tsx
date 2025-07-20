@@ -15,7 +15,7 @@ interface VideoSectionProps {
   videoDescription?: string
   videoUrl?: string
   lessonId?: string
-  onProgressUpdate?: (progress: number) => void
+  onProgressUpdate?: (progress: number, currentTime?: number, duration?: number) => void
 }
 
 const VideoSection: React.FC<VideoSectionProps> = ({
@@ -34,6 +34,7 @@ const VideoSection: React.FC<VideoSectionProps> = ({
   const [isLoading, setIsLoading] = useState(true)
   
   const playerRef = useRef<any>(null)
+  const vimeoPlayerRef = useRef<any>(null)
   const progressManagerRef = useRef<LessonProgressManager | null>(null)
 
   // Extract Vimeo ID from URL like "https://vimeo.com/1095312387/8519cef8f3?share=copy"
@@ -62,15 +63,86 @@ const VideoSection: React.FC<VideoSectionProps> = ({
     setProgress(savedProgress.videoProgress)
   }, [lessonId])
 
-  // Load Vimeo player script for iframe videos
+  // Load Vimeo player script and initialize player for iframe videos
   useEffect(() => {
     if (vimeoEmbedUrl && !document.querySelector('script[src="https://player.vimeo.com/api/player.js"]')) {
       const script = document.createElement('script')
       script.src = 'https://player.vimeo.com/api/player.js'
       script.async = true
+      script.onload = () => {
+        // Script loaded, initialize player when iframe is ready
+        setTimeout(initializeVimeoPlayer, 1000)
+      }
       document.head.appendChild(script)
+    } else if (vimeoEmbedUrl && window.Vimeo) {
+      // Script already loaded, initialize player
+      setTimeout(initializeVimeoPlayer, 1000)
     }
   }, [vimeoEmbedUrl])
+
+  // Initialize Vimeo Player API for progress tracking
+  const initializeVimeoPlayer = () => {
+    if (!vimeoEmbedUrl || !window.Vimeo) return
+
+    const iframe = document.querySelector('iframe[src*="player.vimeo.com"]') as HTMLIFrameElement
+    if (!iframe) return
+
+    try {
+      const player = new window.Vimeo.Player(iframe)
+      vimeoPlayerRef.current = player
+
+      // Get video duration
+      player.getDuration().then((duration: number) => {
+        setDuration(duration)
+        if (onProgressUpdate) {
+          onProgressUpdate(0, 0, duration)
+        }
+      }).catch((error: any) => {
+        console.error('Error getting Vimeo duration:', error)
+      })
+
+      // Track progress
+      player.on('timeupdate', (data: { seconds: number, duration: number }) => {
+        const currentTime = data.seconds
+        const videoDuration = data.duration
+        const progressPercent = (currentTime / videoDuration) * 100
+
+        setCurrentTime(currentTime)
+        setProgress(progressPercent)
+        setDuration(videoDuration)
+
+        // Save progress
+        if (progressManagerRef.current && videoDuration > 0) {
+          progressManagerRef.current.updateVideoProgress(currentTime, videoDuration)
+        }
+
+        // Call progress update callback
+        if (onProgressUpdate) {
+          onProgressUpdate(progressPercent, currentTime, videoDuration)
+        }
+      })
+
+      // Track play/pause
+      player.on('play', () => {
+        setIsPlaying(true)
+      })
+
+      player.on('pause', () => {
+        setIsPlaying(false)
+      })
+
+      // Track when video is ready
+      player.on('loaded', () => {
+        setIsReady(true)
+        setIsLoading(false)
+        setError(null)
+      })
+
+    } catch (error) {
+      console.error('Error initializing Vimeo player:', error)
+      setError('Erro ao inicializar player do Vimeo')
+    }
+  }
 
   const handleReady = () => {
     setIsReady(true)
@@ -104,7 +176,7 @@ const VideoSection: React.FC<VideoSectionProps> = ({
     
     // Call progress update callback
     if (onProgressUpdate) {
-      onProgressUpdate(newProgress)
+      onProgressUpdate(newProgress, newCurrentTime, duration)
     }
   }
 
@@ -264,17 +336,20 @@ const VideoSection: React.FC<VideoSectionProps> = ({
         </p>
         
         {/* Progress indicator */}
-        {vimeoEmbedUrl ? (
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <span>Vídeo carregado com sucesso</span>
-            {isReady && <span className="text-green-500">✓</span>}
-          </div>
-        ) : (
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <span>Progresso do vídeo:</span>
-            <span className="font-medium">{Math.round(progress)}%</span>
-          </div>
-        )}
+        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <span>Progresso do vídeo:</span>
+          <span className="font-medium">{Math.round(progress)}%</span>
+          {vimeoEmbedUrl && (
+            <span className="text-xs text-green-500">
+              (Vimeo {isReady ? '✓' : '⏳'})
+            </span>
+          )}
+          {duration > 0 && (
+            <span className="text-xs">
+              {formatTime(currentTime)} / {formatTime(duration)}
+            </span>
+          )}
+        </div>
       </div>
     </Card>
   )
