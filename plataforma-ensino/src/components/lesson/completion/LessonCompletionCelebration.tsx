@@ -34,7 +34,7 @@ export const LessonCompletionCelebration: React.FC<LessonCompletionCelebrationPr
 }) => {
   const confettiRef = useRef<HTMLDivElement>(null)
 
-  // NAVIGATION WITH DETAILED LOGGING
+  // NAVIGATION WITH DETAILED LOGGING - FIXED DEPENDENCIES
   useEffect(() => {
     console.log('🎉 LessonCompletionCelebration useEffect triggered, isVisible:', isVisible)
     
@@ -89,7 +89,7 @@ export const LessonCompletionCelebration: React.FC<LessonCompletionCelebrationPr
         clearTimeout(timer)
       }
     }
-  }, [isVisible, onComplete, onNavigate])
+  }, [isVisible]) // FIXED: Only depend on isVisible to prevent callback dependency loops
 
   // Generate confetti particles
   const generateConfetti = () => {
