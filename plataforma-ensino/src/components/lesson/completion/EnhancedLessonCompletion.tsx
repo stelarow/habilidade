@@ -218,8 +218,13 @@ export const EnhancedLessonCompletion: React.FC<EnhancedLessonCompletionProps> =
         lessonTitle={lessonTitle}
         courseTitle={courseTitle}
         onComplete={() => {
-          // Celebration will auto-complete and navigate
-          // Additional cleanup can be done here if needed
+          // Celebration completed, prepare for navigation
+          console.log('Celebration completed, preparing to navigate...')
+        }}
+        onNavigate={() => {
+          // Navigate to course page
+          console.log('Navigating to course:', courseSlug)
+          navigateToCourse()
         }}
       />
 

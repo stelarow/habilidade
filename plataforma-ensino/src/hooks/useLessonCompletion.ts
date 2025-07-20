@@ -147,6 +147,7 @@ export const useLessonCompletion = ({
       const result = await response.json()
 
       // Success - trigger celebration
+      console.log('Lesson completion successful, triggering celebration')
       setState(prev => ({ 
         ...prev, 
         isCompleting: false,
@@ -194,6 +195,7 @@ export const useLessonCompletion = ({
 
   // Manual navigation to course page
   const navigateToCourse = useCallback((): void => {
+    console.log('Navigating to course page:', `/course/${courseSlug}`)
     router.push(`/course/${courseSlug}`)
   }, [router, courseSlug])
 

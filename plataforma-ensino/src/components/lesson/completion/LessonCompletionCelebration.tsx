@@ -10,6 +10,7 @@ interface LessonCompletionCelebrationProps {
   lessonTitle?: string
   courseTitle?: string
   onComplete?: () => void
+  onNavigate?: () => void
   className?: string
 }
 
@@ -28,20 +29,25 @@ export const LessonCompletionCelebration: React.FC<LessonCompletionCelebrationPr
   lessonTitle = 'Aula',
   courseTitle = 'Curso',
   onComplete,
+  onNavigate,
   className
 }) => {
   const confettiRef = useRef<HTMLDivElement>(null)
 
-  // Auto-complete after animation
+  // Auto-complete and navigate after animation
   useEffect(() => {
     if (isVisible) {
       const timer = setTimeout(() => {
         onComplete?.()
+        // Navigate after completion callback
+        setTimeout(() => {
+          onNavigate?.()
+        }, 500)
       }, 3000)
       
       return () => clearTimeout(timer)
     }
-  }, [isVisible, onComplete])
+  }, [isVisible, onComplete, onNavigate])
 
   // Generate confetti particles
   const generateConfetti = () => {
@@ -234,12 +240,12 @@ export const LessonCompletionCelebration: React.FC<LessonCompletionCelebrationPr
               animate={{ opacity: 1 }}
               transition={{ delay: 1.2, duration: 0.5 }}
             >
-              <p className="text-sm text-gray-300 mb-2">
+              <p className="text-sm text-gray-300 mb-4">
                 Redirecionando para o curso...
               </p>
               
               {/* Loading dots */}
-              <div className="flex justify-center gap-1">
+              <div className="flex justify-center gap-1 mb-4">
                 {Array.from({ length: 3 }).map((_, i) => (
                   <motion.div
                     key={i}
@@ -256,6 +262,17 @@ export const LessonCompletionCelebration: React.FC<LessonCompletionCelebrationPr
                   />
                 ))}
               </div>
+
+              {/* Fallback Button - appears after 2 seconds */}
+              <motion.button
+                onClick={onNavigate}
+                className="px-4 py-2 bg-[#d400ff] hover:bg-[#b000dd] text-white rounded-lg text-sm font-medium transition-colors"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 2, duration: 0.3 }}
+              >
+                Continuar para o Curso
+              </motion.button>
             </motion.div>
           </motion.div>
 
