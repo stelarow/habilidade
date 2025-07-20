@@ -98,9 +98,9 @@ export const EnhancedLessonCompletion: React.FC<EnhancedLessonCompletionProps> =
     } catch (error) {
       console.error('💥 Completion failed in handleCompleteLesson:', error)
       console.log('🔍 Error details:', {
-        name: error?.name,
-        message: error?.message,
-        stack: error?.stack
+        name: error instanceof Error ? error.name : 'Unknown',
+        message: error instanceof Error ? error.message : String(error),
+        stack: error instanceof Error ? error.stack : undefined
       })
       // Error is already handled by the hook
     }

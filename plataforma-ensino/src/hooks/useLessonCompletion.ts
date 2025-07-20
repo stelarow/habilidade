@@ -241,9 +241,9 @@ export const useLessonCompletion = ({
     } catch (error) {
       console.error('💥 Course navigation failed:', error)
       console.log('🔍 Error details:', {
-        name: error?.name,
-        message: error?.message,
-        stack: error?.stack
+        name: error instanceof Error ? error.name : 'Unknown',
+        message: error instanceof Error ? error.message : String(error),
+        stack: error instanceof Error ? error.stack : undefined
       })
       console.log('🏠 Using dashboard fallback...')
       
