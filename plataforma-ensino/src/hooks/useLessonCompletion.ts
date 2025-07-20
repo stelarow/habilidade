@@ -231,6 +231,26 @@ export const useLessonCompletion = ({
     try {
       // Try Next.js router first
       router.push(`/course/${courseSlug}`)
+      
+      // Add timeout to check if navigation worked
+      setTimeout(() => {
+        if (window.location.pathname.includes('/lesson/')) {
+          console.log('Navigation did not complete, trying alternative routes...')
+          
+          // Try dashboard as fallback
+          console.log('Trying dashboard fallback...')
+          router.push('/dashboard')
+          
+          // If dashboard also fails, use window.location
+          setTimeout(() => {
+            if (window.location.pathname.includes('/lesson/')) {
+              console.log('Router navigation completely failed, using window.location to home')
+              window.location.href = '/'
+            }
+          }, 1000)
+        }
+      }, 1500)
+      
     } catch (error) {
       console.error('Router push failed, using window.location:', error)
       // Fallback to window.location

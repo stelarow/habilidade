@@ -263,19 +263,34 @@ export const LessonCompletionCelebration: React.FC<LessonCompletionCelebrationPr
                 ))}
               </div>
 
-              {/* Fallback Button - appears after 2 seconds */}
-              <motion.button
-                onClick={() => {
-                  console.log('Manual navigation button clicked')
-                  onNavigate?.()
-                }}
-                className="px-4 py-2 bg-[#d400ff] hover:bg-[#b000dd] text-white rounded-lg text-sm font-medium transition-colors"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 2, duration: 0.3 }}
-              >
-                Continuar para o Curso
-              </motion.button>
+              {/* Navigation Buttons - appear after 2 seconds */}
+              <div className="flex gap-3 justify-center">
+                <motion.button
+                  onClick={() => {
+                    console.log('Manual navigation button clicked')
+                    onNavigate?.()
+                  }}
+                  className="px-4 py-2 bg-[#d400ff] hover:bg-[#b000dd] text-white rounded-lg text-sm font-medium transition-colors"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 2, duration: 0.3 }}
+                >
+                  Voltar ao Curso
+                </motion.button>
+                
+                <motion.button
+                  onClick={() => {
+                    console.log('Dashboard navigation button clicked')
+                    window.location.href = '/dashboard'
+                  }}
+                  className="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg text-sm font-medium transition-colors"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 2.2, duration: 0.3 }}
+                >
+                  Ir ao Dashboard
+                </motion.button>
+              </div>
             </motion.div>
           </motion.div>
 
