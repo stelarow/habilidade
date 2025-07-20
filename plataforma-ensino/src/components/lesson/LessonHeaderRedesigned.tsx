@@ -45,6 +45,7 @@ const LessonHeaderRedesigned: React.FC<LessonHeaderRedesignedProps> = ({
                 className="transition-all duration-300 hover:scale-105"
               />
             </div>
+          </div>
           
           {/* Navigation Actions - Enhanced */}
           <div className="flex items-center gap-3">
