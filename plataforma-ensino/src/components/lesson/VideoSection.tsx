@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Card } from '@/components/ui/card'
 import { Progress } from '@/components/ui/progress'
-import { Play, Pause, AlertCircle } from 'lucide-react'
+import { Play, Pause, AlertCircle, Copy, Check } from 'lucide-react'
 import dynamic from 'next/dynamic'
 import { extractVimeoId, formatTime, LessonProgressManager } from '@/utils/lessonProgressUtils'
 
@@ -32,6 +32,7 @@ const VideoSection: React.FC<VideoSectionProps> = ({
   const [isReady, setIsReady] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(true)
+  const [isCopied, setIsCopied] = useState(false)
   
   const playerRef = useRef<any>(null)
   const vimeoPlayerRef = useRef<any>(null)
@@ -212,6 +213,30 @@ const VideoSection: React.FC<VideoSectionProps> = ({
     playerRef.current.seekTo(clickProgress, 'fraction')
   }
 
+  const handleCopyDescription = async () => {
+    const textToCopy = videoDescription || 
+      "Nesta aula você aprenderá os conceitos fundamentais do design, incluindo " +
+      "princípios básicos, teoria das cores e composição visual. O conteúdo aborda " +
+      "desde conceitos teóricos até aplicações práticas no desenvolvimento de projetos."
+    
+    try {
+      await navigator.clipboard.writeText(textToCopy)
+      setIsCopied(true)
+      setTimeout(() => setIsCopied(false), 2000)
+    } catch (err) {
+      console.error('Failed to copy text: ', err)
+      // Fallback for older browsers
+      const textArea = document.createElement('textarea')
+      textArea.value = textToCopy
+      document.body.appendChild(textArea)
+      textArea.select()
+      document.execCommand('copy')
+      document.body.removeChild(textArea)
+      setIsCopied(true)
+      setTimeout(() => setIsCopied(false), 2000)
+    }
+  }
+
   return (
     <Card className="p-6 border-border/50">
       <h2 className="text-2xl font-bold mb-4 gradient-text">{videoTitle}</h2>
@@ -326,7 +351,26 @@ const VideoSection: React.FC<VideoSectionProps> = ({
       </div>
       
       <div className="space-y-2">
-        <h3 className="text-lg font-semibold">Descrição da Aula</h3>
+        <div className="flex items-center justify-between">
+          <h3 className="text-lg font-semibold">Descrição da Aula</h3>
+          <button
+            onClick={handleCopyDescription}
+            className="flex items-center gap-2 px-3 py-1 text-sm bg-muted hover:bg-muted/80 rounded-md transition-colors"
+            title="Copiar descrição"
+          >
+            {isCopied ? (
+              <>
+                <Check className="h-4 w-4 text-green-500" />
+                <span className="text-green-500">Copiado!</span>
+              </>
+            ) : (
+              <>
+                <Copy className="h-4 w-4" />
+                <span>Copiar</span>
+              </>
+            )}
+          </button>
+        </div>
         <p className="text-muted-foreground">
           {videoDescription || 
             "Nesta aula você aprenderá os conceitos fundamentais do design, incluindo " +

@@ -19,6 +19,7 @@ interface LessonPageRedesignedProps {
     id: string
     title: string
     slug: string
+    description?: string
     course: {
       id: string
       title: string
@@ -130,7 +131,7 @@ const LessonPageRedesigned: React.FC<LessonPageRedesignedProps> = ({
             {videoUrl && (
               <VideoSection
                 videoTitle={`Vídeo: ${lesson.title}`}
-                videoDescription="Assista ao conteúdo principal desta aula"
+                videoDescription={lesson.description || "Assista ao conteúdo principal desta aula"}
                 videoUrl={videoUrl}
                 lessonId={lesson.id}
                 onProgressUpdate={handleVideoProgress}

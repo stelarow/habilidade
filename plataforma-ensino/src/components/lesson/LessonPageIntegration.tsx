@@ -80,6 +80,7 @@ const LessonPageIntegration: React.FC<LessonPageIntegrationProps> = ({
     id: lesson.id,
     title: lesson.title,
     slug: lesson.slug,
+    description: lesson.description,
     course: {
       id: course.id,
       title: course.title,
