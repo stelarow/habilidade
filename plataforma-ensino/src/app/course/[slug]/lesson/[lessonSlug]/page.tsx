@@ -197,7 +197,10 @@ export default function LessonPageRefactored() {
       try {
         const { data: quizzesData } = await supabase
           .from('quizzes')
-          .select('*')
+          .select(`
+            *,
+            questions:quiz_questions(*)
+          `)
           .eq('lesson_id', lessonData.id)
         
         setQuizzes(quizzesData || [])

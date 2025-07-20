@@ -25,6 +25,7 @@ interface UploadedFile {
 interface ExercisesSectionProps {
   title?: string
   exerciseFiles?: ExerciseFile[]
+  exercises?: any[]  // Real exercises from database
   onProgressUpdate?: (progress: number, uploadedFiles?: string[]) => void
   onFilesUploaded?: (files: UploadedFile[]) => void
   maxFileSize?: number // in MB
@@ -33,6 +34,7 @@ interface ExercisesSectionProps {
 
 const ExercisesSection: React.FC<ExercisesSectionProps> = ({
   title = "Exercícios Práticos",
+  exercises = [],
   exerciseFiles = [
     {
       id: '1',
@@ -227,18 +229,40 @@ const ExercisesSection: React.FC<ExercisesSectionProps> = ({
           <div>
             <h4 className="font-semibold mb-3">Downloads de Exercícios</h4>
             <div className="space-y-2">
-              <Button variant="outline" className="w-full justify-start">
-                <Download className="h-4 w-4 mr-2" />
-                Exercício 1 - Análise de Casos.pdf
-              </Button>
-              <Button variant="outline" className="w-full justify-start">
-                <Download className="h-4 w-4 mr-2" />
-                Exercício 2 - Projeto Prático.pdf
-              </Button>
-              <Button variant="outline" className="w-full justify-start">
-                <Download className="h-4 w-4 mr-2" />
-                Exercício 3 - Estudo Dirigido.pdf
-              </Button>
+              {exercises.length > 0 ? (
+                exercises.map((exercise, index) => (
+                  <div key={exercise.id} className="space-y-2">
+                    <Button 
+                      variant="outline" 
+                      className="w-full justify-start"
+                      onClick={() => exercise.download_url && window.open(exercise.download_url, '_blank')}
+                    >
+                      <Download className="h-4 w-4 mr-2" />
+                      {exercise.title}
+                    </Button>
+                    {exercise.description && (
+                      <p className="text-sm text-muted-foreground px-3">
+                        {exercise.description}
+                      </p>
+                    )}
+                  </div>
+                ))
+              ) : (
+                <>
+                  <Button variant="outline" className="w-full justify-start">
+                    <Download className="h-4 w-4 mr-2" />
+                    Exercício 1 - Análise de Casos.pdf
+                  </Button>
+                  <Button variant="outline" className="w-full justify-start">
+                    <Download className="h-4 w-4 mr-2" />
+                    Exercício 2 - Projeto Prático.pdf
+                  </Button>
+                  <Button variant="outline" className="w-full justify-start">
+                    <Download className="h-4 w-4 mr-2" />
+                    Exercício 3 - Estudo Dirigido.pdf
+                  </Button>
+                </>
+              )}
             </div>
           </div>
 
@@ -283,7 +307,7 @@ const ExercisesSection: React.FC<ExercisesSectionProps> = ({
                 Progresso dos Exercícios
               </span>
               <span className="font-medium">
-                {uploadedFiles.length} de {exerciseFiles.length} arquivos enviados
+                {uploadedFiles.length} de {exercises.length || exerciseFiles.length} arquivos enviados
               </span>
             </div>
           </div>

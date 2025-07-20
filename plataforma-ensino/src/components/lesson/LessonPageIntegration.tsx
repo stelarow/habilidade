@@ -234,6 +234,11 @@ const LessonPageIntegration: React.FC<LessonPageIntegrationProps> = ({
       progressData={adaptedProgressData}
       onExit={handleExit}
       onLessonComplete={handleLessonComplete}
+      // Pass real data from database
+      videoUrl={lesson.video_url}
+      materials={lesson.materials}
+      exercises={exercises}
+      quizzes={quizzes}
     />
   )
 }
