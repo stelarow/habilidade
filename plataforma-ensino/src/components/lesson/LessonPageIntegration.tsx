@@ -211,21 +211,33 @@ const LessonPageIntegration: React.FC<LessonPageIntegrationProps> = ({
   }, [progress, lesson, quizProgress, submissions, exercises, quizzes])
 
   // Handle exit - navigate back to course
-  const handleExit = useCallback(() => {
+  const handleExit = useCallback(async () => {
+    console.log('LessonPageIntegration handleExit called')
+    console.log('onExit prop:', !!onExit)
+    console.log('course.slug:', course.slug)
+    
     if (onExit) {
-      onExit()
+      console.log('Calling onExit prop')
+      await onExit()
     } else {
-      router.push(`/course/${course.slug}`)
+      console.log('No onExit prop, navigating to course:', `/course/${course.slug}`)
+      await router.push(`/course/${course.slug}`)
+      console.log('Navigation to course completed')
     }
   }, [onExit, router, course.slug])
 
   // Handle lesson completion
-  const handleLessonComplete = useCallback(() => {
+  const handleLessonComplete = useCallback(async () => {
+    console.log('LessonPageIntegration handleLessonComplete called')
+    
     if (onLessonComplete) {
-      onLessonComplete()
+      console.log('Calling onLessonComplete prop')
+      await onLessonComplete()
     } else {
       // Default completion behavior - navigate back to course
-      router.push(`/course/${course.slug}`)
+      console.log('No onLessonComplete prop, navigating to course:', `/course/${course.slug}`)
+      await router.push(`/course/${course.slug}`)
+      console.log('Lesson completion navigation completed')
     }
   }, [onLessonComplete, router, course.slug])
 

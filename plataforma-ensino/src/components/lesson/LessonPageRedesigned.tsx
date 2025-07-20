@@ -63,12 +63,12 @@ const LessonPageRedesigned: React.FC<LessonPageRedesignedProps> = ({
 
 
 
-  const handleExit = useCallback(() => {
+  const handleExit = useCallback(async () => {
     try {
       setIsLoading(true)
       setError(null)
       if (onExit) {
-        onExit()
+        await onExit()
       }
     } catch (err) {
       setError('Erro ao sair da aula. Tente novamente.')

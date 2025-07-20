@@ -59,13 +59,17 @@ const LessonHeaderRedesigned: React.FC<LessonHeaderRedesignedProps> = ({
 
   // Handle dashboard navigation
   const handleDashboardClick = async () => {
+    console.log('Dashboard button clicked')
     setIsNavigating(true)
     try {
+      console.log('Attempting to navigate to /dashboard')
       await router.push('/dashboard')
+      console.log('Navigation to dashboard completed')
     } catch (error) {
       console.error('Dashboard navigation error:', error)
     } finally {
       setIsNavigating(false)
+      console.log('Dashboard navigation finished (loading state cleared)')
     }
   }
 
@@ -79,15 +83,13 @@ const LessonHeaderRedesigned: React.FC<LessonHeaderRedesignedProps> = ({
 
   // Enhanced exit handler with debugging and fallback
   const handleExitLesson = async () => {
-    console.log('Exit button clicked')
-    console.log('Course data:', course)
-    console.log('Course slug:', course?.slug)
+    console.log('Exit button clicked - calling onExit callback')
     
     try {
       // First try the onExit callback
       if (onExit) {
-        console.log('Calling onExit callback')
-        onExit()
+        await onExit()
+        console.log('onExit callback completed')
       } else if (course?.slug) {
         // Fallback: direct navigation to course
         console.log('Fallback: navigating to course', course.slug)
