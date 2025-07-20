@@ -6,7 +6,7 @@ export { default as LessonPageRedesigned } from './LessonPageRedesigned'
 export { default as LessonPageIntegration } from './LessonPageIntegration'
 export { default as LessonHeaderRedesigned } from './LessonHeaderRedesigned'
 export { default as VideoSection } from './VideoSection'
-export { default as PDFSection } from './PDFSection'
+// export { default as PDFSection } from './PDFSection' // Temporarily disabled due to build issues
 export { default as PDFSectionWrapper } from './PDFSectionWrapper'
 export { default as ExercisesSection } from './ExercisesSection'
 export { default as QuizSection } from './QuizSection'
