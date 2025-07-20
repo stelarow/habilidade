@@ -34,16 +34,33 @@ export const LessonCompletionCelebration: React.FC<LessonCompletionCelebrationPr
 }) => {
   const confettiRef = useRef<HTMLDivElement>(null)
 
-  // Auto-complete and navigate after animation
+  // IMMEDIATE NAVIGATION - No delays, no loops
   useEffect(() => {
     if (isVisible) {
+      // Show celebration for just 1.5 seconds then redirect IMMEDIATELY
       const timer = setTimeout(() => {
+        console.log('IMMEDIATE redirection starting...')
         onComplete?.()
-        // Navigate after completion callback
-        setTimeout(() => {
-          onNavigate?.()
-        }, 500)
-      }, 3000)
+        
+        // DIRECT window.location - most reliable approach
+        try {
+          if (onNavigate) {
+            console.log('Using provided navigation callback')
+            onNavigate()
+            // Add immediate fallback in case callback fails
+            setTimeout(() => {
+              console.log('Fallback redirection to dashboard')
+              window.location.href = '/dashboard'
+            }, 500)
+          } else {
+            console.log('Direct redirection to dashboard')
+            window.location.href = '/dashboard'
+          }
+        } catch (error) {
+          console.error('All navigation failed, going home:', error)
+          window.location.href = '/'
+        }
+      }, 1500) // Reduced to 1.5 seconds for faster experience
       
       return () => clearTimeout(timer)
     }
@@ -133,17 +150,17 @@ export const LessonCompletionCelebration: React.FC<LessonCompletionCelebrationPr
               delay: 0.2 
             }}
           >
-            {/* Trophy Icon with Glow */}
+            {/* Trophy Icon with Glow - NO INFINITE LOOPS */}
             <motion.div
               className="relative mb-6"
               animate={{ 
                 rotate: [0, -10, 10, -5, 5, 0],
-                scale: [1, 1.1, 1]
+                scale: [1, 1.1, 1, 1.05, 1]
               }}
               transition={{ 
-                duration: 2,
-                repeat: Infinity,
-                repeatDelay: 1
+                duration: 1.5,
+                repeat: 0, // No infinite repeat
+                ease: "easeInOut"
               }}
             >
               <div className="absolute inset-0 bg-yellow-400/30 rounded-full blur-xl scale-150" />
@@ -152,7 +169,7 @@ export const LessonCompletionCelebration: React.FC<LessonCompletionCelebrationPr
                 weight="fill"
               />
               
-              {/* Sparkle effects around trophy */}
+              {/* Sparkle effects around trophy - FINITE ANIMATION */}
               {Array.from({ length: 8 }).map((_, i) => (
                 <motion.div
                   key={i}
@@ -162,13 +179,13 @@ export const LessonCompletionCelebration: React.FC<LessonCompletionCelebrationPr
                     top: `${50 + 30 * Math.sin((i * Math.PI * 2) / 8)}%`,
                   }}
                   animate={{
-                    scale: [0, 1, 0],
-                    opacity: [0, 1, 0]
+                    scale: [0, 1, 0.5, 0],
+                    opacity: [0, 1, 0.7, 0]
                   }}
                   transition={{
-                    duration: 1.5,
-                    repeat: Infinity,
-                    delay: i * 0.2,
+                    duration: 1.0,
+                    repeat: 0, // No infinite repeat
+                    delay: i * 0.1,
                     ease: "easeInOut"
                   }}
                 />
@@ -244,58 +261,48 @@ export const LessonCompletionCelebration: React.FC<LessonCompletionCelebrationPr
                 Redirecionando para o curso...
               </p>
               
-              {/* Loading dots */}
+              {/* Loading indicator - SIMPLIFIED */}
               <div className="flex justify-center gap-1 mb-4">
-                {Array.from({ length: 3 }).map((_, i) => (
-                  <motion.div
-                    key={i}
-                    className="w-2 h-2 bg-[#d400ff] rounded-full"
-                    animate={{
-                      scale: [1, 1.5, 1],
-                      opacity: [0.5, 1, 0.5]
-                    }}
-                    transition={{
-                      duration: 1,
-                      repeat: Infinity,
-                      delay: i * 0.2
-                    }}
-                  />
-                ))}
+                <motion.div
+                  className="w-4 h-4 border-2 border-[#d400ff] border-t-transparent rounded-full"
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 1, repeat: 0 }} // Single rotation only
+                />
               </div>
 
-              {/* Navigation Buttons - appear after 2 seconds */}
+              {/* Navigation Buttons - appear after 1.5 seconds */}
               <div className="flex gap-3 justify-center">
                 <motion.button
                   onClick={() => {
-                    console.log('Manual navigation button clicked')
-                    onNavigate?.()
+                    console.log('Dashboard navigation button clicked - RELIABLE')
+                    window.location.href = '/dashboard'
                   }}
-                  className="px-4 py-2 bg-[#d400ff] hover:bg-[#b000dd] text-white rounded-lg text-sm font-medium transition-colors"
+                  className="px-6 py-3 bg-[#d400ff] hover:bg-[#b000dd] text-white rounded-lg text-sm font-medium transition-colors"
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 2, duration: 0.3 }}
+                  transition={{ delay: 1.5, duration: 0.3 }}
                 >
-                  Voltar ao Curso
+                  Continuar Estudando
                 </motion.button>
                 
                 <motion.button
                   onClick={() => {
-                    console.log('Dashboard navigation button clicked')
-                    window.location.href = '/dashboard'
+                    console.log('Home navigation button clicked - SAFE FALLBACK')
+                    window.location.href = '/'
                   }}
-                  className="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg text-sm font-medium transition-colors"
+                  className="px-4 py-3 bg-gray-600 hover:bg-gray-700 text-white rounded-lg text-sm font-medium transition-colors"
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 2.2, duration: 0.3 }}
+                  transition={{ delay: 1.7, duration: 0.3 }}
                 >
-                  Ir ao Dashboard
+                  Página Inicial
                 </motion.button>
               </div>
             </motion.div>
           </motion.div>
 
-          {/* Background Gradient Animation */}
-          <motion.div
+          {/* Background Gradient - STATIC */}
+          <div
             className="absolute inset-0 opacity-20"
             style={{
               background: `
@@ -303,14 +310,6 @@ export const LessonCompletionCelebration: React.FC<LessonCompletionCelebrationPr
                 radial-gradient(circle at 80% 20%, #00c4ff 0%, transparent 50%),
                 radial-gradient(circle at 40% 80%, #a000ff 0%, transparent 50%)
               `
-            }}
-            animate={{
-              opacity: [0.1, 0.3, 0.1]
-            }}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-              ease: "easeInOut"
             }}
           />
         </motion.div>

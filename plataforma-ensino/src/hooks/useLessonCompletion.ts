@@ -197,39 +197,20 @@ export const useLessonCompletion = ({
     setState(prev => ({ ...prev, error: null }))
   }, [])
 
-  // Manual navigation to course page
+  // IMMEDIATE RELIABLE navigation to course page
   const navigateToCourse = useCallback((): void => {
-    console.log('Navigating to course page:', `/course/${courseSlug}`)
+    console.log('DIRECT navigation to course page:', `/course/${courseSlug}`)
     
+    // Use direct window.location for most reliable navigation
     try {
-      // Try Next.js router first
-      router.push(`/course/${courseSlug}`)
-      
-      // Add timeout to check if navigation worked
-      setTimeout(() => {
-        if (window.location.pathname.includes('/lesson/')) {
-          console.log('Navigation did not complete, trying alternative routes...')
-          
-          // Try dashboard as fallback
-          console.log('Trying dashboard fallback...')
-          router.push('/dashboard')
-          
-          // If dashboard also fails, use window.location
-          setTimeout(() => {
-            if (window.location.pathname.includes('/lesson/')) {
-              console.log('Router navigation completely failed, using window.location to home')
-              window.location.href = '/'
-            }
-          }, 1000)
-        }
-      }, 1500)
-      
-    } catch (error) {
-      console.error('Router push failed, using window.location:', error)
-      // Fallback to window.location
+      console.log('Using window.location.href for immediate navigation')
       window.location.href = `/course/${courseSlug}`
+    } catch (error) {
+      console.error('Course navigation failed, going to dashboard:', error)
+      // Ultimate fallback
+      window.location.href = '/dashboard'
     }
-  }, [router, courseSlug])
+  }, [courseSlug])
 
   return {
     // State
