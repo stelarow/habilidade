@@ -700,7 +700,6 @@ const PDFSection: React.FC<PDFSectionProps> = ({
                 </div>
               )}
             </div>
-            </div>
           </motion.div>
         )}
       </AnimatePresence>
