@@ -1,10 +1,13 @@
 'use client'
 
 import React, { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import LessonPageRedesigned from '@/components/lesson/LessonPageRedesigned'
 import { LessonProgressData } from '@/types/lesson'
 
 export default function TestLessonRedesignedPage() {
+  const router = useRouter()
+  
   const [progressData, setProgressData] = useState<LessonProgressData>({
     videoProgress: {
       currentTime: 0,
@@ -68,8 +71,15 @@ export default function TestLessonRedesignedPage() {
   }
 
   const handleExit = () => {
-    console.log('Exit lesson')
-    // In a real app, this would navigate back to the course
+    console.log('Exit lesson - navigating to course page')
+    try {
+      // Navigate to the test course page
+      router.push('/course/react-avancado')
+    } catch (error) {
+      console.error('Navigation error:', error)
+      // Fallback to dashboard if course route doesn't exist
+      router.push('/dashboard')
+    }
   }
 
   const handleLessonComplete = () => {

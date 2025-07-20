@@ -263,8 +263,28 @@ export default function LessonPageRefactored() {
   }, [fetchLessonData])
 
   // Handle exit
-  const handleExit = useCallback(() => {
-    router.push(`/course/${course?.slug}`)
+  const handleExit = useCallback(async () => {
+    console.log('Main lesson page handleExit called')
+    console.log('Course data:', course)
+    console.log('Attempting to navigate to:', `/course/${course?.slug}`)
+    
+    try {
+      if (course?.slug) {
+        await router.push(`/course/${course.slug}`)
+        console.log('Navigation to course completed successfully')
+      } else {
+        console.log('No course slug available, navigating to dashboard')
+        await router.push('/dashboard')
+      }
+    } catch (error) {
+      console.error('Navigation error:', error)
+      // Fallback to dashboard
+      try {
+        await router.push('/dashboard')
+      } catch (fallbackError) {
+        console.error('Dashboard fallback failed:', fallbackError)
+      }
+    }
   }, [router, course])
 
   if (loading) {
