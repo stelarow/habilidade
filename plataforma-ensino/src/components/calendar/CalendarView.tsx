@@ -60,6 +60,11 @@ export default function CalendarView({ teacherId }: CalendarViewProps) {
       }
 
       const result = await response.json();
+      console.log('CalendarView - API Response:', result);
+      console.log('CalendarView - Data items:', result.data?.length || 0);
+      if (result.data?.length > 0) {
+        console.log('CalendarView - First item:', result.data[0]);
+      }
       setCalendarData(result.data || []);
 
     } catch (err) {
@@ -71,9 +76,13 @@ export default function CalendarView({ teacherId }: CalendarViewProps) {
   };
 
   const getStudentsForSlot = (dayIndex: number, timeSlot: string) => {
-    return calendarData.filter(
+    const students = calendarData.filter(
       item => item.dayOfWeek === dayIndex + 1 && item.slotLabel === timeSlot
     );
+    if (students.length > 0) {
+      console.log(`Found ${students.length} students for ${DAYS[dayIndex]} ${timeSlot}`);
+    }
+    return students;
   };
 
   if (loading) {

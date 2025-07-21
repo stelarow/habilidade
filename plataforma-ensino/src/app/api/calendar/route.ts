@@ -29,6 +29,19 @@ export async function GET(request: NextRequest) {
 
     const supabase = createClient();
 
+    // First, let's do a simple query to see what data we have
+    console.log('Testing basic query first...');
+    const { data: basicData, error: basicError } = await supabase
+      .from('class_schedules')
+      .select('*')
+      .limit(5);
+    
+    if (basicError) {
+      console.error('Basic query error:', basicError);
+    } else {
+      console.log('Basic class_schedules data:', JSON.stringify(basicData, null, 2));
+    }
+
     // Query principal com tipos corretos - simplified joins
     const calendarQuery = supabase
       .from('class_schedules')
@@ -75,31 +88,79 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Database error' }, { status: 500 });
     }
 
+    // Debug: Log raw data
+    console.log('=== Calendar API Debug ===');
+    console.log('Raw data count:', data?.length || 0);
+    if (data && data.length > 0) {
+      console.log('First raw item:', JSON.stringify(data[0], null, 2));
+    }
+
     // Agora os tipos são corretamente inferidos como CalendarQueryResult
     const typedData: CalendarQueryResult = data;
 
-    // Transformar dados para formato simples - handle potential null values
+    // Debug: Check data before transformation
+    console.log('Before transformation - checking data structure:');
+    const validSchedules = typedData.filter(schedule => 
+      schedule.schedule_slots && schedule.enrollments
+    );
+    console.log(`Valid schedules (with slots and enrollments): ${validSchedules.length}/${typedData.length}`);
+    
+    // Debug invalid schedules
+    const invalidSchedules = typedData.filter(schedule => 
+      !schedule.schedule_slots || !schedule.enrollments
+    );
+    if (invalidSchedules.length > 0) {
+      console.log('Invalid schedules:', invalidSchedules.map(s => ({
+        id: s.id,
+        hasSlots: !!s.schedule_slots,
+        hasEnrollments: !!s.enrollments
+      })));
+    }
+
+    // Transformar dados para formato simples - handle both array and object responses
     const formattedData = typedData
       .filter(schedule => 
-        schedule.schedule_slots && schedule.schedule_slots.length > 0 &&
-        schedule.enrollments && schedule.enrollments.length > 0 &&
-        schedule.enrollments[0].users && schedule.enrollments[0].users.length > 0 &&
-        schedule.enrollments[0].courses && schedule.enrollments[0].courses.length > 0
+        schedule.schedule_slots && schedule.enrollments
       )
-      .map(schedule => ({
-        id: schedule.id,
-        teacherId: schedule.teacher_id,
-        studentEmail: schedule.enrollments[0].users[0].email,
-        studentName: schedule.enrollments[0].users[0].full_name,
-        courseName: schedule.enrollments[0].courses[0].title,
-        dayOfWeek: schedule.schedule_slots[0].day_of_week,
-        startTime: schedule.schedule_slots[0].start_time,
-        endTime: schedule.schedule_slots[0].end_time,
-        slotLabel: schedule.schedule_slots[0].slot_label,
-        startDate: schedule.enrollments[0].start_date,
-        endDate: schedule.enrollments[0].end_date,
-        createdAt: schedule.created_at,
-      }));
+      .map(schedule => {
+        // Handle both array and single object responses from Supabase joins
+        const slot = Array.isArray(schedule.schedule_slots) ? schedule.schedule_slots[0] : schedule.schedule_slots;
+        const enrollment = Array.isArray(schedule.enrollments) ? schedule.enrollments[0] : schedule.enrollments;
+        const user = Array.isArray(enrollment.users) ? enrollment.users[0] : enrollment.users;
+        const course = Array.isArray(enrollment.courses) ? enrollment.courses[0] : enrollment.courses;
+        
+        if (!slot || !enrollment || !user || !course) {
+          console.log('Skipping invalid record:', {
+            scheduleId: schedule.id,
+            hasSlot: !!slot,
+            hasEnrollment: !!enrollment,
+            hasUser: !!user,
+            hasCourse: !!course
+          });
+          return null; // Skip invalid records
+        }
+        
+        return {
+          id: schedule.id,
+          teacherId: schedule.teacher_id,
+          studentEmail: user.email,
+          studentName: user.full_name,
+          courseName: course.title,
+          dayOfWeek: slot.day_of_week,
+          startTime: slot.start_time,
+          endTime: slot.end_time,
+          slotLabel: slot.slot_label,
+          startDate: enrollment.start_date,
+          endDate: enrollment.end_date,
+          createdAt: schedule.created_at,
+        };
+      })
+      .filter(item => item !== null); // Remove null items
+
+    console.log(`Final formatted data count: ${formattedData.length}`);
+    if (formattedData.length > 0) {
+      console.log('Sample formatted item:', formattedData[0]);
+    }
 
     return NextResponse.json({ data: formattedData });
 
