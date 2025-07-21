@@ -83,15 +83,15 @@ export async function GET(request: NextRequest) {
     const formattedData = typedData.map(schedule => ({
       id: schedule.id,
       teacherId: schedule.teacher_id,
-      studentEmail: schedule.enrollments.users.email,
-      studentName: schedule.enrollments.users.full_name,
-      courseName: schedule.enrollments.courses.title,
+      studentEmail: schedule.enrollments[0].users[0].email,
+      studentName: schedule.enrollments[0].users[0].full_name,
+      courseName: schedule.enrollments[0].courses[0].title,
       dayOfWeek: schedule.schedule_slots.day_of_week,
       startTime: schedule.schedule_slots.start_time,
       endTime: schedule.schedule_slots.end_time,
       slotLabel: schedule.schedule_slots.slot_label,
-      startDate: schedule.enrollments.start_date,
-      endDate: schedule.enrollments.end_date,
+      startDate: schedule.enrollments[0].start_date,
+      endDate: schedule.enrollments[0].end_date,
       createdAt: schedule.created_at,
     }));
 
