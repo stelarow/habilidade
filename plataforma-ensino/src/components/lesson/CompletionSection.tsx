@@ -126,7 +126,7 @@ const CompletionSection: React.FC<CompletionSectionProps> = ({
             </h4>
             <ul className="space-y-1">
               {criteria
-                .filter(criterion => !criterion.isCompleted)
+                .filter(criterion => !criterion.isCompleted && criterion.id === 'quiz')
                 .map((criterion) => (
                   <li key={criterion.id} className="flex items-center gap-2 text-sm">
                     <XCircle className="h-4 w-4 text-destructive" />
