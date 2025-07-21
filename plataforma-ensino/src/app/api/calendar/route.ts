@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
 
     const supabase = createClient();
 
-    // Query principal com tipos corretos
+    // Query principal com tipos corretos - simplified joins
     const calendarQuery = supabase
       .from('class_schedules')
       .select(`
@@ -37,21 +37,20 @@ export async function GET(request: NextRequest) {
         enrollment_id,
         teacher_id,
         created_at,
-        schedule_slots!inner (
+        schedule_slots (
           day_of_week,
           start_time,
           end_time,
           slot_label
         ),
-        enrollments!inner (
+        enrollments (
           user_id,
           start_date,
           end_date,
-          courses!inner (
-            title,
-            duration_months
+          courses (
+            title
           ),
-          users!inner (
+          users (
             email,
             full_name
           )
@@ -79,21 +78,28 @@ export async function GET(request: NextRequest) {
     // Agora os tipos são corretamente inferidos como CalendarQueryResult
     const typedData: CalendarQueryResult = data;
 
-    // Transformar dados para formato simples
-    const formattedData = typedData.map(schedule => ({
-      id: schedule.id,
-      teacherId: schedule.teacher_id,
-      studentEmail: schedule.enrollments[0].users[0].email,
-      studentName: schedule.enrollments[0].users[0].full_name,
-      courseName: schedule.enrollments[0].courses[0].title,
-      dayOfWeek: schedule.schedule_slots[0].day_of_week,
-      startTime: schedule.schedule_slots[0].start_time,
-      endTime: schedule.schedule_slots[0].end_time,
-      slotLabel: schedule.schedule_slots[0].slot_label,
-      startDate: schedule.enrollments[0].start_date,
-      endDate: schedule.enrollments[0].end_date,
-      createdAt: schedule.created_at,
-    }));
+    // Transformar dados para formato simples - handle potential null values
+    const formattedData = typedData
+      .filter(schedule => 
+        schedule.schedule_slots && schedule.schedule_slots.length > 0 &&
+        schedule.enrollments && schedule.enrollments.length > 0 &&
+        schedule.enrollments[0].users && schedule.enrollments[0].users.length > 0 &&
+        schedule.enrollments[0].courses && schedule.enrollments[0].courses.length > 0
+      )
+      .map(schedule => ({
+        id: schedule.id,
+        teacherId: schedule.teacher_id,
+        studentEmail: schedule.enrollments[0].users[0].email,
+        studentName: schedule.enrollments[0].users[0].full_name,
+        courseName: schedule.enrollments[0].courses[0].title,
+        dayOfWeek: schedule.schedule_slots[0].day_of_week,
+        startTime: schedule.schedule_slots[0].start_time,
+        endTime: schedule.schedule_slots[0].end_time,
+        slotLabel: schedule.schedule_slots[0].slot_label,
+        startDate: schedule.enrollments[0].start_date,
+        endDate: schedule.enrollments[0].end_date,
+        createdAt: schedule.created_at,
+      }));
 
     return NextResponse.json({ data: formattedData });
 
