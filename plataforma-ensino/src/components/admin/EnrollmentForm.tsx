@@ -19,18 +19,37 @@ interface EnrollmentFormProps {
   existingEnrollment?: Enrollment | null
 }
 
+interface ScheduleSlot {
+  id: string
+  day_of_week: number
+  start_time: string
+  end_time: string
+  slot_label: string
+  currentCount?: number
+  available?: boolean
+  availableSpots?: number
+}
+
 interface EnrollmentFormData {
   user_id: string
   course_id: string
   access_until: string
   status: 'active' | 'completed' | 'cancelled' | 'expired'
+  is_in_person: boolean
+  has_two_classes_per_week: boolean
+  schedule_slot_1?: string
+  schedule_slot_2?: string
 }
 
 const defaultFormData: EnrollmentFormData = {
   user_id: '',
   course_id: '',
   access_until: '',
-  status: 'active'
+  status: 'active',
+  is_in_person: false,
+  has_two_classes_per_week: false,
+  schedule_slot_1: '',
+  schedule_slot_2: ''
 }
 
 export function EnrollmentForm({ 
@@ -48,6 +67,8 @@ export function EnrollmentForm({
   const [searchCourse, setSearchCourse] = useState('')
   const [loadingUsers, setLoadingUsers] = useState(false)
   const [loadingCourses, setLoadingCourses] = useState(false)
+  const [scheduleSlots, setScheduleSlots] = useState<ScheduleSlot[]>([])
+  const [loadingSlots, setLoadingSlots] = useState(false)
 
   const supabase = createClient()
 
@@ -57,7 +78,11 @@ export function EnrollmentForm({
         user_id: existingEnrollment.user_id,
         course_id: existingEnrollment.course_id,
         access_until: existingEnrollment.access_until || '',
-        status: existingEnrollment.status
+        status: existingEnrollment.status,
+        is_in_person: false,
+        has_two_classes_per_week: false,
+        schedule_slot_1: '',
+        schedule_slot_2: ''
       })
     } else {
       setFormData(defaultFormData)
@@ -125,11 +150,50 @@ export function EnrollmentForm({
     return () => clearTimeout(timeoutId)
   }, [searchCourse, supabase])
 
-  const handleInputChange = (field: keyof EnrollmentFormData, value: string) => {
-    setFormData(prev => ({
-      ...prev,
-      [field]: value
-    }))
+  // Load schedule slots when in-person is selected
+  useEffect(() => {
+    const loadScheduleSlots = async () => {
+      if (!formData.is_in_person) return
+      
+      setLoadingSlots(true)
+      try {
+        const response = await fetch('/api/schedule-slots?includeAvailability=true')
+        if (!response.ok) throw new Error('Failed to fetch schedule slots')
+        
+        const result = await response.json()
+        setScheduleSlots(result.data || [])
+      } catch (error) {
+        console.error('Error loading schedule slots:', error)
+        setScheduleSlots([])
+      } finally {
+        setLoadingSlots(false)
+      }
+    }
+
+    loadScheduleSlots()
+  }, [formData.is_in_person])
+
+  const handleInputChange = (field: keyof EnrollmentFormData, value: string | boolean) => {
+    setFormData(prev => {
+      const updated = {
+        ...prev,
+        [field]: value
+      }
+      
+      // Reset schedule fields when switching to/from in-person
+      if (field === 'is_in_person' && !value) {
+        updated.has_two_classes_per_week = false
+        updated.schedule_slot_1 = ''
+        updated.schedule_slot_2 = ''
+      }
+      
+      // Reset second schedule when switching to single class
+      if (field === 'has_two_classes_per_week' && !value) {
+        updated.schedule_slot_2 = ''
+      }
+      
+      return updated
+    })
     
     // Clear error when user starts typing
     if (errors[field]) {
@@ -153,6 +217,23 @@ export function EnrollmentForm({
 
     if (formData.access_until && new Date(formData.access_until) <= new Date()) {
       newErrors.access_until = 'Data de acesso deve ser futura'
+    }
+
+    // Validate in-person scheduling
+    if (formData.is_in_person) {
+      if (!formData.schedule_slot_1) {
+        newErrors.schedule_slot_1 = 'Primeiro horário é obrigatório para aulas presenciais'
+      }
+      
+      if (formData.has_two_classes_per_week) {
+        if (!formData.schedule_slot_2) {
+          newErrors.schedule_slot_2 = 'Segundo horário é obrigatório quando selecionado duas aulas por semana'
+        }
+        
+        if (formData.schedule_slot_1 === formData.schedule_slot_2) {
+          newErrors.schedule_slot_2 = 'O segundo horário deve ser diferente do primeiro'
+        }
+      }
     }
 
     setErrors(newErrors)
@@ -342,6 +423,120 @@ export function EnrollmentForm({
                   <option value="cancelled">Cancelado</option>
                   <option value="expired">Expirado</option>
                 </select>
+              </div>
+            )}
+
+            {/* In-Person Class Options */}
+            {mode === 'create' && (
+              <div className="space-y-4">
+                {/* In-Person Toggle */}
+                <div className="flex items-center space-x-3">
+                  <input
+                    type="checkbox"
+                    id="is_in_person"
+                    checked={formData.is_in_person}
+                    onChange={(e) => handleInputChange('is_in_person', e.target.checked)}
+                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-600 rounded bg-gray-800"
+                  />
+                  <label htmlFor="is_in_person" className="text-sm font-medium text-gray-300">
+                    Aula Presencial
+                  </label>
+                </div>
+
+                {formData.is_in_person && (
+                  <>
+                    {/* Two Classes Per Week Toggle */}
+                    <div className="flex items-center space-x-3 ml-6">
+                      <input
+                        type="checkbox"
+                        id="has_two_classes_per_week"
+                        checked={formData.has_two_classes_per_week}
+                        onChange={(e) => handleInputChange('has_two_classes_per_week', e.target.checked)}
+                        className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-600 rounded bg-gray-800"
+                      />
+                      <label htmlFor="has_two_classes_per_week" className="text-sm font-medium text-gray-300">
+                        Duas aulas por semana
+                      </label>
+                    </div>
+
+                    {/* First Schedule Slot */}
+                    <div className="ml-6">
+                      <label className="block text-sm font-medium text-gray-300 mb-2">
+                        {formData.has_two_classes_per_week ? 'Primeiro Horário *' : 'Horário *'}
+                      </label>
+                      {loadingSlots ? (
+                        <div className="text-sm text-gray-400">Carregando horários...</div>
+                      ) : (
+                        <select
+                          value={formData.schedule_slot_1}
+                          onChange={(e) => handleInputChange('schedule_slot_1', e.target.value)}
+                          className="block w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        >
+                          <option value="">Selecione um horário</option>
+                          {scheduleSlots
+                            .filter(slot => slot.available)
+                            .map((slot) => {
+                              const dayNames = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado']
+                              return (
+                                <option key={slot.id} value={slot.id}>
+                                  {dayNames[slot.day_of_week]} - {slot.slot_label} ({slot.availableSpots} vagas)
+                                </option>
+                              )
+                            })}
+                        </select>
+                      )}
+                      {errors.schedule_slot_1 && (
+                        <p className="mt-1 text-sm text-red-400">{errors.schedule_slot_1}</p>
+                      )}
+                    </div>
+
+                    {/* Second Schedule Slot */}
+                    {formData.has_two_classes_per_week && (
+                      <div className="ml-6">
+                        <label className="block text-sm font-medium text-gray-300 mb-2">
+                          Segundo Horário *
+                        </label>
+                        {loadingSlots ? (
+                          <div className="text-sm text-gray-400">Carregando horários...</div>
+                        ) : (
+                          <select
+                            value={formData.schedule_slot_2}
+                            onChange={(e) => handleInputChange('schedule_slot_2', e.target.value)}
+                            className="block w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                          >
+                            <option value="">Selecione um segundo horário</option>
+                            {scheduleSlots
+                              .filter(slot => slot.available && slot.id !== formData.schedule_slot_1)
+                              .map((slot) => {
+                                const dayNames = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado']
+                                return (
+                                  <option key={slot.id} value={slot.id}>
+                                    {dayNames[slot.day_of_week]} - {slot.slot_label} ({slot.availableSpots} vagas)
+                                  </option>
+                                )
+                              })}
+                          </select>
+                        )}
+                        {errors.schedule_slot_2 && (
+                          <p className="mt-1 text-sm text-red-400">{errors.schedule_slot_2}</p>
+                        )}
+                      </div>
+                    )}
+
+                    {/* Schedule Instructions */}
+                    <div className="ml-6 p-3 bg-blue-900/20 rounded-md border border-blue-500/30">
+                      <p className="text-sm text-blue-300">
+                        ℹ️ <strong>Informações sobre agendamento:</strong>
+                      </p>
+                      <ul className="mt-2 text-xs text-blue-400 space-y-1">
+                        <li>• Máximo de 3 alunos por horário</li>
+                        <li>• Para duas aulas por semana, selecione horários diferentes</li>
+                        <li>• Pode ser mesmo horário em dias diferentes ou mesmo dia em horários diferentes</li>
+                        <li>• O agendamento será permanente até que o admin faça alterações</li>
+                      </ul>
+                    </div>
+                  </>
+                )}
               </div>
             )}
 

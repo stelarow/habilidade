@@ -11,7 +11,23 @@ const enrollmentSchema = z.object({
   user_id: z.string().uuid('ID do usuário inválido'),
   course_id: z.string().uuid('ID do curso inválido'),
   access_until: z.string().optional(),
-  status: z.enum(['active', 'completed', 'cancelled', 'expired']).default('active')
+  status: z.enum(['active', 'completed', 'cancelled', 'expired']).default('active'),
+  is_in_person: z.boolean().default(false),
+  has_two_classes_per_week: z.boolean().default(false),
+  schedule_slot_1: z.string().uuid().optional(),
+  schedule_slot_2: z.string().uuid().optional()
+}).refine((data) => {
+  // If in-person, first schedule slot is required
+  if (data.is_in_person && !data.schedule_slot_1) {
+    return false
+  }
+  // If two classes per week, second schedule slot is required and must be different
+  if (data.has_two_classes_per_week && (!data.schedule_slot_2 || data.schedule_slot_1 === data.schedule_slot_2)) {
+    return false
+  }
+  return true
+}, {
+  message: "Dados de agendamento inválidos"
 })
 
 // GET /api/admin/enrollments - List enrollments for admin use
@@ -166,6 +182,26 @@ export async function POST(request: NextRequest) {
       )
     }
     
+    // Get teacher_id from course instructor
+    const { data: courseData } = await supabase
+      .from('courses')
+      .select(`
+        id,
+        instructors!inner (
+          user_id
+        )
+      `)
+      .eq('id', validatedData.course_id)
+      .single()
+    
+    const teacherId = courseData?.instructors[0]?.user_id
+    if (!teacherId) {
+      return NextResponse.json(
+        { error: 'Instrutor não encontrado para este curso' },
+        { status: 400 }
+      )
+    }
+    
     // Create enrollment
     const { data: enrollment, error } = await supabase
       .from('enrollments')
@@ -194,6 +230,54 @@ export async function POST(request: NextRequest) {
         { error: 'Erro ao criar matrícula' },
         { status: 500 }
       )
+    }
+    
+    // Create class schedules if in-person
+    if (validatedData.is_in_person && enrollment) {
+      const schedulePromises = []
+      
+      // First schedule slot
+      if (validatedData.schedule_slot_1) {
+        schedulePromises.push(
+          supabase
+            .from('class_schedules')
+            .insert({
+              enrollment_id: enrollment.id,
+              teacher_id: teacherId,
+              schedule_slot_id: validatedData.schedule_slot_1
+            })
+        )
+      }
+      
+      // Second schedule slot if two classes per week
+      if (validatedData.has_two_classes_per_week && validatedData.schedule_slot_2) {
+        schedulePromises.push(
+          supabase
+            .from('class_schedules')
+            .insert({
+              enrollment_id: enrollment.id,
+              teacher_id: teacherId,
+              schedule_slot_id: validatedData.schedule_slot_2
+            })
+        )
+      }
+      
+      // Execute schedule creation
+      const scheduleResults = await Promise.all(schedulePromises)
+      
+      // Check for schedule errors
+      const scheduleErrors = scheduleResults.filter(result => result.error)
+      if (scheduleErrors.length > 0) {
+        console.error('Error creating class schedules:', scheduleErrors)
+        
+        // Rollback enrollment if schedule creation failed
+        await supabase.from('enrollments').delete().eq('id', enrollment.id)
+        
+        return NextResponse.json(
+          { error: 'Erro ao agendar horários das aulas' },
+          { status: 500 }
+        )
+      }
     }
     
     return NextResponse.json({
