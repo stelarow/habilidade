@@ -145,8 +145,8 @@ export async function POST(request: NextRequest) {
 
     // Obter teacher_id: primeiro da matrícula, senão do curso
     let teacherId = enrollment.teacher_id;
-    if (!teacherId && enrollment.courses.instructors.user_id) {
-      teacherId = enrollment.courses.instructors.user_id;
+    if (!teacherId && enrollment.courses[0].instructors[0].user_id) {
+      teacherId = enrollment.courses[0].instructors[0].user_id;
     }
     if (!teacherId) {
       return NextResponse.json({ error: 'Teacher not found for this enrollment' }, { status: 400 });
