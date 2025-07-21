@@ -39,9 +39,20 @@ export default function AuthLayout({
             created_at: user.created_at
           })
 
-          // NOTE: Middleware handles all authentication redirects now
-          // No client-side redirects needed - just render or don't render
-          console.log(`[AUTH-LAYOUT-${sessionId}] ℹ️ Middleware handles redirects - allowing render`)
+          // Check if this is a restricted auth route (login/register)
+          const restrictedRoutes = ['/auth/login', '/auth/register']
+          const isRestrictedRoute = restrictedRoutes.some(route => 
+            pathname === route || pathname.startsWith(route + '/')
+          )
+
+          if (isRestrictedRoute) {
+            console.log(`[AUTH-LAYOUT-${sessionId}] 🚫 Authenticated user on restricted route - preventing render`)
+            console.log(`[AUTH-LAYOUT-${sessionId}] ℹ️ Middleware will handle redirect`)
+            setShouldRender(false)
+            return
+          } else {
+            console.log(`[AUTH-LAYOUT-${sessionId}] ℹ️ Non-restricted auth route: ${pathname} - allowing render`)
+          }
         } else {
           console.log(`[AUTH-LAYOUT-${sessionId}] 👤 No authenticated user found - allowing access`)
         }

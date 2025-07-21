@@ -72,13 +72,15 @@ function LoginForm() {
           console.log(`[LOGIN-${loginId}] 🎯 Determining redirect URL...`);
           const redirectUrl = await getRedirectUrlForCurrentUser();
           console.log(`[LOGIN-${loginId}] ↗️ Redirecting user to: ${redirectUrl}`);
-          router.push(redirectUrl);
+          
+          // Use window.location.href for more reliable redirect
+          window.location.href = redirectUrl;
         } catch (error) {
           console.error(`[LOGIN-${loginId}] ❌ Error determining redirect URL:`, error);
           console.log(`[LOGIN-${loginId}] 🔄 Falling back to default dashboard`);
-          router.push('/dashboard');
+          window.location.href = '/dashboard';
         }
-      }, 200); // Slightly longer timeout to ensure auth state is updated
+      }, 500); // Longer timeout to ensure auth state is fully updated
     } catch (err: any) {
       console.error(`[LOGIN-${loginId}] ❌ Login process failed:`, {
         error: err?.message,
