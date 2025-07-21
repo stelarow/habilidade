@@ -1,8 +1,9 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
+import { getRedirectUrlForCurrentUser } from '@/lib/auth/redirect-helpers'
 
 export default function AuthLayout({
   children,
@@ -10,6 +11,7 @@ export default function AuthLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname()
+  const router = useRouter()
   const [isChecking, setIsChecking] = useState(true)
   const [shouldRender, setShouldRender] = useState(false)
 
@@ -46,10 +48,19 @@ export default function AuthLayout({
           )
 
           if (isRestrictedRoute) {
-            console.log(`[AUTH-LAYOUT-${sessionId}] 🚫 Authenticated user on restricted route - preventing render`)
-            console.log(`[AUTH-LAYOUT-${sessionId}] ℹ️ Middleware will handle redirect`)
-            setShouldRender(false)
-            return
+            console.log(`[AUTH-LAYOUT-${sessionId}] 🚫 Authenticated user on restricted route - redirecting`)
+            
+            try {
+              const redirectUrl = await getRedirectUrlForCurrentUser()
+              console.log(`[AUTH-LAYOUT-${sessionId}] ↗️ Redirecting to: ${redirectUrl}`)
+              router.replace(redirectUrl)
+              return
+            } catch (error) {
+              console.error(`[AUTH-LAYOUT-${sessionId}] ❌ Error getting redirect URL:`, error)
+              console.log(`[AUTH-LAYOUT-${sessionId}] 🔄 Falling back to dashboard redirect`)
+              router.replace('/dashboard')
+              return
+            }
           } else {
             console.log(`[AUTH-LAYOUT-${sessionId}] ℹ️ Non-restricted auth route: ${pathname} - allowing render`)
           }
