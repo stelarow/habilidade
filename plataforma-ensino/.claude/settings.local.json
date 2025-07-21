@@ -14,7 +14,8 @@
       "mcp__context7__get-library-docs",
       "mcp__supabase__list_tables",
       "mcp__supabase__apply_migration",
-      "Bash(mkdir:*)"
+      "Bash(mkdir:*)",
+      "mcp__netlify__netlify-user-services"
     ],
     "deny": []
   }
