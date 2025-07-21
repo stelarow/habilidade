@@ -1,7 +1,9 @@
 import { createClient } from '@/lib/supabase/server'
 import { requireAdmin } from '@/lib/auth/session'
-import { CalendarView } from '@/components/calendar'
-import { AdminCalendarInterface } from '@/components/admin/AdminCalendarInterface'
+import { EnhancedAdminCalendarInterface } from '@/components/admin/EnhancedAdminCalendarInterface'
+import { BlurFade } from '@/components/ui/blur-fade'
+import { MagicCard } from '@/components/ui/magic-card'
+import { Users, Calendar, Clock } from 'lucide-react'
 
 // Force dynamic rendering for admin pages that use server-side Supabase client
 export const dynamic = 'force-dynamic'
@@ -73,98 +75,105 @@ export default async function AdminCalendarPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="bg-white shadow">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="py-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <h1 className="text-3xl font-bold text-gray-900">
-                  Administração - Calendários
-                </h1>
-                <p className="mt-1 text-sm text-gray-500">
-                  Visualizar e gerenciar calendários de todos os professores
-                </p>
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      {/* Header */}
+      <BlurFade delay={0.1}>
+        <div className="bg-white dark:bg-gray-800 shadow-lg border-b border-gray-200 dark:border-gray-700">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="py-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                    Administração - Calendários
+                  </h1>
+                  <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
+                    Visualizar e gerenciar calendários de todos os professores
+                  </p>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <div className="px-3 py-1 bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-200 rounded-full text-sm font-medium">
+                    Admin Panel
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </BlurFade>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Statistics cards */}
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-3 mb-8">
-          <div className="bg-white overflow-hidden shadow rounded-lg">
-            <div className="p-5">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-                    <span className="text-white text-sm font-medium">P</span>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+        {/* Enhanced Statistics Cards */}
+        <BlurFade delay={0.2}>
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
+            <MagicCard className="group">
+              <div className="bg-gradient-to-br from-blue-500/10 to-cyan-500/10 border border-blue-200 dark:border-blue-800 rounded-lg p-6 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-blue-500/20">
+                <div className="flex items-center">
+                  <div className="flex-shrink-0">
+                    <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
+                      <Users className="h-6 w-6 text-white" />
+                    </div>
                   </div>
-                </div>
-                <div className="ml-5 w-0 flex-1">
-                  <dl>
-                    <dt className="text-sm font-medium text-gray-500 truncate">
+                  <div className="ml-4 flex-1">
+                    <div className="text-sm font-medium text-gray-500 dark:text-gray-400">
                       Total Professores
-                    </dt>
-                    <dd className="text-lg font-medium text-gray-900">
+                    </div>
+                    <div className="text-2xl font-bold text-gray-900 dark:text-gray-100">
                       {totalTeachers}
-                    </dd>
-                  </dl>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white overflow-hidden shadow rounded-lg">
-            <div className="p-5">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
-                    <span className="text-white text-sm font-medium">A</span>
+                    </div>
                   </div>
                 </div>
-                <div className="ml-5 w-0 flex-1">
-                  <dl>
-                    <dt className="text-sm font-medium text-gray-500 truncate">
+              </div>
+            </MagicCard>
+
+            <MagicCard className="group">
+              <div className="bg-gradient-to-br from-green-500/10 to-emerald-500/10 border border-green-200 dark:border-green-800 rounded-lg p-6 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-green-500/20">
+                <div className="flex items-center">
+                  <div className="flex-shrink-0">
+                    <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-xl flex items-center justify-center shadow-lg">
+                      <Calendar className="h-6 w-6 text-white" />
+                    </div>
+                  </div>
+                  <div className="ml-4 flex-1">
+                    <div className="text-sm font-medium text-gray-500 dark:text-gray-400">
                       Aulas Agendadas
-                    </dt>
-                    <dd className="text-lg font-medium text-gray-900">
+                    </div>
+                    <div className="text-2xl font-bold text-gray-900 dark:text-gray-100">
                       {totalClasses}
-                    </dd>
-                  </dl>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white overflow-hidden shadow rounded-lg">
-            <div className="p-5">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <div className="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center">
-                    <span className="text-white text-sm font-medium">S</span>
+                    </div>
                   </div>
                 </div>
-                <div className="ml-5 w-0 flex-1">
-                  <dl>
-                    <dt className="text-sm font-medium text-gray-500 truncate">
+              </div>
+            </MagicCard>
+
+            <MagicCard className="group">
+              <div className="bg-gradient-to-br from-yellow-500/10 to-orange-500/10 border border-yellow-200 dark:border-yellow-800 rounded-lg p-6 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-yellow-500/20">
+                <div className="flex items-center">
+                  <div className="flex-shrink-0">
+                    <div className="w-12 h-12 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-xl flex items-center justify-center shadow-lg">
+                      <Clock className="h-6 w-6 text-white" />
+                    </div>
+                  </div>
+                  <div className="ml-4 flex-1">
+                    <div className="text-sm font-medium text-gray-500 dark:text-gray-400">
                       Slots Totais
-                    </dt>
-                    <dd className="text-lg font-medium text-gray-900">
+                    </div>
+                    <div className="text-2xl font-bold text-gray-900 dark:text-gray-100">
                       36
-                    </dd>
-                  </dl>
+                    </div>
+                    <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                      6 slots × 6 dias
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
+            </MagicCard>
           </div>
-        </div>
+        </BlurFade>
 
-        {/* Calendar interface with teacher selection */}
-        <div className="bg-white rounded-lg shadow">
-          <AdminCalendarInterface teachers={teachers} />
-        </div>
+        {/* Enhanced Calendar Interface */}
+        <BlurFade delay={0.3}>
+          <EnhancedAdminCalendarInterface teachers={teachers} />
+        </BlurFade>
       </div>
     </div>
   )
