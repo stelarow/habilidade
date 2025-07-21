@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server';
 import { verifySession } from '@/lib/auth/session';
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
+import { QueryData } from '@supabase/supabase-js';
 
 // Force dynamic rendering for authentication
 export const dynamic = 'force-dynamic';
@@ -28,8 +29,8 @@ export async function GET(request: NextRequest) {
 
     const supabase = createClient();
 
-    // Query principal - SIMPLES, sem view materializada
-    let queryBuilder = supabase
+    // Query principal com tipos corretos
+    const calendarQuery = supabase
       .from('class_schedules')
       .select(`
         id,
@@ -57,6 +58,12 @@ export async function GET(request: NextRequest) {
         )
       `);
 
+    // Usar QueryData para inferir tipos corretos
+    type CalendarQueryResult = QueryData<typeof calendarQuery>;
+
+    // Aplicar filtros se necessário
+    let queryBuilder = calendarQuery;
+
     // Filtrar por professor se especificado
     if (query.teacherId) {
       queryBuilder = queryBuilder.eq('teacher_id', query.teacherId);
@@ -69,19 +76,22 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Database error' }, { status: 500 });
     }
 
+    // Agora os tipos são corretamente inferidos como CalendarQueryResult
+    const typedData: CalendarQueryResult = data;
+
     // Transformar dados para formato simples
-    const formattedData = data.map(schedule => ({
+    const formattedData = typedData.map(schedule => ({
       id: schedule.id,
       teacherId: schedule.teacher_id,
-      studentEmail: schedule.enrollments?.users?.email,
-      studentName: schedule.enrollments?.users?.full_name,
-      courseName: schedule.enrollments?.courses?.title,
-      dayOfWeek: schedule.schedule_slots?.day_of_week,
-      startTime: schedule.schedule_slots?.start_time,
-      endTime: schedule.schedule_slots?.end_time,
-      slotLabel: schedule.schedule_slots?.slot_label,
-      startDate: schedule.enrollments?.start_date,
-      endDate: schedule.enrollments?.end_date,
+      studentEmail: schedule.enrollments.users.email,
+      studentName: schedule.enrollments.users.full_name,
+      courseName: schedule.enrollments.courses.title,
+      dayOfWeek: schedule.schedule_slots.day_of_week,
+      startTime: schedule.schedule_slots.start_time,
+      endTime: schedule.schedule_slots.end_time,
+      slotLabel: schedule.schedule_slots.slot_label,
+      startDate: schedule.enrollments.start_date,
+      endDate: schedule.enrollments.end_date,
       createdAt: schedule.created_at,
     }));
 
@@ -119,11 +129,15 @@ export async function POST(request: NextRequest) {
     const supabase = createClient();
 
     // Buscar dados da matrícula para obter teacher_id
-    const { data: enrollment, error: enrollmentError } = await supabase
+    const enrollmentQuery = supabase
       .from('enrollments')
       .select('teacher_id, courses!inner(instructor_id, instructors!inner(user_id))')
       .eq('id', enrollmentId)
       .single();
+
+    type EnrollmentQueryResult = QueryData<typeof enrollmentQuery>;
+
+    const { data: enrollment, error: enrollmentError } = await enrollmentQuery;
 
     if (enrollmentError || !enrollment) {
       return NextResponse.json({ error: 'Enrollment not found' }, { status: 404 });
@@ -131,7 +145,7 @@ export async function POST(request: NextRequest) {
 
     // Obter teacher_id: primeiro da matrícula, senão do curso
     let teacherId = enrollment.teacher_id;
-    if (!teacherId && enrollment.courses?.instructors?.user_id) {
+    if (!teacherId && enrollment.courses.instructors.user_id) {
       teacherId = enrollment.courses.instructors.user_id;
     }
     if (!teacherId) {
@@ -167,8 +181,8 @@ export async function POST(request: NextRequest) {
       }, { status: 409 });
     }
 
-    // Criar agendamento
-    const { data, error } = await supabase
+    // Criar agendamento com tipos corretos
+    const insertQuery = supabase
       .from('class_schedules')
       .insert({
         enrollment_id: enrollmentId,
@@ -192,6 +206,10 @@ export async function POST(request: NextRequest) {
         )
       `)
       .single();
+
+    type InsertQueryResult = QueryData<typeof insertQuery>;
+
+    const { data, error } = await insertQuery;
 
     if (error) {
       console.error('Insert error:', error);
