@@ -42,7 +42,9 @@ export function convertBase64CookiesToSSRFormat(cookies: { name: string; value: 
       hasAccessToken: !!parsed.access_token,
       hasRefreshToken: !!parsed.refresh_token,
       expiresAt: new Date(parsed.expires_at * 1000).toISOString(),
-      userRole: parsed.user?.user_metadata?.role
+      userRole: parsed.user?.user_metadata?.role || parsed.user?.raw_user_meta_data?.role,
+      userMetadata: parsed.user?.user_metadata,
+      rawUserMetadata: parsed.user?.raw_user_meta_data
     })
     
     // Create the individual cookies that @supabase/ssr expects

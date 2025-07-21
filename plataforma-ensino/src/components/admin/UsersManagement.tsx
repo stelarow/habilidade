@@ -67,6 +67,7 @@ export function UsersManagement({ users: initialUsers, currentUser }: UsersManag
 
     setLoading(true)
     try {
+      // Update the user role in the database
       const { error } = await supabase
         .from('users')
         .update({ role: newRole })
@@ -74,9 +75,17 @@ export function UsersManagement({ users: initialUsers, currentUser }: UsersManag
 
       if (error) throw error
 
+      // Update the local state
       setUsers(users.map(user => 
         user.id === userId ? { ...user, role: newRole as any } : user
       ))
+
+      // Show success message with instructions for the user
+      if (userId === currentUser?.id) {
+        alert('Role atualizado com sucesso! Faça logout e login novamente para que as mudanças tenham efeito completo.')
+      } else {
+        alert('Role do usuário atualizado com sucesso! O usuário deve fazer logout e login novamente para que as mudanças tenham efeito completo.')
+      }
     } catch (error) {
       console.error('Error updating user role:', error)
       alert('Erro ao atualizar role do usuário')
