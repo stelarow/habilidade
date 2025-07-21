@@ -23,10 +23,30 @@ export function convertBase64CookiesToSSRFormat(cookies: { name: string; value: 
   const converterId = Math.random().toString(36).substr(2, 9)
   console.log(`[COOKIE_CONVERTER-${converterId}] 🔄 Converting cookies to SSR format`)
   
-  const authTokenCookie = cookies.find(c => c.name === 'supabase.auth.token')
+  // Handle both single and split cookie formats
+  let authTokenCookie = cookies.find(c => c.name === 'supabase.auth.token')
+  
+  // If no single cookie, try to reconstruct from split cookies
+  if (!authTokenCookie) {
+    console.log(`[COOKIE_CONVERTER-${converterId}] 🔍 Looking for split cookies...`)
+    const splitCookies = cookies.filter(c => c.name.startsWith('supabase.auth.token.'))
+      .sort((a, b) => {
+        const aIndex = parseInt(a.name.split('.').pop() || '0')
+        const bIndex = parseInt(b.name.split('.').pop() || '0')
+        return aIndex - bIndex
+      })
+    
+    if (splitCookies.length > 0) {
+      console.log(`[COOKIE_CONVERTER-${converterId}] 🔗 Found ${splitCookies.length} split cookies, reconstructing...`)
+      const combinedValue = splitCookies.map(c => c.value).join('')
+      authTokenCookie = { name: 'supabase.auth.token', value: combinedValue }
+      console.log(`[COOKIE_CONVERTER-${converterId}] ✅ Reconstructed combined cookie`)
+    }
+  }
   
   if (!authTokenCookie || !authTokenCookie.value.startsWith('base64-')) {
-    console.log(`[COOKIE_CONVERTER-${converterId}] ℹ️ No base64 auth token found, returning cookies as-is`)
+    console.log(`[COOKIE_CONVERTER-${converterId}] ℹ️ No valid base64 auth token found, returning cookies as-is`)
+    console.log(`[COOKIE_CONVERTER-${converterId}] 📊 Available cookies:`, cookies.map(c => ({ name: c.name, valueLength: c.value.length })))
     return cookies
   }
   
@@ -62,8 +82,10 @@ export function convertBase64CookiesToSSRFormat(cookies: { name: string; value: 
       }
     ]
     
-    // Remove the old base64 cookie and add the new SSR format cookies
-    const otherCookies = cookies.filter(c => c.name !== 'supabase.auth.token')
+    // Remove all auth token cookies (single and split) and add the new SSR format cookies
+    const otherCookies = cookies.filter(c => 
+      c.name !== 'supabase.auth.token' && !c.name.startsWith('supabase.auth.token.')
+    )
     const result = [...otherCookies, ...ssrCookies]
     
     console.log(`[COOKIE_CONVERTER-${converterId}] 🎯 Conversion complete`, {
