@@ -88,6 +88,12 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Database error' }, { status: 500 });
     }
 
+    // Debug logging
+    console.log('📊 Calendar API - Raw query results:', {
+      totalRecords: data?.length || 0,
+      sampleRecord: data?.[0] || null
+    });
+
     // Debug: Log raw data
     console.log('=== Calendar API Debug ===');
     console.log('Raw data count:', data?.length || 0);
