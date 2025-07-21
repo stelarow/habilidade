@@ -72,7 +72,37 @@ export function CategoriesManagement({ categories: initialCategories, currentUse
     setLoading(true)
 
     try {
+      // First, check if user is authenticated
+      const { data: { user }, error: authError } = await supabase.auth.getUser()
+      
+      if (authError || !user) {
+        console.error('Authentication error:', authError)
+        alert('Erro de autenticação. Por favor, faça login novamente.')
+        setLoading(false)
+        return
+      }
+
+      console.log('Updating category with user:', user.id)
+      console.log('Category data:', { ...formData, id: selectedCategory.id })
+
       const slug = formData.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
+      
+      // Check if the new slug/name would conflict with existing categories
+      if (slug !== selectedCategory.slug || formData.name !== selectedCategory.name) {
+        const { data: existingCategories, error: checkError } = await supabase
+          .from('categories')
+          .select('id, name, slug')
+          .or(`name.ilike.${formData.name},slug.eq.${slug}`)
+          .neq('id', selectedCategory.id)
+
+        if (checkError) {
+          console.error('Error checking existing categories:', checkError)
+        } else if (existingCategories && existingCategories.length > 0) {
+          alert('Uma categoria com este nome ou slug já existe.')
+          setLoading(false)
+          return
+        }
+      }
       
       const { data, error } = await supabase
         .from('categories')
@@ -87,16 +117,45 @@ export function CategoriesManagement({ categories: initialCategories, currentUse
         .eq('id', selectedCategory.id)
         .select()
 
-      if (error) throw error
+      if (error) {
+        console.error('Supabase update error:', {
+          message: error.message,
+          details: error.details,
+          hint: error.hint,
+          code: error.code
+        })
+        
+        // Provide more specific error messages
+        if (error.code === '42501') {
+          alert('Erro de permissão: Você não tem permissão para editar categorias.')
+        } else if (error.code === '23505') {
+          alert('Erro: Uma categoria com este nome ou slug já existe.')
+        } else {
+          alert(`Erro ao atualizar categoria: ${error.message}`)
+        }
+        
+        throw error
+      }
+
+      if (!data || data.length === 0) {
+        console.error('No data returned from update')
+        alert('Erro: Nenhum dado retornado após a atualização.')
+        return
+      }
+
+      console.log('Category updated successfully:', data[0])
 
       setCategories(categories.map(cat => 
         cat.id === selectedCategory.id ? data[0] : cat
       ))
       setShowEditModal(false)
       resetForm()
-    } catch (error) {
+      
+      // Show success message
+      alert('Categoria atualizada com sucesso!')
+    } catch (error: any) {
       console.error('Error updating category:', error)
-      alert('Erro ao atualizar categoria')
+      // Error already handled above with specific messages
     } finally {
       setLoading(false)
     }
