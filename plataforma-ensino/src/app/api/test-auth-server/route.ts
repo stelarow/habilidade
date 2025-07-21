@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
+import { createDebugClient, testAuthWithDebugClient } from '@/lib/supabase/server-debug'
 import { NextRequest, NextResponse } from 'next/server'
 import { verifySession } from '@/lib/auth/session'
 
@@ -58,6 +59,16 @@ export async function GET(request: NextRequest) {
     // Test 3: Create Supabase client and test auth
     console.log(`[API_AUTH_TEST-${testId}] 🔐 Testing Supabase server client...`)
     const supabase = createClient()
+    
+    // Test 3.1: Debug client analysis
+    console.log(`[API_AUTH_TEST-${testId}] 🔍 Running debug client analysis...`)
+    const debugResults = await testAuthWithDebugClient()
+    
+    results.tests.debugClient = {
+      status: debugResults.userError ? 'error' : 'success',
+      data: debugResults,
+      error: debugResults.userError instanceof Error ? debugResults.userError.message : undefined
+    }
     
     try {
       const { data: { user }, error: userError } = await supabase.auth.getUser()
