@@ -236,7 +236,7 @@ export default function CoursePage() {
           </div>
           <h3 className="text-lg font-semibold text-white mb-2">Erro ao carregar curso</h3>
           <p className="text-white/60 mb-4">{error}</p>
-          <GradientButton onClick={() => router.push('/courses')}>
+          <GradientButton onClick={() => router.push('/dashboard')}>
             Voltar aos Cursos
           </GradientButton>
         </div>
@@ -256,7 +256,7 @@ export default function CoursePage() {
         {/* Header */}
         <div className="flex items-center gap-4 mb-8">
           <button
-            onClick={() => router.push('/courses')}
+            onClick={() => router.push('/dashboard')}
             className="flex items-center gap-2 px-3 py-2 bg-white/5 hover:bg-white/10 rounded-lg transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
