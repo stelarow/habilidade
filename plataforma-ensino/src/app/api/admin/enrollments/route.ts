@@ -10,6 +10,7 @@ export const dynamic = 'force-dynamic'
 const enrollmentSchema = z.object({
   user_id: z.string().uuid('ID do usuário inválido'),
   course_id: z.string().uuid('ID do curso inválido'),
+  teacher_id: z.string().uuid('ID do professor inválido'),
   access_until: z.string().optional(),
   status: z.enum(['active', 'completed', 'cancelled', 'expired']).default('active'),
   is_in_person: z.boolean().default(false),
@@ -182,22 +183,16 @@ export async function POST(request: NextRequest) {
       )
     }
     
-    // Get teacher_id from course instructor
-    const { data: courseData } = await supabase
-      .from('courses')
-      .select(`
-        id,
-        instructors!inner (
-          user_id
-        )
-      `)
-      .eq('id', validatedData.course_id)
+    // Verify teacher exists
+    const { data: teacherExists } = await supabase
+      .from('users')
+      .select('id, role')
+      .eq('id', validatedData.teacher_id)
       .single()
     
-    const teacherId = courseData?.instructors[0]?.user_id
-    if (!teacherId) {
+    if (!teacherExists || !['admin', 'instructor'].includes(teacherExists.role)) {
       return NextResponse.json(
-        { error: 'Instrutor não encontrado para este curso' },
+        { error: 'Professor não encontrado ou sem permissão para lecionar' },
         { status: 400 }
       )
     }
@@ -243,7 +238,7 @@ export async function POST(request: NextRequest) {
             .from('class_schedules')
             .insert({
               enrollment_id: enrollment.id,
-              teacher_id: teacherId,
+              teacher_id: validatedData.teacher_id,
               schedule_slot_id: validatedData.schedule_slot_1
             })
         )
@@ -256,7 +251,7 @@ export async function POST(request: NextRequest) {
             .from('class_schedules')
             .insert({
               enrollment_id: enrollment.id,
-              teacher_id: teacherId,
+              teacher_id: validatedData.teacher_id,
               schedule_slot_id: validatedData.schedule_slot_2
             })
         )

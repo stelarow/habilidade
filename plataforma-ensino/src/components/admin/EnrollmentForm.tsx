@@ -33,6 +33,7 @@ interface ScheduleSlot {
 interface EnrollmentFormData {
   user_id: string
   course_id: string
+  teacher_id: string
   access_until: string
   status: 'active' | 'completed' | 'cancelled' | 'expired'
   is_in_person: boolean
@@ -44,6 +45,7 @@ interface EnrollmentFormData {
 const defaultFormData: EnrollmentFormData = {
   user_id: '',
   course_id: '',
+  teacher_id: '',
   access_until: '',
   status: 'active',
   is_in_person: false,
@@ -63,10 +65,13 @@ export function EnrollmentForm({
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [users, setUsers] = useState<User[]>([])
   const [courses, setCourses] = useState<Course[]>([])
+  const [teachers, setTeachers] = useState<User[]>([])
   const [searchUser, setSearchUser] = useState('')
   const [searchCourse, setSearchCourse] = useState('')
+  const [searchTeacher, setSearchTeacher] = useState('')
   const [loadingUsers, setLoadingUsers] = useState(false)
   const [loadingCourses, setLoadingCourses] = useState(false)
+  const [loadingTeachers, setLoadingTeachers] = useState(false)
   const [scheduleSlots, setScheduleSlots] = useState<ScheduleSlot[]>([])
   const [loadingSlots, setLoadingSlots] = useState(false)
 
@@ -77,6 +82,7 @@ export function EnrollmentForm({
       setFormData({
         user_id: existingEnrollment.user_id,
         course_id: existingEnrollment.course_id,
+        teacher_id: (existingEnrollment as any).teacher_id || '',
         access_until: existingEnrollment.access_until || '',
         status: existingEnrollment.status,
         is_in_person: false,
@@ -173,6 +179,37 @@ export function EnrollmentForm({
     loadScheduleSlots()
   }, [formData.is_in_person])
 
+  // Load teachers
+  useEffect(() => {
+    const loadTeachers = async () => {
+      setLoadingTeachers(true)
+      try {
+        let query = supabase
+          .from('users')
+          .select('id, full_name, email, avatar_url, role, created_at, updated_at')
+          .in('role', ['instructor', 'admin'])
+          .order('full_name')
+          .limit(20)
+
+        if (searchTeacher) {
+          query = query.or(`full_name.ilike.%${searchTeacher}%,email.ilike.%${searchTeacher}%`)
+        }
+
+        const { data, error } = await query
+        if (error) throw error
+        setTeachers(data || [])
+      } catch (error) {
+        console.error('Error loading teachers:', error)
+        setTeachers([])
+      } finally {
+        setLoadingTeachers(false)
+      }
+    }
+
+    const timeoutId = setTimeout(loadTeachers, 300) // Debounce search
+    return () => clearTimeout(timeoutId)
+  }, [searchTeacher, supabase])
+
   const handleInputChange = (field: keyof EnrollmentFormData, value: string | boolean) => {
     setFormData(prev => {
       const updated = {
@@ -213,6 +250,10 @@ export function EnrollmentForm({
 
     if (!formData.course_id) {
       newErrors.course_id = 'Curso é obrigatório'
+    }
+
+    if (!formData.teacher_id) {
+      newErrors.teacher_id = 'Professor é obrigatório'
     }
 
     if (formData.access_until && new Date(formData.access_until) <= new Date()) {
@@ -384,6 +425,63 @@ export function EnrollmentForm({
               )}
             </div>
 
+            {/* Teacher Selection */}
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-2">
+                Professor/Instrutor *
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" />
+                </div>
+                <input
+                  type="text"
+                  placeholder="Buscar professor por nome ou email..."
+                  value={searchTeacher}
+                  onChange={(e) => setSearchTeacher(e.target.value)}
+                  className="block w-full pl-10 pr-3 py-2 bg-gray-800 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                />
+              </div>
+              
+              {teachers.find(t => t.id === formData.teacher_id) && (
+                <div className="mt-2 p-3 bg-purple-900/20 rounded-md border border-purple-500/30">
+                  <div className="flex items-center space-x-3">
+                    <UserIcon className="h-5 w-5 text-purple-400" />
+                    <div>
+                      <p className="font-medium text-purple-300">{teachers.find(t => t.id === formData.teacher_id)?.full_name}</p>
+                      <p className="text-sm text-purple-400">{teachers.find(t => t.id === formData.teacher_id)?.email}</p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {!teachers.find(t => t.id === formData.teacher_id) && teachers.length > 0 && (
+                <div className="mt-2 max-h-40 overflow-y-auto border border-gray-600 rounded-md bg-gray-800">
+                  {teachers.map((teacher) => (
+                    <button
+                      key={teacher.id}
+                      type="button"
+                      onClick={() => handleInputChange('teacher_id', teacher.id)}
+                      className="w-full text-left px-3 py-2 hover:bg-gray-700 border-b border-gray-600 last:border-b-0 transition-colors"
+                    >
+                      <div className="flex items-center space-x-3">
+                        <UserIcon className="h-4 w-4 text-gray-400" />
+                        <div>
+                          <p className="font-medium text-white">{teacher.full_name}</p>
+                          <p className="text-sm text-gray-300">{teacher.email}</p>
+                          <p className="text-xs text-gray-400 capitalize">{teacher.role}</p>
+                        </div>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              )}
+              
+              {errors.teacher_id && (
+                <p className="mt-1 text-sm text-red-400">{errors.teacher_id}</p>
+              )}
+            </div>
+
             {/* Access Until */}
             {mode === 'create' && (
               <div>
@@ -551,7 +649,7 @@ export function EnrollmentForm({
               </button>
               <button
                 type="submit"
-                disabled={loading || !selectedUser || !selectedCourse}
+                disabled={loading || !selectedUser || !selectedCourse || !formData.teacher_id}
                 className={`px-4 py-2 text-sm font-medium text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                   loading || !selectedUser || !selectedCourse
                     ? 'bg-gray-600 cursor-not-allowed'
