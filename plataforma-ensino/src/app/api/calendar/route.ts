@@ -46,11 +46,11 @@ export async function GET(request: NextRequest) {
           user_id,
           start_date,
           end_date,
-          courses (
+          course:courses (
             title,
             duration_months
           ),
-          users (
+          user:users (
             email,
             full_name
           )
@@ -73,9 +73,9 @@ export async function GET(request: NextRequest) {
     const formattedData = data.map(schedule => ({
       id: schedule.id,
       teacherId: schedule.teacher_id,
-      studentEmail: schedule.enrollments?.users?.email,
-      studentName: schedule.enrollments?.users?.full_name,
-      courseName: schedule.enrollments?.courses?.title,
+      studentEmail: schedule.enrollments?.user?.email,
+      studentName: schedule.enrollments?.user?.full_name,
+      courseName: schedule.enrollments?.course?.title,
       dayOfWeek: schedule.schedule_slots?.day_of_week,
       startTime: schedule.schedule_slots?.start_time,
       endTime: schedule.schedule_slots?.end_time,
@@ -121,7 +121,7 @@ export async function POST(request: NextRequest) {
     // Buscar dados da matrícula para obter teacher_id
     const { data: enrollment, error: enrollmentError } = await supabase
       .from('enrollments')
-      .select('teacher_id, courses(instructor_id, instructors(user_id))')
+      .select('teacher_id, course:courses(instructor_id, instructor:instructors(user_id))')
       .eq('id', enrollmentId)
       .single();
 
@@ -131,8 +131,8 @@ export async function POST(request: NextRequest) {
 
     // Obter teacher_id: primeiro da matrícula, senão do curso
     let teacherId = enrollment.teacher_id;
-    if (!teacherId && enrollment.courses?.instructors?.user_id) {
-      teacherId = enrollment.courses.instructors.user_id;
+    if (!teacherId && enrollment.course?.instructor?.user_id) {
+      teacherId = enrollment.course.instructor.user_id;
     }
     if (!teacherId) {
       return NextResponse.json({ error: 'Teacher not found for this enrollment' }, { status: 400 });
@@ -187,8 +187,8 @@ export async function POST(request: NextRequest) {
           slot_label
         ),
         enrollments (
-          courses (title),
-          users (email, full_name)
+          course:courses (title),
+          user:users (email, full_name)
         )
       `)
       .single();
