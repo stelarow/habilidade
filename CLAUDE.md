@@ -2,6 +2,13 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## MCP Integration Guidelines
+
+### Required MCP Usage
+- **Context7**: Always use `mcp context7` for library documentation lookups
+- **Sequential Thinking**: Always use `mcp sequential-thinking` for planning complex tasks
+- **Supabase MCP**: Use for all database and Supabase-related operations
+
 ## Project Overview
 
 This is a **dual-architecture educational platform** for Escola Habilidade with two distinct applications:
@@ -36,8 +43,9 @@ npm run dev             # Next.js dev server
 npm run build          # Next.js production build  
 npm run start          # Start production server
 npm run lint           # ESLint + TypeScript checking
-npm run test           # Jest tests (configured but not implemented)
-npm run test:e2e       # Playwright E2E tests (configured)
+npm run test           # Jest tests
+npm run test:watch     # Jest in watch mode
+npm run test:e2e       # Playwright E2E tests
 npm run analyze         # Bundle analyzer for optimization
 npm run test:auth       # Test authentication flow
 ```
@@ -76,6 +84,9 @@ npm run test:auth       # Test authentication flow
 - **React Hook Form + Zod** for forms
 - **Framer Motion** for animations
 - **Radix UI + Headless UI** for components
+- **Sentry** for error tracking
+- **PDF.js** for PDF rendering
+- **Mux Player** for video playback
 
 ## Performance Considerations
 
@@ -200,4 +211,17 @@ The project uses Next.js middleware for:
 ## Development Notes
 
 ### NPM Configuration
-- Aumente o timeout dos comandos npm para 10 minutos para evitar interrupções em builds e instalações complexas
+- Increase NPM command timeout to 10 minutes to prevent interruptions in complex builds and installations
+
+### Manual Tasks
+- **Build Process**: Always ask user to run `npm run build` manually instead of executing it yourself
+- **Development Server**: Always ask user to run `npm run dev` manually instead of executing it yourself
+- **Error Analysis**: Use Sentry MCP when analyzing errors
+
+### Git Workflow
+- Always update git main branch after completing development tasks
+- Main website auto-deploys to Netlify on push to main branch
+
+### Environment Requirements
+- **Node.js**: 18+ required for both applications
+- **Local System**: sudo password is '123' if needed

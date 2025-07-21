@@ -15,15 +15,19 @@ const enrollmentSchema = z.object({
   status: z.enum(['active', 'completed', 'cancelled', 'expired']).default('active'),
   is_in_person: z.boolean().default(false),
   has_two_classes_per_week: z.boolean().default(false),
-  schedule_slot_1: z.string().uuid().optional(),
-  schedule_slot_2: z.string().uuid().optional()
+  schedule_slot_1: z.string().optional().refine((val) => !val || z.string().uuid().safeParse(val).success, {
+    message: "ID do slot de agendamento inválido"
+  }),
+  schedule_slot_2: z.string().optional().refine((val) => !val || z.string().uuid().safeParse(val).success, {
+    message: "ID do segundo slot de agendamento inválido"
+  })
 }).refine((data) => {
   // If in-person, first schedule slot is required
-  if (data.is_in_person && !data.schedule_slot_1) {
+  if (data.is_in_person && (!data.schedule_slot_1 || data.schedule_slot_1.trim() === '')) {
     return false
   }
   // If two classes per week, second schedule slot is required and must be different
-  if (data.has_two_classes_per_week && (!data.schedule_slot_2 || data.schedule_slot_1 === data.schedule_slot_2)) {
+  if (data.has_two_classes_per_week && (!data.schedule_slot_2 || data.schedule_slot_2.trim() === '' || data.schedule_slot_1 === data.schedule_slot_2)) {
     return false
   }
   return true
@@ -241,7 +245,23 @@ export async function POST(request: NextRequest) {
       const schedulePromises = []
       
       // First schedule slot
-      if (validatedData.schedule_slot_1) {
+      if (validatedData.schedule_slot_1 && validatedData.schedule_slot_1.trim() !== '') {
+        // Check slot availability first
+        const { count } = await supabase
+          .from('class_schedules')
+          .select('*', { count: 'exact', head: true })
+          .eq('schedule_slot_id', validatedData.schedule_slot_1)
+          .eq('teacher_id', validatedData.teacher_id)
+        
+        if (count && count >= 3) {
+          // Rollback enrollment
+          await supabase.from('enrollments').delete().eq('id', enrollment.id)
+          return NextResponse.json(
+            { error: 'Primeiro horário já está lotado (máximo 3 alunos)' },
+            { status: 400 }
+          )
+        }
+        
         schedulePromises.push(
           supabase
             .from('class_schedules')
@@ -254,7 +274,23 @@ export async function POST(request: NextRequest) {
       }
       
       // Second schedule slot if two classes per week
-      if (validatedData.has_two_classes_per_week && validatedData.schedule_slot_2) {
+      if (validatedData.has_two_classes_per_week && validatedData.schedule_slot_2 && validatedData.schedule_slot_2.trim() !== '') {
+        // Check slot availability first
+        const { count } = await supabase
+          .from('class_schedules')
+          .select('*', { count: 'exact', head: true })
+          .eq('schedule_slot_id', validatedData.schedule_slot_2)
+          .eq('teacher_id', validatedData.teacher_id)
+        
+        if (count && count >= 3) {
+          // Rollback enrollment
+          await supabase.from('enrollments').delete().eq('id', enrollment.id)
+          return NextResponse.json(
+            { error: 'Segundo horário já está lotado (máximo 3 alunos)' },
+            { status: 400 }
+          )
+        }
+        
         schedulePromises.push(
           supabase
             .from('class_schedules')
@@ -267,20 +303,25 @@ export async function POST(request: NextRequest) {
       }
       
       // Execute schedule creation
-      const scheduleResults = await Promise.all(schedulePromises)
-      
-      // Check for schedule errors
-      const scheduleErrors = scheduleResults.filter(result => result.error)
-      if (scheduleErrors.length > 0) {
-        console.error('Error creating class schedules:', scheduleErrors)
+      if (schedulePromises.length > 0) {
+        const scheduleResults = await Promise.all(schedulePromises)
         
-        // Rollback enrollment if schedule creation failed
-        await supabase.from('enrollments').delete().eq('id', enrollment.id)
-        
-        return NextResponse.json(
-          { error: 'Erro ao agendar horários das aulas' },
-          { status: 500 }
-        )
+        // Check for schedule errors
+        const scheduleErrors = scheduleResults.filter(result => result.error)
+        if (scheduleErrors.length > 0) {
+          console.error('Error creating class schedules:', scheduleErrors)
+          
+          // Rollback enrollment if schedule creation failed
+          await supabase.from('enrollments').delete().eq('id', enrollment.id)
+          
+          return NextResponse.json(
+            { 
+              error: 'Erro ao agendar horários das aulas', 
+              details: scheduleErrors.map(err => err.error?.message).join(', ') 
+            },
+            { status: 500 }
+          )
+        }
       }
     }
     
