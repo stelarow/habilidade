@@ -197,10 +197,19 @@ export async function POST(request: NextRequest) {
       )
     }
     
+    // Prepare enrollment data (excluding form-only fields)
+    const enrollmentData = {
+      user_id: validatedData.user_id,
+      course_id: validatedData.course_id,
+      teacher_id: validatedData.teacher_id,
+      access_until: validatedData.access_until,
+      status: validatedData.status
+    }
+    
     // Create enrollment
     const { data: enrollment, error } = await supabase
       .from('enrollments')
-      .insert([validatedData])
+      .insert([enrollmentData])
       .select(`
         *,
         user:users(id, full_name, email, avatar_url),
