@@ -1,16 +1,14 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useRouter, usePathname } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
-import { getRedirectUrlForCurrentUser } from '@/lib/auth/redirect-helpers'
 
 export default function AuthLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const router = useRouter()
   const pathname = usePathname()
   const [isChecking, setIsChecking] = useState(true)
   const [shouldRender, setShouldRender] = useState(false)
@@ -41,30 +39,9 @@ export default function AuthLayout({
             created_at: user.created_at
           })
 
-          // Check if this is a restricted auth route
-          const restrictedRoutes = ['/auth/login', '/auth/register']
-          const isRestrictedRoute = restrictedRoutes.some(route => 
-            pathname === route || pathname.startsWith(route + '/')
-          )
-
-          if (isRestrictedRoute) {
-            console.log(`[AUTH-LAYOUT-${sessionId}] 🚫 Restricted route detected for authenticated user`)
-            console.log(`[AUTH-LAYOUT-${sessionId}] 🎯 Getting redirect URL...`)
-            
-            try {
-              const redirectUrl = await getRedirectUrlForCurrentUser()
-              console.log(`[AUTH-LAYOUT-${sessionId}] ↗️ Redirecting to: ${redirectUrl}`)
-              router.replace(redirectUrl)
-              return
-            } catch (redirectError) {
-              console.error(`[AUTH-LAYOUT-${sessionId}] ❌ Error getting redirect URL:`, redirectError)
-              console.log(`[AUTH-LAYOUT-${sessionId}] 🔄 Falling back to /dashboard`)
-              router.replace('/dashboard')
-              return
-            }
-          } else {
-            console.log(`[AUTH-LAYOUT-${sessionId}] ℹ️ Non-restricted auth route: ${pathname}`)
-          }
+          // NOTE: Middleware handles all authentication redirects now
+          // No client-side redirects needed - just render or don't render
+          console.log(`[AUTH-LAYOUT-${sessionId}] ℹ️ Middleware handles redirects - allowing render`)
         } else {
           console.log(`[AUTH-LAYOUT-${sessionId}] 👤 No authenticated user found - allowing access`)
         }
@@ -82,7 +59,7 @@ export default function AuthLayout({
     }
 
     checkAuthStatus()
-  }, [router, pathname])
+  }, [pathname])
 
   // Show loading while checking authentication
   if (isChecking) {
