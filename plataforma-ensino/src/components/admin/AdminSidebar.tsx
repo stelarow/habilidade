@@ -12,7 +12,8 @@ import {
   TagIcon,
   Bars3Icon,
   XMarkIcon,
-  PlayIcon
+  PlayIcon,
+  CalendarIcon
 } from '@heroicons/react/24/outline'
 
 interface NavItem {
@@ -27,6 +28,7 @@ const navigation: NavItem[] = [
   { name: 'Usuários', href: '/admin/users', icon: UserGroupIcon },
   { name: 'Cursos', href: '/admin/courses', icon: BookOpenIcon },
   { name: 'Aulas', href: '/admin/lessons', icon: PlayIcon },
+  { name: 'Calendário', href: '/admin/calendar', icon: CalendarIcon },
   { name: 'Categorias', href: '/admin/categories', icon: TagIcon },
   { name: 'Matrículas', href: '/admin/enrollments', icon: AcademicCapIcon },
   { name: 'Configurações', href: '/admin/settings', icon: CogIcon },
