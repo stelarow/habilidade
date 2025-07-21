@@ -1,5 +1,6 @@
 import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
+import { convertBase64CookiesToSSRFormat } from './cookie-converter'
 
 export const createClient = () => {
   const clientId = Math.random().toString(36).substr(2, 9)
@@ -27,9 +28,16 @@ export const createClient = () => {
       {
         cookies: {
           getAll() {
-            const cookies = cookieStore.getAll()
-            console.log(`[SERVER_CLIENT-${clientId}] 📋 getAll() called, returning ${cookies.length} cookies`)
-            return cookies
+            const originalCookies = cookieStore.getAll()
+            const convertedCookies = convertBase64CookiesToSSRFormat(originalCookies)
+            
+            console.log(`[SERVER_CLIENT-${clientId}] 📋 getAll() called`, {
+              original: originalCookies.length,
+              converted: convertedCookies.length,
+              hasConversion: originalCookies.length !== convertedCookies.length
+            })
+            
+            return convertedCookies
           },
           setAll(cookiesToSet) {
             console.log(`[SERVER_CLIENT-${clientId}] 📝 setAll() called with ${cookiesToSet.length} cookies`)

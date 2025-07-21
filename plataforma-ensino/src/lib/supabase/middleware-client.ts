@@ -1,5 +1,6 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextRequest, NextResponse } from 'next/server'
+import { convertBase64CookiesToSSRFormat } from './cookie-converter'
 
 /**
  * 🔥 MIDDLEWARE-SPECIFIC SUPABASE CLIENT
@@ -14,7 +15,8 @@ export function createMiddlewareClient(request: NextRequest, response?: NextResp
     {
       cookies: {
         getAll() {
-          return request.cookies.getAll()
+          const originalCookies = request.cookies.getAll()
+          return convertBase64CookiesToSSRFormat(originalCookies)
         },
         setAll(cookiesToSet) {
           // In middleware, we need to create a response to set cookies properly
