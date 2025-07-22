@@ -21,7 +21,7 @@ This is a **dual-architecture educational platform** for Escola Habilidade with 
 ### Main Website (React/Vite)
 ```bash
 # Development
-npm run dev              # Start dev server
+npm run dev              # Start dev server (port 5173)
 npm run build           # Production build
 npm run build:optimize  # Build + optimization + bundle analysis
 npm run preview         # Preview production build
@@ -33,13 +33,13 @@ npm run test:routes     # Test route configuration
 npm run perf:audit      # Lighthouse performance audit
 
 # Deployment
-npm run deploy          # Build + commit + push (auto-deploy)
+npm run deploy          # Build + commit + push (auto-deploy to Netlify)
 ```
 
 ### Learning Platform (Next.js/TypeScript)
 ```bash
 cd plataforma-ensino
-npm run dev             # Next.js dev server
+npm run dev             # Next.js dev server (port 3000)
 npm run build          # Next.js production build  
 npm run start          # Start production server
 npm run lint           # ESLint + TypeScript checking
@@ -153,14 +153,40 @@ New courses follow the schema in `src/data/coursesSchema.js`:
 
 ## Deployment
 
-- **Main Website**: Live at **www.escolahabilidade.com.br** - Auto-deploys to Netlify on push to main
-- **Learning Platform**: Manual deployment (production setup pending)
-- Both use GitHub Actions for CI/CD
+### Main Website
+- **Live at**: **www.escolahabilidade.com.br** 
+- **Platform**: Netlify - Auto-deploys on push to main branch
+- **GitHub Pages Mirror**: https://stelarow.github.io/habilidade/
+- **CI/CD**: GitHub Actions for automated deployment
+
+### Learning Platform 
+- **Recommended Platform**: Vercel (optimal for Next.js)
+- **Subdomain**: `plataforma.escolahabilidade.com` (when deployed)
+- **Alternative**: Netlify (for consistency with main site)
+- **DNS**: Managed via HostGator
+- **Deployment Guide**: See `/deploy.md` for detailed instructions
 
 ## Current Status
 
-- **Main Website**: Production-ready with 8 detailed courses
-- **Learning Platform**: MVP in development, database schema complete, UI components partially migrated
+### Main Website
+- **Status**: Production-ready with 8 detailed courses
+- **Last Update**: Site updated with curso Design Gráfico corrigido - 2025-01-27 16:30
+- **Features**: EmailJS contact form with WhatsApp fallback, responsive design, performance optimized
+
+### Learning Platform  
+- **Status**: MVP in advanced development
+- **Completed**: 
+  - Next.js 14.2.x + TypeScript + App Router structure
+  - Complete database schema with RLS policies
+  - Authentication system with middleware protection
+  - Design system (Habilidade colors + Tailwind)
+  - All UI components migrated (GradientButton, Starfield, etc.)
+  - All 9 background components migrated to TypeScript
+  - Sentry integration for error tracking
+  - Auth pages (login, register, password recovery)
+  - Lesson page redesign with modular components (90% complete)
+- **In Progress**: Video player integration, dashboard enhancement
+- **Testing**: Jest + Playwright configured, test pages available
 
 ## Important Development Notes
 
@@ -224,4 +250,52 @@ The project uses Next.js middleware for:
 
 ### Environment Requirements
 - **Node.js**: 18+ required for both applications
+- **NPM**: Command timeout set to 10 minutes
 - **Local System**: sudo password is '123' if needed
+
+## Contact Form Configuration (Main Website)
+
+### EmailJS Setup
+- **Service**: EmailJS for form submissions
+- **Recipient**: alessandro.ferreira@escolahabilidade.com
+- **Fallback**: WhatsApp (48) 98855-9491
+- **Configuration**: Update keys in `src/components/ContactForm.jsx`:
+  ```javascript
+  const EMAIL_CONFIG = {
+    SERVICE_ID: 'your_service_id',
+    TEMPLATE_ID: 'your_template_id',
+    PUBLIC_KEY: 'your_public_key'
+  };
+  ```
+
+## Learning Platform Architecture Details
+
+### Database (Supabase)
+- **Schema**: Complete in `database/schema.sql`
+- **Tables**: users, courses, lessons, enrollments, progress, categories, certificates
+- **Features**: RLS policies, triggers, views, stored functions
+- **Setup**: Create project → Run schema.sql → Configure .env.local
+
+### Authentication Flow
+- **Middleware**: Route protection in `middleware.ts`
+- **Roles**: student (default), instructor, admin
+- **Clients**: Server client for SSR, browser client for client-side
+- **Protected Routes**: /admin/* requires admin role
+
+### Design System (Shared Identity)
+- **Colors**: Primary (#d400ff), Secondary (#00c4ff), Accent (#a000ff)
+- **Fonts**: Montserrat (Google Fonts)
+- **Components**: GradientButton (neon), Glass cards, Corner cuts
+- **Animations**: 4s gradient flow, hover effects, starfield backgrounds
+- **Responsive**: Mobile-first with reduced animations on lower-end devices
+
+### Test Pages (Learning Platform)
+- `/test-completion-section` - CompletionSection component testing
+- `/test-lesson-redesigned` - Full redesigned lesson interface
+- Features progress simulation, responsive design validation
+
+## Additional Resources
+
+- **Development Plan**: `/plataforma.md` - Complete roadmap and architecture
+- **Deployment Guide**: `/deploy.md` - Vercel/Netlify deployment instructions
+- **Environment Example**: `/plataforma-ensino/.env.example` - Required variables
