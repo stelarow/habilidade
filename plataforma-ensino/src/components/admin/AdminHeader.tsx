@@ -5,6 +5,7 @@ import { Menu, Transition } from '@headlessui/react'
 import { BellIcon, MagnifyingGlassIcon, UserCircleIcon } from '@heroicons/react/24/outline'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
+import { useAdminSession } from './AdminSessionProvider'
 
 // FIXED: AdminHeader causing headers.split error was due to server-side execution
 // Now properly marked as 'use client' and only executes client-side
@@ -20,6 +21,7 @@ interface SearchResult {
 export function AdminHeader() {
   const supabase = createClient()
   const router = useRouter()
+  const session = useAdminSession() // Get session from context instead of separate auth calls
   const [searchTerm, setSearchTerm] = useState('')
   const [searchResults, setSearchResults] = useState<SearchResult[]>([])
   const [isSearching, setIsSearching] = useState(false)
@@ -27,8 +29,14 @@ export function AdminHeader() {
   const searchRef = useRef<HTMLDivElement>(null)
 
   const handleSignOut = async () => {
-    await supabase.auth.signOut()
-    router.push('/auth/login')
+    try {
+      await supabase.auth.signOut()
+      router.push('/auth/login')
+    } catch (error) {
+      console.error('Sign out error:', error)
+      // Force redirect even if signOut fails
+      router.push('/auth/login')
+    }
   }
 
   const performSearch = useCallback(async (query: string) => {
@@ -259,6 +267,15 @@ export function AdminHeader() {
               leaveTo="transform opacity-0 scale-95"
             >
               <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <Menu.Item>
+                  {({ active }) => (
+                    <div className="px-4 py-2 text-xs text-gray-500 border-b border-gray-200">
+                      {session.profile.full_name || 'Usuário'}
+                      <br />
+                      <span className="text-xs text-gray-400">{session.profile.email}</span>
+                    </div>
+                  )}
+                </Menu.Item>
                 <Menu.Item>
                   {({ active }) => (
                     <a
