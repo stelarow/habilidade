@@ -82,19 +82,34 @@ export default function HolidayManager({
   const loadHolidays = useCallback(async () => {
     try {
       setLoading(true);
+      setError(null); // Clear previous errors
+      
       const response = await fetch(`/api/holidays?year=${year}`);
       
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to load holidays');
+        let errorMessage = 'Failed to load holidays';
+        try {
+          const errorData = await response.json();
+          errorMessage = errorData.error?.message || errorData.message || errorMessage;
+        } catch {
+          // If JSON parsing fails, use status text
+          errorMessage = response.statusText || errorMessage;
+        }
+        throw new Error(errorMessage);
       }
       
-      const data = await response.json();
-      setHolidays(data);
-      onHolidayChange?.(data);
+      const responseData = await response.json();
+      // Handle both direct array and wrapped response formats
+      const holidaysData = responseData.data || responseData;
+      setHolidays(Array.isArray(holidaysData) ? holidaysData : []);
+      onHolidayChange?.(Array.isArray(holidaysData) ? holidaysData : []);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unknown error');
+      const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
+      setError(errorMessage);
       console.error('Error loading holidays:', err);
+      // Set empty array on error to prevent UI crashes
+      setHolidays([]);
+      onHolidayChange?.([]);
     } finally {
       setLoading(false);
     }

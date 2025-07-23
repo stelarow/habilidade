@@ -70,6 +70,24 @@ export async function GET(request: NextRequest) {
     const validatedQuery = holidaysQuerySchema.parse(queryParams)
     
     const supabase = createClient()
+    
+    // Test database connectivity first
+    const { error: connectionError } = await supabase
+      .from('holidays')
+      .select('count')
+      .limit(1)
+      
+    if (connectionError) {
+      console.error('Database connection error:', connectionError)
+      return createErrorResponse(
+        'VALIDATION_ERROR',
+        'Database unavailable',
+        503,
+        pathname,
+        { code: connectionError.code, message: connectionError.message }
+      )
+    }
+    
     let query = supabase
       .from('holidays')
       .select('*')
