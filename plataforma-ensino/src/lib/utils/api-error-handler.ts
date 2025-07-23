@@ -16,6 +16,18 @@ import type {
 // Error severity levels
 export type ErrorSeverity = 'low' | 'normal' | 'high' | 'critical'
 
+// Custom API Error class
+export class ApiError extends Error {
+  constructor(
+    public code: SchedulingApiErrorCode,
+    message: string,
+    public details?: any
+  ) {
+    super(message)
+    this.name = 'ApiError'
+  }
+}
+
 // Error mapping configuration
 interface ErrorConfig {
   httpStatus: number
@@ -331,7 +343,7 @@ export function withErrorHandling<T extends any[]>(
       }
       
       // Handle database errors (check for common database error patterns)
-      if (error?.code || error?.message?.includes('database') || error?.message?.includes('relation')) {
+      if ((error as any)?.code || (error as any)?.message?.includes('database') || (error as any)?.message?.includes('relation')) {
         return handleDatabaseError(error, path)
       }
       
@@ -377,4 +389,41 @@ export function createPaginatedResponse<T>(
     },
     timestamp: new Date().toISOString()
   })
+}
+
+/**
+ * Handle API errors in a standardized way
+ * Main entry point for error handling in API routes
+ */
+export function handleApiError(
+  error: any,
+  path: string
+): NextResponse<ApiErrorResponse> {
+  // Handle ApiError instances
+  if (error instanceof ApiError) {
+    return createApiErrorResponse(
+      error.code,
+      error.message,
+      path,
+      error.details
+    )
+  }
+  
+  // Handle Zod validation errors
+  if (error instanceof ZodError) {
+    return handleZodError(error, path)
+  }
+  
+  // Handle authentication errors
+  if (error instanceof Error && error.message.includes('Redirect')) {
+    return handleAuthError(error, path)
+  }
+  
+  // Handle database errors
+  if ((error as any)?.code || (error as any)?.message?.includes('database') || (error as any)?.message?.includes('relation')) {
+    return handleDatabaseError(error, path)
+  }
+  
+  // Default to unexpected error
+  return handleUnexpectedError(error, path)
 }

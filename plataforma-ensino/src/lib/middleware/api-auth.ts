@@ -302,3 +302,22 @@ export function isValidTimeString(timeString: string): boolean {
   const timeRegex = /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/
   return timeRegex.test(timeString)
 }
+
+/**
+ * Simple authentication middleware
+ * Alias for verifyApiAuthentication for backward compatibility
+ */
+export async function authMiddleware(request: NextRequest): Promise<{
+  success: boolean
+  error?: string
+  user?: any
+  profile?: any
+}> {
+  const result = await verifyApiAuthentication(request)
+  return {
+    success: result.isAuthenticated,
+    error: result.error,
+    user: result.user,
+    profile: result.profile
+  }
+}

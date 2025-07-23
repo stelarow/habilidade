@@ -20,60 +20,69 @@ const postSchema = z.object({
 });
 
 export async function GET(request: Request) {
-  const supabase = createClient();
-  const { data: posts, error } = await supabase.from('posts').select('*');
+  try {
+    const supabase = createClient();
+    const { data: posts, error } = await supabase.from('posts').select('*');
 
-  if (error) {
-    return NextResponse.json({ error: error instanceof Error ? error.message : 'Erro ao buscar posts' }, { status: 500 });
+    if (error) {
+      return NextResponse.json({ error: error instanceof Error ? error.message : 'Erro ao buscar posts' }, { status: 500 });
+    }
+
+    return NextResponse.json({ posts: posts || [] });
+  } catch (error) {
+    // Return empty array if table doesn't exist or any other error
+    return NextResponse.json({ posts: [] });
   }
-
-  return NextResponse.json({ posts });
 }
 
 export async function POST(request: Request) {
-  const supabase = createClient();
+  try {
+    const supabase = createClient();
 
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
-
-  const body = await request.json();
-  const parsed = postSchema.safeParse(body);
-
-  if (!parsed.success) {
-    return NextResponse.json({ error: parsed.error.errors }, { status: 400 });
-  }
-
-  const { title, content, slug, status, excerpt, featured_image_url, tags } = parsed.data;
-
-  // Sanitize content
-  const sanitizedContent = purify.sanitize(content);
-
-  const { data, error } = await supabase
-    .from('posts')
-    .insert([
-      {
-        title,
-        content: sanitizedContent,
-        slug,
-        author_id: user.id,
-        status: status || 'draft',
-        excerpt,
-        featured_image_url,
-        tags,
-        updated_at: new Date().toISOString(),
-      },
-    ])
-    .select();
-
-  if (error) {
-    // Handle potential slug conflict
-    if (error.code === '23505') { // unique_violation
-        return NextResponse.json({ error: 'This slug is already in use.' }, { status: 409 });
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
-    return NextResponse.json({ error: error instanceof Error ? error.message : 'Erro ao criar post' }, { status: 500 });
-  }
 
-  return NextResponse.json({ post: data[0] }, { status: 201 });
+    const body = await request.json();
+    const parsed = postSchema.safeParse(body);
+
+    if (!parsed.success) {
+      return NextResponse.json({ error: parsed.error.errors }, { status: 400 });
+    }
+
+    const { title, content, slug, status, excerpt, featured_image_url, tags } = parsed.data;
+
+    // Sanitize content
+    const sanitizedContent = purify.sanitize(content);
+
+    const { data, error } = await supabase
+      .from('posts')
+      .insert([
+        {
+          title,
+          content: sanitizedContent,
+          slug,
+          author_id: user.id,
+          status: status || 'draft',
+          excerpt,
+          featured_image_url,
+          tags,
+          updated_at: new Date().toISOString(),
+        },
+      ])
+      .select();
+
+    if (error) {
+      // Handle potential slug conflict
+      if (error.code === '23505') { // unique_violation
+          return NextResponse.json({ error: 'This slug is already in use.' }, { status: 409 });
+      }
+      return NextResponse.json({ error: error instanceof Error ? error.message : 'Erro ao criar post' }, { status: 500 });
+    }
+
+    return NextResponse.json({ post: data[0] }, { status: 201 });
+  } catch (error) {
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+  }
 }
