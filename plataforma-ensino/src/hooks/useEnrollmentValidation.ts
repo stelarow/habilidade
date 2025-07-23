@@ -24,7 +24,7 @@ import { TimeSlot } from '@/components/enrollment/ConditionalCalendar'
 // Form state types
 export interface EnrollmentFormData {
   courseId: string
-  teacherId: string
+  teacherId: string | null
   selectedSlots: {
     slotId: string
     date: string
@@ -32,6 +32,7 @@ export interface EnrollmentFormData {
     endTime: string
   }[]
   totalHours: number
+  courseType?: string
   notes?: string
 }
 
@@ -317,11 +318,20 @@ export function useEnrollmentValidation(options: UseEnrollmentValidationOptions 
       const errors: ValidationError[] = []
 
       // Check if enrollment data is complete
-      if (!enrollmentData.courseId || !enrollmentData.teacherId) {
+      if (!enrollmentData.courseId) {
         errors.push({
           field: 'general',
           message: 'Dados de matrícula incompletos',
           code: 'INCOMPLETE_DATA'
+        })
+      }
+
+      // Only require teacherId for scheduled courses
+      if (enrollmentData.courseType === 'scheduled' && !enrollmentData.teacherId) {
+        errors.push({
+          field: 'teacherId',
+          message: 'Professor é obrigatório para cursos agendados',
+          code: 'TEACHER_REQUIRED'
         })
       }
 
