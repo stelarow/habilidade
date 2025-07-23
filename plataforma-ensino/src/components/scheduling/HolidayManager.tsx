@@ -20,6 +20,8 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { HolidayForm } from './HolidayForm';
+import { HolidayCalendarGrid } from './HolidayCalendarGrid';
 
 // Types based on story schema
 interface Holiday {
