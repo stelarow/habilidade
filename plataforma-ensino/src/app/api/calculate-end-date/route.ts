@@ -7,7 +7,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server'
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
+import { createServerComponentClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 import { z } from 'zod'
 import { 
@@ -94,7 +94,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     }
 
     // Initialize Supabase client
-    const supabase = createRouteHandlerClient({ cookies })
+    const cookieStore = await cookies()
+    const supabase = createServerComponentClient({ cookies: () => cookieStore })
 
     // Validate teacher exists and get teacher data
     const { data: teacher, error: teacherError } = await supabase

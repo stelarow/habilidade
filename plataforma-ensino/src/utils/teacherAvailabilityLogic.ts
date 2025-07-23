@@ -6,7 +6,7 @@
  * conflict detection, and real-time updates via Supabase
  */
 
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { createBrowserClient } from '@supabase/ssr'
 import { Holiday, TeacherAvailability, AvailableSlot } from '@/types/api'
 import { isBusinessDay, toISODateString, parseISODate } from './dateCalculations'
 
@@ -50,7 +50,10 @@ export async function calculateAvailableSlots(
     throw new Error('Start date must be before or equal to end date')
   }
 
-  const supabase = createClientComponentClient()
+  const supabase = createBrowserClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  )
   
   // Fetch teacher availability patterns
   const { data: availabilityPatterns, error } = await supabase
@@ -156,7 +159,10 @@ export async function checkCapacityConflicts(
     throw new Error('Requested capacity must be greater than 0')
   }
 
-  const supabase = createClientComponentClient()
+  const supabase = createBrowserClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  )
 
   // Get slot capacity information
   const { data: availability, error: availError } = await supabase
@@ -191,7 +197,10 @@ async function getSlotCapacityInfo(
   availabilityPatternId: string,
   date: string
 ): Promise<CapacityInfo> {
-  const supabase = createClientComponentClient()
+  const supabase = createBrowserClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  )
 
   // Get max capacity from availability pattern
   const { data: pattern, error: patternError } = await supabase
@@ -298,7 +307,10 @@ export async function aggregateAvailabilityForCalendar(
   const endDate = new Date(year, month, 0) // Last day of month
 
   // Get holidays for the month
-  const supabase = createClientComponentClient()
+  const supabase = createBrowserClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  )
   const { data: holidays, error: holidayError } = await supabase
     .from('holidays')
     .select('*')
@@ -369,7 +381,10 @@ export async function detectAvailabilityOverlaps(
   slot2: TeacherAvailability
   overlapMinutes: number
 }>> {
-  const supabase = createClientComponentClient()
+  const supabase = createBrowserClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  )
 
   const { data: availabilities, error } = await supabase
     .from('teacher_availability')
@@ -452,7 +467,10 @@ export function subscribeToAvailabilityUpdates(
   teacherId: string,
   onUpdate: (payload: any) => void
 ): () => void {
-  const supabase = createClientComponentClient()
+  const supabase = createBrowserClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  )
 
   const subscription = supabase
     .channel(`teacher-availability-${teacherId}`)
@@ -535,7 +553,10 @@ export async function validateTeacherAvailability(
     }
 
     // Check for reasonable time ranges
-    const supabase = createClientComponentClient()
+    const supabase = createBrowserClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  )
     const { data: availabilities, error } = await supabase
       .from('teacher_availability')
       .select('*')
