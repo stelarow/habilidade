@@ -112,6 +112,128 @@ export function useEnrollmentFlow(options: UseEnrollmentFlowOptions = {}): UseEn
   )
 
   /**
+   * Check availability of selected time slots
+   */
+  const checkSlotAvailability = useCallback(async (slots: TimeSlot[]): Promise<boolean> => {
+    try {
+      for (const slot of slots) {
+        const { data: availability, error } = await supabase
+          .from('teacher_availability')
+          .select('max_students')
+          .eq('id', slot.slotId)
+          .single()
+
+        if (error || !availability) {
+          return false
+        }
+
+        // Check current enrollments for this specific date and slot
+        const { count, error: countError } = await supabase
+          .from('enrollment_slots')
+          .select('*', { count: 'exact', head: true })
+          .eq('teacher_availability_id', slot.slotId)
+          .eq('scheduled_date', slot.date.toISOString().split('T')[0])
+          .eq('status', 'confirmed')
+
+        if (countError) {
+          return false
+        }
+
+        if ((count || 0) >= availability.max_students) {
+          return false
+        }
+      }
+
+      return true
+    } catch (error) {
+      console.error('Error checking slot availability:', error)
+      return false
+    }
+  }, [supabase])
+
+  /**
+   * Validate enrollment data against business rules
+   */
+  const validateEnrollment = useCallback(async (
+    data: Partial<EnrollmentData>
+  ): Promise<EnrollmentValidation> => {
+    const errors: string[] = []
+    const warnings: string[] = []
+    const requirements = {
+      minimumHours: false,
+      scheduleConflicts: false,
+      teacherAvailability: false,
+      paymentRequired: false
+    }
+
+    try {
+      // Check required fields
+      if (!data.student_id) errors.push('Student ID is required')
+      if (!data.course_id) errors.push('Course ID is required')
+      if (!data.teacher_id) errors.push('Teacher ID is required')
+      if (!data.scheduled_slots || data.scheduled_slots.length === 0) {
+        errors.push('At least one scheduled slot is required')
+      }
+
+      if (data.scheduled_slots && data.scheduled_slots.length > 0) {
+        // Check minimum hours requirement
+        const totalHours = data.total_hours || 0
+        if (totalHours < 10) { // Minimum 10 hours for any course
+          errors.push('Minimum 10 hours of classes required')
+        } else {
+          requirements.minimumHours = true
+        }
+
+        // Check for schedule conflicts
+        const dates = data.scheduled_slots.map(slot => slot.date)
+        const uniqueDates = new Set(dates)
+        if (dates.length !== uniqueDates.size) {
+          warnings.push('Multiple classes scheduled on the same day')
+        } else {
+          requirements.scheduleConflicts = true
+        }
+
+        // Check teacher availability
+        for (const slot of data.scheduled_slots) {
+          const { data: availability, error: availError } = await supabase
+            .from('teacher_availability')
+            .select('max_students, current_enrollments')
+            .eq('id', slot.teacher_availability_id)
+            .single()
+
+          if (availError || !availability) {
+            errors.push(`Teacher availability not found for slot ${slot.slot_id}`)
+            continue
+          }
+
+          if (availability.current_enrollments >= availability.max_students) {
+            errors.push(`Time slot ${slot.slot_id} is fully booked`)
+          } else {
+            requirements.teacherAvailability = true
+          }
+        }
+      }
+
+      // Check payment requirements if enabled
+      if (enablePaymentIntegration && data.payment_status !== 'paid') {
+        warnings.push('Payment is required to confirm enrollment')
+      } else {
+        requirements.paymentRequired = true
+      }
+
+    } catch (validationError) {
+      errors.push(`Validation error: ${validationError instanceof Error ? validationError.message : 'Unknown error'}`)
+    }
+
+    return {
+      isValid: errors.length === 0,
+      errors,
+      warnings,
+      requirements
+    }
+  }, [supabase, enablePaymentIntegration])
+
+  /**
    * Create new enrollment with validation and database persistence
    */
   const createEnrollment = useCallback(async (
@@ -410,134 +532,6 @@ export function useEnrollmentFlow(options: UseEnrollmentFlowOptions = {}): UseEn
       setIsLoading(false)
     }
   }, [supabase, enableEmailNotifications, currentEnrollment])
-
-  /**
-   * Validate enrollment data against business rules
-   */
-  const validateEnrollment = useCallback(async (
-    data: Partial<EnrollmentData>
-  ): Promise<EnrollmentValidation> => {
-    const errors: string[] = []
-    const warnings: string[] = []
-    const requirements = {
-      minimumHours: false,
-      scheduleConflicts: false,
-      teacherAvailability: false,
-      paymentRequired: false
-    }
-
-    try {
-      // Check required fields
-      if (!data.student_id) errors.push('Student ID is required')
-      if (!data.course_id) errors.push('Course ID is required')
-      if (!data.teacher_id) errors.push('Teacher ID is required')
-      if (!data.scheduled_slots || data.scheduled_slots.length === 0) {
-        errors.push('At least one scheduled slot is required')
-      }
-
-      if (data.scheduled_slots && data.scheduled_slots.length > 0) {
-        // Check minimum hours requirement
-        const totalHours = data.total_hours || 0
-        if (totalHours < 10) { // Minimum 10 hours for any course
-          errors.push('Minimum 10 hours of classes required')
-        } else {
-          requirements.minimumHours = true
-        }
-
-        // Check for schedule conflicts
-        const dates = data.scheduled_slots.map(slot => slot.date)
-        const uniqueDates = new Set(dates)
-        if (dates.length !== uniqueDates.size) {
-          warnings.push('Multiple classes scheduled on the same day')
-        } else {
-          requirements.scheduleConflicts = true
-        }
-
-        // Check teacher availability
-        for (const slot of data.scheduled_slots) {
-          const { data: availability, error: availError } = await supabase
-            .from('teacher_availability')
-            .select('max_students, current_enrollments')
-            .eq('id', slot.teacher_availability_id)
-            .single()
-
-          if (availError || !availability) {
-            errors.push(`Teacher availability not found for slot ${slot.slot_id}`)
-            continue
-          }
-
-          if (availability.current_enrollments >= availability.max_students) {
-            errors.push(`Time slot ${slot.start_time}-${slot.end_time} on ${slot.date} is full`)
-          }
-        }
-
-        if (errors.length === 0) {
-          requirements.teacherAvailability = true
-        }
-      }
-
-      // Check payment requirements
-      if (enablePaymentIntegration) {
-        if (!data.payment_status || data.payment_status === 'pending') {
-          warnings.push('Payment is required to confirm enrollment')
-        } else if (data.payment_status === 'paid') {
-          requirements.paymentRequired = true
-        }
-      } else {
-        requirements.paymentRequired = true // Not required
-      }
-
-    } catch (validationError) {
-      errors.push(`Validation error: ${validationError instanceof Error ? validationError.message : 'Unknown error'}`)
-    }
-
-    return {
-      isValid: errors.length === 0,
-      errors,
-      warnings,
-      requirements
-    }
-  }, [supabase, enablePaymentIntegration])
-
-  /**
-   * Check availability of selected time slots
-   */
-  const checkSlotAvailability = useCallback(async (slots: TimeSlot[]): Promise<boolean> => {
-    try {
-      for (const slot of slots) {
-        const { data: availability, error } = await supabase
-          .from('teacher_availability')
-          .select('max_students')
-          .eq('id', slot.slotId)
-          .single()
-
-        if (error || !availability) {
-          return false
-        }
-
-        // Check current enrollments for this specific date and slot
-        const { count, error: countError } = await supabase
-          .from('enrollment_slots')
-          .select('*', { count: 'exact', head: true })
-          .eq('teacher_availability_id', slot.slotId)
-          .eq('scheduled_date', slot.date.toISOString().split('T')[0])
-          .eq('status', 'confirmed')
-
-        if (countError) {
-          return false
-        }
-
-        if ((count || 0) >= availability.max_students) {
-          return false
-        }
-      }
-
-      return true
-    } catch (error) {
-      console.error('Error checking slot availability:', error)
-      return false
-    }
-  }, [supabase])
 
   /**
    * Calculate enrollment cost based on slots and course
