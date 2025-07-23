@@ -295,13 +295,8 @@ export function useEnrollmentValidation(options: UseEnrollmentValidationOptions 
     setIsValidating(true)
     
     try {
-      // Use React Hook Form validation first with timeout
-      const formValidationPromise = enrollmentForm.trigger()
-      const timeoutPromise = new Promise<boolean>((_, reject) => 
-        setTimeout(() => reject(new Error('Validation timeout')), 5000)
-      )
-      
-      const isFormValid = await Promise.race([formValidationPromise, timeoutPromise])
+      // Use React Hook Form validation (no Promise.race to avoid SSR issues)
+      const isFormValid = await enrollmentForm.trigger()
       
       if (!isFormValid) {
         const formErrors = Object.entries(enrollmentForm.formState.errors).map(([field, error]) => ({

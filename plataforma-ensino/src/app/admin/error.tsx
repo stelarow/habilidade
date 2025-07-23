@@ -14,16 +14,28 @@ export default function AdminError({
     // Log the error to console for debugging
     console.error('Admin error boundary caught:', error)
     
-    // Report to Sentry
+    // Enhanced error logging for SSR issues
+    console.error('Error details:', {
+      message: error.message,
+      digest: error.digest,
+      stack: error.stack,
+      name: error.name,
+      cause: error.cause
+    })
+    
+    // Report to Sentry with enhanced context
     Sentry.captureException(error, {
       tags: {
         section: 'admin',
-        errorBoundary: true
+        errorBoundary: true,
+        errorType: error.digest ? 'server-component' : 'client-component'
       },
       extra: {
         digest: error.digest,
         message: error.message,
-        stack: error.stack
+        stack: error.stack,
+        timestamp: new Date().toISOString(),
+        userAgent: typeof window !== 'undefined' ? window.navigator.userAgent : 'server'
       }
     })
   }, [error])
