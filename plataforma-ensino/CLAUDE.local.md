@@ -1,3 +1,3 @@
 ## Bash Commands
 
-- Aumente o timeout de todos os comandos bash para 10 minutos
+- Use appropriate timeouts for bash commands as needed

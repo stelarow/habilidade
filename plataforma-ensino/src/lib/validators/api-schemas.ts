@@ -356,8 +356,75 @@ export const AvailableSlotSchema = z.object({
   path: ['availableSpots']
 })
 
+// Teacher Selection and Enrollment Schemas (Story 3.1)
+
+// Teacher Selection Schema
+export const TeacherSelectionSchema = z.object({
+  teacherId: UUIDSchema,
+  timeSlotId: UUIDSchema,
+  startDate: DateStringSchema,
+  startTime: TimeStringSchema
+}).refine(data => {
+  // Validate that start date is not in the past (allow today)
+  const today = new Date().toISOString().substring(0, 10)
+  return data.startDate >= today
+}, {
+  message: 'Start date cannot be in the past',
+  path: ['startDate']
+})
+
+// Enrollment Form Schema
+export const EnrollmentFormSchema = z.object({
+  courseId: UUIDSchema,
+  teacherId: UUIDSchema,
+  selectedSlots: z.array(z.object({
+    slotId: UUIDSchema,
+    date: DateStringSchema,
+    startTime: TimeStringSchema,
+    endTime: TimeStringSchema
+  })).min(1, 'At least one time slot must be selected'),
+  totalHours: z.number()
+    .min(1, 'Total hours must be at least 1')
+    .max(1000, 'Total hours cannot exceed 1000'),
+  notes: z.string().max(500, 'Notes must be 500 characters or less').optional()
+}).refine(data => {
+  // Validate that total hours matches selected slots
+  const calculatedHours = data.selectedSlots.reduce((sum, slot) => {
+    const start = new Date(`1970-01-01T${slot.startTime}:00`)
+    const end = new Date(`1970-01-01T${slot.endTime}:00`)
+    return sum + (end.getTime() - start.getTime()) / (1000 * 60 * 60)
+  }, 0)
+  
+  // Allow 5% tolerance for rounding differences
+  const tolerance = 0.05
+  return Math.abs(calculatedHours - data.totalHours) <= tolerance
+}, {
+  message: 'Total hours must match the sum of selected time slots',
+  path: ['totalHours']
+})
+
+// Time Slot Selection Schema
+export const TimeSlotSelectionSchema = z.object({
+  slotId: UUIDSchema,
+  date: DateStringSchema,
+  startTime: TimeStringSchema,
+  endTime: TimeStringSchema,
+  teacherId: UUIDSchema,
+  maxCapacity: z.number().int().min(1),
+  currentCapacity: z.number().int().min(0)
+}).refine(data => data.startTime < data.endTime, {
+  message: 'Start time must be before end time',
+  path: ['endTime']
+}).refine(data => data.currentCapacity <= data.maxCapacity, {
+  message: 'Current capacity cannot exceed maximum capacity',
+  path: ['currentCapacity']
+})
+
 // Schema type exports
 export type CalculateEndDateRequest = z.infer<typeof CalculateEndDateRequestSchema>
 export type CalculateEndDateResponse = z.infer<typeof CalculateEndDateResponseSchema>
 export type ClassSchedule = z.infer<typeof ClassScheduleSchema>
 export type AvailableSlot = z.infer<typeof AvailableSlotSchema>
+export type TeacherSelection = z.infer<typeof TeacherSelectionSchema>
+export type EnrollmentForm = z.infer<typeof EnrollmentFormSchema>
+export type TimeSlotSelection = z.infer<typeof TimeSlotSelectionSchema>

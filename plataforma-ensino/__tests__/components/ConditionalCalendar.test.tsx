@@ -38,7 +38,52 @@ jest.mock('@supabase/ssr', () => ({
   createBrowserClient: jest.fn(() => mockSupabaseClient)
 }))
 
-// Mock teacher availability logic
+jest.mock('@/utils/teacherAvailabilityLogic', () => ({
+  calculateAvailableSlots: jest.fn().mockResolvedValue([
+    {
+      id: 'slot-1',
+      teacherId: 'teacher-1',
+      date: '2025-07-24',
+      startTime: '09:00',
+      endTime: '11:00',
+      maxStudents: 10,
+      availableSpots: 5,
+      conflictsWithHoliday: false,
+      nextOccurrence: new Date('2025-07-24T09:00:00'),
+      isRecurring: true,
+      dayOfWeekName: 'Thursday'
+    },
+    {
+      id: 'slot-2',
+      teacherId: 'teacher-1',
+      date: '2025-07-25',
+      startTime: '14:00',
+      endTime: '16:00',
+      maxStudents: 10,
+      availableSpots: 0,
+      conflictsWithHoliday: false,
+      nextOccurrence: new Date('2025-07-25T14:00:00'),
+      isRecurring: true,
+      dayOfWeekName: 'Friday'
+    },
+    {
+      id: 'slot-3',
+      teacherId: 'teacher-1',
+      date: '2025-07-26',
+      startTime: '10:00',
+      endTime: '12:00',
+      maxStudents: 10,
+      availableSpots: 3,
+      conflictsWithHoliday: true,
+      nextOccurrence: new Date('2025-07-26T10:00:00'),
+      isRecurring: true,
+      dayOfWeekName: 'Saturday'
+    }
+  ]),
+  subscribeToAvailabilityUpdates: jest.fn(() => jest.fn())
+}))
+
+// Mock availability slots for reference in tests
 const mockAvailabilitySlots = [
   {
     id: 'slot-1',
@@ -80,11 +125,6 @@ const mockAvailabilitySlots = [
     dayOfWeekName: 'Saturday'
   }
 ]
-
-jest.mock('@/utils/teacherAvailabilityLogic', () => ({
-  calculateAvailableSlots: jest.fn().mockResolvedValue(mockAvailabilitySlots),
-  subscribeToAvailabilityUpdates: jest.fn(() => jest.fn())
-}))
 
 // Mock data
 const mockHolidaysData = [
@@ -407,8 +447,7 @@ describe('ConditionalCalendar Component', () => {
       await waitFor(() => {
         expect(screen.getByText('4.0h / 40h')).toBeInTheDocument()
         
-        const progressBar = screen.getByRole('progressbar') || 
-                           document.querySelector('.bg-gradient-to-r')
+        const progressBar = document.querySelector('.bg-gradient-to-r')
         expect(progressBar).toBeInTheDocument()
       })
     })

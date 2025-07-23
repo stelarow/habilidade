@@ -62,7 +62,7 @@ export async function PUT(
   
   try {
     // Verify admin access
-    await requireAdmin()
+    const session = await requireAdmin()
     
     const { id } = params
     
@@ -144,6 +144,28 @@ export async function PUT(
       )
     }
     
+    // Log audit event
+    try {
+      await supabase
+        .from('audit_logs')
+        .insert({
+          action: 'UPDATE',
+          resource_type: 'holiday',
+          resource_id: id,
+          admin_id: session.user?.id,
+          changes: {
+            before: existingHoliday,
+            after: updateData
+          },
+          ip_address: request.headers.get('x-forwarded-for') || 
+                     request.headers.get('x-real-ip') || 
+                     'unknown'
+        })
+    } catch (auditError) {
+      console.error('Failed to log audit event:', auditError)
+      // Don't fail the request if audit logging fails
+    }
+    
     return createSuccessResponse(holiday)
     
   } catch (error) {
@@ -190,7 +212,7 @@ export async function DELETE(
   
   try {
     // Verify admin access
-    await requireAdmin()
+    const session = await requireAdmin()
     
     const { id } = params
     
@@ -238,6 +260,27 @@ export async function DELETE(
         pathname,
         error
       )
+    }
+    
+    // Log audit event
+    try {
+      await supabase
+        .from('audit_logs')
+        .insert({
+          action: 'DELETE',
+          resource_type: 'holiday',
+          resource_id: id,
+          admin_id: session.user?.id,
+          changes: {
+            deleted: existingHoliday
+          },
+          ip_address: request.headers.get('x-forwarded-for') || 
+                     request.headers.get('x-real-ip') || 
+                     'unknown'
+        })
+    } catch (auditError) {
+      console.error('Failed to log audit event:', auditError)
+      // Don't fail the request if audit logging fails
     }
     
     // Return 204 No Content for successful deletion

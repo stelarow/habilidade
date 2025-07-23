@@ -128,6 +128,10 @@ function useCalendarData(
       setLoading(true)
       setError(null)
 
+      // Add request timeout and cancellation support
+      const controller = new AbortController()
+      const timeoutId = setTimeout(() => controller.abort(), 10000) // 10 second timeout
+
       // Fetch holidays for the date range
       const { data: holidaysData, error: holidaysError } = await supabase
         .from('holidays')
@@ -149,10 +153,15 @@ function useCalendarData(
         holidaysData || []
       )
 
+      clearTimeout(timeoutId)
       setCalendarSlots(slots)
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'AVAILABILITY_CALCULATION_ERROR'
-      setError(errorMessage)
+      if (err instanceof Error && err.name === 'AbortError') {
+        setError('Request timeout - please try again')
+      } else {
+        const errorMessage = err instanceof Error ? err.message : 'AVAILABILITY_CALCULATION_ERROR'
+        setError(errorMessage)
+      }
       console.error('Calendar data fetch error:', err)
     } finally {
       setLoading(false)

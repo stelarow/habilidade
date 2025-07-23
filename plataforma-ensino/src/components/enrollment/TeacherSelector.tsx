@@ -131,7 +131,7 @@ function useTeacherData(availabilityFilter?: TeacherSelectorProps['availabilityF
         `)
         .eq('is_active', true)
         .order('rating', { ascending: false })
-        .order('name')
+        .order('name', { ascending: true })
 
       if (teachersError) {
         throw new Error(`Failed to fetch teachers: ${teachersError.message}`)

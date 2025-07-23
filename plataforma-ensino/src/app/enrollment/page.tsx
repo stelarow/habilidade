@@ -13,10 +13,11 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { TeacherSelector, Teacher } from '@/components/enrollment/TeacherSelector'
 import { ConditionalCalendar, TimeSlot, CourseRequirements } from '@/components/enrollment/ConditionalCalendar'
 import { useEnrollmentFlow } from '@/components/enrollment/EnrollmentFlow'
+import { useEnrollmentValidation } from '@/hooks/useEnrollmentValidation'
 import { Card } from '@/components/ui/card'
 import GradientButton from '@/components/ui/GradientButton'
-import ErrorBoundary from '@/components/ui/ErrorBoundary'
-import { ArrowLeft, ArrowRight, CheckCircle, Users, Calendar, Clock } from 'lucide-react'
+import { EnrollmentErrorBoundary } from '@/components/error-boundaries/EnrollmentErrorBoundary'
+import { ArrowLeft, ArrowRight, CheckCircle, Users, Calendar, Clock, AlertTriangle } from 'lucide-react'
 
 interface Course {
   id: string
@@ -27,6 +28,8 @@ interface Course {
   description?: string
   session_duration?: number
   weekly_frequency?: number
+  requires_teacher_selection?: boolean // Optional teacher selection
+  self_paced?: boolean // For self-paced courses
 }
 
 type EnrollmentStep = 'course-selection' | 'teacher-selection' | 'schedule-selection' | 'confirmation' | 'completed'
@@ -55,6 +58,20 @@ function EnrollmentContent() {
 
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+
+  // Form validation hook
+  const {
+    validateTeacherSelection,
+    validateTimeSlots,
+    validateCompleteEnrollment,
+    allErrors,
+    hasValidationErrors,
+    isValidating,
+    clearErrors
+  } = useEnrollmentValidation({
+    enableRealtimeValidation: true,
+    validateOnChange: true
+  })
 
   // Load course data if courseId is provided
   useEffect(() => {
@@ -86,82 +103,135 @@ function EnrollmentContent() {
     weeklyFrequency: enrollmentState.selectedCourse?.weekly_frequency || 2
   }), [enrollmentState.selectedCourse])
 
+  // Dynamic step order based on course requirements
+  const getStepOrder = useCallback((): EnrollmentStep[] => {
+    const baseSteps: EnrollmentStep[] = ['course-selection']
+    
+    // Add teacher selection only if required
+    if (enrollmentState.selectedCourse?.requires_teacher_selection !== false) {
+      baseSteps.push('teacher-selection')
+    }
+    
+    // Add schedule selection only if teacher selection is required and not self-paced
+    if (enrollmentState.selectedCourse?.requires_teacher_selection !== false && 
+        !enrollmentState.selectedCourse?.self_paced) {
+      baseSteps.push('schedule-selection')
+    }
+    
+    baseSteps.push('confirmation', 'completed')
+    return baseSteps
+  }, [enrollmentState.selectedCourse])
+
   // Navigation handlers
   const handleNext = useCallback(() => {
-    const stepOrder: EnrollmentStep[] = [
-      'course-selection',
-      'teacher-selection', 
-      'schedule-selection', 
-      'confirmation',
-      'completed'
-    ]
-    
+    const stepOrder = getStepOrder()
     const currentIndex = stepOrder.indexOf(enrollmentState.currentStep)
+    
     if (currentIndex < stepOrder.length - 1) {
       setEnrollmentState(prev => ({
         ...prev,
         currentStep: stepOrder[currentIndex + 1]
       }))
     }
-  }, [enrollmentState.currentStep])
+  }, [enrollmentState.currentStep, getStepOrder])
 
   const handlePrevious = useCallback(() => {
-    const stepOrder: EnrollmentStep[] = [
-      'course-selection',
-      'teacher-selection', 
-      'schedule-selection', 
-      'confirmation',
-      'completed'
-    ]
-    
+    const stepOrder = getStepOrder()
     const currentIndex = stepOrder.indexOf(enrollmentState.currentStep)
+    
     if (currentIndex > 0) {
       setEnrollmentState(prev => ({
         ...prev,
         currentStep: stepOrder[currentIndex - 1]
       }))
     }
-  }, [enrollmentState.currentStep])
+  }, [enrollmentState.currentStep, getStepOrder])
 
   const handleStepChange = useCallback((step: EnrollmentStep) => {
+    // Clear errors when changing steps
+    clearErrors()
+    
     setEnrollmentState(prev => ({
       ...prev,
       currentStep: step
     }))
-  }, [])
+  }, [clearErrors])
 
-  // Selection handlers
-  const handleTeacherSelect = useCallback((teacher: Teacher) => {
+  // Reset form state when course changes
+  const handleCourseChange = useCallback((course: Course) => {
+    clearErrors()
+    
+    // Determine next step based on course requirements
+    const nextStep = course.requires_teacher_selection !== false ? 'teacher-selection' : 'confirmation'
+    
     setEnrollmentState(prev => ({
       ...prev,
-      selectedTeacher: teacher,
-      selectedSlots: [] // Reset slots when teacher changes
+      selectedCourse: course,
+      selectedTeacher: null, // Reset teacher when course changes
+      selectedSlots: [], // Reset slots when course changes
+      enrollmentData: null, // Reset enrollment data
+      currentStep: nextStep
     }))
-  }, [])
+  }, [clearErrors])
 
-  const handleSlotSelect = useCallback((slot: TimeSlot) => {
+  // Selection handlers
+  const handleTeacherSelect = useCallback(async (teacher: Teacher) => {
+    // Clear previous errors
+    clearErrors()
+    
+    // Validate teacher selection
+    const validation = await validateTeacherSelection(teacher, enrollmentState.selectedCourse?.id)
+    
+    if (validation.isValid) {
+      setEnrollmentState(prev => ({
+        ...prev,
+        selectedTeacher: teacher,
+        selectedSlots: [] // Reset slots when teacher changes
+      }))
+      setError(null)
+    } else {
+      // Show validation errors but still allow selection for UX
+      setEnrollmentState(prev => ({
+        ...prev,
+        selectedTeacher: teacher,
+        selectedSlots: []
+      }))
+      console.warn('Teacher validation errors:', validation.errors)
+    }
+  }, [enrollmentState.selectedCourse, validateTeacherSelection, clearErrors])
+
+  const handleSlotSelect = useCallback(async (slot: TimeSlot) => {
     setEnrollmentState(prev => {
       const isSelected = prev.selectedSlots.some(s => 
         s.slotId === slot.slotId && s.date.getTime() === slot.date.getTime()
       )
 
+      let newSlots: TimeSlot[]
       if (isSelected) {
         // Deselect slot
-        return {
-          ...prev,
-          selectedSlots: prev.selectedSlots.filter(s => 
-            !(s.slotId === slot.slotId && s.date.getTime() === slot.date.getTime())
-          )
-        }
+        newSlots = prev.selectedSlots.filter(s => 
+          !(s.slotId === slot.slotId && s.date.getTime() === slot.date.getTime())
+        )
       } else {
         // Select slot
-        return {
-          ...prev,
-          selectedSlots: [...prev.selectedSlots, slot]
-        }
+        newSlots = [...prev.selectedSlots, slot]
+      }
+
+      // Validate slots asynchronously
+      if (newSlots.length > 0) {
+        validateTimeSlots(newSlots, courseRequirements).then(validation => {
+          if (!validation.isValid) {
+            console.warn('Time slot validation errors:', validation.errors)
+          }
+        })
+      }
+
+      return {
+        ...prev,
+        selectedSlots: newSlots
       }
     })
-  }, [])
+  }, [courseRequirements, validateTimeSlots])
 
   // Validation functions
   const canProceedFromStep = useCallback((step: EnrollmentStep): boolean => {
@@ -169,8 +239,13 @@ function EnrollmentContent() {
       case 'course-selection':
         return !!enrollmentState.selectedCourse
       case 'teacher-selection':
-        return !!enrollmentState.selectedTeacher
+        // Allow proceeding if teacher selection is optional OR teacher is selected
+        return enrollmentState.selectedCourse?.requires_teacher_selection === false || 
+               !!enrollmentState.selectedTeacher
       case 'schedule-selection':
+        // Skip validation for self-paced courses
+        if (enrollmentState.selectedCourse?.self_paced) return true
+        
         const totalHours = enrollmentState.selectedSlots.reduce((sum, slot) => {
           const start = new Date(`1970-01-01T${slot.startTime}:00`)
           const end = new Date(`1970-01-01T${slot.endTime}:00`)
@@ -184,20 +259,65 @@ function EnrollmentContent() {
     }
   }, [enrollmentState, courseRequirements])
 
+  // Validation errors display component
+  const ValidationErrors = () => {
+    if (!hasValidationErrors || allErrors.length === 0) return null
+
+    return (
+      <Card className="mb-6 p-4 border-red-500/50 bg-red-500/10">
+        <div className="flex items-start gap-3">
+          <AlertTriangle size={20} className="text-red-400 flex-shrink-0 mt-0.5" />
+          <div className="flex-1">
+            <h4 className="text-red-300 font-medium mb-2">
+              {allErrors.length === 1 ? 'Erro de validação' : 'Erros de validação'}
+            </h4>
+            <ul className="space-y-1">
+              {allErrors.slice(0, 5).map((error, index) => (
+                <li key={index} className="text-red-200 text-sm">
+                  • {error.message}
+                </li>
+              ))}
+              {allErrors.length > 5 && (
+                <li className="text-red-200/70 text-sm">
+                  • +{allErrors.length - 5} erro{allErrors.length - 5 !== 1 ? 's' : ''} adiciona{allErrors.length - 5 !== 1 ? 'is' : 'l'}
+                </li>
+              )}
+            </ul>
+          </div>
+          <button
+            onClick={clearErrors}
+            className="text-red-300 hover:text-red-100 transition-colors duration-200"
+            title="Limpar erros"
+          >
+            ✕
+          </button>
+        </div>
+      </Card>
+    )
+  }
+
   // Step indicator component
   const StepIndicator = () => {
-    const steps = [
+    const stepOrder = getStepOrder()
+    const allSteps = [
       { key: 'teacher-selection' as EnrollmentStep, label: 'Professor', icon: <Users size={16} /> },
       { key: 'schedule-selection' as EnrollmentStep, label: 'Horários', icon: <Calendar size={16} /> },
       { key: 'confirmation' as EnrollmentStep, label: 'Confirmação', icon: <CheckCircle size={16} /> }
     ]
+    
+    // Filter steps based on course requirements
+    const steps = allSteps.filter(step => stepOrder.includes(step.key))
 
     return (
       <div className="flex items-center justify-center mb-8">
         {steps.map((step, index) => {
+          const currentStepIndex = stepOrder.indexOf(enrollmentState.currentStep)
+          const stepIndex = stepOrder.indexOf(step.key)
+          
           const isActive = step.key === enrollmentState.currentStep
-          const isCompleted = steps.findIndex(s => s.key === enrollmentState.currentStep) > index
-          const isAccessible = canProceedFromStep(steps[index - 1]?.key || 'course-selection')
+          const isCompleted = currentStepIndex > stepIndex
+          const isAccessible = stepIndex <= currentStepIndex + 1 && 
+                              (stepIndex === 0 || canProceedFromStep(stepOrder[stepIndex - 1]))
 
           return (
             <React.Fragment key={step.key}>
@@ -253,7 +373,9 @@ function EnrollmentContent() {
               category: 'Programação',
               duration_hours: 40,
               max_students: 15,
-              description: 'HTML, CSS, JavaScript e React'
+              description: 'HTML, CSS, JavaScript e React',
+              requires_teacher_selection: true,
+              self_paced: false
             },
             {
               id: '2', 
@@ -261,23 +383,51 @@ function EnrollmentContent() {
               category: 'Design',
               duration_hours: 30,
               max_students: 12,
-              description: 'Photoshop, Illustrator e Figma'
+              description: 'Photoshop, Illustrator e Figma',
+              requires_teacher_selection: true,
+              self_paced: false
+            },
+            {
+              id: '3',
+              title: 'Curso Online Autodirigido',
+              category: 'Online',
+              duration_hours: 20,
+              max_students: 100,
+              description: 'Curso online com materiais pré-gravados',
+              requires_teacher_selection: false,
+              self_paced: true
+            },
+            {
+              id: '4',
+              title: 'Workshop Básico',
+              category: 'Workshop',
+              duration_hours: 8,
+              max_students: 20,
+              description: 'Workshop sem necessidade de agendamento',
+              requires_teacher_selection: false,
+              self_paced: false
             }
           ].map(course => (
             <Card
               key={course.id}
               className="p-6 border-white/20 hover:border-[#d400ff]/50 cursor-pointer transition-all duration-200"
-              onClick={() => {
-                setEnrollmentState(prev => ({
-                  ...prev,
-                  selectedCourse: course,
-                  currentStep: 'teacher-selection'
-                }))
-              }}
+              onClick={() => handleCourseChange(course)}
             >
-              <h3 className="text-lg font-semibold text-white mb-2">
-                {course.title}
-              </h3>
+              <div className="flex items-start justify-between mb-2">
+                <h3 className="text-lg font-semibold text-white">
+                  {course.title}
+                </h3>
+                {course.self_paced && (
+                  <span className="text-xs bg-blue-500/20 text-blue-300 px-2 py-1 rounded">
+                    Autodirigido
+                  </span>
+                )}
+                {course.requires_teacher_selection === false && !course.self_paced && (
+                  <span className="text-xs bg-green-500/20 text-green-300 px-2 py-1 rounded">
+                    Sem agendamento
+                  </span>
+                )}
+              </div>
               <p className="text-gray-300 text-sm mb-3">
                 {course.description}
               </p>
@@ -293,51 +443,93 @@ function EnrollmentContent() {
   )
 
   // Teacher selection step
-  const renderTeacherSelection = () => (
-    <div>
-      <div className="mb-6">
-        <h2 className="text-2xl font-bold text-white mb-2">
-          Escolha seu Professor
-        </h2>
-        <p className="text-gray-300">
-          Curso: <span className="text-[#00c4ff]">{enrollmentState.selectedCourse?.title}</span>
-        </p>
-      </div>
+  const renderTeacherSelection = () => {
+    // Skip teacher selection if not required
+    if (enrollmentState.selectedCourse?.requires_teacher_selection === false) {
+      return (
+        <Card className="p-8 border-white/20 backdrop-blur-sm text-center">
+          <h2 className="text-2xl font-bold text-white mb-4">
+            Seleção de Professor Não Necessária
+          </h2>
+          <p className="text-gray-300 mb-4">
+            Este curso não requer seleção de professor específico.
+          </p>
+          <p className="text-sm text-gray-400">
+            Prossiga para a confirmação da matrícula.
+          </p>
+        </Card>
+      )
+    }
 
-      <TeacherSelector
-        onTeacherSelect={handleTeacherSelect}
-        selectedCourse={enrollmentState.selectedCourse || undefined}
-        availabilityFilter={{
-          startDate: new Date(),
-          endDate: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000) // 3 months
-        }}
-      />
-    </div>
-  )
+    return (
+      <div>
+        <div className="mb-6">
+          <h2 className="text-2xl font-bold text-white mb-2">
+            Escolha seu Professor
+          </h2>
+          <p className="text-gray-300">
+            Curso: <span className="text-[#00c4ff]">{enrollmentState.selectedCourse?.title}</span>
+          </p>
+        </div>
+
+        <ValidationErrors />
+
+        <TeacherSelector
+          onTeacherSelect={handleTeacherSelect}
+          selectedCourse={enrollmentState.selectedCourse || undefined}
+          availabilityFilter={{
+            startDate: new Date(),
+            endDate: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000) // 3 months
+          }}
+        />
+      </div>
+    )
+  }
 
   // Schedule selection step
-  const renderScheduleSelection = () => (
-    <div>
-      <div className="mb-6">
-        <h2 className="text-2xl font-bold text-white mb-2">
-          Selecione os Horários
-        </h2>
-        <p className="text-gray-300">
-          Professor: <span className="text-[#00c4ff]">{enrollmentState.selectedTeacher?.name}</span>
-        </p>
-      </div>
+  const renderScheduleSelection = () => {
+    // Skip schedule selection for self-paced courses
+    if (enrollmentState.selectedCourse?.self_paced) {
+      return (
+        <Card className="p-8 border-white/20 backdrop-blur-sm text-center">
+          <h2 className="text-2xl font-bold text-white mb-4">
+            Curso Autodirigido
+          </h2>
+          <p className="text-gray-300 mb-4">
+            Este é um curso autodirigido que você pode fazer no seu próprio ritmo.
+          </p>
+          <p className="text-sm text-gray-400">
+            Não é necessário agendar horários específicos.
+          </p>
+        </Card>
+      )
+    }
 
-      <ConditionalCalendar
-        teacherId={enrollmentState.selectedTeacher?.id}
-        availabilityData={enrollmentState.selectedTeacher?.availability || []}
-        onSlotSelect={handleSlotSelect}
-        selectedSlots={enrollmentState.selectedSlots}
-        courseRequirements={courseRequirements}
-        enableMultiSelect={true}
-        showLegend={true}
-      />
-    </div>
-  )
+    return (
+      <div>
+        <div className="mb-6">
+          <h2 className="text-2xl font-bold text-white mb-2">
+            Selecione os Horários
+          </h2>
+          <p className="text-gray-300">
+            Professor: <span className="text-[#00c4ff]">{enrollmentState.selectedTeacher?.name || 'Não especificado'}</span>
+          </p>
+        </div>
+
+        <ValidationErrors />
+
+        <ConditionalCalendar
+          teacherId={enrollmentState.selectedTeacher?.id}
+          availabilityData={enrollmentState.selectedTeacher?.availability || []}
+          onSlotSelect={handleSlotSelect}
+          selectedSlots={enrollmentState.selectedSlots}
+          courseRequirements={courseRequirements}
+          enableMultiSelect={true}
+          showLegend={true}
+        />
+      </div>
+    )
+  }
 
   // Confirmation step
   const renderConfirmation = () => {
@@ -374,12 +566,23 @@ function EnrollmentContent() {
                 </div>
               </div>
               
-              <div>
-                <span className="text-gray-400 text-sm">Professor:</span>
-                <div className="text-white font-medium">
-                  {enrollmentState.selectedTeacher?.name}
+              {enrollmentState.selectedCourse?.requires_teacher_selection !== false && (
+                <div>
+                  <span className="text-gray-400 text-sm">Professor:</span>
+                  <div className="text-white font-medium">
+                    {enrollmentState.selectedTeacher?.name || 'Não especificado'}
+                  </div>
                 </div>
-              </div>
+              )}
+              
+              {enrollmentState.selectedCourse?.requires_teacher_selection === false && (
+                <div>
+                  <span className="text-gray-400 text-sm">Modalidade:</span>
+                  <div className="text-white font-medium">
+                    {enrollmentState.selectedCourse?.self_paced ? 'Autodirigido' : 'Sem agendamento específico'}
+                  </div>
+                </div>
+              )}
               
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div>
@@ -398,42 +601,70 @@ function EnrollmentContent() {
           <Card className="p-6 border-white/20 backdrop-blur-sm">
             <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
               <Calendar size={18} />
-              Cronograma
+              {enrollmentState.selectedCourse?.self_paced ? 'Informações do Curso' : 'Cronograma'}
             </h3>
             
-            <div className="space-y-2 max-h-64 overflow-y-auto">
-              {enrollmentState.selectedSlots
-                .sort((a, b) => a.date.getTime() - b.date.getTime())
-                .map((slot, index) => (
-                <div key={index} className="flex items-center justify-between py-2 border-b border-white/10 last:border-0">
+            {enrollmentState.selectedCourse?.self_paced ? (
+              <div className="space-y-3">
+                <div className="text-center p-4 bg-blue-500/10 rounded-lg border border-blue-500/20">
+                  <p className="text-blue-300 text-sm mb-2">Curso Autodirigido</p>
+                  <p className="text-gray-300 text-xs">
+                    Você pode acessar o conteúdo a qualquer momento e estudar no seu próprio ritmo.
+                  </p>
+                </div>
+                <div className="grid grid-cols-2 gap-4 text-sm">
                   <div>
-                    <div className="text-white text-sm font-medium">
-                      {slot.date.toLocaleDateString('pt-BR', {
-                        weekday: 'short',
-                        day: 'numeric',
-                        month: 'short'
-                      })}
-                    </div>
-                    <div className="text-gray-400 text-xs">
-                      {slot.date.toLocaleDateString('pt-BR')}
-                    </div>
+                    <span className="text-gray-400">Duração estimada:</span>
+                    <div className="text-white">{courseRequirements.totalHours}h</div>
                   </div>
-                  <div className="text-right">
-                    <div className="text-white text-sm">
-                      {slot.startTime.slice(0, 5)} - {slot.endTime.slice(0, 5)}
-                    </div>
-                    <div className="text-gray-400 text-xs">
-                      {(() => {
-                        const start = new Date(`1970-01-01T${slot.startTime}:00`)
-                        const end = new Date(`1970-01-01T${slot.endTime}:00`)
-                        const hours = (end.getTime() - start.getTime()) / (1000 * 60 * 60)
-                        return `${hours}h`
-                      })()}
-                    </div>
+                  <div>
+                    <span className="text-gray-400">Acesso válido por:</span>
+                    <div className="text-white">6 meses</div>
                   </div>
                 </div>
-              ))}
-            </div>
+              </div>
+            ) : enrollmentState.selectedSlots.length === 0 ? (
+              <div className="text-center p-4 bg-green-500/10 rounded-lg border border-green-500/20">
+                <p className="text-green-300 text-sm mb-2">Sem Agendamento Necessário</p>
+                <p className="text-gray-300 text-xs">
+                  Este curso não requer horários específicos.
+                </p>
+              </div>
+            ) : (
+              <div className="space-y-2 max-h-64 overflow-y-auto">
+                {enrollmentState.selectedSlots
+                  .sort((a, b) => a.date.getTime() - b.date.getTime())
+                  .map((slot, index) => (
+                  <div key={index} className="flex items-center justify-between py-2 border-b border-white/10 last:border-0">
+                    <div>
+                      <div className="text-white text-sm font-medium">
+                        {slot.date.toLocaleDateString('pt-BR', {
+                          weekday: 'short',
+                          day: 'numeric',
+                          month: 'short'
+                        })}
+                      </div>
+                      <div className="text-gray-400 text-xs">
+                        {slot.date.toLocaleDateString('pt-BR')}
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-white text-sm">
+                        {slot.startTime.slice(0, 5)} - {slot.endTime.slice(0, 5)}
+                      </div>
+                      <div className="text-gray-400 text-xs">
+                        {(() => {
+                          const start = new Date(`1970-01-01T${slot.startTime}:00`)
+                          const end = new Date(`1970-01-01T${slot.endTime}:00`)
+                          const hours = (end.getTime() - start.getTime()) / (1000 * 60 * 60)
+                          return `${hours}h`
+                        })()}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </Card>
         </div>
 
@@ -493,7 +724,7 @@ function EnrollmentContent() {
   }
 
   return (
-    <ErrorBoundary>
+    <EnrollmentErrorBoundary>
       <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black">
         <div className="container mx-auto px-6 py-8">
           {/* Header */}
@@ -537,21 +768,54 @@ function EnrollmentContent() {
 
               {enrollmentState.currentStep === 'confirmation' ? (
                 <GradientButton
-                  onClick={() => {
+                  onClick={async () => {
                     setIsLoading(true)
-                    // Simulate enrollment processing
-                    setTimeout(() => {
+                    
+                    // Validate complete enrollment
+                    const enrollmentData = {
+                      courseId: enrollmentState.selectedCourse?.id || '',
+                      teacherId: enrollmentState.selectedTeacher?.id || null,
+                      selectedSlots: enrollmentState.selectedSlots.map(slot => ({
+                        slotId: slot.slotId,
+                        date: slot.date.toISOString().split('T')[0],
+                        startTime: slot.startTime,
+                        endTime: slot.endTime
+                      })),
+                      totalHours: enrollmentState.selectedSlots.length > 0 
+                        ? enrollmentState.selectedSlots.reduce((sum, slot) => {
+                            const start = new Date(`1970-01-01T${slot.startTime}:00`)
+                            const end = new Date(`1970-01-01T${slot.endTime}:00`)
+                            return sum + (end.getTime() - start.getTime()) / (1000 * 60 * 60)
+                          }, 0)
+                        : courseRequirements.totalHours, // Use course total for self-paced/no-schedule courses
+                      courseType: enrollmentState.selectedCourse?.self_paced 
+                        ? 'self_paced' 
+                        : enrollmentState.selectedCourse?.requires_teacher_selection === false 
+                        ? 'no_schedule' 
+                        : 'scheduled',
+                      notes: ''
+                    }
+                    
+                    const validation = await validateCompleteEnrollment(enrollmentData)
+                    
+                    if (validation.isValid) {
+                      // Simulate enrollment processing
+                      setTimeout(() => {
+                        setIsLoading(false)
+                        setEnrollmentState(prev => ({ ...prev, currentStep: 'completed' }))
+                      }, 2000)
+                    } else {
                       setIsLoading(false)
-                      setEnrollmentState(prev => ({ ...prev, currentStep: 'completed' }))
-                    }, 2000)
+                      setError('Por favor, corrija os erros de validação antes de prosseguir.')
+                    }
                   }}
-                  disabled={isLoading}
+                  disabled={isLoading || hasValidationErrors}
                   className="flex items-center gap-2"
                 >
                   {isLoading ? (
                     <>
                       <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                      Processando...
+                      {isValidating ? 'Validando...' : 'Processando...'}
                     </>
                   ) : (
                     <>
@@ -563,20 +827,30 @@ function EnrollmentContent() {
               ) : (
                 <button
                   onClick={handleNext}
-                  disabled={!canProceedFromStep(enrollmentState.currentStep)}
+                  disabled={!canProceedFromStep(enrollmentState.currentStep) || (hasValidationErrors && enrollmentState.currentStep !== 'teacher-selection')}
                   className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#d400ff] to-[#a000ff]
                            hover:from-[#d400ff]/80 hover:to-[#a000ff]/80 text-white rounded-lg 
                            transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                  title={hasValidationErrors ? 'Corrija os erros de validação para continuar' : ''}
                 >
-                  Próximo
-                  <ArrowRight size={18} />
+                  {isValidating ? (
+                    <>
+                      <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      Validando...
+                    </>
+                  ) : (
+                    <>
+                      Próximo
+                      <ArrowRight size={18} />
+                    </>
+                  )}
                 </button>
               )}
             </div>
           )}
         </div>
       </div>
-    </ErrorBoundary>
+    </EnrollmentErrorBoundary>
   )
 }
 

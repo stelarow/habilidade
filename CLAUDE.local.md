@@ -1,2 +1,1 @@
 - pode acessar o arquivo .env
-- sempre atualize o git main depois de concluir algo

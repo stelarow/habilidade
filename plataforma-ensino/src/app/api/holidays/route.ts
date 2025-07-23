@@ -149,7 +149,7 @@ export async function POST(request: NextRequest) {
   
   try {
     // Verify admin access
-    await requireAdmin()
+    const session = await requireAdmin()
     
     const body = await request.json()
     const validatedData = createHolidaySchema.parse(body)
@@ -194,6 +194,27 @@ export async function POST(request: NextRequest) {
         pathname,
         error
       )
+    }
+    
+    // Log audit event
+    try {
+      await supabase
+        .from('audit_logs')
+        .insert({
+          action: 'CREATE',
+          resource_type: 'holiday',
+          resource_id: holiday.id,
+          admin_id: session.user?.id,
+          changes: {
+            created: validatedData
+          },
+          ip_address: request.headers.get('x-forwarded-for') || 
+                     request.headers.get('x-real-ip') || 
+                     'unknown'
+        })
+    } catch (auditError) {
+      console.error('Failed to log audit event:', auditError)
+      // Don't fail the request if audit logging fails
     }
     
     return NextResponse.json({

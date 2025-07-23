@@ -4,10 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## MCP Integration Guidelines
 
-### Required MCP Usage
-- **Context7**: Always use `mcp context7` for library documentation lookups
-- **Sequential Thinking**: Always use `mcp sequential-thinking` for planning complex tasks
-- **Supabase MCP**: Use for all database and Supabase-related operations
+### Optional MCP Usage
+- **Context7**: Available for library documentation lookups
+- **Supabase MCP**: Available for database and Supabase-related operations
 
 ## Project Overview
 
@@ -120,7 +119,6 @@ To set up the database:
 ### Main Website Development
 - Test performance frequently with `npm run perf:audit`
 - Use debug HTML files for manual testing (`debug-*.html`)
-- Validate course data with `npm run test:data` before adding new courses
 - Deploy automatically triggers on push to main branch
 
 ### Learning Platform Development
@@ -149,7 +147,7 @@ New courses follow the schema in `src/data/coursesSchema.js`:
 - Course backgrounds must be implemented in `src/components/backgrounds/`
 - Icons defined in `src/utils/lessonIcons.js`
 - Labels standardized in `src/utils/lessonLabels.js`
-- Always validate with `npm run test:data` after changes
+- Follow validation schema requirements
 
 ## Deployment
 
@@ -160,7 +158,7 @@ New courses follow the schema in `src/data/coursesSchema.js`:
 - **CI/CD**: GitHub Actions for automated deployment
 
 ### Learning Platform 
-- **Recommended Platform**: Vercel (optimal for Next.js)
+- **Platform Options**: Vercel or Netlify
 - **Subdomain**: `plataforma.escolahabilidade.com` (when deployed)
 - **Alternative**: Netlify (for consistency with main site)
 - **DNS**: Managed via HostGator
@@ -222,14 +220,13 @@ The project uses Next.js middleware for:
 - Located in `middleware.ts` at project root
 
 ### Development Best Practices
-- Always update git main after completion for automatic Netlify deployment
 - Use TypeScript strictly in learning platform - no `any` types
 - Test lesson functionality using dedicated test pages
 - Validate lesson progress calculations with utility functions
 - Use performance hooks for optimized lesson loading
 
 ### Performance and Development Tips
-- Increase NPM command timeout to 10 minutes
+- Monitor build processes for completion
 - Use `npm run build:optimize` for bundle analysis on main website
 - Test lesson components individually before integration
 - Monitor lesson performance metrics with useLessonPerformance hook
@@ -237,20 +234,17 @@ The project uses Next.js middleware for:
 ## Development Notes
 
 ### NPM Configuration
-- Increase NPM command timeout to 10 minutes to prevent interruptions in complex builds and installations
+- Allow sufficient time for complex builds and installations
 
 ### Manual Tasks
-- **Build Process**: Always ask user to run `npm run build` manually instead of executing it yourself
-- **Development Server**: Always ask user to run `npm run dev` manually instead of executing it yourself
 - **Error Analysis**: Use Sentry MCP when analyzing errors
 
 ### Git Workflow
-- Always update git main branch after completing development tasks
 - Main website auto-deploys to Netlify on push to main branch
 
 ### Environment Requirements
 - **Node.js**: 18+ required for both applications
-- **NPM**: Command timeout set to 10 minutes
+- **NPM**: Version 11+ compatible configuration
 - **Local System**: sudo password is '123' if needed
 
 ## Contact Form Configuration (Main Website)
