@@ -117,6 +117,58 @@ export interface PaginatedApiResponse<T> {
   timestamp: string
 }
 
+// Business Logic Types for Core Functionality (Story 2.1)
+
+// Course End Date Calculation Types
+export interface CalculateEndDateRequest {
+  startDate: string // ISO date
+  courseHours: number
+  weeklyClasses: number
+  teacherId: string
+  excludeHolidays?: boolean
+}
+
+export interface CalculateEndDateResponse {
+  endDate: string // ISO date
+  totalWeeks: number
+  holidaysExcluded: string[] // ISO dates
+  actualClassDays: number
+  schedule: ClassSchedule[]
+}
+
+export interface ClassSchedule {
+  date: string // ISO date
+  startTime: string // HH:MM
+  endTime: string   // HH:MM
+  duration: number // minutes
+}
+
+export interface CourseSchedule {
+  endDate: Date
+  totalWeeks: number
+  holidaysExcluded: Date[]
+  actualClassDays: number
+  schedule: ScheduledClass[]
+}
+
+export interface ScheduledClass {
+  date: Date
+  startTime: string // HH:MM
+  endTime: string   // HH:MM
+  duration: number // minutes
+}
+
+export interface AvailableSlot {
+  id: string
+  teacherId: string
+  date: string // ISO date
+  startTime: string // HH:MM
+  endTime: string   // HH:MM
+  maxStudents: number
+  availableSpots: number
+  conflictsWithHoliday: boolean
+}
+
 // Common error codes for the scheduling API
 export type SchedulingApiErrorCode =
   | 'TEACHER_NOT_FOUND'

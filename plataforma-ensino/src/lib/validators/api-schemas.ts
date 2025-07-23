@@ -292,3 +292,72 @@ export type PaginatedResponse<T = any> = {
 }
 
 export type PaginationQuery = z.infer<typeof PaginationQuerySchema>
+
+// Business Logic Schemas (Story 2.1)
+
+// Calculate End Date API Schemas
+export const CalculateEndDateRequestSchema = z.object({
+  startDate: DateStringSchema,
+  courseHours: z.number()
+    .int('Course hours must be an integer')
+    .min(1, 'Course hours must be at least 1')
+    .max(1000, 'Course hours cannot exceed 1000'),
+  weeklyClasses: z.number()
+    .int('Weekly classes must be an integer')
+    .min(1, 'Must have at least 1 class per week')
+    .max(7, 'Cannot have more than 7 classes per week'),
+  teacherId: UUIDSchema,
+  excludeHolidays: z.boolean().default(true)
+}).refine(data => {
+  // Validate that start date is not in the past (allow today)
+  const today = new Date().toISOString().substring(0, 10)
+  return data.startDate >= today
+}, {
+  message: 'Start date cannot be in the past',
+  path: ['startDate']
+})
+
+export const ClassScheduleSchema = z.object({
+  date: DateStringSchema,
+  startTime: TimeStringSchema,
+  endTime: TimeStringSchema,
+  duration: z.number()
+    .int('Duration must be an integer')
+    .min(1, 'Duration must be at least 1 minute')
+    .max(480, 'Duration cannot exceed 8 hours (480 minutes)')
+}).refine(data => data.startTime < data.endTime, {
+  message: 'Start time must be before end time',
+  path: ['endTime']
+})
+
+export const CalculateEndDateResponseSchema = z.object({
+  endDate: DateStringSchema,
+  totalWeeks: z.number().int().min(1),
+  holidaysExcluded: z.array(DateStringSchema),
+  actualClassDays: z.number().int().min(1),
+  schedule: z.array(ClassScheduleSchema)
+})
+
+// Available Slot Schema
+export const AvailableSlotSchema = z.object({
+  id: UUIDSchema,
+  teacherId: UUIDSchema,
+  date: DateStringSchema,
+  startTime: TimeStringSchema,
+  endTime: TimeStringSchema,
+  maxStudents: z.number().int().min(1).max(50),
+  availableSpots: z.number().int().min(0),
+  conflictsWithHoliday: z.boolean()
+}).refine(data => data.startTime < data.endTime, {
+  message: 'Start time must be before end time',
+  path: ['endTime']
+}).refine(data => data.availableSpots <= data.maxStudents, {
+  message: 'Available spots cannot exceed maximum students',
+  path: ['availableSpots']
+})
+
+// Schema type exports
+export type CalculateEndDateRequest = z.infer<typeof CalculateEndDateRequestSchema>
+export type CalculateEndDateResponse = z.infer<typeof CalculateEndDateResponseSchema>
+export type ClassSchedule = z.infer<typeof ClassScheduleSchema>
+export type AvailableSlot = z.infer<typeof AvailableSlotSchema>
