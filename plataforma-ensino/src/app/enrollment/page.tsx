@@ -8,14 +8,14 @@
 
 'use client'
 
-import React, { useState, useCallback, useEffect } from 'react'
+import React, { useState, useCallback, useEffect, useMemo } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { TeacherSelector, Teacher } from '@/components/enrollment/TeacherSelector'
 import { ConditionalCalendar, TimeSlot, CourseRequirements } from '@/components/enrollment/ConditionalCalendar'
-import { EnrollmentFlow } from '@/components/enrollment/EnrollmentFlow'
+import { useEnrollmentFlow } from '@/components/enrollment/EnrollmentFlow'
 import { Card } from '@/components/ui/card'
-import { GradientButton } from '@/components/ui/GradientButton'
-import { ErrorBoundary } from '@/components/ui/ErrorBoundary'
+import GradientButton from '@/components/ui/GradientButton'
+import ErrorBoundary from '@/components/ui/ErrorBoundary'
 import { ArrowLeft, ArrowRight, CheckCircle, Users, Calendar, Clock } from 'lucide-react'
 
 interface Course {
@@ -78,12 +78,12 @@ export default function EnrollmentPage() {
     }
   }, [courseId, enrollmentState.selectedCourse])
 
-  // Get course requirements for calendar
-  const courseRequirements: CourseRequirements = {
+  // Get course requirements for calendar - memoized for performance
+  const courseRequirements: CourseRequirements = useMemo(() => ({
     totalHours: enrollmentState.selectedCourse?.duration_hours || 40,
     sessionDuration: enrollmentState.selectedCourse?.session_duration || 120,
     weeklyFrequency: enrollmentState.selectedCourse?.weekly_frequency || 2
-  }
+  }), [enrollmentState.selectedCourse])
 
   // Navigation handlers
   const handleNext = useCallback(() => {

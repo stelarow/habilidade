@@ -21,11 +21,12 @@
 'use client'
 
 import React, { useState, useEffect, useMemo, useCallback, useId } from 'react'
+import Image from 'next/image'
 import { createBrowserClient } from '@supabase/ssr'
 import { Card } from '@/components/ui/card'
-import { GradientButton } from '@/components/ui/GradientButton'
-import { Loading } from '@/components/ui/Loading'
-import { ErrorBoundary } from '@/components/ui/ErrorBoundary'
+import GradientButton from '@/components/ui/GradientButton'
+import Loading from '@/components/ui/Loading'
+import ErrorBoundary from '@/components/ui/ErrorBoundary'
 import { Star, User, Clock, Users, Search, Filter } from 'lucide-react'
 import { aggregateAvailabilityForCalendar, subscribeToAvailabilityUpdates } from '@/utils/teacherAvailabilityLogic'
 
@@ -316,9 +317,11 @@ function TeacherCard({
         {/* Profile Image */}
         <div className="relative">
           {teacher.profileImage ? (
-            <img
+            <Image
               src={teacher.profileImage}
               alt={`${teacher.name} profile`}
+              width={64}
+              height={64}
               className="w-16 h-16 rounded-full object-cover border-2 border-white/20"
             />
           ) : (

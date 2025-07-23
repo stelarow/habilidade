@@ -29,9 +29,9 @@
 import React, { useState, useEffect, useMemo, useCallback, useId } from 'react'
 import { createBrowserClient } from '@supabase/ssr'
 import { Card } from '@/components/ui/card'
-import { GradientButton } from '@/components/ui/GradientButton'
-import { Loading } from '@/components/ui/Loading'
-import { ErrorBoundary } from '@/components/ui/ErrorBoundary'
+import GradientButton from '@/components/ui/GradientButton'
+import Loading from '@/components/ui/Loading'
+import ErrorBoundary from '@/components/ui/ErrorBoundary'
 import { 
   Calendar, 
   Clock, 

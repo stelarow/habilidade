@@ -229,7 +229,7 @@ export function useEnrollmentFlow(options: UseEnrollmentFlowOptions = {}): UseEn
     } finally {
       setIsLoading(false)
     }
-  }, [supabase, enableValidation, enableEmailNotifications, autoConfirmEnrollment])
+  }, [supabase, enableValidation, enableEmailNotifications, autoConfirmEnrollment, checkSlotAvailability, validateEnrollment])
 
   /**
    * Update existing enrollment
