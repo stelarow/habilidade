@@ -8,7 +8,7 @@
 
 'use client'
 
-import React, { useState, useCallback, useEffect, useMemo } from 'react'
+import React, { useState, useCallback, useEffect, useMemo, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { TeacherSelector, Teacher } from '@/components/enrollment/TeacherSelector'
 import { ConditionalCalendar, TimeSlot, CourseRequirements } from '@/components/enrollment/ConditionalCalendar'
@@ -39,7 +39,8 @@ interface EnrollmentState {
   enrollmentData: any
 }
 
-export default function EnrollmentPage() {
+// Component that uses useSearchParams - must be wrapped in Suspense
+function EnrollmentContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const courseId = searchParams.get('courseId')
@@ -576,5 +577,26 @@ export default function EnrollmentPage() {
         </div>
       </div>
     </ErrorBoundary>
+  )
+}
+
+// Loading component for Suspense fallback
+function EnrollmentLoading() {
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black flex items-center justify-center">
+      <div className="text-center">
+        <div className="w-8 h-8 border-2 border-[#d400ff]/30 border-t-[#d400ff] rounded-full animate-spin mx-auto mb-4" />
+        <p className="text-gray-300">Carregando matrícula...</p>
+      </div>
+    </div>
+  )
+}
+
+// Main export component with Suspense wrapper
+export default function EnrollmentPage() {
+  return (
+    <Suspense fallback={<EnrollmentLoading />}>
+      <EnrollmentContent />
+    </Suspense>
   )
 }

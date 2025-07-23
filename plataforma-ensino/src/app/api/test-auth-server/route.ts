@@ -3,6 +3,9 @@ import { createDebugClient, testAuthWithDebugClient } from '@/lib/supabase/serve
 import { NextRequest, NextResponse } from 'next/server'
 import { verifySession } from '@/lib/auth/session'
 
+// Force dynamic rendering for this API route since it accesses cookies
+export const dynamic = 'force-dynamic'
+
 export async function GET(request: NextRequest) {
   const testId = Math.random().toString(36).substr(2, 9)
   console.log(`[API_AUTH_TEST-${testId}] 🧪 Starting server-side auth test`)
