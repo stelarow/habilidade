@@ -101,8 +101,23 @@ export interface Enrollment {
   progress_percentage: number
   created_at: string
   updated_at: string
+  modality?: 'online' | 'in-person' // Added for Story 1.2
   course?: Course
   user?: User
+  schedules?: StudentSchedule[] // Added for Story 1.2
+}
+
+// Enhanced enrollment types for Story 1.2
+export interface StudentSchedule {
+  id: string
+  enrollment_id: string
+  instructor_id: string
+  day_of_week: number // 1-7 for Monday-Sunday
+  start_time: string // HH:MM:SS format
+  end_time: string // HH:MM:SS format
+  created_at: string
+  updated_at: string
+  instructor?: User
 }
 
 export interface Progress {

@@ -18,8 +18,17 @@ const nextConfig = {
   
   // Enable experimental features for better performance
   experimental: {
-    optimizePackageImports: ['@supabase/supabase-js', 'phosphor-react'],
-    serverComponentsExternalPackages: ['pdfjs-dist'],
+    optimizePackageImports: [
+      '@supabase/supabase-js', 
+      'phosphor-react',
+      '@sentry/nextjs',
+      '@tiptap/react',
+      '@tiptap/starter-kit'
+    ],
+    serverComponentsExternalPackages: [
+      'pdfjs-dist',
+      'puppeteer'
+    ],
   },
   
   // Configure webpack for PDF.js compatibility
@@ -83,8 +92,10 @@ const nextConfig = {
   },
 };
 
-// Conditionally apply Sentry config only if properly configured
-const finalConfig = process.env.SENTRY_ORG && process.env.SENTRY_PROJECT 
+// Conditionally apply Sentry config only in production with proper configuration
+const finalConfig = process.env.NODE_ENV === 'production' && 
+                   process.env.SENTRY_ORG && 
+                   process.env.SENTRY_PROJECT 
   ? withSentryConfig(nextConfig, {
       org: process.env.SENTRY_ORG,
       project: process.env.SENTRY_PROJECT,
@@ -94,7 +105,7 @@ const finalConfig = process.env.SENTRY_ORG && process.env.SENTRY_PROJECT
       silent: !process.env.CI,
       
       // Source map configuration
-      widenClientFileUpload: true,
+      widenClientFileUpload: false,
       hideSourceMaps: true, // Hide source maps from browser devtools in production
       disableLogger: true,
       
@@ -104,10 +115,10 @@ const finalConfig = process.env.SENTRY_ORG && process.env.SENTRY_PROJECT
       // Vercel integration
       automaticVercelMonitors: true,
       
-      // Disable Sentry in development to prevent header processing issues
-      disableServerWebpackPlugin: process.env.NODE_ENV === 'development',
-      disableClientWebpackPlugin: process.env.NODE_ENV === 'development',
+      // Enable all Sentry features in production
+      disableServerWebpackPlugin: false,
+      disableClientWebpackPlugin: false,
     })
-  : nextConfig;
+  : nextConfig; // Skip Sentry completely in development
 
 export default withBundleAnalyzer(finalConfig);

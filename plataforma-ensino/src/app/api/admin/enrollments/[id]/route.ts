@@ -6,11 +6,27 @@ import { z } from 'zod'
 // Force dynamic rendering for admin routes that require authentication
 export const dynamic = 'force-dynamic'
 
-// Validation schema for enrollment update
+// Enhanced validation schema for enrollment update (Story 1.2)
 const enrollmentUpdateSchema = z.object({
   status: z.enum(['active', 'completed', 'cancelled', 'expired']).optional(),
   access_until: z.string().optional(),
-  completed_at: z.string().optional()
+  completed_at: z.string().optional(),
+  modality: z.enum(['online', 'in-person']).optional(),
+  schedules: z.array(z.object({
+    instructor_id: z.string().uuid('ID do instrutor inválido'),
+    day_of_week: z.number().int().min(1).max(7, 'Dia da semana deve ser entre 1-7'),
+    start_time: z.string().regex(/^\d{2}:\d{2}:\d{2}$/, 'Horário deve estar no formato HH:MM:SS'),
+    end_time: z.string().regex(/^\d{2}:\d{2}:\d{2}$/, 'Horário deve estar no formato HH:MM:SS')
+  })).optional()
+}).refine((data) => {
+  // If modality changes to in-person, schedules are required
+  if (data.modality === 'in-person' && (!data.schedules || data.schedules.length === 0)) {
+    return false
+  }
+  return true
+}, {
+  message: 'Para modalidade presencial, é obrigatório fornecer horários',
+  path: ['schedules']
 })
 
 // GET /api/admin/enrollments/[id] - Get enrollment details
@@ -83,10 +99,26 @@ export async function GET(
       console.error('Error fetching progress:', progressError)
     }
     
+    // Get schedules for this enrollment if it's in-person
+    let schedules: any[] = []
+    if (enrollment && enrollment.modality === 'in-person') {
+      const { data: enrollmentSchedules } = await supabase
+        .from('student_schedules')
+        .select(`
+          *,
+          instructor:users!instructor_id(id, full_name, email)
+        `)
+        .eq('enrollment_id', enrollmentId)
+        .order('day_of_week')
+      
+      schedules = enrollmentSchedules || []
+    }
+    
     return NextResponse.json({
       data: {
         ...enrollment,
-        progress: progress || []
+        progress: progress || [],
+        schedules: schedules
       }
     })
     
@@ -141,6 +173,9 @@ export async function PUT(
     // Prepare update data
     const updateData: any = { ...validatedData }
     
+    // Remove schedules from updateData as it will be handled separately
+    delete updateData.schedules
+    
     // Auto-set completed_at when status becomes completed
     if (validatedData.status === 'completed' && existingEnrollment.status !== 'completed') {
       updateData.completed_at = new Date().toISOString()
@@ -182,8 +217,62 @@ export async function PUT(
       )
     }
     
+    // Handle schedule updates if provided
+    if (validatedData.schedules !== undefined) {
+      // First, delete existing schedules
+      const { error: deleteError } = await supabase
+        .from('student_schedules')
+        .delete()
+        .eq('enrollment_id', enrollmentId)
+      
+      if (deleteError) {
+        console.error('Error deleting existing schedules:', deleteError)
+      }
+      
+      // Then, create new schedules if any
+      if (validatedData.schedules && validatedData.schedules.length > 0) {
+        const schedulesToCreate = validatedData.schedules.map((schedule: any) => ({
+          enrollment_id: enrollmentId,
+          instructor_id: schedule.instructor_id,
+          day_of_week: schedule.day_of_week,
+          start_time: schedule.start_time,
+          end_time: schedule.end_time
+        }))
+        
+        const { error: scheduleError } = await supabase
+          .from('student_schedules')
+          .insert(schedulesToCreate)
+        
+        if (scheduleError) {
+          console.error('Error creating updated schedules:', scheduleError)
+          return NextResponse.json(
+            { error: 'Erro ao atualizar horários da matrícula' },
+            { status: 500 }
+          )
+        }
+      }
+    }
+    
+    // Fetch updated schedules for response
+    let schedules: any[] = []
+    if (enrollment && (enrollment.modality === 'in-person' || validatedData.modality === 'in-person')) {
+      const { data: updatedSchedules } = await supabase
+        .from('student_schedules')
+        .select(`
+          *,
+          instructor:users!instructor_id(id, full_name, email)
+        `)
+        .eq('enrollment_id', enrollmentId)
+        .order('day_of_week')
+      
+      schedules = updatedSchedules || []
+    }
+    
     return NextResponse.json({
-      data: enrollment,
+      data: {
+        ...enrollment,
+        schedules: schedules
+      },
       message: 'Matrícula atualizada com sucesso'
     })
     

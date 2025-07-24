@@ -12,7 +12,12 @@
     "test:watch": "jest --watch",
     "test:e2e": "playwright test",
     "test:auth": "node tests/auth-redirect.test.js",
-    "analyze": "ANALYZE=true npm run build"
+    "analyze": "ANALYZE=true npm run build",
+    "clean": "rm -rf .next node_modules/.cache tsconfig.tsbuildinfo",
+    "clean:build": "rm -rf .next",
+    "build:clean": "npm run clean:build && npm run build",
+    "build:fast": "SKIP_ENV_VALIDATION=1 npm run build",
+    "dev:fast": "npm run clean && npm run dev"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.0",

@@ -1,7 +1,9 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { User, Course, Enrollment } from '@/types'
+import { User, Course as DBCourse, Enrollment } from '@/types'
+import { EnhancedEnrollmentFormData, EnrollmentValidationErrors } from '@/types/enrollment'
+import { Course as TeacherSelectorCourse } from '@/components/enrollment/TeacherSelector'
 import { createClient } from '@/lib/supabase/client'
 import { 
   XMarkIcon,
@@ -10,6 +12,13 @@ import {
   AcademicCapIcon,
   CalendarIcon
 } from '@heroicons/react/24/outline'
+import SchedulingSection from '@/components/scheduling/SchedulingSection'
+import { 
+  validateEnrollmentForm, 
+  transformFormDataToApiPayload,
+  validationMessages 
+} from '@/utils/enrollmentValidation'
+import { useToast } from '@/hooks/useToast'
 
 interface EnrollmentFormProps {
   onSubmit: (enrollmentData: any) => Promise<void>
@@ -19,30 +28,8 @@ interface EnrollmentFormProps {
   existingEnrollment?: Enrollment | null
 }
 
-interface ScheduleSlot {
-  id: string
-  day_of_week: number
-  start_time: string
-  end_time: string
-  slot_label: string
-  currentCount?: number
-  available?: boolean
-  availableSpots?: number
-}
 
-interface EnrollmentFormData {
-  user_id: string
-  course_id: string
-  teacher_id: string
-  access_until: string
-  status: 'active' | 'completed' | 'cancelled' | 'expired'
-  is_in_person: boolean
-  has_two_classes_per_week: boolean
-  schedule_slot_1?: string
-  schedule_slot_2?: string
-}
-
-const defaultFormData: EnrollmentFormData = {
+const defaultFormData: EnhancedEnrollmentFormData = {
   user_id: '',
   course_id: '',
   teacher_id: '',
@@ -61,10 +48,10 @@ export function EnrollmentForm({
   mode,
   existingEnrollment
 }: EnrollmentFormProps) {
-  const [formData, setFormData] = useState<EnrollmentFormData>(defaultFormData)
-  const [errors, setErrors] = useState<Record<string, string>>({})
+  const [formData, setFormData] = useState<EnhancedEnrollmentFormData>(defaultFormData)
+  const [errors, setErrors] = useState<EnrollmentValidationErrors>({})
   const [users, setUsers] = useState<User[]>([])
-  const [courses, setCourses] = useState<Course[]>([])
+  const [courses, setCourses] = useState<DBCourse[]>([])
   const [teachers, setTeachers] = useState<User[]>([])
   const [searchUser, setSearchUser] = useState('')
   const [searchCourse, setSearchCourse] = useState('')
@@ -72,23 +59,35 @@ export function EnrollmentForm({
   const [loadingUsers, setLoadingUsers] = useState(false)
   const [loadingCourses, setLoadingCourses] = useState(false)
   const [loadingTeachers, setLoadingTeachers] = useState(false)
-  const [scheduleSlots, setScheduleSlots] = useState<ScheduleSlot[]>([])
-  const [loadingSlots, setLoadingSlots] = useState(false)
+  
+  // Toast hook for enhanced error handling (AC: 4)
+  const { toastError, toastSuccess, toastWarning } = useToast()
+
+  // Convert DB Course to TeacherSelector Course
+  const convertToTeacherSelectorCourse = (course: DBCourse): TeacherSelectorCourse => ({
+    id: course.id,
+    title: course.title,
+    category: course.category?.name || 'Uncategorized',
+    duration_hours: Math.ceil(course.duration_minutes / 60),
+    max_students: 20 // Default value, could be from course settings
+  })
 
   const supabase = createClient()
 
   useEffect(() => {
     if (existingEnrollment) {
+      // Handle pre-population for editing existing in-person enrollments (AC: 5)
+      const enrollmentAny = existingEnrollment as any
       setFormData({
         user_id: existingEnrollment.user_id,
         course_id: existingEnrollment.course_id,
-        teacher_id: (existingEnrollment as any).teacher_id || '',
+        teacher_id: enrollmentAny.teacher_id || '',
         access_until: existingEnrollment.access_until || '',
         status: existingEnrollment.status,
-        is_in_person: false,
-        has_two_classes_per_week: false,
-        schedule_slot_1: '',
-        schedule_slot_2: ''
+        is_in_person: enrollmentAny.is_in_person || false,
+        has_two_classes_per_week: enrollmentAny.has_two_classes_per_week || false,
+        schedule_slot_1: enrollmentAny.schedule_slot_1 || '',
+        schedule_slot_2: enrollmentAny.schedule_slot_2 || ''
       })
     } else {
       setFormData(defaultFormData)
@@ -156,29 +155,6 @@ export function EnrollmentForm({
     return () => clearTimeout(timeoutId)
   }, [searchCourse, supabase])
 
-  // Load schedule slots when in-person is selected
-  useEffect(() => {
-    const loadScheduleSlots = async () => {
-      if (!formData.is_in_person) return
-      
-      setLoadingSlots(true)
-      try {
-        const response = await fetch('/api/schedule-slots?includeAvailability=true')
-        if (!response.ok) throw new Error('Failed to fetch schedule slots')
-        
-        const result = await response.json()
-        setScheduleSlots(result.data || [])
-      } catch (error) {
-        console.error('Error loading schedule slots:', error)
-        setScheduleSlots([])
-      } finally {
-        setLoadingSlots(false)
-      }
-    }
-
-    loadScheduleSlots()
-  }, [formData.is_in_person])
-
   // Load teachers
   useEffect(() => {
     const loadTeachers = async () => {
@@ -210,7 +186,7 @@ export function EnrollmentForm({
     return () => clearTimeout(timeoutId)
   }, [searchTeacher, supabase])
 
-  const handleInputChange = (field: keyof EnrollmentFormData, value: string | boolean) => {
+  const handleInputChange = (field: keyof EnhancedEnrollmentFormData, value: string | boolean) => {
     setFormData(prev => {
       const updated = {
         ...prev,
@@ -242,54 +218,57 @@ export function EnrollmentForm({
   }
 
   const validateForm = () => {
-    const newErrors: Record<string, string> = {}
-
-    if (!formData.user_id) {
-      newErrors.user_id = 'Usuário é obrigatório'
-    }
-
-    if (!formData.course_id) {
-      newErrors.course_id = 'Curso é obrigatório'
-    }
-
-    if (!formData.teacher_id) {
-      newErrors.teacher_id = 'Professor é obrigatório'
-    }
-
-    if (formData.access_until && new Date(formData.access_until) <= new Date()) {
-      newErrors.access_until = 'Data de acesso deve ser futura'
-    }
-
-    // Validate in-person scheduling
-    if (formData.is_in_person) {
-      if (!formData.schedule_slot_1) {
-        newErrors.schedule_slot_1 = 'Primeiro horário é obrigatório para aulas presenciais'
-      }
-      
-      if (formData.has_two_classes_per_week) {
-        if (!formData.schedule_slot_2) {
-          newErrors.schedule_slot_2 = 'Segundo horário é obrigatório quando selecionado duas aulas por semana'
-        }
-        
-        if (formData.schedule_slot_1 === formData.schedule_slot_2) {
-          newErrors.schedule_slot_2 = 'O segundo horário deve ser diferente do primeiro'
-        }
-      }
-    }
-
-    setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
+    // Use enhanced validation with Zod (AC: 1, 2)
+    const { isValid, errors: validationErrors } = validateEnrollmentForm(formData)
+    
+    setErrors(validationErrors)
+    return isValid
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
-    if (!validateForm()) return
+    // Enhanced validation with specific error messages (AC: 4)
+    if (!validateForm()) {
+      // Show specific error messages for common validation failures
+      if (formData.is_in_person && !formData.teacher_id) {
+        toastError(validationMessages.teacher_required, 'Erro de Validação')
+      }
+      if (formData.is_in_person && !formData.schedule_slot_1) {
+        toastError(validationMessages.schedule_required, 'Erro de Validação')
+      }
+      if (formData.has_two_classes_per_week && (!formData.schedule_slot_2 || formData.schedule_slot_1 === formData.schedule_slot_2)) {
+        toastError(validationMessages.two_schedules_required, 'Erro de Validação')
+      }
+      return
+    }
 
     try {
-      await onSubmit(formData)
-    } catch (error) {
+      // Transform form data to API payload format (AC: 3)
+      const apiPayload = transformFormDataToApiPayload(formData)
+      await onSubmit(apiPayload)
+      
+      // Success notification (AC: 4)
+      toastSuccess(
+        mode === 'create' 
+          ? 'Matrícula criada com sucesso!' 
+          : 'Matrícula removida com sucesso!'
+      )
+    } catch (error: any) {
       console.error('Form submission error:', error)
+      
+      // Enhanced API error handling with Toast notifications (AC: 4)
+      const errorMessage = error?.message || error?.error || 'Erro interno do servidor'
+      
+      if (errorMessage.includes('já está matriculado')) {
+        toastWarning('Este usuário já está matriculado neste curso', 'Matrícula Duplicada')
+      } else if (errorMessage.includes('não encontrado')) {
+        toastError('Alguns dados não foram encontrados. Verifique as informações e tente novamente.', 'Dados Inválidos')
+      } else if (errorMessage.includes('horário')) {
+        toastError('Erro relacionado aos horários selecionados. Verifique a disponibilidade.', 'Erro de Agendamento')
+      } else {
+        toastError(errorMessage, 'Erro na Submissão')
+      }
     }
   }
 
@@ -425,10 +404,10 @@ export function EnrollmentForm({
               )}
             </div>
 
-            {/* Teacher Selection */}
+            {/* Teacher Selection - Conditional requirement based on modality (AC: 1, 2) */}
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-2">
-                Professor/Instrutor *
+                Professor/Instrutor {formData.is_in_person ? '*' : '(opcional)'}
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -480,6 +459,13 @@ export function EnrollmentForm({
               {errors.teacher_id && (
                 <p className="mt-1 text-sm text-red-400">{errors.teacher_id}</p>
               )}
+              
+              {/* Enhanced validation feedback for in-person enrollments (AC: 4) */}
+              {formData.is_in_person && !formData.teacher_id && (
+                <p className="mt-1 text-sm text-yellow-400">
+                  ⚠️ {validationMessages.teacher_required}
+                </p>
+              )}
             </div>
 
             {/* Access Until */}
@@ -524,10 +510,10 @@ export function EnrollmentForm({
               </div>
             )}
 
-            {/* In-Person Class Options */}
+            {/* In-Person Class Options (AC: 1 - "Curso Presencial" checkbox, unchecked by default) */}
             {mode === 'create' && (
-              <div className="space-y-4">
-                {/* In-Person Toggle */}
+              <div className="space-y-6">
+                {/* Curso Presencial Toggle */}
                 <div className="flex items-center space-x-3">
                   <input
                     type="checkbox"
@@ -537,103 +523,64 @@ export function EnrollmentForm({
                     className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-600 rounded bg-gray-800"
                   />
                   <label htmlFor="is_in_person" className="text-sm font-medium text-gray-300">
-                    Aula Presencial
+                    Curso Presencial
                   </label>
                 </div>
 
+                {/* Conditional SchedulingSection (AC: 2, 3, 4) */}
+                <SchedulingSection
+                  isVisible={formData.is_in_person}
+                  selectedCourse={selectedCourse ? convertToTeacherSelectorCourse(selectedCourse) : undefined}
+                  teacherId={formData.teacher_id}
+                  hasTwoClassesPerWeek={formData.has_two_classes_per_week}
+                  onTeacherChange={(teacherId) => handleInputChange('teacher_id', teacherId)}
+                  onTwoClassesChange={(checked) => handleInputChange('has_two_classes_per_week', checked)}
+                  onSlotSelect={(slot1, slot2) => {
+                    handleInputChange('schedule_slot_1', slot1 || '')
+                    handleInputChange('schedule_slot_2', slot2 || '')
+                  }}
+                />
+                
+                {/* Enhanced scheduling validation feedback (AC: 4) */}
                 {formData.is_in_person && (
-                  <>
-                    {/* Two Classes Per Week Toggle */}
-                    <div className="flex items-center space-x-3 ml-6">
-                      <input
-                        type="checkbox"
-                        id="has_two_classes_per_week"
-                        checked={formData.has_two_classes_per_week}
-                        onChange={(e) => handleInputChange('has_two_classes_per_week', e.target.checked)}
-                        className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-600 rounded bg-gray-800"
-                      />
-                      <label htmlFor="has_two_classes_per_week" className="text-sm font-medium text-gray-300">
-                        Duas aulas por semana
-                      </label>
-                    </div>
-
-                    {/* First Schedule Slot */}
-                    <div className="ml-6">
-                      <label className="block text-sm font-medium text-gray-300 mb-2">
-                        {formData.has_two_classes_per_week ? 'Primeiro Horário *' : 'Horário *'}
-                      </label>
-                      {loadingSlots ? (
-                        <div className="text-sm text-gray-400">Carregando horários...</div>
-                      ) : (
-                        <select
-                          value={formData.schedule_slot_1}
-                          onChange={(e) => handleInputChange('schedule_slot_1', e.target.value)}
-                          className="block w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        >
-                          <option value="">Selecione um horário</option>
-                          {scheduleSlots
-                            .filter(slot => slot.available)
-                            .map((slot) => {
-                              const dayNames = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado']
-                              return (
-                                <option key={slot.id} value={slot.id}>
-                                  {dayNames[slot.day_of_week]} - {slot.slot_label} ({slot.availableSpots} vagas)
-                                </option>
-                              )
-                            })}
-                        </select>
-                      )}
-                      {errors.schedule_slot_1 && (
-                        <p className="mt-1 text-sm text-red-400">{errors.schedule_slot_1}</p>
-                      )}
-                    </div>
-
-                    {/* Second Schedule Slot */}
-                    {formData.has_two_classes_per_week && (
-                      <div className="ml-6">
-                        <label className="block text-sm font-medium text-gray-300 mb-2">
-                          Segundo Horário *
-                        </label>
-                        {loadingSlots ? (
-                          <div className="text-sm text-gray-400">Carregando horários...</div>
-                        ) : (
-                          <select
-                            value={formData.schedule_slot_2}
-                            onChange={(e) => handleInputChange('schedule_slot_2', e.target.value)}
-                            className="block w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                          >
-                            <option value="">Selecione um segundo horário</option>
-                            {scheduleSlots
-                              .filter(slot => slot.available && slot.id !== formData.schedule_slot_1)
-                              .map((slot) => {
-                                const dayNames = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado']
-                                return (
-                                  <option key={slot.id} value={slot.id}>
-                                    {dayNames[slot.day_of_week]} - {slot.slot_label} ({slot.availableSpots} vagas)
-                                  </option>
-                                )
-                              })}
-                          </select>
-                        )}
-                        {errors.schedule_slot_2 && (
-                          <p className="mt-1 text-sm text-red-400">{errors.schedule_slot_2}</p>
-                        )}
-                      </div>
-                    )}
-
-                    {/* Schedule Instructions */}
-                    <div className="ml-6 p-3 bg-blue-900/20 rounded-md border border-blue-500/30">
-                      <p className="text-sm text-blue-300">
-                        ℹ️ <strong>Informações sobre agendamento:</strong>
+                  <div className="space-y-2">
+                    {!formData.schedule_slot_1 && (
+                      <p className="text-sm text-yellow-400">
+                        ⚠️ {validationMessages.schedule_required}
                       </p>
-                      <ul className="mt-2 text-xs text-blue-400 space-y-1">
-                        <li>• Máximo de 3 alunos por horário</li>
-                        <li>• Para duas aulas por semana, selecione horários diferentes</li>
-                        <li>• Pode ser mesmo horário em dias diferentes ou mesmo dia em horários diferentes</li>
-                        <li>• O agendamento será permanente até que o admin faça alterações</li>
-                      </ul>
-                    </div>
-                  </>
+                    )}
+                    
+                    {errors.schedule_slot_1 && (
+                      <p className="text-sm text-red-400">{errors.schedule_slot_1}</p>
+                    )}
+                    
+                    {formData.has_two_classes_per_week && (
+                      <>
+                        {!formData.schedule_slot_2 && (
+                          <p className="text-sm text-yellow-400">
+                            ⚠️ {validationMessages.two_schedules_required}
+                          </p>
+                        )}
+                        
+                        {formData.schedule_slot_1 === formData.schedule_slot_2 && formData.schedule_slot_2 && (
+                          <p className="text-sm text-red-400">
+                            ❌ {validationMessages.schedules_must_differ}
+                          </p>
+                        )}
+                      </>
+                    )}
+                    
+                    {errors.schedule_slot_2 && (
+                      <p className="text-sm text-red-400">{errors.schedule_slot_2}</p>
+                    )}
+                  </div>
+                )}
+                
+                {/* Success feedback for online enrollments (AC: 1) */}
+                {!formData.is_in_person && (
+                  <p className="text-sm text-green-400">
+                    ✅ {validationMessages.online_validation_passed}
+                  </p>
                 )}
               </div>
             )}
@@ -649,9 +596,9 @@ export function EnrollmentForm({
               </button>
               <button
                 type="submit"
-                disabled={loading || !selectedUser || !selectedCourse || !formData.teacher_id}
+                disabled={loading || !selectedUser || !selectedCourse || (formData.is_in_person && !formData.teacher_id)}
                 className={`px-4 py-2 text-sm font-medium text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                  loading || !selectedUser || !selectedCourse
+                  loading || !selectedUser || !selectedCourse || (formData.is_in_person && !formData.teacher_id)
                     ? 'bg-gray-600 cursor-not-allowed'
                     : mode === 'create'
                     ? 'bg-blue-600 hover:bg-blue-700'
