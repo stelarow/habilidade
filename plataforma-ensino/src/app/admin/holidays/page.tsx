@@ -36,10 +36,6 @@ export default async function HolidaysPage() {
           <Suspense fallback={<HolidayLoadingFallback />}>
             <HolidayManager 
               year={2025}
-              onHolidayChange={(holidays) => {
-                // This could trigger updates to other components if needed
-                console.log('Holidays updated:', holidays.length);
-              }}
             />
           </Suspense>
         </div>
