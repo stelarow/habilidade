@@ -2,12 +2,14 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { z } from 'zod';
-import DOMPurify from 'dompurify';
-import { JSDOM } from 'jsdom';
 
-// Initialize DOMPurify
-const window = new JSDOM('').window;
-const purify = DOMPurify(window);
+// Function to get DOMPurify instance (lazy initialization)
+function getPurify() {
+  const DOMPurify = require('dompurify');
+  const { JSDOM } = require('jsdom');
+  const window = new JSDOM('').window;
+  return DOMPurify(window);
+}
 
 const postSchema = z.object({
   title: z.string().min(1, 'Title is required'),
@@ -54,6 +56,7 @@ export async function POST(request: Request) {
     const { title, content, slug, status, excerpt, featured_image_url, tags } = parsed.data;
 
     // Sanitize content
+    const purify = getPurify();
     const sanitizedContent = purify.sanitize(content);
 
     const { data, error } = await supabase
