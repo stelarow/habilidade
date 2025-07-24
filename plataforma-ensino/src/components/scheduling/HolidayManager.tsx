@@ -102,8 +102,19 @@ export default function HolidayManager({
       const responseData = await response.json();
       // Handle both direct array and wrapped response formats
       const holidaysData = responseData.data || responseData;
-      setHolidays(Array.isArray(holidaysData) ? holidaysData : []);
-      onHolidayChange?.(Array.isArray(holidaysData) ? holidaysData : []);
+      
+      // Ensure we have a valid array and filter out invalid items
+      const validHolidays = Array.isArray(holidaysData) 
+        ? holidaysData.filter(holiday => 
+            holiday && 
+            typeof holiday === 'object' && 
+            typeof holiday.name === 'string' &&
+            typeof holiday.date === 'string'
+          )
+        : [];
+      
+      setHolidays(validHolidays);
+      onHolidayChange?.(validHolidays);
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
       setError(errorMessage);
@@ -238,7 +249,14 @@ export default function HolidayManager({
 
   // Filter holidays
   const filteredHolidays = holidays.filter(holiday => {
-    const matchesSearch = holiday.name.toLowerCase().includes(searchTerm.toLowerCase());
+    // Ensure holiday is a valid object with required properties
+    if (!holiday || typeof holiday !== 'object') {
+      return false;
+    }
+    
+    // Safely handle undefined/null name property
+    const holidayName = holiday?.name || '';
+    const matchesSearch = holidayName.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesFilter = filterNational === null || holiday.is_national === filterNational;
     return matchesSearch && matchesFilter;
   });

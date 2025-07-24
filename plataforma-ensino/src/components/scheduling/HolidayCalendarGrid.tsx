@@ -39,8 +39,17 @@ export const HolidayCalendarGrid = React.memo<HolidayCalendarGridProps>(({
   const generateCalendarGrid = () => {
     return Array.from({ length: 12 }, (_, month) => {
       const monthHolidays = holidays.filter(holiday => {
-        const holidayDate = new Date(holiday.date);
-        return holidayDate.getMonth() === month && holidayDate.getFullYear() === year;
+        // Safety check for valid holiday object
+        if (!holiday || !holiday.date) return false;
+        
+        try {
+          const holidayDate = new Date(holiday.date);
+          return !isNaN(holidayDate.getTime()) && 
+                 holidayDate.getMonth() === month && 
+                 holidayDate.getFullYear() === year;
+        } catch {
+          return false;
+        }
       });
 
       return {
@@ -72,9 +81,9 @@ export const HolidayCalendarGrid = React.memo<HolidayCalendarGridProps>(({
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
-                      <h4 className="font-medium text-sm">{holiday.name}</h4>
+                      <h4 className="font-medium text-sm">{holiday.name || 'Nome não disponível'}</h4>
                       <p className="text-xs text-gray-600 dark:text-gray-400">
-                        {new Date(holiday.date).toLocaleDateString('pt-BR')}
+                        {holiday.date ? new Date(holiday.date).toLocaleDateString('pt-BR') : 'Data inválida'}
                       </p>
                       {holiday.is_national && (
                         <span className="inline-block bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 text-xs px-2 py-1 rounded-full mt-1">
@@ -90,7 +99,7 @@ export const HolidayCalendarGrid = React.memo<HolidayCalendarGridProps>(({
                           size="sm"
                           onClick={() => onEdit(holiday)}
                           className="h-6 w-6 p-0"
-                          aria-label={`Editar feriado ${holiday.name}`}
+                          aria-label={`Editar feriado ${holiday.name || 'sem nome'}`}
                         >
                           <Edit2 className="h-3 w-3" />
                         </Button>
@@ -99,7 +108,7 @@ export const HolidayCalendarGrid = React.memo<HolidayCalendarGridProps>(({
                           size="sm"
                           onClick={() => onDelete(holiday.id)}
                           className="h-6 w-6 p-0 text-red-600 hover:text-red-700"
-                          aria-label={`Excluir feriado ${holiday.name}`}
+                          aria-label={`Excluir feriado ${holiday.name || 'sem nome'}`}
                         >
                           <Trash2 className="h-3 w-3" />
                         </Button>
