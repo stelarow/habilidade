@@ -15,24 +15,24 @@ This is a **dual-architecture educational platform** for Escola Habilidade with 
 - **Main Website** (`/`) - React 19 + Vite marketing site with course catalog
 - **Learning Platform** (`/plataforma-ensino/`) - Next.js 14 + TypeScript + Supabase LMS
 
-## Common Development Commands
+## Development Commands
 
 ### Main Website (React/Vite)
 ```bash
 # Development
 npm run dev              # Start dev server
 npm run build           # Production build
-npm run build:optimize  # Build + optimization + bundle analysis
+npm run build:optimize  # Build + optimization + bundle analysis (always use for performance monitoring)
 npm run preview         # Preview production build
 
 # Testing & Quality
 npm run lint            # ESLint with SonarJS + Unicorn plugins
 npm run test:data       # Validate course data schema
 npm run test:routes     # Test route configuration
-npm run perf:audit      # Lighthouse performance audit
+npm run perf:audit      # Lighthouse performance audit (run frequently)
 
 # Deployment
-npm run deploy          # Build + commit + push (auto-deploy)
+npm run deploy          # Build + commit + push (auto-deploy to Netlify)
 ```
 
 ### Learning Platform (Next.js/TypeScript)
@@ -49,22 +49,6 @@ npm run analyze         # Bundle analyzer for optimization
 npm run test:auth       # Test authentication flow
 ```
 
-## Architecture Patterns
-
-### Main Website Structure
-- **Performance-first**: Custom memory manager, lazy loading, manual code splitting
-- **Components**: Organized by feature (`/components/course/`, `/components/backgrounds/`)
-- **Hooks**: 15+ specialized hooks for complex state logic (`/hooks/`)
-- **Utils**: Performance utilities (`memoryManager.js`, `domOptimizer.js`)
-- **Data**: Static course catalog with runtime validation (`/data/coursesData.js`)
-
-### Learning Platform Structure
-- **Next.js App Router**: Full-stack application with server components
-- **Database**: Supabase with complete schema in `database/schema.sql`
-- **Auth**: Supabase Auth with middleware protection
-- **Types**: Full TypeScript coverage with shared types in `/types/`
-- **UI**: Design system components in `/components/ui/`
-
 ## Technology Stack
 
 ### Main Website
@@ -77,7 +61,7 @@ npm run test:auth       # Test authentication flow
 
 ### Learning Platform
 - **Next.js 14.2.x** with App Router
-- **TypeScript** for type safety
+- **TypeScript** for type safety (strict mode - no `any` types)
 - **Supabase** (PostgreSQL + Auth + Storage + Realtime)
 - **Zustand** for state management
 - **React Hook Form + Zod** for forms
@@ -87,59 +71,127 @@ npm run test:auth       # Test authentication flow
 - **PDF.js** for PDF rendering
 - **Mux Player** for video playback
 
-## Performance Considerations
+## Architecture & Key Files
 
-### Main Website
-- Uses **custom memory manager** - always run `npm run build:optimize` to check bundle size
-- **Lazy loading** implemented for all route components
-- **Manual code splitting** with vendor, router, utils, backgrounds chunks
-- **Performance monitoring** with adaptive animations based on device capabilities
-- **Background animations** are performance-intensive - use `backgroundTester.js` for debugging
+### Main Website Structure
+- **Performance-first**: Custom memory manager, lazy loading, manual code splitting
+- **Components**: Organized by feature (`/components/course/`, `/components/backgrounds/`)
+- **Hooks**: 15+ specialized hooks for complex state logic (`/hooks/`)
+- **Utils**: Performance utilities (`memoryManager.js`, `domOptimizer.js`)
+- **Data**: Static course catalog with runtime validation (`/data/coursesData.js`)
+- **Key Files**:
+  - `src/data/coursesData.js` - Course catalog with validation schema
+  - `src/utils/memoryManager.js` - Performance optimization core
+  - `src/hooks/usePerformanceLevel.js` - Adaptive performance system
+  - `vite.config.js` - Build optimization configuration
 
-### Learning Platform
-- Server components for optimal performance
-- Database queries use Row Level Security (RLS)
-- Image optimization through Next.js built-in features
+### Learning Platform Structure
+- **Next.js App Router**: Full-stack application with server components
+- **Types**: Full TypeScript coverage with shared types in `/types/`
+- **UI**: Design system components in `/components/ui/`
+- **Path Aliases**: `@/*` maps to `./src/*` - Use for all internal imports
+- **Key Files**:
+  - `database/schema.sql` - Complete database structure with RLS policies
+  - `lib/supabase/` - Database client configurations
+  - `middleware.ts` - Authentication and route protection
+  - `src/app/globals.css` - Design system definitions
 
-## Database Schema
+## Database & Authentication
 
-The learning platform uses Supabase with a complete schema in `database/schema.sql`:
-- User profiles and authentication
-- Course structure with lessons and progress tracking
-- Quiz and assessment system
-- File uploads and media management
+### Supabase Configuration
+- **Complete Schema**: `database/schema.sql` includes:
+  - User profiles and authentication
+  - Course structure with lessons and progress tracking
+  - Quiz and assessment system
+  - File uploads and media management
+  - Row Level Security (RLS) policies
 
-To set up the database:
+### Authentication & Middleware
+- **Middleware**: Located in `middleware.ts` at project root
+- **Protection**: Admin route protection (`/admin/*`)
+- **Roles**: student (default), instructor, admin
+- **Redirects**: Admin → `/admin`, users → `/dashboard`
+- **Auth Blocking**: Prevents authenticated users from accessing auth routes
+
+### Setup Process
 1. Create a Supabase project
 2. Run the SQL in `database/schema.sql`
 3. Configure environment variables in `.env.local`
 
-## Development Workflows
+## Environment & Requirements
 
-### Main Website Development
-- Test performance frequently with `npm run perf:audit`
-- Use debug HTML files for manual testing (`debug-*.html`)
-- Deploy automatically triggers on push to main branch
+### System Requirements
+- **Node.js**: 18+ required for both applications
+- **Local System**: sudo password is '123' if needed
 
-### Learning Platform Development
-- Database changes require migration files
-- Use TypeScript strictly - no `any` types
-- Implement tests for new features (Jest + Playwright ready)
-- Follow Next.js App Router conventions
+### Environment Configuration
+- **Required**: `.env.local` for Supabase configuration
+- **Error Tracking**: Sentry integration with client/server/edge configs
+- **Performance**: Server components for optimal performance
+- **Database**: All queries use Row Level Security (RLS)
 
-## Key Files to Understand
+## Deployment
 
 ### Main Website
-- `src/data/coursesData.js` - Course catalog with validation schema
-- `src/utils/memoryManager.js` - Performance optimization core
-- `src/hooks/usePerformanceLevel.js` - Adaptive performance system
-- `vite.config.js` - Build optimization configuration
+- **Live**: www.escolahabilidade.com.br
+- **Platform**: Netlify with auto-deploy on push to main branch
+- **CI/CD**: GitHub Actions for automated deployment
 
 ### Learning Platform
-- `database/schema.sql` - Complete database structure
-- `lib/supabase/` - Database client configurations
-- `middleware.ts` - Authentication and route protection
-- `src/app/globals.css` - Design system definitions
+- **Status**: Manual deployment (production setup pending)
+- **Planned**: Vercel or Netlify deployment
+- **CI/CD**: GitHub Actions configured
+
+## Current Development Status
+
+### Main Website
+- **Status**: Production-ready with 8 detailed courses
+- **Features**: EmailJS contact form with WhatsApp fallback, responsive design, performance optimized
+
+### Learning Platform (MVP in Advanced Development)
+- **Completed Features**:
+  - Next.js 14.2.x + TypeScript + App Router structure
+  - Complete database schema with RLS policies
+  - Authentication system with middleware protection
+  - Design system (Habilidade colors + Tailwind)
+  - All UI components migrated (GradientButton, Starfield, etc.)
+  - All 9 background components migrated to TypeScript
+  - Sentry integration for error tracking
+  - Auth pages (login, register, password recovery)
+
+- **Current Focus - Lesson Page Redesign**:
+  - **Page**: `/src/app/course/[slug]/lesson/[lessonSlug]/page-redesigned.tsx`
+  - **Integration**: `/src/components/lesson/LessonPageIntegration.tsx`
+  - **Core Components**: VideoSection, PDFSection, QuizSection, ExercisesSection, CompletionSection
+  - **Test Pages**: `/test-lesson-redesigned`, `/test-completion-section` for validation
+  - **Performance**: useLessonProgress, useLessonPerformance hooks for optimized experience
+  - **Utilities**: `/src/utils/lessonProgressUtils.ts` and `/src/utils/lessonTestUtils.ts`
+
+## Development Best Practices
+
+### Performance Considerations
+- **Main Website**: 
+  - Uses custom memory manager - always run `npm run build:optimize` for bundle analysis
+  - Lazy loading implemented for all route components
+  - Manual code splitting with vendor, router, utils, backgrounds chunks
+  - Performance monitoring with adaptive animations based on device capabilities
+  - Background animations are performance-intensive - use `backgroundTester.js` for debugging
+
+- **Learning Platform**: 
+  - Server components for optimal performance
+  - Database queries use Row Level Security (RLS)
+  - Image optimization through Next.js built-in features
+
+### Development Workflows
+- **Main Website**: Test performance frequently, use debug HTML files for manual testing
+- **Learning Platform**: Database changes require migration files, implement tests for new features
+- **Both**: Follow respective framework conventions (React/Vite vs Next.js App Router)
+
+### Code Standards
+- **TypeScript**: Use strictly in learning platform - no `any` types
+- **Testing**: Jest + Playwright configured and ready
+- **Performance**: Monitor lesson performance metrics with useLessonPerformance hook
+- **Components**: Test lesson functionality using dedicated test pages before integration
 
 ## Course Data Management
 
@@ -148,62 +200,6 @@ New courses follow the schema in `src/data/coursesSchema.js`:
 - Icons defined in `src/utils/lessonIcons.js`
 - Labels standardized in `src/utils/lessonLabels.js`
 - Follow validation schema requirements
-
-## Deployment
-
-- **Main Website**: Live at **www.escolahabilidade.com.br** - Auto-deploys to Netlify on push to main
-- **Learning Platform**: Manual deployment (production setup pending)
-- Both use GitHub Actions for CI/CD
-
-## Current Status
-
-- **Main Website**: Production-ready with 8 detailed courses
-- **Learning Platform**: MVP in development, database schema complete, UI components partially migrated
-
-## Important Development Notes
-
-### Learning Platform Current Status (Mid-Development)
-- **Lesson Page Redesign**: Advanced redesigned lesson interface with modular components
-- **Key Components**: VideoSection, PDFSection, QuizSection, ExercisesSection, CompletionSection
-- **Integration System**: LessonPageIntegration bridges existing data with new UI
-- **Test Pages**: Multiple test pages for validation (`/test-lesson-redesigned`, `/test-completion-section`, etc.)
-- **Performance Hooks**: useLessonProgress, useLessonPerformance for optimized lesson experience
-
-### Path Aliases
-- `@/*` maps to `./src/*` - Use for all internal imports
-- Example: `import { Button } from '@/components/ui/button'`
-
-### Current Implementation Focus
-- **Page**: `/src/app/course/[slug]/lesson/[lessonSlug]/page-redesigned.tsx`
-- **Integration**: `/src/components/lesson/LessonPageIntegration.tsx`
-- **Core Components**: `/src/components/lesson/` directory with modular lesson sections
-- **Utilities**: `/src/utils/lessonProgressUtils.ts` and `/src/utils/lessonTestUtils.ts`
-
-### Environment Configuration
-- **Supabase**: Database schema in `database/schema.sql` with complete RLS policies
-- **Authentication**: Middleware-based auth with role-based redirects (`middleware.ts`)
-- **Environment**: `.env.local` required for Supabase configuration
-- **Error Tracking**: Sentry integration with client/server/edge configs
-- **Admin Routes**: Protected by middleware, require admin role
-
-### Middleware Configuration
-The project uses Next.js middleware for:
-- Admin route protection (`/admin/*`)
-- Auth route blocking for authenticated users  
-- Role-based redirects (admin → `/admin`, users → `/dashboard`)
-- Located in `middleware.ts` at project root
-
-### Development Best Practices
-- Use TypeScript strictly in learning platform - no `any` types
-- Test lesson functionality using dedicated test pages
-- Validate lesson progress calculations with utility functions
-- Use performance hooks for optimized lesson loading
-
-### Performance and Development Tips
-- Monitor build processes for completion
-- Use `npm run build:optimize` for bundle analysis on main website
-- Test lesson components individually before integration
-- Monitor lesson performance metrics with useLessonPerformance hook
 
 ## Development Notes
 
@@ -216,6 +212,7 @@ The project uses Next.js middleware for:
 ### Git Workflow
 - Main website auto-deploys to Netlify on push to main branch
 
-### Environment Requirements
-- **Node.js**: 18+ required for both applications
-- **Local System**: sudo password is '123' if needed
+### Performance Tips
+- Monitor build processes for completion
+- Test lesson components individually before integration
+- Validate lesson progress calculations with utility functions

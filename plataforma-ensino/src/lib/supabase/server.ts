@@ -6,6 +6,13 @@ export const createClient = () => {
   const clientId = Math.random().toString(36).substr(2, 9)
   console.log(`[SERVER_CLIENT-${clientId}] Creating SSR-compatible server client`)
   
+  // Validate environment variables first
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    const error = new Error(`Missing Supabase environment variables: URL=${!!process.env.NEXT_PUBLIC_SUPABASE_URL}, KEY=${!!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`)
+    console.error(`[SERVER_CLIENT-${clientId}] ❌ Environment error:`, error.message)
+    throw error
+  }
+  
   try {
     const cookieStore = cookies()
     const allCookies = cookieStore.getAll()
@@ -19,7 +26,8 @@ export const createClient = () => {
     console.log(`[SERVER_CLIENT-${clientId}] 🔧 Environment check:`, {
       hasUrl: !!process.env.NEXT_PUBLIC_SUPABASE_URL,
       hasKey: !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
-      urlPrefix: process.env.NEXT_PUBLIC_SUPABASE_URL?.substring(0, 30) + '...'
+      urlPrefix: process.env.NEXT_PUBLIC_SUPABASE_URL?.substring(0, 30) + '...',
+      nodeEnv: process.env.NODE_ENV
     })
     
     return createServerClient(
