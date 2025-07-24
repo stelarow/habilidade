@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { useClientOnly } from '@/hooks/useClientOnly';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -56,7 +55,6 @@ export default function HolidayManager({
   onHolidayChange,
   readonly = false 
 }: HolidayManagerProps) {
-  const isClient = useClientOnly();
   
   // State management
   const [holidays, setHolidays] = useState<Holiday[]>([]);
@@ -274,8 +272,8 @@ export default function HolidayManager({
     setSelectedHoliday(null);
   };
 
-  // Prevent hydration mismatch by only rendering on client
-  if (!isClient || loading) {
+  // Show loading state while data is being fetched
+  if (loading) {
     return (
       <div 
         className="flex items-center justify-center p-8"
