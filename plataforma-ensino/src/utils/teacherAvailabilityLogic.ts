@@ -71,7 +71,6 @@ export async function calculateAvailableSlots(
     return []
   }
 
-  const holidayDates = holidays.map(h => new Date(h.date))
   const slots: AvailabilitySlotWithOccurrence[] = []
   const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
@@ -80,7 +79,7 @@ export async function calculateAvailableSlots(
     const patternSlots = await generateSlotsForPattern(
       pattern,
       dateRange,
-      holidayDates,
+      holidays,
       dayNames[pattern.day_of_week]
     )
     slots.push(...patternSlots)
@@ -104,7 +103,7 @@ export async function calculateAvailableSlots(
 async function generateSlotsForPattern(
   pattern: TeacherAvailability,
   dateRange: { start: Date; end: Date },
-  holidays: Date[],
+  holidays: Holiday[],
   dayName: string
 ): Promise<AvailabilitySlotWithOccurrence[]> {
   const slots: AvailabilitySlotWithOccurrence[] = []
@@ -117,7 +116,13 @@ async function generateSlotsForPattern(
 
   // Generate slots for each occurrence of this day within the range
   while (currentDate <= dateRange.end) {
-    if (isBusinessDay(currentDate, holidays)) {
+    // Convert API Holiday format to date-calculation Holiday format
+    const dateCalculationHolidays = holidays.map(h => ({
+      date: h.date,
+      name: h.name,
+      type: h.is_national ? 'national' as const : 'regional' as const
+    }));
+    if (isBusinessDay(currentDate, dateCalculationHolidays)) {
       const capacityInfo = await getSlotCapacityInfo(pattern.id, toISODateString(currentDate))
       const conflictInfo = await checkSlotConflicts(pattern.id, currentDate, holidays)
 
@@ -243,12 +248,12 @@ async function getSlotCapacityInfo(
 async function checkSlotConflicts(
   availabilityPatternId: string,
   date: Date,
-  holidays: Date[]
+  holidays: Holiday[]
 ): Promise<ConflictInfo> {
   // Check holiday conflicts
   const dateStr = toISODateString(date)
   const isHoliday = holidays.some(holiday => 
-    toISODateString(holiday) === dateStr
+    holiday.date === dateStr
   )
 
   if (isHoliday) {

@@ -4,8 +4,8 @@ import {
   AnimatePresence,
   motion,
   useInView,
-  Variants,
-  MotionProps,
+  type Variants,
+  type MotionProps,
 } from "framer-motion";
 import { useRef } from "react";
 

@@ -154,12 +154,9 @@ Network error during image upload -> A clear error message should be displayed t
 Slug conflict -> The system should auto-append a suffix (e.g., -2) or show a validation error prompting the author to change the slug.
 
 Wireframes & Mockups
-Design Files
 Primary Design Files: It is recommended that detailed, high-fidelity mockups and prototypes be created in Figma. This will serve as the single source of truth for all visual and interaction design.
 
 Key Screen Layouts
-Below are low-fidelity wireframes for the most critical screens.
-
 Screen: Blog Homepage
 
 Purpose: To present the latest articles and allow users to browse by category or search.
@@ -167,10 +164,10 @@ Purpose: To present the latest articles and allow users to browse by category or
 Layout Concept:
 
 +---------------------------------------------------+
-| [Stelarow Header with "Blog" link active]         |
+| [Stelarow Header with "Blog" link active]           |
 +---------------------------------------------------+
 |                                                   |
-|             [Featured Article Large]              |
+|               [Featured Article Large]            |
 |                                                   |
 +---------------------------------------------------+
 | [Search Bar]               [Filter by Category]   |
@@ -193,8 +190,8 @@ Layout Concept:
 +---------------------------------------------------+
 | [Breadcrumb: Home > Blog > Category]              |
 |                                                   |
-| <h1>Article Title</h1>                            |
-| <p>by Author Name on July 26, 2024</p>             |
+| <h1>Article Title</h1>                           |
+| <p>by Author Name on July 25, 2025</p>             |
 |                                                   |
 | [ ------ Feature Image ------ ]                   |
 |                                                   |
@@ -207,7 +204,6 @@ Layout Concept:
 | [Stelarow Footer]                                 |
 +---------------------------------------------------+
 Component Library / Design System
-Design System Approach
 Design System Approach: We will extend the existing Stelarow design system. All foundational elements like buttons and inputs will be reused. New components must adhere to the established design tokens.
 
 Core Components
@@ -232,35 +228,69 @@ Component: MarkdownEditor
 Purpose: A rich text editor for the authoring interface that uses Markdown.
 
 Branding & Style Guide
-The blog will inherit all visual design language directly from the existing Stelarow platform.
+This section defines the visual brand elements that must be used to ensure consistency with the existing Stelarow platform.
 
 Visual Identity
 Brand Guidelines: All visual elements must adhere to the official Stelarow brand guidelines.
 
 Color Palette
-The blog will use the established color palette from the Stelarow platform.
+The color palette is based on the system's design tokens to ensure full integration.
 
+Color Type	Hex Code	Usage
+Primary	#4f46e5	Used for links, primary buttons, and active UI elements.
+Secondary	#0ea5e9	Used for secondary emphasis and informational icons.
+Accent	#f59e0b	Used for Call-to-Actions (CTAs) and elements needing high visibility.
+Success	#10b981	Used for success messages and positive feedback.
+Warning	#f97316	Used for warnings and notices that require attention.
+Error	#ef4444	Used for error messages and destructive actions.
+Neutral	#111827, #374151, #d1d5db, #f9fafb	Used for text, borders, and page backgrounds.
+
+Exportar para as Planilhas
 Typography
-All typography must be inherited from the existing Stelarow design system.
+Font Families
+Primary: "Inter", sans-serif
+
+Secondary: "Lora", serif (for article body to improve readability)
+
+Monospace: "Fira Code", monospace (for code blocks)
+
+Type Scale
+Element	Size	Weight	Line Height
+H1	2.25rem	700	2.5rem
+H2	1.875rem	700	2.25rem
+H3	1.5rem	600	2rem
+Body	1rem	400	1.5rem
+Small	0.875rem	400	1.25rem
+(All typography specifications cited from stelarow-habilidade.txt)			
+
+Exportar para as Planilhas
+Iconography
+Icon Library: Heroicons v2
+
+Usage Guidelines: The "Solid" variant should be used for active or selected states. The "Outline" variant should be used for default states. Stroke width should be 1.5px.
+
+Spacing & Layout
+Grid System: The layout is based on a 4px grid system.
+
+Spacing Scale: Spacing should follow the design system's token scale (e.g., 4px, 8px, 16px, 32px, 64px) to ensure consistency.
 
 Accessibility Requirements
-Compliance Target
-Standard: The blog must conform to the Web Content Accessibility Guidelines (WCAG) 2.1 at a Level AA standard.
+Compliance Target: The blog must conform to the Web Content Accessibility Guidelines (WCAG) 2.1 at a Level AA standard.
 
-Key Requirements
+Key Requirements:
+
 Visual: Text must have a contrast ratio of at least 4.5:1. All interactive elements must have a visible focus state.
 
 Interaction: All functionality must be operable via keyboard. The site must be coded with semantic HTML for screen readers.
 
 Content: All meaningful images must have descriptive alt text. Pages must use a logical heading structure.
 
-Testing Strategy
-A combination of automated scans (e.g., Axe), manual keyboard testing, and screen reader testing is required.
+Testing Strategy: A combination of automated scans (e.g., Axe), manual keyboard testing, and screen reader testing is required.
 
 Responsiveness Strategy
-Breakpoints
-A mobile-first approach will be adopted with the following breakpoints:
+A mobile-first approach will be adopted.
 
+Breakpoints
 Breakpoint	Min Width	Target Devices
 Mobile	320px	Mobile phones
 Tablet	768px	Tablets
@@ -273,40 +303,46 @@ Layout: Single-column on mobile, transitioning to multi-column on larger screens
 Navigation: A hamburger menu on mobile, expanding to a full navigation bar on desktop.
 
 Animation & Micro-interactions
-Motion Principles
+Motion Principles:
+
 Purposeful: Animations should provide feedback or smooth transitions.
 
 Performant: All animations must be lightweight, using CSS transitions where possible.
 
 Subtle: Motion should be quick and unobtrusive.
 
-Key Animations
-Interactive Element Feedback: Subtle transitions on hover/focus for links and buttons.
+Key Animations:
 
-Mobile Menu Transition: Smooth slide-in/out for the mobile navigation menu.
+Subtle transitions on hover/focus for links and buttons.
+
+Smooth slide-in/out for the mobile navigation menu.
 
 Performance Considerations
-Performance Goals
+Performance Goals:
+
 First Contentful Paint (FCP): Article pages must have an FCP of less than 2 seconds.
 
 Core Web Vitals: Aim for "Good" scores for LCP, INP, and CLS.
 
-Design Strategies
-Image Optimization: All images will be compressed and served in modern formats (e.g., WebP).
+Design Strategies:
 
-Lazy Loading: Images below the fold will be lazy-loaded.
+All images will be compressed and served in modern formats (e.g., WebP).
 
-Static Site Generation (SSG): Blog pages will be statically generated at build time via Next.js.
+Images below the fold will be lazy-loaded.
+
+Blog pages will be statically generated at build time via Next.js.
 
 Next Steps
-Immediate Actions
-Stakeholder Review: Share this document for final approval.
+Immediate Actions:
 
-High-Fidelity Mockups: Begin creating detailed visual designs in Figma.
+Share this document with stakeholders for final approval.
 
-Architectural Design: Handoff this document to the Architect.
+Begin creating detailed high-fidelity visual designs in Figma.
 
-Design Handoff Checklist
+Handoff this document to the Architect to begin frontend architectural design.
+
+Design Handoff Checklist:
+
 [x] All user flows documented
 
 [x] Component inventory complete
