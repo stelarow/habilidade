@@ -25,8 +25,10 @@
 
 import React, { useState, useEffect, useMemo, useCallback } from 'react'
 import { Card } from '@/components/ui/card'
-import TeacherSelector, { Teacher, Course } from '@/components/enrollment/TeacherSelector'
-import ConditionalCalendar, { TimeSlot, CourseRequirements } from '@/components/enrollment/ConditionalCalendar'
+import TeacherSelector from '@/components/enrollment/TeacherSelector'
+import type { Teacher, Course } from '@/components/enrollment/TeacherSelector'
+import ConditionalCalendar from '@/components/enrollment/ConditionalCalendar'
+import type { TimeSlot, CourseRequirements } from '@/components/enrollment/ConditionalCalendar'
 import { CalendarDaysIcon, UserIcon, ClockIcon } from '@heroicons/react/24/outline'
 
 export interface SchedulingSectionProps {

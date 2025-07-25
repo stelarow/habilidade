@@ -2,7 +2,7 @@
 
 import { useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
-import { LessonProgressData } from '@/types/lesson'
+import type { LessonProgressData } from '@/types/lesson'
 
 interface CompletionState {
   isCompleting: boolean

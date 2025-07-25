@@ -66,6 +66,9 @@ export interface EnrollmentValidationErrors {
   course_id?: string
   teacher_id?: string
   access_until?: string
+  status?: string
+  is_in_person?: string
+  has_two_classes_per_week?: string
   schedule_slot_1?: string
   schedule_slot_2?: string
   scheduling?: string

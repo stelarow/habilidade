@@ -18,8 +18,8 @@ import {
   type TeacherSelection,
   type TimeSlotSelection
 } from '@/lib/validators/api-schemas'
-import { Teacher } from '@/components/enrollment/TeacherSelector'
-import { TimeSlot } from '@/components/enrollment/ConditionalCalendar'
+import type { Teacher } from '@/components/enrollment/TeacherSelector'
+import type { TimeSlot } from '@/components/enrollment/ConditionalCalendar'
 
 // Form state types
 export interface EnrollmentFormData {

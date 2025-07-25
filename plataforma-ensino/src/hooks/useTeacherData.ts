@@ -8,7 +8,7 @@
 
 import { useState, useEffect, useMemo, useCallback } from 'react'
 import { createBrowserClient } from '@supabase/ssr'
-import { Teacher, TeacherAvailability } from '@/components/enrollment/TeacherSelector'
+import type { Teacher, TeacherAvailability } from '@/components/enrollment/TeacherSelector'
 import { aggregateAvailabilityForCalendar } from '@/utils/teacherAvailabilityLogic'
 
 export interface TeacherWithAvailabilityInfo extends Teacher {

@@ -10,8 +10,10 @@
 
 import React, { useState, useCallback, useEffect, useMemo, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { TeacherSelector, Teacher } from '@/components/enrollment/TeacherSelector'
-import { ConditionalCalendar, TimeSlot, CourseRequirements } from '@/components/enrollment/ConditionalCalendar'
+import { TeacherSelector } from '@/components/enrollment/TeacherSelector'
+import type { Teacher } from '@/components/enrollment/TeacherSelector'
+import { ConditionalCalendar } from '@/components/enrollment/ConditionalCalendar'
+import type { TimeSlot, CourseRequirements } from '@/components/enrollment/ConditionalCalendar'
 import { useEnrollmentFlow } from '@/components/enrollment/EnrollmentFlow'
 import { useEnrollmentValidation } from '@/hooks/useEnrollmentValidation'
 import { Card } from '@/components/ui/card'

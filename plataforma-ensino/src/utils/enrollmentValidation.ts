@@ -1,7 +1,7 @@
 // Enrollment validation utilities for Story 1.2: Form Submission and Validation Enhancement
 
 import { z } from 'zod'
-import { EnhancedEnrollmentFormData, EnrollmentValidationErrors, ScheduleSlot } from '@/types/enrollment'
+import type { EnhancedEnrollmentFormData, EnrollmentValidationErrors, ScheduleSlot } from '@/types/enrollment'
 
 // Base validation schema for all enrollments
 const baseEnrollmentSchema = z.object({

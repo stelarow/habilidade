@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { getCurrentUserClient, isAdmin, canAccessAdminPanel } from '@/lib/auth/permissions-client'
-import { User } from '@/types'
+import type { User } from '@/types'
 
 interface AdminAuthState {
   user: User | null

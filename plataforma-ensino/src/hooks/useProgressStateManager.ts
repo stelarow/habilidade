@@ -1,8 +1,9 @@
 'use client'
 
 import { useState, useCallback, useEffect, useRef } from 'react'
-import { LessonProgressData, ProgressEvent } from '@/types/lesson'
-import { useEnhancedProgressCalculation, EnhancedProgressData } from './useEnhancedProgressCalculation'
+import type { LessonProgressData, ProgressEvent } from '@/types/lesson'
+import { useEnhancedProgressCalculation } from './useEnhancedProgressCalculation'
+import type { EnhancedProgressData } from './useEnhancedProgressCalculation'
 
 interface ProgressStateManagerConfig {
   autosaveInterval: number

@@ -1,4 +1,4 @@
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 import { requireAdmin } from '@/lib/auth/session';
 import HolidayManager from '@/components/scheduling/HolidayManager';
 import { Suspense } from 'react';

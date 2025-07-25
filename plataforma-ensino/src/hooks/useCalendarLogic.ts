@@ -7,8 +7,8 @@
  */
 
 import { useState, useCallback, useMemo, useEffect } from 'react'
-import { TimeSlot, CourseRequirements } from '@/components/enrollment/ConditionalCalendar'
-import { TeacherAvailability } from '@/types/api'
+import type { TimeSlot, CourseRequirements } from '@/components/enrollment/ConditionalCalendar'
+import type { TeacherAvailability } from '@/types/api'
 
 export interface CalendarState {
   currentDate: Date

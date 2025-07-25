@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
-import { User } from '@/types'
+import type { User } from '@/types'
 import { UserProfile } from '@/lib/auth/session'
 import { hasPermission } from '@/lib/auth/permissions-client'
 import { createClient } from '@/lib/supabase/client'

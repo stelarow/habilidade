@@ -7,7 +7,7 @@
  */
 
 import { createBrowserClient } from '@supabase/ssr'
-import { Holiday, TeacherAvailability, AvailableSlot } from '@/types/api'
+import type { Holiday, TeacherAvailability, AvailableSlot } from '@/types/api'
 import { isBusinessDay, toISODateString, parseISODate } from './dateCalculations'
 
 export interface AvailabilitySlotWithOccurrence extends AvailableSlot {

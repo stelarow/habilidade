@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import * as Sentry from '@sentry/nextjs'
-import { Course, Enrollment, Progress, User, UserCourseProgress } from '@/types'
+import type { Course, Enrollment, Progress, User, UserCourseProgress } from '@/types'
 
 interface DashboardStats {
   totalEnrollments: number

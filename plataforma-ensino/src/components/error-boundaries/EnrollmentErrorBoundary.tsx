@@ -8,7 +8,8 @@
 
 'use client'
 
-import React, { Component, ErrorInfo, ReactNode } from 'react'
+import React, { Component } from 'react'
+import type { ErrorInfo, ReactNode } from 'react'
 import { AlertTriangle, RefreshCw, Home, Mail } from 'lucide-react'
 import { Card } from '@/components/ui/card'
 import GradientButton from '@/components/ui/GradientButton'

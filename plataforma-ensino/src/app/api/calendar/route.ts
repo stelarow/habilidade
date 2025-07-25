@@ -2,7 +2,7 @@ import { createClient } from '@/lib/supabase/server';
 import { verifySession } from '@/lib/auth/session';
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
-import { QueryData } from '@supabase/supabase-js';
+import type { QueryData } from '@supabase/supabase-js';
 
 // Force dynamic rendering for authentication
 export const dynamic = 'force-dynamic';

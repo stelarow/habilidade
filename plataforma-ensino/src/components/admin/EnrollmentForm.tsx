@@ -1,9 +1,9 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { User, Course as DBCourse, Enrollment } from '@/types'
-import { EnhancedEnrollmentFormData, EnrollmentValidationErrors } from '@/types/enrollment'
-import { Course as TeacherSelectorCourse } from '@/components/enrollment/TeacherSelector'
+import type { User, Course as DBCourse, Enrollment } from '@/types'
+import type { EnhancedEnrollmentFormData, EnrollmentValidationErrors } from '@/types/enrollment'
+import type { Course as TeacherSelectorCourse } from '@/components/enrollment/TeacherSelector'
 import { createClient } from '@/lib/supabase/client'
 import { 
   XMarkIcon,

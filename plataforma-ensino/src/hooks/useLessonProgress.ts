@@ -3,7 +3,7 @@
  */
 
 import { useState, useEffect, useCallback } from 'react'
-import { LessonProgressData } from '@/types/lesson'
+import type { LessonProgressData } from '@/types/lesson'
 import { LessonProgressManager } from '@/utils/lessonProgressUtils'
 
 interface UseLessonProgressProps {

@@ -26,7 +26,7 @@ import {
 } from '@/utils/teacherAvailabilityLogic'
 import { authMiddleware } from '@/lib/middleware/api-auth'
 import { handleApiError, ApiError } from '@/lib/utils/api-error-handler'
-import { 
+import type { 
   Holiday,
   CalculateEndDateRequest,
   CalculateEndDateResponse,

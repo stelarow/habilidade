@@ -1,8 +1,8 @@
 'use client'
 
 import React, { createContext, useContext, useReducer, useCallback, useMemo } from 'react'
-import { LessonContent, LessonProgressData, ProgressActions, ProgressConfig } from '@/types/lesson'
-import { User, Lesson, Progress } from '@/types'
+import type { LessonContent, LessonProgressData, ProgressActions, ProgressConfig } from '@/types/lesson'
+import type { User, Lesson, Progress } from '@/types'
 
 // Lesson Context State
 interface LessonContextState {

@@ -6,7 +6,7 @@
  * with holiday exclusion and business day validation
  */
 
-import { Holiday } from '@/types/api'
+import type { Holiday } from '@/types/api'
 
 export interface CourseSchedule {
   endDate: Date

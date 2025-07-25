@@ -1,4 +1,4 @@
-import { LessonProgressData } from '@/types/lesson'
+import type { LessonProgressData } from '@/types/lesson'
 
 // Test data generators
 export const createMockLessonProgressData = (overrides?: Partial<LessonProgressData>): LessonProgressData => ({
