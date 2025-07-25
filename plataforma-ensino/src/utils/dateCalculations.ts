@@ -6,228 +6,232 @@
  * with holiday exclusion and business day validation
  */
 
-import type { Holiday } from '@/types/api'
+import { Holiday, WorkingDaysCalculation } from '@/types/date-calculation';
+import { getBrazilianHolidays2025 } from '@/data/holidays-2025';
 
-export interface CourseSchedule {
-  endDate: Date
-  totalWeeks: number
-  holidaysExcluded: Date[]
-  actualClassDays: number
-  schedule: ScheduledClass[]
-}
-
-export interface ScheduledClass {
-  date: Date
-  startTime: string // HH:MM
-  endTime: string   // HH:MM
-  duration: number // minutes
+/**
+ * Check if a date is a weekend (Saturday or Sunday)
+ */
+export function isWeekend(date: Date): boolean {
+  const day = date.getUTCDay();
+  return day === 0 || day === 6; // Sunday = 0, Saturday = 6
 }
 
 /**
- * Calculate course end date considering holidays and weekend exclusions
- * @param startDate - Course start date
- * @param courseHours - Total course hours needed
- * @param weeklyClasses - Number of classes per week
- * @param holidayDates - Array of holiday dates to exclude
- * @returns Complete course schedule with end date and class breakdown
+ * Check if a date is a holiday
+ */
+export function isHoliday(date: Date, holidays: Holiday[]): boolean {
+  const dateString = formatDateISO(date);
+  return holidays.some(holiday => holiday.date === dateString);
+}
+
+/**
+ * Format date to ISO string (YYYY-MM-DD)
+ */
+export function formatDateISO(date: Date): string {
+  return date.toISOString().split('T')[0];
+}
+
+/**
+ * Parse ISO date string to Date object with validation
+ */
+export function parseDateISO(dateString: string): Date {
+  const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+  if (!dateRegex.test(dateString)) {
+    throw new Error(`Invalid date format: ${dateString}. Expected YYYY-MM-DD`);
+  }
+
+  const date = new Date(dateString + 'T00:00:00.000Z');
+  if (isNaN(date.getTime())) {
+    throw new Error(`Invalid date: ${dateString}`);
+  }
+
+  return date;
+}
+
+/**
+ * Calculate working days between two dates (excluding weekends and holidays)
+ */
+export function calculateWorkingDays(
+  startDate: Date,
+  endDate: Date,
+  holidays: Holiday[] = getBrazilianHolidays2025()
+): WorkingDaysCalculation {
+  if (startDate > endDate) {
+    throw new Error('Start date must be before or equal to end date');
+  }
+
+  let totalDays = 0;
+  let workingDays = 0;
+  let excludedWeekends = 0;
+  let excludedHolidays = 0;
+
+  const currentDate = new Date(startDate);
+  
+  while (currentDate <= endDate) {
+    totalDays++;
+    
+    const isWeekendDay = isWeekend(currentDate);
+    const isHolidayDay = isHoliday(currentDate, holidays);
+    
+    if (isWeekendDay) {
+      excludedWeekends++;
+    } else if (isHolidayDay) {
+      excludedHolidays++;
+    } else {
+      workingDays++;
+    }
+    
+    currentDate.setUTCDate(currentDate.getUTCDate() + 1);
+  }
+
+  return {
+    totalDays,
+    workingDays,
+    excludedWeekends,
+    excludedHolidays
+  };
+}
+
+/**
+ * Calculate course end date based on start date and duration in working days
  */
 export function calculateCourseEndDate(
   startDate: Date,
-  courseHours: number,
-  weeklyClasses: number,
-  holidayDates: Date[]
-): CourseSchedule {
-  if (courseHours <= 0) {
-    throw new Error('Course hours must be greater than 0')
-  }
-  if (weeklyClasses <= 0 || weeklyClasses > 7) {
-    throw new Error('Weekly classes must be between 1 and 7')
+  duration: number,
+  holidays: Holiday[] = getBrazilianHolidays2025()
+): Date {
+  if (duration <= 0) {
+    throw new Error('Duration must be a positive number');
   }
 
-  const holidays = new Set(holidayDates.map(date => date.toISOString().substring(0, 10)))
-  const hoursPerClass = 2 // Standard 2-hour classes
-  const totalClassesNeeded = Math.ceil(courseHours / hoursPerClass)
-  
-  let currentDate = new Date(startDate)
-  let classesScheduled = 0
-  let totalWeeks = 0
-  const schedule: ScheduledClass[] = []
-  const holidaysExcluded: Date[] = []
-  
-  // Continue until we have scheduled all required classes
-  while (classesScheduled < totalClassesNeeded) {
-    const weekStart = new Date(currentDate)
-    let classesThisWeek = 0
-    
-    // Schedule classes for this week
-    for (let dayOffset = 0; dayOffset < 7 && classesScheduled < totalClassesNeeded && classesThisWeek < weeklyClasses; dayOffset++) {
-      const classDate = new Date(weekStart)
-      classDate.setDate(weekStart.getDate() + dayOffset)
-      
-      if (isBusinessDay(classDate, holidayDates)) {
-        // Schedule this class
-        schedule.push({
-          date: new Date(classDate),
-          startTime: '09:00',
-          endTime: '11:00',
-          duration: 120
-        })
-        classesScheduled++
-        classesThisWeek++
-      } else if (holidays.has(classDate.toISOString().substring(0, 10))) {
-        // Track excluded holidays
-        const holidayDate = new Date(classDate)
-        if (!holidaysExcluded.some(h => h.toISOString().substring(0, 10) === holidayDate.toISOString().substring(0, 10))) {
-          holidaysExcluded.push(holidayDate)
-        }
-      }
+  const currentDate = new Date(startDate);
+  let workingDaysCount = 0;
+
+  // If start date is not a working day, find the next working day
+  while (isWeekend(currentDate) || isHoliday(currentDate, holidays)) {
+    currentDate.setUTCDate(currentDate.getUTCDate() + 1);
+  }
+
+  // Count working days until we reach the desired duration
+  while (workingDaysCount < duration) {
+    const isWeekendDay = isWeekend(currentDate);
+    const isHolidayDay = isHoliday(currentDate, holidays);
+
+    if (!isWeekendDay && !isHolidayDay) {
+      workingDaysCount++;
     }
-    
-    totalWeeks++
-    // Move to next week
-    currentDate.setDate(currentDate.getDate() + 7)
-    
-    // Safety check to prevent infinite loops
-    if (totalWeeks > 104) { // 2 years maximum
-      throw new Error('Course scheduling exceeded maximum duration (2 years)')
+
+    // If we haven't reached the duration yet, move to next day
+    if (workingDaysCount < duration) {
+      currentDate.setUTCDate(currentDate.getUTCDate() + 1);
     }
   }
-  
-  // Calculate final end date from last scheduled class
-  const endDate = schedule.length > 0 
-    ? new Date(schedule[schedule.length - 1].date)
-    : new Date(startDate)
-  
-  return {
-    endDate,
-    totalWeeks,
-    holidaysExcluded,
-    actualClassDays: schedule.length,
-    schedule
-  }
+
+  return currentDate;
 }
 
 /**
- * Get holidays within a specific date range
- * @param startDate - Range start date
- * @param endDate - Range end date
- * @param holidays - Array of all holidays
- * @returns Holidays within the specified range
+ * Calculate course end date with detailed information
  */
-export function getHolidaysInRange(
+export function calculateCourseEndDateDetailed(
   startDate: Date,
-  endDate: Date,
-  holidays: Holiday[]
-): Holiday[] {
-  if (startDate > endDate) {
-    throw new Error('Start date must be before or equal to end date')
-  }
+  duration: number,
+  holidays: Holiday[] = getBrazilianHolidays2025()
+): {
+  startDate: Date;
+  endDate: Date;
+  workingDays: number;
+  excludedDays: {
+    weekends: number;
+    holidays: number;
+  };
+} {
+  const endDate = calculateCourseEndDate(startDate, duration, holidays);
+  const calculation = calculateWorkingDays(startDate, endDate, holidays);
 
-  const startDateStr = startDate.toISOString().substring(0, 10)
-  const endDateStr = endDate.toISOString().substring(0, 10)
-  
-  return holidays.filter(holiday => {
-    const holidayDate = holiday.date
-    return holidayDate >= startDateStr && holidayDate <= endDateStr
-  })
+  return {
+    startDate,
+    endDate,
+    workingDays: duration,
+    excludedDays: {
+      weekends: calculation.excludedWeekends,
+      holidays: calculation.excludedHolidays
+    }
+  };
+}
+
+/**
+ * Cache for holiday data to improve performance
+ */
+let cachedHolidays: Holiday[] | null = null;
+
+/**
+ * Get cached holiday data or load it
+ */
+export function getCachedHolidays(): Holiday[] {
+  if (!cachedHolidays) {
+    cachedHolidays = getBrazilianHolidays2025();
+  }
+  return cachedHolidays;
+}
+
+/**
+ * Clear holiday cache (useful for testing)
+ */
+export function clearHolidayCache(): void {
+  cachedHolidays = null;
 }
 
 /**
  * Check if a date is a business day (not weekend, not holiday)
  * @param date - Date to check
- * @param holidays - Array of holiday dates
+ * @param holidays - Array of holiday objects
  * @returns True if date is a business day
  */
-export function isBusinessDay(date: Date, holidays: Date[]): boolean {
-  // Check if it's a weekend (Saturday = 6, Sunday = 0)
-  const dayOfWeek = date.getDay()
-  if (dayOfWeek === 0 || dayOfWeek === 6) {
-    return false
-  }
-  
-  // Check if it's a holiday
-  const dateStr = date.toISOString().substring(0, 10)
-  const isHoliday = holidays.some(holiday => 
-    holiday.toISOString().substring(0, 10) === dateStr
-  )
-  
-  return !isHoliday
+export function isBusinessDay(date: Date, holidays: Holiday[] = getBrazilianHolidays2025()): boolean {
+  return !isWeekend(date) && !isHoliday(date, holidays);
 }
 
 /**
  * Calculate the number of business days between two dates
  * @param startDate - Start date (inclusive)
  * @param endDate - End date (inclusive)
- * @param holidays - Array of holiday dates to exclude
+ * @param holidays - Array of holiday objects to exclude
  * @returns Number of business days
  */
 export function getBusinessDaysBetween(
   startDate: Date,
   endDate: Date,
-  holidays: Date[] = []
+  holidays: Holiday[] = getBrazilianHolidays2025()
 ): number {
-  if (startDate > endDate) {
-    return 0
-  }
-
-  let businessDays = 0
-  const currentDate = new Date(startDate)
-  
-  while (currentDate <= endDate) {
-    if (isBusinessDay(currentDate, holidays)) {
-      businessDays++
-    }
-    currentDate.setDate(currentDate.getDate() + 1)
-  }
-  
-  return businessDays
+  const calculation = calculateWorkingDays(startDate, endDate, holidays);
+  return calculation.workingDays;
 }
 
 /**
  * Add business days to a date, skipping weekends and holidays
  * @param startDate - Starting date
  * @param businessDays - Number of business days to add
- * @param holidays - Array of holiday dates to skip
+ * @param holidays - Array of holiday objects to skip
  * @returns New date after adding business days
  */
 export function addBusinessDays(
   startDate: Date,
   businessDays: number,
-  holidays: Date[] = []
+  holidays: Holiday[] = getBrazilianHolidays2025()
 ): Date {
-  if (businessDays < 0) {
-    throw new Error('Business days must be non-negative')
-  }
-
-  const result = new Date(startDate)
-  let daysAdded = 0
-  
-  while (daysAdded < businessDays) {
-    result.setDate(result.getDate() + 1)
-    
-    if (isBusinessDay(result, holidays)) {
-      daysAdded++
-    }
-  }
-  
-  return result
+  return calculateCourseEndDate(startDate, businessDays, holidays);
 }
 
 /**
  * Get the next business day after a given date
  * @param date - Reference date
- * @param holidays - Array of holiday dates to skip
+ * @param holidays - Array of holiday objects to skip
  * @returns Next business day
  */
-export function getNextBusinessDay(date: Date, holidays: Date[] = []): Date {
-  const nextDay = new Date(date)
-  nextDay.setDate(nextDay.getDate() + 1)
-  
-  while (!isBusinessDay(nextDay, holidays)) {
-    nextDay.setDate(nextDay.getDate() + 1)
-  }
-  
-  return nextDay
+export function getNextBusinessDay(date: Date, holidays: Holiday[] = getBrazilianHolidays2025()): Date {
+  return addBusinessDays(date, 1, holidays);
 }
 
 /**
@@ -255,32 +259,30 @@ export function getDaysInMonth(month: number, year: number): number {
  * @returns True if valid ISO date format
  */
 export function isValidISODate(dateString: string): boolean {
-  const isoDateRegex = /^\d{4}-\d{2}-\d{2}$/
-  if (!isoDateRegex.test(dateString)) {
-    return false
+  try {
+    parseDateISO(dateString);
+    return true;
+  } catch {
+    return false;
   }
-  
-  const date = new Date(dateString)
-  return date.toISOString().substring(0, 10) === dateString
 }
 
 /**
  * Convert a Date object to ISO date string (YYYY-MM-DD)
  * @param date - Date to convert
  * @returns ISO date string
+ * @deprecated Use formatDateISO instead
  */
 export function toISODateString(date: Date): string {
-  return date.toISOString().substring(0, 10)
+  return formatDateISO(date);
 }
 
 /**
  * Parse ISO date string to Date object
  * @param dateString - ISO date string (YYYY-MM-DD)
  * @returns Date object
+ * @deprecated Use parseDateISO instead
  */
 export function parseISODate(dateString: string): Date {
-  if (!isValidISODate(dateString)) {
-    throw new Error(`Invalid ISO date format: ${dateString}`)
-  }
-  return new Date(dateString)
+  return parseDateISO(dateString);
 }
