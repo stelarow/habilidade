@@ -318,8 +318,8 @@ export async function POST(request: NextRequest) {
     }
     
     // Create student schedules based on format and modality
+    let schedulesToCreate: any[] = []
     if (enrollment) {
-      let schedulesToCreate: any[] = []
       
       if (isEnhancedFormat && validatedData.schedules && validatedData.modality === 'in-person') {
         // Enhanced format with schedules array
