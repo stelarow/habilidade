@@ -142,17 +142,20 @@ function useTeacherData(availabilityFilter?: TeacherSelectorProps['availabilityF
       // Transform data and calculate availability info
       const enrichedTeachers: TeacherWithAvailabilityInfo[] = await Promise.all(
         teachersData.map(async (teacherData) => {
+          // Cast users to single object (Supabase join returns single object, not array)
+          const userInfo = teacherData.users as any
+          
           const teacher: Teacher = {
             id: teacherData.id,
-            name: teacherData.users?.full_name || '',
+            name: userInfo?.full_name || '',
             bio: teacherData.bio,
-            profileImage: teacherData.users?.avatar_url,
+            profileImage: userInfo?.avatar_url,
             rating: teacherData.rating || 0,
             specialties: teacherData.expertise || [],
             availability: teacherData.teacher_availability || [],
             maxStudentsPerClass: teacherData.max_students_per_class || 1,
             isActive: true, // Since we're filtering by is_active in the query
-            email: teacherData.users?.email || '',
+            email: userInfo?.email || '',
             phone: '', // Not available in current schema
             experience_years: 0, // Not available in current schema
             qualifications: [] // Not available in current schema
