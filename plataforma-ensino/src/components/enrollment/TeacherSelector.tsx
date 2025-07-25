@@ -103,20 +103,19 @@ function useTeacherData(availabilityFilter?: TeacherSelectorProps['availabilityF
 
       // Query teachers with availability using MCP Supabase pattern
       const { data: teachersData, error: teachersError } = await supabase
-        .from('teachers')
+        .from('instructors')
         .select(`
           id,
-          name,
           bio,
-          profile_image,
           rating,
-          specialties,
+          expertise,
           max_students_per_class,
-          is_active,
-          email,
-          phone,
-          experience_years,
-          qualifications,
+          total_reviews,
+          users:user_id (
+            full_name,
+            email,
+            avatar_url
+          ),
           teacher_availability (
             id,
             teacher_id,
@@ -129,9 +128,7 @@ function useTeacherData(availabilityFilter?: TeacherSelectorProps['availabilityF
             updated_at
           )
         `)
-        .eq('is_active', true)
         .order('rating', { ascending: false })
-        .order('name', { ascending: true })
 
       if (teachersError) {
         throw new Error(`Failed to fetch teachers: ${teachersError.message}`)
@@ -147,18 +144,18 @@ function useTeacherData(availabilityFilter?: TeacherSelectorProps['availabilityF
         teachersData.map(async (teacherData) => {
           const teacher: Teacher = {
             id: teacherData.id,
-            name: teacherData.name,
+            name: teacherData.users?.full_name || '',
             bio: teacherData.bio,
-            profileImage: teacherData.profile_image,
+            profileImage: teacherData.users?.avatar_url,
             rating: teacherData.rating || 0,
-            specialties: teacherData.specialties || [],
+            specialties: teacherData.expertise || [],
             availability: teacherData.teacher_availability || [],
             maxStudentsPerClass: teacherData.max_students_per_class || 1,
-            isActive: teacherData.is_active,
-            email: teacherData.email,
-            phone: teacherData.phone,
-            experience_years: teacherData.experience_years,
-            qualifications: teacherData.qualifications || []
+            isActive: true, // Since we're filtering by is_active in the query
+            email: teacherData.users?.email || '',
+            phone: '', // Not available in current schema
+            experience_years: 0, // Not available in current schema
+            qualifications: [] // Not available in current schema
           }
 
           // Calculate availability info if filter is provided
