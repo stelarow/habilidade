@@ -52,13 +52,10 @@ export function EnrollmentForm({
   const [errors, setErrors] = useState<EnrollmentValidationErrors>({})
   const [users, setUsers] = useState<User[]>([])
   const [courses, setCourses] = useState<DBCourse[]>([])
-  const [teachers, setTeachers] = useState<User[]>([])
   const [searchUser, setSearchUser] = useState('')
   const [searchCourse, setSearchCourse] = useState('')
-  const [searchTeacher, setSearchTeacher] = useState('')
   const [loadingUsers, setLoadingUsers] = useState(false)
   const [loadingCourses, setLoadingCourses] = useState(false)
-  const [loadingTeachers, setLoadingTeachers] = useState(false)
   
   // Toast hook for enhanced error handling (AC: 4)
   const { toastError, toastSuccess, toastWarning } = useToast()
@@ -155,36 +152,6 @@ export function EnrollmentForm({
     return () => clearTimeout(timeoutId)
   }, [searchCourse, supabase])
 
-  // Load teachers
-  useEffect(() => {
-    const loadTeachers = async () => {
-      setLoadingTeachers(true)
-      try {
-        let query = supabase
-          .from('users')
-          .select('id, full_name, email, avatar_url, role, created_at, updated_at')
-          .in('role', ['instructor', 'admin'])
-          .order('full_name')
-          .limit(20)
-
-        if (searchTeacher) {
-          query = query.or(`full_name.ilike.%${searchTeacher}%,email.ilike.%${searchTeacher}%`)
-        }
-
-        const { data, error } = await query
-        if (error) throw error
-        setTeachers(data || [])
-      } catch (error) {
-        console.error('Error loading teachers:', error)
-        setTeachers([])
-      } finally {
-        setLoadingTeachers(false)
-      }
-    }
-
-    const timeoutId = setTimeout(loadTeachers, 300) // Debounce search
-    return () => clearTimeout(timeoutId)
-  }, [searchTeacher, supabase])
 
   const handleInputChange = (field: keyof EnhancedEnrollmentFormData, value: string | boolean) => {
     setFormData(prev => {
@@ -430,74 +397,6 @@ export function EnrollmentForm({
               )}
             </div>
 
-            {/* Teacher Selection - Only for online courses (when is_in_person is false) */}
-            {!formData.is_in_person && (
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Professor/Instrutor (opcional)
-                </label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" />
-                  </div>
-                  <input
-                    type="text"
-                    placeholder="Buscar professor por nome ou email..."
-                    value={searchTeacher}
-                    onChange={(e) => setSearchTeacher(e.target.value)}
-                    className="block w-full pl-10 pr-3 py-2 bg-gray-800 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  />
-                </div>
-                
-                {teachers.find(t => t.id === formData.teacher_id) && (
-                  <div className="mt-2 p-3 bg-purple-900/20 rounded-md border border-purple-500/30">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-3">
-                        <UserIcon className="h-5 w-5 text-purple-400" />
-                        <div>
-                          <p className="font-medium text-purple-300">{teachers.find(t => t.id === formData.teacher_id)?.full_name}</p>
-                          <p className="text-sm text-purple-400">{teachers.find(t => t.id === formData.teacher_id)?.email}</p>
-                        </div>
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() => handleInputChange('teacher_id', '')}
-                        className="text-gray-400 hover:text-gray-300 p-1"
-                        title="Remover seleção"
-                      >
-                        <XMarkIcon className="h-4 w-4" />
-                      </button>
-                    </div>
-                  </div>
-                )}
-
-                {!teachers.find(t => t.id === formData.teacher_id) && teachers.length > 0 && (
-                  <div className="mt-2 max-h-40 overflow-y-auto border border-gray-600 rounded-md bg-gray-800">
-                    {teachers.map((teacher) => (
-                      <button
-                        key={teacher.id}
-                        type="button"
-                        onClick={() => handleInputChange('teacher_id', teacher.id)}
-                        className="w-full text-left px-3 py-2 hover:bg-gray-700 border-b border-gray-600 last:border-b-0 transition-colors"
-                      >
-                        <div className="flex items-center space-x-3">
-                          <UserIcon className="h-4 w-4 text-gray-400" />
-                          <div>
-                            <p className="font-medium text-white">{teacher.full_name}</p>
-                            <p className="text-sm text-gray-300">{teacher.email}</p>
-                            <p className="text-xs text-gray-400 capitalize">{teacher.role}</p>
-                          </div>
-                        </div>
-                      </button>
-                    ))}
-                  </div>
-                )}
-                
-                {errors.teacher_id && (
-                  <p className="mt-1 text-sm text-red-400">{errors.teacher_id}</p>
-                )}
-              </div>
-            )}
 
             {/* Access Until */}
             {mode === 'create' && (
