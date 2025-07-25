@@ -27,8 +27,7 @@ import React, { useState, useEffect, useMemo, useCallback } from 'react'
 import { Card } from '@/components/ui/card'
 import TeacherSelector from '@/components/enrollment/TeacherSelector'
 import type { Teacher, Course } from '@/components/enrollment/TeacherSelector'
-import ConditionalCalendar from '@/components/enrollment/ConditionalCalendar'
-import type { TimeSlot, CourseRequirements } from '@/components/enrollment/ConditionalCalendar'
+import SimplifiedWeeklySchedule from '@/components/enrollment/SimplifiedWeeklySchedule'
 import { CalendarDaysIcon, UserIcon, ClockIcon } from '@heroicons/react/24/outline'
 
 export interface SchedulingSectionProps {
@@ -72,127 +71,27 @@ function TeacherSelectionSection({
 }
 
 /**
- * Calendar section component
+ * Simplified Calendar section component
  */
 function CalendarSection({
   selectedTeacher,
-  selectedCourse,
   hasTwoClassesPerWeek,
   isEnabled,
   onSlotSelect
 }: {
   selectedTeacher: Teacher | null
-  selectedCourse?: Course
   hasTwoClassesPerWeek: boolean
   isEnabled: boolean
   onSlotSelect?: (slot1: string, slot2?: string) => void
 }) {
-  const [selectedSlots, setSelectedSlots] = useState<TimeSlot[]>([])
-
-  const courseRequirements: CourseRequirements = useMemo(() => ({
-    totalHours: selectedCourse?.duration_hours || 40,
-    sessionDuration: 120, // 2 hours per session
-    weeklyFrequency: hasTwoClassesPerWeek ? 2 : 1
-  }), [selectedCourse, hasTwoClassesPerWeek])
-
-  const handleSlotSelect = useCallback((slot: TimeSlot) => {
-    setSelectedSlots(prev => {
-      const isSelected = prev.some(s => 
-        s.slotId === slot.slotId && 
-        s.date.getTime() === slot.date.getTime()
-      )
-
-      let newSlots: TimeSlot[]
-      
-      if (isSelected) {
-        // Remove slot
-        newSlots = prev.filter(s => 
-          !(s.slotId === slot.slotId && s.date.getTime() === slot.date.getTime())
-        )
-      } else {
-        // Add slot
-        if (hasTwoClassesPerWeek && prev.length >= 2) {
-          // Replace oldest slot when at limit for two classes
-          newSlots = [prev[1], slot]
-        } else if (!hasTwoClassesPerWeek && prev.length >= 1) {
-          // Replace slot when at limit for single class
-          newSlots = [slot]
-        } else {
-          // Add slot
-          newSlots = [...prev, slot]
-        }
-      }
-
-      // Notify parent component of slot selection
-      if (onSlotSelect) {
-        onSlotSelect(newSlots[0]?.slotId || '', newSlots[1]?.slotId)
-      }
-
-      return newSlots
-    })
-  }, [hasTwoClassesPerWeek, onSlotSelect])
-
-  // Clear slots when teacher changes or component becomes disabled
-  useEffect(() => {
-    if (!selectedTeacher || !isEnabled) {
-      setSelectedSlots([])
-      if (onSlotSelect) {
-        onSlotSelect('', '')
-      }
-    }
-  }, [selectedTeacher, isEnabled, onSlotSelect])
-
-  // Update slots when hasTwoClassesPerWeek changes
-  useEffect(() => {
-    if (!hasTwoClassesPerWeek && selectedSlots.length > 1) {
-      const newSlots = [selectedSlots[0]]
-      setSelectedSlots(newSlots)
-      if (onSlotSelect) {
-        onSlotSelect(newSlots[0]?.slotId || '', '')
-      }
-    }
-  }, [hasTwoClassesPerWeek, selectedSlots, onSlotSelect])
-
-  if (!isEnabled || !selectedTeacher) {
-    return (
-      <div className="space-y-4">
-        <div className="flex items-center gap-2 mb-4">
-          <CalendarDaysIcon className="w-5 h-5 text-gray-500" />
-          <h3 className="text-lg font-semibold text-gray-500">Calendário de Horários</h3>
-        </div>
-        
-        <Card className="p-6 border-gray-600 bg-gray-800/50">
-          <div className="text-center py-8">
-            <CalendarDaysIcon className="w-12 h-12 text-gray-500 mx-auto mb-4" />
-            <p className="text-gray-400">
-              {!selectedTeacher 
-                ? 'Selecione um professor para visualizar os horários disponíveis'
-                : 'Calendário desabilitado'
-              }
-            </p>
-          </div>
-        </Card>
-      </div>
-    )
-  }
-
   return (
     <div className="space-y-4">
-      <div className="flex items-center gap-2 mb-4">
-        <CalendarDaysIcon className="w-5 h-5 text-[#00c4ff]" />
-        <h3 className="text-lg font-semibold text-white">Calendário de Horários</h3>
-        <span className="text-red-400 text-sm">*</span>
-      </div>
-      
-      <ConditionalCalendar
-        teacherId={selectedTeacher.id}
-        availabilityData={selectedTeacher.availability}
-        onSlotSelect={handleSlotSelect}
-        selectedSlots={selectedSlots}
-        courseRequirements={courseRequirements}
-        maxSelectableSlots={courseRequirements.weeklyFrequency}
-        enableMultiSelect={courseRequirements.weeklyFrequency > 1}
-        className="calendar-section"
+      <SimplifiedWeeklySchedule
+        teacherId={selectedTeacher?.id}
+        onSlotSelect={onSlotSelect}
+        maxSelectableSlots={hasTwoClassesPerWeek ? 2 : 1}
+        hasTwoClassesPerWeek={hasTwoClassesPerWeek}
+        className="simplified-calendar-section"
       />
     </div>
   )
@@ -294,7 +193,7 @@ export function SchedulingSection({
         <div>
           <h2 className="text-xl font-bold text-white">Agendamento de Aulas</h2>
           <p className="text-gray-300 text-sm">
-            Configure professor e horários para aulas presenciais
+            Selecione professor e horários semanais para aulas presenciais
           </p>
         </div>
       </div>
@@ -313,10 +212,9 @@ export function SchedulingSection({
         isEnabled={isVisible}
       />
 
-      {/* Calendar Section (implements AC: 3 - ConditionalCalendar, initially disabled until teacher is selected) */}
+      {/* Simplified Calendar Section */}
       <CalendarSection
         selectedTeacher={selectedTeacher}
-        selectedCourse={selectedCourse}
         hasTwoClassesPerWeek={hasTwoClassesPerWeek}
         isEnabled={isCalendarEnabled}
         onSlotSelect={onSlotSelect}
@@ -332,10 +230,10 @@ export function SchedulingSection({
         </div>
         
         <ul className="text-xs text-blue-400 space-y-1">
-          <li>• Primeiro selecione o professor, depois os horários disponíveis serão exibidos</li>
-          <li>• Para duas aulas por semana, você pode selecionar até 2 horários</li>
-          <li>• O calendário mostra a disponibilidade real do professor selecionado</li>
-          <li>• Horários em conflito com feriados são automaticamente marcados como indisponíveis</li>
+          <li>• Primeiro selecione o professor para ver os horários semanais disponíveis</li>
+          <li>• Os horários mostram as vagas ocupadas/total para cada período</li>
+          <li>• Para duas aulas por semana, selecione até 2 horários diferentes</li>
+          <li>• Horários indisponíveis estão destacados em vermelho</li>
         </ul>
       </Card>
     </div>

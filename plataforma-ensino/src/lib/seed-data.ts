@@ -3,6 +3,9 @@ import { createClient } from '@/lib/supabase/client'
 export async function seedSampleCourses() {
   const supabase = createClient()
 
+  // First, create sample instructors
+  await seedSampleInstructors()
+
   // Sample categories
   const categories = [
     { id: '1', name: 'Inteligência Artificial', color_theme: 'ia', icon: '🤖', status: 'active' },
@@ -192,6 +195,153 @@ export async function enrollUserInSampleCourses(userId: string) {
 
   } catch (error) {
     console.error('Error enrolling user:', error)
+    return { success: false, error }
+  }
+}
+
+export async function seedSampleInstructors() {
+  const supabase = createClient()
+
+  try {
+    // Sample instructor users (these need to be created in auth first)
+    const instructorUsers = [
+      {
+        id: '1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p',
+        email: 'prof.silva@habilidade.com',
+        full_name: 'Prof. João Silva',
+        role: 'instructor'
+      },
+      {
+        id: '2b3c4d5e-6f7g-8h9i-0j1k-2l3m4n5o6p7q',
+        email: 'prof.santos@habilidade.com',
+        full_name: 'Prof. Maria Santos',
+        role: 'instructor'
+      },
+      {
+        id: '3c4d5e6f-7g8h-9i0j-1k2l-3m4n5o6p7q8r',
+        email: 'prof.costa@habilidade.com',
+        full_name: 'Prof. Carlos Costa',
+        role: 'instructor'
+      }
+    ]
+
+    // Insert instructor users (only if they don't exist)
+    for (const user of instructorUsers) {
+      const { error: userError } = await supabase
+        .from('users')
+        .upsert(user, { onConflict: 'id' })
+
+      if (userError && !userError.message.includes('duplicate')) {
+        console.error('Error creating instructor user:', userError)
+      }
+    }
+
+    // Sample instructors
+    const instructors = [
+      {
+        id: '1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p',
+        user_id: '1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p',
+        bio: 'Especialista em Inteligência Artificial com 10 anos de experiência',
+        expertise: ['Inteligência Artificial', 'Machine Learning', 'Python'],
+        rating: 4.8,
+        total_reviews: 45
+      },
+      {
+        id: '2b3c4d5e-6f7g-8h9i-0j1k-2l3m4n5o6p7q',
+        user_id: '2b3c4d5e-6f7g-8h9i-0j1k-2l3m4n5o6p7q',
+        bio: 'Designer gráfica profissional com foco em branding e identidade visual',
+        expertise: ['Design Gráfico', 'Branding', 'Adobe Creative Suite'],
+        rating: 4.9,
+        total_reviews: 62
+      },
+      {
+        id: '3c4d5e6f-7g8h-9i0j-1k2l-3m4n5o6p7q8r',
+        user_id: '3c4d5e6f-7g8h-9i0j-1k2l-3m4n5o6p7q8r',
+        bio: 'Desenvolvedor full-stack com expertise em tecnologias web modernas',
+        expertise: ['Programação Web', 'JavaScript', 'React', 'Node.js'],
+        rating: 4.7,
+        total_reviews: 38
+      }
+    ]
+
+    const { error: instructorError } = await supabase
+      .from('instructors')
+      .upsert(instructors, { onConflict: 'id' })
+
+    if (instructorError) {
+      console.error('Error inserting instructors:', instructorError)
+      return { success: false, error: instructorError }
+    }
+
+    // Create standard availability for all instructors
+    // All instructors have the same standard schedule:
+    // Monday to Friday: 08:00-10:00, 10:00-12:00, 13:30-15:30, 15:30-17:30, 18:00-20:00, 20:00-22:00
+    // Saturday: 08:00-10:00, 10:00-12:00
+
+    const availabilitySlots = []
+    
+    for (const instructor of instructors) {
+      // Monday to Friday (day_of_week: 1-5)
+      for (let day = 1; day <= 5; day++) {
+        const dailySlots = [
+          { start_time: '08:00:00', end_time: '10:00:00', max_students: 3 },
+          { start_time: '10:00:00', end_time: '12:00:00', max_students: 3 },
+          { start_time: '13:30:00', end_time: '15:30:00', max_students: 3 },
+          { start_time: '15:30:00', end_time: '17:30:00', max_students: 3 },
+          { start_time: '18:00:00', end_time: '20:00:00', max_students: 3 },
+          { start_time: '20:00:00', end_time: '22:00:00', max_students: 3 }
+        ]
+
+        dailySlots.forEach(slot => {
+          availabilitySlots.push({
+            teacher_id: instructor.id,
+            day_of_week: day,
+            start_time: slot.start_time,
+            end_time: slot.end_time,
+            max_students: slot.max_students,
+            is_active: true
+          })
+        })
+      }
+
+      // Saturday (day_of_week: 6)
+      const saturdaySlots = [
+        { start_time: '08:00:00', end_time: '10:00:00', max_students: 3 },
+        { start_time: '10:00:00', end_time: '12:00:00', max_students: 3 }
+      ]
+
+      saturdaySlots.forEach(slot => {
+        availabilitySlots.push({
+          teacher_id: instructor.id,
+          day_of_week: 6,
+          start_time: slot.start_time,
+          end_time: slot.end_time,
+          max_students: slot.max_students,
+          is_active: true
+        })
+      })
+    }
+
+    const { error: availabilityError } = await supabase
+      .from('teacher_availability')
+      .upsert(availabilitySlots)
+
+    if (availabilityError) {
+      console.error('Error inserting teacher availability:', availabilityError)
+      return { success: false, error: availabilityError }
+    }
+
+    console.log('Sample instructors and availability seeded successfully!')
+    return { 
+      success: true, 
+      data: { 
+        instructors: instructors.length,
+        availability_slots: availabilitySlots.length 
+      } 
+    }
+
+  } catch (error) {
+    console.error('Error seeding instructors:', error)
     return { success: false, error }
   }
 }
