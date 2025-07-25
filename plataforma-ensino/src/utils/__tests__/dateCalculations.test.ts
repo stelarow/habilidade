@@ -332,8 +332,8 @@ describe('Date Calculation Utilities', () => {
       const duration = 4 // 4 working days
       const endDate = calculateCourseEndDate(start, duration, [])
       
-      // Should cross year boundary (Dec 30, 31, Jan 2, 3)
-      expect(formatDateISO(endDate)).toBe('2025-01-03')
+      // Should cross year boundary (Dec 30, 31, Jan 1, 2)
+      expect(formatDateISO(endDate)).toBe('2025-01-02')
     })
 
     it('should handle month boundaries correctly', () => {

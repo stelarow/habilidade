@@ -8,20 +8,12 @@ import { ShimmerButton } from '@/components/ui/shimmer-button';
 import { RainbowButton } from '@/components/ui/rainbow-button';
 import { RefreshCw, Users, Calendar, Clock, BookOpen } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { CompletionIndicatorCompact } from './CompletionIndicator';
+import { calculateCompletionStatus, getCompletionStatusForClass } from '@/utils/completionStatus';
+import { formatDateISO } from '@/utils/dateCalculations';
+import type { StudentWithCompletion } from '@/types/completion-status';
 
-interface CalendarData {
-  id: string;
-  teacherId: string;
-  studentEmail: string;
-  studentName?: string;
-  courseName: string;
-  dayOfWeek: number;
-  startTime: string;
-  endTime: string;
-  slotLabel: string;
-  startDate?: string;
-  endDate?: string;
-}
+interface CalendarData extends StudentWithCompletion {}
 
 interface EnhancedCalendarViewProps {
   teacherId?: string;
@@ -76,7 +68,25 @@ export default function EnhancedCalendarView({ teacherId }: EnhancedCalendarView
       }
 
       const result = await response.json();
-      setCalendarData(result.data || []);
+      const rawData = result.data || [];
+      
+      // Process completion status for each calendar item
+      const dataWithCompletionStatus = rawData.map((item: any) => {
+        let completionStatus = { type: 'none', label: '', daysRemaining: 0, isLastClass: false, isWithinOneMonth: false };
+        
+        if (item.endDate) {
+          // For now, calculate basic completion status
+          // Last class detection will be handled per calendar cell
+          completionStatus = calculateCompletionStatus(item.endDate);
+        }
+        
+        return {
+          ...item,
+          completionStatus
+        };
+      });
+      
+      setCalendarData(dataWithCompletionStatus);
 
     } catch (err) {
       console.error('Error fetching calendar:', err);
@@ -100,11 +110,65 @@ export default function EnhancedCalendarView({ teacherId }: EnhancedCalendarView
     );
   };
 
-  const stats = useMemo(() => ({
-    totalClasses: calendarData.length,
-    occupiedSlots: new Set(calendarData.map(item => `${item.dayOfWeek}-${item.slotLabel}`)).size,
-    uniqueStudents: new Set(calendarData.map(item => item.studentEmail)).size
-  }), [calendarData]);
+  // Helper function to get current week dates and calculate completion status for specific class dates
+  const getWeekDates = () => {
+    const today = new Date();
+    const currentDay = today.getDay(); // 0 = Sunday, 1 = Monday, etc.
+    const mondayOffset = currentDay === 0 ? -6 : 1 - currentDay; // Adjust for Sunday
+    const monday = new Date(today);
+    monday.setDate(today.getDate() + mondayOffset);
+    
+    const weekDates = [];
+    for (let i = 0; i < 6; i++) { // Monday to Saturday
+      const date = new Date(monday);
+      date.setDate(monday.getDate() + i);
+      weekDates.push(formatDateISO(date));
+    }
+    return weekDates;
+  };
+
+  const currentWeekDates = getWeekDates();
+
+  const getStudentsWithCompletionForDate = (dayIndex: number, timeSlot: string) => {
+    const students = getStudentsForSlot(dayIndex, timeSlot);
+    const classDate = currentWeekDates[dayIndex];
+    
+    return students.map(student => {
+      if (!student.endDate) {
+        return student;
+      }
+      
+      // Calculate completion status for this specific class date
+      const completionStatusForClass = getCompletionStatusForClass({
+        endDate: student.endDate,
+        classDate
+      });
+      
+      return {
+        ...student,
+        completionStatus: completionStatusForClass
+      };
+    });
+  };
+
+  const stats = useMemo(() => {
+    const studentsWithOneMonth = calendarData.filter(item => 
+      item.completionStatus?.type === 'one_month_remaining'
+    ).length;
+    
+    const studentsWithLastClass = calendarData.filter(item => 
+      item.completionStatus?.type === 'last_class'
+    ).length;
+    
+    return {
+      totalClasses: calendarData.length,
+      occupiedSlots: new Set(calendarData.map(item => `${item.dayOfWeek}-${item.slotLabel}`)).size,
+      uniqueStudents: new Set(calendarData.map(item => item.studentEmail)).size,
+      studentsNearCompletion: studentsWithOneMonth + studentsWithLastClass,
+      studentsWithOneMonth,
+      studentsWithLastClass
+    };
+  }, [calendarData]);
 
   if (loading) {
     return (
@@ -177,7 +241,7 @@ export default function EnhancedCalendarView({ teacherId }: EnhancedCalendarView
 
       {/* Statistics Cards */}
       <BlurFade delay={0.2}>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <MagicCard className="group">
             <div className="bg-gradient-to-br from-blue-500/10 to-cyan-500/10 border border-blue-200 dark:border-blue-800 rounded-lg p-4 transition-all duration-300 group-hover:shadow-lg">
               <div className="flex items-center space-x-3">
@@ -219,6 +283,20 @@ export default function EnhancedCalendarView({ teacherId }: EnhancedCalendarView
               </div>
             </div>
           </MagicCard>
+
+          <MagicCard className="group">
+            <div className="bg-gradient-to-br from-orange-500/10 to-red-500/10 border border-orange-200 dark:border-orange-800 rounded-lg p-4 transition-all duration-300 group-hover:shadow-lg">
+              <div className="flex items-center space-x-3">
+                <div className="p-2 bg-orange-100 dark:bg-orange-900/50 rounded-full">
+                  <Clock className="h-5 w-5 text-orange-600 dark:text-orange-400" />
+                </div>
+                <div>
+                  <div className="text-sm text-gray-500 dark:text-gray-400">Próximos ao Fim</div>
+                  <div className="text-2xl font-bold text-gray-900 dark:text-gray-100">{stats.studentsNearCompletion}</div>
+                </div>
+              </div>
+            </div>
+          </MagicCard>
         </div>
       </BlurFade>
 
@@ -254,7 +332,7 @@ export default function EnhancedCalendarView({ teacherId }: EnhancedCalendarView
                       </div>
                       
                       {DAYS.map((day, dayIndex) => {
-                        const students = getStudentsForSlot(dayIndex, timeSlot);
+                        const students = getStudentsWithCompletionForDate(dayIndex, timeSlot);
                         const isOccupied = students.length > 0;
                         const isFull = students.length >= 3;
                         
@@ -278,6 +356,15 @@ export default function EnhancedCalendarView({ teacherId }: EnhancedCalendarView
                                             {student.studentName || student.studentEmail}
                                           </div>
                                         </div>
+                                        {student.completionStatus && student.completionStatus.type !== 'none' && (
+                                          <div className="mb-1">
+                                            <CompletionIndicatorCompact
+                                              type={student.completionStatus.type}
+                                              label={student.completionStatus.label}
+                                              daysRemaining={student.completionStatus.daysRemaining}
+                                            />
+                                          </div>
+                                        )}
                                         <div className="flex items-center space-x-1">
                                           <BookOpen className="h-3 w-3 text-blue-600 dark:text-blue-400" />
                                           <div className="text-blue-600 dark:text-blue-300 truncate text-xs" 

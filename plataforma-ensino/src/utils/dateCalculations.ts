@@ -41,8 +41,28 @@ export function parseDateISO(dateString: string): Date {
     throw new Error(`Invalid date format: ${dateString}. Expected YYYY-MM-DD`);
   }
 
+  // Validate the actual date by parsing components
+  const [year, month, day] = dateString.split('-').map(Number);
+  
+  // Check for obviously invalid dates
+  if (month < 1 || month > 12) {
+    throw new Error(`Invalid date: ${dateString}`);
+  }
+  
+  if (day < 1 || day > 31) {
+    throw new Error(`Invalid date: ${dateString}`);
+  }
+  
+  // Create date and verify it matches input (handles edge cases like Feb 30)
   const date = new Date(dateString + 'T00:00:00.000Z');
   if (isNaN(date.getTime())) {
+    throw new Error(`Invalid date: ${dateString}`);
+  }
+  
+  // Verify the date components match the input (prevents Feb 30 -> Mar 2)
+  if (date.getUTCFullYear() !== year || 
+      date.getUTCMonth() !== month - 1 || 
+      date.getUTCDate() !== day) {
     throw new Error(`Invalid date: ${dateString}`);
   }
 
@@ -108,16 +128,12 @@ export function calculateCourseEndDate(
   const currentDate = new Date(startDate);
   let workingDaysCount = 0;
 
-  // If start date is not a working day, find the next working day
-  while (isWeekend(currentDate) || isHoliday(currentDate, holidays)) {
-    currentDate.setUTCDate(currentDate.getUTCDate() + 1);
-  }
-
-  // Count working days until we reach the desired duration
+  // Start from the given date and count working days
   while (workingDaysCount < duration) {
     const isWeekendDay = isWeekend(currentDate);
     const isHolidayDay = isHoliday(currentDate, holidays);
 
+    // If current day is a working day, count it
     if (!isWeekendDay && !isHolidayDay) {
       workingDaysCount++;
     }
@@ -221,7 +237,24 @@ export function addBusinessDays(
   businessDays: number,
   holidays: Holiday[] = getBrazilianHolidays2025()
 ): Date {
-  return calculateCourseEndDate(startDate, businessDays, holidays);
+  if (businessDays <= 0) {
+    throw new Error('Business days must be a positive number');
+  }
+
+  const currentDate = new Date(startDate);
+  let daysAdded = 0;
+
+  while (daysAdded < businessDays) {
+    // Move to next day
+    currentDate.setUTCDate(currentDate.getUTCDate() + 1);
+    
+    // Check if this day is a business day
+    if (!isWeekend(currentDate) && !isHoliday(currentDate, holidays)) {
+      daysAdded++;
+    }
+  }
+
+  return currentDate;
 }
 
 /**
@@ -231,7 +264,13 @@ export function addBusinessDays(
  * @returns Next business day
  */
 export function getNextBusinessDay(date: Date, holidays: Holiday[] = getBrazilianHolidays2025()): Date {
-  return addBusinessDays(date, 1, holidays);
+  const nextDate = new Date(date);
+  
+  do {
+    nextDate.setUTCDate(nextDate.getUTCDate() + 1);
+  } while (isWeekend(nextDate) || isHoliday(nextDate, holidays));
+  
+  return nextDate;
 }
 
 /**

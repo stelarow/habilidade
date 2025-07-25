@@ -48,26 +48,12 @@ export interface SchedulingSectionProps {
 function TeacherSelectionSection({
   selectedCourse,
   teacherId,
-  onTeacherChange
+  onTeacherSelect
 }: {
   selectedCourse?: Course
   teacherId: string
-  onTeacherChange: (teacherId: string) => void
+  onTeacherSelect: (teacher: Teacher) => void
 }) {
-  const [selectedTeacher, setSelectedTeacher] = useState<Teacher | null>(null)
-
-  const handleTeacherSelect = useCallback((teacher: Teacher) => {
-    setSelectedTeacher(teacher)
-    onTeacherChange(teacher.id)
-  }, [onTeacherChange])
-
-  // Reset selected teacher when teacherId changes externally
-  useEffect(() => {
-    if (!teacherId) {
-      setSelectedTeacher(null)
-    }
-  }, [teacherId])
-
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-2 mb-4">
@@ -77,7 +63,7 @@ function TeacherSelectionSection({
       </div>
       
       <TeacherSelector
-        onTeacherSelect={handleTeacherSelect}
+        onTeacherSelect={onTeacherSelect}
         selectedCourse={selectedCourse}
         className="teacher-selection-section"
       />
@@ -280,12 +266,19 @@ export function SchedulingSection({
     onTeacherChange(newTeacherId)
   }, [onTeacherChange])
 
-  const isCalendarEnabled = isVisible && !!teacherId
+  // Handle teacher selection from TeacherSelector
+  const handleTeacherSelect = useCallback((teacher: Teacher) => {
+    setSelectedTeacher(teacher)
+    onTeacherChange(teacher.id)
+  }, [onTeacherChange])
 
-  // Track selected teacher for calendar integration
+  const isCalendarEnabled = isVisible && !!teacherId && !!selectedTeacher
+
+  // Sync selectedTeacher when teacherId changes externally
   useEffect(() => {
-    // This effect would be used to sync with external teacher selection
-    // if needed for the calendar component
+    if (!teacherId) {
+      setSelectedTeacher(null)
+    }
   }, [teacherId])
 
   // Render nothing when not visible (implements AC: 2)
@@ -310,7 +303,7 @@ export function SchedulingSection({
       <TeacherSelectionSection
         selectedCourse={selectedCourse}
         teacherId={teacherId}
-        onTeacherChange={handleTeacherChange}
+        onTeacherSelect={handleTeacherSelect}
       />
 
       {/* Two Classes Per Week Checkbox (implements AC: 3) */}
