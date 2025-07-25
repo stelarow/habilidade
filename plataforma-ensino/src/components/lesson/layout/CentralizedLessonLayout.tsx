@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { LessonContent } from '@/types/lesson/content';
+import type { LessonContent } from '@/types/lesson/content';
 
 interface CentralizedLessonLayoutProps {
   lesson: LessonContent;

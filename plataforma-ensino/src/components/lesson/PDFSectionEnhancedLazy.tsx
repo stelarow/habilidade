@@ -1,6 +1,10 @@
 import React from 'react';
 import dynamic from 'next/dynamic';
 
+// Import CSS statically to avoid dynamic import issues
+import 'react-pdf/dist/Page/AnnotationLayer.css';
+import 'react-pdf/dist/Page/TextLayer.css';
+
 // Lazy load the heavy PDF components with proper loading states
 const Document = dynamic(
   () => import('react-pdf').then(mod => ({ default: mod.Document })),
@@ -27,25 +31,9 @@ const Page = dynamic(
   }
 );
 
-// Lazy load CSS imports to prevent blocking
-const PDFCSSLoader = dynamic(
-  () => Promise.all([
-    import('react-pdf/dist/Page/AnnotationLayer.css'),
-    import('react-pdf/dist/Page/TextLayer.css')
-  ]).then(() => ({ default: () => null })),
-  { ssr: false }
-);
-
 // Re-export the enhanced component with lazy loading
 const PDFSectionEnhanced = dynamic(
-  () => import('./PDFSectionEnhanced').then(mod => ({
-    default: (props: any) => (
-      <>
-        <PDFCSSLoader />
-        <mod.default {...props} />
-      </>
-    )
-  })),
+  () => import('./PDFSectionEnhanced'),
   {
     loading: () => (
       <section className="relative bg-muted rounded-lg mb-4">
