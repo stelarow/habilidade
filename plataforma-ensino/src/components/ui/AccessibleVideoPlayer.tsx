@@ -1,7 +1,8 @@
 'use client'
 
 import React, { useState, useEffect, useRef } from 'react'
-import { LazyVideoPlayer, LazyVideoPlayerProps } from './LazyVideoPlayer'
+import { LazyVideoPlayer } from './LazyVideoPlayer'
+import type { LazyVideoPlayerProps } from './LazyVideoPlayer'
 import { VideoPlayerRef } from './ReactVideoPlayer'
 import { cn } from '@/lib/utils'
 

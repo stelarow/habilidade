@@ -1,91 +1,323 @@
-# UI/UX Specification: Stelarow Integrated Blog
+# Stelarow Integrado Blog UI/UX Specification
 
-**Autor:** BMad-UX (UX Expert)
-**Status:** Versão 1.0 - Pronto para Arquitetura de Frontend
-**Baseado em:** `docs/prd.md`
+### **Introduction**
+This document defines the user experience goals, information architecture, user flows, and visual design specifications for the Stelarow Integrado Blog's user interface. It serves as the foundation for visual design and frontend development, ensuring a cohesive and user-centered experience.
 
----
+#### **Overall UX Goals & Principles**
+Based on the PRD, the core vision is a clean, fast, and readable experience that integrates seamlessly with the main Stelarow platform.
 
-### 1. Visão Geral e Filosofia de Design
+* **Target User Personas**
+    * **Content Author (Admin/Instructor):** Platform administrators and instructors who need an efficient and intuitive interface to create, manage, and publish articles.
+    * **Visitor/Reader:** Potential or current students visiting the site who want to discover and consume content easily and without distraction.
+* **Usability Goals**
+    * **Readability:** Content is presented in a clean, legible format on all devices.
+    * **Performance:** Pages load quickly, with a First Contentful Paint (FCP) under 2 seconds.
+    * **Seamless Journey:** The transition from reading a blog post to exploring a course on the main platform feels natural and unintrusive.
+    * **Authoring Efficiency:** Authors can create and publish a formatted article with minimal friction.
+* **Design Principles**
+    1.  **Seamless Integration:** The blog should feel like a natural extension of the Stelarow platform, not a separate entity. It will use the existing design system, colors, and typography.
+    2.  **Readability First:** All design choices must prioritize a clean, focused, and comfortable reading experience.
+    3.  **Performance by Default:** The UI must be lightweight and fast to ensure optimal SEO and user experience.
+    4.  **Clear Path to Conversion:** While the focus is on content, the path for a reader to become a student must be clear and logical via contextual CTAs.
 
-Esta especificação detalha a interface e a experiência do utilizador para o novo blog da Stelarow. O design seguirá três princípios fundamentais:
-* **Consistência de Marca:** A UI do blog será uma extensão natural da plataforma Stelarow existente, utilizando o mesmo design system, paleta de cores, tipografia e componentes para criar uma experiência unificada.
-* **Foco no Conteúdo:** O design será minimalista e limpo, garantindo que o conteúdo seja o protagonista. A legibilidade e a velocidade de carregamento são prioridades máximas para otimizar a experiência de leitura.
-* **Jornada Orientada à Conversão:** Cada elemento de design será intencionalmente projetado para guiar o utilizador desde a descoberta do artigo até a consideração de um curso, utilizando CTAs claros e contextuais.
+#### **Change Log**
+| Date | Version | Description | Author |
+| :--- | :--- | :--- | :--- |
+| 2025-07-25 | 1.0 | Initial draft based on PRD v1.0 | Sally (BMad-UX) |
 
-### 2. Fluxo do Utilizador Principal (User Flow)
+***
 
-O fluxo principal antecipado para um novo utilizador é o seguinte:
+### **Information Architecture (IA)**
+This section defines how the blog's content and features are organized and structured.
 
-1.  **Descoberta (Entrada):** O utilizador encontra um artigo do blog através de um motor de busca (ex: Google) ou de um link partilhado.
-2.  **Página do Artigo:** Aterra diretamente na página do artigo. A página carrega rapidamente (FCP < 2s) e apresenta o conteúdo de forma clara e legível em qualquer dispositivo.
-3.  **Engajamento e Conversão:**
-    * Durante a leitura, o utilizador encontra um **CTA contextual** (ex: "Gostou deste artigo sobre Next.js? Conheça nosso curso completo!").
-    * Ao final do artigo, encontra uma seção de **"Cursos Relacionados"** e uma lista de **"Artigos Semelhantes"**.
-4.  **Navegação para a Plataforma:** Ao clicar em um CTA ou curso, o utilizador é levado diretamente para a página do curso correspondente na plataforma principal, completando a jornada de conversão.
+#### **Site Map / Screen Inventory**
+The diagram below illustrates the key pages of the blog and their relationships, separating the public-facing areas from the internal authoring interface.
 
-### 3. Wireframes (Descrição Estrutural)
+```mermaid
+graph TD
+    subgraph Stelarow Main Platform
+        A[Stelarow Website]
+        P[Stelarow Admin Panel]
+    end
 
-#### 3.1. Página Inicial do Blog (`/blog`)
+    subgraph Public Blog (/blog)
+        B[Blog Homepage] --> C(Article Page);
+        B --> D(Category/Tag Page);
+        B --> E(Search Results Page);
+        D --> C;
+        E --> C;
+    end
+    
+    subgraph Authoring Area (in Admin Panel)
+        F(Blog Dashboard) --> G(Article List);
+        G --> H(Create/Edit Article Form);
+        F --> H;
+    end
 
-* **Header:** Header global da Stelarow (consistente com a plataforma).
-* **Secção Principal:** Um artigo em destaque (o mais recente ou um fixado manualmente).
-* **Grid de Artigos:** Uma lista paginada de artigos em formato de cartão (`ArticleCard`), mostrando imagem, título, resumo e categorias/tags.
-* **Barra Lateral (Desktop) / Seção (Mobile):**
-    * Componente de Pesquisa (`SearchBar`).
-    * Lista de Categorias para filtro.
-    * CTA para a newsletter principal.
-* **Footer:** Footer global da Stelarow.
+    A --> B;
+    P --> F;
+Navigation Structure
+Main Site Integration: The primary Stelarow website navigation will feature a prominent "Blog" link that directs users to the Blog Homepage.
 
-#### 3.2. Página do Artigo (`/blog/[slug]`)
+Blog Internal Navigation: On the blog pages, users will find:
 
-* **Header:** Header global.
-* **Título do Artigo:** Título `H1` grande e claro.
-* **Metadados:** Nome do autor, data de publicação, tempo de leitura estimado.
-* **Imagem de Destaque:** Imagem principal do artigo.
-* **Corpo do Conteúdo:** Renderização do Markdown, com estilos para parágrafos, listas, código (`<code>`), citações (`<blockquote>`), etc. Otimizado para legibilidade.
-* **CTAs Embutidos:** Componentes de CTA estrategicamente posicionados dentro do corpo do artigo.
-* **Botões de Partilha Social:** Ícones para partilhar em redes sociais.
-* **Secção de Cursos Relacionados:** Cards de cursos da plataforma principal, filtrados por relevância com o tema do artigo.
-* **Secção de Artigos Semelhantes:** Grid de `ArticleCard` de outros posts.
-* **Footer:** Footer global.
+A navigation bar with links to key Categories.
 
-#### 3.3. Interface de Criação/Edição (`/admin/blog/new` ou `/admin/blog/edit/[id]`)
+A clearly visible Search field.
 
-* **Acesso:** Protegido por autenticação (papéis de `instrutor` e `administrador`).
-* **Layout:** Interface de formulário simples e funcional.
-* **Campos de Formulário:**
-    * `Título` (input de texto).
-    * `Slug` (input de texto, com geração automática a partir do título).
-    * `Resumo` (textarea).
-    * `Imagem de Destaque` (componente de upload de imagem).
-    * **Editor Markdown (`MarkdownEditor`):** Área principal para escrever o conteúdo, com preview em tempo real.
-    * **Configurações de SEO:** Campos para `Meta Title` e `Meta Description`.
-    * **Categorias e Tags:** Seletor múltiplo ou campo de input para adicionar taxonomias.
-    * **Status:** Dropdown para selecionar `Rascunho` ou `Publicado`.
-* **Ações:** Botões para `Salvar Rascunho` e `Publicar`.
+Tags and Categories listed on article pages will be clickable, leading to the respective listing pages.
 
-### 4. Componentes Reutilizáveis
+Breadcrumbs: To aid orientation, a breadcrumb trail will be present on article and category/tag pages.
 
-Os seguintes componentes de UI devem ser criados ou adaptados do design system existente:
+Example: Home > Blog > Nome da Categoria > Título do Artigo
 
-* **`ArticleCard`:** Componente para exibir um resumo do artigo na página inicial e listagens.
-    * Props: `imageUrl`, `title`, `excerpt`, `tags`, `slug`.
-* **`SearchBar`:** Campo de input para pesquisa.
-    * Props: `onSearch`.
-* **`TagPill`:** Componente visual para exibir uma categoria ou tag.
-    * Props: `label`, `url`.
-* **`CtaSection`:** Bloco de chamada para ação para ser usado nos artigos.
-    * Props: `title`, `text`, `buttonLabel`, `buttonUrl`.
-* **`MarkdownEditor`:** Editor de texto para a área de administração.
-* **`ImageUploader`:** Componente para upload e gestão de imagens.
+Authoring Access: Users with "instrutor" or "administrador" roles will find a new "Blog Management" section within the main Stelarow Admin Panel to access the authoring tools.
 
-### 5. Acessibilidade (WCAG)
+User Flows
+Here we define the step-by-step journeys for the most critical tasks identified in the PRD.
 
-Toda a interface deve seguir as diretrizes WCAG 2.1 nível AA, incluindo:
-* Contraste de cores adequado.
-* Uso de atributos `alt` em todas as imagens.
-* Navegação por teclado completa.
-* Uso de semântica HTML correta (tags `main`, `article`, `nav`, `aside`).
+Flow 1: Reading an Article
+User Goal: To find and read an article of interest.
 
----
+Entry Points: Main Stelarow site, direct link (social media, email), search engine result, clicking a category/tag link.
+
+Success Criteria: The user successfully navigates to an article page and can read its full content without interruption.
+
+Flow Diagram:
+
+Snippet de código
+
+graph TD
+    A(Enters Blog Homepage) --> B{Sees list of articles};
+    B --> C(Clicks on an article title);
+    C --> D[Article Page Loads];
+    D --> E(Reads content);
+    E --> F(Clicks on a CTA);
+    F --> G[Navigates to Course Page];
+Edge Cases & Error Handling:
+
+What happens if an article slug is invalid or the article is unpublished? -> A clear "404 - Article Not Found" page should be displayed with a link back to the blog homepage.
+
+Flow 2: Searching for Content
+User Goal: To find articles related to a specific keyword.
+
+Entry Points: The search bar on any page of the blog.
+
+Success Criteria: The user receives a relevant list of articles or a clear "no results" message.
+
+Flow Diagram:
+
+Snippet de código
+
+graph TD
+    A(User is on a blog page) --> B(Types keyword in Search Bar);
+    B --> C(Submits search);
+    C --> D{Results Found?};
+    D -- Yes --> E[Displays Search Results Page];
+    D -- No --> F[Displays "No results found" message];
+    E --> G(User clicks an article);
+    G --> H[Article Page Loads];
+Edge Cases & Error Handling:
+
+Search for an empty term -> The search button should be disabled or it should return to the main blog page.
+
+Search term with special characters -> Input should be sanitized before querying the database.
+
+Flow 3: Creating a New Post (Author Flow)
+User Goal: To write, format, and publish a new article.
+
+Entry Points: "Blog Management" section in the Stelarow Admin Panel.
+
+Success Criteria: An author can successfully create a new article, save it as a draft, and later publish it to the public blog.
+
+Flow Diagram:
+
+Snippet de código
+
+graph TD
+    A(Author logs into Admin Panel) --> B(Navigates to Blog Management);
+    B --> C(Clicks "Create New Article");
+    C --> D[Displays Create/Edit Form];
+    D --> E(Fills in Title, Content, SEO fields);
+    E --> F(Uploads images and associates categories/tags);
+    F --> G{Save as Draft or Publish?};
+    G -- Draft --> H[Article saved as draft];
+    G -- Publish --> I[Article is published];
+    H --> J(Returns to Article List);
+    I --> J;
+Edge Cases & Error Handling:
+
+Attempting to publish without a title -> The form should show a validation error.
+
+Network error during image upload -> A clear error message should be displayed to the author.
+
+Slug conflict -> The system should auto-append a suffix (e.g., -2) or show a validation error prompting the author to change the slug.
+
+Wireframes & Mockups
+Design Files
+Primary Design Files: It is recommended that detailed, high-fidelity mockups and prototypes be created in Figma. This will serve as the single source of truth for all visual and interaction design.
+
+Key Screen Layouts
+Below are low-fidelity wireframes for the most critical screens.
+
+Screen: Blog Homepage
+
+Purpose: To present the latest articles and allow users to browse by category or search.
+
+Layout Concept:
+
++---------------------------------------------------+
+| [Stelarow Header with "Blog" link active]         |
++---------------------------------------------------+
+|                                                   |
+|             [Featured Article Large]              |
+|                                                   |
++---------------------------------------------------+
+| [Search Bar]               [Filter by Category]   |
++---------------------------------------------------+
+| [Article Card] [Article Card] [Article Card]      |
+| [Article Card] [Article Card] [Article Card]      |
++---------------------------------------------------+
+| [Pagination: 1, 2, 3...]                          |
++---------------------------------------------------+
+| [Stelarow Footer]                                 |
++---------------------------------------------------+
+Screen: Article Page
+
+Purpose: To provide a clean, focused, and performant reading experience.
+
+Layout Concept:
+
++---------------------------------------------------+
+| [Stelarow Header]                                 |
++---------------------------------------------------+
+| [Breadcrumb: Home > Blog > Category]              |
+|                                                   |
+| <h1>Article Title</h1>                            |
+| <p>by Author Name on July 26, 2024</p>             |
+|                                                   |
+| [ ------ Feature Image ------ ]                   |
+|                                                   |
+| <p>Article content starts here...</p>              |
+|                                                   |
+| [Tags: Tag1, Tag2]                                |
+|                                                   |
+| [ ------- Call-to-Action Component ------- ]      |
++---------------------------------------------------+
+| [Stelarow Footer]                                 |
++---------------------------------------------------+
+Component Library / Design System
+Design System Approach
+Design System Approach: We will extend the existing Stelarow design system. All foundational elements like buttons and inputs will be reused. New components must adhere to the established design tokens.
+
+Core Components
+Component: ArticleCard
+
+Purpose: To display a preview of an article on listing pages.
+
+Variants: Standard, Featured.
+
+Component: MarkdownRenderer
+
+Purpose: To render raw Markdown content as styled HTML on the article page.
+
+Component: CallToAction (CTA)
+
+Purpose: To guide readers from a blog post to a relevant course page.
+
+Variants: Specific (links to a course), Generic (links to the main course list).
+
+Component: MarkdownEditor
+
+Purpose: A rich text editor for the authoring interface that uses Markdown.
+
+Branding & Style Guide
+The blog will inherit all visual design language directly from the existing Stelarow platform.
+
+Visual Identity
+Brand Guidelines: All visual elements must adhere to the official Stelarow brand guidelines.
+
+Color Palette
+The blog will use the established color palette from the Stelarow platform.
+
+Typography
+All typography must be inherited from the existing Stelarow design system.
+
+Accessibility Requirements
+Compliance Target
+Standard: The blog must conform to the Web Content Accessibility Guidelines (WCAG) 2.1 at a Level AA standard.
+
+Key Requirements
+Visual: Text must have a contrast ratio of at least 4.5:1. All interactive elements must have a visible focus state.
+
+Interaction: All functionality must be operable via keyboard. The site must be coded with semantic HTML for screen readers.
+
+Content: All meaningful images must have descriptive alt text. Pages must use a logical heading structure.
+
+Testing Strategy
+A combination of automated scans (e.g., Axe), manual keyboard testing, and screen reader testing is required.
+
+Responsiveness Strategy
+Breakpoints
+A mobile-first approach will be adopted with the following breakpoints:
+
+Breakpoint	Min Width	Target Devices
+Mobile	320px	Mobile phones
+Tablet	768px	Tablets
+Desktop	1024px	Laptops and desktops
+
+Exportar para as Planilhas
+Adaptation Patterns
+Layout: Single-column on mobile, transitioning to multi-column on larger screens.
+
+Navigation: A hamburger menu on mobile, expanding to a full navigation bar on desktop.
+
+Animation & Micro-interactions
+Motion Principles
+Purposeful: Animations should provide feedback or smooth transitions.
+
+Performant: All animations must be lightweight, using CSS transitions where possible.
+
+Subtle: Motion should be quick and unobtrusive.
+
+Key Animations
+Interactive Element Feedback: Subtle transitions on hover/focus for links and buttons.
+
+Mobile Menu Transition: Smooth slide-in/out for the mobile navigation menu.
+
+Performance Considerations
+Performance Goals
+First Contentful Paint (FCP): Article pages must have an FCP of less than 2 seconds.
+
+Core Web Vitals: Aim for "Good" scores for LCP, INP, and CLS.
+
+Design Strategies
+Image Optimization: All images will be compressed and served in modern formats (e.g., WebP).
+
+Lazy Loading: Images below the fold will be lazy-loaded.
+
+Static Site Generation (SSG): Blog pages will be statically generated at build time via Next.js.
+
+Next Steps
+Immediate Actions
+Stakeholder Review: Share this document for final approval.
+
+High-Fidelity Mockups: Begin creating detailed visual designs in Figma.
+
+Architectural Design: Handoff this document to the Architect.
+
+Design Handoff Checklist
+[x] All user flows documented
+
+[x] Component inventory complete
+
+[x] Accessibility requirements defined
+
+[x] Responsive strategy clear
+
+[x] Brand guidelines incorporated
+
+[x] Performance goals established
+
+Checklist Results
+No UI/UX checklist is configured for this agent. This section is a placeholder.

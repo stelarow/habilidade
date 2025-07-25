@@ -50,7 +50,7 @@ const inPersonEnrollmentSchema = baseEnrollmentSchema.extend({
 })
 
 // Conditional validation schema that switches based on is_in_person
-export const enrollmentFormSchema = z.discriminatedUnion('is_in_person', [
+export const enrollmentFormSchema = z.union([
   onlineEnrollmentSchema,
   inPersonEnrollmentSchema
 ])
