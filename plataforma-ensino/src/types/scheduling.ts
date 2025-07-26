@@ -6,6 +6,26 @@
  * including holidays, teacher availability, and scheduling utilities.
  */
 
+// Import core types from api.ts for use in this file
+import type {
+  Holiday,
+  HolidaysQuery,
+  CreateHolidayRequest,
+  UpdateHolidayRequest,
+  TeacherAvailability,
+  AvailabilityQuery,
+  CreateAvailabilityRequest,
+  UpdateAvailabilityRequest,
+  AvailabilitySlot,
+  CalculateEndDateRequest,
+  CalculateEndDateResponse,
+  ClassSchedule,
+  CourseSchedule,
+  ScheduledClass,
+  AvailableSlot,
+  SchedulingApiErrorCode
+} from './api'
+
 // Re-export core types from api.ts for centralized access
 export type {
   Holiday,
@@ -24,7 +44,7 @@ export type {
   ScheduledClass,
   AvailableSlot,
   SchedulingApiErrorCode
-} from '@/types/api'
+}
 
 // Database result types for joined queries
 export interface HolidayWithStats {
