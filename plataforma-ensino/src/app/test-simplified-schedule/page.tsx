@@ -30,7 +30,7 @@ export default function TestSimplifiedSchedulePage() {
           return
         }
 
-        const teacherList = data?.map(instructor => ({
+        const teacherList = data?.map((instructor: any) => ({
           id: instructor.id,
           name: instructor.users?.full_name || 'Nome não disponível'
         })) || []
