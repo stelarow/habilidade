@@ -16,7 +16,7 @@ export async function GET(
 ) {
   try {
     // Verify admin access
-    const { user, profile } = await requireAdmin()
+    const { user: _user, profile: _profile } = await requireAdmin()
     
     const supabase = createClient()
     const lessonId = params.id
@@ -65,7 +65,7 @@ export async function PUT(
 ) {
   try {
     // Verify admin access
-    const { user, profile } = await requireAdmin()
+    const { user: _user, profile: _profile } = await requireAdmin()
     
     const supabase = createClient()
     const lessonId = params.id
@@ -291,7 +291,7 @@ export async function DELETE(
 ) {
   try {
     // Verify admin access
-    const { user, profile } = await requireAdmin()
+    const { user: _user, profile: _profile } = await requireAdmin()
     
     const supabase = createClient()
     const lessonId = params.id

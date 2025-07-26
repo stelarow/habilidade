@@ -41,7 +41,7 @@ function generateSlug(title: string): string {
 export async function GET(request: NextRequest) {
   try {
     // Verify admin access
-    const { user, profile } = await requireAdmin()
+    const { user: _user, profile: _profile } = await requireAdmin()
     
     const supabase = createClient()
     const url = new URL(request.url)
@@ -98,7 +98,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     // Verify admin access
-    const { user, profile } = await requireAdmin()
+    const { user: _user, profile: _profile } = await requireAdmin()
     
     const body = await request.json()
     

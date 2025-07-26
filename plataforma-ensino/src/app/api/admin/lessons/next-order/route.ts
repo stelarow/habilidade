@@ -9,7 +9,7 @@ export const dynamic = 'force-dynamic'
 export async function GET(request: NextRequest) {
   try {
     // Verify admin access
-    const { user, profile } = await requireAdmin()
+    const { user: _user, profile: _profile } = await requireAdmin()
     
     const supabase = createClient()
     const url = new URL(request.url)

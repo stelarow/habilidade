@@ -33,7 +33,7 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    const { user, profile } = await requireAdmin()
+    const { user: _user, profile: _profile } = await requireAdmin()
     const courseId = params.id
     
     const supabase = createClient()
@@ -87,7 +87,7 @@ export async function PUT(
   { params }: { params: { id: string } }
 ) {
   try {
-    const { user, profile } = await requireAdmin()
+    const { user: _user, profile: _profile } = await requireAdmin()
     const courseId = params.id
     const body = await request.json()
     
@@ -216,7 +216,7 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
-    const { user, profile } = await requireAdmin()
+    const { user: _user, profile: _profile } = await requireAdmin()
     const courseId = params.id
     
     const supabase = createClient()
