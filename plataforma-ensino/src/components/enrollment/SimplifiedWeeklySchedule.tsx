@@ -9,7 +9,7 @@
 
 'use client'
 
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect, useMemo, useCallback } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { Card } from '@/components/ui/card'
 import Loading from '@/components/ui/Loading'
@@ -59,93 +59,90 @@ export default function SimplifiedWeeklySchedule({
   const [scheduleSlots, setScheduleSlots] = useState<WeeklyScheduleSlot[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [errorCount, setErrorCount] = useState(0)
   
-  const supabase = createClient()
+  // Estabilizar cliente Supabase - evita re-renders infinitos
+  const supabase = useMemo(() => createClient(), [])
 
-  // Load teacher availability and current enrollments
-  useEffect(() => {
+  // Load teacher availability and current enrollments com useCallback otimizado
+  const loadScheduleData = useCallback(async () => {
     if (!teacherId) {
       setScheduleSlots([])
       return
     }
 
-    const loadScheduleData = async () => {
-      setLoading(true)
-      setError(null)
+    // Circuit breaker - evita loops infinitos
+    if (errorCount > 3) {
+      console.warn('Too many errors, stopping requests')
+      setError('Muitos erros consecutivos. Recarregue a página para tentar novamente.')
+      return
+    }
 
-      try {
-        console.log('Loading availability and schedules for teacherId:', teacherId)
+    setLoading(true)
+    setError(null)
+
+    try {
+      console.log('Loading availability and schedules for teacherId:', teacherId)
+      
+      // Get teacher availability and current schedules in parallel
+      // CORREÇÃO: Usar instructor_id (UUID) ao invés de user_id
+      const [availabilityResult, schedulesResult] = await Promise.all([
+        supabase
+          .from('teacher_availability')
+          .select('*')
+          .eq('teacher_id', teacherId)
+          .eq('is_active', true)
+          .order('day_of_week')
+          .order('start_time'),
+        supabase
+          .from('student_schedules')
+          .select('*')
+          .eq('instructor_id', teacherId) // CORREÇÃO: Usar teacherId diretamente como instructor_id
+      ])
+
+      if (availabilityResult.error) {
+        console.error('Error fetching teacher availability:', availabilityResult.error)
+        throw availabilityResult.error
+      }
+
+      if (schedulesResult.error) {
+        console.error('Error fetching student schedules:', schedulesResult.error)
+        throw schedulesResult.error
+      }
+
+      const availability = availabilityResult.data
+      const currentSchedules = schedulesResult.data
+
+      console.log('Found', availability?.length || 0, 'availability slots')
+      console.log('Found', currentSchedules?.length || 0, 'current schedules')
+
+      // Validate data integrity
+      if (!availability || availability.length === 0) {
+        console.warn('No availability slots found for teacher:', teacherId)
+        setScheduleSlots([])
+        setErrorCount(0) // Reset error count on successful query
+        return
+      }
+
+      // Process availability with current occupancy
+      // Fix day-of-week conversion: teacher_availability uses 0-6, student_schedules uses 1-7
+      const processedSlots: WeeklyScheduleSlot[] = (availability || []).map((slot, index) => {
+        // Convert teacher_availability day_of_week (0-6) to student_schedules format (1-7)
+        // 0 (Sunday) -> 7, 1 (Monday) -> 1, 2 (Tuesday) -> 2, ... 6 (Saturday) -> 6
+        const schedulesDayOfWeek = slot.day_of_week === 0 ? 7 : slot.day_of_week
         
-        // First get instructor user_id
-        const { data: instructorData, error: instructorError } = await supabase
-          .from('instructors')
-          .select('user_id')
-          .eq('id', teacherId)
-          .single()
+        // Find matching schedules for this time slot
+        const matchingSchedules = (currentSchedules || []).filter(
+          schedule => 
+            schedule.day_of_week === schedulesDayOfWeek &&
+            schedule.start_time === slot.start_time &&
+            schedule.end_time === slot.end_time
+        )
+        
+        const currentOccupancy = matchingSchedules.length
 
-        if (instructorError) {
-          console.error('Error fetching instructor data:', instructorError)
-          throw instructorError
-        }
-
-        console.log('Found instructor user_id:', instructorData.user_id)
-
-        // Get teacher availability and current schedules in parallel for better performance
-        const [availabilityResult, schedulesResult] = await Promise.all([
-          supabase
-            .from('teacher_availability')
-            .select('*')
-            .eq('teacher_id', teacherId)
-            .eq('is_active', true)
-            .order('day_of_week')
-            .order('start_time'),
-          supabase
-            .from('student_schedules')
-            .select('*')
-            .eq('instructor_id', instructorData.user_id)
-        ])
-
-        if (availabilityResult.error) {
-          console.error('Error fetching teacher availability:', availabilityResult.error)
-          throw availabilityResult.error
-        }
-
-        if (schedulesResult.error) {
-          console.error('Error fetching student schedules:', schedulesResult.error)
-          throw schedulesResult.error
-        }
-
-        const availability = availabilityResult.data
-        const currentSchedules = schedulesResult.data
-
-        console.log('Found', availability?.length || 0, 'availability slots')
-        console.log('Found', currentSchedules?.length || 0, 'current schedules')
-
-        // Validate data integrity
-        if (!availability || availability.length === 0) {
-          console.warn('No availability slots found for teacher:', teacherId)
-          setScheduleSlots([])
-          return
-        }
-
-        // Process availability with current occupancy
-        // Fix day-of-week conversion: teacher_availability uses 0-6, student_schedules uses 1-7
-        const processedSlots: WeeklyScheduleSlot[] = (availability || []).map((slot, index) => {
-          // Convert teacher_availability day_of_week (0-6) to student_schedules format (1-7)
-          // 0 (Sunday) -> 7, 1 (Monday) -> 1, 2 (Tuesday) -> 2, ... 6 (Saturday) -> 6
-          const schedulesDayOfWeek = slot.day_of_week === 0 ? 7 : slot.day_of_week
-          
-          // Find matching schedules for this time slot
-          const matchingSchedules = (currentSchedules || []).filter(
-            schedule => 
-              schedule.day_of_week === schedulesDayOfWeek &&
-              schedule.start_time === slot.start_time &&
-              schedule.end_time === slot.end_time
-          )
-          
-          const currentOccupancy = matchingSchedules.length
-
-          // Log details for debugging
+        // Log details for debugging (reduzido para evitar spam)
+        if (index < 3) { // Log apenas os 3 primeiros slots
           console.log(`Slot ${index + 1}:`, {
             slotId: slot.id,
             teacherDayOfWeek: slot.day_of_week,
@@ -153,58 +150,61 @@ export default function SimplifiedWeeklySchedule({
             startTime: slot.start_time,
             endTime: slot.end_time,
             maxStudents: slot.max_students,
-            currentOccupancy,
-            matchingSchedulesCount: matchingSchedules.length
+            currentOccupancy
           })
-
-          // For display, we need Monday-Saturday (1-6), so convert Sunday (0) to 7 but filter it out later
-          const displayDayOfWeek = slot.day_of_week === 0 ? 7 : slot.day_of_week
-
-          return {
-            id: slot.id,
-            dayOfWeek: displayDayOfWeek,
-            startTime: slot.start_time,
-            endTime: slot.end_time,
-            maxStudents: slot.max_students,
-            currentStudents: currentOccupancy,
-            isAvailable: currentOccupancy < slot.max_students
-          }
-        }).filter(slot => slot.dayOfWeek <= 6) // Only show Monday-Saturday (1-6)
-
-        setScheduleSlots(processedSlots)
-        console.log('Successfully processed', processedSlots.length, 'schedule slots')
-      } catch (err) {
-        console.error('Error loading schedule data:', err)
-        
-        // Provide detailed error information for debugging
-        let errorMessage = 'Erro desconhecido ao carregar horários'
-        
-        if (err instanceof Error) {
-          console.error('Error details:', {
-            name: err.name,
-            message: err.message,
-            stack: err.stack
-          })
-          
-          if (err.message.includes('instructor')) {
-            errorMessage = 'Erro ao buscar dados do instrutor. Verifique se o ID do professor está correto.'
-          } else if (err.message.includes('availability')) {
-            errorMessage = 'Erro ao buscar disponibilidade do professor. O professor pode não ter horários configurados.'
-          } else if (err.message.includes('schedules')) {
-            errorMessage = 'Erro ao buscar horários ocupados. Pode haver um problema na consulta de agendamentos.'
-          } else {
-            errorMessage = `Erro ao carregar horários: ${err.message}`
-          }
         }
-        
-        setError(errorMessage)
-      } finally {
-        setLoading(false)
-      }
-    }
 
+        // For display, we need Monday-Saturday (1-6), so convert Sunday (0) to 7 but filter it out later
+        const displayDayOfWeek = slot.day_of_week === 0 ? 7 : slot.day_of_week
+
+        return {
+          id: slot.id,
+          dayOfWeek: displayDayOfWeek,
+          startTime: slot.start_time,
+          endTime: slot.end_time,
+          maxStudents: slot.max_students,
+          currentStudents: currentOccupancy,
+          isAvailable: currentOccupancy < slot.max_students
+        }
+      }).filter(slot => slot.dayOfWeek <= 6) // Only show Monday-Saturday (1-6)
+
+      setScheduleSlots(processedSlots)
+      setErrorCount(0) // Reset error count on success
+      console.log('Successfully processed', processedSlots.length, 'schedule slots')
+      
+    } catch (err) {
+      console.error('Error loading schedule data:', err)
+      setErrorCount(prev => prev + 1)
+      
+      // Provide detailed error information for debugging
+      let errorMessage = 'Erro desconhecido ao carregar horários'
+      
+      if (err instanceof Error) {
+        console.error('Error details:', {
+          name: err.name,
+          message: err.message,
+          errorCount: errorCount + 1
+        })
+        
+        if (err.message.includes('availability')) {
+          errorMessage = 'Erro ao buscar disponibilidade do professor. O professor pode não ter horários configurados.'
+        } else if (err.message.includes('schedules')) {
+          errorMessage = 'Erro ao buscar horários ocupados. Verifique a tabela student_schedules.'
+        } else {
+          errorMessage = `Erro ao carregar horários: ${err.message}`
+        }
+      }
+      
+      setError(errorMessage)
+    } finally {
+      setLoading(false)
+    }
+  }, [teacherId, supabase, errorCount])
+
+  // useEffect com dependências estáveis - evita loops infinitos
+  useEffect(() => {
     loadScheduleData()
-  }, [teacherId, supabase])
+  }, [loadScheduleData])
 
   // Group slots by day of week
   const slotsByDay = useMemo(() => {
@@ -217,7 +217,7 @@ export default function SimplifiedWeeklySchedule({
     return grouped
   }, [scheduleSlots])
 
-  const handleSlotClick = (slotId: string) => {
+  const handleSlotClick = useCallback((slotId: string) => {
     if (!onSlotSelect) return
 
     const isSelected = selectedSlots.includes(slotId)
@@ -241,7 +241,7 @@ export default function SimplifiedWeeklySchedule({
     }
 
     onSlotSelect(newSelection[0] || '', newSelection[1])
-  }
+  }, [onSlotSelect, selectedSlots, hasTwoClassesPerWeek, maxSelectableSlots])
 
   const formatTime = (time: string) => {
     return time.slice(0, 5) // Remove seconds
@@ -293,7 +293,19 @@ export default function SimplifiedWeeklySchedule({
       <Card className="p-6 border-red-500/50 bg-red-500/10">
         <div className="text-center py-8">
           <div className="text-red-400 mb-2">❌ Erro ao carregar horários</div>
-          <p className="text-gray-300">{error}</p>
+          <p className="text-gray-300 mb-4">{error}</p>
+          {errorCount > 3 && (
+            <button
+              onClick={() => {
+                setErrorCount(0)
+                setError(null)
+                loadScheduleData()
+              }}
+              className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md transition-colors"
+            >
+              Tentar Novamente
+            </button>
+          )}
         </div>
       </Card>
     )
