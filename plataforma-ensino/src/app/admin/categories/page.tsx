@@ -6,7 +6,7 @@ import { CategoriesManagement } from '@/components/admin/CategoriesManagement'
 export const dynamic = 'force-dynamic'
 
 export default async function CategoriesPage() {
-  const { user: currentUser, profile } = await requireAdmin()
+  const { user: _currentUser, profile } = await requireAdmin()
   console.log(`[ADMIN-CATEGORIES] Access authorized for admin: ${profile.email}`)
 
   const supabase = createClient()

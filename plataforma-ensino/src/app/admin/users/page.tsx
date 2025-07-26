@@ -8,7 +8,7 @@ export const dynamic = 'force-dynamic'
 
 export default async function UsersPage() {
   // 🔥 CRITICAL: SERVER-SIDE PROTECTION - Execute BEFORE any other code
-  const { user: currentUser, profile } = await requireAdmin()
+  const { user: _currentUser, profile } = await requireAdmin()
   console.log(`[ADMIN-USERS] Access authorized for admin: ${profile.email}`)
   
   const supabase = createClient()

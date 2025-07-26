@@ -6,7 +6,7 @@ import { AdminSettings } from '@/components/admin/AdminSettings'
 export const dynamic = 'force-dynamic'
 
 export default async function SettingsPage() {
-  const { user: currentUser, profile } = await requireAdmin()
+  const { user: _currentUser, profile } = await requireAdmin()
   console.log(`[ADMIN-SETTINGS] Access authorized for admin: ${profile.email}`)
 
   const supabase = createClient()
