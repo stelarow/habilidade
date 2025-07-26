@@ -15,8 +15,7 @@ interface Post {
 export const dynamic = 'force-dynamic'
 
 export default async function BlogAdminPage() {
-  const { user: _currentUser, profile } = await requireAdmin()
-  console.log(`[ADMIN-BLOG] Access authorized for admin: ${profile.email}`)
+  const { user: _currentUser, profile: _profile } = await requireAdmin()
 
   const supabase = createClient()
   
@@ -24,7 +23,7 @@ export default async function BlogAdminPage() {
   const { data: posts, error } = await supabase
     .from('posts')
     .select('id, title, status, created_at')
-    .order('created_at', { ascending: false })
+    .order('created_at', { ascending: false }) as { data: Post[] | null, error: any }
 
   if (error) {
     console.error('Error fetching posts:', error)
