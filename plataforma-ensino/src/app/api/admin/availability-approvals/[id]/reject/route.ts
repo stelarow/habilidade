@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { requireAdmin } from '@/lib/auth/session'
 import { z } from 'zod'
+import { logError } from '@/lib/utils/logger'
 
 export const dynamic = 'force-dynamic'
 
@@ -68,7 +69,7 @@ export async function POST(
       .eq('id', requestId)
 
     if (updateError) {
-      console.error('Database error rejecting request:', updateError)
+      logError('Database error rejecting request:', updateError)
       return NextResponse.json({
         error: {
           code: 'DATABASE_ERROR',
@@ -111,7 +112,7 @@ export async function POST(
       }, { status: 400 })
     }
 
-    console.error('Rejection POST error:', error)
+    logError('Rejection POST error:', error)
     
     if (error instanceof Error && error.message === 'Unauthorized') {
       return NextResponse.json({

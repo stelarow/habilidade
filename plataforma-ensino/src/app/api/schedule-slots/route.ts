@@ -36,7 +36,7 @@ export async function GET(request: NextRequest) {
       .order('start_time');
 
     if (error) {
-      console.error('Database error:', error);
+      logError('Database error:', error);
       return NextResponse.json({ error: 'Database error' }, { status: 500 });
     }
 
@@ -71,7 +71,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ data: slots });
 
   } catch (error) {
-    console.error('API error:', error);
+    logError('API error:', error);
     if (error instanceof z.ZodError) {
       return NextResponse.json(
         { error: 'Invalid query parameters', details: error.errors },

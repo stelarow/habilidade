@@ -17,7 +17,7 @@ export default async function SettingsPage() {
     .order('key')
 
   if (error) {
-    console.error('Error fetching settings:', error)
+    logError('Error fetching settings:', error)
     return (
       <div className="text-center py-8">
         <p className="text-red-400">Erro ao carregar configurações</p>

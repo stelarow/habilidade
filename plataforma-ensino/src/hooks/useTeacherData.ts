@@ -136,11 +136,11 @@ export function useTeacherData(options: UseTeacherDataOptions = {}): UseTeacherD
         }
       } catch (error) {
         // Response time calculation failed, use default
-        console.warn(`Failed to calculate response time for teacher ${teacher.id}:`, error)
+        logWarn(`Failed to calculate response time for teacher ${teacher.id}:`, error)
       }
 
     } catch (error) {
-      console.warn(`Failed to calculate metrics for teacher ${teacher.id}:`, error)
+      logWarn(`Failed to calculate metrics for teacher ${teacher.id}:`, error)
     }
 
     return {
@@ -268,7 +268,7 @@ export function useTeacherData(options: UseTeacherDataOptions = {}): UseTeacherD
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'UNKNOWN_ERROR'
       setError(errorMessage)
-      console.error('Teacher data fetch error:', err)
+      logError('Teacher data fetch error:', err)
     } finally {
       setLoading(false)
     }
@@ -331,7 +331,7 @@ export function useTeacherData(options: UseTeacherDataOptions = {}): UseTeacherD
     if (!enableRealtime || refreshInterval <= 0) return
 
     const intervalId = setInterval(() => {
-      console.log('Refreshing teacher data...')
+      logDebug('Refreshing teacher data...')
       fetchTeachers()
     }, refreshInterval)
 
@@ -352,7 +352,7 @@ export function useTeacherData(options: UseTeacherDataOptions = {}): UseTeacherD
           table: 'teachers'
         },
         (payload) => {
-          console.log('Teacher data updated:', payload)
+          logDebug('Teacher data updated:', payload)
           fetchTeachers()
         }
       )
@@ -364,7 +364,7 @@ export function useTeacherData(options: UseTeacherDataOptions = {}): UseTeacherD
           table: 'teacher_availability'
         },
         (payload) => {
-          console.log('Teacher availability updated:', payload)
+          logDebug('Teacher availability updated:', payload)
           fetchTeachers()
         }
       )

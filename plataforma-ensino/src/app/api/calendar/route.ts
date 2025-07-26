@@ -30,16 +30,16 @@ export async function GET(request: NextRequest) {
     const supabase = createClient();
 
     // First, let's do a simple query to see what data we have
-    console.log('Testing basic query first...');
+    logDebug('Testing basic query first...');
     const { data: basicData, error: basicError } = await supabase
       .from('class_schedules')
       .select('*')
       .limit(5);
     
     if (basicError) {
-      console.error('Basic query error:', basicError);
+      logError('Basic query error:', basicError);
     } else {
-      console.log('Basic class_schedules data:', JSON.stringify(basicData, null, 2));
+      logDebug('Basic class_schedules data:', JSON.stringify(basicData, null, 2));
     }
 
     // Query principal com tipos corretos - simplified joins
@@ -84,39 +84,39 @@ export async function GET(request: NextRequest) {
     const { data, error } = await queryBuilder;
 
     if (error) {
-      console.error('Database error:', error);
+      logError('Database error:', error);
       return NextResponse.json({ error: 'Database error' }, { status: 500 });
     }
 
     // Debug logging
-    console.log('📊 Calendar API - Raw query results:', {
+    logDebug('📊 Calendar API - Raw query results:', {
       totalRecords: data?.length || 0,
       sampleRecord: data?.[0] || null
     });
 
     // Debug: Log raw data
-    console.log('=== Calendar API Debug ===');
-    console.log('Raw data count:', data?.length || 0);
+    logDebug('=== Calendar API Debug ===');
+    logDebug('Raw data count:', data?.length || 0);
     if (data && data.length > 0) {
-      console.log('First raw item:', JSON.stringify(data[0], null, 2));
+      logDebug('First raw item:', JSON.stringify(data[0], null, 2));
     }
 
     // Agora os tipos são corretamente inferidos como CalendarQueryResult
     const typedData: CalendarQueryResult = data;
 
     // Debug: Check data before transformation
-    console.log('Before transformation - checking data structure:');
+    logDebug('Before transformation - checking data structure:');
     const validSchedules = typedData.filter(schedule => 
       schedule.schedule_slots && schedule.enrollments
     );
-    console.log(`Valid schedules (with slots and enrollments): ${validSchedules.length}/${typedData.length}`);
+    logDebug(`Valid schedules (with slots and enrollments): ${validSchedules.length}/${typedData.length}`);
     
     // Debug invalid schedules
     const invalidSchedules = typedData.filter(schedule => 
       !schedule.schedule_slots || !schedule.enrollments
     );
     if (invalidSchedules.length > 0) {
-      console.log('Invalid schedules:', invalidSchedules.map(s => ({
+      logDebug('Invalid schedules:', invalidSchedules.map(s => ({
         id: s.id,
         hasSlots: !!s.schedule_slots,
         hasEnrollments: !!s.enrollments
@@ -136,7 +136,7 @@ export async function GET(request: NextRequest) {
         const course = Array.isArray(enrollment.courses) ? enrollment.courses[0] : enrollment.courses;
         
         if (!slot || !enrollment || !user || !course) {
-          console.log('Skipping invalid record:', {
+          logDebug('Skipping invalid record:', {
             scheduleId: schedule.id,
             hasSlot: !!slot,
             hasEnrollment: !!enrollment,
@@ -163,15 +163,15 @@ export async function GET(request: NextRequest) {
       })
       .filter(item => item !== null); // Remove null items
 
-    console.log(`Final formatted data count: ${formattedData.length}`);
+    logDebug(`Final formatted data count: ${formattedData.length}`);
     if (formattedData.length > 0) {
-      console.log('Sample formatted item:', formattedData[0]);
+      logDebug('Sample formatted item:', formattedData[0]);
     }
 
     return NextResponse.json({ data: formattedData });
 
   } catch (error) {
-    console.error('API error:', error);
+    logError('API error:', error);
     if (error instanceof z.ZodError) {
       return NextResponse.json(
         { error: 'Invalid query parameters', details: error.errors },
@@ -285,7 +285,7 @@ export async function POST(request: NextRequest) {
     const { data, error } = await insertQuery;
 
     if (error) {
-      console.error('Insert error:', error);
+      logError('Insert error:', error);
       return NextResponse.json({ 
         error: 'Failed to create schedule',
         message: 'Erro ao criar agendamento' 
@@ -298,7 +298,7 @@ export async function POST(request: NextRequest) {
     }, { status: 201 });
 
   } catch (error) {
-    console.error('API error:', error);
+    logError('API error:', error);
     if (error instanceof z.ZodError) {
       return NextResponse.json(
         { error: 'Invalid request data', details: error.errors },

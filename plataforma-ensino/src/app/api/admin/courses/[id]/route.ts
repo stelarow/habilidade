@@ -61,7 +61,7 @@ export async function GET(
         )
       }
       
-      console.error('Error fetching course:', error)
+      logError('Error fetching course:', error)
       return NextResponse.json(
         { error: 'Erro ao buscar curso' },
         { status: 500 }
@@ -73,7 +73,7 @@ export async function GET(
     })
     
   } catch (error) {
-    console.error('Course fetch error:', error)
+    logError('Course fetch error:', error)
     return NextResponse.json(
       { error: 'Erro interno do servidor' },
       { status: 500 }
@@ -183,7 +183,7 @@ export async function PUT(
       .single()
     
     if (error) {
-      console.error('Error updating course:', error)
+      logError('Error updating course:', error)
       return NextResponse.json(
         { error: 'Erro ao atualizar curso' },
         { status: 500 }
@@ -202,7 +202,7 @@ export async function PUT(
       )
     }
     
-    console.error('Course update error:', error)
+    logError('Course update error:', error)
     return NextResponse.json(
       { error: 'Erro interno do servidor' },
       { status: 500 }
@@ -261,7 +261,7 @@ export async function DELETE(
       .eq('id', courseId)
     
     if (error) {
-      console.error('Error deleting course:', error)
+      logError('Error deleting course:', error)
       return NextResponse.json(
         { error: 'Erro ao excluir curso' },
         { status: 500 }
@@ -273,7 +273,7 @@ export async function DELETE(
     })
     
   } catch (error) {
-    console.error('Course deletion error:', error)
+    logError('Course deletion error:', error)
     return NextResponse.json(
       { error: 'Erro interno do servidor' },
       { status: 500 }

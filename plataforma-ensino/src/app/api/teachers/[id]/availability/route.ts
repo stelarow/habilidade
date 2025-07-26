@@ -174,7 +174,7 @@ export async function GET(
     const { data: availabilitySlots, error } = await availabilityQuery
     
     if (error) {
-      console.error('Database error fetching availability:', error)
+      logError('Database error fetching availability:', error)
       return createErrorResponse(
         'VALIDATION_ERROR',
         'Failed to fetch availability',
@@ -238,7 +238,7 @@ export async function GET(
       )
     }
     
-    console.error('Teacher availability GET error:', error)
+    logError('Teacher availability GET error:', error)
     return createErrorResponse(
       'VALIDATION_ERROR',
       'Internal server error',
@@ -364,7 +364,7 @@ export async function POST(
       .single()
     
     if (error) {
-      console.error('Database error creating availability:', error)
+      logError('Database error creating availability:', error)
       return createErrorResponse(
         'VALIDATION_ERROR',
         'Failed to create availability slot',
@@ -390,7 +390,7 @@ export async function POST(
       )
     }
     
-    console.error('Teacher availability POST error:', error)
+    logError('Teacher availability POST error:', error)
     return createErrorResponse(
       'VALIDATION_ERROR',
       'Internal server error',

@@ -96,7 +96,7 @@ export async function GET(request: NextRequest) {
     const { data: progress, error } = await query
     
     if (error) {
-      console.error('Error fetching progress:', error)
+      logError('Error fetching progress:', error)
       return NextResponse.json(
         { error: 'Erro ao buscar progresso' },
         { status: 500 }
@@ -117,7 +117,7 @@ export async function GET(request: NextRequest) {
     })
     
   } catch (error) {
-    console.error('Progress API error:', error)
+    logError('Progress API error:', error)
     return NextResponse.json(
       { error: 'Erro interno do servidor' },
       { status: 500 }
@@ -207,7 +207,7 @@ export async function POST(request: NextRequest) {
             results.push(newProgress)
           }
         } catch (error) {
-          console.error(`Error updating progress for lesson ${update.lesson_id}:`, error)
+          logError(`Error updating progress for lesson ${update.lesson_id}:`, error)
           errors.push({
             lesson_id: update.lesson_id,
             error: error instanceof Error ? error.message : 'Erro ao atualizar progresso'
@@ -287,7 +287,7 @@ export async function POST(request: NextRequest) {
           .single()
         
         if (error) {
-          console.error('Error updating progress:', error)
+          logError('Error updating progress:', error)
           return NextResponse.json(
             { error: 'Erro ao atualizar progresso' },
             { status: 500 }
@@ -317,7 +317,7 @@ export async function POST(request: NextRequest) {
           .single()
         
         if (error) {
-          console.error('Error creating progress:', error)
+          logError('Error creating progress:', error)
           return NextResponse.json(
             { error: 'Erro ao criar progresso' },
             { status: 500 }
@@ -344,7 +344,7 @@ export async function POST(request: NextRequest) {
       )
     }
     
-    console.error('Progress creation/update error:', error)
+    logError('Progress creation/update error:', error)
     return NextResponse.json(
       { error: 'Erro interno do servidor' },
       { status: 500 }

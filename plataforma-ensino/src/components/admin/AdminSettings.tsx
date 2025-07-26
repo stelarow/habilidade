@@ -78,7 +78,7 @@ export function AdminSettings({ settings: initialSettings, currentUser }: AdminS
       setEditingKey(null)
       setEditValue('')
     } catch (error) {
-      console.error('Error updating setting:', error)
+      logError('Error updating setting:', error)
       alert('Erro ao salvar configuração')
     } finally {
       setLoading(false)

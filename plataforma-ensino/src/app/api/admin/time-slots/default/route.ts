@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
+import { logError } from '@/lib/utils/logger';
 
 // Force dynamic rendering for authentication and database queries
 export const dynamic = 'force-dynamic';
@@ -20,6 +21,16 @@ const createTimeSlotsSchema = z.object({
   teacherId: z.string().uuid('ID do professor deve ser um UUID válido'),
   maxStudents: z.number().int().min(1).max(5).default(3)
 });
+
+// Type definitions for type safety
+interface InstructorWithUser {
+  id: string;
+  user_id: string;
+  user: {
+    full_name: string;
+    email: string;
+  } | null;
+}
 
 /**
  * GET /api/admin/time-slots/default
@@ -78,7 +89,7 @@ export async function GET(_request: NextRequest) {
 
     return NextResponse.json(response);
   } catch (error) {
-    console.error('Erro ao buscar horários padrões:', error);
+    logError('Erro ao buscar horários padrões:', error);
     return NextResponse.json(
       { error: 'Erro interno do servidor' },
       { status: 500 }
@@ -186,7 +197,7 @@ export async function POST(request: NextRequest) {
       .select('*');
 
     if (insertError) {
-      console.error('Erro ao criar horários:', insertError);
+      logError('Erro ao criar horários:', insertError);
       return NextResponse.json(
         { error: 'Erro ao criar horários padrões' },
         { status: 500 }
@@ -199,7 +210,7 @@ export async function POST(request: NextRequest) {
       .select(`
         id,
         user_id,
-        users!inner(
+        user:users(
           full_name,
           email
         )
@@ -207,13 +218,16 @@ export async function POST(request: NextRequest) {
       .eq('id', validatedData.teacherId)
       .single();
 
+    // Type assertion with proper null checking
+    const typedTeacherInfo = teacherInfo as InstructorWithUser | null;
+
     const response = {
       success: true,
       message: 'Horários padrões aplicados com sucesso',
       teacher: {
-        id: teacherInfo?.id,
-        name: teacherInfo?.users?.full_name,
-        email: teacherInfo?.users?.email
+        id: typedTeacherInfo?.id || validatedData.teacherId,
+        name: typedTeacherInfo?.user?.full_name || 'Nome não disponível',
+        email: typedTeacherInfo?.user?.email || 'Email não disponível'
       },
       created: {
         totalSlots: createdSlots?.length,
@@ -241,7 +255,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    console.error('Erro ao aplicar horários padrões:', error);
+    logError('Erro ao aplicar horários padrões:', error);
     return NextResponse.json(
       { error: 'Erro interno do servidor' },
       { status: 500 }

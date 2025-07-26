@@ -134,7 +134,7 @@ export async function PUT(
       .single()
     
     if (error) {
-      console.error('Database error updating holiday:', error)
+      logError('Database error updating holiday:', error)
       return createErrorResponse(
         'VALIDATION_ERROR',
         'Failed to update holiday',
@@ -162,7 +162,7 @@ export async function PUT(
                      'unknown'
         })
     } catch (auditError) {
-      console.error('Failed to log audit event:', auditError)
+      logError('Failed to log audit event:', auditError)
       // Don't fail the request if audit logging fails
     }
     
@@ -189,7 +189,7 @@ export async function PUT(
       )
     }
     
-    console.error('Holiday PUT error:', error)
+    logError('Holiday PUT error:', error)
     return createErrorResponse(
       'VALIDATION_ERROR',
       'Internal server error',
@@ -252,7 +252,7 @@ export async function DELETE(
       .eq('id', id)
     
     if (error) {
-      console.error('Database error deleting holiday:', error)
+      logError('Database error deleting holiday:', error)
       return createErrorResponse(
         'VALIDATION_ERROR',
         'Failed to delete holiday',
@@ -279,7 +279,7 @@ export async function DELETE(
                      'unknown'
         })
     } catch (auditError) {
-      console.error('Failed to log audit event:', auditError)
+      logError('Failed to log audit event:', auditError)
       // Don't fail the request if audit logging fails
     }
     
@@ -297,7 +297,7 @@ export async function DELETE(
       )
     }
     
-    console.error('Holiday DELETE error:', error)
+    logError('Holiday DELETE error:', error)
     return createErrorResponse(
       'VALIDATION_ERROR',
       'Internal server error',

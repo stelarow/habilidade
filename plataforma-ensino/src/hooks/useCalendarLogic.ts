@@ -145,7 +145,7 @@ export function useCalendarLogic(
             }))
           }
         } catch (error) {
-          console.warn('Failed to restore calendar state:', error)
+          logWarn('Failed to restore calendar state:', error)
         }
       }
     }
@@ -236,7 +236,7 @@ export function useCalendarLogic(
   const selectSlot = useCallback((slot: TimeSlot) => {
     const validation = validateSlot(slot)
     if (!validation.isValid) {
-      console.warn('Cannot select slot:', validation.reason)
+      logWarn('Cannot select slot:', validation.reason)
       return
     }
 
@@ -288,7 +288,7 @@ export function useCalendarLogic(
     const validSlots = slots.filter(slot => validateSlot(slot).isValid)
     
     if (maxSelectableSlots && validSlots.length > maxSelectableSlots) {
-      console.warn(`Can only select ${maxSelectableSlots} slots, truncating selection`)
+      logWarn(`Can only select ${maxSelectableSlots} slots, truncating selection`)
       validSlots.splice(maxSelectableSlots)
     }
 

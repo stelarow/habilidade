@@ -97,7 +97,7 @@ export async function POST(
     }
 
     // SIMPLIFIED validation - only check quiz if exists
-    console.log('Received completion data:', { quizScore, completionCriteria })
+    logDebug('Received completion data:', { quizScore, completionCriteria })
     
     // Ultra simple validation
     const hasQuiz = completionCriteria?.hasQuiz || false
@@ -110,7 +110,7 @@ export async function POST(
       )
     }
     
-    console.log('Simplified validation passed:', { hasQuiz, passesValidation })
+    logDebug('Simplified validation passed:', { hasQuiz, passesValidation })
 
     // Start transaction to mark lesson complete and unlock next lesson
     const completedAt = new Date().toISOString()
@@ -142,7 +142,7 @@ export async function POST(
       })
 
     if (updateError) {
-      console.error('Error updating lesson progress:', updateError)
+      logError('Error updating lesson progress:', updateError)
       return NextResponse.json(
         { error: 'Failed to mark lesson as completed' },
         { status: 500 }
@@ -213,7 +213,7 @@ export async function POST(
     })
 
   } catch (error) {
-    console.error('Lesson completion error:', error)
+    logError('Lesson completion error:', error)
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -252,7 +252,7 @@ async function updateCourseProgress(supabase: any, userId: string, courseId: str
         })
     }
   } catch (error) {
-    console.error('Error updating course progress:', error)
+    logError('Error updating course progress:', error)
   }
 }
 

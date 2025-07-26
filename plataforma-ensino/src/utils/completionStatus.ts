@@ -13,6 +13,7 @@ import {
   CompletionCalculationInput,
   StudentIndicator 
 } from '@/types/completion-status';
+import { logError } from '@/lib/utils/logger';
 
 /**
  * Number of days threshold for "one month remaining" indicator
@@ -70,7 +71,7 @@ export function calculateCompletionStatus(
     };
     
   } catch (error) {
-    console.error('Error calculating completion status:', error);
+    logError('Error calculating completion status:', error);
     return {
       type: 'none',
       label: '',
@@ -106,7 +107,7 @@ export function isLastClass(endDate: string, classDate: string): boolean {
     // Compare dates by their ISO string representation
     return formatDateISO(endDateObj) === formatDateISO(classDateObj);
   } catch (error) {
-    console.error('Error checking last class:', error);
+    logError('Error checking last class:', error);
     return false;
   }
 }
@@ -234,7 +235,7 @@ export function getDaysRemaining(endDate: string, currentDate?: string): number 
     const timeDiff = endDateObj.getTime() - currentDateObj.getTime();
     return Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
   } catch (error) {
-    console.error('Error calculating days remaining:', error);
+    logError('Error calculating days remaining:', error);
     return 0;
   }
 }

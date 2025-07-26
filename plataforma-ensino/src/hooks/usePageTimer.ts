@@ -36,7 +36,7 @@ interface UsePageTimerOptions {
  * Usage:
  * const { timeSpent, hasReachedMinimum, percentage, formattedTime } = usePageTimer({
  *   minimumTimeMinutes: 25,
- *   onMinimumReached: () => console.log('Minimum time reached!'),
+ *   onMinimumReached: () => logDebug('Minimum time reached!'),
  *   lessonId: 'lesson-123'
  * })
  */
@@ -113,7 +113,7 @@ export function usePageTimer({
           hasCalledMinimumRef.current = true
         }
       } catch (error) {
-        console.error('Failed to parse saved timer data:', error)
+        logError('Failed to parse saved timer data:', error)
       }
     }
   }, [fullStorageKey, calculateStateValues])

@@ -45,14 +45,14 @@ export function useLessonPerformance(
 
     // Report performance if threshold exceeded
     if (config.reportThreshold && renderTime > config.reportThreshold) {
-      console.warn(`${componentName} slow render: ${renderTime}ms`)
+      logWarn(`${componentName} slow render: ${renderTime}ms`)
     }
 
     return () => {
       // Cleanup on unmount
       if (config.trackMemory && 'memory' in performance) {
         const memInfo = (performance as any).memory
-        console.log(`${componentName} memory usage:`, {
+        logDebug(`${componentName} memory usage:`, {
           used: memInfo.usedJSHeapSize,
           total: memInfo.totalJSHeapSize,
           limit: memInfo.jsHeapSizeLimit
@@ -92,7 +92,7 @@ export function useLessonPerformance(
       }))
 
       if (interactionType && interactionTime > 100) {
-        console.log(`${componentName} ${interactionType} interaction: ${interactionTime}ms`)
+        logDebug(`${componentName} ${interactionType} interaction: ${interactionTime}ms`)
       }
 
       interactionStart.current = null
@@ -106,7 +106,7 @@ export function useLessonPerformance(
       errorCount: prev.errorCount + 1
     }))
 
-    console.error(`${componentName} error${context ? ` (${context})` : ''}:`, error)
+    logError(`${componentName} error${context ? ` (${context})` : ''}:`, error)
   }
 
   // Performance report

@@ -95,7 +95,7 @@ export async function GET(
       .order('start_time');
 
     if (availabilityError) {
-      console.error('Erro ao buscar disponibilidade:', availabilityError);
+      logError('Erro ao buscar disponibilidade:', availabilityError);
       return NextResponse.json(
         { error: 'Erro ao buscar disponibilidade' },
         { status: 500 }
@@ -124,7 +124,7 @@ export async function GET(
       .eq('instructor_id', instructor.user_id);
 
     if (schedulesError) {
-      console.error('Erro ao buscar agendamentos:', schedulesError);
+      logError('Erro ao buscar agendamentos:', schedulesError);
     }
 
     // Processar dados por dia da semana
@@ -241,7 +241,7 @@ export async function GET(
     return NextResponse.json(response);
 
   } catch (error) {
-    console.error('Erro ao buscar disponibilidade do professor:', error);
+    logError('Erro ao buscar disponibilidade do professor:', error);
     return NextResponse.json(
       { error: 'Erro interno do servidor' },
       { status: 500 }

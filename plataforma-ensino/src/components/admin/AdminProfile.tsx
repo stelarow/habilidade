@@ -76,7 +76,7 @@ export function AdminProfile({ currentUser }: AdminProfileProps) {
       setUser(prev => prev ? { ...prev, full_name: profileData.name, bio: profileData.bio, phone: profileData.phone, location: profileData.location } : null)
       alert('Perfil atualizado com sucesso!')
     } catch (error) {
-      console.error('Error updating profile:', error)
+      logError('Error updating profile:', error)
       alert('Erro ao atualizar perfil')
     } finally {
       setLoading(false)
@@ -108,7 +108,7 @@ export function AdminProfile({ currentUser }: AdminProfileProps) {
       
       alert('Senha atualizada com sucesso!')
     } catch (error) {
-      console.error('Error updating password:', error)
+      logError('Error updating password:', error)
       alert('Erro ao atualizar senha')
     } finally {
       setLoading(false)
@@ -130,7 +130,7 @@ export function AdminProfile({ currentUser }: AdminProfileProps) {
 
       alert('Configurações de notificação atualizadas!')
     } catch (error) {
-      console.error('Error updating notification settings:', error)
+      logError('Error updating notification settings:', error)
       alert('Erro ao atualizar configurações')
     } finally {
       setLoading(false)

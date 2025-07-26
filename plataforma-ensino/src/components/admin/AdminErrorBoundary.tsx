@@ -51,7 +51,7 @@ export class AdminErrorBoundary extends Component<Props, State> {
 
     // Log error to console in development
     if (process.env.NODE_ENV === 'development') {
-      console.error('Admin Error Boundary caught an error:', error, errorInfo);
+      logError('Admin Error Boundary caught an error:', error, errorInfo);
     }
 
     // Report error to external service (e.g., Sentry)
@@ -118,7 +118,7 @@ export class AdminErrorBoundary extends Component<Props, State> {
         })
       });
     } catch (reportError) {
-      console.error('Failed to report error:', reportError);
+      logError('Failed to report error:', reportError);
     } finally {
       this.setState({ isReporting: false });
     }

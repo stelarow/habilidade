@@ -96,7 +96,7 @@ export async function POST(request: NextRequest) {
       .select('*')
     
     if (error) {
-      console.error('Database error creating holidays:', error)
+      logError('Database error creating holidays:', error)
       return createErrorResponse(
         'VALIDATION_ERROR',
         'Failed to create holidays',
@@ -124,7 +124,7 @@ export async function POST(request: NextRequest) {
                      'unknown'
         })
     } catch (auditError) {
-      console.error('Failed to log audit event:', auditError)
+      logError('Failed to log audit event:', auditError)
       // Don't fail the request if audit logging fails
     }
     
@@ -157,7 +157,7 @@ export async function POST(request: NextRequest) {
       )
     }
     
-    console.error('Bulk holidays POST error:', error)
+    logError('Bulk holidays POST error:', error)
     return createErrorResponse(
       'VALIDATION_ERROR',
       'Internal server error',
@@ -208,7 +208,7 @@ export async function DELETE(request: NextRequest) {
       .in('id', ids)
     
     if (error) {
-      console.error('Database error deleting holidays:', error)
+      logError('Database error deleting holidays:', error)
       return createErrorResponse(
         'VALIDATION_ERROR',
         'Failed to delete holidays',
@@ -236,7 +236,7 @@ export async function DELETE(request: NextRequest) {
                      'unknown'
         })
     } catch (auditError) {
-      console.error('Failed to log audit event:', auditError)
+      logError('Failed to log audit event:', auditError)
       // Don't fail the request if audit logging fails
     }
     
@@ -269,7 +269,7 @@ export async function DELETE(request: NextRequest) {
       )
     }
     
-    console.error('Bulk holidays DELETE error:', error)
+    logError('Bulk holidays DELETE error:', error)
     return createErrorResponse(
       'VALIDATION_ERROR',
       'Internal server error',

@@ -27,12 +27,12 @@ export default function UpdatePasswordPage() {
       const { data: { session }, error } = await supabase.auth.getSession();
       
       if (error || !session) {
-        console.error('No valid session for password update:', error);
+        logError('No valid session for password update:', error);
         setError('Sessão expirada. Solicite um novo link de recuperação.');
         return;
       }
       
-      console.log('Valid session found for password update');
+      logDebug('Valid session found for password update');
     };
     
     checkSession();

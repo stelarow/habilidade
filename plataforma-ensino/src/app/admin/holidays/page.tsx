@@ -42,7 +42,7 @@ export default async function HolidaysPage() {
       </div>
     );
   } catch (error) {
-    console.error('[HOLIDAYS_PAGE] Server component error:', error);
+    logError('[HOLIDAYS_PAGE] Server component error:', error);
     
     // Instead of letting the error bubble up, provide a more graceful fallback
     throw new Error(`Authentication required for admin holidays page. Please ensure you are logged in as an admin user.`);

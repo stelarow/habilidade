@@ -59,7 +59,7 @@ export function useTimeTracker({
           hasReachedMinimum: accumulatedTimeRef.current >= minimumTimeMinutes * 60
         }))
       } catch (error) {
-        console.error('Failed to parse saved time data:', error)
+        logError('Failed to parse saved time data:', error)
       }
     }
   }, [storageKey, minimumTimeMinutes])

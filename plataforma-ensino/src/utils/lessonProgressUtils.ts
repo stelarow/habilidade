@@ -3,6 +3,8 @@
  * Handles real progress calculation and persistence for video, PDF, exercises, and quiz
  */
 
+import { logError, logDebug } from '@/lib/utils/logger';
+
 export interface LessonProgressState {
   videoProgress: number
   pdfProgress: number
@@ -111,7 +113,7 @@ export class LessonProgressManager {
       const updatedProgress = { ...existingProgress, ...progress }
       localStorage.setItem(this.storageKey, JSON.stringify(updatedProgress))
     } catch (error) {
-      console.error('Error saving lesson progress:', error)
+      logError('Error saving lesson progress:', error)
     }
   }
 
@@ -125,7 +127,7 @@ export class LessonProgressManager {
         return JSON.parse(stored)
       }
     } catch (error) {
-      console.error('Error loading lesson progress:', error)
+      logError('Error loading lesson progress:', error)
     }
 
     // Return default progress state
@@ -195,7 +197,7 @@ export class LessonProgressManager {
     try {
       localStorage.removeItem(this.storageKey)
     } catch (error) {
-      console.error('Error clearing lesson progress:', error)
+      logError('Error clearing lesson progress:', error)
     }
   }
 }

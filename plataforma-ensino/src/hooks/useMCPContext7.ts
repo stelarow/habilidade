@@ -416,7 +416,7 @@ export function useMCPContext7(options: UseMCPContext7Options = {}): UseMCPConte
     if (enableCaching) {
       const cachedEntry = documentationCache.get(cacheKey)
       if (cachedEntry && isCacheValid(cachedEntry)) {
-        console.log('Returning cached documentation for:', query.topic)
+        logDebug('Returning cached documentation for:', query.topic)
         return {
           ...cachedEntry.data,
           cached: true
@@ -432,7 +432,7 @@ export function useMCPContext7(options: UseMCPContext7Options = {}): UseMCPConte
     
     while (attempts < retryAttempts) {
       try {
-        console.log(`Querying MCP Context7 (attempt ${attempts + 1}):`, query.topic)
+        logDebug(`Querying MCP Context7 (attempt ${attempts + 1}):`, query.topic)
         
         // In a real implementation, this would use the actual MCP Context7 API
         // For now, we'll use our simulation
@@ -481,7 +481,7 @@ export function useMCPContext7(options: UseMCPContext7Options = {}): UseMCPConte
    */
   const clearCache = useCallback(() => {
     documentationCache.clear()
-    console.log('Documentation cache cleared')
+    logDebug('Documentation cache cleared')
   }, [])
 
   /**

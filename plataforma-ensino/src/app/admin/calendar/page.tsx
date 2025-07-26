@@ -56,7 +56,7 @@ export default async function AdminCalendarPage() {
       }
     }
   } catch (error) {
-    console.error('Error fetching teachers:', error)
+    logError('Error fetching teachers:', error)
   }
 
   // Get some basic statistics
@@ -70,7 +70,7 @@ export default async function AdminCalendarPage() {
     
     totalClasses = count || 0
   } catch (error) {
-    console.error('Error fetching class count:', error)
+    logError('Error fetching class count:', error)
   }
 
   return (

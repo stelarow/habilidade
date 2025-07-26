@@ -146,7 +146,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     })
 
   } catch (error) {
-    console.error('Calculate end date error:', error)
+    logError('Calculate end date error:', error)
     return NextResponse.json(
       {
         error: 'Internal server error',

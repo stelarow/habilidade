@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { requireAdmin } from '@/lib/auth/session'
+import { logError } from '@/lib/utils/logger'
 
 export const dynamic = 'force-dynamic'
 
@@ -21,7 +22,7 @@ export async function GET(_request: NextRequest) {
       .order('created_at', { ascending: true })
 
     if (error) {
-      console.error('Database error fetching pending requests:', error)
+      logError('Database error fetching pending requests:', error)
       return NextResponse.json({
         error: {
           code: 'DATABASE_ERROR',
@@ -36,7 +37,7 @@ export async function GET(_request: NextRequest) {
     })
 
   } catch (error) {
-    console.error('Approval requests GET error:', error)
+    logError('Approval requests GET error:', error)
     
     if (error instanceof Error && error.message === 'Unauthorized') {
       return NextResponse.json({

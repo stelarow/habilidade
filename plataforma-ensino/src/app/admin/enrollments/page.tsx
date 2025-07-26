@@ -21,7 +21,7 @@ export default async function EnrollmentsPage() {
     .order('created_at', { ascending: false })
 
   if (error) {
-    console.error('Error fetching enrollments:', error)
+    logError('Error fetching enrollments:', error)
     return (
       <div className="text-center py-8">
         <p className="text-red-400">Erro ao carregar matrículas</p>

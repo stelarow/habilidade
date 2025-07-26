@@ -41,7 +41,7 @@ export async function GET(request: NextRequest) {
       .rpc('get_next_lesson_order', { course_uuid: courseId })
     
     if (orderError) {
-      console.error('Error getting next order:', orderError)
+      logError('Error getting next order:', orderError)
       return NextResponse.json(
         { error: 'Failed to get next order index' },
         { status: 500 }
@@ -55,7 +55,7 @@ export async function GET(request: NextRequest) {
       .eq('course_id', courseId)
     
     if (countError) {
-      console.error('Error counting lessons:', countError)
+      logError('Error counting lessons:', countError)
     }
     
     return NextResponse.json({
@@ -70,7 +70,7 @@ export async function GET(request: NextRequest) {
     })
     
   } catch (error) {
-    console.error('Next order API error:', error)
+    logError('Next order API error:', error)
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

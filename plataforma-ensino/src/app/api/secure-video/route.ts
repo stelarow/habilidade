@@ -143,7 +143,7 @@ export async function GET(request: NextRequest) {
     })
 
   } catch (error) {
-    console.error('Secure video API error:', error)
+    logError('Secure video API error:', error)
     return NextResponse.json(
       { error: 'Erro interno do servidor' },
       { status: 500 }
@@ -178,7 +178,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ success: true })
 
   } catch (error) {
-    console.error('Video heartbeat error:', error)
+    logError('Video heartbeat error:', error)
     return NextResponse.json(
       { error: 'Erro interno do servidor' },
       { status: 500 }

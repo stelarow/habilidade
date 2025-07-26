@@ -64,7 +64,7 @@ export function EnrollmentForm({
   const convertToTeacherSelectorCourse = (course: DBCourse): TeacherSelectorCourse | null => {
     // Validate required fields to prevent React errors
     if (!course || !course.id || !course.title) {
-      console.warn('Invalid course data for conversion:', course)
+      logWarn('Invalid course data for conversion:', course)
       return null
     }
     
@@ -77,7 +77,7 @@ export function EnrollmentForm({
         max_students: 20 // Default value, could be from course settings
       }
     } catch (error) {
-      console.error('Error converting course:', error)
+      logError('Error converting course:', error)
       return null
     }
   }
@@ -123,7 +123,7 @@ export function EnrollmentForm({
         if (error) throw error
         setUsers(data || [])
       } catch (error) {
-        console.error('Error loading users:', error)
+        logError('Error loading users:', error)
         setUsers([])
       } finally {
         setLoadingUsers(false)
@@ -154,7 +154,7 @@ export function EnrollmentForm({
         if (error) throw error
         setCourses(data || [])
       } catch (error) {
-        console.error('Error loading courses:', error)
+        logError('Error loading courses:', error)
         setCourses([])
       } finally {
         setLoadingCourses(false)
@@ -169,7 +169,7 @@ export function EnrollmentForm({
   const handleInputChange = (field: keyof EnhancedEnrollmentFormData, value: string | boolean) => {
     // Validate field and value to prevent undefined/null errors
     if (!field) {
-      console.warn('handleInputChange called with invalid field:', field)
+      logWarn('handleInputChange called with invalid field:', field)
       return
     }
     
@@ -250,7 +250,7 @@ export function EnrollmentForm({
           : 'Matrícula removida com sucesso!'
       )
     } catch (error: any) {
-      console.error('Form submission error:', error)
+      logError('Form submission error:', error)
       
       // Enhanced API error handling with detailed instructor validation (AC: 4)
       const errorMessage = error?.message || error?.error || (typeof error === 'string' ? error : 'Erro interno do servidor')
@@ -263,10 +263,10 @@ export function EnrollmentForm({
           errorDetails = error.details
         }
       } catch (e) {
-        console.warn('Could not parse error details:', e)
+        logWarn('Could not parse error details:', e)
       }
       
-      console.error('Form submission error details:', {
+      logError('Form submission error details:', {
         error,
         errorMessage,
         errorDetails,
@@ -548,14 +548,14 @@ export function EnrollmentForm({
                   hasTwoClassesPerWeek={formData.has_two_classes_per_week}
                   onTeacherChange={(teacherId) => {
                     const safeTeacherId = teacherId || ''
-                    console.log('Teacher changed:', safeTeacherId)
+                    logDebug('Teacher changed:', safeTeacherId)
                     handleInputChange('teacher_id', safeTeacherId)
                   }}
                   onTwoClassesChange={(checked) => handleInputChange('has_two_classes_per_week', checked)}
                   onSlotSelect={(slot1, slot2) => {
                     const safeSlot1 = slot1 || ''
                     const safeSlot2 = slot2 || ''
-                    console.log('Slots selected:', { slot1: safeSlot1, slot2: safeSlot2 })
+                    logDebug('Slots selected:', { slot1: safeSlot1, slot2: safeSlot2 })
                     handleInputChange('schedule_slot_1', safeSlot1)
                     handleInputChange('schedule_slot_2', safeSlot2)
                   }}

@@ -64,7 +64,7 @@ export function useAdminAuth() {
         })
 
       } catch (error) {
-        console.error('[useAdminAuth] Error:', error)
+        logError('[useAdminAuth] Error:', error)
         setState(prev => ({ 
           ...prev, 
           isLoading: false, 

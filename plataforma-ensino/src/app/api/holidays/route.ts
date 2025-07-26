@@ -78,7 +78,7 @@ export async function GET(request: NextRequest) {
       .limit(1)
       
     if (connectionError) {
-      console.error('Database connection error:', connectionError)
+      logError('Database connection error:', connectionError)
       return createErrorResponse(
         'VALIDATION_ERROR',
         'Database unavailable',
@@ -124,7 +124,7 @@ export async function GET(request: NextRequest) {
     const { data: holidays, error } = await query
     
     if (error) {
-      console.error('Database error fetching holidays:', error)
+      logError('Database error fetching holidays:', error)
       return createErrorResponse(
         'VALIDATION_ERROR',
         'Failed to fetch holidays',
@@ -147,7 +147,7 @@ export async function GET(request: NextRequest) {
       )
     }
     
-    console.error('Holidays GET error:', error)
+    logError('Holidays GET error:', error)
     return createErrorResponse(
       'VALIDATION_ERROR',
       'Internal server error',
@@ -204,7 +204,7 @@ export async function POST(request: NextRequest) {
       .single()
     
     if (error) {
-      console.error('Database error creating holiday:', error)
+      logError('Database error creating holiday:', error)
       return createErrorResponse(
         'VALIDATION_ERROR',
         'Failed to create holiday',
@@ -231,7 +231,7 @@ export async function POST(request: NextRequest) {
                      'unknown'
         })
     } catch (auditError) {
-      console.error('Failed to log audit event:', auditError)
+      logError('Failed to log audit event:', auditError)
       // Don't fail the request if audit logging fails
     }
     
@@ -261,7 +261,7 @@ export async function POST(request: NextRequest) {
       )
     }
     
-    console.error('Holiday POST error:', error)
+    logError('Holiday POST error:', error)
     return createErrorResponse(
       'VALIDATION_ERROR',
       'Internal server error',

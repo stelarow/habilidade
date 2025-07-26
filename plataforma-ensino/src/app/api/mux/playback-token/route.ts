@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ token })
   } catch (error) {
-    console.error('Error generating Mux playback token:', error)
+    logError('Error generating Mux playback token:', error)
     return NextResponse.json({ error: 'Failed to generate token' }, { status: 500 })
   }
 }

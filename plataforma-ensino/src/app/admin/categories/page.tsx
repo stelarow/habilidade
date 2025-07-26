@@ -17,7 +17,7 @@ export default async function CategoriesPage() {
     .order('name')
 
   if (error) {
-    console.error('Error fetching categories:', error)
+    logError('Error fetching categories:', error)
     return (
       <div className="text-center py-8">
         <p className="text-red-400">Erro ao carregar categorias</p>

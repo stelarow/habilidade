@@ -47,7 +47,7 @@ export default async function LessonsPage() {
     .order('title')
 
   if (lessonsError) {
-    console.error('Error fetching lessons:', lessonsError)
+    logError('Error fetching lessons:', lessonsError)
     return (
       <div className="text-center py-8">
         <p className="text-red-400">Erro ao carregar aulas</p>
@@ -56,7 +56,7 @@ export default async function LessonsPage() {
   }
 
   if (coursesError) {
-    console.error('Error fetching courses:', coursesError)
+    logError('Error fetching courses:', coursesError)
     return (
       <div className="text-center py-8">
         <p className="text-red-400">Erro ao carregar cursos</p>

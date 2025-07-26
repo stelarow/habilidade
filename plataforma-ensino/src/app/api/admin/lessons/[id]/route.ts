@@ -40,7 +40,7 @@ export async function GET(
       .single()
     
     if (error) {
-      console.error('Error fetching lesson:', error)
+      logError('Error fetching lesson:', error)
       return NextResponse.json(
         { error: 'Lesson not found' },
         { status: 404 }
@@ -50,7 +50,7 @@ export async function GET(
     return NextResponse.json({ data: lesson })
     
   } catch (error) {
-    console.error('Get lesson API error:', error)
+    logError('Get lesson API error:', error)
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -118,7 +118,7 @@ export async function PUT(
       .single()
     
     if (lessonError) {
-      console.error('Error updating lesson:', lessonError)
+      logError('Error updating lesson:', lessonError)
       return NextResponse.json(
         { error: 'Failed to update lesson' },
         { status: 500 }
@@ -134,7 +134,7 @@ export async function PUT(
         .eq('lesson_id', lessonId)
       
       if (deleteExercisesError) {
-        console.error('Error deleting exercises:', deleteExercisesError)
+        logError('Error deleting exercises:', deleteExercisesError)
       } else if (exercises.length > 0) {
         // Create new exercises
         const exercisesToInsert = exercises.map((exercise: any, index: number) => ({
@@ -150,7 +150,7 @@ export async function PUT(
           .insert(exercisesToInsert)
         
         if (exercisesError) {
-          console.error('Error creating exercises:', exercisesError)
+          logError('Error creating exercises:', exercisesError)
         }
       }
     }
@@ -182,7 +182,7 @@ export async function PUT(
           .single()
         
         if (updateQuizError) {
-          console.error('Error updating quiz:', updateQuizError)
+          logError('Error updating quiz:', updateQuizError)
         } else {
           // Update quiz questions (delete all and recreate)
           const { error: deleteQuestionsError } = await supabase
@@ -191,7 +191,7 @@ export async function PUT(
             .eq('quiz_id', existingQuiz.id)
           
           if (deleteQuestionsError) {
-            console.error('Error deleting quiz questions:', deleteQuestionsError)
+            logError('Error deleting quiz questions:', deleteQuestionsError)
           } else if (quiz.questions && quiz.questions.length > 0) {
             const questionsToInsert = quiz.questions.map((question: any, index: number) => ({
               quiz_id: existingQuiz.id,
@@ -208,7 +208,7 @@ export async function PUT(
               .insert(questionsToInsert)
             
             if (questionsError) {
-              console.error('Error creating quiz questions:', questionsError)
+              logError('Error creating quiz questions:', questionsError)
             }
           }
         }
@@ -230,7 +230,7 @@ export async function PUT(
           .single()
         
         if (quizError) {
-          console.error('Error creating quiz:', quizError)
+          logError('Error creating quiz:', quizError)
         } else if (quiz.questions && quiz.questions.length > 0) {
           const questionsToInsert = quiz.questions.map((question: any, index: number) => ({
             quiz_id: createdQuiz.id,
@@ -247,7 +247,7 @@ export async function PUT(
             .insert(questionsToInsert)
           
           if (questionsError) {
-            console.error('Error creating quiz questions:', questionsError)
+            logError('Error creating quiz questions:', questionsError)
           }
         }
       }
@@ -266,7 +266,7 @@ export async function PUT(
       .single()
     
     if (fetchError) {
-      console.error('Error fetching complete lesson:', fetchError)
+      logError('Error fetching complete lesson:', fetchError)
       return NextResponse.json({ data: lesson })
     }
     
@@ -276,7 +276,7 @@ export async function PUT(
     })
     
   } catch (error) {
-    console.error('Update lesson API error:', error)
+    logError('Update lesson API error:', error)
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -317,7 +317,7 @@ export async function DELETE(
       .eq('id', lessonId)
     
     if (deleteError) {
-      console.error('Error deleting lesson:', deleteError)
+      logError('Error deleting lesson:', deleteError)
       return NextResponse.json(
         { error: 'Failed to delete lesson' },
         { status: 500 }
@@ -329,7 +329,7 @@ export async function DELETE(
     })
     
   } catch (error) {
-    console.error('Delete lesson API error:', error)
+    logError('Delete lesson API error:', error)
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

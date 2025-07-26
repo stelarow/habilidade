@@ -33,7 +33,7 @@ export function AdminHeader() {
       await supabase.auth.signOut()
       router.push('/auth/login')
     } catch (error) {
-      console.error('Sign out error:', error)
+      logError('Sign out error:', error)
       // Force redirect even if signOut fails
       router.push('/auth/login')
     }
@@ -102,7 +102,7 @@ export function AdminHeader() {
 
       setSearchResults(results)
     } catch (error) {
-      console.error('Search error:', error)
+      logError('Search error:', error)
     } finally {
       setIsSearching(false)
     }

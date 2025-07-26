@@ -61,7 +61,7 @@ export function useCompletionCriteria({
     totalPages: pdfTotalPages,
     lessonId,
     onFullyRead: () => {
-      console.log('PDF fully read!')
+      logDebug('PDF fully read!')
     }
   })
 

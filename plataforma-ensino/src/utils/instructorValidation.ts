@@ -2,6 +2,7 @@
 // Helps validate and debug instructor-related issues in enrollment process
 
 import { createClient } from '@/lib/supabase/client'
+import { logDebug, logWarn, logError } from '@/lib/utils/logger'
 
 export interface InstructorValidationResult {
   isValid: boolean
@@ -175,8 +176,8 @@ export function logInstructorValidationIssues(
 ) {
   console.group(`🔍 ${context} - Instructor Validation`)
   
-  console.log('📋 Requested Instructor IDs:', validation.instructorIds)
-  console.log('✅ Found Instructors:', validation.foundInstructors.length)
+  logDebug('📋 Requested Instructor IDs:', validation.instructorIds)
+  logDebug('✅ Found Instructors:', validation.foundInstructors.length)
   
   if (validation.foundInstructors.length > 0) {
     console.table(validation.foundInstructors.map(i => ({
@@ -188,11 +189,11 @@ export function logInstructorValidationIssues(
   }
   
   if (validation.missingInstructors.length > 0) {
-    console.warn('❌ Missing Instructors:', validation.missingInstructors)
+    logWarn('❌ Missing Instructors:', validation.missingInstructors)
   }
   
   if (validation.invalidRoleInstructors.length > 0) {
-    console.warn('⚠️ Invalid Role Instructors:')
+    logWarn('⚠️ Invalid Role Instructors:')
     console.table(validation.invalidRoleInstructors.map(i => ({
       ID: i.id,
       Name: i.full_name,
@@ -202,15 +203,15 @@ export function logInstructorValidationIssues(
   }
   
   if (validation.errors.length > 0) {
-    console.error('❌ Validation Errors:')
-    validation.errors.forEach(error => console.error(`   - ${error}`))
+    logError('❌ Validation Errors:')
+    validation.errors.forEach(error => logError(`   - ${error}`))
   }
   
   if (validation.warnings.length > 0) {
-    console.warn('⚠️ Validation Warnings:')
-    validation.warnings.forEach(warning => console.warn(`   - ${warning}`))
+    logWarn('⚠️ Validation Warnings:')
+    validation.warnings.forEach(warning => logWarn(`   - ${warning}`))
   }
   
-  console.log('🏁 Validation Result:', validation.isValid ? 'PASSED' : 'FAILED')
+  logDebug('🏁 Validation Result:', validation.isValid ? 'PASSED' : 'FAILED')
   console.groupEnd()
 }

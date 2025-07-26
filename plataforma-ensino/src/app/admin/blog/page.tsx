@@ -3,6 +3,7 @@ import { requireAdmin } from '@/lib/auth/session'
 import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link';
 import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
+import { logError } from '@/lib/utils/logger';
 
 interface Post {
   id: string;
@@ -26,7 +27,7 @@ export default async function BlogAdminPage() {
     .order('created_at', { ascending: false }) as { data: Post[] | null, error: any }
 
   if (error) {
-    console.error('Error fetching posts:', error)
+    logError('Error fetching posts:', error)
     return (
       <div className="text-center py-8">
         <p className="text-red-400">Erro ao carregar posts</p>

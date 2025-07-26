@@ -40,7 +40,7 @@ export default async function CoursesPage() {
     .order('created_at')
 
   if (error) {
-    console.error('Error fetching courses:', error)
+    logError('Error fetching courses:', error)
     return (
       <div className="text-center py-8">
         <p className="text-red-400">Erro ao carregar cursos</p>

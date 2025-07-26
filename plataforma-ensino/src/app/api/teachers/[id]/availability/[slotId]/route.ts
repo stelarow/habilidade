@@ -221,7 +221,7 @@ export async function PUT(
       .single()
     
     if (error) {
-      console.error('Database error updating availability:', error)
+      logError('Database error updating availability:', error)
       return createErrorResponse(
         'VALIDATION_ERROR',
         'Failed to update availability slot',
@@ -244,7 +244,7 @@ export async function PUT(
       )
     }
     
-    console.error('Availability PUT error:', error)
+    logError('Availability PUT error:', error)
     return createErrorResponse(
       'VALIDATION_ERROR',
       'Internal server error',
@@ -350,7 +350,7 @@ export async function DELETE(
       .eq('id', slotId)
     
     if (error) {
-      console.error('Database error deleting availability:', error)
+      logError('Database error deleting availability:', error)
       return createErrorResponse(
         'VALIDATION_ERROR',
         'Failed to delete availability slot',
@@ -364,7 +364,7 @@ export async function DELETE(
     return new NextResponse(null, { status: 204 })
     
   } catch (error) {
-    console.error('Availability DELETE error:', error)
+    logError('Availability DELETE error:', error)
     return createErrorResponse(
       'VALIDATION_ERROR',
       'Internal server error',

@@ -57,7 +57,7 @@ export async function GET(_request: NextRequest) {
       .order('users(full_name)');
 
     if (teachersError) {
-      console.error('Erro ao buscar professores:', teachersError);
+      logError('Erro ao buscar professores:', teachersError);
       return NextResponse.json(
         { error: 'Erro ao buscar professores' },
         { status: 500 }
@@ -74,7 +74,7 @@ export async function GET(_request: NextRequest) {
           .eq('teacher_id', teacher.id);
 
         if (availabilityError) {
-          console.error(`Erro ao buscar disponibilidade do professor ${teacher.id}:`, availabilityError);
+          logError(`Erro ao buscar disponibilidade do professor ${teacher.id}:`, availabilityError);
         }
 
         // Contar agendamentos ativos
@@ -84,7 +84,7 @@ export async function GET(_request: NextRequest) {
           .eq('instructor_id', teacher.user_id);
 
         if (schedulesError) {
-          console.error(`Erro ao buscar agendamentos do professor ${teacher.id}:`, schedulesError);
+          logError(`Erro ao buscar agendamentos do professor ${teacher.id}:`, schedulesError);
         }
 
         const totalSlots = availabilitySlots?.length || 0;
@@ -146,7 +146,7 @@ export async function GET(_request: NextRequest) {
     return NextResponse.json(response);
 
   } catch (error) {
-    console.error('Erro ao buscar professores:', error);
+    logError('Erro ao buscar professores:', error);
     return NextResponse.json(
       { error: 'Erro interno do servidor' },
       { status: 500 }

@@ -202,7 +202,7 @@ function useTeacherData(availabilityFilter?: TeacherSelectorProps['availabilityF
               )
               capacityUtilization = totalCapacity > 0 ? (usedCapacity / totalCapacity) * 100 : 0
             } catch (error) {
-              console.warn(`Failed to fetch availability info for teacher ${teacher.id}:`, error)
+              logWarn(`Failed to fetch availability info for teacher ${teacher.id}:`, error)
             }
           }
 
@@ -219,7 +219,7 @@ function useTeacherData(availabilityFilter?: TeacherSelectorProps['availabilityF
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred'
       setError(errorMessage)
-      console.error('Teacher data fetch error:', err)
+      logError('Teacher data fetch error:', err)
     } finally {
       setLoading(false)
     }
@@ -251,7 +251,7 @@ function useRealtimeUpdates(teachers: TeacherWithAvailabilityInfo[], onUpdate: (
       const unsubscribe = subscribeToAvailabilityUpdates(
         teacher.id,
         (payload) => {
-          console.log('Teacher availability updated:', payload)
+          logDebug('Teacher availability updated:', payload)
           onUpdate()
         }
       )

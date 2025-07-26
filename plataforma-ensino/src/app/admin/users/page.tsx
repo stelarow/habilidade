@@ -19,7 +19,7 @@ export default async function UsersPage() {
     .order('created_at', { ascending: false })
 
   if (error) {
-    console.error('Error fetching users:', error)
+    logError('Error fetching users:', error)
     return (
       <div className="text-center py-8">
         <p className="text-red-400">Erro ao carregar usuários</p>

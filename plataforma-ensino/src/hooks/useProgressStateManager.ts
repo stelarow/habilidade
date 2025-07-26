@@ -324,10 +324,10 @@ export function useProgressStateManager(
     try {
       // Mock API call - replace with actual implementation
       await new Promise(resolve => setTimeout(resolve, 1000))
-      console.log('Progress saved:', progressData)
+      logDebug('Progress saved:', progressData)
     } catch (err) {
       setError('Failed to save progress')
-      console.error('Save progress error:', err)
+      logError('Save progress error:', err)
     } finally {
       setIsSaving(false)
     }

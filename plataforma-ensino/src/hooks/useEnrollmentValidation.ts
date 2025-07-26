@@ -126,7 +126,7 @@ export function useEnrollmentValidation(options: UseEnrollmentValidationOptions 
       // Course compatibility check (if courseId provided)
       if (courseId && teacher.specialties && teacher.specialties.length > 0) {
         // In a real implementation, this would check course-teacher compatibility
-        console.log('Course compatibility check for:', courseId, teacher.specialties)
+        logDebug('Course compatibility check for:', courseId, teacher.specialties)
       }
 
       setCustomErrors(errors)

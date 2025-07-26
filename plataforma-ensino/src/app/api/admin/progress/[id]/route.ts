@@ -57,7 +57,7 @@ export async function GET(
       .single()
     
     if (error) {
-      console.error('Error fetching progress:', error)
+      logError('Error fetching progress:', error)
       if (error.code === 'PGRST116') {
         return NextResponse.json(
           { error: 'Progresso não encontrado' },
@@ -75,7 +75,7 @@ export async function GET(
     })
     
   } catch (error) {
-    console.error('Progress detail API error:', error)
+    logError('Progress detail API error:', error)
     return NextResponse.json(
       { error: 'Erro interno do servidor' },
       { status: 500 }
@@ -155,7 +155,7 @@ export async function PUT(
       .single()
     
     if (error) {
-      console.error('Error updating progress:', error)
+      logError('Error updating progress:', error)
       return NextResponse.json(
         { error: 'Erro ao atualizar progresso' },
         { status: 500 }
@@ -182,7 +182,7 @@ export async function PUT(
       )
     }
     
-    console.error('Progress update error:', error)
+    logError('Progress update error:', error)
     return NextResponse.json(
       { error: 'Erro interno do servidor' },
       { status: 500 }
@@ -232,7 +232,7 @@ export async function DELETE(
       .eq('id', progressId)
     
     if (error) {
-      console.error('Error deleting progress:', error)
+      logError('Error deleting progress:', error)
       return NextResponse.json(
         { error: 'Erro ao remover progresso' },
         { status: 500 }
@@ -251,7 +251,7 @@ export async function DELETE(
     })
     
   } catch (error) {
-    console.error('Progress deletion error:', error)
+    logError('Progress deletion error:', error)
     return NextResponse.json(
       { error: 'Erro interno do servidor' },
       { status: 500 }

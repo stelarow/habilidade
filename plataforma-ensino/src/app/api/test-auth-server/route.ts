@@ -8,7 +8,7 @@ export const dynamic = 'force-dynamic'
 
 export async function GET(request: NextRequest) {
   const testId = Math.random().toString(36).substr(2, 9)
-  console.log(`[API_AUTH_TEST-${testId}] 🧪 Starting server-side auth test`)
+  logDebug(`[API_AUTH_TEST-${testId}] 🧪 Starting server-side auth test`)
 
   const results = {
     timestamp: new Date().toISOString(),
@@ -26,7 +26,7 @@ export async function GET(request: NextRequest) {
 
   try {
     // Test 1: Check request cookies
-    console.log(`[API_AUTH_TEST-${testId}] 🍪 Testing cookies...`)
+    logDebug(`[API_AUTH_TEST-${testId}] 🍪 Testing cookies...`)
     const cookies = request.cookies.getAll()
     const supabaseCookies = cookies.filter(c => 
       c.name.includes('supabase') || 
@@ -47,7 +47,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Test 2: Check headers
-    console.log(`[API_AUTH_TEST-${testId}] 📋 Testing headers...`)
+    logDebug(`[API_AUTH_TEST-${testId}] 📋 Testing headers...`)
     results.headers = {
       authorization: request.headers.get('authorization'),
       cookie: request.headers.get('cookie') ? 'present' : 'missing',
@@ -60,11 +60,11 @@ export async function GET(request: NextRequest) {
     }
 
     // Test 3: Create Supabase client and test auth
-    console.log(`[API_AUTH_TEST-${testId}] 🔐 Testing Supabase server client...`)
+    logDebug(`[API_AUTH_TEST-${testId}] 🔐 Testing Supabase server client...`)
     const supabase = createClient()
     
     // Test 3.1: Debug client analysis
-    console.log(`[API_AUTH_TEST-${testId}] 🔍 Running debug client analysis...`)
+    logDebug(`[API_AUTH_TEST-${testId}] 🔍 Running debug client analysis...`)
     const debugResults = await testAuthWithDebugClient()
     
     results.tests.debugClient = {
@@ -89,10 +89,10 @@ export async function GET(request: NextRequest) {
 
       if (user) {
         results.summary.authenticated = true
-        console.log(`[API_AUTH_TEST-${testId}] ✅ User authenticated: ${user.id}`)
+        logDebug(`[API_AUTH_TEST-${testId}] ✅ User authenticated: ${user.id}`)
 
         // Test 4: Get user profile
-        console.log(`[API_AUTH_TEST-${testId}] 👤 Testing user profile...`)
+        logDebug(`[API_AUTH_TEST-${testId}] 👤 Testing user profile...`)
         const { data: profile, error: profileError } = await supabase
           .from('users')
           .select('*')
@@ -108,10 +108,10 @@ export async function GET(request: NextRequest) {
         if (profile) {
           results.summary.hasProfile = true
           results.summary.isAdmin = profile.role === 'admin'
-          console.log(`[API_AUTH_TEST-${testId}] 👤 Profile found: ${profile.role}`)
+          logDebug(`[API_AUTH_TEST-${testId}] 👤 Profile found: ${profile.role}`)
 
           // Test 5: Test is_admin RPC
-          console.log(`[API_AUTH_TEST-${testId}] 🔧 Testing is_admin RPC...`)
+          logDebug(`[API_AUTH_TEST-${testId}] 🔧 Testing is_admin RPC...`)
           const { data: isAdminResult, error: adminError } = await supabase.rpc('is_admin')
           
           results.tests.isAdminRPC = {
@@ -125,11 +125,11 @@ export async function GET(request: NextRequest) {
           }
         }
       } else {
-        console.log(`[API_AUTH_TEST-${testId}] ❌ No user authenticated`)
+        logDebug(`[API_AUTH_TEST-${testId}] ❌ No user authenticated`)
         results.summary.errors.push('No authenticated user found')
       }
     } catch (supabaseError) {
-      console.error(`[API_AUTH_TEST-${testId}] ❌ Supabase error:`, supabaseError)
+      logError(`[API_AUTH_TEST-${testId}] ❌ Supabase error:`, supabaseError)
       results.tests.supabaseAuth = {
         status: 'error',
         error: supabaseError instanceof Error ? supabaseError.message : String(supabaseError)
@@ -138,7 +138,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Test 6: Test session verification function
-    console.log(`[API_AUTH_TEST-${testId}] 🛡️ Testing session verification...`)
+    logDebug(`[API_AUTH_TEST-${testId}] 🛡️ Testing session verification...`)
     try {
       const session = await verifySession()
       results.tests.sessionVerification = {
@@ -159,11 +159,11 @@ export async function GET(request: NextRequest) {
     }
 
   } catch (error) {
-    console.error(`[API_AUTH_TEST-${testId}] ❌ Test suite error:`, error)
+    logError(`[API_AUTH_TEST-${testId}] ❌ Test suite error:`, error)
     results.summary.errors.push(error instanceof Error ? error.message : String(error))
   }
 
-  console.log(`[API_AUTH_TEST-${testId}] 🏁 Test completed. Summary:`, results.summary)
+  logDebug(`[API_AUTH_TEST-${testId}] 🏁 Test completed. Summary:`, results.summary)
 
   return NextResponse.json(results, {
     headers: {

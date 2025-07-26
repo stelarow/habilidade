@@ -20,7 +20,7 @@ export default function AuthLayout({
     
     const checkAuthStatus = async () => {
       try {
-        console.log(`[AUTH-LAYOUT-${sessionId}] 🔍 Client-side auth check starting for: ${pathname}`)
+        logDebug(`[AUTH-LAYOUT-${sessionId}] 🔍 Client-side auth check starting for: ${pathname}`)
         
         const supabase = createClient()
         
@@ -28,14 +28,14 @@ export default function AuthLayout({
         const { data: { user }, error } = await supabase.auth.getUser()
         
         if (error) {
-          console.log(`[AUTH-LAYOUT-${sessionId}] ❌ Error getting user:`, error.message)
+          logDebug(`[AUTH-LAYOUT-${sessionId}] ❌ Error getting user:`, error.message)
           setShouldRender(true)
           return
         }
 
         if (user) {
-          console.log(`[AUTH-LAYOUT-${sessionId}] ✅ User authenticated (ID: ${user.id})`)
-          console.log(`[AUTH-LAYOUT-${sessionId}] 👤 User details:`, {
+          logDebug(`[AUTH-LAYOUT-${sessionId}] ✅ User authenticated (ID: ${user.id})`)
+          logDebug(`[AUTH-LAYOUT-${sessionId}] 👤 User details:`, {
             email: user.email,
             role: user.user_metadata?.role || 'not_set',
             created_at: user.created_at
@@ -48,35 +48,35 @@ export default function AuthLayout({
           )
 
           if (isRestrictedRoute) {
-            console.log(`[AUTH-LAYOUT-${sessionId}] 🚫 Authenticated user on restricted route - redirecting`)
+            logDebug(`[AUTH-LAYOUT-${sessionId}] 🚫 Authenticated user on restricted route - redirecting`)
             
             try {
               const redirectUrl = await getRedirectUrlForCurrentUser()
-              console.log(`[AUTH-LAYOUT-${sessionId}] ↗️ Redirecting to: ${redirectUrl}`)
+              logDebug(`[AUTH-LAYOUT-${sessionId}] ↗️ Redirecting to: ${redirectUrl}`)
               router.replace(redirectUrl)
               return
             } catch (error) {
-              console.error(`[AUTH-LAYOUT-${sessionId}] ❌ Error getting redirect URL:`, error)
-              console.log(`[AUTH-LAYOUT-${sessionId}] 🔄 Falling back to dashboard redirect`)
+              logError(`[AUTH-LAYOUT-${sessionId}] ❌ Error getting redirect URL:`, error)
+              logDebug(`[AUTH-LAYOUT-${sessionId}] 🔄 Falling back to dashboard redirect`)
               router.replace('/dashboard')
               return
             }
           } else {
-            console.log(`[AUTH-LAYOUT-${sessionId}] ℹ️ Non-restricted auth route: ${pathname} - allowing render`)
+            logDebug(`[AUTH-LAYOUT-${sessionId}] ℹ️ Non-restricted auth route: ${pathname} - allowing render`)
           }
         } else {
-          console.log(`[AUTH-LAYOUT-${sessionId}] 👤 No authenticated user found - allowing access`)
+          logDebug(`[AUTH-LAYOUT-${sessionId}] 👤 No authenticated user found - allowing access`)
         }
 
         setShouldRender(true)
         
       } catch (error) {
-        console.error(`[AUTH-LAYOUT-${sessionId}] ❌ Unexpected error in auth check:`, error)
+        logError(`[AUTH-LAYOUT-${sessionId}] ❌ Unexpected error in auth check:`, error)
         // Allow rendering on error to avoid blocking the page
         setShouldRender(true)
       } finally {
         setIsChecking(false)
-        console.log(`[AUTH-LAYOUT-${sessionId}] ✅ Auth check completed`)
+        logDebug(`[AUTH-LAYOUT-${sessionId}] ✅ Auth check completed`)
       }
     }
 
