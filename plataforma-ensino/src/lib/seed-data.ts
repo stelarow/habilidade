@@ -278,7 +278,7 @@ export async function seedSampleInstructors() {
     // Monday to Friday: 08:00-10:00, 10:00-12:00, 13:30-15:30, 15:30-17:30, 18:00-20:00, 20:00-22:00
     // Saturday: 08:00-10:00, 10:00-12:00
 
-    const availabilitySlots = []
+    const availabilitySlots: any[] = []
     
     for (const instructor of instructors) {
       // Monday to Friday (day_of_week: 1-5)
