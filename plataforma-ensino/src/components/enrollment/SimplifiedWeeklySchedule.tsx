@@ -74,58 +74,130 @@ export default function SimplifiedWeeklySchedule({
       setError(null)
 
       try {
-        // Get teacher availability
-        const { data: availability, error: availError } = await supabase
-          .from('teacher_availability')
-          .select('*')
-          .eq('teacher_id', teacherId)
-          .eq('is_active', true)
-          .order('day_of_week')
-          .order('start_time')
-
-        if (availError) throw availError
-
-        // Get current student schedules for this teacher (instructor_id references users.id)
-        // First get the instructor's user_id
+        console.log('Loading availability and schedules for teacherId:', teacherId)
+        
+        // First get instructor user_id
         const { data: instructorData, error: instructorError } = await supabase
           .from('instructors')
           .select('user_id')
           .eq('id', teacherId)
           .single()
 
-        if (instructorError) throw instructorError
+        if (instructorError) {
+          console.error('Error fetching instructor data:', instructorError)
+          throw instructorError
+        }
 
-        const { data: currentSchedules, error: schedError } = await supabase
-          .from('student_schedules')
-          .select('*')
-          .eq('instructor_id', instructorData.user_id)
+        console.log('Found instructor user_id:', instructorData.user_id)
 
-        if (schedError) throw schedError
+        // Get teacher availability and current schedules in parallel for better performance
+        const [availabilityResult, schedulesResult] = await Promise.all([
+          supabase
+            .from('teacher_availability')
+            .select('*')
+            .eq('teacher_id', teacherId)
+            .eq('is_active', true)
+            .order('day_of_week')
+            .order('start_time'),
+          supabase
+            .from('student_schedules')
+            .select('*')
+            .eq('instructor_id', instructorData.user_id)
+        ])
+
+        if (availabilityResult.error) {
+          console.error('Error fetching teacher availability:', availabilityResult.error)
+          throw availabilityResult.error
+        }
+
+        if (schedulesResult.error) {
+          console.error('Error fetching student schedules:', schedulesResult.error)
+          throw schedulesResult.error
+        }
+
+        const availability = availabilityResult.data
+        const currentSchedules = schedulesResult.data
+
+        console.log('Found', availability?.length || 0, 'availability slots')
+        console.log('Found', currentSchedules?.length || 0, 'current schedules')
+
+        // Validate data integrity
+        if (!availability || availability.length === 0) {
+          console.warn('No availability slots found for teacher:', teacherId)
+          setScheduleSlots([])
+          return
+        }
 
         // Process availability with current occupancy
-        const processedSlots: WeeklyScheduleSlot[] = (availability || []).map(slot => {
-          const currentOccupancy = (currentSchedules || []).filter(
+        // Fix day-of-week conversion: teacher_availability uses 0-6, student_schedules uses 1-7
+        const processedSlots: WeeklyScheduleSlot[] = (availability || []).map((slot, index) => {
+          // Convert teacher_availability day_of_week (0-6) to student_schedules format (1-7)
+          // 0 (Sunday) -> 7, 1 (Monday) -> 1, 2 (Tuesday) -> 2, ... 6 (Saturday) -> 6
+          const schedulesDayOfWeek = slot.day_of_week === 0 ? 7 : slot.day_of_week
+          
+          // Find matching schedules for this time slot
+          const matchingSchedules = (currentSchedules || []).filter(
             schedule => 
-              schedule.day_of_week === (slot.day_of_week === 0 ? 7 : slot.day_of_week) && // Convert Sunday (0) to 7
+              schedule.day_of_week === schedulesDayOfWeek &&
               schedule.start_time === slot.start_time &&
               schedule.end_time === slot.end_time
-          ).length
+          )
+          
+          const currentOccupancy = matchingSchedules.length
+
+          // Log details for debugging
+          console.log(`Slot ${index + 1}:`, {
+            slotId: slot.id,
+            teacherDayOfWeek: slot.day_of_week,
+            schedulesDayOfWeek,
+            startTime: slot.start_time,
+            endTime: slot.end_time,
+            maxStudents: slot.max_students,
+            currentOccupancy,
+            matchingSchedulesCount: matchingSchedules.length
+          })
+
+          // For display, we need Monday-Saturday (1-6), so convert Sunday (0) to 7 but filter it out later
+          const displayDayOfWeek = slot.day_of_week === 0 ? 7 : slot.day_of_week
 
           return {
             id: slot.id,
-            dayOfWeek: slot.day_of_week === 0 ? 7 : slot.day_of_week, // Convert Sunday to 7
+            dayOfWeek: displayDayOfWeek,
             startTime: slot.start_time,
             endTime: slot.end_time,
             maxStudents: slot.max_students,
             currentStudents: currentOccupancy,
             isAvailable: currentOccupancy < slot.max_students
           }
-        })
+        }).filter(slot => slot.dayOfWeek <= 6) // Only show Monday-Saturday (1-6)
 
         setScheduleSlots(processedSlots)
+        console.log('Successfully processed', processedSlots.length, 'schedule slots')
       } catch (err) {
         console.error('Error loading schedule data:', err)
-        setError(err instanceof Error ? err.message : 'Erro ao carregar horários')
+        
+        // Provide detailed error information for debugging
+        let errorMessage = 'Erro desconhecido ao carregar horários'
+        
+        if (err instanceof Error) {
+          console.error('Error details:', {
+            name: err.name,
+            message: err.message,
+            stack: err.stack
+          })
+          
+          if (err.message.includes('instructor')) {
+            errorMessage = 'Erro ao buscar dados do instrutor. Verifique se o ID do professor está correto.'
+          } else if (err.message.includes('availability')) {
+            errorMessage = 'Erro ao buscar disponibilidade do professor. O professor pode não ter horários configurados.'
+          } else if (err.message.includes('schedules')) {
+            errorMessage = 'Erro ao buscar horários ocupados. Pode haver um problema na consulta de agendamentos.'
+          } else {
+            errorMessage = `Erro ao carregar horários: ${err.message}`
+          }
+        }
+        
+        setError(errorMessage)
       } finally {
         setLoading(false)
       }
