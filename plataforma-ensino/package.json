@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "dev:fast": "next dev --config next.config.dev.mjs",
-    "build": "NODE_ENV=production NODE_OPTIONS='--max-old-space-size=2048' next build",
+    "build": "NODE_ENV=production NODE_OPTIONS='--max-old-space-size=3072' next build",
     "build:dev": "NODE_OPTIONS='--max-old-space-size=1024' next build --config next.config.dev.mjs",
     "build:fast": "NODE_OPTIONS='--max-old-space-size=1024' next build --config next.config.dev.mjs",
     "build:production": "NODE_ENV=production NODE_OPTIONS='--max-old-space-size=2048' next build",
@@ -78,7 +78,7 @@
     "zustand": "^4.5.0"
   },
   "devDependencies": {
-    "@netlify/plugin-nextjs": "^5.7.2",
+    "@netlify/plugin-nextjs": "^5.11.6",
     "@next/bundle-analyzer": "^15.3.5",
     "@playwright/test": "^1.40.0",
     "@testing-library/jest-dom": "^6.0.0",

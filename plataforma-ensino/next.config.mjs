@@ -19,9 +19,6 @@ const nextConfig = {
     // Always lint in production for quality assurance
     ignoreDuringBuilds: false,
     dirs: ['src'],
-    // Cache ESLint results for faster builds
-    cache: true,
-    cacheLocation: '.next/cache/eslint/',
   },
   
   // Configure images for optimal performance
@@ -152,11 +149,11 @@ const nextConfig = {
         }
       };
 
-      // Add performance hints for development feedback
+      // Add performance hints for development feedback (relaxed for Netlify)
       config.performance = {
-        hints: 'warning',
-        maxEntrypointSize: 250000, // 250KB
-        maxAssetSize: 250000, // 250KB
+        hints: false, // Disable performance hints in production builds
+        maxEntrypointSize: 500000, // 500KB (relaxed for Netlify)
+        maxAssetSize: 500000, // 500KB (relaxed for Netlify)
       };
     }
     
