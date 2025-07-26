@@ -273,7 +273,7 @@ export default function SimplifiedWeeklySchedule({
   }, [scheduleSlots])
 
   const handleSlotClick = useCallback((slotId: string) => {
-    if (!onSlotSelect || !slotId) return
+    if (!onSlotSelect || !slotId || !teacherId) return
 
     const isSelected = selectedSlots.includes(slotId)
     let newSelection: string[] = []
@@ -295,13 +295,36 @@ export default function SimplifiedWeeklySchedule({
       }
     }
 
-    // Always pass valid strings - never undefined
-    const slot1 = newSelection[0] || ''
-    const slot2 = newSelection[1] || ''
+    // Format slots for parseScheduleSlot function
+    // Expected format: "teacherId:day:HH:MM-HH:MM"
+    const formatSlotForSubmission = (selectedSlotId: string): string => {
+      const slot = scheduleSlots.find(s => s.id === selectedSlotId)
+      if (!slot) {
+        console.warn('formatSlotForSubmission - Slot not found:', selectedSlotId)
+        return ''
+      }
+      
+      // Ensure we have valid time format (remove seconds if present)
+      const startTime = slot.startTime.includes(':') ? slot.startTime.slice(0, 5) : slot.startTime
+      const endTime = slot.endTime.includes(':') ? slot.endTime.slice(0, 5) : slot.endTime
+      
+      const formattedSlot = `${teacherId}:${slot.dayOfWeek}:${startTime}-${endTime}`
+      console.log('formatSlotForSubmission - Input:', selectedSlotId, 'Output:', formattedSlot)
+      return formattedSlot
+    }
+
+    // Always pass valid formatted strings - never undefined
+    const slot1 = newSelection[0] ? formatSlotForSubmission(newSelection[0]) : ''
+    const slot2 = newSelection[1] ? formatSlotForSubmission(newSelection[1]) : ''
     
-    console.log('Slot selection:', { slot1, slot2, newSelection })
+    console.log('Slot selection:', { 
+      slot1,
+      slot2,
+      newSelection
+    })
+    
     onSlotSelect(slot1, slot2)
-  }, [onSlotSelect, selectedSlots, hasTwoClassesPerWeek, maxSelectableSlots])
+  }, [onSlotSelect, selectedSlots, hasTwoClassesPerWeek, maxSelectableSlots, teacherId, scheduleSlots])
 
   const formatTime = (time: string) => {
     return time.slice(0, 5) // Remove seconds

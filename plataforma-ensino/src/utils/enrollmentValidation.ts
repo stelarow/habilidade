@@ -81,17 +81,57 @@ export function validateEnrollmentForm(
 export function parseScheduleSlot(slotString: string): ScheduleSlot | null {
   try {
     console.log('parseScheduleSlot - Input:', slotString)
+    
+    // Handle empty or invalid inputs
+    if (!slotString || typeof slotString !== 'string') {
+      console.warn('parseScheduleSlot - Empty or invalid input')
+      return null
+    }
+    
+    // Check if input is a UUID (fallback for old format)
+    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+    if (uuidRegex.test(slotString)) {
+      console.warn('parseScheduleSlot - Received UUID instead of formatted slot string:', slotString)
+      return null
+    }
+    
     // Expected format: "teacherId:day:HH:MM-HH:MM"
     const parts = slotString.split(':')
     console.log('parseScheduleSlot - Parts:', parts)
     
-    if (parts.length < 3) return null
+    if (parts.length < 3) {
+      console.warn('parseScheduleSlot - Invalid format, expected at least 3 parts separated by ":"')
+      return null
+    }
     
     const [teacherId, dayStr] = parts
     const timeRange = parts.slice(2).join(':') // Handle HH:MM-HH:MM format with colons
     const day = parseInt(dayStr)
     
-    if (!teacherId || isNaN(day) || day < 1 || day > 7) return null
+    // Validate teacherId (should be a UUID)
+    if (!teacherId || !uuidRegex.test(teacherId)) {
+      console.warn('parseScheduleSlot - Invalid teacherId format:', teacherId)
+      return null
+    }
+    
+    // Validate day (1-7 for Monday-Sunday)
+    if (isNaN(day) || day < 1 || day > 7) {
+      console.warn('parseScheduleSlot - Invalid day:', dayStr, 'parsed as:', day)
+      return null
+    }
+    
+    // Validate time range format (HH:MM-HH:MM)
+    if (!timeRange || !timeRange.includes('-')) {
+      console.warn('parseScheduleSlot - Invalid time range format:', timeRange)
+      return null
+    }
+    
+    const [startTime, endTime] = timeRange.split('-')
+    const timeFormat = /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/
+    if (!timeFormat.test(startTime) || !timeFormat.test(endTime)) {
+      console.warn('parseScheduleSlot - Invalid time format:', { startTime, endTime })
+      return null
+    }
     
     const result = {
       day,
@@ -99,7 +139,7 @@ export function parseScheduleSlot(slotString: string): ScheduleSlot | null {
       teacherId
     }
     
-    console.log('parseScheduleSlot - Result:', result)
+    console.log('parseScheduleSlot - Successfully parsed result:', result)
     return result
   } catch (error) {
     console.error('parseScheduleSlot - Error:', error)
