@@ -1,6 +1,9 @@
 import { createClient } from '@/lib/supabase/server';
 import { NextResponse } from 'next/server';
 
+// Force dynamic rendering for authentication and database queries
+export const dynamic = 'force-dynamic';
+
 /**
  * GET /api/admin/teachers
  * Lista todos os professores com informações de disponibilidade

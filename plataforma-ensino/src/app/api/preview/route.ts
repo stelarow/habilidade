@@ -2,6 +2,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { draftMode } from 'next/headers';
 
+// Force dynamic rendering for draft mode
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const redirect = searchParams.get('redirect');

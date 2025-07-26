@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import jwt from 'jsonwebtoken'
 
+// Force dynamic rendering for token generation
+export const dynamic = 'force-dynamic'
+
 export async function POST(request: NextRequest) {
   try {
     const { playbackId, userId } = await request.json()

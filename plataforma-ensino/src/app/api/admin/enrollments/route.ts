@@ -7,6 +7,25 @@ import { z } from 'zod'
 export const dynamic = 'force-dynamic'
 
 // Enhanced validation schema for Story 1.2 API format
+// 
+// CRITICAL ID MAPPING REFERENCE:
+// ================================
+// Database Table Relationships:
+// - instructors.id (UUID) -> unique instructor profile identifier  
+// - instructors.user_id (UUID) -> references users.id (instructor's user account)
+// - teacher_availability.teacher_id (UUID) -> references instructors.id
+// - student_schedules.instructor_id (UUID) -> references users.id (NOT instructors.id!)
+//
+// API Request/Response Mapping:
+// - schedules[].instructor_id in request body -> users.id (for student_schedules table)
+// - Frontend TeacherSelector provides both instructor.id AND instructor.user_id
+// - SimplifiedWeeklySchedule needs BOTH IDs for proper queries:
+//   * teacherId (instructor.id) for teacher_availability queries
+//   * teacherUserId (user.id) for student_schedules queries
+//
+// This mapping was corrected to fix enrollment validation errors with instructor 
+// Maria Eduarda (instructor.id: 3834f9e6-2fd9-447f-9d74-757cdd6b6e44, 
+//                user.id: 355f9ed5-c838-4c66-8671-2cfbf87121fa)
 const enhancedEnrollmentSchema = z.object({
   student_id: z.string().uuid('ID do estudante inválido'),
   course_id: z.string().uuid('ID do curso inválido'),
@@ -15,7 +34,7 @@ const enhancedEnrollmentSchema = z.object({
     errorMap: () => ({ message: 'Modalidade deve ser "online" ou "in-person"' })
   }),
   schedules: z.array(z.object({
-    instructor_id: z.string().uuid('ID do instrutor inválido'),
+    instructor_id: z.string().uuid('ID do instrutor inválido'), // Note: This is actually the user_id from users table
     day_of_week: z.number().int().min(1).max(7, 'Dia da semana deve ser entre 1-7 (1=Segunda, 7=Domingo)'),
     start_time: z.string().regex(/^\d{2}:\d{2}:\d{2}$/, 'Horário de início deve estar no formato HH:MM:SS'),
     end_time: z.string().regex(/^\d{2}:\d{2}:\d{2}$/, 'Horário de fim deve estar no formato HH:MM:SS')
@@ -242,25 +261,67 @@ export async function POST(request: NextRequest) {
     // For enhanced format, verify all instructors exist
     if (isEnhancedFormat && validatedData.schedules && validatedData.schedules.length > 0) {
       const instructorIds = validatedData.schedules.map((s: any) => s.instructor_id)
-      const { data: instructors } = await supabase
+      console.log('Enrollment API - Validating instructor IDs (as user_ids):', instructorIds)
+      
+      // IMPORTANT: instructor_id in the request body actually refers to user_id in the users table
+      // This is because student_schedules.instructor_id references users.id, not instructors.id
+      const { data: instructorUsers, error: instructorQueryError } = await supabase
         .from('users')
-        .select('id, role')
+        .select('id, role, full_name, email')
         .in('id', instructorIds)
+        .in('role', ['admin', 'instructor'])
       
-      if (!instructors || instructors.length !== instructorIds.length) {
+      if (instructorQueryError) {
+        console.error('Enrollment API - Error querying instructor users:', instructorQueryError)
         return NextResponse.json(
-          { error: 'Um ou mais instrutores não foram encontrados' },
+          { 
+            error: 'Erro ao validar instrutores',
+            details: instructorQueryError.message
+          },
+          { status: 500 }
+        )
+      }
+      
+      console.log('Enrollment API - Found instructor users:', instructorUsers)
+      console.log('Enrollment API - Expected count:', instructorIds.length, 'Found count:', instructorUsers?.length || 0)
+      
+      if (!instructorUsers || instructorUsers.length !== instructorIds.length) {
+        const foundIds = instructorUsers?.map(i => i.id) || []
+        const missingIds = instructorIds.filter(id => !foundIds.includes(id))
+        
+        console.error('Enrollment API - Missing instructor user IDs:', missingIds)
+        
+        // Additional debug: Check if these IDs exist in users table but without instructor role
+        const { data: allUsers } = await supabase
+          .from('users')
+          .select('id, role, full_name, email')
+          .in('id', missingIds)
+        
+        const usersWithoutInstructorRole = allUsers || []
+        
+        return NextResponse.json(
+          { 
+            error: 'Um ou mais instrutores não foram encontrados ou não têm permissão para lecionar',
+            details: {
+              expected: instructorIds.length,
+              found: instructorUsers?.length || 0,
+              missing_instructor_ids: missingIds,
+              users_without_instructor_role: usersWithoutInstructorRole.map(u => ({
+                id: u.id,
+                name: u.full_name,
+                email: u.email,
+                current_role: u.role,
+                required_roles: ['admin', 'instructor']
+              })),
+              message: 'Verifique se os usuários existem e possuem função de instrutor ou admin. Note que instructor_id deve ser o user_id do instrutor.'
+            }
+          },
           { status: 400 }
         )
       }
       
-      const invalidInstructors = instructors.filter(i => !['admin', 'instructor'].includes(i.role))
-      if (invalidInstructors.length > 0) {
-        return NextResponse.json(
-          { error: 'Um ou mais usuários não têm permissão para lecionar' },
-          { status: 400 }
-        )
-      }
+      // All instructors are valid (already filtered by role in the query)
+      console.log('Enrollment API - All instructor users validated successfully')
       
       // TODO: Future enhancement - Check instructor availability against teacher_availability table
       // This will be implemented when the availability checking system is integrated

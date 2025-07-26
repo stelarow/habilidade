@@ -31,7 +31,8 @@ import { Star, User, Clock, Users, Search, Filter } from 'lucide-react'
 import { aggregateAvailabilityForCalendar, subscribeToAvailabilityUpdates } from '@/utils/teacherAvailabilityLogic'
 
 export interface Teacher {
-  id: string
+  id: string // instructor.id
+  userId: string // user.id for student_schedules references
   name: string
   bio: string
   profileImage?: string
@@ -106,6 +107,7 @@ function useTeacherData(availabilityFilter?: TeacherSelectorProps['availabilityF
         .from('instructors')
         .select(`
           id,
+          user_id,
           bio,
           rating,
           expertise,
@@ -147,6 +149,7 @@ function useTeacherData(availabilityFilter?: TeacherSelectorProps['availabilityF
           
           const teacher: Teacher = {
             id: teacherData.id,
+            userId: teacherData.user_id,
             name: userInfo?.full_name || '',
             bio: teacherData.bio,
             profileImage: userInfo?.avatar_url,

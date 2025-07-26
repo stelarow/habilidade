@@ -31,7 +31,8 @@ interface WeeklyScheduleSlot {
 }
 
 interface SimplifiedWeeklyScheduleProps {
-  teacherId?: string
+  teacherId?: string // This should be the instructor.id for teacher_availability queries
+  teacherUserId?: string // This should be the user.id for student_schedules queries  
   onSlotSelect?: (slot1: string, slot2?: string) => void
   selectedSlots?: string[]
   maxSelectableSlots?: number
@@ -50,6 +51,7 @@ const DAYS_OF_WEEK = [
 
 export default function SimplifiedWeeklySchedule({
   teacherId,
+  teacherUserId,
   onSlotSelect,
   selectedSlots = [],
   maxSelectableSlots = 1,
@@ -80,7 +82,7 @@ export default function SimplifiedWeeklySchedule({
 
   // Load teacher availability and current enrollments com useCallback otimizado
   const loadScheduleData = useCallback(async () => {
-    if (!teacherId) {
+    if (!teacherId && !teacherUserId) {
       if (mountedRef.current) {
         setScheduleSlots([])
       }
@@ -110,30 +112,46 @@ export default function SimplifiedWeeklySchedule({
     }
 
     try {
-      console.log('Loading availability and schedules for teacherId:', teacherId)
+      console.log('Loading availability and schedules for teacherId:', teacherId, 'teacherUserId:', teacherUserId)
       
       // Check if component is still mounted before proceeding
       if (!mountedRef.current) {
         return
       }
       
-      // Get teacher availability and current schedules in parallel
-      // CORREÇÃO: Usar instructor_id (UUID) ao invés de user_id
-      const [availabilityResult, schedulesResult] = await Promise.all([
-        supabase
-          .from('teacher_availability')
-          .select('*')
-          .eq('teacher_id', teacherId)
-          .eq('is_active', true)
-          .order('day_of_week')
-          .order('start_time')
-          .abortSignal(abortControllerRef.current?.signal),
-        supabase
-          .from('student_schedules')
-          .select('*')
-          .eq('instructor_id', teacherId) // CORREÇÃO: Usar teacherId diretamente como instructor_id
-          .abortSignal(abortControllerRef.current?.signal)
-      ])
+      // Build queries conditionally based on available IDs
+      const queries = []
+      
+      // Get teacher availability (requires instructor.id)
+      if (teacherId) {
+        queries.push(
+          supabase
+            .from('teacher_availability')
+            .select('*')
+            .eq('teacher_id', teacherId)
+            .eq('is_active', true)
+            .order('day_of_week')
+            .order('start_time')
+            .abortSignal(abortControllerRef.current?.signal)
+        )
+      } else {
+        queries.push(Promise.resolve({ data: [], error: null }))
+      }
+      
+      // Get current student schedules (requires user.id)
+      if (teacherUserId) {
+        queries.push(
+          supabase
+            .from('student_schedules')
+            .select('*')
+            .eq('instructor_id', teacherUserId)
+            .abortSignal(abortControllerRef.current?.signal)
+        )
+      } else {
+        queries.push(Promise.resolve({ data: [], error: null }))
+      }
+      
+      const [availabilityResult, schedulesResult] = await Promise.all(queries)
 
       if (availabilityResult.error) {
         console.error('Error fetching teacher availability:', availabilityResult.error)
@@ -254,12 +272,12 @@ export default function SimplifiedWeeklySchedule({
         setLoading(false)
       }
     }
-  }, [teacherId]) // Only depend on teacherId to prevent infinite loop
+  }, [teacherId, teacherUserId]) // Depend on both IDs to prevent infinite loop
 
   // useEffect com dependências estáveis - carrega dados quando teacherId muda
   useEffect(() => {
     loadScheduleData()
-  }, [teacherId]) // Direct dependency on teacherId instead of loadScheduleData
+  }, [teacherId, teacherUserId]) // Direct dependency on both IDs instead of loadScheduleData
 
   // Group slots by day of week
   const slotsByDay = useMemo(() => {
@@ -324,7 +342,7 @@ export default function SimplifiedWeeklySchedule({
     })
     
     onSlotSelect(slot1, slot2)
-  }, [onSlotSelect, selectedSlots, hasTwoClassesPerWeek, maxSelectableSlots, teacherId, scheduleSlots])
+  }, [onSlotSelect, selectedSlots, hasTwoClassesPerWeek, maxSelectableSlots, teacherId, teacherUserId, scheduleSlots])
 
   const formatTime = (time: string) => {
     return time.slice(0, 5) // Remove seconds

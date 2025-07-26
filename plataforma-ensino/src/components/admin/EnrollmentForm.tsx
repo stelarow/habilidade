@@ -252,12 +252,24 @@ export function EnrollmentForm({
     } catch (error: any) {
       console.error('Form submission error:', error)
       
-      // Enhanced API error handling with Toast notifications (AC: 4)
+      // Enhanced API error handling with detailed instructor validation (AC: 4)
       const errorMessage = error?.message || error?.error || (typeof error === 'string' ? error : 'Erro interno do servidor')
+      
+      // Handle detailed error responses from API
+      let errorDetails = null
+      try {
+        // Try to parse additional error details from API response
+        if (error?.details) {
+          errorDetails = error.details
+        }
+      } catch (e) {
+        console.warn('Could not parse error details:', e)
+      }
       
       console.error('Form submission error details:', {
         error,
         errorMessage,
+        errorDetails,
         formData: {
           ...formData,
           // Log relevant form data for debugging
@@ -270,8 +282,40 @@ export function EnrollmentForm({
         }
       })
       
+      // Specific error handling based on error type
       if (errorMessage.includes('já está matriculado')) {
         toastWarning('Este usuário já está matriculado neste curso', 'Matrícula Duplicada')
+      } else if (errorMessage.includes('instrutores não foram encontrados')) {
+        // Handle instructor not found errors with specific details
+        if (errorDetails?.missing_instructor_ids) {
+          toastError(
+            `Professores não encontrados no sistema: ${errorDetails.missing_instructor_ids.join(', ')}. ` +
+            'Verifique se os professores foram cadastrados corretamente.',
+            'Professores Não Encontrados'
+          )
+        } else {
+          toastError(
+            'Um ou mais professores selecionados não foram encontrados no sistema. ' +
+            'Verifique se os professores foram cadastrados corretamente.',
+            'Professores Não Encontrados'
+          )
+        }
+      } else if (errorMessage.includes('não têm permissão para lecionar')) {
+        // Handle invalid instructor role errors
+        if (errorDetails?.invalid_instructors) {
+          const invalidNames = errorDetails.invalid_instructors.map((i: any) => i.name).join(', ')
+          toastError(
+            `Os seguintes usuários não têm permissão para lecionar: ${invalidNames}. ` +
+            'Verifique as funções dos usuários selecionados.',
+            'Permissões Insuficientes'
+          )
+        } else {
+          toastError(
+            'Um ou mais usuários selecionados não têm permissão para lecionar. ' +
+            'Verifique as funções dos usuários.',
+            'Permissões Insuficientes'
+          )
+        }
       } else if (errorMessage.includes('não encontrado')) {
         toastError('Alguns dados não foram encontrados. Verifique as informações e tente novamente.', 'Dados Inválidos')
       } else if (errorMessage.includes('horário')) {

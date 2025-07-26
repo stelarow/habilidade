@@ -1,6 +1,9 @@
 import { createClient } from '@/lib/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
 
+// Force dynamic rendering for authentication and database queries
+export const dynamic = 'force-dynamic';
+
 interface TimeSlot {
   id: string;
   dayOfWeek: number;

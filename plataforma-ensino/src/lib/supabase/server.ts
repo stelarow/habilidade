@@ -2,70 +2,72 @@ import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 import { convertBase64CookiesToSSRFormat } from './cookie-converter'
 
+const isDevelopment = process.env.NODE_ENV === 'development'
+
 export const createClient = () => {
-  const clientId = Math.random().toString(36).substr(2, 9)
-  console.log(`[SERVER_CLIENT-${clientId}] Creating SSR-compatible server client`)
-  
-  // Validate environment variables first
+  // Environment validation
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
     const error = new Error(`Missing Supabase environment variables: URL=${!!process.env.NEXT_PUBLIC_SUPABASE_URL}, KEY=${!!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`)
-    console.error(`[SERVER_CLIENT-${clientId}] ❌ Environment error:`, error.message)
+    if (isDevelopment) {
+      console.error('❌ Supabase environment error:', error.message)
+    }
     throw error
   }
   
   try {
     const cookieStore = cookies()
-    const allCookies = cookieStore.getAll()
     
-    console.log(`[SERVER_CLIENT-${clientId}] 🍪 Available cookies:`, {
-      total: allCookies.length,
-      names: allCookies.map(c => c.name),
-      supabaseCookies: allCookies.filter(c => c.name.includes('supabase') || c.name.includes('sb-')).length
-    })
-    
-    console.log(`[SERVER_CLIENT-${clientId}] 🔧 Environment check:`, {
-      hasUrl: !!process.env.NEXT_PUBLIC_SUPABASE_URL,
-      hasKey: !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
-      urlPrefix: process.env.NEXT_PUBLIC_SUPABASE_URL?.substring(0, 30) + '...',
-      nodeEnv: process.env.NODE_ENV
-    })
+    // Only log in development for debugging
+    if (isDevelopment) {
+      const allCookies = cookieStore.getAll()
+      console.log('🍪 Supabase server client cookies:', {
+        total: allCookies.length,
+        supabaseCookies: allCookies.filter(c => c.name.includes('supabase') || c.name.includes('sb-')).length
+      })
+    }
     
     return createServerClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      process.env.NEXT_PUBLIC_SUPABASE_URL,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
       {
         cookies: {
           getAll() {
             const originalCookies = cookieStore.getAll()
             const convertedCookies = convertBase64CookiesToSSRFormat(originalCookies)
             
-            console.log(`[SERVER_CLIENT-${clientId}] 📋 getAll() called`, {
-              original: originalCookies.length,
-              converted: convertedCookies.length,
-              hasConversion: originalCookies.length !== convertedCookies.length
-            })
+            // Only log conversion details in development
+            if (isDevelopment && originalCookies.length !== convertedCookies.length) {
+              console.log('📋 Cookie conversion applied:', {
+                original: originalCookies.length,
+                converted: convertedCookies.length
+              })
+            }
             
             return convertedCookies
           },
           setAll(cookiesToSet) {
-            console.log(`[SERVER_CLIENT-${clientId}] 📝 setAll() called with ${cookiesToSet.length} cookies`)
+            if (isDevelopment && cookiesToSet.length > 0) {
+              console.log(`📝 Setting ${cookiesToSet.length} cookies`)
+            }
+            
             try {
               cookiesToSet.forEach(({ name, value, options }) => {
-                console.log(`[SERVER_CLIENT-${clientId}] 🔧 Setting cookie: ${name}`)
                 cookieStore.set(name, value, options)
               })
             } catch (error) {
-              console.log(`[SERVER_CLIENT-${clientId}] ⚠️ setAll() failed (normal in Server Components):`, error instanceof Error ? error.message : error)
-              // The `setAll` method was called from a Server Component.
-              // This can be ignored if you have middleware refreshing
-              // user sessions.
+              // Silently handle expected Server Component limitations
+              if (isDevelopment) {
+                console.log('⚠️ Cookie setting failed (normal in Server Components):', error instanceof Error ? error.message : error)
+              }
             }
           },
         },
       }
     )
   } catch (error) {
-    console.error(`[SERVER_CLIENT-${clientId}] ❌ Error creating client:`, error)
+    if (isDevelopment) {
+      console.error('❌ Error creating Supabase server client:', error)
+    }
     throw error
   }
 }

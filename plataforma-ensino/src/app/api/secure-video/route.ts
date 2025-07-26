@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server'
 import { VideoSecurity } from '@/lib/video-security'
 import { createClient } from '@/lib/supabase/server'
 
+// Force dynamic rendering for authentication and database queries
+export const dynamic = 'force-dynamic'
+
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url)

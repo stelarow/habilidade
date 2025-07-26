@@ -88,6 +88,7 @@ function CalendarSection({
     <div className="space-y-4">
       <SimplifiedWeeklySchedule
         teacherId={selectedTeacher?.id}
+        teacherUserId={selectedTeacher?.userId}
         onSlotSelect={onSlotSelect}
         maxSelectableSlots={hasTwoClassesPerWeek ? 2 : 1}
         hasTwoClassesPerWeek={hasTwoClassesPerWeek}

@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+
+// Force dynamic rendering for authentication and database queries
+export const dynamic = 'force-dynamic'
 import { cookies } from 'next/headers'
 
 // POST /api/lessons/[id]/complete - Mark lesson as completed

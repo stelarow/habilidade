@@ -5,7 +5,7 @@ import { createClient } from '@/lib/supabase/client'
 import SimplifiedWeeklySchedule from '@/components/enrollment/SimplifiedWeeklySchedule'
 
 export default function TestSimplifiedSchedulePage() {
-  const [teachers, setTeachers] = useState<Array<{id: string, name: string}>>([])
+  const [teachers, setTeachers] = useState<Array<{id: string, userId: string, name: string}>>([])
   const [selectedTeacher, setSelectedTeacher] = useState<string>('')
   const [selectedSlots, setSelectedSlots] = useState<string[]>([])
   const [loading, setLoading] = useState(true)
@@ -32,6 +32,7 @@ export default function TestSimplifiedSchedulePage() {
 
         const teacherList = data?.map((instructor: any) => ({
           id: instructor.id,
+          userId: instructor.user_id,
           name: instructor.users?.full_name || 'Nome não disponível'
         })) || []
 
@@ -106,6 +107,7 @@ export default function TestSimplifiedSchedulePage() {
         {selectedTeacher && (
           <SimplifiedWeeklySchedule
             teacherId={selectedTeacher}
+            teacherUserId={teachers.find(t => t.id === selectedTeacher)?.userId}
             onSlotSelect={handleSlotSelect}
             selectedSlots={selectedSlots}
             maxSelectableSlots={2}

@@ -1,6 +1,6 @@
 import { requireAdmin } from '@/lib/auth/session'
 import { createClient } from '@/lib/supabase/server'
-import { EnrollmentsManagement } from '@/components/admin/EnrollmentsManagement'
+import EnrollmentsManagementLazy from '@/components/admin/EnrollmentsManagementLazy'
 
 // Force dynamic rendering for admin pages that use server-side Supabase client
 export const dynamic = 'force-dynamic'
@@ -30,5 +30,5 @@ export default async function EnrollmentsPage() {
     )
   }
 
-  return <EnrollmentsManagement enrollments={enrollments || []} currentUser={profile} />
+  return <EnrollmentsManagementLazy enrollments={enrollments || []} currentUser={profile} />
 }

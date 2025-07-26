@@ -5,10 +5,10 @@ import { Card } from '@/components/ui/card'
 import { LessonProgressData } from '@/types/lesson'
 import { EnhancedLessonCompletion } from './completion/EnhancedLessonCompletion'
 import LessonHeaderRedesigned from './LessonHeaderRedesigned'
-import VideoSection from './VideoSection'
-import ExercisesSection from './ExercisesSection'
-import PDFSectionWrapper from './PDFSectionWrapper'
-import QuizSection from './QuizSection'
+import VideoSectionLazy from './VideoSectionLazy'
+import ExercisesSectionLazy from './ExercisesSectionLazy'
+import PDFSectionLazy from './PDFSectionLazy'
+import QuizSectionLazy from './QuizSectionLazy'
 import CompletionSection from './CompletionSection'
 import LessonErrorBoundary from './LessonErrorBoundary'
 
@@ -134,7 +134,7 @@ const LessonPageRedesigned: React.FC<LessonPageRedesignedProps> = ({
             {/* Video Section */}
             {videoUrl && (
               <div id="video-section">
-                <VideoSection
+                <VideoSectionLazy
                   videoTitle={`Vídeo: ${lesson.title}`}
                   videoDescription={lesson.description || "Assista ao conteúdo principal desta aula"}
                   videoUrl={videoUrl}
@@ -147,7 +147,7 @@ const LessonPageRedesigned: React.FC<LessonPageRedesignedProps> = ({
             {/* PDF Section */}
             {materials.length > 0 && materials.find(m => m.type === 'pdf') && (
               <div id="pdf-section">
-                <PDFSectionWrapper
+                <PDFSectionLazy
                   title={materials.find(m => m.type === 'pdf')?.title || "Material Didático"}
                   pdfUrl={materials.find(m => m.type === 'pdf')?.url}
                   lessonId={lesson.id}
@@ -160,7 +160,7 @@ const LessonPageRedesigned: React.FC<LessonPageRedesignedProps> = ({
             {/* Quiz Section */}
             {quizzes.length > 0 && (
               <div id="quiz-section">
-                <QuizSection
+                <QuizSectionLazy
                   title={quizzes[0]?.title || "Quiz de Avaliação"}
                   questions={quizzes[0]?.questions?.map((q: any, index: number) => ({
                     id: index + 1,
@@ -183,7 +183,7 @@ const LessonPageRedesigned: React.FC<LessonPageRedesignedProps> = ({
             {/* Exercises Section */}
             {exercises.length > 0 && (
               <div id="exercises-section">
-                <ExercisesSection
+                <ExercisesSectionLazy
                   title="Exercícios Práticos"
                   exercises={exercises}
                   onProgressUpdate={handleExercisesProgress}

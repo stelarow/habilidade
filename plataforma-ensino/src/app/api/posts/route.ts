@@ -3,6 +3,9 @@ import { NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { z } from 'zod';
 
+// Force dynamic rendering for authentication and database queries
+export const dynamic = 'force-dynamic';
+
 // Function to get DOMPurify instance (lazy initialization)
 function getPurify() {
   const DOMPurify = require('dompurify');

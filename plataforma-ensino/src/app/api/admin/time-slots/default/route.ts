@@ -2,6 +2,9 @@ import { createClient } from '@/lib/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 
+// Force dynamic rendering for authentication and database queries
+export const dynamic = 'force-dynamic';
+
 // Horários padrões definidos para todos os professores
 const DEFAULT_TIME_SLOTS = [
   { startTime: '08:00', endTime: '10:00' },
