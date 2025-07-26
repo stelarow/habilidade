@@ -37,8 +37,8 @@ const mockQuery = {
   single: jest.fn()
 }
 
-jest.mock('@supabase/auth-helpers-nextjs', () => ({
-  createRouteHandlerClient: () => mockSupabaseClient
+jest.mock('@/lib/supabase/server', () => ({
+  createClient: () => mockSupabaseClient
 }))
 
 // Mock authentication middleware

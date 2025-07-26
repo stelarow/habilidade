@@ -79,8 +79,8 @@ const mockHolidays: Holiday[] = [
 ]
 
 // Mock the Supabase client
-jest.mock('@supabase/auth-helpers-nextjs', () => ({
-  createClientComponentClient: () => mockSupabaseClient
+jest.mock('@/lib/supabase/client', () => ({
+  createClient: () => mockSupabaseClient
 }))
 
 // Setup query chain mock

@@ -33,9 +33,8 @@ const mockSupabaseClient = {
   }
 }
 
-jest.mock('@supabase/auth-helpers-nextjs', () => ({
-  createRouteHandlerClient: () => mockSupabaseClient,
-  createClientComponentClient: () => mockSupabaseClient
+jest.mock('@/lib/supabase/server', () => ({
+  createClient: () => mockSupabaseClient
 }))
 
 jest.mock('next/headers', () => ({

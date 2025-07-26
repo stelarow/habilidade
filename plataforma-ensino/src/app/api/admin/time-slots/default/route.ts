@@ -1,5 +1,4 @@
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
+import { createClient } from '@/lib/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 
@@ -25,7 +24,7 @@ const createTimeSlotsSchema = z.object({
  */
 export async function GET() {
   try {
-    const supabase = createRouteHandlerClient({ cookies });
+    const supabase = createClient();
 
     // Verificar autenticação e permissão de admin
     const { data: { user }, error: authError } = await supabase.auth.getUser();
@@ -90,7 +89,7 @@ export async function GET() {
  */
 export async function POST(request: NextRequest) {
   try {
-    const supabase = createRouteHandlerClient({ cookies });
+    const supabase = createClient();
 
     // Verificar autenticação e permissão de admin
     const { data: { user }, error: authError } = await supabase.auth.getUser();

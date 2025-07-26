@@ -351,8 +351,10 @@ WHERE role = 'admin';
 #### **Via API Route (Next.js)**
 ```typescript
 // /api/test-admin.ts
+import { createClient } from '@/lib/supabase/server'
+
 export async function GET() {
-  const supabase = createRouteHandlerClient({ cookies })
+  const supabase = createClient()
   
   // Testar função is_admin() via RPC
   const { data: isAdmin, error } = await supabase.rpc('is_admin')
