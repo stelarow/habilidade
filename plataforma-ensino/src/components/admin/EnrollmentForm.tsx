@@ -60,14 +60,27 @@ export function EnrollmentForm({
   // Toast hook for enhanced error handling (AC: 4)
   const { toastError, toastSuccess, toastWarning } = useToast()
 
-  // Convert DB Course to TeacherSelector Course
-  const convertToTeacherSelectorCourse = (course: DBCourse): TeacherSelectorCourse => ({
-    id: course.id,
-    title: course.title,
-    category: course.category?.name || 'Uncategorized',
-    duration_hours: Math.ceil(course.duration_minutes / 60),
-    max_students: 20 // Default value, could be from course settings
-  })
+  // Convert DB Course to TeacherSelector Course with validation
+  const convertToTeacherSelectorCourse = (course: DBCourse): TeacherSelectorCourse | null => {
+    // Validate required fields to prevent React errors
+    if (!course || !course.id || !course.title) {
+      console.warn('Invalid course data for conversion:', course)
+      return null
+    }
+    
+    try {
+      return {
+        id: course.id,
+        title: course.title,
+        category: course.category?.name || 'Uncategorized',
+        duration_hours: Math.ceil((course.duration_minutes || 60) / 60), // Default 60 minutes if not set
+        max_students: 20 // Default value, could be from course settings
+      }
+    } catch (error) {
+      console.error('Error converting course:', error)
+      return null
+    }
+  }
 
   const supabase = createClient()
 
@@ -154,14 +167,23 @@ export function EnrollmentForm({
 
 
   const handleInputChange = (field: keyof EnhancedEnrollmentFormData, value: string | boolean) => {
+    // Validate field and value to prevent undefined/null errors
+    if (!field) {
+      console.warn('handleInputChange called with invalid field:', field)
+      return
+    }
+    
+    // Ensure value is not undefined (convert to empty string if needed)
+    const safeValue = value === undefined || value === null ? '' : value
+    
     setFormData(prev => {
       const updated = {
         ...prev,
-        [field]: value
+        [field]: safeValue
       }
       
       // Reset schedule fields when switching to/from in-person
-      if (field === 'is_in_person' && !value) {
+      if (field === 'is_in_person' && !safeValue) {
         updated.has_two_classes_per_week = false
         updated.schedule_slot_1 = ''
         updated.schedule_slot_2 = ''
@@ -169,12 +191,12 @@ export function EnrollmentForm({
       }
       
       // Clear teacher when switching to in-person (will be handled by SchedulingSection)
-      if (field === 'is_in_person' && value) {
+      if (field === 'is_in_person' && safeValue) {
         updated.teacher_id = ''
       }
       
       // Reset second schedule when switching to single class
-      if (field === 'has_two_classes_per_week' && !value) {
+      if (field === 'has_two_classes_per_week' && !safeValue) {
         updated.schedule_slot_2 = ''
       }
       
@@ -231,7 +253,22 @@ export function EnrollmentForm({
       console.error('Form submission error:', error)
       
       // Enhanced API error handling with Toast notifications (AC: 4)
-      const errorMessage = error?.message || error?.error || 'Erro interno do servidor'
+      const errorMessage = error?.message || error?.error || (typeof error === 'string' ? error : 'Erro interno do servidor')
+      
+      console.error('Form submission error details:', {
+        error,
+        errorMessage,
+        formData: {
+          ...formData,
+          // Log relevant form data for debugging
+          user_id: formData.user_id,
+          course_id: formData.course_id,
+          teacher_id: formData.teacher_id,
+          is_in_person: formData.is_in_person,
+          schedule_slot_1: formData.schedule_slot_1,
+          schedule_slot_2: formData.schedule_slot_2
+        }
+      })
       
       if (errorMessage.includes('já está matriculado')) {
         toastWarning('Este usuário já está matriculado neste curso', 'Matrícula Duplicada')
@@ -239,6 +276,8 @@ export function EnrollmentForm({
         toastError('Alguns dados não foram encontrados. Verifique as informações e tente novamente.', 'Dados Inválidos')
       } else if (errorMessage.includes('horário')) {
         toastError('Erro relacionado aos horários selecionados. Verifique a disponibilidade.', 'Erro de Agendamento')
+      } else if (errorMessage.includes('undefined') || errorMessage.includes('null')) {
+        toastError('Dados inválidos detectados. Verifique se todos os campos obrigatórios foram preenchidos.', 'Erro de Validação')
       } else {
         toastError(errorMessage, 'Erro na Submissão')
       }
@@ -460,14 +499,21 @@ export function EnrollmentForm({
                 {/* Conditional SchedulingSection (AC: 2, 3, 4) */}
                 <SchedulingSection
                   isVisible={formData.is_in_person}
-                  selectedCourse={selectedCourse ? convertToTeacherSelectorCourse(selectedCourse) : undefined}
-                  teacherId={formData.teacher_id}
+                  selectedCourse={selectedCourse ? convertToTeacherSelectorCourse(selectedCourse) || undefined : undefined}
+                  teacherId={formData.teacher_id || ''}
                   hasTwoClassesPerWeek={formData.has_two_classes_per_week}
-                  onTeacherChange={(teacherId) => handleInputChange('teacher_id', teacherId)}
+                  onTeacherChange={(teacherId) => {
+                    const safeTeacherId = teacherId || ''
+                    console.log('Teacher changed:', safeTeacherId)
+                    handleInputChange('teacher_id', safeTeacherId)
+                  }}
                   onTwoClassesChange={(checked) => handleInputChange('has_two_classes_per_week', checked)}
                   onSlotSelect={(slot1, slot2) => {
-                    handleInputChange('schedule_slot_1', slot1 || '')
-                    handleInputChange('schedule_slot_2', slot2 || '')
+                    const safeSlot1 = slot1 || ''
+                    const safeSlot2 = slot2 || ''
+                    console.log('Slots selected:', { slot1: safeSlot1, slot2: safeSlot2 })
+                    handleInputChange('schedule_slot_1', safeSlot1)
+                    handleInputChange('schedule_slot_2', safeSlot2)
                   }}
                 />
                 
@@ -526,9 +572,9 @@ export function EnrollmentForm({
               </button>
               <button
                 type="submit"
-                disabled={loading || !selectedUser || !selectedCourse || (formData.is_in_person && !formData.teacher_id)}
+                disabled={loading || !selectedUser || !selectedCourse || (formData.is_in_person && (!formData.teacher_id || !formData.schedule_slot_1))}
                 className={`px-4 py-2 text-sm font-medium text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                  loading || !selectedUser || !selectedCourse || (formData.is_in_person && !formData.teacher_id)
+                  loading || !selectedUser || !selectedCourse || (formData.is_in_person && (!formData.teacher_id || !formData.schedule_slot_1))
                     ? 'bg-gray-600 cursor-not-allowed'
                     : mode === 'create'
                     ? 'bg-blue-600 hover:bg-blue-700'

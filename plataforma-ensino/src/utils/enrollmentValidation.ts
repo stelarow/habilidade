@@ -80,21 +80,29 @@ export function validateEnrollmentForm(
 // Helper function to parse schedule slot format (AC: 3)
 export function parseScheduleSlot(slotString: string): ScheduleSlot | null {
   try {
+    console.log('parseScheduleSlot - Input:', slotString)
     // Expected format: "teacherId:day:HH:MM-HH:MM"
     const parts = slotString.split(':')
-    if (parts.length !== 4) return null
+    console.log('parseScheduleSlot - Parts:', parts)
     
-    const [teacherId, dayStr, timeRange] = parts
+    if (parts.length < 3) return null
+    
+    const [teacherId, dayStr] = parts
+    const timeRange = parts.slice(2).join(':') // Handle HH:MM-HH:MM format with colons
     const day = parseInt(dayStr)
     
-    if (isNaN(day) || day < 1 || day > 7) return null
+    if (!teacherId || isNaN(day) || day < 1 || day > 7) return null
     
-    return {
+    const result = {
       day,
       time: timeRange,
       teacherId
     }
-  } catch {
+    
+    console.log('parseScheduleSlot - Result:', result)
+    return result
+  } catch (error) {
+    console.error('parseScheduleSlot - Error:', error)
     return null
   }
 }
@@ -114,6 +122,8 @@ export function transformFormDataToApiPayload(
     end_time: string
   }[]
 } {
+  console.log('enrollmentValidation - Transforming form data:', formData)
+  
   const payload = {
     student_id: formData.user_id,
     course_id: formData.course_id,
@@ -127,34 +137,43 @@ export function transformFormDataToApiPayload(
     
     // Parse first schedule slot
     const slot1 = parseScheduleSlot(formData.schedule_slot_1)
+    console.log('enrollmentValidation - Parsed slot1:', slot1)
     if (slot1) {
       const [startTime, endTime] = slot1.time.split('-')
-      schedules.push({
-        instructor_id: slot1.teacherId,
-        day_of_week: slot1.day,
-        start_time: `${startTime}:00`,
-        end_time: `${endTime}:00`
-      })
-    }
-    
-    // Parse second schedule slot if exists
-    if (formData.schedule_slot_2) {
-      const slot2 = parseScheduleSlot(formData.schedule_slot_2)
-      if (slot2) {
-        const [startTime, endTime] = slot2.time.split('-')
+      if (startTime && endTime) {
         schedules.push({
-          instructor_id: slot2.teacherId,
-          day_of_week: slot2.day,
+          instructor_id: slot1.teacherId,
+          day_of_week: slot1.day,
           start_time: `${startTime}:00`,
           end_time: `${endTime}:00`
         })
       }
     }
     
+    // Parse second schedule slot if exists
+    if (formData.schedule_slot_2) {
+      const slot2 = parseScheduleSlot(formData.schedule_slot_2)
+      console.log('enrollmentValidation - Parsed slot2:', slot2)
+      if (slot2) {
+        const [startTime, endTime] = slot2.time.split('-')
+        if (startTime && endTime) {
+          schedules.push({
+            instructor_id: slot2.teacherId,
+            day_of_week: slot2.day,
+            start_time: `${startTime}:00`,
+            end_time: `${endTime}:00`
+          })
+        }
+      }
+    }
+    
+    console.log('enrollmentValidation - Generated schedules:', schedules)
     return { ...payload, schedules }
   }
   
-  return payload
+  // For online enrollments, ensure schedules is an empty array
+  console.log('enrollmentValidation - Generated payload (online):', { ...payload, schedules: [] })
+  return { ...payload, schedules: [] }
 }
 
 // Validation messages for UI display (AC: 4)

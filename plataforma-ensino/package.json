@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "NODE_OPTIONS='--max-old-space-size=1024' next build",
     "export": "next export",
     "start": "next start",
     "lint": "next lint",
@@ -17,6 +17,10 @@
     "clean:build": "rm -rf .next",
     "build:clean": "npm run clean:build && npm run build",
     "build:fast": "SKIP_ENV_VALIDATION=1 npm run build",
+    "build:memory": "NODE_OPTIONS='--max-old-space-size=512' next build",
+    "build:minimal": "NODE_ENV=production SKIP_ENV_VALIDATION=1 NODE_OPTIONS='--max-old-space-size=512' next build",
+    "build:low-memory": "LOW_MEMORY_BUILD=true NODE_ENV=production SKIP_ENV_VALIDATION=1 NODE_OPTIONS='--max-old-space-size=512' next build",
+    "build:minimal-config": "NODE_ENV=production SKIP_ENV_VALIDATION=1 NODE_OPTIONS='--max-old-space-size=512' next build --config next.config.minimal.mjs",
     "dev:fast": "npm run clean && npm run dev"
   },
   "dependencies": {
@@ -25,10 +29,12 @@
     "@hookform/resolvers": "^3.3.0",
     "@mux/mux-player-react": "^2.6.0",
     "@phosphor-icons/react": "^2.1.10",
+    "@radix-ui/react-alert-dialog": "^1.1.14",
     "@radix-ui/react-dialog": "^1.0.0",
     "@radix-ui/react-dropdown-menu": "^2.0.0",
     "@radix-ui/react-progress": "^1.1.7",
     "@radix-ui/react-select": "^2.0.0",
+    "@radix-ui/react-separator": "^1.1.7",
     "@radix-ui/react-slot": "^1.2.3",
     "@radix-ui/react-tabs": "^1.0.0",
     "@radix-ui/react-toast": "^1.1.0",

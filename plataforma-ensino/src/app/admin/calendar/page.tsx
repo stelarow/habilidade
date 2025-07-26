@@ -49,7 +49,7 @@ export default async function AdminCalendarPage() {
         .order('users.full_name')
 
       if (!instructorsError && instructorsData) {
-        teachers = instructorsData.map(instructor => ({
+        teachers = instructorsData.map((instructor: any) => ({
           id: instructor.user_id,
           email: instructor.users[0]?.email || '',
           full_name: instructor.users[0]?.full_name || ''

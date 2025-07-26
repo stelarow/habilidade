@@ -19,7 +19,7 @@ const enhancedEnrollmentSchema = z.object({
     day_of_week: z.number().int().min(1).max(7, 'Dia da semana deve ser entre 1-7 (1=Segunda, 7=Domingo)'),
     start_time: z.string().regex(/^\d{2}:\d{2}:\d{2}$/, 'Horário de início deve estar no formato HH:MM:SS'),
     end_time: z.string().regex(/^\d{2}:\d{2}:\d{2}$/, 'Horário de fim deve estar no formato HH:MM:SS')
-  })).optional()
+  })).optional().default([])
 }).refine((data) => {
   // If in-person, schedules array is required and must have at least one schedule
   if (data.modality === 'in-person') {
@@ -31,7 +31,7 @@ const enhancedEnrollmentSchema = z.object({
   path: ['schedules']
 }).refine((data) => {
   // Validate time order for each schedule
-  if (data.schedules) {
+  if (data.schedules && data.schedules.length > 0) {
     return data.schedules.every(schedule => schedule.start_time < schedule.end_time)
   }
   return true
@@ -169,15 +169,22 @@ export async function POST(request: NextRequest) {
     let validatedData: any
     let isEnhancedFormat = false
     
+    // Log the incoming data for debugging
+    console.log('Enrollment API - Incoming data:', JSON.stringify(body, null, 2))
+    
     try {
       validatedData = enhancedEnrollmentSchema.parse(body)
       isEnhancedFormat = true
+      console.log('Enrollment API - Enhanced schema validation passed')
     } catch (enhancedError) {
+      console.log('Enrollment API - Enhanced schema failed:', enhancedError)
       // Fall back to legacy format
       try {
         validatedData = legacyEnrollmentSchema.parse(body)
         isEnhancedFormat = false
+        console.log('Enrollment API - Legacy schema validation passed')
       } catch (legacyError) {
+        console.log('Enrollment API - Legacy schema failed:', legacyError)
         // Return enhanced format errors as they're more descriptive
         throw enhancedError
       }
@@ -233,7 +240,7 @@ export async function POST(request: NextRequest) {
     }
     
     // For enhanced format, verify all instructors exist
-    if (isEnhancedFormat && validatedData.schedules) {
+    if (isEnhancedFormat && validatedData.schedules && validatedData.schedules.length > 0) {
       const instructorIds = validatedData.schedules.map((s: any) => s.instructor_id)
       const { data: instructors } = await supabase
         .from('users')
@@ -254,6 +261,16 @@ export async function POST(request: NextRequest) {
           { status: 400 }
         )
       }
+      
+      // TODO: Future enhancement - Check instructor availability against teacher_availability table
+      // This will be implemented when the availability checking system is integrated
+      // const availabilityCheck = await checkInstructorAvailability(validatedData.schedules)
+      // if (!availabilityCheck.allAvailable) {
+      //   return NextResponse.json({
+      //     error: 'Conflito de horários detectado',
+      //     conflicts: availabilityCheck.conflicts
+      //   }, { status: 409 })
+      // }
     }
     
     // For legacy format, verify teacher exists if provided
@@ -282,10 +299,12 @@ export async function POST(request: NextRequest) {
     } : {
       user_id: userId,
       course_id: courseId,
-      access_until: validatedData.access_until,
+      access_until: validatedData.access_until || null,
       status: validatedData.status,
       modality: validatedData.is_in_person ? 'in-person' : 'online'
     }
+    
+    console.log('Enrollment API - Enrollment data to insert:', enrollmentData)
     
     // Create enrollment
     const { data: enrollment, error } = await supabase
@@ -320,8 +339,10 @@ export async function POST(request: NextRequest) {
     // Create student schedules based on format and modality
     let schedulesToCreate: any[] = []
     if (enrollment) {
+      console.log('Enrollment API - Processing schedules for enrollment:', enrollment.id)
       
-      if (isEnhancedFormat && validatedData.schedules && validatedData.modality === 'in-person') {
+      if (isEnhancedFormat && validatedData.schedules && validatedData.schedules.length > 0 && validatedData.modality === 'in-person') {
+        console.log('Enrollment API - Enhanced format schedules:', validatedData.schedules)
         // Enhanced format with schedules array
         schedulesToCreate = validatedData.schedules.map((schedule: any) => ({
           enrollment_id: enrollment.id,
@@ -331,10 +352,13 @@ export async function POST(request: NextRequest) {
           end_time: schedule.end_time
         }))
       } else if (!isEnhancedFormat && validatedData.is_in_person) {
+        console.log('Enrollment API - Legacy format in-person, skipping schedule creation for now')
         // Legacy format - would need conversion from schedule slots to actual times
         // For now, we'll skip this as it requires additional data conversion
         // This would be handled by the form transformation in the frontend
       }
+      
+      console.log('Enrollment API - Schedules to create:', schedulesToCreate)
       
       // Insert student schedules if any
       if (schedulesToCreate.length > 0) {
@@ -356,6 +380,9 @@ export async function POST(request: NextRequest) {
             { status: 500 }
           )
         }
+        console.log('Enrollment API - Schedules created successfully')
+      } else {
+        console.log('Enrollment API - No schedules to create (online enrollment or legacy format)')
       }
     }
     
@@ -380,8 +407,13 @@ export async function POST(request: NextRequest) {
     
   } catch (error) {
     if (error instanceof z.ZodError) {
+      console.error('Zod validation error:', error.errors)
       return NextResponse.json(
-        { error: 'Dados inválidos', details: error.errors },
+        { 
+          error: 'Dados inválidos', 
+          details: error.errors,
+          message: 'Verifique os campos obrigatórios e formatos de dados'
+        },
         { status: 400 }
       )
     }

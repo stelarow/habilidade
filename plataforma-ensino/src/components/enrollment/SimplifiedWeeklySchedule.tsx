@@ -9,7 +9,7 @@
 
 'use client'
 
-import React, { useState, useEffect, useMemo, useCallback } from 'react'
+import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { Card } from '@/components/ui/card'
 import Loading from '@/components/ui/Loading'
@@ -61,28 +61,61 @@ export default function SimplifiedWeeklySchedule({
   const [error, setError] = useState<string | null>(null)
   const [errorCount, setErrorCount] = useState(0)
   
+  // Track component mount status to prevent setState on unmounted component
+  const mountedRef = useRef(true)
+  const abortControllerRef = useRef<AbortController | null>(null)
+  
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      mountedRef.current = false
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort()
+      }
+    }
+  }, [])
+  
   // Estabilizar cliente Supabase - evita re-renders infinitos
   const supabase = useMemo(() => createClient(), [])
 
   // Load teacher availability and current enrollments com useCallback otimizado
   const loadScheduleData = useCallback(async () => {
     if (!teacherId) {
-      setScheduleSlots([])
+      if (mountedRef.current) {
+        setScheduleSlots([])
+      }
       return
     }
 
     // Circuit breaker - evita loops infinitos
     if (errorCount > 3) {
       console.warn('Too many errors, stopping requests')
-      setError('Muitos erros consecutivos. Recarregue a página para tentar novamente.')
+      if (mountedRef.current) {
+        setError('Muitos erros consecutivos. Recarregue a página para tentar novamente.')
+      }
       return
     }
 
-    setLoading(true)
-    setError(null)
+    // Cancel previous request if exists
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort()
+    }
+    
+    // Create new abort controller for this request
+    abortControllerRef.current = new AbortController()
+    
+    if (mountedRef.current) {
+      setLoading(true)
+      setError(null)
+    }
 
     try {
       console.log('Loading availability and schedules for teacherId:', teacherId)
+      
+      // Check if component is still mounted before proceeding
+      if (!mountedRef.current) {
+        return
+      }
       
       // Get teacher availability and current schedules in parallel
       // CORREÇÃO: Usar instructor_id (UUID) ao invés de user_id
@@ -93,11 +126,13 @@ export default function SimplifiedWeeklySchedule({
           .eq('teacher_id', teacherId)
           .eq('is_active', true)
           .order('day_of_week')
-          .order('start_time'),
+          .order('start_time')
+          .abortSignal(abortControllerRef.current?.signal),
         supabase
           .from('student_schedules')
           .select('*')
           .eq('instructor_id', teacherId) // CORREÇÃO: Usar teacherId diretamente como instructor_id
+          .abortSignal(abortControllerRef.current?.signal)
       ])
 
       if (availabilityResult.error) {
@@ -116,6 +151,11 @@ export default function SimplifiedWeeklySchedule({
       console.log('Found', availability?.length || 0, 'availability slots')
       console.log('Found', currentSchedules?.length || 0, 'current schedules')
 
+      // Check if component is still mounted before updating state
+      if (!mountedRef.current) {
+        return
+      }
+      
       // Validate data integrity
       if (!availability || availability.length === 0) {
         console.warn('No availability slots found for teacher:', teacherId)
@@ -168,43 +208,58 @@ export default function SimplifiedWeeklySchedule({
         }
       }).filter(slot => slot.dayOfWeek <= 6) // Only show Monday-Saturday (1-6)
 
-      setScheduleSlots(processedSlots)
-      setErrorCount(0) // Reset error count on success
-      console.log('Successfully processed', processedSlots.length, 'schedule slots')
-      
-    } catch (err) {
-      console.error('Error loading schedule data:', err)
-      setErrorCount(prev => prev + 1)
-      
-      // Provide detailed error information for debugging
-      let errorMessage = 'Erro desconhecido ao carregar horários'
-      
-      if (err instanceof Error) {
-        console.error('Error details:', {
-          name: err.name,
-          message: err.message,
-          errorCount: errorCount + 1
-        })
-        
-        if (err.message.includes('availability')) {
-          errorMessage = 'Erro ao buscar disponibilidade do professor. O professor pode não ter horários configurados.'
-        } else if (err.message.includes('schedules')) {
-          errorMessage = 'Erro ao buscar horários ocupados. Verifique a tabela student_schedules.'
-        } else {
-          errorMessage = `Erro ao carregar horários: ${err.message}`
-        }
+      // Only update state if component is still mounted
+      if (mountedRef.current) {
+        setScheduleSlots(processedSlots)
+        setErrorCount(0) // Reset error count on success
+        console.log('Successfully processed', processedSlots.length, 'schedule slots')
       }
       
-      setError(errorMessage)
+    } catch (err) {
+      // Ignore AbortError - it's expected when component unmounts
+      if (err instanceof Error && err.name === 'AbortError') {
+        return
+      }
+      
+      console.error('Error loading schedule data:', err)
+      
+      // Only update state if component is still mounted
+      if (mountedRef.current) {
+        setErrorCount(prev => prev + 1)
+      
+        // Provide detailed error information for debugging
+        let errorMessage = 'Erro desconhecido ao carregar horários'
+        
+        if (err instanceof Error) {
+          console.error('Error details:', {
+            name: err.name,
+            message: err.message,
+            errorCount: errorCount + 1
+          })
+          
+          if (err.message.includes('availability')) {
+            errorMessage = 'Erro ao buscar disponibilidade do professor. O professor pode não ter horários configurados.'
+          } else if (err.message.includes('schedules')) {
+            errorMessage = 'Erro ao buscar horários ocupados. Verifique a tabela student_schedules.'
+          } else {
+            errorMessage = `Erro ao carregar horários: ${err.message}`
+          }
+        }
+        
+        setError(errorMessage)
+      }
     } finally {
-      setLoading(false)
+      // Only update loading state if component is still mounted
+      if (mountedRef.current) {
+        setLoading(false)
+      }
     }
-  }, [teacherId, supabase, errorCount])
+  }, [teacherId]) // Only depend on teacherId to prevent infinite loop
 
-  // useEffect com dependências estáveis - evita loops infinitos
+  // useEffect com dependências estáveis - carrega dados quando teacherId muda
   useEffect(() => {
     loadScheduleData()
-  }, [loadScheduleData])
+  }, [teacherId]) // Direct dependency on teacherId instead of loadScheduleData
 
   // Group slots by day of week
   const slotsByDay = useMemo(() => {
@@ -218,7 +273,7 @@ export default function SimplifiedWeeklySchedule({
   }, [scheduleSlots])
 
   const handleSlotClick = useCallback((slotId: string) => {
-    if (!onSlotSelect) return
+    if (!onSlotSelect || !slotId) return
 
     const isSelected = selectedSlots.includes(slotId)
     let newSelection: string[] = []
@@ -240,7 +295,12 @@ export default function SimplifiedWeeklySchedule({
       }
     }
 
-    onSlotSelect(newSelection[0] || '', newSelection[1])
+    // Always pass valid strings - never undefined
+    const slot1 = newSelection[0] || ''
+    const slot2 = newSelection[1] || ''
+    
+    console.log('Slot selection:', { slot1, slot2, newSelection })
+    onSlotSelect(slot1, slot2)
   }, [onSlotSelect, selectedSlots, hasTwoClassesPerWeek, maxSelectableSlots])
 
   const formatTime = (time: string) => {
@@ -297,9 +357,11 @@ export default function SimplifiedWeeklySchedule({
           {errorCount > 3 && (
             <button
               onClick={() => {
-                setErrorCount(0)
-                setError(null)
-                loadScheduleData()
+                if (mountedRef.current) {
+                  setErrorCount(0)
+                  setError(null)
+                  loadScheduleData()
+                }
               }}
               className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md transition-colors"
             >

@@ -337,7 +337,7 @@ export function CourseForm({
                   className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
                 >
                   <option value="">Nenhum instrutor selecionado</option>
-                  {instructors.map(instructor => (
+                  {instructors.map((instructor: any) => (
                     <option key={instructor.id} value={instructor.id}>
                       {instructor.user?.full_name || 'Instrutor sem nome'}
                     </option>
