@@ -36,7 +36,7 @@ export default function TestSimplifiedCalendarPage() {
       if (result.success) {
         alert('Dados de exemplo criados com sucesso!')
       } else {
-        alert('Erro ao criar dados: ' + (result.error?.message || 'Erro desconhecido'))
+        alert('Erro ao criar dados: ' + (result.error ? JSON.stringify(result.error) : 'Erro desconhecido'))
       }
     } catch (error) {
       console.error('Error seeding data:', error)

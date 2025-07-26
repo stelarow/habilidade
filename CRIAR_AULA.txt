@@ -12,24 +12,24 @@ INSTRUÇÕES:
                                 🎯 DADOS BÁSICOS (OBRIGATÓRIO)
 ================================================================================
 
-TÍTULO: 
+TÍTULO: Aula 1 - Ferramentas Fundamentais
 
-DESCRIÇÃO: 
+DESCRIÇÃO: Vamos aprender como utilizar ferramentas fundamentais para desenhos 3D, Como ferramentas de navegação, ferramentas de Linha, retângulo, circulo, polígono, arcos, puxar e empurrar, equidistância.
 
-COURSE_SLUG: 
+COURSE_SLUG: teste-de-curso
 (Exemplos: "programacao-web", "design-grafico", "inteligencia-artificial")
 
-POSIÇÃO_NO_CURSO: 
+POSIÇÃO_NO_CURSO: 1
 (Número da aula: 1, 2, 3, etc.)
 
-SLUG_PERSONALIZADO: 
+SLUG_PERSONALIZADO: aula1-ferramentas-fundamentais
 (Deixe vazio para gerar automaticamente do título)
 
 ================================================================================
                                 📹 VÍDEO (OPCIONAL)
 ================================================================================
 
-URL_DO_VIDEO: 
+URL_DO_VIDEO: https://vimeo.com/1066920043/7f3a2a274a?ts=0&share=copy
 
 DURAÇÃO_EM_SEGUNDOS: 
 (Exemplo: 1800 = 30 minutos, 3600 = 1 hora)
@@ -41,16 +41,15 @@ URL_THUMBNAIL:
                             📄 MATERIAIS/PDFs (OPCIONAL)
 ================================================================================
 
-MATERIAL_1_TITULO: 
+MATERIAL_1_TITULO: Capitulo 1, Ferramenta Fundamentais	
 
-MATERIAL_1_URL: 
+MATERIAL_1_URL: https://drive.google.com/file/d/1YvmnoLsvYd7EhTp3MeKdbe56RAeHq4lK/view?usp=sharing
 
-MATERIAL_1_TIPO: 
+MATERIAL_1_TIPO: pdf
 (pdf ou link)
 
 MATERIAL_1_DESCRIÇÃO: 
-
-MATERIAL_1_PERMITE_DOWNLOAD: 
+MATERIAL_1_PERMITE_DOWNLOAD: não
 (sim ou não)
 
 ---
@@ -72,7 +71,7 @@ MATERIAL_2_PERMITE_DOWNLOAD:
 ================================================================================
 
 TEXTO_DA_AULA:
-(Cole aqui o conteúdo textual da aula em HTML ou texto simples)
+será que é possível colocar aqui por exemplo um prompt e ter um botão de copiar automaticamente?
 
 
 
@@ -80,14 +79,14 @@ TEXTO_DA_AULA:
                             ✏️ EXERCÍCIOS (OPCIONAL)
 ================================================================================
 
-EXERCICIO_1_TITULO: 
+EXERCICIO_1_TITULO: fazer o design de uma cadeira
 
-EXERCICIO_1_DESCRIÇÃO: 
+EXERCICIO_1_DESCRIÇÃO: não pegar da 3d warehouse	
 
-EXERCICIO_1_PERMITE_UPLOAD: 
+EXERCICIO_1_PERMITE_UPLOAD: não
 (sim ou não)
 
-EXERCICIO_1_INSTRUÇÕES_UPLOAD: 
+EXERCICIO_1_INSTRUÇÕES_UPLOAD: não
 
 ---
 
@@ -104,14 +103,14 @@ EXERCICIO_2_INSTRUÇÕES_UPLOAD:
                             🧠 QUIZ DE VERIFICAÇÃO (OPCIONAL)
 ================================================================================
 
-QUIZ_TITULO: 
+QUIZ_TITULO: testar conhecimento
 
-QUIZ_DESCRIÇÃO: 
+QUIZ_DESCRIÇÃO: precisa de um descrição melhor mas para testar ta bom
 
 TEMPO_LIMITE_MINUTOS: 
 (Deixe vazio para sem limite)
 
-TENTATIVAS_PERMITIDAS: 
+TENTATIVAS_PERMITIDAS: 3
 (Exemplo: 3)
 
 NOTA_MÍNIMA: 70
@@ -121,62 +120,63 @@ NOTA_MÍNIMA: 70
 
 QUESTÃO_1: 
 
-ALTERNATIVAS_1:
-A) 
+ALTERNATIVAS_1:quantos anos eu tenho?
+A) 31
 B) 
 C) 
 D) 
 
-RESPOSTA_CORRETA_1: 
+RESPOSTA_CORRETA_1: A
 (A, B, C ou D)
 
 PONTOS_1: 25
 
 ---
 
-QUESTÃO_2: 
+QUESTÃO_2: qual o meu nome?
 
 ALTERNATIVAS_2:
 A) 
-B) 
+B) Alessandro
 C) 
 D) 
 
-RESPOSTA_CORRETA_2: 
+RESPOSTA_CORRETA_2: B
 (A, B, C ou D)
 
 PONTOS_2: 25
 
 ---
 
-QUESTÃO_3: 
+QUESTÃO_3: nome da escola
 
 ALTERNATIVAS_3:
 A) 
-B) 
+B) Habilidade
 C) 
 D) 
 
-RESPOSTA_CORRETA_3: 
+RESPOSTA_CORRETA_3: B
 (A, B, C ou D)
 
 PONTOS_3: 25
 
 ---
 
-QUESTÃO_4: 
+QUESTÃO_4: melhor curso
 
 ALTERNATIVAS_4:
 A) 
 B) 
-C) 
+C) sketchup
 D) 
 
-RESPOSTA_CORRETA_4: 
+RESPOSTA_CORRETA_4: c
 (A, B, C ou D)
 
 PONTOS_4: 25
 
+gere as alternativas erradas.
 ================================================================================
                                 ✅ CHECKLIST FINAL
 ================================================================================
