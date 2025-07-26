@@ -6,8 +6,7 @@ import { NewPostClient } from '@/components/admin/NewPostClient'
 export const dynamic = 'force-dynamic'
 
 export default async function NewPostPage() {
-  const { user: _currentUser, profile } = await requireAdmin()
-  console.log(`[ADMIN-BLOG-NEW] Access authorized for admin: ${profile.email}`)
+  const { user: _currentUser, profile: _profile } = await requireAdmin()
 
   return <NewPostClient />
 }

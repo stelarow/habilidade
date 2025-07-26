@@ -12,21 +12,7 @@ export default async function AdminLayout({
 }: {
   children: React.ReactNode
 }) {
-  const layoutId = Math.random().toString(36).substr(2, 9)
-  console.log(`[ADMIN_LAYOUT-${layoutId}] ========== ADMIN LAYOUT RENDERING ==========`)
-  
-  // Direct session verification - no dependency on headers
-  console.log(`[ADMIN_LAYOUT-${layoutId}] Verifying admin session directly...`)
   const session = await requireAdmin()
-  
-  console.log(`[ADMIN_LAYOUT-${layoutId}] ✅ Session verified:`, {
-    userId: session.user.id,
-    userEmail: session.profile.email,
-    userRole: session.profile.role,
-    userName: session.profile.full_name
-  })
-
-  console.log(`[ADMIN_LAYOUT-${layoutId}] Rendering admin interface with session context...`)
 
   return (
     <AdminSessionProvider session={session}>

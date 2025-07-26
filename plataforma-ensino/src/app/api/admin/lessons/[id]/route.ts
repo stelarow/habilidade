@@ -11,7 +11,7 @@ interface RouteParams {
 
 // GET /api/admin/lessons/[id] - Get a specific lesson with all relations
 export async function GET(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: RouteParams
 ) {
   try {
@@ -286,7 +286,7 @@ export async function PUT(
 
 // DELETE /api/admin/lessons/[id] - Delete a lesson
 export async function DELETE(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: RouteParams
 ) {
   try {

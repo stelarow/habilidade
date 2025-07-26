@@ -7,7 +7,6 @@ export const dynamic = 'force-dynamic'
 
 export default async function CategoriesPage() {
   const { user: _currentUser, profile } = await requireAdmin()
-  console.log(`[ADMIN-CATEGORIES] Access authorized for admin: ${profile.email}`)
 
   const supabase = createClient()
 

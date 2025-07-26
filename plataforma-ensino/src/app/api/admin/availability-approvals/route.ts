@@ -8,10 +8,10 @@ export const dynamic = 'force-dynamic'
  * GET /api/admin/availability-approvals
  * Admin endpoint to get pending availability change requests
  */
-export async function GET(request: NextRequest) {
+export async function GET(_request: NextRequest) {
   try {
     // Verify admin authentication
-    const session = await requireAdmin()
+    await requireAdmin()
     const supabase = createClient()
 
     // Get pending approval requests from the view

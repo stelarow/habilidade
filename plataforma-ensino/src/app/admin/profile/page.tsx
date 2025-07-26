@@ -6,7 +6,6 @@ export const dynamic = 'force-dynamic'
 
 export default async function ProfilePage() {
   const { user: _currentUser, profile } = await requireAdmin()
-  console.log(`[ADMIN-PROFILE] Access authorized for admin: ${profile.email}`)
 
   return <AdminProfile currentUser={profile} />
 }

@@ -1,6 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { AdminDashboard } from '@/components/admin/AdminDashboard'
-import { DashboardStats } from '@/types'
+import type { DashboardStats } from '@/types'
 import { requireAdmin } from '@/lib/auth/session'
 
 // Force dynamic rendering for admin pages that use server-side Supabase client
@@ -11,50 +11,34 @@ const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 
 export default async function AdminPage() {
   // 🔥 CRITICAL: SERVER-SIDE PROTECTION - Execute BEFORE any other code
-  const { user, profile } = await requireAdmin()
-  
-  const pageId = Math.random().toString(36).substr(2, 9)
-  console.log(`[ADMIN-PAGE-${pageId}] 🎉 Admin page access authorized for: ${profile.email}`)
-  console.log(`[ADMIN-PAGE-${pageId}] Starting dashboard data collection...`)
+  const { user: _user, profile: _profile } = await requireAdmin()
   
   const supabase = createClient()
 
-  console.log('[ADMIN-DASHBOARD] 3. Iniciando consultas sequenciais para estatísticas...')
-  
   // Get dashboard statistics - Sequential queries with delays to prevent race conditions
-  console.log('[ADMIN-DASHBOARD] 3.1. Query students count...')
-  const { count: totalStudents, error: studentsError } = await supabase
+  const { count: totalStudents, error: _studentsError } = await supabase
     .from('users')
     .select('*', { count: 'exact' })
     .eq('role', 'student')
     .limit(0)
-  
-  console.log('[ADMIN-DASHBOARD] Students result:', { count: totalStudents, error: studentsError })
 
   await delay(100) // Small delay to prevent concurrent requests
 
-  console.log('[ADMIN-DASHBOARD] 3.2. Query courses count...')
-  const { count: totalCourses, error: coursesError } = await supabase
+  const { count: totalCourses, error: _coursesError } = await supabase
     .from('courses')
     .select('*', { count: 'exact' })
     .eq('is_published', true)
     .limit(0)
-  
-  console.log('[ADMIN-DASHBOARD] Courses result:', { count: totalCourses, error: coursesError })
 
   await delay(100)
 
-  console.log('[ADMIN-DASHBOARD] 3.3. Query enrollments count...')
-  const { count: totalEnrollments, error: enrollmentsError } = await supabase
+  const { count: totalEnrollments, error: _enrollmentsError } = await supabase
     .from('enrollments')
     .select('*', { count: 'exact' })
     .limit(0)
-  
-  console.log('[ADMIN-DASHBOARD] Enrollments result:', { count: totalEnrollments, error: enrollmentsError })
 
   await delay(100)
 
-  console.log('[ADMIN-DASHBOARD] 3.4. Query recent enrollments...')
   const { data: recentEnrollments } = await supabase
     .from('enrollments')
     .select(`
@@ -65,8 +49,6 @@ export default async function AdminPage() {
     .order('created_at', { ascending: false })
     .limit(10)
 
-  console.log('[ADMIN-DASHBOARD] 4. Promise.all completado com sucesso')
-  console.log('[ADMIN-DASHBOARD] 5. Dados:', { totalStudents, totalCourses, totalEnrollments, enrollments: recentEnrollments?.length })
 
   const stats: DashboardStats = {
     totalStudents: totalStudents ?? 0,
@@ -81,7 +63,6 @@ export default async function AdminPage() {
     }
   }
 
-  console.log('[ADMIN-DASHBOARD] 6. Renderizando AdminDashboard component')
   
   return (
     <AdminDashboard 

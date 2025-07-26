@@ -81,7 +81,7 @@ export default function AuthLayout({
     }
 
     checkAuthStatus()
-  }, [pathname])
+  }, [pathname, router])
 
   // Show loading while checking authentication
   if (isChecking) {

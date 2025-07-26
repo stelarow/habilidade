@@ -15,7 +15,7 @@ const progressUpdateSchema = z.object({
 
 // GET /api/admin/progress/[id] - Get progress details
 export async function GET(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
@@ -192,7 +192,7 @@ export async function PUT(
 
 // DELETE /api/admin/progress/[id] - Delete progress (reset lesson progress)
 export async function DELETE(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {

@@ -16,8 +16,7 @@ interface Teacher {
 
 export default async function AdminCalendarPage() {
   // 🔥 CRITICAL: SERVER-SIDE PROTECTION - Execute BEFORE any other code
-  const { user: _currentUser, profile } = await requireAdmin()
-  console.log(`[ADMIN-CALENDAR] Access authorized for admin: ${profile.email}`)
+  const { user: _currentUser, profile: _profile } = await requireAdmin()
   
   const supabase = createClient()
 
@@ -62,7 +61,7 @@ export default async function AdminCalendarPage() {
 
   // Get some basic statistics
   let totalClasses = 0
-  let totalTeachers = teachers.length
+  const _totalTeachers = teachers.length
 
   try {
     const { count } = await supabase
@@ -118,7 +117,7 @@ export default async function AdminCalendarPage() {
                       Total Professores
                     </div>
                     <div className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                      {totalTeachers}
+                      {_totalTeachers}
                     </div>
                   </div>
                 </div>

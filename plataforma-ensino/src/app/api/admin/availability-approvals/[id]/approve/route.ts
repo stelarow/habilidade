@@ -9,7 +9,7 @@ export const dynamic = 'force-dynamic'
  * Admin endpoint to approve an availability change request
  */
 export async function POST(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {

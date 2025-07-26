@@ -1,5 +1,5 @@
 import { createClient } from '@/lib/supabase/server';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 // Force dynamic rendering for authentication and database queries
 export const dynamic = 'force-dynamic';
@@ -8,7 +8,7 @@ export const dynamic = 'force-dynamic';
  * GET /api/admin/teachers
  * Lista todos os professores com informações de disponibilidade
  */
-export async function GET() {
+export async function GET(_request: NextRequest) {
   try {
     const supabase = createClient();
 

@@ -25,7 +25,7 @@ const createTimeSlotsSchema = z.object({
  * GET /api/admin/time-slots/default
  * Retorna os horários padrões configurados no sistema
  */
-export async function GET() {
+export async function GET(_request: NextRequest) {
   try {
     const supabase = createClient();
 

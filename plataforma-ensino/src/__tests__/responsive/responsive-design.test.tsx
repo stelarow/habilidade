@@ -17,12 +17,22 @@ const ResponsiveTeacherSelector = () => (
       <h2 className="text-xl mb-4">Selecione um Professor (Desktop)</h2>
       <div className="grid grid-cols-3 gap-4">
         <div className="teacher-card p-4 border rounded">
-          <img src="/teacher1.jpg" alt="Professor João" className="w-16 h-16 rounded-full mb-2" />
+          <div 
+            data-testid="mock-teacher-image"
+            className="w-16 h-16 rounded-full mb-2 bg-gray-200"
+            role="img"
+            aria-label="Professor João"
+          />
           <h3>Professor João</h3>
           <p>Programação Web</p>
         </div>
         <div className="teacher-card p-4 border rounded">
-          <img src="/teacher2.jpg" alt="Professora Maria" className="w-16 h-16 rounded-full mb-2" />
+          <div 
+            data-testid="mock-teacher-image"
+            className="w-16 h-16 rounded-full mb-2 bg-gray-200"
+            role="img"
+            aria-label="Professora Maria"
+          />
           <h3>Professora Maria</h3>
           <p>Design Gráfico</p>
         </div>
@@ -33,14 +43,24 @@ const ResponsiveTeacherSelector = () => (
       <h2 className="text-lg mb-3">Selecione um Professor</h2>
       <div className="space-y-3">
         <div className="teacher-card p-3 border rounded flex items-center">
-          <img src="/teacher1.jpg" alt="Professor João" className="w-12 h-12 rounded-full mr-3" />
+          <div 
+            data-testid="mock-teacher-image-mobile"
+            className="w-12 h-12 rounded-full mr-3 bg-gray-200"
+            role="img"
+            aria-label="Professor João"
+          />
           <div>
             <h3 className="text-sm font-medium">Professor João</h3>
             <p className="text-xs text-gray-600">Programação Web</p>
           </div>
         </div>
         <div className="teacher-card p-3 border rounded flex items-center">
-          <img src="/teacher2.jpg" alt="Professora Maria" className="w-12 h-12 rounded-full mr-3" />
+          <div 
+            data-testid="mock-teacher-image-mobile"
+            className="w-12 h-12 rounded-full mr-3 bg-gray-200"
+            role="img"
+            aria-label="Professora Maria"
+          />
           <div>
             <h3 className="text-sm font-medium">Professora Maria</h3>
             <p className="text-xs text-gray-600">Design Gráfico</p>

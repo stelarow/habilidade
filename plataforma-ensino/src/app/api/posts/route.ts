@@ -24,7 +24,7 @@ const postSchema = z.object({
   tags: z.array(z.string()).optional(),
 });
 
-export async function GET(request: Request) {
+export async function GET(_request: Request) {
   try {
     const supabase = createClient();
     const { data: posts, error } = await supabase.from('posts').select('*');

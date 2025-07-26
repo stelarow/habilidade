@@ -25,8 +25,19 @@ jest.mock('@supabase/ssr')
 jest.mock('@/utils/teacherAvailabilityLogic')
 jest.mock('next/image', () => ({
   __esModule: true,
-  default: ({ src, alt, ...props }: any) => (
-    <img src={src} alt={alt} {...props} />
+  default: ({ src, alt, width, height, ...props }: any) => (
+    // Mock Image component for testing - avoids Next.js image optimization warnings
+    <div 
+      data-testid="mock-image"
+      data-src={src} 
+      data-alt={alt}
+      data-width={width}
+      data-height={height}
+      role="img"
+      aria-label={alt}
+      style={{ width: width ? `${width}px` : 'auto', height: height ? `${height}px` : 'auto' }}
+      {...props}
+    />
   )
 }))
 
@@ -35,11 +46,9 @@ const mockSupabase = {
     select: jest.fn(() => ({
       eq: jest.fn(() => ({
         order: jest.fn(() => ({
-          order: jest.fn(() => ({
-            // Mock successful response
-            data: mockTeachersData,
-            error: null
-          }))
+          // Mock successful response
+          data: mockTeachersData,
+          error: null
         }))
       }))
     }))

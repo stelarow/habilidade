@@ -2,8 +2,7 @@ import { requireAdmin } from '@/lib/auth/session'
 import { createClient } from '@/lib/supabase/server'
 
 export default async function TestCategoriesPage() {
-  const { user: _currentUser, profile } = await requireAdmin()
-  console.log(`[TEST-CATEGORIES] Access authorized for admin: ${profile.email}`)
+  const { user: _currentUser, profile: _profile } = await requireAdmin()
 
   const supabase = createClient()
 

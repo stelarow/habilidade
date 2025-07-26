@@ -242,7 +242,7 @@ export default function LessonPageRefactored() {
       setLoading(false)
       setIsInitialLoad(false)
     }
-  }, [courseSlug, lessonSlug, supabase, router])
+  }, [courseSlug, lessonSlug, supabase, router, isInitialLoad])
 
   useEffect(() => {
     fetchLessonData()

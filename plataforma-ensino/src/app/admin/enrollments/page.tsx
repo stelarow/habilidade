@@ -7,7 +7,6 @@ export const dynamic = 'force-dynamic'
 
 export default async function EnrollmentsPage() {
   const { user: _currentUser, profile } = await requireAdmin()
-  console.log(`[ADMIN-ENROLLMENTS] Access authorized for admin: ${profile.email}`)
 
   const supabase = createClient()
 

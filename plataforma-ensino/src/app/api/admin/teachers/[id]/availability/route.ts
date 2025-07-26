@@ -29,7 +29,7 @@ interface DaySchedule {
  * Retorna a disponibilidade detalhada de um professor específico
  */
 export async function GET(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {

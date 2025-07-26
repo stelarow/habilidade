@@ -31,7 +31,7 @@ const enrollmentUpdateSchema = z.object({
 
 // GET /api/admin/enrollments/[id] - Get enrollment details
 export async function GET(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
@@ -294,7 +294,7 @@ export async function PUT(
 
 // DELETE /api/admin/enrollments/[id] - Delete enrollment
 export async function DELETE(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {

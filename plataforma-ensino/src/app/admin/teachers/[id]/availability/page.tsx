@@ -11,8 +11,7 @@ export default function TeacherAvailabilityPage({ params }: PageProps) {
     <div className="container mx-auto px-4 py-6 max-w-7xl">
       <TeacherAvailabilityGrid 
         teacherId={params.id}
-        onSlotClick={(slot) => {
-          console.log('Slot clicado:', slot);
+        onSlotClick={(_slot) => {
           // Aqui pode abrir um modal para editar o slot
         }}
       />
@@ -20,7 +19,7 @@ export default function TeacherAvailabilityPage({ params }: PageProps) {
   );
 }
 
-export async function generateMetadata({ params }: PageProps) {
+export async function generateMetadata({ params: _params }: PageProps) {
   return {
     title: 'Disponibilidade do Professor | Admin - Plataforma Habilidade',
     description: 'Visualize e gerencie a disponibilidade de horários do professor.',

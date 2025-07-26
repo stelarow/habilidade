@@ -1,0 +1,4 @@
+
+> plataforma-ensino-habilidade@1.0.0 build
+> NODE_ENV=production NODE_OPTIONS='--max-old-space-size=3072' next build 2
+

@@ -29,7 +29,7 @@ const updateCourseSchema = z.object({
 
 // GET /api/admin/courses/[id] - Get specific course
 export async function GET(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
@@ -212,7 +212,7 @@ export async function PUT(
 
 // DELETE /api/admin/courses/[id] - Delete course
 export async function DELETE(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {

@@ -272,12 +272,12 @@ export default function SimplifiedWeeklySchedule({
         setLoading(false)
       }
     }
-  }, [teacherId, teacherUserId]) // Depend on both IDs to prevent infinite loop
+  }, [teacherId, teacherUserId, errorCount, supabase]) // Add all dependencies
 
   // useEffect com dependências estáveis - carrega dados quando teacherId muda
   useEffect(() => {
     loadScheduleData()
-  }, [teacherId, teacherUserId]) // Direct dependency on both IDs instead of loadScheduleData
+  }, [loadScheduleData]) // Use the callback with proper dependencies
 
   // Group slots by day of week
   const slotsByDay = useMemo(() => {
@@ -342,7 +342,7 @@ export default function SimplifiedWeeklySchedule({
     })
     
     onSlotSelect(slot1, slot2)
-  }, [onSlotSelect, selectedSlots, hasTwoClassesPerWeek, maxSelectableSlots, teacherId, teacherUserId, scheduleSlots])
+  }, [onSlotSelect, selectedSlots, hasTwoClassesPerWeek, maxSelectableSlots, teacherId, scheduleSlots])
 
   const formatTime = (time: string) => {
     return time.slice(0, 5) // Remove seconds
