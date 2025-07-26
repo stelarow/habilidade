@@ -95,9 +95,9 @@ export async function GET(_request: NextRequest) {
         return {
           id: teacher.id,
           userId: teacher.user_id,
-          name: teacher.users.full_name,
-          email: teacher.users.email,
-          avatarUrl: teacher.users.avatar_url,
+          name: teacher.users?.[0]?.full_name || 'N/A',
+          email: teacher.users?.[0]?.email || 'N/A',
+          avatarUrl: teacher.users?.[0]?.avatar_url || null,
           bio: teacher.bio,
           expertise: teacher.expertise,
           rating: teacher.rating,

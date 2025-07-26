@@ -287,7 +287,7 @@ export async function POST(request: NextRequest) {
       
       if (!instructorUsers || instructorUsers.length !== instructorIds.length) {
         const foundIds = instructorUsers?.map(i => i.id) || []
-        const missingIds = instructorIds.filter(id => !foundIds.includes(id))
+        const missingIds = instructorIds.filter((id: string) => !foundIds.includes(id))
         
         console.error('Enrollment API - Missing instructor user IDs:', missingIds)
         

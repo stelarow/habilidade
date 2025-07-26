@@ -166,7 +166,7 @@ export async function PUT(
       
       if (existingQuiz) {
         // Update existing quiz
-        const { data: updatedQuiz, error: updateQuizError } = await supabase
+        const { data: _updatedQuiz, error: updateQuizError } = await supabase
           .from('quizzes')
           .update({
             title: quiz.title,

@@ -194,7 +194,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Buscar dados do professor para resposta
-    const { data: teacherInfo, error: teacherError } = await supabase
+    const { data: teacherInfo, error: _teacherError } = await supabase
       .from('instructors')
       .select(`
         id,

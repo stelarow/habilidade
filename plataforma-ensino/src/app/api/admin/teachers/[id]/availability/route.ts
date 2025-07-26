@@ -148,7 +148,7 @@ export async function GET(
           schedule.day_of_week === slot.day_of_week &&
           schedule.start_time === slot.start_time &&
           schedule.end_time === slot.end_time &&
-          schedule.enrollments?.status === 'active'
+          schedule.enrollments?.some((e: any) => e.status === 'active')
         ) || [];
 
         const currentBookings = bookings.length;
@@ -184,7 +184,7 @@ export async function GET(
     const totalSlots = availability?.length || 0;
     const activeSlots = availability?.filter(slot => slot.is_active).length || 0;
     const totalCapacity = availability?.reduce((sum, slot) => sum + slot.max_students, 0) || 0;
-    const totalBookings = schedules?.filter(s => s.enrollments?.status === 'active').length || 0;
+    const totalBookings = schedules?.filter(s => s.enrollments?.some((e: any) => e.status === 'active')).length || 0;
     const overallUtilization = totalCapacity > 0 ? Math.round((totalBookings / totalCapacity) * 100) : 0;
 
     // Identificar horários mais e menos ocupados
@@ -201,9 +201,9 @@ export async function GET(
       teacher: {
         id: instructor.id,
         userId: instructor.user_id,
-        name: instructor.users.full_name,
-        email: instructor.users.email,
-        avatarUrl: instructor.users.avatar_url,
+        name: instructor.users?.[0]?.full_name || 'N/A',
+        email: instructor.users?.[0]?.email || 'N/A',
+        avatarUrl: instructor.users?.[0]?.avatar_url || null,
         bio: instructor.bio,
         expertise: instructor.expertise,
         rating: instructor.rating,
