@@ -40,7 +40,7 @@ export async function GET(request: NextRequest) {
     if (basicError) {
       logError('Basic query error:', basicError);
     } else {
-      logDebug('Basic class_schedules data:', JSON.stringify(basicData, null, 2));
+      logDebug('Basic class_schedules data:', { data: basicData });
     }
 
     // Query principal com tipos corretos - simplified joins
@@ -97,9 +97,9 @@ export async function GET(request: NextRequest) {
 
     // Debug: Log raw data
     logDebug('=== Calendar API Debug ===');
-    logDebug('Raw data count:', data?.length || 0);
+    logDebug('Raw data count:', { count: data?.length || 0 });
     if (data && data.length > 0) {
-      logDebug('First raw item:', JSON.stringify(data[0], null, 2));
+      logDebug('First raw item:', { item: data[0] });
     }
 
     // Agora os tipos são corretamente inferidos como CalendarQueryResult
@@ -110,18 +110,20 @@ export async function GET(request: NextRequest) {
     const validSchedules = typedData.filter(schedule => 
       schedule.schedule_slots && schedule.enrollments
     );
-    logDebug(`Valid schedules (with slots and enrollments): ${validSchedules.length}/${typedData.length}`);
+    logDebug('Valid schedules (with slots and enrollments):', { valid: validSchedules.length, total: typedData.length });
     
     // Debug invalid schedules
     const invalidSchedules = typedData.filter(schedule => 
       !schedule.schedule_slots || !schedule.enrollments
     );
     if (invalidSchedules.length > 0) {
-      logDebug('Invalid schedules:', invalidSchedules.map(s => ({
-        id: s.id,
-        hasSlots: !!s.schedule_slots,
-        hasEnrollments: !!s.enrollments
-      })));
+      logDebug('Invalid schedules:', { 
+        schedules: invalidSchedules.map(s => ({
+          id: s.id,
+          hasSlots: !!s.schedule_slots,
+          hasEnrollments: !!s.enrollments
+        }))
+      });
     }
 
     // Transformar dados para formato simples - handle both array and object responses
@@ -164,9 +166,9 @@ export async function GET(request: NextRequest) {
       })
       .filter(item => item !== null); // Remove null items
 
-    logDebug(`Final formatted data count: ${formattedData.length}`);
+    logDebug('Final formatted data count:', { count: formattedData.length });
     if (formattedData.length > 0) {
-      logDebug('Sample formatted item:', formattedData[0]);
+      logDebug('Sample formatted item:', { item: formattedData[0] });
     }
 
     return NextResponse.json({ data: formattedData });
