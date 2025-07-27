@@ -5,6 +5,7 @@ import { LessonProgressData } from '@/types/lesson'
 import { usePageTimer } from './usePageTimer'
 import { usePDFProgress } from './usePDFProgress'
 import { getCompletionIcon } from '@/utils/completionIcons'
+import { logDebug } from '@/lib/utils/logger'
 
 export interface CompletionCriterion {
   id: string

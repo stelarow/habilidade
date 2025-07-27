@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import jwt from 'jsonwebtoken'
+import { logError } from '@/lib/utils/logger'
 
 // Force dynamic rendering for token generation
 export const dynamic = 'force-dynamic'

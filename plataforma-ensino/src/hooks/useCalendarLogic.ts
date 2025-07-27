@@ -7,6 +7,7 @@
  */
 
 import { useState, useCallback, useMemo, useEffect } from 'react'
+import { logWarn } from '@/lib/utils/logger'
 import type { TimeSlot, CourseRequirements } from '@/components/enrollment/ConditionalCalendar'
 import type { TeacherAvailability } from '@/types/api'
 

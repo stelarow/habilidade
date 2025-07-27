@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { getRedirectUrlForCurrentUser } from '@/lib/auth/redirect-helpers'
+import { logDebug, logError } from '@/lib/utils/logger'
 
 export default function AuthLayout({
   children,

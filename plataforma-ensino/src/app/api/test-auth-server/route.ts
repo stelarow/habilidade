@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import { createDebugClient, testAuthWithDebugClient } from '@/lib/supabase/server-debug'
 import { NextRequest, NextResponse } from 'next/server'
 import { verifySession } from '@/lib/auth/session'
+import { logError, logDebug } from '@/lib/utils/logger'
 
 // Force dynamic rendering for this API route since it accesses cookies
 export const dynamic = 'force-dynamic'

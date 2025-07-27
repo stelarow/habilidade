@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server';
 import { verifySession } from '@/lib/auth/session';
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
+import { logError } from '@/lib/utils/logger';
 
 // Force dynamic rendering for authentication
 export const dynamic = 'force-dynamic';

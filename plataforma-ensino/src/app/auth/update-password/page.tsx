@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { createClient } from '@supabase/supabase-js';
 import { GradientButton, Loading } from '@/components/ui';
 import { Starfield } from '@/components/ui';
+import { logError, logDebug } from '@/lib/utils/logger';
 
 export default function UpdatePasswordPage() {
   const router = useRouter();

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { verifySession, requireAdmin, requireInstructorOrAdmin } from '@/lib/auth/session'
 import { z } from 'zod'
+import { logError } from '@/lib/utils/logger'
 import type {
   AvailabilityQuery,
   CreateAvailabilityRequest,

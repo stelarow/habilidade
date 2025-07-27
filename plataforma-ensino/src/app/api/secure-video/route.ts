@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { VideoSecurity } from '@/lib/video-security'
 import { createClient } from '@/lib/supabase/server'
+import { logError } from '@/lib/utils/logger'
 
 // Force dynamic rendering for authentication and database queries
 export const dynamic = 'force-dynamic'
