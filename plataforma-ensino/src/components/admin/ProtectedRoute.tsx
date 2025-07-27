@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { getCurrentUserClient, hasPermission, Permission } from '../../lib/auth/permissions-client'
-import { User } from '@/types'
+import type { User } from '@/types'
 import Loading from '@/components/ui/Loading'
 
 interface ProtectedRouteProps {

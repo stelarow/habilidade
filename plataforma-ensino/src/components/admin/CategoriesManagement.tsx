@@ -1,8 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { Category, User } from '@/types'
-import { UserProfile } from '@/lib/auth/session'
+import type { Category, User } from '@/types'
+import type { UserProfile } from '@/lib/auth/session'
 import { createClient } from '@/lib/supabase/client'
 import { 
   PlusIcon, 

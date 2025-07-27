@@ -6,7 +6,7 @@
  * with holiday exclusion and business day validation
  */
 
-import { Holiday, WorkingDaysCalculation } from '@/types/date-calculation';
+import type { Holiday, WorkingDaysCalculation } from '@/types/date-calculation';
 import { getBrazilianHolidays2025 } from '@/data/holidays-2025';
 
 /**

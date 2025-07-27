@@ -7,7 +7,7 @@
  */
 
 import { parseDateISO, formatDateISO } from './dateCalculations';
-import { 
+import type { 
   CompletionStatus, 
   CompletionIndicatorType, 
   CompletionCalculationInput,

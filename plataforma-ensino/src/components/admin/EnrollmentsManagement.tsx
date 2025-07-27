@@ -2,8 +2,8 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
-import { User, Enrollment as EnrollmentType } from '@/types'
-import { UserProfile } from '@/lib/auth/session'
+import type { User, Enrollment as EnrollmentType } from '@/types'
+import type { UserProfile } from '@/lib/auth/session'
 import { createClient } from '@/lib/supabase/client'
 import { 
   MagnifyingGlassIcon,

@@ -1,5 +1,5 @@
-import { User } from '@/types'
-import { UserProfile } from '@/lib/auth/session'
+import type { User } from '@/types'
+import type { UserProfile } from '@/lib/auth/session'
 import { createClient } from '@/lib/supabase/client'
 
 export type Permission = 

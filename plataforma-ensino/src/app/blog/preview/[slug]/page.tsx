@@ -1,6 +1,6 @@
 
 import { createClient } from '@/lib/supabase/server';
-import { Post } from '@/types';
+import type { Post } from '@/types';
 import { notFound } from 'next/navigation';
 
 interface PreviewPostPageProps {

@@ -4,7 +4,7 @@ import React, { useRef, useState, useCallback, useEffect } from 'react'
 import ReactPlayer from 'react-player'
 import { Play, Pause, SkipBack, SkipForward, SpeakerHigh, SpeakerSlash, CornersOut, Gear } from 'phosphor-react'
 import * as Sentry from '@sentry/nextjs'
-import { VideoPlayerProps, VideoProgress } from '@/types'
+import type { VideoPlayerProps, VideoProgress } from '@/types'
 import { cn } from '@/lib/utils'
 import { validateAndFormatYouTubeUrl } from '@/lib/youtube-utils'
 

@@ -1,6 +1,6 @@
 'use client'
 
-import { DashboardStats, Enrollment } from '@/types'
+import type { DashboardStats, Enrollment } from '@/types'
 import { 
   UsersIcon, 
   BookOpenIcon, 

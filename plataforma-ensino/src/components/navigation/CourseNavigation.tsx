@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Course, Lesson, Progress, Enrollment } from '@/types'
+import type { Course, Lesson, Progress, Enrollment } from '@/types'
 import { formatDuration } from '@/lib/utils'
 import { 
   List, 

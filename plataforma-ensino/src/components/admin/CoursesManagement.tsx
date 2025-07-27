@@ -3,8 +3,8 @@
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { useSearchParams, useRouter } from 'next/navigation'
-import { Course, Category, Instructor, User } from '@/types'
-import { UserProfile } from '@/lib/auth/session'
+import type { Course, Category, Instructor, User } from '@/types'
+import type { UserProfile } from '@/lib/auth/session'
 import { hasPermission } from '@/lib/auth/permissions-client'
 import { createClient } from '@/lib/supabase/client'
 import { 

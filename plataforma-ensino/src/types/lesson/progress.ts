@@ -1,7 +1,7 @@
 // Progress Tracking Types for Lesson System
 // Part of Fase 1: Arquitetura e Fundação
 
-import { User } from '../index'
+import type { User } from '../index'
 
 // Enhanced progress tracking beyond the existing Progress interface
 export interface LessonProgressData {

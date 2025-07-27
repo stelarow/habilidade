@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Lesson, Course, ExtendedLessonForm, ExerciseForm, QuizQuestionForm } from '@/types'
+import type { Lesson, Course, ExtendedLessonForm, ExerciseForm, QuizQuestionForm } from '@/types'
 import { 
   XMarkIcon,
   PlusIcon,

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Course, Category, Instructor } from '@/types'
+import type { Course, Category, Instructor } from '@/types'
 import { createClient } from '@/lib/supabase/client'
 import { 
   XMarkIcon,

@@ -1,7 +1,7 @@
 // Layout System Types for Adaptive Lesson Pages
 // Part of Fase 1: Arquitetura e Fundação
 
-import { LessonContent } from './content'
+import type { LessonContent } from './content'
 
 // Layout States as defined in the checklist
 export type LayoutState = 

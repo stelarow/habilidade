@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import { CompletionSection } from '@/components/lesson'
-import { LessonProgressData } from '@/types/lesson'
+import type { LessonProgressData } from '@/types/lesson'
 
 export default function TestCompletionSectionPage() {
   const [progressData, setProgressData] = useState<LessonProgressData>({

@@ -1,8 +1,8 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Lesson, Course, User } from '@/types'
-import { UserProfile } from '@/lib/auth/session'
+import type { Lesson, Course, User } from '@/types'
+import type { UserProfile } from '@/lib/auth/session'
 import { hasPermission } from '@/lib/auth/permissions-client'
 import { createClient } from '@/lib/supabase/client'
 import { 

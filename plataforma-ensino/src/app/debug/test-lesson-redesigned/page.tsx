@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import LessonPageRedesigned from '@/components/lesson/LessonPageRedesigned'
-import { LessonProgressData } from '@/types/lesson'
+import type { LessonProgressData } from '@/types/lesson'
 
 export default function TestLessonRedesignedPage() {
   const router = useRouter()
