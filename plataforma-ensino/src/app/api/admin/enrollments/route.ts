@@ -190,21 +190,21 @@ export async function POST(request: NextRequest) {
     let isEnhancedFormat = false
     
     // Log the incoming data for debugging
-    logDebug('Enrollment API - Incoming data:', JSON.stringify(body, null, 2))
+    logDebug('Enrollment API - Incoming data: ' + JSON.stringify(body, null, 2))
     
     try {
       validatedData = enhancedEnrollmentSchema.parse(body)
       isEnhancedFormat = true
       logDebug('Enrollment API - Enhanced schema validation passed')
     } catch (enhancedError) {
-      logDebug('Enrollment API - Enhanced schema failed:', enhancedError)
+      logDebug('Enrollment API - Enhanced schema failed: ' + (enhancedError instanceof Error ? enhancedError.message : String(enhancedError)))
       // Fall back to legacy format
       try {
         validatedData = legacyEnrollmentSchema.parse(body)
         isEnhancedFormat = false
         logDebug('Enrollment API - Legacy schema validation passed')
       } catch (legacyError) {
-        logDebug('Enrollment API - Legacy schema failed:', legacyError)
+        logDebug('Enrollment API - Legacy schema failed: ' + (legacyError instanceof Error ? legacyError.message : String(legacyError)))
         // Return enhanced format errors as they're more descriptive
         throw enhancedError
       }
@@ -262,7 +262,7 @@ export async function POST(request: NextRequest) {
     // For enhanced format, verify all instructors exist
     if (isEnhancedFormat && validatedData.schedules && validatedData.schedules.length > 0) {
       const instructorIds = validatedData.schedules.map((s: any) => s.instructor_id)
-      logDebug('Enrollment API - Validating instructor IDs (as user_ids):', instructorIds)
+      logDebug('Enrollment API - Validating instructor IDs (as user_ids): ' + JSON.stringify(instructorIds))
       
       // IMPORTANT: instructor_id in the request body actually refers to user_id in the users table
       // This is because student_schedules.instructor_id references users.id, not instructors.id
@@ -283,8 +283,8 @@ export async function POST(request: NextRequest) {
         )
       }
       
-      logDebug('Enrollment API - Found instructor users:', instructorUsers)
-      logDebug('Enrollment API - Expected count:', instructorIds.length, 'Found count:', instructorUsers?.length || 0)
+      logDebug('Enrollment API - Found instructor users: ' + JSON.stringify(instructorUsers))
+      logDebug('Enrollment API - Expected count: ' + instructorIds.length + ', Found count: ' + (instructorUsers?.length || 0))
       
       if (!instructorUsers || instructorUsers.length !== instructorIds.length) {
         const foundIds = instructorUsers?.map(i => i.id) || []
@@ -366,7 +366,7 @@ export async function POST(request: NextRequest) {
       modality: validatedData.is_in_person ? 'in-person' : 'online'
     }
     
-    logDebug('Enrollment API - Enrollment data to insert:', enrollmentData)
+    logDebug('Enrollment API - Enrollment data to insert: ' + JSON.stringify(enrollmentData))
     
     // Create enrollment
     const { data: enrollment, error } = await supabase
@@ -404,7 +404,7 @@ export async function POST(request: NextRequest) {
       logDebug('Enrollment API - Processing schedules for enrollment:', enrollment.id)
       
       if (isEnhancedFormat && validatedData.schedules && validatedData.schedules.length > 0 && validatedData.modality === 'in-person') {
-        logDebug('Enrollment API - Enhanced format schedules:', validatedData.schedules)
+        logDebug('Enrollment API - Enhanced format schedules: ' + JSON.stringify(validatedData.schedules))
         // Enhanced format with schedules array
         schedulesToCreate = validatedData.schedules.map((schedule: any) => ({
           enrollment_id: enrollment.id,
@@ -420,7 +420,7 @@ export async function POST(request: NextRequest) {
         // This would be handled by the form transformation in the frontend
       }
       
-      logDebug('Enrollment API - Schedules to create:', schedulesToCreate)
+      logDebug('Enrollment API - Schedules to create: ' + JSON.stringify(schedulesToCreate))
       
       // Insert student schedules if any
       if (schedulesToCreate.length > 0) {

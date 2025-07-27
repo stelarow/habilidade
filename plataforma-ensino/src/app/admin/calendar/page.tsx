@@ -4,6 +4,7 @@ import { EnhancedAdminCalendarInterface } from '@/components/admin/EnhancedAdmin
 import { BlurFade } from '@/components/ui/blur-fade'
 import { MagicCard } from '@/components/ui/magic-card'
 import { Users, Calendar, Clock } from 'lucide-react'
+import { logError } from '@/lib/utils/logger'
 
 // Force dynamic rendering for admin pages that use server-side Supabase client
 export const dynamic = 'force-dynamic'

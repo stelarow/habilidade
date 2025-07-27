@@ -19,4 +19,6 @@ This is a **dual-architecture educational platform** for Escola Habilidade with 
 - **Main Website** (`/`) - React 19 + Vite marketing site with course catalog
 - **Learning Platform** (`/plataforma-ensino/`) - Next.js 14 + TypeScript + Supabase LMS
 
-[Rest of the file remains unchanged...]
+## Development Commands
+
+- NPM run commands (dev, build, lint, tests) should have a minimum timeout of 10 minutes to ensure full command execution completes

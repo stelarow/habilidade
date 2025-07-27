@@ -3,6 +3,7 @@ import { verifySession } from '@/lib/auth/session';
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import type { QueryData } from '@supabase/supabase-js';
+import { logDebug, logError } from '@/lib/utils/logger';
 
 // Force dynamic rendering for authentication
 export const dynamic = 'force-dynamic';

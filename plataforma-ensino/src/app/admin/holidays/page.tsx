@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { requireAdmin } from '@/lib/auth/session';
 import HolidayManager from '@/components/scheduling/HolidayManager';
 import { Suspense } from 'react';
+import { logError } from '@/lib/utils/logger';
 
 // Force dynamic rendering and disable caching for admin pages
 export const dynamic = 'force-dynamic';

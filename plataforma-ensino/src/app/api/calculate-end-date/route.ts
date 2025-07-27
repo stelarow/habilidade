@@ -8,6 +8,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
+import { logError } from '@/lib/utils/logger'
 import { z } from 'zod'
 
 // Force dynamic rendering for authentication and database queries
