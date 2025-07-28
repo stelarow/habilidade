@@ -265,62 +265,124 @@ export async function POST(request: NextRequest) {
       
       // IMPORTANT: instructor_id in the request body actually refers to user_id in the users table
       // This is because student_schedules.instructor_id references users.id, not instructors.id
-      const { data: instructorUsers, error: instructorQueryError } = await supabase
+      
+      // Step 1: Check if these users exist in the users table
+      const { data: allUsers, error: usersQueryError } = await supabase
         .from('users')
         .select('id, role, full_name, email')
         .in('id', instructorIds)
-        .in('role', ['admin', 'instructor'])
       
-      if (instructorQueryError) {
-        console.error('Enrollment API - Error querying instructor users:', instructorQueryError)
+      if (usersQueryError) {
+        console.error('Enrollment API - Error querying users:', usersQueryError)
         return NextResponse.json(
           { 
-            error: 'Erro ao validar instrutores',
-            details: instructorQueryError.message
+            error: 'Erro ao validar usuários instrutores',
+            details: usersQueryError.message
           },
           { status: 500 }
         )
       }
       
-      console.log('Enrollment API - Found instructor users: ' + JSON.stringify(instructorUsers))
-      console.log('Enrollment API - Expected count: ' + instructorIds.length + ', Found count: ' + (instructorUsers?.length || 0))
+      console.log('Enrollment API - Found users: ' + JSON.stringify(allUsers))
       
-      if (!instructorUsers || instructorUsers.length !== instructorIds.length) {
-        const foundIds = instructorUsers?.map((i: any) => i.id) || []
-        const missingIds = instructorIds.filter((id: string) => !foundIds.includes(id))
-        
-        console.error('Enrollment API - Missing instructor user IDs:', missingIds)
-        
-        // Additional debug: Check if these IDs exist in users table but without instructor role
-        const { data: allUsers } = await supabase
-          .from('users')
-          .select('id, role, full_name, email')
-          .in('id', missingIds)
-        
-        const usersWithoutInstructorRole = allUsers || []
-        
+      // Step 2: Check if these users have instructor profiles
+      const { data: instructorProfiles, error: instructorProfilesError } = await supabase
+        .from('instructors')
+        .select('id, user_id, bio, rating')
+        .in('user_id', instructorIds)
+      
+      if (instructorProfilesError) {
+        console.error('Enrollment API - Error querying instructor profiles:', instructorProfilesError)
         return NextResponse.json(
           { 
-            error: 'Um ou mais instrutores não foram encontrados ou não têm permissão para lecionar',
+            error: 'Erro ao validar perfis de instrutores',
+            details: instructorProfilesError.message
+          },
+          { status: 500 }
+        )
+      }
+      
+      console.log('Enrollment API - Found instructor profiles: ' + JSON.stringify(instructorProfiles))
+      
+      // Step 3: Validate results and provide detailed error information
+      const foundUserIds = allUsers?.map((u: any) => u.id) || []
+      const foundInstructorUserIds = instructorProfiles?.map((i: any) => i.user_id) || []
+      const missingUserIds = instructorIds.filter((id: string) => !foundUserIds.includes(id))
+      const usersWithoutInstructorProfile = foundUserIds.filter((id: string) => !foundInstructorUserIds.includes(id))
+      const instructorUsers = allUsers?.filter((u: any) => 
+        ['admin', 'instructor'].includes(u.role) && foundInstructorUserIds.includes(u.id)
+      ) || []
+      
+      console.log('Enrollment API - Validation results:', {
+        expected: instructorIds.length,
+        foundUsers: foundUserIds.length,
+        foundInstructorProfiles: foundInstructorUserIds.length,
+        missingUsers: missingUserIds,
+        usersWithoutProfiles: usersWithoutInstructorProfile,
+        validInstructors: instructorUsers.length
+      })
+      
+      // Check for missing users
+      if (missingUserIds.length > 0) {
+        return NextResponse.json(
+          { 
+            error: 'Um ou mais usuários não foram encontrados no sistema',
             details: {
               expected: instructorIds.length,
-              found: instructorUsers?.length || 0,
-              missing_instructor_ids: missingIds,
-              users_without_instructor_role: usersWithoutInstructorRole.map((u: any) => ({
-                id: u.id,
-                name: u.full_name,
-                email: u.email,
-                current_role: u.role,
-                required_roles: ['admin', 'instructor']
-              })),
-              message: 'Verifique se os usuários existem e possuem função de instrutor ou admin. Note que instructor_id deve ser o user_id do instrutor.'
+              found: foundUserIds.length,
+              missing_user_ids: missingUserIds,
+              message: 'Os seguintes IDs de usuário não existem no sistema: ' + missingUserIds.join(', ')
             }
           },
           { status: 400 }
         )
       }
       
-      // All instructors are valid (already filtered by role in the query)
+      // Check for users without instructor profiles
+      if (usersWithoutInstructorProfile.length > 0) {
+        const usersInfo = allUsers?.filter((u: any) => usersWithoutInstructorProfile.includes(u.id)) || []
+        return NextResponse.json(
+          { 
+            error: 'Um ou mais usuários não possuem perfil de instrutor',
+            details: {
+              users_without_instructor_profile: usersInfo.map((u: any) => ({
+                id: u.id,
+                name: u.full_name,
+                email: u.email,
+                role: u.role
+              })),
+              message: 'Os seguintes usuários não possuem perfil de instrutor cadastrado no sistema.'
+            }
+          },
+          { status: 400 }
+        )
+      }
+      
+      // Check for invalid roles
+      if (instructorUsers.length !== instructorIds.length) {
+        const usersWithInvalidRoles = allUsers?.filter((u: any) => 
+          foundInstructorUserIds.includes(u.id) && !['admin', 'instructor'].includes(u.role)
+        ) || []
+        
+        return NextResponse.json(
+          { 
+            error: 'Um ou mais usuários não têm permissão para lecionar',
+            details: {
+              users_with_invalid_roles: usersWithInvalidRoles.map((u: any) => ({
+                id: u.id,
+                name: u.full_name,
+                email: u.email,
+                current_role: u.role,
+                required_roles: ['admin', 'instructor']
+              })),
+              message: 'Os seguintes usuários não possuem função de instrutor ou admin.'
+            }
+          },
+          { status: 400 }
+        )
+      }
+      
+      // All instructors are valid
       console.log('Enrollment API - All instructor users validated successfully')
       
       // TODO: Future enhancement - Check instructor availability against teacher_availability table

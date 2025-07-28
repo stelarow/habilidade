@@ -302,8 +302,53 @@ export function EnrollmentForm({
       // Specific error handling based on error type
       if (errorMessage.includes('já está matriculado')) {
         toastWarning('Este usuário já está matriculado neste curso', 'Matrícula Duplicada')
+      } else if (errorMessage.includes('usuários não foram encontrados no sistema')) {
+        // Handle missing users errors
+        if (errorDetails?.missing_user_ids) {
+          toastError(
+            `Usuários não encontrados no sistema: ${errorDetails.missing_user_ids.join(', ')}. ` +
+            'Verifique se os usuários existem no banco de dados.',
+            'Usuários Não Encontrados'
+          )
+        } else {
+          toastError(
+            'Um ou mais usuários não foram encontrados no sistema.',
+            'Usuários Não Encontrados'
+          )
+        }
+      } else if (errorMessage.includes('não possuem perfil de instrutor')) {
+        // Handle users without instructor profile
+        if (errorDetails?.users_without_instructor_profile) {
+          const userNames = errorDetails.users_without_instructor_profile.map((u: any) => u.name).join(', ')
+          toastError(
+            `Os seguintes usuários não possuem perfil de instrutor: ${userNames}. ` +
+            'Verifique se os perfis de instrutor foram criados.',
+            'Perfis de Instrutor Ausentes'
+          )
+        } else {
+          toastError(
+            'Um ou mais usuários não possuem perfil de instrutor cadastrado.',
+            'Perfis de Instrutor Ausentes'
+          )
+        }
+      } else if (errorMessage.includes('não têm permissão para lecionar')) {
+        // Handle invalid instructor role errors
+        if (errorDetails?.users_with_invalid_roles) {
+          const invalidNames = errorDetails.users_with_invalid_roles.map((u: any) => u.name).join(', ')
+          toastError(
+            `Os seguintes usuários não têm permissão para lecionar: ${invalidNames}. ` +
+            'Verifique as funções dos usuários (devem ser "instructor" ou "admin").',
+            'Permissões Insuficientes'
+          )
+        } else {
+          toastError(
+            'Um ou mais usuários selecionados não têm permissão para lecionar. ' +
+            'Verifique as funções dos usuários.',
+            'Permissões Insuficientes'
+          )
+        }
       } else if (errorMessage.includes('instrutores não foram encontrados')) {
-        // Handle instructor not found errors with specific details
+        // Legacy error handling - kept for backward compatibility
         if (errorDetails?.missing_instructor_ids) {
           toastError(
             `Professores não encontrados no sistema: ${errorDetails.missing_instructor_ids.join(', ')}. ` +
@@ -315,22 +360,6 @@ export function EnrollmentForm({
             'Um ou mais professores selecionados não foram encontrados no sistema. ' +
             'Verifique se os professores foram cadastrados corretamente.',
             'Professores Não Encontrados'
-          )
-        }
-      } else if (errorMessage.includes('não têm permissão para lecionar')) {
-        // Handle invalid instructor role errors
-        if (errorDetails?.invalid_instructors) {
-          const invalidNames = errorDetails.invalid_instructors.map((i: any) => i.name).join(', ')
-          toastError(
-            `Os seguintes usuários não têm permissão para lecionar: ${invalidNames}. ` +
-            'Verifique as funções dos usuários selecionados.',
-            'Permissões Insuficientes'
-          )
-        } else {
-          toastError(
-            'Um ou mais usuários selecionados não têm permissão para lecionar. ' +
-            'Verifique as funções dos usuários.',
-            'Permissões Insuficientes'
           )
         }
       } else if (errorMessage.includes('não encontrado')) {

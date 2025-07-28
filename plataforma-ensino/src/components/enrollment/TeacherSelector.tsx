@@ -164,6 +164,14 @@ function useTeacherData(availabilityFilter?: TeacherSelectorProps['availabilityF
             qualifications: [] // Not available in current schema
           }
 
+          // Enhanced logging for debugging instructor ID mapping
+          console.log('TeacherSelector - Teacher data mapping:', {
+            instructorId: teacher.id,
+            userId: teacher.userId,
+            name: teacher.name,
+            email: teacher.email
+          })
+
           // Calculate availability info if filter is provided
           let availableSlots = 0
           let nextAvailableDate: string | undefined

@@ -180,6 +180,12 @@ export function SchedulingSection({
   const handleTeacherSelect = useCallback((teacher: Teacher) => {
     setSelectedTeacher(teacher)
     // CRITICAL: Pass the userId (for student_schedules table), not the instructor.id
+    console.log('SchedulingSection - Teacher selected:', {
+      instructorId: teacher.id,
+      userId: teacher.userId,
+      name: teacher.name,
+      willPassToParent: teacher.userId
+    })
     onTeacherChange(teacher.userId)
   }, [onTeacherChange])
 
