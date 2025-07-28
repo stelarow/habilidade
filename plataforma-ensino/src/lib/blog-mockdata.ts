@@ -1,4 +1,4 @@
-// Mockdata para validaÁ„o de UI/UX do Blog
+// Mockdata para valida√ß√£o de UI/UX do Blog
 // FEATURE_009_VALIDACAO_UI_BLOG.md - Tarefa 4
 
 export interface BlogPost {
@@ -18,418 +18,383 @@ export interface BlogPost {
   status: 'draft' | 'published' | 'scheduled';
   tags: string[];
   seo: {
-    metaTitle: string;
-    metaDescription: string;
+    title: string;
+    description: string;
     keywords: string[];
   };
+  featured: boolean;
+  relatedPosts?: string[];
 }
 
 export interface BlogCategory {
   id: string;
   name: string;
   slug: string;
-  color: string;
   description: string;
+  color: string;
   count: number;
 }
 
 export interface Author {
   id: string;
   name: string;
+  email: string;
   avatar: string;
   bio: string;
-  socialLinks: {
-    twitter?: string;
+  role: string;
+  social: {
     linkedin?: string;
+    twitter?: string;
     instagram?: string;
   };
-}
-
-export interface BlogComment {
-  id: string;
-  postId: string;
-  author: string;
-  content: string;
-  publishedAt: string;
-  likes: number;
 }
 
 export interface BlogMetrics {
   totalPosts: number;
   totalViews: number;
-  totalLikes: number;
-  totalComments: number;
   avgReadingTime: number;
-  topCategories: { category: string; count: number }[];
+  mostViewedCategory: string;
   recentActivity: {
     date: string;
-    posts: number;
-    views: number;
+    action: string;
+    description: string;
   }[];
 }
 
-export interface Course {
-  id: string;
-  name: string;
-  slug: string;
-  image: string;
-  description: string;
-  price: number;
-  duration: string;
-}
+// Mock Authors
+export const mockAuthors: Author[] = [
+  {
+    id: 'author-1',
+    name: 'Alessandro Ferreira',
+    email: 'alessandro@escolahabilidade.com',
+    avatar: '/images/avatars/alessandro.jpg',
+    bio: 'Especialista em educa√ß√£o profissional com mais de 10 anos de experi√™ncia em design e tecnologia.',
+    role: 'Diretor Acad√™mico',
+    social: {
+      linkedin: 'https://linkedin.com/in/alessandro-ferreira',
+      instagram: 'https://instagram.com/alessandro_educa'
+    }
+  },
+  {
+    id: 'author-2',
+    name: 'Mariana Silva',
+    email: 'mariana@escolahabilidade.com',
+    avatar: '/images/avatars/mariana.jpg',
+    bio: 'Designer gr√°fica e educadora, especialista em metodologias ativas de aprendizagem.',
+    role: 'Coordenadora de Design',
+    social: {
+      linkedin: 'https://linkedin.com/in/mariana-silva',
+      twitter: 'https://twitter.com/mari_design'
+    }
+  },
+  {
+    id: 'author-3',
+    name: 'Carlos Oliveira',
+    email: 'carlos@escolahabilidade.com',
+    avatar: '/images/avatars/carlos.jpg',
+    bio: 'Desenvolvedor full-stack e instrutor de programa√ß√£o com paix√£o por ensinar tecnologia.',
+    role: 'Instrutor de Tecnologia',
+    social: {
+      linkedin: 'https://linkedin.com/in/carlos-oliveira-dev',
+      twitter: 'https://twitter.com/carlos_codes'
+    }
+  }
+];
 
-// Dados Mockados
+// Mock Categories
 export const mockCategories: BlogCategory[] = [
   {
-    id: '1',
-    name: 'Design Gr·fico',
+    id: 'design-grafico',
+    name: 'Design Gr√°fico',
     slug: 'design-grafico',
-    color: '#d400ff',
-    description: 'Artigos sobre design gr·fico, criatividade e ferramentas',
-    count: 15
-  },
-  {
-    id: '2',
-    name: 'Marketing Digital',
-    slug: 'marketing-digital',
-    color: '#00c4ff',
-    description: 'EstratÈgias de marketing digital e redes sociais',
-    count: 23
-  },
-  {
-    id: '3',
-    name: 'Desenvolvimento Web',
-    slug: 'desenvolvimento-web',
-    color: '#a000ff',
-    description: 'Tutoriais e dicas sobre desenvolvimento web',
-    count: 18
-  },
-  {
-    id: '4',
-    name: 'Empreendedorismo',
-    slug: 'empreendedorismo',
-    color: '#ff6b6b',
-    description: 'Conte˙do sobre empreendedorismo e negÛcios',
+    description: 'Artigos sobre design, criatividade e ferramentas visuais',
+    color: '#FF6B6B',
     count: 12
   },
   {
-    id: '5',
+    id: 'marketing-digital',
+    name: 'Marketing Digital',
+    slug: 'marketing-digital',
+    description: 'Estrat√©gias e tend√™ncias em marketing online',
+    color: '#4ECDC4',
+    count: 8
+  },
+  {
+    id: 'desenvolvimento',
+    name: 'Desenvolvimento',
+    slug: 'desenvolvimento',
+    description: 'Programa√ß√£o, tecnologia e desenvolvimento de software',
+    color: '#45B7D1',
+    count: 15
+  },
+  {
+    id: 'empreendedorismo',
+    name: 'Empreendedorismo',
+    slug: 'empreendedorismo',
+    description: 'Dicas para empreendedores e gest√£o de neg√≥cios',
+    color: '#96CEB4',
+    count: 6
+  },
+  {
+    id: 'produtividade',
     name: 'Produtividade',
     slug: 'produtividade',
-    color: '#4ecdc4',
-    description: 'Dicas para aumentar a produtividade e organizaÁ„o',
+    description: 'M√©todos e ferramentas para aumentar a produtividade',
+    color: '#FECA57',
     count: 9
   }
 ];
 
-export const mockAuthors: Author[] = [
-  {
-    id: '1',
-    name: 'Ana Silva',
-    avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face',
-    bio: 'Designer gr·fica especializada em branding e identidade visual',
-    socialLinks: {
-      twitter: '@anasilva',
-      linkedin: 'anasilva',
-      instagram: '@anasilva_design'
-    }
-  },
-  {
-    id: '2',
-    name: 'Carlos Santos',
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
-    bio: 'Especialista em marketing digital com 10 anos de experiÍncia',
-    socialLinks: {
-      twitter: '@carlossantos',
-      linkedin: 'carlossantos'
-    }
-  },
-  {
-    id: '3',
-    name: 'Maria Oliveira',
-    avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face',
-    bio: 'Desenvolvedora full-stack e instrutora de programaÁ„o',
-    socialLinks: {
-      twitter: '@mariaoliveira',
-      linkedin: 'mariaoliveira'
-    }
-  }
-];
-
+// Mock Posts
 export const mockPosts: BlogPost[] = [
   {
-    id: '1',
-    title: '10 TendÍncias de Design Gr·fico para 2024',
-    slug: '10-tendencias-design-grafico-2024',
-    excerpt: 'Descubra as principais tendÍncias de design gr·fico que dominar„o o mercado em 2024 e como aplic·-las em seus projetos.',
+    id: 'post-1',
+    title: 'As 10 Tend√™ncias de Design Gr√°fico para 2024',
+    slug: 'tendencias-design-grafico-2024',
+    excerpt: 'Descubra as principais tend√™ncias que est√£o moldando o design gr√°fico em 2024 e como aplic√°-las em seus projetos.',
     content: `
-      <h2>As Principais TendÍncias de Design para 2024</h2>
-      <p>O mundo do design gr·fico est· em constante evoluÁ„o, e 2024 promete trazer mudanÁas significativas na forma como criamos e percebemos o design visual.</p>
+      <h2>Introdu√ß√£o</h2>
+      <p>O design gr√°fico est√° em constante evolu√ß√£o, e 2024 trouxe tend√™ncias fascinantes que est√£o redefinindo a forma como criamos e comunicamos visualmente.</p>
       
-      <h3>1. Tipografia Experimental</h3>
-      <p>A tipografia experimental continuar· sendo uma tendÍncia forte, com designers explorando formas ˙nicas de comunicar atravÈs das letras.</p>
+      <h2>1. Minimalismo Expressivo</h2>
+      <p>O minimalismo continua forte, mas agora com um toque mais expressivo e emocional...</p>
       
-      <h3>2. Cores Vibrantes e Gradientes</h3>
-      <p>O uso de cores vibrantes e gradientes complexos est· se tornando cada vez mais popular, criando composiÁıes visualmente impactantes.</p>
-      
-      <h3>3. Design Sustent·vel</h3>
-      <p>A consciÍncia ambiental est· influenciando o design, com foco em soluÁıes sustent·veis e respons·veis.</p>
+      <h2>2. Cores Vibrantes e Gradientes</h2>
+      <p>Paletas de cores ousadas e gradientes din√¢micos est√£o dominando o cen√°rio...</p>
     `,
-    image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&h=400&fit=crop',
+    image: '/images/blog/design-trends-2024.jpg',
     category: mockCategories[0],
-    author: mockAuthors[0],
-    publishedAt: '2024-01-15',
+    author: mockAuthors[1],
+    publishedAt: '2024-01-15T10:00:00Z',
     readingTime: 8,
-    views: 2543,
-    likes: 187,
+    views: 1247,
+    likes: 89,
     comments: 23,
     status: 'published',
-    tags: ['design', 'tendÍncias', '2024', 'criatividade'],
+    tags: ['design', 'tend√™ncias', 'cores', 'tipografia'],
     seo: {
-      metaTitle: '10 TendÍncias de Design Gr·fico para 2024 | Escola Habilidade',
-      metaDescription: 'Descubra as principais tendÍncias de design gr·fico que dominar„o 2024. Guia completo com exemplos pr·ticos.',
-      keywords: ['design gr·fico', 'tendÍncias 2024', 'design trends', 'criatividade']
-    }
+      title: 'Tend√™ncias de Design Gr√°fico 2024 | Escola Habilidade',
+      description: 'Conhe√ßa as 10 principais tend√™ncias de design gr√°fico para 2024 e mantenha-se atualizado no mercado criativo.',
+      keywords: ['design gr√°fico', 'tend√™ncias 2024', 'cores', 'tipografia', 'minimalismo']
+    },
+    featured: true,
+    relatedPosts: ['post-2', 'post-3']
   },
   {
-    id: '2',
-    title: 'Como Criar uma EstratÈgia de Marketing Digital Eficaz',
+    id: 'post-2',
+    title: 'Como Criar uma Estrat√©gia de Marketing Digital Eficaz',
     slug: 'estrategia-marketing-digital-eficaz',
-    excerpt: 'Aprenda passo a passo como desenvolver uma estratÈgia de marketing digital que gera resultados reais para seu negÛcio.',
+    excerpt: 'Passo a passo completo para desenvolver uma estrat√©gia de marketing digital que realmente converte.',
     content: `
-      <h2>Construindo uma EstratÈgia de Marketing Digital</h2>
-      <p>Uma estratÈgia bem definida È fundamental para o sucesso no marketing digital.</p>
+      <h2>Planejamento Estrat√©gico</h2>
+      <p>Uma estrat√©gia de marketing digital eficaz come√ßa com um planejamento s√≥lido...</p>
+      
+      <h2>Definindo seu P√∫blico-Alvo</h2>
+      <p>Conhecer profundamente seu p√∫blico √© fundamental para o sucesso...</p>
     `,
-    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=400&fit=crop',
+    image: '/images/blog/marketing-strategy.jpg',
     category: mockCategories[1],
-    author: mockAuthors[1],
-    publishedAt: '2024-01-12',
+    author: mockAuthors[0],
+    publishedAt: '2024-01-12T14:30:00Z',
     readingTime: 12,
-    views: 3217,
-    likes: 294,
-    comments: 41,
+    views: 892,
+    likes: 67,
+    comments: 18,
     status: 'published',
-    tags: ['marketing digital', 'estratÈgia', 'ROI', 'campanhas'],
+    tags: ['marketing', 'estrat√©gia', 'digital', 'convers√£o'],
     seo: {
-      metaTitle: 'EstratÈgia de Marketing Digital Eficaz | Guia Completo',
-      metaDescription: 'Aprenda a criar estratÈgias de marketing digital que convertem. Metodologia testada e aprovada.',
-      keywords: ['marketing digital', 'estratÈgia', 'convers„o', 'ROI']
-    }
+      title: 'Estrat√©gia de Marketing Digital Eficaz | Guia Completo',
+      description: 'Aprenda a criar uma estrat√©gia de marketing digital que converte com nosso guia passo a passo.',
+      keywords: ['marketing digital', 'estrat√©gia', 'convers√£o', 'p√∫blico-alvo', 'ROI']
+    },
+    featured: false,
+    relatedPosts: ['post-1', 'post-4']
   },
   {
-    id: '3',
-    title: 'IntroduÁ„o ao React: Seu Primeiro Componente',
-    slug: 'introducao-react-primeiro-componente',
-    excerpt: 'Um guia iniciante para criar seu primeiro componente React, com exemplos pr·ticos e dicas importantes.',
+    id: 'post-3',
+    title: 'JavaScript ES2024: Novidades e Recursos Avan√ßados',
+    slug: 'javascript-es2024-novidades',
+    excerpt: 'Explore as mais recentes funcionalidades do JavaScript ES2024 e como elas podem melhorar seu c√≥digo.',
     content: `
-      <h2>ComeÁando com React</h2>
-      <p>React È uma das bibliotecas JavaScript mais populares para construÁ„o de interfaces de usu·rio.</p>
+      <h2>Novos Recursos do ES2024</h2>
+      <p>O JavaScript continua evoluindo rapidamente, e o ES2024 trouxe recursos incr√≠veis...</p>
+      
+      <h2>Array Grouping</h2>
+      <p>Uma das funcionalidades mais aguardadas finalmente chegou...</p>
     `,
-    image: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&h=400&fit=crop',
+    image: '/images/blog/javascript-es2024.jpg',
     category: mockCategories[2],
     author: mockAuthors[2],
-    publishedAt: '2024-01-10',
+    publishedAt: '2024-01-10T09:15:00Z',
     readingTime: 15,
-    views: 1876,
-    likes: 156,
-    comments: 28,
+    views: 1456,
+    likes: 123,
+    comments: 34,
     status: 'published',
-    tags: ['react', 'javascript', 'frontend', 'desenvolvimento'],
+    tags: ['javascript', 'es2024', 'programa√ß√£o', 'web development'],
     seo: {
-      metaTitle: 'IntroduÁ„o ao React: Primeiro Componente | Tutorial',
-      metaDescription: 'Aprenda React do zero com este tutorial pr·tico. Crie seu primeiro componente em minutos.',
-      keywords: ['react', 'javascript', 'componente', 'tutorial']
-    }
+      title: 'JavaScript ES2024: Guia Completo das Novidades',
+      description: 'Descubra todos os novos recursos do JavaScript ES2024 com exemplos pr√°ticos e aplica√ß√µes reais.',
+      keywords: ['javascript', 'es2024', 'programa√ß√£o', 'desenvolvimento web', 'novidades']
+    },
+    featured: true,
+    relatedPosts: ['post-5', 'post-6']
   },
   {
-    id: '4',
-    title: 'Como Validar sua Ideia de NegÛcio',
-    slug: 'como-validar-ideia-negocio',
-    excerpt: 'Descubra mÈtodos pr·ticos para validar sua ideia de negÛcio antes de investir tempo e dinheiro.',
+    id: 'post-4',
+    title: 'Empreendedorismo Digital: Como Come√ßar do Zero',
+    slug: 'empreendedorismo-digital-como-comecar',
+    excerpt: 'Guia pr√°tico para quem quer come√ßar no empreendedorismo digital sem experi√™ncia pr√©via.',
     content: `
-      <h2>ValidaÁ„o de Ideias de NegÛcio</h2>
-      <p>Antes de investir recursos em uma ideia, È crucial valid·-la no mercado.</p>
+      <h2>Primeiros Passos</h2>
+      <p>Come√ßar no empreendedorismo digital pode parecer intimidador, mas com a abordagem certa...</p>
     `,
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=400&fit=crop',
+    image: '/images/blog/empreendedorismo-digital.jpg',
     category: mockCategories[3],
-    author: mockAuthors[1],
-    publishedAt: '2024-01-08',
+    author: mockAuthors[0],
+    publishedAt: '2024-01-08T16:45:00Z',
     readingTime: 10,
-    views: 2198,
-    likes: 203,
-    comments: 35,
+    views: 634,
+    likes: 45,
+    comments: 12,
     status: 'published',
-    tags: ['empreendedorismo', 'validaÁ„o', 'startup', 'negÛcios'],
+    tags: ['empreendedorismo', 'digital', 'startup', 'neg√≥cios'],
     seo: {
-      metaTitle: 'Como Validar sua Ideia de NegÛcio | Guia Pr·tico',
-      metaDescription: 'MÈtodos comprovados para validar ideias de negÛcio. Evite fracassos e maximize suas chances de sucesso.',
-      keywords: ['validaÁ„o', 'ideia de negÛcio', 'startup', 'empreendedorismo']
-    }
+      title: 'Empreendedorismo Digital: Guia Completo para Iniciantes',
+      description: 'Aprenda como come√ßar no empreendedorismo digital do zero com dicas pr√°ticas e estrat√©gias comprovadas.',
+      keywords: ['empreendedorismo digital', 'startup', 'neg√≥cios online', 'como come√ßar']
+    },
+    featured: false
   },
   {
-    id: '5',
-    title: '7 TÈcnicas de Produtividade para Freelancers',
-    slug: '7-tecnicas-produtividade-freelancers',
-    excerpt: 'TÈcnicas comprovadas para aumentar sua produtividade como freelancer e melhorar a qualidade de vida.',
+    id: 'post-5',
+    title: '10 T√©cnicas de Produtividade para Desenvolvedores',
+    slug: 'tecnicas-produtividade-desenvolvedores',
+    excerpt: 'Aumente sua efici√™ncia e qualidade de c√≥digo com essas t√©cnicas comprovadas de produtividade.',
     content: `
-      <h2>Produtividade para Freelancers</h2>
-      <p>Trabalhar como freelancer exige disciplina e organizaÁ„o excepcionais.</p>
+      <h2>Gest√£o de Tempo</h2>
+      <p>A gest√£o eficaz do tempo √© crucial para desenvolvedores...</p>
     `,
-    image: 'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&h=400&fit=crop',
+    image: '/images/blog/produtividade-dev.jpg',
     category: mockCategories[4],
-    author: mockAuthors[0],
-    publishedAt: '2024-01-05',
+    author: mockAuthors[2],
+    publishedAt: '2024-01-05T11:20:00Z',
     readingTime: 7,
-    views: 1543,
-    likes: 128,
+    views: 789,
+    likes: 56,
     comments: 19,
     status: 'published',
-    tags: ['produtividade', 'freelancer', 'organizaÁ„o', 'trabalho remoto'],
+    tags: ['produtividade', 'desenvolvimento', 't√©cnicas', 'efici√™ncia'],
     seo: {
-      metaTitle: '7 TÈcnicas de Produtividade para Freelancers | Dicas Pr·ticas',
-      metaDescription: 'Aumente sua produtividade como freelancer com estas 7 tÈcnicas comprovadas. Melhore sua qualidade de vida.',
-      keywords: ['produtividade', 'freelancer', 'organizaÁ„o', 'tÈcnicas']
-    }
+      title: 'T√©cnicas de Produtividade para Desenvolvedores',
+      description: 'Descubra 10 t√©cnicas essenciais para aumentar sua produtividade como desenvolvedor.',
+      keywords: ['produtividade', 'desenvolvedores', 't√©cnicas', 'efici√™ncia', 'gest√£o tempo']
+    },
+    featured: false
   },
   {
-    id: '6',
-    title: 'Design System: Como Criar e Implementar',
-    slug: 'design-system-como-criar-implementar',
-    excerpt: 'Guia completo para criar e implementar um design system eficaz em seus projetos.',
+    id: 'post-6',
+    title: 'UX/UI Design: Princ√≠pios Fundamentais para Iniciantes',
+    slug: 'ux-ui-design-principios-fundamentais',
+    excerpt: 'Aprenda os princ√≠pios b√°sicos de UX/UI Design e como aplic√°-los em seus projetos.',
     content: `
-      <h2>O que È um Design System?</h2>
-      <p>Um design system È uma coleÁ„o de componentes reutiliz·veis guiados por padrıes claros.</p>
+      <h2>O que √© UX/UI Design?</h2>
+      <p>UX/UI Design s√£o disciplinas complementares que focam na experi√™ncia do usu√°rio...</p>
     `,
-    image: 'https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=800&h=400&fit=crop',
+    image: '/images/blog/ux-ui-fundamentals.jpg',
     category: mockCategories[0],
-    author: mockAuthors[0],
-    publishedAt: '2024-01-03',
-    readingTime: 20,
-    views: 3456,
-    likes: 312,
-    comments: 67,
-    status: 'draft',
-    tags: ['design system', 'UI/UX', 'componentes', 'design'],
+    author: mockAuthors[1],
+    publishedAt: '2024-01-03T13:10:00Z',
+    readingTime: 11,
+    views: 1023,
+    likes: 78,
+    comments: 25,
+    status: 'published',
+    tags: ['ux', 'ui', 'design', 'experi√™ncia usu√°rio'],
     seo: {
-      metaTitle: 'Design System: Guia Completo | Como Criar e Implementar',
-      metaDescription: 'Aprenda a criar design systems eficazes. Guia passo a passo com exemplos pr·ticos.',
-      keywords: ['design system', 'UI/UX', 'design', 'componentes']
-    }
+      title: 'UX/UI Design: Guia Completo para Iniciantes',
+      description: 'Aprenda os princ√≠pios fundamentais de UX/UI Design com exemplos pr√°ticos e dicas de profissionais.',
+      keywords: ['ux design', 'ui design', 'experi√™ncia usu√°rio', 'interface', 'usabilidade']
+    },
+    featured: true
   }
 ];
 
-export const mockComments: BlogComment[] = [
-  {
-    id: '1',
-    postId: '1',
-    author: 'Jo„o Silva',
-    content: 'Excelente artigo! As tendÍncias apresentadas s„o muito relevantes para o mercado atual.',
-    publishedAt: '2024-01-16',
-    likes: 12
-  },
-  {
-    id: '2',
-    postId: '1',
-    author: 'Maria Santos',
-    content: 'Adorei as dicas sobre tipografia experimental. J· estou aplicando em meus projetos!',
-    publishedAt: '2024-01-17',
-    likes: 8
-  },
-  {
-    id: '3',
-    postId: '2',
-    author: 'Pedro Costa',
-    content: 'Muito ˙til! Finalmente entendi como estruturar uma estratÈgia de marketing digital.',
-    publishedAt: '2024-01-13',
-    likes: 15
-  }
-];
-
-export const mockCourses: Course[] = [
-  {
-    id: '1',
-    name: 'Design Gr·fico Completo',
-    slug: 'design-grafico-completo',
-    image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=300&fit=crop',
-    description: 'Aprenda design gr·fico do b·sico ao avanÁado',
-    price: 197,
-    duration: '8 semanas'
-  },
-  {
-    id: '2',
-    name: 'Marketing Digital AvanÁado',
-    slug: 'marketing-digital-avancado',
-    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop',
-    description: 'Domine as estratÈgias de marketing digital',
-    price: 297,
-    duration: '12 semanas'
-  },
-  {
-    id: '3',
-    name: 'Desenvolvimento Web Frontend',
-    slug: 'desenvolvimento-web-frontend',
-    image: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=400&h=300&fit=crop',
-    description: 'Torne-se um desenvolvedor frontend completo',
-    price: 397,
-    duration: '16 semanas'
-  }
-];
-
-export const mockMetrics: BlogMetrics = {
-  totalPosts: 147,
-  totalViews: 125430,
-  totalLikes: 8937,
-  totalComments: 1256,
-  avgReadingTime: 11,
-  topCategories: [
-    { category: 'Marketing Digital', count: 23 },
-    { category: 'Desenvolvimento Web', count: 18 },
-    { category: 'Design Gr·fico', count: 15 },
-    { category: 'Empreendedorismo', count: 12 },
-    { category: 'Produtividade', count: 9 }
-  ],
-  recentActivity: [
-    { date: '2024-01-15', posts: 3, views: 1247 },
-    { date: '2024-01-14', posts: 1, views: 892 },
-    { date: '2024-01-13', posts: 2, views: 1456 },
-    { date: '2024-01-12', posts: 1, views: 734 },
-    { date: '2024-01-11', posts: 0, views: 623 },
-    { date: '2024-01-10', posts: 2, views: 1123 },
-    { date: '2024-01-09', posts: 1, views: 856 }
-  ]
-};
-
-// FunÁıes utilit·rias
-export const getPostsByCategory = (categorySlug: string): BlogPost[] => {
+// Utility Functions
+export function getPostsByCategory(categorySlug: string): BlogPost[] {
   return mockPosts.filter(post => post.category.slug === categorySlug);
-};
+}
 
-export const getPopularPosts = (limit: number = 5): BlogPost[] => {
+export function getFeaturedPosts(): BlogPost[] {
+  return mockPosts.filter(post => post.featured);
+}
+
+export function getPopularPosts(limit: number = 5): BlogPost[] {
   return [...mockPosts]
     .sort((a, b) => b.views - a.views)
     .slice(0, limit);
-};
+}
 
-export const getRecentPosts = (limit: number = 5): BlogPost[] => {
+export function getRecentPosts(limit: number = 5): BlogPost[] {
   return [...mockPosts]
     .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
     .slice(0, limit);
-};
+}
 
-export const searchPosts = (query: string): BlogPost[] => {
-  const lowerQuery = query.toLowerCase();
+export function searchPosts(query: string): BlogPost[] {
+  const searchTerm = query.toLowerCase();
   return mockPosts.filter(post => 
-    post.title.toLowerCase().includes(lowerQuery) ||
-    post.excerpt.toLowerCase().includes(lowerQuery) ||
-    post.tags.some(tag => tag.toLowerCase().includes(lowerQuery))
+    post.title.toLowerCase().includes(searchTerm) ||
+    post.excerpt.toLowerCase().includes(searchTerm) ||
+    post.tags.some(tag => tag.toLowerCase().includes(searchTerm)) ||
+    post.category.name.toLowerCase().includes(searchTerm)
   );
-};
+}
 
-export const getRelatedPosts = (currentPost: BlogPost, limit: number = 3): BlogPost[] => {
-  return mockPosts
-    .filter(post => 
-      post.id !== currentPost.id && 
-      post.category.id === currentPost.category.id
-    )
-    .slice(0, limit);
+export function getRelatedPosts(postId: string, limit: number = 3): BlogPost[] {
+  const currentPost = mockPosts.find(post => post.id === postId);
+  if (!currentPost) return [];
+
+  // Get posts from same category
+  const relatedPosts = mockPosts.filter(post => 
+    post.id !== postId && 
+    post.category.id === currentPost.category.id
+  );
+
+  // If not enough posts in same category, add posts with similar tags
+  if (relatedPosts.length < limit) {
+    const tagMatches = mockPosts.filter(post => 
+      post.id !== postId &&
+      post.category.id !== currentPost.category.id &&
+      post.tags.some(tag => currentPost.tags.includes(tag))
+    );
+    relatedPosts.push(...tagMatches);
+  }
+
+  return relatedPosts.slice(0, limit);
+}
+
+// Mock Metrics
+export const mockMetrics: BlogMetrics = {
+  totalPosts: mockPosts.length,
+  totalViews: mockPosts.reduce((sum, post) => sum + post.views, 0),
+  avgReadingTime: Math.round(mockPosts.reduce((sum, post) => sum + post.readingTime, 0) / mockPosts.length),
+  mostViewedCategory: 'Desenvolvimento',
+  recentActivity: [
+    {
+      date: '2024-01-15T10:00:00Z',
+      action: 'publish',
+      description: 'Novo artigo publicado: "Tend√™ncias de Design Gr√°fico 2024"'
+    },
+    {
+      date: '2024-01-12T14:30:00Z',
+      action: 'publish',
+      description: 'Novo artigo publicado: "Estrat√©gia de Marketing Digital"'
+    },
+    {
+      date: '2024-01-10T09:15:00Z',
+      action: 'publish',
+      description: 'Novo artigo publicado: "JavaScript ES2024"'
+    }
+  ]
 };

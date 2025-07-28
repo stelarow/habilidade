@@ -10,7 +10,6 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { 
   mockPosts, 
-  mockCourses,
   getRelatedPosts,
   type BlogPost 
 } from '@/lib/blog-mockdata';
@@ -29,9 +28,11 @@ export default function TestBlogPostPage() {
   // Using the first post as example
   const currentPost = mockPosts[0];
   const relatedPosts = getRelatedPosts(currentPost);
-  const suggestedCourse = mockCourses.find(course => 
-    course.name.toLowerCase().includes('design')
-  );
+  const suggestedCourse = {
+    name: 'Curso Design GrÃ¡fico Completo',
+    description: 'Aprenda design do bÃ¡sico ao avanÃ§ado',
+    slug: 'design-grafico-completo'
+  };
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('pt-BR', {
@@ -145,7 +146,7 @@ export default function TestBlogPostPage() {
                   </div>
                   <div className="flex items-center gap-1">
                     <Eye className="w-4 h-4" />
-                    <span>{formatNumber(currentPost.views)} visualizações</span>
+                    <span>{formatNumber(currentPost.views)} visualizaï¿½ï¿½es</span>
                   </div>
                   <div className="flex items-center gap-1">
                     <Heart className="w-4 h-4" />
@@ -174,25 +175,25 @@ export default function TestBlogPostPage() {
               
               {/* Extended Content for Demo */}
               <div className="space-y-6 mt-8">
-                <h2 className="text-2xl font-bold gradient-text">Aplicando as Tendências na Prática</h2>
+                <h2 className="text-2xl font-bold gradient-text">Aplicando as Tendï¿½ncias na Prï¿½tica</h2>
                 
                 <p className="text-muted-foreground leading-relaxed">
-                  Agora que exploramos as principais tendências de design gráfico para 2024, é hora de entender 
-                  como aplicá-las de forma efetiva em seus projetos. Cada tendência tem seu contexto ideal e 
-                  sua aplicação adequada.
+                  Agora que exploramos as principais tendï¿½ncias de design grï¿½fico para 2024, ï¿½ hora de entender 
+                  como aplicï¿½-las de forma efetiva em seus projetos. Cada tendï¿½ncia tem seu contexto ideal e 
+                  sua aplicaï¿½ï¿½o adequada.
                 </p>
 
                 <h3 className="text-xl font-semibold">1. Implementando Tipografia Experimental</h3>
                 
                 <p className="text-muted-foreground leading-relaxed">
                   A tipografia experimental requer cuidado especial para manter a legibilidade. Comece com 
-                  projetos onde a mensagem é simples e direta, como cartazes ou capas de livros. Use fontes 
-                  experimentais apenas para títulos, mantendo o corpo do texto com fontes legíveis.
+                  projetos onde a mensagem ï¿½ simples e direta, como cartazes ou capas de livros. Use fontes 
+                  experimentais apenas para tï¿½tulos, mantendo o corpo do texto com fontes legï¿½veis.
                 </p>
 
                 <blockquote className="border-l-4 border-primary pl-6 py-4 bg-card/30 rounded-r-lg">
                   <p className="text-lg font-medium italic text-foreground">
-                    "O design não é apenas como algo parece ou como se sente. Design é como funciona."
+                    "O design nï¿½o ï¿½ apenas como algo parece ou como se sente. Design ï¿½ como funciona."
                   </p>
                   <cite className="text-sm text-muted-foreground">- Steve Jobs</cite>
                 </blockquote>
@@ -200,25 +201,25 @@ export default function TestBlogPostPage() {
                 <h3 className="text-xl font-semibold">2. Trabalhando com Cores Vibrantes</h3>
                 
                 <p className="text-muted-foreground leading-relaxed">
-                  Cores vibrantes podem transformar completamente a percepção de uma marca. No entanto, 
-                  é essencial encontrar o equilíbrio certo. Use cores vibrantes como acentos, não como 
+                  Cores vibrantes podem transformar completamente a percepï¿½ï¿½o de uma marca. No entanto, 
+                  ï¿½ essencial encontrar o equilï¿½brio certo. Use cores vibrantes como acentos, nï¿½o como 
                   base principal do design.
                 </p>
 
                 <div className="bg-card/50 p-6 rounded-lg border border-border/50">
-                  <h4 className="font-semibold mb-3">Dica Prática:</h4>
+                  <h4 className="font-semibold mb-3">Dica Prï¿½tica:</h4>
                   <p className="text-sm text-muted-foreground">
-                    Teste suas combinações de cores em diferentes dispositivos e condições de iluminação. 
-                    O que parece vibrante na tela pode não ter o mesmo impacto quando impresso.
+                    Teste suas combinaï¿½ï¿½es de cores em diferentes dispositivos e condiï¿½ï¿½es de iluminaï¿½ï¿½o. 
+                    O que parece vibrante na tela pode nï¿½o ter o mesmo impacto quando impresso.
                   </p>
                 </div>
 
-                <h3 className="text-xl font-semibold">3. Design Sustentável em Ação</h3>
+                <h3 className="text-xl font-semibold">3. Design Sustentï¿½vel em Aï¿½ï¿½o</h3>
                 
                 <p className="text-muted-foreground leading-relaxed">
-                  O design sustentável vai além da escolha de materiais. Inclui decisões sobre durabilidade, 
-                  reutilização e impacto ambiental. Considere criar designs atemporais que não precisem 
-                  ser substituídos frequentemente.
+                  O design sustentï¿½vel vai alï¿½m da escolha de materiais. Inclui decisï¿½es sobre durabilidade, 
+                  reutilizaï¿½ï¿½o e impacto ambiental. Considere criar designs atemporais que nï¿½o precisem 
+                  ser substituï¿½dos frequentemente.
                 </p>
               </div>
             </div>
@@ -254,7 +255,7 @@ export default function TestBlogPostPage() {
                     />
                     <div className="flex-1 text-center md:text-left">
                       <h3 className="text-xl font-bold mb-2">
-                        Quer se aprofundar mais em Design Gráfico?
+                        Quer se aprofundar mais em Design Grï¿½fico?
                       </h3>
                       <p className="text-muted-foreground mb-4">
                         {suggestedCourse.description}
@@ -336,7 +337,7 @@ export default function TestBlogPostPage() {
 
       {/* Debug Info */}
       <div className="fixed bottom-4 right-4 bg-card/90 backdrop-blur-sm border border-border/50 rounded-lg p-3 text-xs font-mono text-muted-foreground">
-        <div>Página de Teste: Blog Post</div>
+        <div>Pï¿½gina de Teste: Blog Post</div>
         <div>Post: {currentPost.title.substring(0, 20)}...</div>
         <div>Autor: {currentPost.author.name}</div>
         <div>Categoria: {currentPost.category.name}</div>

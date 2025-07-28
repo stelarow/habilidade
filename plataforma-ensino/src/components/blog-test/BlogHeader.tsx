@@ -26,7 +26,7 @@ export function BlogHeader({
 
   const navigationItems = [
     { name: 'Todos os Posts', href: '#', active: true },
-    { name: 'Design Gr·fico', href: '#' },
+    { name: 'Design Gr√°fico', href: '#' },
     { name: 'Marketing Digital', href: '#' },
     { name: 'Desenvolvimento', href: '#' },
     { name: 'Empreendedorismo', href: '#' },
