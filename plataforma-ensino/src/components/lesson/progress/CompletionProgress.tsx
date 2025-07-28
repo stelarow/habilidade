@@ -3,8 +3,9 @@
 import React, { useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
-import { useEnhancedProgressCalculation, EnhancedProgressData } from '@/hooks/useEnhancedProgressCalculation'
-import { LessonProgressData } from '@/types/lesson'
+import { useEnhancedProgressCalculation } from '@/hooks/useEnhancedProgressCalculation'
+import type { EnhancedProgressData } from '@/hooks/useEnhancedProgressCalculation'
+import type { LessonProgressData } from '@/types/lesson'
 
 interface CompletionCriterion {
   id: string
@@ -249,9 +250,9 @@ export function CompletionProgress({
           <p className="text-sm text-gray-400">
             Continue trabalhando nos critérios restantes
           </p>
-          {criteria.some(c => !c.isCompleted) && (
+          {criteria.some((c: any) => !c.isCompleted) && (
             <p className="text-xs text-gray-500 mt-1">
-              Próximo: {criteria.find(c => !c.isCompleted)?.name}
+              Próximo: {criteria.find((c: any) => !c.isCompleted)?.name}
             </p>
           )}
         </div>

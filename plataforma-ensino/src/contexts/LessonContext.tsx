@@ -145,16 +145,16 @@ export function LessonProvider({ children, initialLesson, initialUser, config }:
       } : undefined,
       
       // PDF materials
-      pdf: lesson.materials.find(m => m.type === 'pdf') ? {
-        url: lesson.materials.find(m => m.type === 'pdf')!.url!,
-        title: lesson.materials.find(m => m.type === 'pdf')!.title,
-        filename: lesson.materials.find(m => m.type === 'pdf')!.title,
-        size: lesson.materials.find(m => m.type === 'pdf')!.size || 0,
+      pdf: lesson.materials.find((m: any) => m.type === 'pdf') ? {
+        url: lesson.materials.find((m: any) => m.type === 'pdf')!.url!,
+        title: lesson.materials.find((m: any) => m.type === 'pdf')!.title,
+        filename: lesson.materials.find((m: any) => m.type === 'pdf')!.title,
+        size: lesson.materials.find((m: any) => m.type === 'pdf')!.size || 0,
         downloadable: true
       } : undefined,
       
       // Exercises
-      exercises: lesson.exercises?.map(exercise => ({
+      exercises: lesson.exercises?.map((exercise: any) => ({
         id: exercise.id,
         title: exercise.title,
         description: exercise.description,
@@ -180,7 +180,7 @@ export function LessonProvider({ children, initialLesson, initialUser, config }:
       content: lesson.content,
       
       // Materials
-      materials: lesson.materials.map(material => ({
+      materials: lesson.materials.map((material: any) => ({
         type: material.type,
         title: material.title,
         url: material.url,

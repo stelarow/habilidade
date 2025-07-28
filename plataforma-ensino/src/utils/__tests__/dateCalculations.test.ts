@@ -280,8 +280,8 @@ describe('Date Calculation Utilities', () => {
       const holidays = getBrazilianHolidays2025()
       
       expect(holidays.length).toBeGreaterThan(10)
-      expect(holidays.find(h => h.date === '2025-01-01')).toBeDefined()
-      expect(holidays.find(h => h.date === '2025-12-25')).toBeDefined()
+      expect(holidays.find((h: any) => h.date === '2025-01-01')).toBeDefined()
+      expect(holidays.find((h: any) => h.date === '2025-12-25')).toBeDefined()
     })
 
     it('should cache holidays correctly', () => {

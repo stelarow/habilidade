@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import { LessonHeader } from './LessonHeader'
-import { LessonProgressData } from '@/types/lesson'
+import type { LessonProgressData } from '@/types/lesson'
 
 /**
  * Comprehensive test component for header scroll behavior across different screen sizes

@@ -225,7 +225,7 @@ const MarketingDigitalBackground: React.FC<BackgroundProps> = ({
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // Desenhar elementos na ordem correta
-    metricsRef.current.forEach(metric => {
+    metricsRef.current.forEach((metric: any) => {
       metric.update();
       metric.draw(ctx);
     });

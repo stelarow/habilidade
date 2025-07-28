@@ -3,7 +3,7 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
-import { VideoData } from '@/types/lesson'
+import type { VideoData } from '@/types/lesson'
 
 interface VideoPlayerProps {
   video: VideoData
@@ -611,7 +611,7 @@ export function VideoPlayer({
                   onChange={(e) => changePlaybackRate(Number(e.target.value))}
                   className="bg-white/20 text-white text-sm rounded px-2 py-1 border-none outline-none"
                 >
-                  {playbackRates.map(rate => (
+                  {playbackRates.map((rate: any) => (
                     <option key={rate} value={rate} className="bg-black">
                       {rate}x
                     </option>

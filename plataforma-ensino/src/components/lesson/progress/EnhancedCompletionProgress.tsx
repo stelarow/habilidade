@@ -4,7 +4,7 @@ import React, { useMemo, useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
 import { useEnhancedProgressCalculation } from '@/hooks/useEnhancedProgressCalculation'
-import { LessonProgressData } from '@/types/lesson'
+import type { LessonProgressData } from '@/types/lesson'
 import { 
   Clock, 
   FileText, 
@@ -102,6 +102,7 @@ export function EnhancedCompletionProgress({
       
       return () => clearTimeout(timer)
     }
+    return undefined;
   }, [progress.overallProgress.isCompleted, showCelebration])
   
   // Progress circle component with enhanced animations
@@ -505,9 +506,9 @@ export function EnhancedCompletionProgress({
           <p className="text-sm text-gray-400">
             {progress.visualStates.completionMessage}
           </p>
-          {criteriaData.some(c => !c.isCompleted) && (
+          {criteriaData.some((c: any) => !c.isCompleted) && (
             <p className="text-xs text-gray-500 mt-1">
-              Próximo: {criteriaData.find(c => !c.isCompleted)?.name}
+              Próximo: {criteriaData.find((c: any) => !c.isCompleted)?.name}
             </p>
           )}
         </div>

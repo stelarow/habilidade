@@ -407,6 +407,8 @@ const DesignGraficoBackground: React.FC<DesignGraficoBackgroundProps> = ({
       window.addEventListener('mousemove', handleMouseMove);
       return () => window.removeEventListener('mousemove', handleMouseMove);
     }
+    
+    return undefined;
   }, [config.cursorInfluence]);
 
   // Inicializar elementos
@@ -448,13 +450,13 @@ const DesignGraficoBackground: React.FC<DesignGraficoBackgroundProps> = ({
     }
     
     // Atualizar e desenhar pinceladas
-    brushStrokesRef.current.forEach(brush => {
+    brushStrokesRef.current.forEach((brush: any) => {
       brush.update();
       brush.draw(ctx);
     });
     
     // Atualizar e desenhar formas
-    shapesRef.current.forEach(shape => {
+    shapesRef.current.forEach((shape: any) => {
       shape.update();
       shape.draw(ctx);
     });

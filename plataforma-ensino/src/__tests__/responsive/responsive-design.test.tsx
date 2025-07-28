@@ -76,7 +76,7 @@ const ResponsiveCalendar = () => (
     {/* Desktop Layout */}
     <div className="hidden lg:block" data-testid="desktop-calendar">
       <div className="grid grid-cols-7 gap-2 mb-4">
-        {['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'].map(day => (
+        {['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'].map((day: any) => (
           <div key={day} className="text-center font-medium p-2">
             {day}
           </div>
@@ -94,7 +94,7 @@ const ResponsiveCalendar = () => (
     {/* Tablet Layout */}
     <div className="hidden md:block lg:hidden" data-testid="tablet-calendar">
       <div className="grid grid-cols-5 gap-3 mb-4">
-        {['Seg', 'Ter', 'Qua', 'Qui', 'Sex'].map(day => (
+        {['Seg', 'Ter', 'Qua', 'Qui', 'Sex'].map((day: any) => (
           <div key={day} className="text-center font-medium p-2">
             {day}
           </div>
@@ -213,7 +213,7 @@ describe('Responsive Design Tests', () => {
       const mobileCalendar = screen.getByTestId('mobile-calendar')
       const buttons = mobileCalendar.querySelectorAll('button')
       
-      buttons.forEach(button => {
+      buttons.forEach((button: any) => {
         const styles = window.getComputedStyle(button)
         // In a real test, we'd check computed dimensions
         expect(button).toBeInTheDocument()
@@ -339,7 +339,7 @@ describe('Responsive Design Tests', () => {
       
       const desktopButtons = screen.getByTestId('desktop-calendar').querySelectorAll('button')
       
-      desktopButtons.forEach(button => {
+      desktopButtons.forEach((button: any) => {
         expect(button).toHaveClass('hover:bg-blue-50')
       })
     })

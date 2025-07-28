@@ -103,7 +103,7 @@ export function useTeacherData(options: UseTeacherDataOptions = {}): UseTeacherD
 
         // Find next available date
         const sortedDates = Object.keys(aggregatedData)
-          .filter(date => aggregatedData[date].availableSlots > 0)
+          .filter((date: any) => aggregatedData[date].availableSlots > 0)
           .sort()
         nextAvailableDate = sortedDates[0]
 
@@ -136,11 +136,11 @@ export function useTeacherData(options: UseTeacherDataOptions = {}): UseTeacherD
         }
       } catch (error) {
         // Response time calculation failed, use default
-        logWarn(`Failed to calculate response time for teacher ${teacher.id}:`, error)
+        console.warn(`Failed to calculate response time for teacher ${teacher.id}:`, error)
       }
 
     } catch (error) {
-      logWarn(`Failed to calculate metrics for teacher ${teacher.id}:`, error)
+      console.warn(`Failed to calculate metrics for teacher ${teacher.id}:`, error)
     }
 
     return {
@@ -163,22 +163,22 @@ export function useTeacherData(options: UseTeacherDataOptions = {}): UseTeacherD
 
       // Build dynamic query based on filters
       let query = supabase
-        .from('teachers')
+        .from('instructors')
         .select(`
           id,
-          name,
+          user_id,
           bio,
-          profile_image,
           rating,
-          specialties,
-          max_students_per_class,
-          is_active,
-          email,
-          phone,
-          experience_years,
-          qualifications,
+          expertise,
+          total_reviews,
           created_at,
           updated_at,
+          users!inner(
+            full_name,
+            email,
+            avatar_url,
+            role
+          ),
           teacher_availability (
             id,
             teacher_id,
@@ -217,20 +217,21 @@ export function useTeacherData(options: UseTeacherDataOptions = {}): UseTeacherD
         teachersData.map(async (teacherData) => {
           const teacher: Teacher = {
             id: teacherData.id,
-            name: teacherData.name,
+            userId: teacherData.user_id,
+            name: (teacherData.users as any)?.[0]?.full_name || (teacherData.users as any)?.full_name || 'Nome não disponível',
             bio: teacherData.bio || '',
-            profileImage: teacherData.profile_image,
+            profileImage: (teacherData.users as any)?.[0]?.avatar_url || (teacherData.users as any)?.avatar_url,
             rating: teacherData.rating || 0,
-            specialties: teacherData.specialties || [],
+            specialties: teacherData.expertise || [],
             availability: (teacherData.teacher_availability || []).filter(
               (avail: any) => avail.is_active
             ),
-            maxStudentsPerClass: teacherData.max_students_per_class || 1,
-            isActive: teacherData.is_active,
-            email: teacherData.email,
-            phone: teacherData.phone,
-            experience_years: teacherData.experience_years,
-            qualifications: teacherData.qualifications || []
+            maxStudentsPerClass: 1, // Default value since this field doesn't exist in instructors table
+            isActive: true, // All fetched instructors are active based on the query filter
+            email: (teacherData.users as any)?.[0]?.email || (teacherData.users as any)?.email || '',
+            phone: '', // This field doesn't exist in the schema
+            experience_years: 0, // This field doesn't exist in the schema
+            qualifications: [] // This field doesn't exist in the schema
           }
 
           return await calculateTeacherMetrics(teacher)
@@ -241,11 +242,11 @@ export function useTeacherData(options: UseTeacherDataOptions = {}): UseTeacherD
       let filteredTeachers = enrichedTeachers
 
       if (availabilityFilter) {
-        filteredTeachers = enrichedTeachers.filter(teacher => {
+        filteredTeachers = enrichedTeachers.filter((teacher: any) => {
           // Filter by availability slots if required
           if (availabilityFilter.timeSlots && availabilityFilter.timeSlots.length > 0) {
-            return teacher.availability.some(avail => 
-              availabilityFilter.timeSlots!.some(timeSlot => {
+            return teacher.availability.some((avail: any) => 
+              availabilityFilter.timeSlots!.some((timeSlot: any) => {
                 const [startHour] = timeSlot.split(':')
                 const [availStartHour] = avail.start_time.split(':')
                 return startHour === availStartHour
@@ -257,8 +258,8 @@ export function useTeacherData(options: UseTeacherDataOptions = {}): UseTeacherD
       }
 
       if (courseFilter?.category) {
-        filteredTeachers = filteredTeachers.filter(teacher =>
-          teacher.specialties.some(specialty => 
+        filteredTeachers = filteredTeachers.filter((teacher: any) =>
+          teacher.specialties.some((specialty: any) => 
             specialty.toLowerCase().includes(courseFilter.category!.toLowerCase())
           )
         )
@@ -268,7 +269,7 @@ export function useTeacherData(options: UseTeacherDataOptions = {}): UseTeacherD
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'UNKNOWN_ERROR'
       setError(errorMessage)
-      logError('Teacher data fetch error:', err)
+      console.error('Teacher data fetch error:', err)
     } finally {
       setLoading(false)
     }
@@ -281,10 +282,10 @@ export function useTeacherData(options: UseTeacherDataOptions = {}): UseTeacherD
     if (!query.trim()) return teachers
 
     const searchLower = query.toLowerCase()
-    return teachers.filter(teacher => 
+    return teachers.filter((teacher: any) => 
       teacher.name.toLowerCase().includes(searchLower) ||
       teacher.bio.toLowerCase().includes(searchLower) ||
-      teacher.specialties.some(specialty => 
+      teacher.specialties.some((specialty: any) => 
         specialty.toLowerCase().includes(searchLower)
       )
     )
@@ -295,21 +296,21 @@ export function useTeacherData(options: UseTeacherDataOptions = {}): UseTeacherD
    */
   const filterBySpecialty = useCallback((specialty: string): TeacherWithAvailabilityInfo[] => {
     if (!specialty) return teachers
-    return teachers.filter(teacher => teacher.specialties.includes(specialty))
+    return teachers.filter((teacher: any) => teacher.specialties.includes(specialty))
   }, [teachers])
 
   /**
    * Filter teachers by minimum rating
    */
   const filterByRating = useCallback((minRating: number): TeacherWithAvailabilityInfo[] => {
-    return teachers.filter(teacher => teacher.rating >= minRating)
+    return teachers.filter((teacher: any) => teacher.rating >= minRating)
   }, [teachers])
 
   /**
    * Get teacher by ID
    */
   const getTeacherById = useCallback((id: string): TeacherWithAvailabilityInfo | undefined => {
-    return teachers.find(teacher => teacher.id === id)
+    return teachers.find((teacher: any) => teacher.id === id)
   }, [teachers])
 
   /**
@@ -331,7 +332,7 @@ export function useTeacherData(options: UseTeacherDataOptions = {}): UseTeacherD
     if (!enableRealtime || refreshInterval <= 0) return
 
     const intervalId = setInterval(() => {
-      logDebug('Refreshing teacher data...')
+      console.log('Refreshing teacher data...')
       fetchTeachers()
     }, refreshInterval)
 
@@ -352,7 +353,7 @@ export function useTeacherData(options: UseTeacherDataOptions = {}): UseTeacherD
           table: 'teachers'
         },
         (payload) => {
-          logDebug('Teacher data updated:', payload)
+          console.log('Teacher data updated:', payload)
           fetchTeachers()
         }
       )
@@ -364,7 +365,7 @@ export function useTeacherData(options: UseTeacherDataOptions = {}): UseTeacherD
           table: 'teacher_availability'
         },
         (payload) => {
-          logDebug('Teacher availability updated:', payload)
+          console.log('Teacher availability updated:', payload)
           fetchTeachers()
         }
       )

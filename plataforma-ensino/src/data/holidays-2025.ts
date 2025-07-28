@@ -1,4 +1,4 @@
-import { Holiday } from '@/types/date-calculation';
+import type { Holiday } from '@/types/date-calculation';
 
 /**
  * Brazilian holidays for 2025
@@ -41,7 +41,7 @@ export function getBrazilianHolidays2025(): Holiday[] {
  * Get holidays by type
  */
 export function getHolidaysByType(type: 'national' | 'regional'): Holiday[] {
-  return BRAZILIAN_HOLIDAYS_2025.filter(holiday => holiday.type === type);
+  return BRAZILIAN_HOLIDAYS_2025.filter((holiday: any) => holiday.type === type);
 }
 
 /**

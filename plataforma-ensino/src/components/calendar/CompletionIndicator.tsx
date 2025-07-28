@@ -10,7 +10,7 @@
 
 import { Clock, Calendar, AlertTriangle } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { 
+import type { 
   CompletionIndicatorProps, 
   CompletionIndicatorType 
 } from '@/types/completion-status';

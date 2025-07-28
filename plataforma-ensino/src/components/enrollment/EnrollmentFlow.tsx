@@ -10,8 +10,8 @@
 
 import React, { useState, useCallback, useEffect } from 'react'
 import { createBrowserClient } from '@supabase/ssr'
-import { Teacher } from './TeacherSelector'
-import { TimeSlot, CourseRequirements } from './ConditionalCalendar'
+import type { Teacher } from './TeacherSelector'
+import type { TimeSlot, CourseRequirements } from './ConditionalCalendar'
 
 export interface Course {
   id: string
@@ -185,7 +185,7 @@ export function useEnrollmentFlow(options: UseEnrollmentFlowOptions = {}): UseEn
         }
 
         // Check for schedule conflicts
-        const dates = data.scheduled_slots.map(slot => slot.date)
+        const dates = data.scheduled_slots.map((slot: any) => slot.date)
         const uniqueDates = new Set(dates)
         if (dates.length !== uniqueDates.size) {
           warnings.push('Multiple classes scheduled on the same day')
@@ -252,7 +252,7 @@ export function useEnrollmentFlow(options: UseEnrollmentFlowOptions = {}): UseEn
       }
 
       // Check slot availability
-      const slotsAsTimeSlots = data.scheduled_slots.map(slot => ({
+      const slotsAsTimeSlots = data.scheduled_slots.map((slot: any) => ({
         date: new Date(slot.date),
         startTime: slot.start_time,
         endTime: slot.end_time,
@@ -295,7 +295,7 @@ export function useEnrollmentFlow(options: UseEnrollmentFlowOptions = {}): UseEn
       }
 
       // Create scheduled slots
-      const slotsToInsert = data.scheduled_slots.map(slot => ({
+      const slotsToInsert = data.scheduled_slots.map((slot: any) => ({
         enrollment_id: enrollment.id,
         teacher_availability_id: slot.teacher_availability_id,
         scheduled_date: slot.date,

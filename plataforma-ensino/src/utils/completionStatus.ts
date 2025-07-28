@@ -13,7 +13,6 @@ import type {
   CompletionCalculationInput,
   StudentIndicator 
 } from '@/types/completion-status';
-import { logError } from '@/lib/utils/logger';
 
 /**
  * Number of days threshold for "one month remaining" indicator
@@ -71,7 +70,7 @@ export function calculateCompletionStatus(
     };
     
   } catch (error) {
-    logError('Error calculating completion status:', error);
+    console.error('Error calculating completion status:', error);
     return {
       type: 'none',
       label: '',
@@ -107,7 +106,7 @@ export function isLastClass(endDate: string, classDate: string): boolean {
     // Compare dates by their ISO string representation
     return formatDateISO(endDateObj) === formatDateISO(classDateObj);
   } catch (error) {
-    logError('Error checking last class:', error);
+    console.error('Error checking last class:', error);
     return false;
   }
 }
@@ -196,13 +195,13 @@ export function getStudentsWithIndicators(
   currentDate?: string
 ): StudentIndicator[] {
   return students
-    .map(student => createStudentIndicator(
+    .map((student: any) => createStudentIndicator(
       student.student_id,
       student.student_name,
       student.enrollment_id,
       student.end_date
     ))
-    .filter(indicator => indicator.indicator_type !== 'none');
+    .filter((indicator: any) => indicator.indicator_type !== 'none');
 }
 
 /**
@@ -235,7 +234,7 @@ export function getDaysRemaining(endDate: string, currentDate?: string): number 
     const timeDiff = endDateObj.getTime() - currentDateObj.getTime();
     return Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
   } catch (error) {
-    logError('Error calculating days remaining:', error);
+    console.error('Error calculating days remaining:', error);
     return 0;
   }
 }
@@ -267,12 +266,12 @@ export function getCompletionIndicatorsForDate(
   classDate: string
 ): StudentIndicator[] {
   return students
-    .map(student => createStudentIndicator(
+    .map((student: any) => createStudentIndicator(
       student.student_id,
       student.student_name,
       student.enrollment_id,
       student.end_date,
       classDate
     ))
-    .filter(indicator => indicator.indicator_type !== 'none');
+    .filter((indicator: any) => indicator.indicator_type !== 'none');
 }

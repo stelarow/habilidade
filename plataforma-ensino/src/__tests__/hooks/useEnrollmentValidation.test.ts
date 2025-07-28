@@ -12,8 +12,8 @@
 
 import { renderHook, act, waitFor } from '@testing-library/react'
 import { useEnrollmentValidation } from '@/hooks/useEnrollmentValidation'
-import { Teacher } from '@/components/enrollment/TeacherSelector'
-import { TimeSlot } from '@/components/enrollment/ConditionalCalendar'
+import type { Teacher } from '@/components/enrollment/TeacherSelector'
+import type { TimeSlot } from '@/components/enrollment/ConditionalCalendar'
 
 // Mock react-hook-form
 jest.mock('react-hook-form', () => ({

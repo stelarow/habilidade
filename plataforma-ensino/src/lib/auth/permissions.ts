@@ -128,7 +128,7 @@ export function hasAnyPermission(user: User | null, permissions: Permission[]): 
   if (!user) return false
   
   const userPermissions = rolePermissions[user.role] || []
-  return permissions.some(permission => userPermissions.includes(permission))
+  return permissions.some((permission: any) => userPermissions.includes(permission))
 }
 
 export function requirePermission(user: User | null, permission: Permission): void {

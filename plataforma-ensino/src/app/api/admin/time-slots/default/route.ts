@@ -1,7 +1,6 @@
 import { createClient } from '@/lib/supabase/server';
-import { NextRequest, NextResponse } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
-import { logError } from '@/lib/utils/logger';
 
 // Force dynamic rendering for authentication and database queries
 export const dynamic = 'force-dynamic';
@@ -89,7 +88,7 @@ export async function GET(_request: NextRequest) {
 
     return NextResponse.json(response);
   } catch (error) {
-    logError('Erro ao buscar horários padrões:', error);
+    console.error('Erro ao buscar horários padrões:', error);
     return NextResponse.json(
       { error: 'Erro interno do servidor' },
       { status: 500 }
@@ -197,7 +196,7 @@ export async function POST(request: NextRequest) {
       .select('*');
 
     if (insertError) {
-      logError('Erro ao criar horários:', insertError);
+      console.error('Erro ao criar horários:', insertError);
       return NextResponse.json(
         { error: 'Erro ao criar horários padrões' },
         { status: 500 }
@@ -249,13 +248,13 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         { 
           error: 'Dados inválidos', 
-          details: error.errors.map(e => `${e.path.join('.')}: ${e.message}`)
+          details: error.errors.map((e: any) => `${e.path.join('.')}: ${e.message}`)
         },
         { status: 400 }
       );
     }
 
-    logError('Erro ao aplicar horários padrões:', error);
+    console.error('Erro ao aplicar horários padrões:', error);
     return NextResponse.json(
       { error: 'Erro interno do servidor' },
       { status: 500 }

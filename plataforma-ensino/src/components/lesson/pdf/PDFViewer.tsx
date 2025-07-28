@@ -4,7 +4,7 @@ import React, { useState, useCallback, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import dynamic from 'next/dynamic'
 import { FileText, MagnifyingGlass, Minus, Plus, ArrowsOut, ArrowsIn, Download, Warning, CaretLeft, CaretRight, CaretUp, CaretDown } from '@phosphor-icons/react'
-import { PDFData } from '@/types/lesson'
+import type { PDFData } from '@/types/lesson'
 import { cn } from '@/lib/utils'
 
 // PDF Fallback Component for SSR and error states

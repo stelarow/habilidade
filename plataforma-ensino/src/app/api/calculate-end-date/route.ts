@@ -5,10 +5,9 @@
  * Simple course end date calculation with holiday and weekend exclusion
  */
 
-import { NextRequest, NextResponse } from 'next/server'
+import { type NextRequest, NextResponse } from 'next/server'
 import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
-import { logError } from '@/lib/utils/logger'
 import { z } from 'zod'
 
 // Force dynamic rendering for authentication and database queries
@@ -147,7 +146,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     })
 
   } catch (error) {
-    logError('Calculate end date error:', error)
+    console.error('Calculate end date error:', error)
     return NextResponse.json(
       {
         error: 'Internal server error',

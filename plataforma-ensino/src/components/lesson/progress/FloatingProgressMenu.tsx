@@ -4,7 +4,7 @@ import React, { useState, useCallback, useEffect, useMemo, memo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
 import { Play, FileText, ClipboardText, PuzzlePiece, Trophy } from '@phosphor-icons/react'
-import { LessonProgressData } from '@/types/lesson'
+import type { LessonProgressData } from '@/types/lesson'
 
 interface FloatingProgressMenuProps {
   progress: LessonProgressData
@@ -310,7 +310,7 @@ const FloatingProgressMenuComponent = ({
             <div className="grid grid-cols-2 gap-3 text-center">
               <div>
                 <div className="text-sm font-bold text-white">
-                  {sections.filter(s => s.isCompleted).length}
+                  {sections.filter((s: any) => s.isCompleted).length}
                 </div>
                 <div className="text-xs text-gray-400">Concluídos</div>
               </div>

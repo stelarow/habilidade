@@ -145,7 +145,7 @@ export function CategoriesManagement({ categories: initialCategories, currentUse
 
       console.log('Category updated successfully:', data[0])
 
-      setCategories(categories.map(cat => 
+      setCategories(categories.map((cat: any) => 
         cat.id === selectedCategory.id ? data[0] : cat
       ))
       setShowEditModal(false)
@@ -174,7 +174,7 @@ export function CategoriesManagement({ categories: initialCategories, currentUse
 
       if (error) throw error
 
-      setCategories(categories.filter(cat => cat.id !== selectedCategory.id))
+      setCategories(categories.filter((cat: any) => cat.id !== selectedCategory.id))
       setShowDeleteModal(false)
       setSelectedCategory(null)
     } catch (error) {

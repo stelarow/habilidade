@@ -3,7 +3,7 @@
  * Centralized and optimized database queries for holidays
  */
 
-import { createClient } from '@/lib/supabase/server'
+import type { createClient } from '@/lib/supabase/server'
 import type { HolidaysQuery, Holiday } from '@/types/api'
 
 /**

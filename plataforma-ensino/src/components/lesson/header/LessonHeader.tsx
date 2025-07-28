@@ -8,7 +8,7 @@ import { ArrowLeft } from '@phosphor-icons/react/dist/ssr'
 import { ProgressIndicator } from './ProgressIndicator'
 import { useEnhancedProgressCalculation } from '@/hooks/useEnhancedProgressCalculation'
 import { useScrollBehavior } from '@/hooks/useScrollBehavior'
-import { LessonProgressData } from '@/types/lesson'
+import type { LessonProgressData } from '@/types/lesson'
 import styles from './LessonHeader.module.css'
 
 interface LessonHeaderProps {

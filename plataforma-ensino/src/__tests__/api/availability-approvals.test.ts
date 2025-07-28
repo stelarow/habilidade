@@ -1,7 +1,7 @@
-import { NextRequest } from 'next/server'
-import { GET } from '@/app/api/admin/availability-approvals/route'
-import { POST as APPROVE_POST } from '@/app/api/admin/availability-approvals/[id]/approve/route'
-import { POST as REJECT_POST } from '@/app/api/admin/availability-approvals/[id]/reject/route'
+import type { NextRequest } from 'next/server'
+import type { GET } from '@/app/api/admin/availability-approvals/route'
+import type { POST as APPROVE_POST } from '@/app/api/admin/availability-approvals/[id]/approve/route'
+import type { POST as REJECT_POST } from '@/app/api/admin/availability-approvals/[id]/reject/route'
 import { jest } from '@jest/globals'
 
 // Mock Supabase client

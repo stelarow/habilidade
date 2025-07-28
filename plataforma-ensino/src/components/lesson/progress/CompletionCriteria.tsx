@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
 import { Target } from '@phosphor-icons/react'
 import { useCompletionCriteria } from '@/hooks/useCompletionCriteria'
-import { LessonProgressData } from '@/types/lesson'
+import type { LessonProgressData } from '@/types/lesson'
 
 interface CompletionCriteriaProps {
   progressData: LessonProgressData | null

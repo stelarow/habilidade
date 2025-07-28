@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import { createClient } from '@supabase/supabase-js';
 import { GradientButton, Loading } from '@/components/ui';
 import { Starfield } from '@/components/ui';
-import { logError, logDebug } from '@/lib/utils/logger';
 
 export default function UpdatePasswordPage() {
   const router = useRouter();
@@ -28,12 +27,12 @@ export default function UpdatePasswordPage() {
       const { data: { session }, error } = await supabase.auth.getSession();
       
       if (error || !session) {
-        logError('No valid session for password update:', error);
+        console.error('No valid session for password update:', error);
         setError('Sessão expirada. Solicite um novo link de recuperação.');
         return;
       }
       
-      logDebug('Valid session found for password update');
+      console.log('Valid session found for password update');
     };
     
     checkSession();

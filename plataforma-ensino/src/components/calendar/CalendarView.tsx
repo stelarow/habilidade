@@ -190,13 +190,13 @@ export default function CalendarView({ teacherId }: CalendarViewProps) {
           <div className="bg-white border rounded-lg p-4">
             <div className="text-sm text-gray-500">Horários Ocupados</div>
             <div className="text-2xl font-bold text-green-600">
-              {new Set(calendarData.map(item => `${item.dayOfWeek}-${item.slotLabel}`)).size}
+              {new Set(calendarData.map((item: any) => `${item.dayOfWeek}-${item.slotLabel}`)).size}
             </div>
           </div>
           <div className="bg-white border rounded-lg p-4">
             <div className="text-sm text-gray-500">Estudantes Únicos</div>
             <div className="text-2xl font-bold text-blue-600">
-              {new Set(calendarData.map(item => item.studentEmail)).size}
+              {new Set(calendarData.map((item: any) => item.studentEmail)).size}
             </div>
           </div>
         </div>

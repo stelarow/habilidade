@@ -200,7 +200,7 @@ export function useVideoProgress({
       })
 
     } catch (err) {
-      logError('Failed to mark lesson as completed:', err)
+      console.error('Failed to mark lesson as completed:', err)
     }
   }, [progress, userId, lessonId, enrollmentId, saveProgress])
 
@@ -235,7 +235,7 @@ export function useVideoProgress({
       setIsCompleted(false)
       totalWatchTime.current = 0
     } catch (err) {
-      logError('Failed to reset progress:', err)
+      console.error('Failed to reset progress:', err)
     }
   }, [saveProgress])
 

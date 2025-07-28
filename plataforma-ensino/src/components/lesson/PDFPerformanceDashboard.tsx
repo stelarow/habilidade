@@ -103,7 +103,7 @@ export const PDFPerformanceDashboard: React.FC<PDFPerformanceDashboardProps> = (
     if (historicalData.length < 2) return null;
     
     const recent = historicalData.slice(-3);
-    const values = recent.map(d => d[metric as keyof typeof metrics] as number);
+    const values = recent.map((d: any) => d[metric as keyof typeof metrics] as number);
     const trend = values[values.length - 1] - values[0];
     
     return trend > 0 ? 'up' : trend < 0 ? 'down' : 'stable';

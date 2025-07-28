@@ -2,7 +2,6 @@
 
 import { useEffect } from 'react'
 import * as Sentry from '@sentry/nextjs'
-import { logError } from '@/lib/utils/logger'
 
 export default function AdminError({
   error,
@@ -19,10 +18,10 @@ export default function AdminError({
   }
   useEffect(() => {
     // Log the error to console for debugging
-    logError('Admin error boundary caught:', error)
+    console.error('Admin error boundary caught:', error)
     
     // Enhanced error logging for SSR issues
-    logError('Error details:', {
+    console.error('Error details:', {
       message: error.message,
       digest: error.digest,
       stack: error.stack,

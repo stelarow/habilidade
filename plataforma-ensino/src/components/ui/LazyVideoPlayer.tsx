@@ -2,7 +2,7 @@
 
 import React, { Suspense } from 'react'
 import dynamic from 'next/dynamic'
-import { VideoPlayerWrapperProps } from './VideoPlayerWrapper'
+import type { VideoPlayerWrapperProps } from './VideoPlayerWrapper'
 
 // Dynamically import VideoPlayerWrapper with no SSR
 const VideoPlayerWrapper = dynamic(

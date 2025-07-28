@@ -1,7 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { type NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { requireAdmin } from '@/lib/auth/session'
-import { logError } from '@/lib/utils/logger'
 
 // Force dynamic rendering for admin routes that require authentication
 export const dynamic = 'force-dynamic'
@@ -42,7 +41,7 @@ export async function GET(request: NextRequest) {
       .rpc('get_next_lesson_order', { course_uuid: courseId })
     
     if (orderError) {
-      logError('Error getting next order:', orderError)
+      console.error('Error getting next order:', orderError)
       return NextResponse.json(
         { error: 'Failed to get next order index' },
         { status: 500 }
@@ -56,7 +55,7 @@ export async function GET(request: NextRequest) {
       .eq('course_id', courseId)
     
     if (countError) {
-      logError('Error counting lessons:', countError)
+      console.error('Error counting lessons:', countError)
     }
     
     return NextResponse.json({
@@ -71,7 +70,7 @@ export async function GET(request: NextRequest) {
     })
     
   } catch (error) {
-    logError('Next order API error:', error)
+    console.error('Next order API error:', error)
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

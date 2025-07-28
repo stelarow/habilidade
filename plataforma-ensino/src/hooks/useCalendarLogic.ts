@@ -146,7 +146,7 @@ export function useCalendarLogic(
             }))
           }
         } catch (error) {
-          logWarn('Failed to restore calendar state:', error)
+          console.warn('Failed to restore calendar state:', error)
         }
       }
     }
@@ -160,7 +160,7 @@ export function useCalendarLogic(
       const stateToSave = {
         ...calendarState,
         currentDate: calendarState.currentDate.toISOString(),
-        selectedSlots: calendarState.selectedSlots.map(slot => ({
+        selectedSlots: calendarState.selectedSlots.map((slot: any) => ({
           ...slot,
           date: slot.date.toISOString()
         }))
@@ -218,7 +218,7 @@ export function useCalendarLogic(
     }
 
     if (maxSelectableSlots && calendarState.selectedSlots.length >= maxSelectableSlots) {
-      const isAlreadySelected = calendarState.selectedSlots.some(s => 
+      const isAlreadySelected = calendarState.selectedSlots.some((s: any) => 
         s.slotId === slot.slotId && s.date.getTime() === slot.date.getTime()
       )
       if (!isAlreadySelected) {
@@ -237,12 +237,12 @@ export function useCalendarLogic(
   const selectSlot = useCallback((slot: TimeSlot) => {
     const validation = validateSlot(slot)
     if (!validation.isValid) {
-      logWarn('Cannot select slot:', validation.reason)
+      console.warn('Cannot select slot:', validation.reason)
       return
     }
 
     setCalendarState(prev => {
-      const isAlreadySelected = prev.selectedSlots.some(s => 
+      const isAlreadySelected = prev.selectedSlots.some((s: any) => 
         s.slotId === slot.slotId && s.date.getTime() === slot.date.getTime()
       )
 
@@ -260,14 +260,14 @@ export function useCalendarLogic(
   const deselectSlot = useCallback((slot: TimeSlot) => {
     setCalendarState(prev => ({
       ...prev,
-      selectedSlots: prev.selectedSlots.filter(s => 
+      selectedSlots: prev.selectedSlots.filter((s: any) => 
         !(s.slotId === slot.slotId && s.date.getTime() === slot.date.getTime())
       )
     }))
   }, [])
 
   const toggleSlot = useCallback((slot: TimeSlot) => {
-    const isSelected = calendarState.selectedSlots.some(s => 
+    const isSelected = calendarState.selectedSlots.some((s: any) => 
       s.slotId === slot.slotId && s.date.getTime() === slot.date.getTime()
     )
 
@@ -286,10 +286,10 @@ export function useCalendarLogic(
   }, [])
 
   const selectMultipleSlots = useCallback((slots: TimeSlot[]) => {
-    const validSlots = slots.filter(slot => validateSlot(slot).isValid)
+    const validSlots = slots.filter((slot: any) => validateSlot(slot).isValid)
     
     if (maxSelectableSlots && validSlots.length > maxSelectableSlots) {
-      logWarn(`Can only select ${maxSelectableSlots} slots, truncating selection`)
+      console.warn(`Can only select ${maxSelectableSlots} slots, truncating selection`)
       validSlots.splice(maxSelectableSlots)
     }
 
@@ -320,7 +320,7 @@ export function useCalendarLogic(
   const getFilteredSlots = useCallback((slots: TimeSlot[]): TimeSlot[] => {
     const { filterCriteria } = calendarState
 
-    return slots.filter(slot => {
+    return slots.filter((slot: any) => {
       // Available only filter
       if (filterCriteria.showAvailableOnly && !slot.isAvailable) {
         return false
@@ -391,7 +391,7 @@ export function useCalendarLogic(
     }
 
     // Check for scheduling conflicts
-    const dates = selectedSlots.map(slot => slot.date.toDateString())
+    const dates = selectedSlots.map((slot: any) => slot.date.toDateString())
     const uniqueDates = new Set(dates)
     if (dates.length !== uniqueDates.size) {
       warnings.push('Multiple slots selected for the same day')
@@ -407,7 +407,7 @@ export function useCalendarLogic(
       }
 
       // Check distribution
-      const weekDays = selectedSlots.map(slot => slot.date.getDay())
+      const weekDays = selectedSlots.map((slot: any) => slot.date.getDay())
       const weekDistribution = weekDays.reduce((acc, day) => (acc[day] = (acc[day] || 0) + 1, acc), {} as Record<number, number>)
       
       if (Object.keys(weekDistribution).length < 2 && selectedSlots.length > 2) {
@@ -425,8 +425,8 @@ export function useCalendarLogic(
 
   // Performance metrics
   const getPerformanceMetrics = useCallback((allSlots: TimeSlot[]): CalendarPerformanceMetrics => {
-    const availableSlots = allSlots.filter(slot => slot.isAvailable).length
-    const conflictCount = allSlots.filter(slot => slot.conflictReason).length
+    const availableSlots = allSlots.filter((slot: any) => slot.isAvailable).length
+    const conflictCount = allSlots.filter((slot: any) => slot.conflictReason).length
     const selectedCount = calendarState.selectedSlots.length
 
     const totalSelectedHours = calendarState.selectedSlots.reduce((sum, slot) => {
@@ -444,7 +444,7 @@ export function useCalendarLogic(
       const remainingHours = courseRequirements.totalHours - totalSelectedHours
       const remainingSlots = Math.ceil(remainingHours / avgHoursPerSlot)
       
-      const lastSlotDate = Math.max(...calendarState.selectedSlots.map(slot => slot.date.getTime()))
+      const lastSlotDate = Math.max(...calendarState.selectedSlots.map((slot: any) => slot.date.getTime()))
       const estimatedDays = remainingSlots * 7 // Assume one slot per week
       
       estimatedCompletion = new Date(lastSlotDate + estimatedDays * 24 * 60 * 60 * 1000)
@@ -477,12 +477,12 @@ export function useCalendarLogic(
     allSlots: TimeSlot[], 
     courseReq: CourseRequirements
   ): TimeSlot[] => {
-    const availableSlots = allSlots.filter(slot => slot.isAvailable && !slot.conflictReason)
+    const availableSlots = allSlots.filter((slot: any) => slot.isAvailable && !slot.conflictReason)
     const targetSessionHours = courseReq.sessionDuration / 60
     const sessionsNeeded = Math.ceil(courseReq.totalHours / targetSessionHours)
 
     // Filter slots that match target session duration
-    const idealSlots = availableSlots.filter(slot => {
+    const idealSlots = availableSlots.filter((slot: any) => {
       const start = new Date(`1970-01-01T${slot.startTime}:00`)
       const end = new Date(`1970-01-01T${slot.endTime}:00`)
       const hours = (end.getTime() - start.getTime()) / (1000 * 60 * 60)
@@ -504,7 +504,7 @@ export function useCalendarLogic(
 
   // Utility functions
   const isSlotSelected = useCallback((slot: TimeSlot): boolean => {
-    return calendarState.selectedSlots.some(s => 
+    return calendarState.selectedSlots.some((s: any) => 
       s.slotId === slot.slotId && s.date.getTime() === slot.date.getTime()
     )
   }, [calendarState.selectedSlots])
@@ -517,7 +517,7 @@ export function useCalendarLogic(
 
   const getSelectedSlotsForDate = useCallback((date: Date): TimeSlot[] => {
     const targetDate = date.toDateString()
-    return calendarState.selectedSlots.filter(slot => 
+    return calendarState.selectedSlots.filter((slot: any) => 
       slot.date.toDateString() === targetDate
     )
   }, [calendarState.selectedSlots])

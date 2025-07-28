@@ -2,7 +2,7 @@
 
 import React from 'react'
 import LessonPageRedesigned from '@/components/lesson/LessonPageRedesigned'
-import { LessonProgressData } from '@/types/lesson'
+import type { LessonProgressData } from '@/types/lesson'
 
 // Mock lesson data for testing
 const mockLesson = {

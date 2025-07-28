@@ -64,7 +64,7 @@ export function EnrollmentForm({
   const convertToTeacherSelectorCourse = (course: DBCourse): TeacherSelectorCourse | null => {
     // Validate required fields to prevent React errors
     if (!course || !course.id || !course.title) {
-      logWarn('Invalid course data for conversion:', course)
+      console.warn('Invalid course data for conversion:', course)
       return null
     }
     
@@ -77,7 +77,7 @@ export function EnrollmentForm({
         max_students: 20 // Default value, could be from course settings
       }
     } catch (error) {
-      logError('Error converting course:', error)
+      console.error('Error converting course:', error)
       return null
     }
   }
@@ -123,7 +123,7 @@ export function EnrollmentForm({
         if (error) throw error
         setUsers(data || [])
       } catch (error) {
-        logError('Error loading users:', error)
+        console.error('Error loading users:', error)
         setUsers([])
       } finally {
         setLoadingUsers(false)
@@ -154,7 +154,7 @@ export function EnrollmentForm({
         if (error) throw error
         setCourses(data || [])
       } catch (error) {
-        logError('Error loading courses:', error)
+        console.error('Error loading courses:', error)
         setCourses([])
       } finally {
         setLoadingCourses(false)
@@ -169,7 +169,7 @@ export function EnrollmentForm({
   const handleInputChange = (field: keyof EnhancedEnrollmentFormData, value: string | boolean) => {
     // Validate field and value to prevent undefined/null errors
     if (!field) {
-      logWarn('handleInputChange called with invalid field:', field)
+      console.warn('handleInputChange called with invalid field:', field)
       return
     }
     
@@ -250,7 +250,7 @@ export function EnrollmentForm({
           : 'Matrícula removida com sucesso!'
       )
     } catch (error: any) {
-      logError('Form submission error:', error)
+      console.error('Form submission error:', error)
       
       // Enhanced API error handling with detailed instructor validation (AC: 4)
       const errorMessage = error?.message || error?.error || (typeof error === 'string' ? error : 'Erro interno do servidor')
@@ -263,10 +263,10 @@ export function EnrollmentForm({
           errorDetails = error.details
         }
       } catch (e) {
-        logWarn('Could not parse error details:', e)
+        console.warn('Could not parse error details:', e)
       }
       
-      logError('Form submission error details:', {
+      console.error('Form submission error details:', {
         error,
         errorMessage,
         errorDetails,
@@ -328,8 +328,8 @@ export function EnrollmentForm({
     }
   }
 
-  const selectedUser = users.find(u => u.id === formData.user_id)
-  const selectedCourse = courses.find(c => c.id === formData.course_id)
+  const selectedUser = users.find((u: any) => u.id === formData.user_id)
+  const selectedCourse = courses.find((c: any) => c.id === formData.course_id)
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
@@ -548,14 +548,14 @@ export function EnrollmentForm({
                   hasTwoClassesPerWeek={formData.has_two_classes_per_week}
                   onTeacherChange={(teacherId) => {
                     const safeTeacherId = teacherId || ''
-                    logDebug('Teacher changed:', safeTeacherId)
+                    console.log('Teacher changed:', safeTeacherId)
                     handleInputChange('teacher_id', safeTeacherId)
                   }}
                   onTwoClassesChange={(checked) => handleInputChange('has_two_classes_per_week', checked)}
                   onSlotSelect={(slot1, slot2) => {
                     const safeSlot1 = slot1 || ''
                     const safeSlot2 = slot2 || ''
-                    logDebug('Slots selected:', { slot1: safeSlot1, slot2: safeSlot2 })
+                    console.log('Slots selected:', { slot1: safeSlot1, slot2: safeSlot2 })
                     handleInputChange('schedule_slot_1', safeSlot1)
                     handleInputChange('schedule_slot_2', safeSlot2)
                   }}

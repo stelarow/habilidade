@@ -154,7 +154,7 @@ export function TeacherAvailabilityGrid({ teacherId, onSlotClick }: TeacherAvail
 
   const { teacher, schedule, statistics, insights } = data;
   const filteredSchedule = selectedDay !== null 
-    ? schedule.filter(day => day.dayOfWeek === selectedDay)
+    ? schedule.filter((day: any) => day.dayOfWeek === selectedDay)
     : schedule;
 
   return (
@@ -267,8 +267,8 @@ export function TeacherAvailabilityGrid({ teacherId, onSlotClick }: TeacherAvail
         <CardContent>
           <div className="flex flex-wrap gap-2">
             {schedule
-              .filter(day => day.slots.length > 0)
-              .map(day => (
+              .filter((day: any) => day.slots.length > 0)
+              .map((day: any) => (
                 <Button
                   key={day.dayOfWeek}
                   variant={selectedDay === day.dayOfWeek ? 'default' : 'outline'}
@@ -297,8 +297,8 @@ export function TeacherAvailabilityGrid({ teacherId, onSlotClick }: TeacherAvail
         <CardContent>
           <div className="space-y-6">
             {filteredSchedule
-              .filter(day => day.slots.length > 0)
-              .map(day => (
+              .filter((day: any) => day.slots.length > 0)
+              .map((day: any) => (
                 <div key={day.dayOfWeek}>
                   <div className="flex items-center justify-between mb-3">
                     <h3 className="font-semibold text-lg">{day.dayName}</h3>
@@ -314,7 +314,7 @@ export function TeacherAvailabilityGrid({ teacherId, onSlotClick }: TeacherAvail
                   </div>
                   
                   <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-                    {day.slots.map(slot => (
+                    {day.slots.map((slot: any) => (
                       <Card
                         key={slot.id}
                         className={cn(

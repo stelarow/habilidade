@@ -62,7 +62,7 @@ export function EnrollmentsManagement({ enrollments: initialEnrollments, current
 
   const supabase = createClient()
 
-  const filteredEnrollments = enrollments.filter(enrollment => {
+  const filteredEnrollments = enrollments.filter((enrollment: any) => {
     const matchesSearch = searchTerm === '' || 
       enrollment.user.full_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       enrollment.user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -120,7 +120,7 @@ export function EnrollmentsManagement({ enrollments: initialEnrollments, current
 
       if (error) throw error
 
-      setEnrollments(enrollments.map(enrollment => 
+      setEnrollments(enrollments.map((enrollment: any) => 
         enrollment.id === enrollmentId 
           ? { ...enrollment, status: newStatus as any }
           : enrollment
@@ -183,7 +183,7 @@ export function EnrollmentsManagement({ enrollments: initialEnrollments, current
         }
 
         // Remove enrollment from list
-        setEnrollments(enrollments.filter(e => e.id !== selectedEnrollment.id))
+        setEnrollments(enrollments.filter((e: any) => e.id !== selectedEnrollment.id))
         alert('Matrícula removida com sucesso!')
       }
 
@@ -228,8 +228,8 @@ export function EnrollmentsManagement({ enrollments: initialEnrollments, current
       if (progressError) throw progressError
 
       // Combine lessons with progress
-      const progressData = lessons?.map(lesson => {
-        const lessonProgress = progress?.find(p => p.lesson_id === lesson.id)
+      const progressData = lessons?.map((lesson: any) => {
+        const lessonProgress = progress?.find((p: any) => p.lesson_id === lesson.id)
         return {
           lesson,
           progress: lessonProgress || {
@@ -271,19 +271,19 @@ export function EnrollmentsManagement({ enrollments: initialEnrollments, current
       if (!response.ok) throw new Error('Failed to update progress')
 
       // Update local progress data
-      setProgressData(prev => prev.map(item => 
+      setProgressData(prev => prev.map((item: any) => 
         item.lesson.id === lessonId 
           ? { ...item, progress: { ...item.progress, completed, completed_at: completed ? new Date().toISOString() : null } }
           : item
       ))
 
       // Refresh enrollment progress percentage
-      const completedCount = progressData.filter(item => 
+      const completedCount = progressData.filter((item: any) => 
         item.lesson.id === lessonId ? completed : item.progress.completed
       ).length
       const progressPercentage = Math.round((completedCount / progressData.length) * 100)
 
-      setEnrollments(prev => prev.map(enrollment =>
+      setEnrollments(prev => prev.map((enrollment: any) =>
         enrollment.id === selectedEnrollment.id
           ? { ...enrollment, progress_percentage: progressPercentage }
           : enrollment
@@ -345,19 +345,19 @@ export function EnrollmentsManagement({ enrollments: initialEnrollments, current
         <div className="bg-gray-800 rounded-lg p-4 border border-gray-700">
           <p className="text-sm text-gray-400">Ativas</p>
           <p className="text-2xl font-bold text-blue-400">
-            {enrollments.filter(e => e.status === 'active').length}
+            {enrollments.filter((e: any) => e.status === 'active').length}
           </p>
         </div>
         <div className="bg-gray-800 rounded-lg p-4 border border-gray-700">
           <p className="text-sm text-gray-400">Concluídas</p>
           <p className="text-2xl font-bold text-green-400">
-            {enrollments.filter(e => e.status === 'completed').length}
+            {enrollments.filter((e: any) => e.status === 'completed').length}
           </p>
         </div>
         <div className="bg-gray-800 rounded-lg p-4 border border-gray-700">
           <p className="text-sm text-gray-400">Canceladas</p>
           <p className="text-2xl font-bold text-red-400">
-            {enrollments.filter(e => e.status === 'cancelled').length}
+            {enrollments.filter((e: any) => e.status === 'cancelled').length}
           </p>
         </div>
       </div>

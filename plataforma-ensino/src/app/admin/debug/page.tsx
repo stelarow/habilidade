@@ -28,7 +28,7 @@ export default async function AdminDebugPage() {
   // Get cookie information
   const cookieStore = cookies()
   const allCookies = cookieStore.getAll()
-  const authCookies = allCookies.filter(cookie => 
+  const authCookies = allCookies.filter((cookie: any) => 
     cookie.name.includes('supabase') || cookie.name.includes('sb-')
   )
 

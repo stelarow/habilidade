@@ -11,7 +11,7 @@ import {
   CheckCircle,
   X
 } from '@phosphor-icons/react'
-import { ProgressState } from '@/hooks/useEnhancedProgressCalculation'
+import type { ProgressState } from '@/hooks/useEnhancedProgressCalculation'
 
 interface ProgressIndicatorProps {
   icon: 'time' | 'pdf' | 'exercises' | 'quiz'

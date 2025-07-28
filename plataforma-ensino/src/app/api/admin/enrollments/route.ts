@@ -1,8 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { type NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { requireAdmin } from '@/lib/auth/session'
 import { z } from 'zod'
-import { logError, logDebug } from '@/lib/utils/logger'
 
 // Force dynamic rendering for admin routes that require authentication
 export const dynamic = 'force-dynamic'
@@ -148,7 +147,7 @@ export async function GET(request: NextRequest) {
     const { data: enrollments, error } = await query
     
     if (error) {
-      logError('Error fetching enrollments:', error)
+      console.error('Error fetching enrollments:', error)
       return NextResponse.json(
         { error: 'Erro ao buscar matrículas' },
         { status: 500 }
@@ -169,7 +168,7 @@ export async function GET(request: NextRequest) {
     })
     
   } catch (error) {
-    logError('Enrollments API error:', error)
+    console.error('Enrollments API error:', error)
     return NextResponse.json(
       { error: 'Erro interno do servidor' },
       { status: 500 }
@@ -190,21 +189,21 @@ export async function POST(request: NextRequest) {
     let isEnhancedFormat = false
     
     // Log the incoming data for debugging
-    logDebug('Enrollment API - Incoming data: ' + JSON.stringify(body, null, 2))
+    console.log('Enrollment API - Incoming data: ' + JSON.stringify(body, null, 2))
     
     try {
       validatedData = enhancedEnrollmentSchema.parse(body)
       isEnhancedFormat = true
-      logDebug('Enrollment API - Enhanced schema validation passed')
+      console.log('Enrollment API - Enhanced schema validation passed')
     } catch (enhancedError) {
-      logDebug('Enrollment API - Enhanced schema failed: ' + (enhancedError instanceof Error ? enhancedError.message : String(enhancedError)))
+      console.log('Enrollment API - Enhanced schema failed: ' + (enhancedError instanceof Error ? enhancedError.message : String(enhancedError)))
       // Fall back to legacy format
       try {
         validatedData = legacyEnrollmentSchema.parse(body)
         isEnhancedFormat = false
-        logDebug('Enrollment API - Legacy schema validation passed')
+        console.log('Enrollment API - Legacy schema validation passed')
       } catch (legacyError) {
-        logDebug('Enrollment API - Legacy schema failed: ' + (legacyError instanceof Error ? legacyError.message : String(legacyError)))
+        console.log('Enrollment API - Legacy schema failed: ' + (legacyError instanceof Error ? legacyError.message : String(legacyError)))
         // Return enhanced format errors as they're more descriptive
         throw enhancedError
       }
@@ -262,7 +261,7 @@ export async function POST(request: NextRequest) {
     // For enhanced format, verify all instructors exist
     if (isEnhancedFormat && validatedData.schedules && validatedData.schedules.length > 0) {
       const instructorIds = validatedData.schedules.map((s: any) => s.instructor_id)
-      logDebug('Enrollment API - Validating instructor IDs (as user_ids): ' + JSON.stringify(instructorIds))
+      console.log('Enrollment API - Validating instructor IDs (as user_ids): ' + JSON.stringify(instructorIds))
       
       // IMPORTANT: instructor_id in the request body actually refers to user_id in the users table
       // This is because student_schedules.instructor_id references users.id, not instructors.id
@@ -273,7 +272,7 @@ export async function POST(request: NextRequest) {
         .in('role', ['admin', 'instructor'])
       
       if (instructorQueryError) {
-        logError('Enrollment API - Error querying instructor users:', instructorQueryError)
+        console.error('Enrollment API - Error querying instructor users:', instructorQueryError)
         return NextResponse.json(
           { 
             error: 'Erro ao validar instrutores',
@@ -283,14 +282,14 @@ export async function POST(request: NextRequest) {
         )
       }
       
-      logDebug('Enrollment API - Found instructor users: ' + JSON.stringify(instructorUsers))
-      logDebug('Enrollment API - Expected count: ' + instructorIds.length + ', Found count: ' + (instructorUsers?.length || 0))
+      console.log('Enrollment API - Found instructor users: ' + JSON.stringify(instructorUsers))
+      console.log('Enrollment API - Expected count: ' + instructorIds.length + ', Found count: ' + (instructorUsers?.length || 0))
       
       if (!instructorUsers || instructorUsers.length !== instructorIds.length) {
-        const foundIds = instructorUsers?.map(i => i.id) || []
+        const foundIds = instructorUsers?.map((i: any) => i.id) || []
         const missingIds = instructorIds.filter((id: string) => !foundIds.includes(id))
         
-        logError('Enrollment API - Missing instructor user IDs:', missingIds)
+        console.error('Enrollment API - Missing instructor user IDs:', missingIds)
         
         // Additional debug: Check if these IDs exist in users table but without instructor role
         const { data: allUsers } = await supabase
@@ -307,7 +306,7 @@ export async function POST(request: NextRequest) {
               expected: instructorIds.length,
               found: instructorUsers?.length || 0,
               missing_instructor_ids: missingIds,
-              users_without_instructor_role: usersWithoutInstructorRole.map(u => ({
+              users_without_instructor_role: usersWithoutInstructorRole.map((u: any) => ({
                 id: u.id,
                 name: u.full_name,
                 email: u.email,
@@ -322,7 +321,7 @@ export async function POST(request: NextRequest) {
       }
       
       // All instructors are valid (already filtered by role in the query)
-      logDebug('Enrollment API - All instructor users validated successfully')
+      console.log('Enrollment API - All instructor users validated successfully')
       
       // TODO: Future enhancement - Check instructor availability against teacher_availability table
       // This will be implemented when the availability checking system is integrated
@@ -366,7 +365,7 @@ export async function POST(request: NextRequest) {
       modality: validatedData.is_in_person ? 'in-person' : 'online'
     }
     
-    logDebug('Enrollment API - Enrollment data to insert: ' + JSON.stringify(enrollmentData))
+    console.log('Enrollment API - Enrollment data to insert: ' + JSON.stringify(enrollmentData))
     
     // Create enrollment
     const { data: enrollment, error } = await supabase
@@ -391,7 +390,7 @@ export async function POST(request: NextRequest) {
       .single()
     
     if (error) {
-      logError('Error creating enrollment:', error)
+      console.error('Error creating enrollment:', error)
       return NextResponse.json(
         { error: 'Erro ao criar matrícula' },
         { status: 500 }
@@ -401,10 +400,10 @@ export async function POST(request: NextRequest) {
     // Create student schedules based on format and modality
     let schedulesToCreate: any[] = []
     if (enrollment) {
-      logDebug('Enrollment API - Processing schedules for enrollment:', enrollment.id)
+      console.log('Enrollment API - Processing schedules for enrollment:', enrollment.id)
       
       if (isEnhancedFormat && validatedData.schedules && validatedData.schedules.length > 0 && validatedData.modality === 'in-person') {
-        logDebug('Enrollment API - Enhanced format schedules: ' + JSON.stringify(validatedData.schedules))
+        console.log('Enrollment API - Enhanced format schedules: ' + JSON.stringify(validatedData.schedules))
         // Enhanced format with schedules array
         schedulesToCreate = validatedData.schedules.map((schedule: any) => ({
           enrollment_id: enrollment.id,
@@ -414,13 +413,13 @@ export async function POST(request: NextRequest) {
           end_time: schedule.end_time
         }))
       } else if (!isEnhancedFormat && validatedData.is_in_person) {
-        logDebug('Enrollment API - Legacy format in-person, skipping schedule creation for now')
+        console.log('Enrollment API - Legacy format in-person, skipping schedule creation for now')
         // Legacy format - would need conversion from schedule slots to actual times
         // For now, we'll skip this as it requires additional data conversion
         // This would be handled by the form transformation in the frontend
       }
       
-      logDebug('Enrollment API - Schedules to create: ' + JSON.stringify(schedulesToCreate))
+      console.log('Enrollment API - Schedules to create: ' + JSON.stringify(schedulesToCreate))
       
       // Insert student schedules if any
       if (schedulesToCreate.length > 0) {
@@ -429,7 +428,7 @@ export async function POST(request: NextRequest) {
           .insert(schedulesToCreate)
         
         if (scheduleError) {
-          logError('Error creating student schedules:', scheduleError)
+          console.error('Error creating student schedules:', scheduleError)
           
           // Rollback enrollment if schedule creation failed
           await supabase.from('enrollments').delete().eq('id', enrollment.id)
@@ -442,9 +441,9 @@ export async function POST(request: NextRequest) {
             { status: 500 }
           )
         }
-        logDebug('Enrollment API - Schedules created successfully')
+        console.log('Enrollment API - Schedules created successfully')
       } else {
-        logDebug('Enrollment API - No schedules to create (online enrollment or legacy format)')
+        console.log('Enrollment API - No schedules to create (online enrollment or legacy format)')
       }
     }
     
@@ -469,7 +468,7 @@ export async function POST(request: NextRequest) {
     
   } catch (error) {
     if (error instanceof z.ZodError) {
-      logError('Zod validation error:', error.errors)
+      console.error('Zod validation error:', error.errors)
       return NextResponse.json(
         { 
           error: 'Dados inválidos', 
@@ -480,7 +479,7 @@ export async function POST(request: NextRequest) {
       )
     }
     
-    logError('Enrollment creation error:', error)
+    console.error('Enrollment creation error:', error)
     return NextResponse.json(
       { error: 'Erro interno do servidor' },
       { status: 500 }

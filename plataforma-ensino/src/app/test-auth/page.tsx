@@ -30,9 +30,9 @@ export default function AuthTestPage() {
 
   const updateTest = (name: string, update: Partial<TestResult>) => {
     setTests(prev => {
-      const existing = prev.find(t => t.name === name)
+      const existing = prev.find((t: any) => t.name === name)
       if (existing) {
-        return prev.map(t => t.name === name ? { ...t, ...update } : t)
+        return prev.map((t: any) => t.name === name ? { ...t, ...update } : t)
       }
       return [...prev, { name, status: 'pending', ...update } as TestResult]
     })
@@ -71,12 +71,12 @@ export default function AuthTestPage() {
     try {
       // Test 1: Check cookies
       const cookies = await runTest('Cookies Available', async () => {
-        const allCookies = document.cookie.split(';').map(cookie => {
+        const allCookies = document.cookie.split(';').map((cookie: any) => {
           const [name, value] = cookie.trim().split('=')
           return { name, value: value || '' }
-        }).filter(cookie => cookie.name)
+        }).filter((cookie: any) => cookie.name)
         
-        const supabaseCookies = allCookies.filter(cookie => 
+        const supabaseCookies = allCookies.filter((cookie: any) => 
           cookie.name.includes('supabase') || 
           cookie.name.includes('sb-') ||
           cookie.name.includes('auth')
@@ -129,7 +129,7 @@ export default function AuthTestPage() {
       // Test 6: Test Auth State Changes
       await runTest('Auth State Listener', async () => {
         return new Promise((resolve) => {
-          const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+          const { data: { subscription } } = supabase.auth.onAuthStateChange((event: any, session: any) => {
             resolve({
               event,
               hasSession: !!session,

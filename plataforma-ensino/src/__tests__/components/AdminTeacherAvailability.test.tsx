@@ -432,7 +432,7 @@ describe('AdminTeacherAvailability', () => {
 
     // Find and click edit button
     const editButtons = screen.getAllByRole('button')
-    const editButton = editButtons.find(button => button.innerHTML.includes('Edit2'))
+    const editButton = editButtons.find((button: any) => button.innerHTML.includes('Edit2'))
     
     if (editButton) {
       fireEvent.click(editButton)

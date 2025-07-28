@@ -1,6 +1,5 @@
 import { createClient } from '@/lib/supabase/server';
-import { NextRequest, NextResponse } from 'next/server';
-import { logError } from '@/lib/utils/logger';
+import { type NextRequest, NextResponse } from 'next/server';
 
 // Force dynamic rendering for authentication and database queries
 export const dynamic = 'force-dynamic';
@@ -96,7 +95,7 @@ export async function GET(
       .order('start_time');
 
     if (availabilityError) {
-      logError('Erro ao buscar disponibilidade:', availabilityError);
+      console.error('Erro ao buscar disponibilidade:', availabilityError);
       return NextResponse.json(
         { error: 'Erro ao buscar disponibilidade' },
         { status: 500 }
@@ -125,7 +124,7 @@ export async function GET(
       .eq('instructor_id', instructor.user_id);
 
     if (schedulesError) {
-      logError('Erro ao buscar agendamentos:', schedulesError);
+      console.error('Erro ao buscar agendamentos:', schedulesError);
     }
 
     // Processar dados por dia da semana
@@ -140,12 +139,12 @@ export async function GET(
     ];
 
     // Agrupar slots por dia e calcular ocupação
-    const scheduleByDay: DaySchedule[] = daysOfWeek.map(day => {
-      const daySlots = availability?.filter(slot => slot.day_of_week === day.value) || [];
+    const scheduleByDay: DaySchedule[] = daysOfWeek.map((day: any) => {
+      const daySlots = availability?.filter((slot: any) => slot.day_of_week === day.value) || [];
       
-      const processedSlots: TimeSlot[] = daySlots.map(slot => {
+      const processedSlots: TimeSlot[] = daySlots.map((slot: any) => {
         // Contar quantos agendamentos existem para este slot
-        const bookings = schedules?.filter(schedule => 
+        const bookings = schedules?.filter((schedule: any) => 
           schedule.day_of_week === slot.day_of_week &&
           schedule.start_time === slot.start_time &&
           schedule.end_time === slot.end_time &&
@@ -183,14 +182,14 @@ export async function GET(
 
     // Calcular estatísticas gerais
     const totalSlots = availability?.length || 0;
-    const activeSlots = availability?.filter(slot => slot.is_active).length || 0;
+    const activeSlots = availability?.filter((slot: any) => slot.is_active).length || 0;
     const totalCapacity = availability?.reduce((sum, slot) => sum + slot.max_students, 0) || 0;
-    const totalBookings = schedules?.filter(s => s.enrollments?.some((e: any) => e.status === 'active')).length || 0;
+    const totalBookings = schedules?.filter((s: any) => s.enrollments?.some((e: any) => e.status === 'active')).length || 0;
     const overallUtilization = totalCapacity > 0 ? Math.round((totalBookings / totalCapacity) * 100) : 0;
 
     // Identificar horários mais e menos ocupados
     const allSlots = scheduleByDay.flatMap(day => day.slots);
-    const slotOccupancy = allSlots.map(slot => ({
+    const slotOccupancy = allSlots.map((slot: any) => ({
       time: `${slot.startTime} - ${slot.endTime}`,
       utilizationRate: slot.maxStudents > 0 ? Math.round((slot.currentBookings / slot.maxStudents) * 100) : 0
     }));
@@ -219,17 +218,17 @@ export async function GET(
         totalBookings,
         availableSpots: totalCapacity - totalBookings,
         overallUtilization,
-        workingDays: [...new Set(availability?.map(slot => slot.day_of_week))].length,
+        workingDays: [...new Set(availability?.map((slot: any) => slot.day_of_week))].length,
         averageSlotsPerDay: totalSlots > 0 ? Math.round(totalSlots / 6) : 0
       },
       insights: {
         mostOccupiedSlots: mostOccupied,
         leastOccupiedSlots: leastOccupied,
         peakDays: scheduleByDay
-          .filter(day => day.totalCapacity > 0)
+          .filter((day: any) => day.totalCapacity > 0)
           .sort((a, b) => b.utilizationRate - a.utilizationRate)
           .slice(0, 3)
-          .map(day => ({
+          .map((day: any) => ({
             dayName: day.dayName,
             utilizationRate: day.utilizationRate
           }))
@@ -242,7 +241,7 @@ export async function GET(
     return NextResponse.json(response);
 
   } catch (error) {
-    logError('Erro ao buscar disponibilidade do professor:', error);
+    console.error('Erro ao buscar disponibilidade do professor:', error);
     return NextResponse.json(
       { error: 'Erro interno do servidor' },
       { status: 500 }

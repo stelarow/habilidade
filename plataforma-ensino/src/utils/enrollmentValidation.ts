@@ -2,7 +2,6 @@
 
 import { z } from 'zod'
 import type { EnhancedEnrollmentFormData, EnrollmentValidationErrors, ScheduleSlot } from '@/types/enrollment'
-import { logDebug, logWarn, logError } from '@/lib/utils/logger'
 
 // Base validation schema for all enrollments
 const baseEnrollmentSchema = z.object({
@@ -81,27 +80,27 @@ export function validateEnrollmentForm(
 // Helper function to parse schedule slot format (AC: 3)
 export function parseScheduleSlot(slotString: string): ScheduleSlot | null {
   try {
-    logDebug('parseScheduleSlot - Input:', slotString)
+    console.log('parseScheduleSlot - Input:', slotString)
     
     // Handle empty or invalid inputs
     if (!slotString || typeof slotString !== 'string') {
-      logWarn('parseScheduleSlot - Empty or invalid input')
+      console.warn('parseScheduleSlot - Empty or invalid input')
       return null
     }
     
     // Check if input is a UUID (fallback for old format)
     const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
     if (uuidRegex.test(slotString)) {
-      logWarn('parseScheduleSlot - Received UUID instead of formatted slot string:', slotString)
+      console.warn('parseScheduleSlot - Received UUID instead of formatted slot string:', slotString)
       return null
     }
     
     // Expected format: "teacherId:day:HH:MM-HH:MM"
     const parts = slotString.split(':')
-    logDebug('parseScheduleSlot - Parts:', parts)
+    console.log('parseScheduleSlot - Parts:', parts)
     
     if (parts.length < 3) {
-      logWarn('parseScheduleSlot - Invalid format, expected at least 3 parts separated by ":"')
+      console.warn('parseScheduleSlot - Invalid format, expected at least 3 parts separated by ":"')
       return null
     }
     
@@ -111,26 +110,26 @@ export function parseScheduleSlot(slotString: string): ScheduleSlot | null {
     
     // Validate teacherId (should be a UUID)
     if (!teacherId || !uuidRegex.test(teacherId)) {
-      logWarn('parseScheduleSlot - Invalid teacherId format:', teacherId)
+      console.warn('parseScheduleSlot - Invalid teacherId format:', teacherId)
       return null
     }
     
     // Validate day (1-7 for Monday-Sunday)
     if (isNaN(day) || day < 1 || day > 7) {
-      logWarn('parseScheduleSlot - Invalid day:', dayStr, 'parsed as:', day)
+      console.warn('parseScheduleSlot - Invalid day:', dayStr, 'parsed as:', day)
       return null
     }
     
     // Validate time range format (HH:MM-HH:MM)
     if (!timeRange || !timeRange.includes('-')) {
-      logWarn('parseScheduleSlot - Invalid time range format:', timeRange)
+      console.warn('parseScheduleSlot - Invalid time range format:', timeRange)
       return null
     }
     
     const [startTime, endTime] = timeRange.split('-')
     const timeFormat = /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/
     if (!timeFormat.test(startTime) || !timeFormat.test(endTime)) {
-      logWarn('parseScheduleSlot - Invalid time format:', { startTime, endTime })
+      console.warn('parseScheduleSlot - Invalid time format:', { startTime, endTime })
       return null
     }
     
@@ -140,10 +139,10 @@ export function parseScheduleSlot(slotString: string): ScheduleSlot | null {
       teacherId
     }
     
-    logDebug('parseScheduleSlot - Successfully parsed result:', result)
+    console.log('parseScheduleSlot - Successfully parsed result:', result)
     return result
   } catch (error) {
-    logError('parseScheduleSlot - Error:', error)
+    console.error('parseScheduleSlot - Error:', error)
     return null
   }
 }
@@ -163,7 +162,7 @@ export function transformFormDataToApiPayload(
     end_time: string
   }[]
 } {
-  logDebug('enrollmentValidation - Transforming form data:', formData)
+  console.log('enrollmentValidation - Transforming form data:', formData)
   
   const payload = {
     student_id: formData.user_id,
@@ -178,7 +177,7 @@ export function transformFormDataToApiPayload(
     
     // Parse first schedule slot
     const slot1 = parseScheduleSlot(formData.schedule_slot_1)
-    logDebug('enrollmentValidation - Parsed slot1:', slot1)
+    console.log('enrollmentValidation - Parsed slot1:', slot1)
     if (slot1) {
       const [startTime, endTime] = slot1.time.split('-')
       if (startTime && endTime) {
@@ -194,7 +193,7 @@ export function transformFormDataToApiPayload(
     // Parse second schedule slot if exists
     if (formData.schedule_slot_2) {
       const slot2 = parseScheduleSlot(formData.schedule_slot_2)
-      logDebug('enrollmentValidation - Parsed slot2:', slot2)
+      console.log('enrollmentValidation - Parsed slot2:', slot2)
       if (slot2) {
         const [startTime, endTime] = slot2.time.split('-')
         if (startTime && endTime) {
@@ -208,12 +207,12 @@ export function transformFormDataToApiPayload(
       }
     }
     
-    logDebug('enrollmentValidation - Generated schedules:', schedules)
+    console.log('enrollmentValidation - Generated schedules:', schedules)
     return { ...payload, schedules }
   }
   
   // For online enrollments, ensure schedules is an empty array
-  logDebug('enrollmentValidation - Generated payload (online):', { ...payload, schedules: [] })
+  console.log('enrollmentValidation - Generated payload (online):', { ...payload, schedules: [] })
   return { ...payload, schedules: [] }
 }
 

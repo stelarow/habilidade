@@ -19,7 +19,7 @@ export default async function DebugServerPage() {
   console.log(`[DEBUG_SERVER-${debugId}] Headers count: ${Object.keys(allHeaders).length}`)
 
   // Create Supabase client
-  let debugData: any = {
+  const debugData: any = {
     timestamp: new Date().toISOString(),
     path: '/debug-server',
     method: 'GET'
@@ -91,13 +91,13 @@ export default async function DebugServerPage() {
   }
 
   debugData.middlewareHeaders = middlewareHeaders
-  debugData.cookies = allCookies.map(c => ({
+  debugData.cookies = allCookies.map((c: any) => ({
     name: c.name,
     hasValue: !!c.value,
     valueLength: c.value?.length || 0
   }))
 
-  const supabaseCookies = allCookies.filter(c => 
+  const supabaseCookies = allCookies.filter((c: any) => 
     c.name.includes('supabase') || c.name.includes('sb-')
   )
 

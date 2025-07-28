@@ -292,7 +292,7 @@ export async function seedSampleInstructors() {
           { start_time: '20:00:00', end_time: '22:00:00', max_students: 3 }
         ]
 
-        dailySlots.forEach(slot => {
+        dailySlots.forEach((slot: any) => {
           availabilitySlots.push({
             teacher_id: instructor.id,
             day_of_week: day,
@@ -310,7 +310,7 @@ export async function seedSampleInstructors() {
         { start_time: '10:00:00', end_time: '12:00:00', max_students: 3 }
       ]
 
-      saturdaySlots.forEach(slot => {
+      saturdaySlots.forEach((slot: any) => {
         availabilitySlots.push({
           teacher_id: instructor.id,
           day_of_week: 6,

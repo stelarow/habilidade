@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
 import { useLessonCompletion } from '@/hooks/useLessonCompletion'
 import { LessonCompletionCelebration } from './LessonCompletionCelebration'
-import { LessonProgressData } from '@/types/lesson'
+import type { LessonProgressData } from '@/types/lesson'
 import { Warning, ArrowClockwise, X } from '@phosphor-icons/react'
 
 interface EnhancedLessonCompletionProps {

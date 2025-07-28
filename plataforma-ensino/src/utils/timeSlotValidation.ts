@@ -139,7 +139,7 @@ export const DAYS_OF_WEEK = [
   { value: 6, label: 'Sábado', short: 'Sáb', workingDay: true }
 ] as const;
 
-export const WORKING_DAYS = DAYS_OF_WEEK.filter(day => day.workingDay);
+export const WORKING_DAYS = DAYS_OF_WEEK.filter((day: any) => day.workingDay);
 
 // Função para validar conflitos de horários
 export function hasTimeConflict(

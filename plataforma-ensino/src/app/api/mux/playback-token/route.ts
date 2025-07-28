@@ -1,6 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { type NextRequest, NextResponse } from 'next/server'
 import jwt from 'jsonwebtoken'
-import { logError } from '@/lib/utils/logger'
 
 // Force dynamic rendering for token generation
 export const dynamic = 'force-dynamic'
@@ -36,7 +35,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ token })
   } catch (error) {
-    logError('Error generating Mux playback token:', error)
+    console.error('Error generating Mux playback token:', error)
     return NextResponse.json({ error: 'Failed to generate token' }, { status: 500 })
   }
 }

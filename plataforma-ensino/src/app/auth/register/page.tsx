@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation';
 import { GradientButton, Loading } from '@/components/ui';
 import { Starfield } from '@/components/ui';
 import { createClient } from '@supabase/supabase-js';
-import { logDebug, logError } from '@/lib/utils/logger';
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -28,23 +27,23 @@ export default function RegisterPage() {
     const registerId = Math.random().toString(36).substr(2, 9);
 
     // Validation
-    logDebug(`[REGISTER-${registerId}] 🚀 Starting registration process for: ${formData.email}`);
+    console.log(`[REGISTER-${registerId}] 🚀 Starting registration process for: ${formData.email}`);
     
     if (formData.password !== formData.confirmPassword) {
-      logDebug(`[REGISTER-${registerId}] ❌ Password confirmation mismatch`);
+      console.log(`[REGISTER-${registerId}] ❌ Password confirmation mismatch`);
       setError('As senhas não coincidem');
       setIsLoading(false);
       return;
     }
 
     if (formData.password.length < 6) {
-      logDebug(`[REGISTER-${registerId}] ❌ Password too short: ${formData.password.length} characters`);
+      console.log(`[REGISTER-${registerId}] ❌ Password too short: ${formData.password.length} characters`);
       setError('A senha deve ter pelo menos 6 caracteres');
       setIsLoading(false);
       return;
     }
 
-    logDebug(`[REGISTER-${registerId}] ✅ Form validation passed`);
+    console.log(`[REGISTER-${registerId}] ✅ Form validation passed`);
 
     try {
       const supabase = createClient(
@@ -52,11 +51,11 @@ export default function RegisterPage() {
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string
       );
 
-      logDebug(`[REGISTER-${registerId}] 🔄 Clearing any existing session...`);
+      console.log(`[REGISTER-${registerId}] 🔄 Clearing any existing session...`);
       // Clear any existing session first
       await supabase.auth.signOut();
 
-      logDebug(`[REGISTER-${registerId}] 📝 Attempting user registration...`);
+      console.log(`[REGISTER-${registerId}] 📝 Attempting user registration...`);
       const { data, error: signUpError } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
@@ -66,7 +65,7 @@ export default function RegisterPage() {
         }
       });
 
-      logDebug(`[REGISTER-${registerId}] 📊 Registration response:`, {
+      console.log(`[REGISTER-${registerId}] 📊 Registration response:`, {
         hasUser: !!data.user,
         hasSession: !!data.session,
         hasError: !!signUpError,
@@ -75,7 +74,7 @@ export default function RegisterPage() {
       });
 
       if (signUpError) {
-        logError(`[REGISTER-${registerId}] ❌ Registration error:`, {
+        console.error(`[REGISTER-${registerId}] ❌ Registration error:`, {
           message: signUpError.message,
           status: signUpError.status
         });
@@ -95,23 +94,23 @@ export default function RegisterPage() {
           data.user.role === ''
         );
         
-        logDebug(`[REGISTER-${registerId}] 🔍 Duplicate email check:`, {
+        console.log(`[REGISTER-${registerId}] 🔍 Duplicate email check:`, {
           identitiesLength: data.user.identities?.length,
           role: data.user.role,
           isDuplicate: isDuplicateEmail
         });
         
         if (isDuplicateEmail) {
-          logDebug(`[REGISTER-${registerId}] ⚠️ Duplicate email detected - blocking registration`);
+          console.log(`[REGISTER-${registerId}] ⚠️ Duplicate email detected - blocking registration`);
           setError('Este email já está cadastrado. Verifique sua caixa de entrada para o link de verificação ou tente fazer login.');
           return;
         }
       }
 
-      logDebug(`[REGISTER-${registerId}] ✅ Registration successful - email verification sent`);
+      console.log(`[REGISTER-${registerId}] ✅ Registration successful - email verification sent`);
       setEmailSent(true);
     } catch (err: any) {
-      logError(`[REGISTER-${registerId}] ❌ Registration failed:`, {
+      console.error(`[REGISTER-${registerId}] ❌ Registration failed:`, {
         error: err?.message,
         status: err?.status,
         code: err?.code
@@ -119,7 +118,7 @@ export default function RegisterPage() {
       setError(err?.message ?? 'Erro ao criar conta. Tente novamente.');
     } finally {
       setIsLoading(false);
-      logDebug(`[REGISTER-${registerId}] 🏁 Registration process completed`);
+      console.log(`[REGISTER-${registerId}] 🏁 Registration process completed`);
     }
   };
 

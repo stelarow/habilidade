@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { CheckCircle, XCircle, Trophy, Clock, FileText, Clipboard, Brain } from 'lucide-react'
-import { LessonProgressData } from '@/types/lesson'
+import type { LessonProgressData } from '@/types/lesson'
 import { useCompletionCriteria } from '@/hooks/useCompletionCriteria'
 
 interface CompletionSectionProps {
@@ -126,7 +126,7 @@ const CompletionSection: React.FC<CompletionSectionProps> = ({
             </h4>
             <ul className="space-y-1">
               {criteria
-                .filter(criterion => !criterion.isCompleted && criterion.id === 'quiz')
+                .filter((criterion: any) => !criterion.isCompleted && criterion.id === 'quiz')
                 .map((criterion) => (
                   <li key={criterion.id} className="flex items-center gap-2 text-sm">
                     <XCircle className="h-4 w-4 text-destructive" />

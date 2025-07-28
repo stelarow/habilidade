@@ -411,13 +411,13 @@ const IABackground: React.FC<IABackgroundProps> = ({
     }
     
     // Atualizar e desenhar nós
-    neuralNodesRef.current.forEach(node => {
+    neuralNodesRef.current.forEach((node: any) => {
       node.update();
       node.draw(ctx);
     });
     
     // Atualizar e desenhar fluxos de dados
-    dataFlowRef.current.forEach(flow => {
+    dataFlowRef.current.forEach((flow: any) => {
       flow.update();
       flow.draw(ctx);
     });

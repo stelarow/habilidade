@@ -296,7 +296,7 @@ export default function TestLessonPage() {
     {
       id: 'pdf',
       name: 'Material PDF',
-      isCompleted: completionCriteria.criteria.find(c => c.id === 'pdf')?.isCompleted || false,
+      isCompleted: completionCriteria.criteria.find((c: any) => c.id === 'pdf')?.isCompleted || false,
       progress: completionCriteria.pdfProgress.percentageRead,
       icon: <FileText className="w-4 h-4" weight="duotone" />,
       color: '#00c4ff',
@@ -305,7 +305,7 @@ export default function TestLessonPage() {
     {
       id: 'quiz',
       name: 'Quiz',
-      isCompleted: completionCriteria.criteria.find(c => c.id === 'quiz')?.isCompleted || false,
+      isCompleted: completionCriteria.criteria.find((c: any) => c.id === 'quiz')?.isCompleted || false,
       progress: 0, // Would come from quiz component
       icon: <Target className="w-4 h-4" weight="duotone" />,
       color: '#22c55e',
@@ -314,7 +314,7 @@ export default function TestLessonPage() {
     {
       id: 'exercises',
       name: 'Exercícios',
-      isCompleted: completionCriteria.criteria.find(c => c.id === 'exercises')?.isCompleted || false,
+      isCompleted: completionCriteria.criteria.find((c: any) => c.id === 'exercises')?.isCompleted || false,
       progress: 0, // Would come from exercises component
       icon: <ClipboardText className="w-4 h-4" weight="duotone" />,
       color: '#ef4444',

@@ -11,7 +11,7 @@ import React from 'react'
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import { SchedulingSection } from '../SchedulingSection'
-import { Course } from '@/components/enrollment/TeacherSelector'
+import type { Course } from '@/components/enrollment/TeacherSelector'
 
 // Mock the external dependencies
 jest.mock('@/components/enrollment/TeacherSelector', () => ({

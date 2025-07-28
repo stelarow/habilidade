@@ -75,7 +75,7 @@ export default function TestSimplifiedCalendarPage() {
                 className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <option value="">Selecione um professor...</option>
-                {sampleTeachers.map(teacher => (
+                {sampleTeachers.map((teacher: any) => (
                   <option key={teacher.id} value={teacher.id}>
                     {teacher.name}
                   </option>

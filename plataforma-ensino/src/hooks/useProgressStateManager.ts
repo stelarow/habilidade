@@ -324,10 +324,10 @@ export function useProgressStateManager(
     try {
       // Mock API call - replace with actual implementation
       await new Promise(resolve => setTimeout(resolve, 1000))
-      logDebug('Progress saved:', progressData)
+      console.log('Progress saved:', progressData)
     } catch (err) {
       setError('Failed to save progress')
-      logError('Save progress error:', err)
+      console.error('Save progress error:', err)
     } finally {
       setIsSaving(false)
     }
@@ -358,6 +358,7 @@ export function useProgressStateManager(
         }
       }
     }
+    return undefined
   }, [finalConfig.autosaveInterval, progressData, saveProgress])
   
   // Cleanup on unmount

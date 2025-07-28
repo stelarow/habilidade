@@ -1,7 +1,6 @@
 import { requireAdmin } from '@/lib/auth/session'
 import { createClient } from '@/lib/supabase/server'
 import { AdminSettings } from '@/components/admin/AdminSettings'
-import { logError } from '@/lib/utils/logger'
 
 // Force dynamic rendering for admin pages that use server-side Supabase client
 export const dynamic = 'force-dynamic'
@@ -18,7 +17,7 @@ export default async function SettingsPage() {
     .order('key')
 
   if (error) {
-    logError('Error fetching settings:', error)
+    console.error('Error fetching settings:', error)
     return (
       <div className="text-center py-8">
         <p className="text-red-400">Erro ao carregar configurações</p>

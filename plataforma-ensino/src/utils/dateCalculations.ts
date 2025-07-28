@@ -22,7 +22,7 @@ export function isWeekend(date: Date): boolean {
  */
 export function isHoliday(date: Date, holidays: Holiday[]): boolean {
   const dateString = formatDateISO(date);
-  return holidays.some(holiday => holiday.date === dateString);
+  return holidays.some((holiday: any) => holiday.date === dateString);
 }
 
 /**

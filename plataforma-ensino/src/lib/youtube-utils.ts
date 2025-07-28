@@ -31,7 +31,7 @@ export function extractYouTubeVideoId(url: string): string | null {
  */
 export function isValidYouTubeUrl(url: string): boolean {
   if (!url) return false
-  return YOUTUBE_PATTERNS.some(pattern => pattern.test(url))
+  return YOUTUBE_PATTERNS.some((pattern: any) => pattern.test(url))
 }
 
 /**

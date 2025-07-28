@@ -7,7 +7,6 @@ import { GradientButton, Loading } from '@/components/ui';
 import { Starfield } from '@/components/ui';
 import { createClient } from '@/lib/supabase/client';
 import { getRedirectUrlForCurrentUser } from '@/lib/auth/redirect-helpers';
-import { logDebug, logError } from '@/lib/utils/logger';
 
 // Separate component for search params handling
 function LoginErrorHandler({ setError }: { setError: (error: string | null) => void }) {
@@ -40,26 +39,26 @@ function LoginForm() {
     const loginId = Math.random().toString(36).substr(2, 9);
     
     try {
-      logDebug(`Starting login process for email: ${formData.email}`, { component: 'LoginForm', loginId });
+      console.log(`Starting login process for email: ${formData.email}`, { component: 'LoginForm', loginId });
       
       const supabase = createClient();
 
-      logDebug('Attempting authentication with Supabase...', { component: 'LoginForm', loginId });
+      console.log('Attempting authentication with Supabase...', { component: 'LoginForm', loginId });
       const { data, error: authError } = await supabase.auth.signInWithPassword({
         email: formData.email,
         password: formData.password
       });
 
       if (authError) {
-        logError(`[LOGIN-${loginId}] ❌ Authentication failed:`, {
+        console.error(`[LOGIN-${loginId}] ❌ Authentication failed:`, {
           error: authError.message,
           code: authError.status
         });
         throw authError;
       }
 
-      logDebug(`[LOGIN-${loginId}] ✅ Authentication successful`);
-      logDebug(`[LOGIN-${loginId}] 👤 User data:`, {
+      console.log(`[LOGIN-${loginId}] ✅ Authentication successful`);
+      console.log(`[LOGIN-${loginId}] 👤 User data:`, {
         id: data.user?.id,
         email: data.user?.email,
         role: data.user?.user_metadata?.role || 'not_set',
@@ -67,23 +66,23 @@ function LoginForm() {
       });
 
       // Wait a moment for the auth state to update, then redirect based on user role
-      logDebug(`[LOGIN-${loginId}] ⏳ Waiting for auth state to update...`);
+      console.log(`[LOGIN-${loginId}] ⏳ Waiting for auth state to update...`);
       setTimeout(async () => {
         try {
-          logDebug(`[LOGIN-${loginId}] 🎯 Determining redirect URL...`);
+          console.log(`[LOGIN-${loginId}] 🎯 Determining redirect URL...`);
           const redirectUrl = await getRedirectUrlForCurrentUser();
-          logDebug(`[LOGIN-${loginId}] ↗️ Redirecting user to: ${redirectUrl}`);
+          console.log(`[LOGIN-${loginId}] ↗️ Redirecting user to: ${redirectUrl}`);
           
           // Use window.location.href for more reliable redirect
           window.location.href = redirectUrl;
         } catch (error) {
-          logError(`[LOGIN-${loginId}] ❌ Error determining redirect URL:`, error);
-          logDebug(`[LOGIN-${loginId}] 🔄 Falling back to default dashboard`);
+          console.error(`[LOGIN-${loginId}] ❌ Error determining redirect URL:`, error);
+          console.log(`[LOGIN-${loginId}] 🔄 Falling back to default dashboard`);
           window.location.href = '/dashboard';
         }
       }, 500); // Longer timeout to ensure auth state is fully updated
     } catch (err: any) {
-      logError(`[LOGIN-${loginId}] ❌ Login process failed:`, {
+      console.error(`[LOGIN-${loginId}] ❌ Login process failed:`, {
         error: err?.message,
         status: err?.status,
         code: err?.code
@@ -91,7 +90,7 @@ function LoginForm() {
       setError(err?.message ?? 'Erro ao fazer login. Verifique suas credenciais.');
     } finally {
       setIsLoading(false);
-      logDebug(`[LOGIN-${loginId}] 🏁 Login process completed`);
+      console.log(`[LOGIN-${loginId}] 🏁 Login process completed`);
     }
   };
 

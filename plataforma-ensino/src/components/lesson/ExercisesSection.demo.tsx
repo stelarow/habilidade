@@ -10,7 +10,7 @@ const ExercisesSectionDemo: React.FC = () => {
   }
 
   const handleFilesUploaded = (files: any[]) => {
-    console.log('Files uploaded:', files.map(f => f.name))
+    console.log('Files uploaded:', files.map((f: any) => f.name))
   }
 
   return (

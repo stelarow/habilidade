@@ -1,7 +1,7 @@
 'use client'
 
 import React, { createContext, useContext, useReducer, useCallback, useMemo } from 'react'
-import { LessonContent, LayoutResult, LayoutState, Breakpoint, GRID_TEMPLATES, LayoutProviderState } from '@/types/lesson'
+import { type LessonContent, type LayoutResult, type LayoutState, Breakpoint, GRID_TEMPLATES, type LayoutProviderState } from '@/types/lesson'
 import { useResponsiveLayout } from './LessonGrid'
 
 // Layout Context

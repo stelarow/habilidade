@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useRef } from 'react'
-import { ExerciseData } from '@/types/lesson'
+import type { ExerciseData } from '@/types/lesson'
 
 interface ExercisePanelProps {
   exercises: ExerciseData[]
@@ -25,8 +25,8 @@ interface ExercisePanelProps {
  * - Progress tracking per exercise
  */
 export function ExercisePanel({ exercises, className, onExerciseSubmit }: ExercisePanelProps) {
-  const completedCount = exercises.filter(ex => ex.status === 'completed').length
-  const inProgressCount = exercises.filter(ex => ex.status === 'in_progress').length
+  const completedCount = exercises.filter((ex: any) => ex.status === 'completed').length
+  const inProgressCount = exercises.filter((ex: any) => ex.status === 'in_progress').length
   const [uploadingExercise, setUploadingExercise] = useState<string | null>(null)
   const fileInputRefs = useRef<{ [key: string]: HTMLInputElement | null }>({})
   

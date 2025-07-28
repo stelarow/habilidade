@@ -10,8 +10,8 @@ interface AdminAuthWrapperProps {
 
 export function AdminAuthWrapper({ children }: AdminAuthWrapperProps) {
   const wrapperId = Math.random().toString(36).substr(2, 9)
-  logDebug(`[ADMIN_AUTH_WRAPPER-${wrapperId}] ========== CLIENT-SIDE AUTH WRAPPER RENDERING ==========`)
-  logDebug(`[ADMIN_AUTH_WRAPPER-${wrapperId}] Component Props:`, {
+  console.log(`[ADMIN_AUTH_WRAPPER-${wrapperId}] ========== CLIENT-SIDE AUTH WRAPPER RENDERING ==========`)
+  console.log(`[ADMIN_AUTH_WRAPPER-${wrapperId}] Component Props:`, {
     hasChildren: !!children,
     timestamp: new Date().toISOString(),
     location: typeof window !== 'undefined' ? window.location.href : 'server-side'
@@ -50,8 +50,8 @@ export function AdminAuthWrapper({ children }: AdminAuthWrapperProps) {
     </div>
   )
 
-  logDebug(`[ADMIN_AUTH_WRAPPER-${wrapperId}] Fallback component prepared`)
-  logDebug(`[ADMIN_AUTH_WRAPPER-${wrapperId}] Rendering ProtectedRoute with:`, {
+  console.log(`[ADMIN_AUTH_WRAPPER-${wrapperId}] Fallback component prepared`)
+  console.log(`[ADMIN_AUTH_WRAPPER-${wrapperId}] Rendering ProtectedRoute with:`, {
     role: 'admin',
     permission: 'admin.view',
     redirectTo: '/auth/login'

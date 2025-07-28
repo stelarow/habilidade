@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { LessonHeader } from './LessonHeader'
-import { LessonProgressData } from '@/types/lesson'
+import type { LessonProgressData } from '@/types/lesson'
 
 /**
  * Demo component to test scroll behavior

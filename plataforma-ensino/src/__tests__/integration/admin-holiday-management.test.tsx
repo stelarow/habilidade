@@ -109,7 +109,7 @@ describe('Holiday Management Integration', () => {
       expect(onHolidayChange).toHaveBeenCalled()
     })
     
-    const createCall = mockApiCalls.find(call => 
+    const createCall = mockApiCalls.find((call: any) => 
       call.url.includes('/api/holidays') && call.options?.method === 'POST'
     )
     expect(createCall).toBeDefined()
@@ -129,7 +129,7 @@ describe('Holiday Management Integration', () => {
     fireEvent.click(screen.getByText('Atualizar'))
     
     await waitFor(() => {
-      const updateCall = mockApiCalls.find(call => 
+      const updateCall = mockApiCalls.find((call: any) => 
         call.url.includes('/api/holidays/1') && call.options?.method === 'PUT'
       )
       expect(updateCall).toBeDefined()
@@ -142,7 +142,7 @@ describe('Holiday Management Integration', () => {
     fireEvent.click(deleteButtons[0])
     
     await waitFor(() => {
-      const deleteCall = mockApiCalls.find(call => 
+      const deleteCall = mockApiCalls.find((call: any) => 
         call.url.includes('/api/holidays/1') && call.options?.method === 'DELETE'
       )
       expect(deleteCall).toBeDefined()
@@ -173,7 +173,7 @@ describe('Holiday Management Integration', () => {
     fireEvent.change(fileInput)
     
     await waitFor(() => {
-      const bulkCall = mockApiCalls.find(call => 
+      const bulkCall = mockApiCalls.find((call: any) => 
         call.url.includes('/api/holidays/bulk') && call.options?.method === 'POST'
       )
       expect(bulkCall).toBeDefined()
@@ -311,7 +311,7 @@ describe('Holiday Management Integration', () => {
     await Promise.all(promises)
     
     // Should have made 3 POST requests
-    const postCalls = mockApiCalls.filter(call => 
+    const postCalls = mockApiCalls.filter((call: any) => 
       call.url.includes('/api/holidays') && call.options?.method === 'POST'
     )
     expect(postCalls).toHaveLength(3)

@@ -63,7 +63,7 @@ export default function TestSeedPage() {
 
       if (coursesError) throw coursesError
 
-      const enrollments = courses?.map(course => ({
+      const enrollments = courses?.map((course: any) => ({
         user_id: userId,
         course_id: course.id,
         status: 'active' as const,
@@ -77,8 +77,8 @@ export default function TestSeedPage() {
       if (error) throw error
 
       addResult(`✅ Usuário matriculado com sucesso! ${enrollments.length} matrículas criadas`, 'success')
-      enrollments.forEach(enrollment => {
-        const course = courses?.find(c => c.id === enrollment.course_id)
+      enrollments.forEach((enrollment: any) => {
+        const course = courses?.find((c: any) => c.id === enrollment.course_id)
         addResult(`📚 Matriculado em: ${course?.title}`, 'info')
       })
     } catch (error) {

@@ -38,7 +38,7 @@ export const HolidayCalendarGrid = React.memo<HolidayCalendarGridProps>(({
   // Generate calendar grid
   const generateCalendarGrid = () => {
     return Array.from({ length: 12 }, (_, month) => {
-      const monthHolidays = holidays.filter(holiday => {
+      const monthHolidays = holidays.filter((holiday: any) => {
         // Safety check for valid holiday object
         if (!holiday || !holiday.date) return false;
         

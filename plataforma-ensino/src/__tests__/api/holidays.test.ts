@@ -1,7 +1,7 @@
-import { NextRequest } from 'next/server'
-import { GET, POST } from '@/app/api/holidays/route'
-import { GET as GET_ID, PUT, DELETE } from '@/app/api/holidays/[id]/route'
-import { POST as BULK_POST } from '@/app/api/holidays/bulk/route'
+import type { NextRequest } from 'next/server'
+import type { GET, POST } from '@/app/api/holidays/route'
+import type { GET as GET_ID, PUT, DELETE } from '@/app/api/holidays/[id]/route'
+import type { POST as BULK_POST } from '@/app/api/holidays/bulk/route'
 import { jest } from '@jest/globals'
 
 // Mock Supabase client

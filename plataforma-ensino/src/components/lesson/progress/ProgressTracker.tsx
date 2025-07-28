@@ -4,8 +4,9 @@ import React, { useMemo, useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
 import { Clock, FileText, ClipboardText, Target, CheckCircle, Trophy } from '@phosphor-icons/react'
-import { LessonProgressData, ComponentProgress } from '@/types/lesson'
-import { useEnhancedProgressCalculation, EnhancedProgressData } from '@/hooks/useEnhancedProgressCalculation'
+import type { LessonProgressData, ComponentProgress } from '@/types/lesson'
+import { useEnhancedProgressCalculation } from '@/hooks/useEnhancedProgressCalculation'
+import type { EnhancedProgressData } from '@/hooks/useEnhancedProgressCalculation'
 
 interface ProgressTrackerProps {
   progress: LessonProgressData

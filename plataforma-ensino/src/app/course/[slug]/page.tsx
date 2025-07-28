@@ -135,7 +135,7 @@ export default function CoursePage() {
 
       // Fetch user progress if enrolled
       if (enrollmentData && lessonsData?.length) {
-        const lessonIds = lessonsData.map(l => l.id)
+        const lessonIds = lessonsData.map((l: { id: string }) => l.id)
         const { data: progressData, error: progressError } = await supabase
           .from('progress')
           .select('*')
@@ -213,8 +213,8 @@ export default function CoursePage() {
 
   const getProgressPercentage = () => {
     if (!lessons.length) return 0
-    const completedLessons = lessons.filter(lesson => 
-      userProgress.some(p => p.lesson_id === lesson.id && p.completed)
+    const completedLessons = lessons.filter((lesson: any) => 
+      userProgress.some((p: any) => p.lesson_id === lesson.id && p.completed)
     ).length
     return Math.round((completedLessons / lessons.length) * 100)
   }
@@ -365,7 +365,7 @@ export default function CoursePage() {
                   
                   <GradientButton 
                     onClick={() => {
-                      const firstLesson = lessons.find(l => l.order_index === 1)
+                      const firstLesson = lessons.find((l: any) => l.order_index === 1)
                       if (firstLesson) {
                         handleStartLesson(firstLesson.slug)
                       }
@@ -420,7 +420,7 @@ export default function CoursePage() {
 
             <div className="space-y-3">
               {lessons.map((lesson, index) => {
-                const isCompleted = userProgress.some(p => p.lesson_id === lesson.id && p.completed)
+                const isCompleted = userProgress.some((p: any) => p.lesson_id === lesson.id && p.completed)
                 const canAccess = isEnrolled || lesson.is_preview
 
                 return (

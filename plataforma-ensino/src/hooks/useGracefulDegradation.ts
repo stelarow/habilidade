@@ -249,8 +249,8 @@ export function useGracefulBatch<T extends Record<string, any>>(
   }, [operations, options]);
 
   const isLoading = Object.values(loading).some(Boolean);
-  const hasErrors = Object.values(errors).some(error => error !== null);
-  const successCount = Object.values(errors).filter(error => error === null).length;
+  const hasErrors = Object.values(errors).some((error: any) => error !== null);
+  const successCount = Object.values(errors).filter((error: any) => error === null).length;
   const totalCount = Object.keys(operations).length;
 
   return {

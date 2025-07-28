@@ -1,7 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { requireAdmin } from '@/lib/auth/session'
 import { LessonManagement } from '@/components/admin/LessonManagement'
-import { logError } from '@/lib/utils/logger'
 
 // Force dynamic rendering for admin pages that use server-side Supabase client
 export const dynamic = 'force-dynamic'
@@ -48,7 +47,7 @@ export default async function LessonsPage() {
     .order('title')
 
   if (lessonsError) {
-    logError('Error fetching lessons:', lessonsError)
+    console.error('Error fetching lessons:', lessonsError)
     return (
       <div className="text-center py-8">
         <p className="text-red-400">Erro ao carregar aulas</p>
@@ -57,7 +56,7 @@ export default async function LessonsPage() {
   }
 
   if (coursesError) {
-    logError('Error fetching courses:', coursesError)
+    console.error('Error fetching courses:', coursesError)
     return (
       <div className="text-center py-8">
         <p className="text-red-400">Erro ao carregar cursos</p>

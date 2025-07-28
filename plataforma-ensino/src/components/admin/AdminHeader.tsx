@@ -33,7 +33,7 @@ export function AdminHeader() {
       await supabase.auth.signOut()
       router.push('/auth/login')
     } catch (error) {
-      logError('Sign out error:', error)
+      console.error('Sign out error:', error)
       // Force redirect even if signOut fails
       router.push('/auth/login')
     }
@@ -56,7 +56,7 @@ export function AdminHeader() {
         .or(`full_name.ilike.%${query}%,email.ilike.%${query}%`)
         .limit(5)
 
-      users?.forEach(user => {
+      users?.forEach((user: any) => {
         results.push({
           id: user.id,
           type: 'user',
@@ -73,7 +73,7 @@ export function AdminHeader() {
         .or(`title.ilike.%${query}%,short_description.ilike.%${query}%`)
         .limit(5)
 
-      courses?.forEach(course => {
+      courses?.forEach((course: any) => {
         results.push({
           id: course.id,
           type: 'course',
@@ -90,7 +90,7 @@ export function AdminHeader() {
         .or(`name.ilike.%${query}%,description.ilike.%${query}%`)
         .limit(5)
 
-      categories?.forEach(category => {
+      categories?.forEach((category: any) => {
         results.push({
           id: category.id,
           type: 'category',
@@ -102,7 +102,7 @@ export function AdminHeader() {
 
       setSearchResults(results)
     } catch (error) {
-      logError('Search error:', error)
+      console.error('Search error:', error)
     } finally {
       setIsSearching(false)
     }

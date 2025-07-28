@@ -1,8 +1,7 @@
 import { createClient } from '@/lib/supabase/server';
 import { verifySession } from '@/lib/auth/session';
-import { NextRequest, NextResponse } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
-import { logError } from '@/lib/utils/logger';
 
 // Force dynamic rendering for authentication
 export const dynamic = 'force-dynamic';
@@ -37,7 +36,7 @@ export async function GET(request: NextRequest) {
       .order('start_time');
 
     if (error) {
-      logError('Database error:', error);
+      console.error('Database error:', error);
       return NextResponse.json({ error: 'Database error' }, { status: 500 });
     }
 
@@ -72,7 +71,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ data: slots });
 
   } catch (error) {
-    logError('API error:', error);
+    console.error('API error:', error);
     if (error instanceof z.ZodError) {
       return NextResponse.json(
         { error: 'Invalid query parameters', details: error.errors },

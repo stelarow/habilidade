@@ -187,7 +187,7 @@ function useTeacherData(availabilityFilter?: TeacherSelectorProps['availabilityF
 
               // Find next available date
               const sortedDates = Object.keys(aggregatedData)
-                .filter(date => aggregatedData[date].availableSlots > 0)
+                .filter((date: any) => aggregatedData[date].availableSlots > 0)
                 .sort()
               nextAvailableDate = sortedDates[0]
 
@@ -202,7 +202,7 @@ function useTeacherData(availabilityFilter?: TeacherSelectorProps['availabilityF
               )
               capacityUtilization = totalCapacity > 0 ? (usedCapacity / totalCapacity) * 100 : 0
             } catch (error) {
-              logWarn(`Failed to fetch availability info for teacher ${teacher.id}:`, error)
+              console.warn(`Failed to fetch availability info for teacher ${teacher.id}:`, error)
             }
           }
 
@@ -219,7 +219,7 @@ function useTeacherData(availabilityFilter?: TeacherSelectorProps['availabilityF
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred'
       setError(errorMessage)
-      logError('Teacher data fetch error:', err)
+      console.error('Teacher data fetch error:', err)
     } finally {
       setLoading(false)
     }
@@ -247,11 +247,11 @@ function useRealtimeUpdates(teachers: TeacherWithAvailabilityInfo[], onUpdate: (
     const unsubscribers: (() => void)[] = []
 
     // Set up subscriptions for each teacher
-    teachers.forEach(teacher => {
+    teachers.forEach((teacher: any) => {
       const unsubscribe = subscribeToAvailabilityUpdates(
         teacher.id,
         (payload) => {
-          logDebug('Teacher availability updated:', payload)
+          console.log('Teacher availability updated:', payload)
           onUpdate()
         }
       )
@@ -259,7 +259,7 @@ function useRealtimeUpdates(teachers: TeacherWithAvailabilityInfo[], onUpdate: (
     })
 
     return () => {
-      unsubscribers.forEach(unsubscribe => unsubscribe())
+      unsubscribers.forEach((unsubscribe: any) => unsubscribe())
     }
   }, [teachers, onUpdate, supabase])
 }
@@ -494,7 +494,7 @@ function TeacherFilters({
                        transition-colors duration-200"
           >
             <option value="">Todas especialidades</option>
-            {availableSpecialties.map(specialty => (
+            {availableSpecialties.map((specialty: any) => (
               <option key={specialty} value={specialty}>
                 {specialty}
               </option>
@@ -544,13 +544,13 @@ export function TeacherSelector({
 
   // Filter teachers based on search and filter criteria
   const filteredTeachers = useMemo(() => {
-    return teachers.filter(teacher => {
+    return teachers.filter((teacher: any) => {
       // Text search
       if (searchTerm) {
         const searchLower = searchTerm.toLowerCase()
         const matchesName = teacher.name.toLowerCase().includes(searchLower)
         const matchesBio = teacher.bio.toLowerCase().includes(searchLower)
-        const matchesSpecialty = teacher.specialties.some(s => 
+        const matchesSpecialty = teacher.specialties.some((s: any) => 
           s.toLowerCase().includes(searchLower)
         )
         if (!matchesName && !matchesBio && !matchesSpecialty) {
@@ -580,8 +580,8 @@ export function TeacherSelector({
   // Get available specialties for filter
   const availableSpecialties = useMemo(() => {
     const specialties = new Set<string>()
-    teachers.forEach(teacher => {
-      teacher.specialties.forEach(specialty => specialties.add(specialty))
+    teachers.forEach((teacher: any) => {
+      teacher.specialties.forEach((specialty: any) => specialties.add(specialty))
     })
     return Array.from(specialties).sort()
   }, [teachers])
@@ -656,7 +656,7 @@ export function TeacherSelector({
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            {filteredTeachers.map(teacher => (
+            {filteredTeachers.map((teacher: any) => (
               <TeacherCard
                 key={teacher.id}
                 teacher={teacher}

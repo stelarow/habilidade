@@ -4,7 +4,7 @@ import React, { useState, useCallback, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
 import { Code, PaintBrush, Lightning, Globe, Question, Clock, Target, ArrowClockwise, ListBullets, Trophy, BookOpen, CheckCircle, X, Lightbulb, Play } from '@phosphor-icons/react'
-import { QuizData } from '@/types/lesson'
+import type { QuizData } from '@/types/lesson'
 import { chapter2Questions, type QuizQuestion } from '@/data/quiz-questions'
 
 interface QuizAttempt {
@@ -57,10 +57,10 @@ export function EnhancedQuizInterface({
   const isLastQuestion = currentQuestionIndex === totalQuestions - 1
 
   // Calculate scores
-  const correctAnswers = answers.filter(a => a.isCorrect).length
+  const correctAnswers = answers.filter((a: any) => a.isCorrect).length
   const totalPossibleScore = questions.reduce((sum, q) => sum + q.points, 0)
   const earnedScore = answers.reduce((sum, a) => {
-    const question = questions.find(q => q.id === a.questionId)
+    const question = questions.find((q: any) => q.id === a.questionId)
     return sum + (a.isCorrect ? (question?.points || 0) : 0)
   }, 0)
   const currentScore = totalPossibleScore > 0 ? Math.round((earnedScore / totalPossibleScore) * 100) : 0
@@ -83,6 +83,7 @@ export function EnhancedQuizInterface({
     } else if (timeRemaining === 0) {
       handleQuizComplete()
     }
+    return undefined;
   }, [timeRemaining, isStarted, isCompleted, handleQuizComplete])
 
   // Start quiz
@@ -234,8 +235,8 @@ export function EnhancedQuizInterface({
               <div className="space-y-2">
                 <h4 className="text-sm font-semibold text-white">Categorias das Questões:</h4>
                 <div className="grid grid-cols-2 gap-2 text-xs">
-                  {['html', 'css', 'javascript', 'general'].map(category => {
-                    const count = questions.filter(q => q.category === category).length
+                  {['html', 'css', 'javascript', 'general'].map((category: any) => {
+                    const count = questions.filter((q: any) => q.category === category).length
                     return (
                       <div key={category} className="flex items-center gap-2">
                         <span>{getCategoryIcon(category as QuizQuestion['category'])}</span>
@@ -265,13 +266,13 @@ export function EnhancedQuizInterface({
 
   if (isCompleted) {
     const passed = currentScore >= quiz.passingScore
-    const categoryScores = ['html', 'css', 'javascript', 'general'].map(category => {
-      const categoryQuestions = questions.filter(q => q.category === category)
-      const categoryAnswers = answers.filter(a => {
-        const question = questions.find(q => q.id === a.questionId)
+    const categoryScores = ['html', 'css', 'javascript', 'general'].map((category: any) => {
+      const categoryQuestions = questions.filter((q: any) => q.category === category)
+      const categoryAnswers = answers.filter((a: any) => {
+        const question = questions.find((q: any) => q.id === a.questionId)
         return question?.category === category
       })
-      const correct = categoryAnswers.filter(a => a.isCorrect).length
+      const correct = categoryAnswers.filter((a: any) => a.isCorrect).length
       const percentage = categoryQuestions.length > 0 ? Math.round((correct / categoryQuestions.length) * 100) : 0
       
       return {
@@ -373,7 +374,7 @@ export function EnhancedQuizInterface({
                 className="space-y-4"
               >
                 {questions.map((question, index) => {
-                  const attempt = answers.find(a => a.questionId === question.id)
+                  const attempt = answers.find((a: any) => a.questionId === question.id)
                   const isCorrect = attempt?.isCorrect || false
                   
                   return (

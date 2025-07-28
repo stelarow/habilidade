@@ -1,8 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { type NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { verifySession, requireAdmin, requireInstructorOrAdmin } from '@/lib/auth/session'
 import { z } from 'zod'
-import { logError } from '@/lib/utils/logger'
 import type {
   AvailabilityQuery,
   CreateAvailabilityRequest,
@@ -84,7 +83,7 @@ function calculateNextOccurrence(dayOfWeek: number, startDate: string, endDate: 
   const end = new Date(endDate)
   
   // Find first occurrence of the day of week
-  let current = new Date(start)
+  const current = new Date(start)
   while (current.getDay() !== dayOfWeek && current <= end) {
     current.setDate(current.getDate() + 1)
   }
@@ -98,7 +97,7 @@ function calculateNextOccurrence(dayOfWeek: number, startDate: string, endDate: 
 
 // Helper function to check if date conflicts with holidays
 function dateConflictsWithHoliday(date: string, holidays: Holiday[]): boolean {
-  return holidays.some(holiday => holiday.date === date)
+  return holidays.some((holiday: any) => holiday.date === date)
 }
 
 /**
@@ -175,7 +174,7 @@ export async function GET(
     const { data: availabilitySlots, error } = await availabilityQuery
     
     if (error) {
-      logError('Database error fetching availability:', error)
+      console.error('Database error fetching availability:', error)
       return createErrorResponse(
         'VALIDATION_ERROR',
         'Failed to fetch availability',
@@ -204,7 +203,7 @@ export async function GET(
     // to calculate available_spots and scheduled_count. For now, we'll mock this data.
     
     // Enhance availability slots with computed data
-    const enhancedSlots: AvailabilitySlot[] = availabilitySlots.map(slot => {
+    const enhancedSlots: AvailabilitySlot[] = availabilitySlots.map((slot: any) => {
       const nextOccurrence = calculateNextOccurrence(
         slot.day_of_week,
         validatedQuery.startDate,
@@ -239,7 +238,7 @@ export async function GET(
       )
     }
     
-    logError('Teacher availability GET error:', error)
+    console.error('Teacher availability GET error:', error)
     return createErrorResponse(
       'VALIDATION_ERROR',
       'Internal server error',
@@ -330,7 +329,7 @@ export async function POST(
     
     if (existingSlots) {
       // Check for time overlap
-      const hasConflict = existingSlots.some(slot => {
+      const hasConflict = existingSlots.some((slot: any) => {
         const existingStart = slot.start_time
         const existingEnd = slot.end_time
         const newStart = validatedData.startTime
@@ -365,7 +364,7 @@ export async function POST(
       .single()
     
     if (error) {
-      logError('Database error creating availability:', error)
+      console.error('Database error creating availability:', error)
       return createErrorResponse(
         'VALIDATION_ERROR',
         'Failed to create availability slot',
@@ -391,7 +390,7 @@ export async function POST(
       )
     }
     
-    logError('Teacher availability POST error:', error)
+    console.error('Teacher availability POST error:', error)
     return createErrorResponse(
       'VALIDATION_ERROR',
       'Internal server error',

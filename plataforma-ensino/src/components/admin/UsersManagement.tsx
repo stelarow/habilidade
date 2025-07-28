@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import type { User } from '@/types'
-import { UserProfile } from '@/lib/auth/session'
+import type { UserProfile } from '@/lib/auth/session'
 import { hasPermission } from '@/lib/auth/permissions-client'
 import { createClient } from '@/lib/supabase/client'
 import { 
@@ -45,7 +45,7 @@ export function UsersManagement({ users: initialUsers, currentUser }: UsersManag
 
     // Filter by search term
     if (searchTerm) {
-      filtered = filtered.filter(user => 
+      filtered = filtered.filter((user: any) => 
         user.full_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         user.email.toLowerCase().includes(searchTerm.toLowerCase())
       )
@@ -53,7 +53,7 @@ export function UsersManagement({ users: initialUsers, currentUser }: UsersManag
 
     // Filter by role
     if (roleFilter !== 'all') {
-      filtered = filtered.filter(user => user.role === roleFilter)
+      filtered = filtered.filter((user: any) => user.role === roleFilter)
     }
 
     setFilteredUsers(filtered)
@@ -76,7 +76,7 @@ export function UsersManagement({ users: initialUsers, currentUser }: UsersManag
       if (error) throw error
 
       // Update the local state
-      setUsers(users.map(user => 
+      setUsers(users.map((user: any) => 
         user.id === userId ? { ...user, role: newRole as any } : user
       ))
 
@@ -106,7 +106,7 @@ export function UsersManagement({ users: initialUsers, currentUser }: UsersManag
 
       if (error) throw error
 
-      setUsers(users.filter(user => user.id !== userId))
+      setUsers(users.filter((user: any) => user.id !== userId))
       setShowDeleteModal(false)
       setSelectedUser(null)
     } catch (error) {

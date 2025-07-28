@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useRef, useState } from 'react'
-import { ReactVideoPlayer, VideoPlayerRef } from '../ui/ReactVideoPlayer'
+import { ReactVideoPlayer, type VideoPlayerRef } from '../ui/ReactVideoPlayer'
 import { VideoPlayerWrapper } from '../ui/VideoPlayerWrapper'
 import { LazyVideoPlayer } from '../ui/LazyVideoPlayer'
 import { AccessibleVideoPlayer } from '../ui/AccessibleVideoPlayer'

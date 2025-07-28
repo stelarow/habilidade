@@ -10,7 +10,6 @@ import { useState, useCallback, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { logDebug } from '@/lib/utils/logger'
 import { 
   EnrollmentFormSchema, 
   TeacherSelectionSchema, 
@@ -127,7 +126,7 @@ export function useEnrollmentValidation(options: UseEnrollmentValidationOptions 
       // Course compatibility check (if courseId provided)
       if (courseId && teacher.specialties && teacher.specialties.length > 0) {
         // In a real implementation, this would check course-teacher compatibility
-        logDebug('Course compatibility check for:', courseId, teacher.specialties)
+        console.log('Course compatibility check for:', courseId, teacher.specialties)
       }
 
       setCustomErrors(errors)
@@ -182,7 +181,7 @@ export function useEnrollmentValidation(options: UseEnrollmentValidationOptions 
           })
         } catch (zodError) {
           if (zodError instanceof z.ZodError) {
-            zodError.errors.forEach(err => {
+            zodError.errors.forEach((err: any) => {
               slotErrors.push({
                 field: `selectedSlots[${i}].${err.path.join('.')}`,
                 message: err.message,
@@ -240,7 +239,7 @@ export function useEnrollmentValidation(options: UseEnrollmentValidationOptions 
 
       // Check for overlapping dates
       const dateMap = new Map<string, TimeSlot[]>()
-      slots.forEach(slot => {
+      slots.forEach((slot: any) => {
         const dateStr = slot.date.toISOString().split('T')[0]
         if (!dateMap.has(dateStr)) {
           dateMap.set(dateStr, [])
@@ -333,8 +332,8 @@ export function useEnrollmentValidation(options: UseEnrollmentValidationOptions 
 
       // Validate enrollment timing
       const now = new Date()
-      const enrollmentSlots = enrollmentData.selectedSlots.map(slot => new Date(slot.date))
-      const nearestSlot = Math.min(...enrollmentSlots.map(date => date.getTime()))
+      const enrollmentSlots = enrollmentData.selectedSlots.map((slot: any) => new Date(slot.date))
+      const nearestSlot = Math.min(...enrollmentSlots.map((date: any) => date.getTime()))
       const nearestSlotDate = new Date(nearestSlot)
 
       // Must have at least 24 hours notice

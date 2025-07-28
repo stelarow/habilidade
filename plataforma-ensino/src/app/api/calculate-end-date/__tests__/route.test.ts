@@ -5,8 +5,8 @@
  * Comprehensive test suite for the calculate-end-date API endpoint
  */
 
-import { NextRequest } from 'next/server'
-import { POST, GET } from '../route'
+import type { NextRequest } from 'next/server'
+import type { POST, GET } from '../route'
 
 // Mock the date calculations module
 jest.mock('@/utils/dateCalculations', () => ({

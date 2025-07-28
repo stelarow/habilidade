@@ -110,20 +110,20 @@ export function useDashboard(userId?: string) {
       // Calculate stats
       const stats: DashboardStats = {
         totalEnrollments: enrollmentsData?.length || 0,
-        completedCourses: progressData?.filter(p => p.status === 'completed').length || 0,
-        totalWatchTime: progressData?.reduce((total, p) => total + (p.total_watch_time || 0), 0) || 0,
+        completedCourses: progressData?.filter((p: any) => p.status === 'completed').length || 0,
+        totalWatchTime: progressData?.reduce((total: number, p: any) => total + (p.total_watch_time || 0), 0) || 0,
         completionPercentage: progressData?.length > 0 
-          ? Math.round(progressData.reduce((total, p) => total + p.progress_percentage, 0) / progressData.length)
+          ? Math.round(progressData.reduce((total: number, p: any) => total + p.progress_percentage, 0) / progressData.length)
           : 0,
         currentStreak: calculateCurrentStreak(recentCompletions || []),
-        totalLessons: progressData?.reduce((total, p) => total + (p.total_lessons || 0), 0) || 0,
-        completedLessons: progressData?.reduce((total, p) => total + (p.completed_lessons || 0), 0) || 0
+        totalLessons: progressData?.reduce((total: number, p: any) => total + (p.total_lessons || 0), 0) || 0,
+        completedLessons: progressData?.reduce((total: number, p: any) => total + (p.completed_lessons || 0), 0) || 0
       }
 
       // Format recent activity
       const recentActivity: RecentActivity[] = (recentCompletions || [])
         .slice(0, 5)
-        .map(completion => ({
+        .map((completion: any) => ({
           id: completion.id,
           type: 'lesson_completed',
           title: completion.lesson?.title || 'Aula concluída',
@@ -134,8 +134,8 @@ export function useDashboard(userId?: string) {
         }))
 
       // Add course completion activities
-      const completedCourses = progressData?.filter(p => p.status === 'completed') || []
-      completedCourses.forEach(course => {
+      const completedCourses = progressData?.filter((p: any) => p.status === 'completed') || []
+      completedCourses.forEach((course: any) => {
         recentActivity.push({
           id: `course_${course.course_id}`,
           type: 'course_completed',
@@ -191,8 +191,8 @@ export function useDashboard(userId?: string) {
     if (!completions.length) return 0
 
     const completionDates = completions
-      .map(c => new Date(c.completed_at || c.updated_at))
-      .map(date => date.toDateString())
+      .map((c: any) => new Date(c.completed_at || c.updated_at))
+      .map((date: any) => date.toDateString())
       .filter((date, index, arr) => arr.indexOf(date) === index) // Unique dates
       .sort((a, b) => new Date(b).getTime() - new Date(a).getTime())
 

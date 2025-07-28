@@ -1,5 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
-import { User, AuthError } from '@supabase/supabase-js'
+import { type User, AuthError } from '@supabase/supabase-js'
 import { cache } from 'react'
 
 /**

@@ -7,7 +7,7 @@ import { PDFViewer } from './pdf/PDFViewer'
 import { QuizInterface } from './quiz/QuizInterface'
 import { ExercisePanel } from './exercises/ExercisePanel'
 import { LessonProvider, useLessonContent } from '@/contexts/LessonContext'
-import { LessonContent } from '@/types/lesson'
+import type { LessonContent } from '@/types/lesson'
 
 // Import CSS
 import '@/styles/lesson-layout.css'

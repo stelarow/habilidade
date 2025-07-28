@@ -1,8 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { type NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { requireAdmin } from '@/lib/auth/session'
 import { z } from 'zod'
-import { logError } from '@/lib/utils/logger'
 import type {
   HolidaysQuery,
   CreateHolidayRequest,
@@ -79,7 +78,7 @@ export async function GET(request: NextRequest) {
       .limit(1)
       
     if (connectionError) {
-      logError('Database connection error:', connectionError)
+      console.error('Database connection error:', connectionError)
       return createErrorResponse(
         'VALIDATION_ERROR',
         'Database unavailable',
@@ -125,7 +124,7 @@ export async function GET(request: NextRequest) {
     const { data: holidays, error } = await query
     
     if (error) {
-      logError('Database error fetching holidays:', error)
+      console.error('Database error fetching holidays:', error)
       return createErrorResponse(
         'VALIDATION_ERROR',
         'Failed to fetch holidays',
@@ -148,7 +147,7 @@ export async function GET(request: NextRequest) {
       )
     }
     
-    logError('Holidays GET error:', error)
+    console.error('Holidays GET error:', error)
     return createErrorResponse(
       'VALIDATION_ERROR',
       'Internal server error',
@@ -205,7 +204,7 @@ export async function POST(request: NextRequest) {
       .single()
     
     if (error) {
-      logError('Database error creating holiday:', error)
+      console.error('Database error creating holiday:', error)
       return createErrorResponse(
         'VALIDATION_ERROR',
         'Failed to create holiday',
@@ -232,7 +231,7 @@ export async function POST(request: NextRequest) {
                      'unknown'
         })
     } catch (auditError) {
-      logError('Failed to log audit event:', auditError)
+      console.error('Failed to log audit event:', auditError)
       // Don't fail the request if audit logging fails
     }
     
@@ -262,7 +261,7 @@ export async function POST(request: NextRequest) {
       )
     }
     
-    logError('Holiday POST error:', error)
+    console.error('Holiday POST error:', error)
     return createErrorResponse(
       'VALIDATION_ERROR',
       'Internal server error',

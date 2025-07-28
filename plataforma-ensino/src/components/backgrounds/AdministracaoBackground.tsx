@@ -291,19 +291,19 @@ const AdministracaoBackground: React.FC<BackgroundProps> = ({
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // Atualizar e desenhar documentos
-    documentsRef.current.forEach(doc => {
+    documentsRef.current.forEach((doc: any) => {
       doc.update();
       doc.draw(ctx);
     });
 
     // Atualizar e desenhar gráficos
-    chartsRef.current.forEach(chart => {
+    chartsRef.current.forEach((chart: any) => {
       chart.update();
       chart.draw(ctx);
     });
 
     // Atualizar e desenhar partículas
-    particlesRef.current.forEach(particle => {
+    particlesRef.current.forEach((particle: any) => {
       particle.update();
       particle.draw(ctx);
     });

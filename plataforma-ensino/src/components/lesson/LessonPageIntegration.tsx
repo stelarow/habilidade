@@ -3,7 +3,7 @@
 import React, { useCallback, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
 import LessonPageRedesigned from './LessonPageRedesigned'
-import { LessonProgressData } from '@/types/lesson'
+import type { LessonProgressData } from '@/types/lesson'
 
 // Types for existing lesson data structure (from current page.tsx)
 interface Course {
@@ -108,7 +108,7 @@ const LessonPageIntegration: React.FC<LessonPageIntegrationProps> = ({
     const quizPassed = quizScores.some((quiz: any) => quiz?.isPassed)
 
     // Calculate exercise progress
-    const approvedSubmissions = submissions.filter(sub => sub.status === 'approved')
+    const approvedSubmissions = submissions.filter((sub: any) => sub.status === 'approved')
     const exerciseCompletionPercentage = exercises.length > 0
       ? (approvedSubmissions.length / exercises.length) * 100
       : 0
@@ -180,8 +180,8 @@ const LessonPageIntegration: React.FC<LessonPageIntegrationProps> = ({
         isPassed: quizPassed
       },
       exerciseProgress: {
-        completedExercises: approvedSubmissions.map(sub => sub.exercise_id),
-        submittedFiles: submissions.map(sub => ({
+        completedExercises: approvedSubmissions.map((sub: any) => sub.exercise_id),
+        submittedFiles: submissions.map((sub: any) => ({
           exerciseId: sub.exercise_id,
           fileName: sub.file_name,
           fileUrl: sub.file_url || '',
@@ -189,7 +189,7 @@ const LessonPageIntegration: React.FC<LessonPageIntegrationProps> = ({
           status: sub.status,
           feedback: sub.feedback
         })),
-        pendingReviews: submissions.filter(sub => sub.status === 'pending').map(sub => sub.id),
+        pendingReviews: submissions.filter((sub: any) => sub.status === 'pending').map((sub: any) => sub.id),
         totalExercises: exercises.length,
         completionPercentage: exerciseCompletionPercentage
       },

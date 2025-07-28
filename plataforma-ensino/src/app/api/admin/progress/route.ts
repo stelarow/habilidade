@@ -1,8 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { type NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { requireAdmin } from '@/lib/auth/session'
 import { z } from 'zod'
-import { logError } from '@/lib/utils/logger'
 
 // Force dynamic rendering for admin routes that require authentication
 export const dynamic = 'force-dynamic'
@@ -97,7 +96,7 @@ export async function GET(request: NextRequest) {
     const { data: progress, error } = await query
     
     if (error) {
-      logError('Error fetching progress:', error)
+      console.error('Error fetching progress:', error)
       return NextResponse.json(
         { error: 'Erro ao buscar progresso' },
         { status: 500 }
@@ -118,7 +117,7 @@ export async function GET(request: NextRequest) {
     })
     
   } catch (error) {
-    logError('Progress API error:', error)
+    console.error('Progress API error:', error)
     return NextResponse.json(
       { error: 'Erro interno do servidor' },
       { status: 500 }
@@ -208,7 +207,7 @@ export async function POST(request: NextRequest) {
             results.push(newProgress)
           }
         } catch (error) {
-          logError(`Error updating progress for lesson ${update.lesson_id}:`, error)
+          console.error(`Error updating progress for lesson ${update.lesson_id}:`, error)
           errors.push({
             lesson_id: update.lesson_id,
             error: error instanceof Error ? error.message : 'Erro ao atualizar progresso'
@@ -288,7 +287,7 @@ export async function POST(request: NextRequest) {
           .single()
         
         if (error) {
-          logError('Error updating progress:', error)
+          console.error('Error updating progress:', error)
           return NextResponse.json(
             { error: 'Erro ao atualizar progresso' },
             { status: 500 }
@@ -318,7 +317,7 @@ export async function POST(request: NextRequest) {
           .single()
         
         if (error) {
-          logError('Error creating progress:', error)
+          console.error('Error creating progress:', error)
           return NextResponse.json(
             { error: 'Erro ao criar progresso' },
             { status: 500 }
@@ -345,7 +344,7 @@ export async function POST(request: NextRequest) {
       )
     }
     
-    logError('Progress creation/update error:', error)
+    console.error('Progress creation/update error:', error)
     return NextResponse.json(
       { error: 'Erro interno do servidor' },
       { status: 500 }

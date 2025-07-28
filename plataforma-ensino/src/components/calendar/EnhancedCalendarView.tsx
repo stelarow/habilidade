@@ -133,7 +133,7 @@ export default function EnhancedCalendarView({ teacherId }: EnhancedCalendarView
     const students = getStudentsForSlot(dayIndex, timeSlot);
     const classDate = currentWeekDates[dayIndex];
     
-    return students.map(student => {
+    return students.map((student: any) => {
       if (!student.endDate) {
         return student;
       }
@@ -152,18 +152,18 @@ export default function EnhancedCalendarView({ teacherId }: EnhancedCalendarView
   };
 
   const stats = useMemo(() => {
-    const studentsWithOneMonth = calendarData.filter(item => 
+    const studentsWithOneMonth = calendarData.filter((item: any) => 
       item.completionStatus?.type === 'one_month_remaining'
     ).length;
     
-    const studentsWithLastClass = calendarData.filter(item => 
+    const studentsWithLastClass = calendarData.filter((item: any) => 
       item.completionStatus?.type === 'last_class'
     ).length;
     
     return {
       totalClasses: calendarData.length,
-      occupiedSlots: new Set(calendarData.map(item => `${item.dayOfWeek}-${item.slotLabel}`)).size,
-      uniqueStudents: new Set(calendarData.map(item => item.studentEmail)).size,
+      occupiedSlots: new Set(calendarData.map((item: any) => `${item.dayOfWeek}-${item.slotLabel}`)).size,
+      uniqueStudents: new Set(calendarData.map((item: any) => item.studentEmail)).size,
       studentsNearCompletion: studentsWithOneMonth + studentsWithLastClass,
       studentsWithOneMonth,
       studentsWithLastClass

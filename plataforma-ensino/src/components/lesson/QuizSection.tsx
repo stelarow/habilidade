@@ -143,7 +143,7 @@ const QuizSection: React.FC<QuizSectionProps> = ({
   // Calculate score
   const calculateScore = useCallback(() => {
     let correctAnswers = 0
-    questions.forEach(question => {
+    questions.forEach((question: any) => {
       if (answers[question.id] === question.correctAnswer) {
         correctAnswers++
       }

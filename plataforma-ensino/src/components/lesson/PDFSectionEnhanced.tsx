@@ -133,6 +133,7 @@ export const PDFSectionEnhanced: React.FC<PDFSectionEnhancedProps> = ({
 
       return () => clearTimeout(timeoutId);
     }
+    return undefined;
   }, [viewState.currentPage, viewState.zoomLevel, viewState.isLoading, trackDimensions]);
 
   // Document load handlers

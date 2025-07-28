@@ -13,6 +13,8 @@ import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { Card } from '@/components/ui/card'
 import Loading from '@/components/ui/Loading'
+import type { TeacherAvailability } from '@/types/api'
+import type { StudentSchedule } from '@/types'
 import { 
   ClockIcon, 
   UserGroupIcon, 
@@ -91,7 +93,7 @@ export default function SimplifiedWeeklySchedule({
 
     // Circuit breaker - evita loops infinitos
     if (errorCount > 3) {
-      logWarn('Too many errors, stopping requests')
+      console.warn('Too many errors, stopping requests')
       if (mountedRef.current) {
         setError('Muitos erros consecutivos. Recarregue a página para tentar novamente.')
       }
@@ -112,7 +114,7 @@ export default function SimplifiedWeeklySchedule({
     }
 
     try {
-      logDebug('Loading availability and schedules for teacherId:', teacherId, 'teacherUserId:', teacherUserId)
+      console.log('Loading availability and schedules for teacherId:', teacherId, 'teacherUserId:', teacherUserId)
       
       // Check if component is still mounted before proceeding
       if (!mountedRef.current) {
@@ -154,20 +156,20 @@ export default function SimplifiedWeeklySchedule({
       const [availabilityResult, schedulesResult] = await Promise.all(queries)
 
       if (availabilityResult.error) {
-        logError('Error fetching teacher availability:', availabilityResult.error)
+        console.error('Error fetching teacher availability:', availabilityResult.error)
         throw availabilityResult.error
       }
 
       if (schedulesResult.error) {
-        logError('Error fetching student schedules:', schedulesResult.error)
+        console.error('Error fetching student schedules:', schedulesResult.error)
         throw schedulesResult.error
       }
 
       const availability = availabilityResult.data
       const currentSchedules = schedulesResult.data
 
-      logDebug('Found', availability?.length || 0, 'availability slots')
-      logDebug('Found', currentSchedules?.length || 0, 'current schedules')
+      console.log('Found', availability?.length || 0, 'availability slots')
+      console.log('Found', currentSchedules?.length || 0, 'current schedules')
 
       // Check if component is still mounted before updating state
       if (!mountedRef.current) {
@@ -176,7 +178,7 @@ export default function SimplifiedWeeklySchedule({
       
       // Validate data integrity
       if (!availability || availability.length === 0) {
-        logWarn('No availability slots found for teacher:', teacherId)
+        console.warn('No availability slots found for teacher:', teacherId)
         setScheduleSlots([])
         setErrorCount(0) // Reset error count on successful query
         return
@@ -184,14 +186,14 @@ export default function SimplifiedWeeklySchedule({
 
       // Process availability with current occupancy
       // Fix day-of-week conversion: teacher_availability uses 0-6, student_schedules uses 1-7
-      const processedSlots: WeeklyScheduleSlot[] = (availability || []).map((slot, index) => {
+      const processedSlots: WeeklyScheduleSlot[] = (availability || []).map((slot: TeacherAvailability, index: number) => {
         // Convert teacher_availability day_of_week (0-6) to student_schedules format (1-7)
         // 0 (Sunday) -> 7, 1 (Monday) -> 1, 2 (Tuesday) -> 2, ... 6 (Saturday) -> 6
         const schedulesDayOfWeek = slot.day_of_week === 0 ? 7 : slot.day_of_week
         
         // Find matching schedules for this time slot
         const matchingSchedules = (currentSchedules || []).filter(
-          schedule => 
+          (schedule: StudentSchedule) => 
             schedule.day_of_week === schedulesDayOfWeek &&
             schedule.start_time === slot.start_time &&
             schedule.end_time === slot.end_time
@@ -201,7 +203,7 @@ export default function SimplifiedWeeklySchedule({
 
         // Log details for debugging (reduzido para evitar spam)
         if (index < 3) { // Log apenas os 3 primeiros slots
-          logDebug(`Slot ${index + 1}:`, {
+          console.log(`Slot ${index + 1}:`, {
             slotId: slot.id,
             teacherDayOfWeek: slot.day_of_week,
             schedulesDayOfWeek,
@@ -224,13 +226,13 @@ export default function SimplifiedWeeklySchedule({
           currentStudents: currentOccupancy,
           isAvailable: currentOccupancy < slot.max_students
         }
-      }).filter(slot => slot.dayOfWeek <= 6) // Only show Monday-Saturday (1-6)
+      }).filter((slot: any) => slot.dayOfWeek <= 6) // Only show Monday-Saturday (1-6)
 
       // Only update state if component is still mounted
       if (mountedRef.current) {
         setScheduleSlots(processedSlots)
         setErrorCount(0) // Reset error count on success
-        logDebug('Successfully processed', processedSlots.length, 'schedule slots')
+        console.log('Successfully processed', processedSlots.length, 'schedule slots')
       }
       
     } catch (err) {
@@ -239,7 +241,7 @@ export default function SimplifiedWeeklySchedule({
         return
       }
       
-      logError('Error loading schedule data:', err)
+      console.error('Error loading schedule data:', err)
       
       // Only update state if component is still mounted
       if (mountedRef.current) {
@@ -249,7 +251,7 @@ export default function SimplifiedWeeklySchedule({
         let errorMessage = 'Erro desconhecido ao carregar horários'
         
         if (err instanceof Error) {
-          logError('Error details:', {
+          console.error('Error details:', {
             name: err.name,
             message: err.message,
             errorCount: errorCount + 1
@@ -283,8 +285,8 @@ export default function SimplifiedWeeklySchedule({
   const slotsByDay = useMemo(() => {
     const grouped: Record<number, WeeklyScheduleSlot[]> = {}
     
-    DAYS_OF_WEEK.forEach(day => {
-      grouped[day.id] = scheduleSlots.filter(slot => slot.dayOfWeek === day.id)
+    DAYS_OF_WEEK.forEach((day: any) => {
+      grouped[day.id] = scheduleSlots.filter((slot: any) => slot.dayOfWeek === day.id)
     })
     
     return grouped
@@ -298,7 +300,7 @@ export default function SimplifiedWeeklySchedule({
 
     if (isSelected) {
       // Remove slot
-      newSelection = selectedSlots.filter(id => id !== slotId)
+      newSelection = selectedSlots.filter((id: any) => id !== slotId)
     } else {
       // Add slot
       if (hasTwoClassesPerWeek && selectedSlots.length < 2) {
@@ -316,9 +318,9 @@ export default function SimplifiedWeeklySchedule({
     // Format slots for parseScheduleSlot function
     // Expected format: "teacherId:day:HH:MM-HH:MM"
     const formatSlotForSubmission = (selectedSlotId: string): string => {
-      const slot = scheduleSlots.find(s => s.id === selectedSlotId)
+      const slot = scheduleSlots.find((s: any) => s.id === selectedSlotId)
       if (!slot) {
-        logWarn('formatSlotForSubmission - Slot not found:', selectedSlotId)
+        console.warn('formatSlotForSubmission - Slot not found:', selectedSlotId)
         return ''
       }
       
@@ -327,7 +329,7 @@ export default function SimplifiedWeeklySchedule({
       const endTime = slot.endTime.includes(':') ? slot.endTime.slice(0, 5) : slot.endTime
       
       const formattedSlot = `${teacherId}:${slot.dayOfWeek}:${startTime}-${endTime}`
-      logDebug('formatSlotForSubmission - Input:', selectedSlotId, 'Output:', formattedSlot)
+      console.log('formatSlotForSubmission - Input:', selectedSlotId, 'Output:', formattedSlot)
       return formattedSlot
     }
 
@@ -335,7 +337,7 @@ export default function SimplifiedWeeklySchedule({
     const slot1 = newSelection[0] ? formatSlotForSubmission(newSelection[0]) : ''
     const slot2 = newSelection[1] ? formatSlotForSubmission(newSelection[1]) : ''
     
-    logDebug('Slot selection:', { 
+    console.log('Slot selection:', { 
       slot1,
       slot2,
       newSelection
@@ -427,7 +429,7 @@ export default function SimplifiedWeeklySchedule({
       </div>
 
       <div className="space-y-6">
-        {DAYS_OF_WEEK.map(day => {
+        {DAYS_OF_WEEK.map((day: any) => {
           const daySlots = slotsByDay[day.id] || []
           
           return (
@@ -439,7 +441,7 @@ export default function SimplifiedWeeklySchedule({
               
               {daySlots.length > 0 ? (
                 <div className="space-y-2">
-                  {daySlots.map(slot => {
+                  {daySlots.map((slot: any) => {
                     const isSelected = selectedSlots.includes(slot.id)
                     const canSelect = slot.isAvailable && (
                       selectedSlots.length < maxSelectableSlots || isSelected
@@ -498,11 +500,11 @@ export default function SimplifiedWeeklySchedule({
           </div>
           
           <div className="space-y-2">
-            {selectedSlots.map(slotId => {
-              const slot = scheduleSlots.find(s => s.id === slotId)
+            {selectedSlots.map((slotId: any) => {
+              const slot = scheduleSlots.find((s: any) => s.id === slotId)
               if (!slot) return null
               
-              const dayName = DAYS_OF_WEEK.find(d => d.id === slot.dayOfWeek)?.name || ''
+              const dayName = DAYS_OF_WEEK.find((d: any) => d.id === slot.dayOfWeek)?.name || ''
               
               return (
                 <div key={slotId} className="text-sm bg-black/20 rounded p-2">

@@ -15,7 +15,7 @@ import {
   Menu,
   ChevronDown
 } from 'lucide-react'
-import { LessonProgressData } from '@/types/lesson'
+import type { LessonProgressData } from '@/types/lesson'
 
 interface LessonHeaderRedesignedProps {
   course: { 
@@ -52,7 +52,7 @@ const LessonHeaderRedesigned: React.FC<LessonHeaderRedesignedProps> = ({
   // Count available lesson sections for mobile dropdown
   const availableSections = [
     videoUrl && { id: 'video-section', label: 'Vídeo', icon: Play },
-    materials.some(m => m.type === 'pdf') && { id: 'pdf-section', label: 'Material', icon: FileText },
+    materials.some((m: any) => m.type === 'pdf') && { id: 'pdf-section', label: 'Material', icon: FileText },
     exercises.length > 0 && { id: 'exercises-section', label: 'Exercícios', icon: PenTool },
     quizzes.length > 0 && { id: 'quiz-section', label: 'Quiz', icon: Trophy }
   ].filter(Boolean)
@@ -235,7 +235,7 @@ const LessonHeaderRedesigned: React.FC<LessonHeaderRedesignedProps> = ({
                 </Button>
               )}
               
-              {materials.some(m => m.type === 'pdf') && (
+              {materials.some((m: any) => m.type === 'pdf') && (
                 <Button
                   variant="ghost"
                   size="sm"

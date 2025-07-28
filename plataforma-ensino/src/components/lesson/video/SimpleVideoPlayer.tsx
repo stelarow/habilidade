@@ -4,7 +4,7 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
 import { Play, Lightbulb } from '@phosphor-icons/react'
-import { VideoData } from '@/types/lesson'
+import type { VideoData } from '@/types/lesson'
 
 interface SimpleVideoPlayerProps {
   video: VideoData

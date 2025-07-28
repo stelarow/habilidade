@@ -6,7 +6,7 @@ export async function updateSession(request: NextRequest) {
   const sessionId = Math.random().toString(36).substr(2, 9)
   console.log(`[UPDATE_SESSION-${sessionId}] ========== PROCESSING: ${request.nextUrl.pathname} ==========`)
   
-  let response = NextResponse.next({
+  const response = NextResponse.next({
     request: {
       headers: request.headers,
     },
@@ -34,7 +34,7 @@ export async function updateSession(request: NextRequest) {
           },
           setAll(cookiesToSet) {
             console.log(`[UPDATE_SESSION-${sessionId}] Cookie setAll() called with ${cookiesToSet.length} cookies:`, 
-              cookiesToSet.map(c => ({ name: c.name, hasValue: !!c.value, valueLength: c.value?.length || 0 }))
+              cookiesToSet.map((c: any) => ({ name: c.name, hasValue: !!c.value, valueLength: c.value?.length || 0 }))
             )
             cookiesToSet.forEach(({ name, value, options }) => {
               request.cookies.set(name, value)

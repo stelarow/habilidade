@@ -192,7 +192,7 @@ const BIBackground: React.FC<BackgroundProps> = ({
         ctx.globalAlpha = this.opacity;
         
         // Desenhar partículas
-        this.particles.forEach(particle => {
+        this.particles.forEach((particle: any) => {
           const t = particle.progress;
           
           // Posição ao longo da curva Bézier quadrática
@@ -388,7 +388,7 @@ const BIBackground: React.FC<BackgroundProps> = ({
     
     // Criar KPI cards
     if (FloatingKPIRef.current) {
-      config.kpis.slice(0, config.kpiCount).forEach(kpi => {
+      config.kpis.slice(0, config.kpiCount).forEach((kpi: any) => {
         kpiCardsRef.current.push(new FloatingKPIRef.current(canvas, kpi, config));
       });
     }
@@ -405,12 +405,12 @@ const BIBackground: React.FC<BackgroundProps> = ({
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // Desenhar elementos na ordem correta
-    dataStreamsRef.current.forEach(stream => {
+    dataStreamsRef.current.forEach((stream: any) => {
       stream.update();
       stream.draw(ctx);
     });
     
-    kpiCardsRef.current.forEach(kpi => {
+    kpiCardsRef.current.forEach((kpi: any) => {
       kpi.update();
       kpi.draw(ctx);
     });

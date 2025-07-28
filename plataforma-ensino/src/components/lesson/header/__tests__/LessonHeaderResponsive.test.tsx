@@ -1,7 +1,7 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 import { LessonHeader } from '../LessonHeader'
-import { LessonProgressData } from '@/types/lesson'
+import type { LessonProgressData } from '@/types/lesson'
 
 // Mock framer-motion
 jest.mock('framer-motion', () => ({

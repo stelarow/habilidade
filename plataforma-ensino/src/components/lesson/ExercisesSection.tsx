@@ -13,7 +13,7 @@ interface ExerciseFile {
   downloadUrl?: string
 }
 
-interface UploadedFile {
+export interface UploadedFile {
   id: string
   file: File
   name: string
@@ -159,7 +159,7 @@ const ExercisesSection: React.FC<ExercisesSectionProps> = ({
       // Calculate progress based on uploaded files (100% when at least 1 file is uploaded)
       const progress = updatedFiles.length > 0 ? 100 : 0
       if (onProgressUpdate) {
-        onProgressUpdate(progress, updatedFiles.map(f => f.name))
+        onProgressUpdate(progress, updatedFiles.map((f: any) => f.name))
       }
 
       if (onFilesUploaded) {
@@ -206,13 +206,13 @@ const ExercisesSection: React.FC<ExercisesSectionProps> = ({
 
   // Remove uploaded file
   const removeUploadedFile = (fileId: string) => {
-    const updatedFiles = uploadedFiles.filter(file => file.id !== fileId)
+    const updatedFiles = uploadedFiles.filter((file: any) => file.id !== fileId)
     setUploadedFiles(updatedFiles)
     
     // Update progress (100% when at least 1 file is uploaded)
     const progress = updatedFiles.length > 0 ? 100 : 0
     if (onProgressUpdate) {
-      onProgressUpdate(progress, updatedFiles.map(f => f.name))
+      onProgressUpdate(progress, updatedFiles.map((f: any) => f.name))
     }
 
     if (onFilesUploaded) {

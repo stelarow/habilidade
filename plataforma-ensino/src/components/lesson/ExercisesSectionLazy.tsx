@@ -4,6 +4,7 @@ import React, { Suspense } from 'react'
 import dynamic from 'next/dynamic'
 import { Card } from '@/components/ui/card'
 import { Loading } from '@/components/ui'
+import type { UploadedFile } from './ExercisesSection'
 
 // Lazy load the ExercisesSection component
 const ExercisesSection = dynamic(() => import('./ExercisesSection'), {
@@ -30,7 +31,7 @@ interface ExercisesSectionLazyProps {
   title: string
   exercises: any[]
   onProgressUpdate: (progress: number, uploadedFiles?: string[]) => void
-  onFilesUploaded: (files: File[]) => void
+  onFilesUploaded: (files: UploadedFile[]) => void
 }
 
 const ExercisesSectionLazy: React.FC<ExercisesSectionLazyProps> = (props) => {

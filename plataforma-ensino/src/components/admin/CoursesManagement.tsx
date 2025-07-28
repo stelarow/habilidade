@@ -53,7 +53,7 @@ export function CoursesManagement({
 
     // Filter by search term
     if (searchTerm) {
-      filtered = filtered.filter(course => 
+      filtered = filtered.filter((course: any) => 
         course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         course.description?.toLowerCase().includes(searchTerm.toLowerCase())
       )
@@ -61,14 +61,14 @@ export function CoursesManagement({
 
     // Filter by status
     if (statusFilter !== 'all') {
-      filtered = filtered.filter(course => 
+      filtered = filtered.filter((course: any) => 
         statusFilter === 'published' ? course.is_published : !course.is_published
       )
     }
 
     // Filter by category
     if (categoryFilter !== 'all') {
-      filtered = filtered.filter(course => course.category_id === categoryFilter)
+      filtered = filtered.filter((course: any) => course.category_id === categoryFilter)
     }
 
     setFilteredCourses(filtered)
@@ -101,7 +101,7 @@ export function CoursesManagement({
 
       if (error) throw error
 
-      setCourses(courses.map(course => 
+      setCourses(courses.map((course: any) => 
         course.id === courseId ? { ...course, is_published: !currentStatus } : course
       ))
     } catch (error) {
@@ -167,7 +167,7 @@ export function CoursesManagement({
       }
 
       const { data: updatedCourse } = await response.json()
-      setCourses(courses.map(course => 
+      setCourses(courses.map((course: any) => 
         course.id === selectedCourse.id ? updatedCourse : course
       ))
       setShowEditModal(false)
@@ -198,7 +198,7 @@ export function CoursesManagement({
         throw new Error(errorData.error || 'Erro ao deletar curso')
       }
 
-      setCourses(courses.filter(course => course.id !== courseId))
+      setCourses(courses.filter((course: any) => course.id !== courseId))
       setShowDeleteModal(false)
       setSelectedCourse(null)
       alert('Curso excluído com sucesso!')
@@ -301,7 +301,7 @@ export function CoursesManagement({
               className="appearance-none bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 pr-8 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
             >
               <option value="all">Todas as Categorias</option>
-              {categories.map(category => (
+              {categories.map((category: any) => (
                 <option key={category.id} value={category.id}>
                   {category.name}
                 </option>

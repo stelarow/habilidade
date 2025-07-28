@@ -1,7 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { type NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { requireAdmin } from '@/lib/auth/session'
-import { logError } from '@/lib/utils/logger'
 
 // Force dynamic rendering for admin routes that require authentication
 export const dynamic = 'force-dynamic'
@@ -57,7 +56,7 @@ export async function GET(request: NextRequest) {
     const { data: lessons, error } = await query
     
     if (error) {
-      logError('Error fetching lessons:', error)
+      console.error('Error fetching lessons:', error)
       return NextResponse.json(
         { error: 'Failed to fetch lessons' },
         { status: 500 }
@@ -84,7 +83,7 @@ export async function GET(request: NextRequest) {
     const { count, error: countError } = await countQuery
     
     if (countError) {
-      logError('Error counting lessons:', countError)
+      console.error('Error counting lessons:', countError)
       return NextResponse.json(
         { error: 'Failed to count lessons' },
         { status: 500 }
@@ -105,7 +104,7 @@ export async function GET(request: NextRequest) {
     })
     
   } catch (error) {
-    logError('Lessons API error:', error)
+    console.error('Lessons API error:', error)
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -149,7 +148,7 @@ export async function POST(request: NextRequest) {
       .rpc('get_next_lesson_order', { course_uuid: course_id })
     
     if (orderError) {
-      logError('Error getting next order:', orderError)
+      console.error('Error getting next order:', orderError)
       return NextResponse.json(
         { error: 'Failed to determine lesson order' },
         { status: 500 }
@@ -219,7 +218,7 @@ export async function POST(request: NextRequest) {
       .single()
     
     if (lessonError) {
-      logError('Error creating lesson:', lessonError)
+      console.error('Error creating lesson:', lessonError)
       
       // Provide more specific error messages
       if (lessonError.code === '23505') { // Unique constraint violation
@@ -262,7 +261,7 @@ export async function POST(request: NextRequest) {
         .insert(exercisesToInsert)
       
       if (exercisesError) {
-        logError('Error creating exercises:', exercisesError)
+        console.error('Error creating exercises:', exercisesError)
         // Note: lesson was created, but exercises failed
         // In a real app, you might want to implement rollback
       }
@@ -286,7 +285,7 @@ export async function POST(request: NextRequest) {
         .single()
       
       if (quizError) {
-        logError('Error creating quiz:', quizError)
+        console.error('Error creating quiz:', quizError)
       } else if (quiz.questions && quiz.questions.length > 0) {
         // Create quiz questions
         const questionsToInsert = quiz.questions.map((question: any, index: number) => ({
@@ -304,7 +303,7 @@ export async function POST(request: NextRequest) {
           .insert(questionsToInsert)
         
         if (questionsError) {
-          logError('Error creating quiz questions:', questionsError)
+          console.error('Error creating quiz questions:', questionsError)
         }
       }
     }
@@ -322,7 +321,7 @@ export async function POST(request: NextRequest) {
       .single()
     
     if (fetchError) {
-      logError('Error fetching complete lesson:', fetchError)
+      console.error('Error fetching complete lesson:', fetchError)
       return NextResponse.json({ data: lesson })
     }
     
@@ -335,7 +334,7 @@ export async function POST(request: NextRequest) {
     )
     
   } catch (error) {
-    logError('Create lesson API error:', error)
+    console.error('Create lesson API error:', error)
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

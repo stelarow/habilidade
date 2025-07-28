@@ -120,7 +120,7 @@ Wrap teacher components with error boundaries:
 
 ### 1. Virtual Scrolling for Large Datasets
 \`\`\`tsx
-import { FixedSizeList as List } from 'react-window'
+import type { FixedSizeList as List } from 'react-window'
 
 function CalendarMonth({ slots }) {
   return (
@@ -156,7 +156,7 @@ const calendarState = useReducer(calendarReducer, {
   aria-label="Teacher availability calendar"
   className="calendar-grid"
 >
-  {slots.map(slot => (
+  {slots.map((slot: any) => (
     <button
       key={slot.id}
       role="gridcell"
@@ -174,7 +174,7 @@ const calendarState = useReducer(calendarReducer, {
 \`\`\`tsx
 const MemoizedCalendarDay = React.memo(({ day, slots }) => (
   <div className="calendar-day">
-    {slots.map(slot => (
+    {slots.map((slot: any) => (
       <TimeSlot key={slot.id} slot={slot} />
     ))}
   </div>
@@ -296,7 +296,7 @@ interface Selector<T> {
 
 // Usage
 const teacherSelector: Selector<Teacher> = {
-  items: teachers.map(teacher => ({
+  items: teachers.map((teacher: any) => ({
     id: teacher.id,
     data: teacher,
     selected: false
@@ -345,7 +345,7 @@ type StudentId = string & { __brand: 'StudentId' }
 
 // Type-safe ID handling
 function getTeacher(id: TeacherId): Teacher | undefined {
-  return teachers.find(t => t.id === id)
+  return teachers.find((t: any) => t.id === id)
 }
 \`\`\`
     `
@@ -353,7 +353,7 @@ function getTeacher(id: TeacherId): Teacher | undefined {
 
   // Find best matching response
   const queryLower = query.topic.toLowerCase()
-  const matchingKey = Object.keys(responses).find(key => 
+  const matchingKey = Object.keys(responses).find((key: any) => 
     queryLower.includes(key) || key.includes(queryLower)
   )
 
@@ -416,7 +416,7 @@ export function useMCPContext7(options: UseMCPContext7Options = {}): UseMCPConte
     if (enableCaching) {
       const cachedEntry = documentationCache.get(cacheKey)
       if (cachedEntry && isCacheValid(cachedEntry)) {
-        logDebug('Returning cached documentation for:', query.topic)
+        console.log('Returning cached documentation for:', query.topic)
         return {
           ...cachedEntry.data,
           cached: true
@@ -432,7 +432,7 @@ export function useMCPContext7(options: UseMCPContext7Options = {}): UseMCPConte
     
     while (attempts < retryAttempts) {
       try {
-        logDebug(`Querying MCP Context7 (attempt ${attempts + 1}):`, query.topic)
+        console.log(`Querying MCP Context7 (attempt ${attempts + 1}):`, query.topic)
         
         // In a real implementation, this would use the actual MCP Context7 API
         // For now, we'll use our simulation
@@ -481,7 +481,7 @@ export function useMCPContext7(options: UseMCPContext7Options = {}): UseMCPConte
    */
   const clearCache = useCallback(() => {
     documentationCache.clear()
-    logDebug('Documentation cache cleared')
+    console.log('Documentation cache cleared')
   }, [])
 
   /**

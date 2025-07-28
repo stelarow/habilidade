@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import { SecureVideoPlayer } from '@/components/ui/SecureVideoPlayer'
-import { type SecureVideoConfig } from '@/lib/video-security'
+import type { SecureVideoConfig } from '@/lib/video-security'
 
 export default function TestSecurePlayerPage() {
   const [violations, setViolations] = useState<string[]>([])
@@ -49,7 +49,7 @@ export default function TestSecurePlayerPage() {
               { id: 'basic', label: '🎥 Player Básico' },
               { id: 'watermark', label: '💧 Com Watermark' },
               { id: 'protection', label: '🛡️ Proteção Total' }
-            ].map(mode => (
+            ].map((mode: any) => (
               <button
                 key={mode.id}
                 onClick={() => setCurrentTest(mode.id as any)}

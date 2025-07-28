@@ -283,7 +283,7 @@ const Projetista3DBackground: React.FC<BackgroundProps> = ({
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // Desenhar e atualizar wireframes
-    wireframesRef.current.forEach(wireframe => {
+    wireframesRef.current.forEach((wireframe: any) => {
       wireframe.update();
       wireframe.draw(ctx);
     });

@@ -1,9 +1,8 @@
 import { createClient } from '@/lib/supabase/server';
 import { verifySession } from '@/lib/auth/session';
-import { NextRequest, NextResponse } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import type { QueryData } from '@supabase/supabase-js';
-import { logDebug, logError } from '@/lib/utils/logger';
 
 // Force dynamic rendering for authentication
 export const dynamic = 'force-dynamic';
@@ -31,16 +30,16 @@ export async function GET(request: NextRequest) {
     const supabase = createClient();
 
     // First, let's do a simple query to see what data we have
-    logDebug('Testing basic query first...');
+    console.log('Testing basic query first...');
     const { data: basicData, error: basicError } = await supabase
       .from('class_schedules')
       .select('*')
       .limit(5);
     
     if (basicError) {
-      logError('Basic query error:', basicError);
+      console.error('Basic query error:', basicError);
     } else {
-      logDebug('Basic class_schedules data:', { data: basicData });
+      console.log('Basic class_schedules data:', { data: basicData });
     }
 
     // Query principal com tipos corretos - simplified joins
@@ -85,40 +84,40 @@ export async function GET(request: NextRequest) {
     const { data, error } = await queryBuilder;
 
     if (error) {
-      logError('Database error:', error);
+      console.error('Database error:', error);
       return NextResponse.json({ error: 'Database error' }, { status: 500 });
     }
 
     // Debug logging
-    logDebug('📊 Calendar API - Raw query results:', {
+    console.log('📊 Calendar API - Raw query results:', {
       totalRecords: data?.length || 0,
       sampleRecord: data?.[0] || null
     });
 
     // Debug: Log raw data
-    logDebug('=== Calendar API Debug ===');
-    logDebug('Raw data count:', { count: data?.length || 0 });
+    console.log('=== Calendar API Debug ===');
+    console.log('Raw data count:', { count: data?.length || 0 });
     if (data && data.length > 0) {
-      logDebug('First raw item:', { item: data[0] });
+      console.log('First raw item:', { item: data[0] });
     }
 
     // Agora os tipos são corretamente inferidos como CalendarQueryResult
     const typedData: CalendarQueryResult = data;
 
     // Debug: Check data before transformation
-    logDebug('Before transformation - checking data structure:');
-    const validSchedules = typedData.filter(schedule => 
+    console.log('Before transformation - checking data structure:');
+    const validSchedules = typedData.filter((schedule: any) => 
       schedule.schedule_slots && schedule.enrollments
     );
-    logDebug('Valid schedules (with slots and enrollments):', { valid: validSchedules.length, total: typedData.length });
+    console.log('Valid schedules (with slots and enrollments):', { valid: validSchedules.length, total: typedData.length });
     
     // Debug invalid schedules
-    const invalidSchedules = typedData.filter(schedule => 
+    const invalidSchedules = typedData.filter((schedule: any) => 
       !schedule.schedule_slots || !schedule.enrollments
     );
     if (invalidSchedules.length > 0) {
-      logDebug('Invalid schedules:', { 
-        schedules: invalidSchedules.map(s => ({
+      console.log('Invalid schedules:', { 
+        schedules: invalidSchedules.map((s: any) => ({
           id: s.id,
           hasSlots: !!s.schedule_slots,
           hasEnrollments: !!s.enrollments
@@ -128,10 +127,10 @@ export async function GET(request: NextRequest) {
 
     // Transformar dados para formato simples - handle both array and object responses
     const formattedData = typedData
-      .filter(schedule => 
+      .filter((schedule: any) => 
         schedule.schedule_slots && schedule.enrollments
       )
-      .map(schedule => {
+      .map((schedule: any) => {
         // Handle both array and single object responses from Supabase joins
         const slot = Array.isArray(schedule.schedule_slots) ? schedule.schedule_slots[0] : schedule.schedule_slots;
         const enrollment = Array.isArray(schedule.enrollments) ? schedule.enrollments[0] : schedule.enrollments;
@@ -139,7 +138,7 @@ export async function GET(request: NextRequest) {
         const course = Array.isArray(enrollment.courses) ? enrollment.courses[0] : enrollment.courses;
         
         if (!slot || !enrollment || !user || !course) {
-          logDebug('Skipping invalid record:', {
+          console.log('Skipping invalid record:', {
             scheduleId: schedule.id,
             hasSlot: !!slot,
             hasEnrollment: !!enrollment,
@@ -164,17 +163,17 @@ export async function GET(request: NextRequest) {
           createdAt: schedule.created_at,
         };
       })
-      .filter(item => item !== null); // Remove null items
+      .filter((item: any) => item !== null); // Remove null items
 
-    logDebug('Final formatted data count:', { count: formattedData.length });
+    console.log('Final formatted data count:', { count: formattedData.length });
     if (formattedData.length > 0) {
-      logDebug('Sample formatted item:', { item: formattedData[0] });
+      console.log('Sample formatted item:', { item: formattedData[0] });
     }
 
     return NextResponse.json({ data: formattedData });
 
   } catch (error) {
-    logError('API error:', error);
+    console.error('API error:', error);
     if (error instanceof z.ZodError) {
       return NextResponse.json(
         { error: 'Invalid query parameters', details: error.errors },
@@ -288,7 +287,7 @@ export async function POST(request: NextRequest) {
     const { data, error } = await insertQuery;
 
     if (error) {
-      logError('Insert error:', error);
+      console.error('Insert error:', error);
       return NextResponse.json({ 
         error: 'Failed to create schedule',
         message: 'Erro ao criar agendamento' 
@@ -301,7 +300,7 @@ export async function POST(request: NextRequest) {
     }, { status: 201 });
 
   } catch (error) {
-    logError('API error:', error);
+    console.error('API error:', error);
     if (error instanceof z.ZodError) {
       return NextResponse.json(
         { error: 'Invalid request data', details: error.errors },

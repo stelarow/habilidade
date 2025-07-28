@@ -1,6 +1,5 @@
 import { createClient } from '@/lib/supabase/server';
-import { NextRequest, NextResponse } from 'next/server';
-import { logError } from '@/lib/utils/logger';
+import { type NextRequest, NextResponse } from 'next/server';
 
 // Force dynamic rendering for authentication and database queries
 export const dynamic = 'force-dynamic';
@@ -58,7 +57,7 @@ export async function GET(_request: NextRequest) {
       .order('users(full_name)');
 
     if (teachersError) {
-      logError('Erro ao buscar professores:', teachersError);
+      console.error('Erro ao buscar professores:', teachersError);
       return NextResponse.json(
         { error: 'Erro ao buscar professores' },
         { status: 500 }
@@ -75,7 +74,7 @@ export async function GET(_request: NextRequest) {
           .eq('teacher_id', teacher.id);
 
         if (availabilityError) {
-          logError(`Erro ao buscar disponibilidade do professor ${teacher.id}:`, availabilityError);
+          console.error(`Erro ao buscar disponibilidade do professor ${teacher.id}:`, availabilityError);
         }
 
         // Contar agendamentos ativos
@@ -85,11 +84,11 @@ export async function GET(_request: NextRequest) {
           .eq('instructor_id', teacher.user_id);
 
         if (schedulesError) {
-          logError(`Erro ao buscar agendamentos do professor ${teacher.id}:`, schedulesError);
+          console.error(`Erro ao buscar agendamentos do professor ${teacher.id}:`, schedulesError);
         }
 
         const totalSlots = availabilitySlots?.length || 0;
-        const activeSlots = availabilitySlots?.filter(slot => slot.is_active).length || 0;
+        const activeSlots = availabilitySlots?.filter((slot: any) => slot.is_active).length || 0;
         const totalCapacity = availabilitySlots?.reduce((sum, slot) => sum + (slot.max_students || 0), 0) || 0;
         const currentBookings = activeSchedules?.length || 0;
 
@@ -114,7 +113,7 @@ export async function GET(_request: NextRequest) {
             utilizationRate: totalCapacity > 0 ? Math.round((currentBookings / totalCapacity) * 100) : 0,
             hasScheduleConfigured: totalSlots > 0,
             daysConfigured: availabilitySlots ? 
-              [...new Set(availabilitySlots.map(slot => slot.day_of_week))].length : 0
+              [...new Set(availabilitySlots.map((slot: any) => slot.day_of_week))].length : 0
           }
         };
       })
@@ -123,8 +122,8 @@ export async function GET(_request: NextRequest) {
     // Calcular estatísticas gerais
     const stats = {
       totalTeachers: teachersWithAvailability.length,
-      teachersWithSchedule: teachersWithAvailability.filter(t => t.availability.hasScheduleConfigured).length,
-      teachersWithoutSchedule: teachersWithAvailability.filter(t => !t.availability.hasScheduleConfigured).length,
+      teachersWithSchedule: teachersWithAvailability.filter((t: any) => t.availability.hasScheduleConfigured).length,
+      teachersWithoutSchedule: teachersWithAvailability.filter((t: any) => !t.availability.hasScheduleConfigured).length,
       totalAvailableSlots: teachersWithAvailability.reduce((sum, t) => sum + t.availability.activeSlots, 0),
       totalCapacity: teachersWithAvailability.reduce((sum, t) => sum + t.availability.totalCapacity, 0),
       totalBookings: teachersWithAvailability.reduce((sum, t) => sum + t.availability.currentBookings, 0),
@@ -147,7 +146,7 @@ export async function GET(_request: NextRequest) {
     return NextResponse.json(response);
 
   } catch (error) {
-    logError('Erro ao buscar professores:', error);
+    console.error('Erro ao buscar professores:', error);
     return NextResponse.json(
       { error: 'Erro interno do servidor' },
       { status: 500 }

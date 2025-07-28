@@ -10,7 +10,7 @@ import React from 'react'
 import { render, screen, fireEvent, waitFor, act } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import { EnrollmentForm } from '../EnrollmentForm'
-import { Enrollment } from '@/types'
+import type { Enrollment } from '@/types'
 
 // Mock Supabase client
 jest.mock('@/lib/supabase/client', () => ({

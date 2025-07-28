@@ -2,7 +2,7 @@ import React from 'react'
 import { render, screen, fireEvent } from '@testing-library/react'
 import { useRouter } from 'next/navigation'
 import { LessonHeader } from '../LessonHeader'
-import { LessonProgressData } from '@/types/lesson'
+import type { LessonProgressData } from '@/types/lesson'
 
 // Mock Next.js router
 jest.mock('next/navigation', () => ({
@@ -184,7 +184,7 @@ describe('LessonHeader Exit Button Responsive Positioning', () => {
       render(<LessonHeader {...mockProps} />)
       
       const exitButton = screen.getByLabelText(/Voltar ao curso/)
-      const progressIndicators = screen.getAllByRole('button').filter(button => 
+      const progressIndicators = screen.getAllByRole('button').filter((button: any) => 
         button.getAttribute('data-testid')?.includes('progress-')
       )
       

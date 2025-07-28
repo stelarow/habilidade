@@ -1,8 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { type NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { requireAdmin } from '@/lib/auth/session'
 import { z } from 'zod'
-import { logError, logDebug } from '@/lib/utils/logger'
 
 // Force dynamic rendering for admin routes that require authentication
 export const dynamic = 'force-dynamic'
@@ -73,7 +72,7 @@ export async function GET(
       .single()
     
     if (error) {
-      logError('Error fetching enrollment:', error)
+      console.error('Error fetching enrollment:', error)
       if (error.code === 'PGRST116') {
         return NextResponse.json(
           { error: 'Matrícula não encontrada' },
@@ -97,7 +96,7 @@ export async function GET(
       .order('lesson.order_index', { ascending: true })
     
     if (progressError) {
-      logError('Error fetching progress:', progressError)
+      console.error('Error fetching progress:', progressError)
     }
     
     // Get schedules for this enrollment if it's in-person
@@ -124,7 +123,7 @@ export async function GET(
     })
     
   } catch (error) {
-    logError('Enrollment detail API error:', error)
+    console.error('Enrollment detail API error:', error)
     return NextResponse.json(
       { error: 'Erro interno do servidor' },
       { status: 500 }
@@ -211,7 +210,7 @@ export async function PUT(
       .single()
     
     if (error) {
-      logError('Error updating enrollment:', error)
+      console.error('Error updating enrollment:', error)
       return NextResponse.json(
         { error: 'Erro ao atualizar matrícula' },
         { status: 500 }
@@ -227,7 +226,7 @@ export async function PUT(
         .eq('enrollment_id', enrollmentId)
       
       if (deleteError) {
-        logError('Error deleting existing schedules:', deleteError)
+        console.error('Error deleting existing schedules:', deleteError)
       }
       
       // Then, create new schedules if any
@@ -245,7 +244,7 @@ export async function PUT(
           .insert(schedulesToCreate)
         
         if (scheduleError) {
-          logError('Error creating updated schedules:', scheduleError)
+          console.error('Error creating updated schedules:', scheduleError)
           return NextResponse.json(
             { error: 'Erro ao atualizar horários da matrícula' },
             { status: 500 }
@@ -285,7 +284,7 @@ export async function PUT(
       )
     }
     
-    logError('Enrollment update error:', error)
+    console.error('Enrollment update error:', error)
     return NextResponse.json(
       { error: 'Erro interno do servidor' },
       { status: 500 }
@@ -335,7 +334,7 @@ export async function DELETE(
       .eq('enrollment_id', enrollmentId)
     
     if (progressError) {
-      logError('Error deleting progress:', progressError)
+      console.error('Error deleting progress:', progressError)
       return NextResponse.json(
         { error: 'Erro ao remover progresso da matrícula' },
         { status: 500 }
@@ -349,7 +348,7 @@ export async function DELETE(
       .eq('id', enrollmentId)
     
     if (error) {
-      logError('Error deleting enrollment:', error)
+      console.error('Error deleting enrollment:', error)
       return NextResponse.json(
         { error: 'Erro ao remover matrícula' },
         { status: 500 }
@@ -361,7 +360,7 @@ export async function DELETE(
     })
     
   } catch (error) {
-    logError('Enrollment deletion error:', error)
+    console.error('Enrollment deletion error:', error)
     return NextResponse.json(
       { error: 'Erro interno do servidor' },
       { status: 500 }

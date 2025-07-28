@@ -47,10 +47,10 @@ import {
 import { 
   calculateAvailableSlots, 
   aggregateAvailabilityForCalendar,
-  subscribeToAvailabilityUpdates,
-  AvailabilitySlotWithOccurrence
+  subscribeToAvailabilityUpdates
 } from '@/utils/teacherAvailabilityLogic'
-import { TeacherAvailability } from '@/types/api'
+import type { AvailabilitySlotWithOccurrence } from '@/utils/teacherAvailabilityLogic'
+import type { TeacherAvailability } from '@/types/api'
 
 export interface TimeSlot {
   date: Date
@@ -220,8 +220,8 @@ function useCalendarGrid(
 
         // Find slots for this day
         const daySlots: TimeSlot[] = slots
-          .filter(slot => slot.date === dayDateStr)
-          .map(slot => ({
+          .filter((slot: any) => slot.date === dayDateStr)
+          .map((slot: any) => ({
             date: dayDate,
             startTime: slot.startTime,
             endTime: slot.endTime,
@@ -239,8 +239,8 @@ function useCalendarGrid(
           isCurrentMonth: dayDate.getMonth() === startDate.getMonth(),
           isToday: dayDate.getTime() === today.getTime(),
           isPast: dayDate < today,
-          totalAvailable: daySlots.filter(s => s.isAvailable).length,
-          totalOccupied: daySlots.filter(s => !s.isAvailable && !s.conflictReason).length
+          totalAvailable: daySlots.filter((s: any) => s.isAvailable).length,
+          totalOccupied: daySlots.filter((s: any) => !s.isAvailable && !s.conflictReason).length
         }
 
         week.days.push(day)
@@ -323,7 +323,7 @@ function DayNamesHeader() {
 
   return (
     <div className="grid grid-cols-7 gap-1 mb-2">
-      {dayNames.map(day => (
+      {dayNames.map((day: any) => (
         <div 
           key={day}
           className="p-2 text-center text-sm font-medium text-gray-400"
@@ -468,8 +468,8 @@ function CalendarDayCell({
 
       {/* Time slots */}
       <div className="space-y-1">
-        {day.slots.map(slot => {
-          const isSelected = selectedSlots.some(s => 
+        {day.slots.map((slot: any) => {
+          const isSelected = selectedSlots.some((s: any) => 
             s.slotId === slot.slotId && 
             s.date.getTime() === slot.date.getTime()
           )
@@ -761,9 +761,9 @@ export function ConditionalCalendar({
                 <DayNamesHeader />
                 
                 <div className="space-y-1">
-                  {calendarWeeks.map(week => (
+                  {calendarWeeks.map((week: any) => (
                     <div key={week.weekNumber} className="grid grid-cols-7 gap-1">
-                      {week.days.map((day, dayIndex) => (
+                      {week.days.map((day: any, dayIndex: number) => (
                         <CalendarDayCell
                           key={`${week.weekNumber}-${dayIndex}`}
                           day={day}

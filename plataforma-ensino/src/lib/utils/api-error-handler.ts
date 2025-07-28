@@ -209,7 +209,7 @@ export function handleZodError(
   path: string,
   message: string = 'Validation failed'
 ): NextResponse<ApiErrorResponse> {
-  const details = error.errors.map(err => ({
+  const details = error.errors.map((err: any) => ({
     field: err.path.join('.'),
     message: err.message,
     code: err.code

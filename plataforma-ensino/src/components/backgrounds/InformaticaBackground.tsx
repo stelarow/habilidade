@@ -271,7 +271,7 @@ const InformaticaBackground: React.FC<BackgroundProps> = ({
       ctx.strokeStyle = config.colors.connection;
       ctx.lineWidth = 1;
       
-      const particles = particlesRef.current.filter(p => p && typeof p.distanceTo === 'function');
+      const particles = particlesRef.current.filter((p: any) => p && typeof p.distanceTo === 'function');
       
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
@@ -326,7 +326,7 @@ const InformaticaBackground: React.FC<BackgroundProps> = ({
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // Atualizar e desenhar matrix rain
-    matrixRef.current.drops.forEach(drop => {
+    matrixRef.current.drops.forEach((drop: any) => {
       drop.update(canvas.height);
       drop.draw(ctx);
     });
@@ -337,7 +337,7 @@ const InformaticaBackground: React.FC<BackgroundProps> = ({
     }
     
     // Atualizar e desenhar partículas
-    particlesRef.current.forEach(particle => {
+    particlesRef.current.forEach((particle: any) => {
       particle.update();
       particle.draw(ctx);
     });

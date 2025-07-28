@@ -51,7 +51,7 @@ export function AdminSettings({ settings: initialSettings, currentUser }: AdminS
   ]
 
   const groupedSettings = categories.reduce((acc, category) => {
-    acc[category.key] = settings.filter(setting => setting.category === category.key)
+    acc[category.key] = settings.filter((setting: any) => setting.category === category.key)
     return acc
   }, {} as Record<string, Setting[]>)
 
@@ -69,7 +69,7 @@ export function AdminSettings({ settings: initialSettings, currentUser }: AdminS
 
       if (error) throw error
 
-      setSettings(settings.map(setting => 
+      setSettings(settings.map((setting: any) => 
         setting.id === settingId 
           ? { ...setting, value: newValue, updated_at: new Date().toISOString() }
           : setting
@@ -78,7 +78,7 @@ export function AdminSettings({ settings: initialSettings, currentUser }: AdminS
       setEditingKey(null)
       setEditValue('')
     } catch (error) {
-      logError('Error updating setting:', error)
+      console.error('Error updating setting:', error)
       alert('Erro ao salvar configuração')
     } finally {
       setLoading(false)
@@ -170,7 +170,7 @@ export function AdminSettings({ settings: initialSettings, currentUser }: AdminS
 
       {/* Settings by Category */}
       <div className="space-y-6">
-        {categories.map(category => {
+        {categories.map((category: any) => {
           const categorySettings = groupedSettings[category.key]
           if (!categorySettings || categorySettings.length === 0) return null
 
@@ -183,7 +183,7 @@ export function AdminSettings({ settings: initialSettings, currentUser }: AdminS
                 </div>
 
                 <div className="space-y-4">
-                  {categorySettings.map(setting => (
+                  {categorySettings.map((setting: any) => (
                     <div key={setting.id} className="flex items-center justify-between p-4 bg-gray-750 rounded-lg">
                       <div className="flex-1">
                         <div className="flex items-center space-x-2 mb-2">
@@ -253,7 +253,7 @@ export function AdminSettings({ settings: initialSettings, currentUser }: AdminS
           <div>
             <p className="text-gray-400">Configurações Públicas</p>
             <p className="text-white font-medium">
-              {settings.filter(s => s.is_public).length}
+              {settings.filter((s: any) => s.is_public).length}
             </p>
           </div>
         </div>

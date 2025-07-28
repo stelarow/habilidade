@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react'
 import { Card } from '@/components/ui/card'
-import { LessonProgressData } from '@/types/lesson'
+import type { LessonProgressData } from '@/types/lesson'
 import { EnhancedLessonCompletion } from './completion/EnhancedLessonCompletion'
 import LessonHeaderRedesigned from './LessonHeaderRedesigned'
 import VideoSectionLazy from './VideoSectionLazy'
@@ -11,6 +11,7 @@ import PDFSectionLazy from './PDFSectionLazy'
 import QuizSectionLazy from './QuizSectionLazy'
 import CompletionSection from './CompletionSection'
 import LessonErrorBoundary from './LessonErrorBoundary'
+import type { UploadedFile } from './ExercisesSection'
 
 import { useLessonProgress } from '@/hooks/useLessonProgress'
 
@@ -145,11 +146,11 @@ const LessonPageRedesigned: React.FC<LessonPageRedesignedProps> = ({
             )}
 
             {/* PDF Section */}
-            {materials.length > 0 && materials.find(m => m.type === 'pdf') && (
+            {materials.length > 0 && materials.find((m: any) => m.type === 'pdf') && (
               <div id="pdf-section">
                 <PDFSectionLazy
-                  title={materials.find(m => m.type === 'pdf')?.title || "Material Didático"}
-                  pdfUrl={materials.find(m => m.type === 'pdf')?.url}
+                  title={materials.find((m: any) => m.type === 'pdf')?.title || "Material Didático"}
+                  pdfUrl={materials.find((m: any) => m.type === 'pdf')?.url}
                   lessonId={lesson.id}
                   onProgressUpdate={handlePDFProgress}
                   initialProgress={currentProgressData?.pdfProgress?.percentageRead || 0}
@@ -187,7 +188,7 @@ const LessonPageRedesigned: React.FC<LessonPageRedesignedProps> = ({
                   title="Exercícios Práticos"
                   exercises={exercises}
                   onProgressUpdate={handleExercisesProgress}
-                  onFilesUploaded={(files) => {
+                  onFilesUploaded={(files: UploadedFile[]) => {
                     // console.log('Files uploaded:', files) // Removed to prevent excessive logging
                   }}
                 />

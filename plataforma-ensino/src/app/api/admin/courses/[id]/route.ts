@@ -1,8 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { type NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { requireAdmin } from '@/lib/auth/session'
 import { z } from 'zod'
-import { logError } from '@/lib/utils/logger'
 
 // Force dynamic rendering for admin routes that require authentication
 export const dynamic = 'force-dynamic'
@@ -62,7 +61,7 @@ export async function GET(
         )
       }
       
-      logError('Error fetching course:', error)
+      console.error('Error fetching course:', error)
       return NextResponse.json(
         { error: 'Erro ao buscar curso' },
         { status: 500 }
@@ -74,7 +73,7 @@ export async function GET(
     })
     
   } catch (error) {
-    logError('Course fetch error:', error)
+    console.error('Course fetch error:', error)
     return NextResponse.json(
       { error: 'Erro interno do servidor' },
       { status: 500 }
@@ -184,7 +183,7 @@ export async function PUT(
       .single()
     
     if (error) {
-      logError('Error updating course:', error)
+      console.error('Error updating course:', error)
       return NextResponse.json(
         { error: 'Erro ao atualizar curso' },
         { status: 500 }
@@ -203,7 +202,7 @@ export async function PUT(
       )
     }
     
-    logError('Course update error:', error)
+    console.error('Course update error:', error)
     return NextResponse.json(
       { error: 'Erro interno do servidor' },
       { status: 500 }
@@ -262,7 +261,7 @@ export async function DELETE(
       .eq('id', courseId)
     
     if (error) {
-      logError('Error deleting course:', error)
+      console.error('Error deleting course:', error)
       return NextResponse.json(
         { error: 'Erro ao excluir curso' },
         { status: 500 }
@@ -274,7 +273,7 @@ export async function DELETE(
     })
     
   } catch (error) {
-    logError('Course deletion error:', error)
+    console.error('Course deletion error:', error)
     return NextResponse.json(
       { error: 'Erro interno do servidor' },
       { status: 500 }

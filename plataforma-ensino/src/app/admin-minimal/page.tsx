@@ -1,16 +1,15 @@
 // MINIMAL ADMIN PAGE - ZERO COMPONENTS TO ISOLATE headers.split ERROR
 import { createClient } from '@/lib/supabase/server'
-import { logDebug, logError } from '@/lib/utils/logger'
 
 export const dynamic = 'force-dynamic'
 
 export default async function MinimalAdminPage() {
-  logDebug('Starting minimal admin page', { component: 'MinimalAdminPage' })
+  console.log('Starting minimal admin page', { component: 'MinimalAdminPage' })
   
   const supabase = createClient()
-  logDebug('Supabase client created', { component: 'MinimalAdminPage' })
+  console.log('Supabase client created', { component: 'MinimalAdminPage' })
 
-  logDebug('Making SINGLE simple query...', { component: 'MinimalAdminPage' })
+  console.log('Making SINGLE simple query...', { component: 'MinimalAdminPage' })
   
   try {
     // SIMPLEST POSSIBLE QUERY
@@ -19,8 +18,8 @@ export default async function MinimalAdminPage() {
       .select('id')
       .limit(1)
 
-    logDebug('Query completed successfully', { component: 'MinimalAdminPage' })
-    logDebug('Query result', { component: 'MinimalAdminPage', dataLength: data?.length, hasError: !!error })
+    console.log('Query completed successfully', { component: 'MinimalAdminPage' })
+    console.log('Query result', { component: 'MinimalAdminPage', dataLength: data?.length, hasError: !!error })
 
     return (
       <div style={{ padding: '20px', background: 'black', color: 'white', minHeight: '100vh' }}>
@@ -53,7 +52,7 @@ export default async function MinimalAdminPage() {
     )
 
   } catch (err: any) {
-    logError('Error during execution', err, { component: 'MinimalAdminPage' })
+    console.error('Error during execution', err, { component: 'MinimalAdminPage' })
     
     return (
       <div style={{ padding: '20px', background: 'black', color: 'white', minHeight: '100vh' }}>

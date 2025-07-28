@@ -1,8 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { type NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { verifySession } from '@/lib/auth/session'
 import { z } from 'zod'
-import { logError } from '@/lib/utils/logger'
 import type {
   UpdateAvailabilityRequest,
   TeacherAvailability,
@@ -194,7 +193,7 @@ export async function PUT(
         .neq('id', slotId) // Exclude current slot
       
       if (otherSlots) {
-        const hasConflict = otherSlots.some(slot => {
+        const hasConflict = otherSlots.some((slot: any) => {
           const existingStart = slot.start_time
           const existingEnd = slot.end_time
           
@@ -222,7 +221,7 @@ export async function PUT(
       .single()
     
     if (error) {
-      logError('Database error updating availability:', error)
+      console.error('Database error updating availability:', error)
       return createErrorResponse(
         'VALIDATION_ERROR',
         'Failed to update availability slot',
@@ -245,7 +244,7 @@ export async function PUT(
       )
     }
     
-    logError('Availability PUT error:', error)
+    console.error('Availability PUT error:', error)
     return createErrorResponse(
       'VALIDATION_ERROR',
       'Internal server error',
@@ -351,7 +350,7 @@ export async function DELETE(
       .eq('id', slotId)
     
     if (error) {
-      logError('Database error deleting availability:', error)
+      console.error('Database error deleting availability:', error)
       return createErrorResponse(
         'VALIDATION_ERROR',
         'Failed to delete availability slot',
@@ -365,7 +364,7 @@ export async function DELETE(
     return new NextResponse(null, { status: 204 })
     
   } catch (error) {
-    logError('Availability DELETE error:', error)
+    console.error('Availability DELETE error:', error)
     return createErrorResponse(
       'VALIDATION_ERROR',
       'Internal server error',

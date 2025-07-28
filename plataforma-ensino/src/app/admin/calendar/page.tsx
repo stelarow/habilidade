@@ -4,7 +4,6 @@ import { EnhancedAdminCalendarInterface } from '@/components/admin/EnhancedAdmin
 import { BlurFade } from '@/components/ui/blur-fade'
 import { MagicCard } from '@/components/ui/magic-card'
 import { Users, Calendar, Clock } from 'lucide-react'
-import { logError } from '@/lib/utils/logger'
 
 // Force dynamic rendering for admin pages that use server-side Supabase client
 export const dynamic = 'force-dynamic'
@@ -57,7 +56,7 @@ export default async function AdminCalendarPage() {
       }
     }
   } catch (error) {
-    logError('Error fetching teachers:', error)
+    console.error('Error fetching teachers:', error)
   }
 
   // Get some basic statistics
@@ -71,7 +70,7 @@ export default async function AdminCalendarPage() {
     
     totalClasses = count || 0
   } catch (error) {
-    logError('Error fetching class count:', error)
+    console.error('Error fetching class count:', error)
   }
 
   return (

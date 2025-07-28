@@ -22,7 +22,7 @@ export const createClient = () => {
       const allCookies = cookieStore.getAll()
       console.log('🍪 Supabase server client cookies:', {
         total: allCookies.length,
-        supabaseCookies: allCookies.filter(c => c.name.includes('supabase') || c.name.includes('sb-')).length
+        supabaseCookies: allCookies.filter((c: any) => c.name.includes('supabase') || c.name.includes('sb-')).length
       })
     }
     

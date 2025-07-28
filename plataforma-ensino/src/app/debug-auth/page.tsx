@@ -83,14 +83,14 @@ export default function DebugAuthPage() {
         })
 
         // Get cookies (client-side approximation)
-        const cookies = document.cookie.split(';').map(cookie => {
+        const cookies = document.cookie.split(';').map((cookie: any) => {
           const [name, ...valueParts] = cookie.trim().split('=')
           return {
             name: name?.trim(),
             hasValue: valueParts.length > 0,
             valueLength: valueParts.join('=').length
           }
-        }).filter(c => c.name)
+        }).filter((c: any) => c.name)
 
         console.log(`[DEBUG_AUTH-${debugId}] Found ${cookies.length} cookies`)
 

@@ -117,7 +117,7 @@ export default function VideoPlayer({
       }
     }
 
-    const handleGlobalError = (event: ErrorEvent) => {
+    const handleGlobalError = (event: ErrorEvent): boolean | void => {
       if (event.message && (
         event.message.includes('postMessage') ||
         event.message.includes('removeChild') ||
@@ -128,6 +128,7 @@ export default function VideoPlayer({
         console.warn('Suppressed video player error:', event.message)
         return false
       }
+      return undefined
     }
 
     const handleUnhandledRejection = (event: PromiseRejectionEvent) => {
@@ -600,7 +601,7 @@ export default function VideoPlayer({
                 {showSettings && (
                   <div className="absolute bottom-full right-0 mb-2 bg-black/90 rounded-lg p-2 min-w-[120px]">
                     <div className="text-xs text-white/60 mb-2">Velocidade</div>
-                    {playbackRates.map(rate => (
+                    {playbackRates.map((rate: any) => (
                       <button
                         key={rate}
                         onClick={() => {

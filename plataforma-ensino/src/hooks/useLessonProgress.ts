@@ -149,7 +149,7 @@ export const useLessonProgress = ({ lessonId, initialProgressData }: UseLessonPr
         exerciseProgress: {
           ...prev.exerciseProgress,
           completionPercentage: progress,
-          submittedFiles: uploadedFiles ? uploadedFiles.map(file => ({
+          submittedFiles: uploadedFiles ? uploadedFiles.map((file: any) => ({
             exerciseId: 'default',
             fileName: file,
             fileUrl: '',

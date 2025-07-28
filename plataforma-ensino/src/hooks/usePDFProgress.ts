@@ -44,7 +44,7 @@ interface UsePDFProgressOptions {
  *   markPageAsRead
  * } = usePDFProgress({
  *   totalPages: 50,
- *   onFullyRead: () => logDebug('PDF fully read!'),
+ *   onFullyRead: () => console.log('PDF fully read!'),
  *   lessonId: 'lesson-123'
  * })
  */
@@ -119,7 +119,7 @@ export function usePDFProgress({
           hasCalledFullyReadRef.current = true
         }
       } catch (error) {
-        logError('Failed to parse saved PDF progress:', error)
+        console.error('Failed to parse saved PDF progress:', error)
       }
     }
   }, [fullStorageKey, totalPages, calculatePercentageRead, calculateEstimatedTimeRemaining])

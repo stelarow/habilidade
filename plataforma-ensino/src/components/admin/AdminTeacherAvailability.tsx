@@ -261,7 +261,7 @@ export default function AdminTeacherAvailability({
 
       const updatedAvailability = await response.json();
       setAvailabilities(prev => 
-        prev.map(a => a.id === id ? updatedAvailability.data : a)
+        prev.map((a: any) => a.id === id ? updatedAvailability.data : a)
       );
       setIsEditing(false);
       setSelectedAvailability(null);
@@ -284,7 +284,7 @@ export default function AdminTeacherAvailability({
         throw new Error(errorData.message || 'Failed to delete availability');
       }
 
-      setAvailabilities(prev => prev.filter(a => a.id !== id));
+      setAvailabilities(prev => prev.filter((a: any) => a.id !== id));
       await detectConflicts();
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to delete availability');
@@ -296,8 +296,8 @@ export default function AdminTeacherAvailability({
     if (selectedSlots.length === 0) return;
     
     try {
-      const updates = selectedSlots.map(slotId => {
-        const slot = availabilities.find(a => a.id === slotId);
+      const updates = selectedSlots.map((slotId: any) => {
+        const slot = availabilities.find((a: any) => a.id === slotId);
         return {
           id: slotId,
           teacher_id: slot?.teacher_id || '',
@@ -397,8 +397,8 @@ export default function AdminTeacherAvailability({
   };
 
   // Filter availabilities
-  const filteredAvailabilities = availabilities.filter(availability => {
-    const teacher = teachers.find(t => t.id === availability.teacher_id);
+  const filteredAvailabilities = availabilities.filter((availability: any) => {
+    const teacher = teachers.find((t: any) => t.id === availability.teacher_id);
     const matchesSearch = !searchTerm || 
       teacher?.full_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       teacher?.email.toLowerCase().includes(searchTerm.toLowerCase());
@@ -410,10 +410,10 @@ export default function AdminTeacherAvailability({
   });
 
   // Group availabilities by teacher
-  const groupedAvailabilities = teachers.map(teacher => ({
+  const groupedAvailabilities = teachers.map((teacher: any) => ({
     teacher,
-    availabilities: filteredAvailabilities.filter(a => a.teacher_id === teacher.id)
-  })).filter(group => group.availabilities.length > 0 || !searchTerm);
+    availabilities: filteredAvailabilities.filter((a: any) => a.teacher_id === teacher.id)
+  })).filter((group: any) => group.availabilities.length > 0 || !searchTerm);
 
   // Initialize
   useEffect(() => {
@@ -583,7 +583,7 @@ export default function AdminTeacherAvailability({
           {showConflicts && (
             <div className="mt-4 space-y-2">
               {conflicts.map((conflict, index) => {
-                const teacher = teachers.find(t => t.id === conflict.teacher_id);
+                const teacher = teachers.find((t: any) => t.id === conflict.teacher_id);
                 return (
                   <div key={index} className="bg-yellow-100 dark:bg-yellow-900/40 rounded p-3">
                     <h4 className="font-medium text-yellow-900 dark:text-yellow-100">
@@ -732,7 +732,7 @@ export default function AdminTeacherAvailability({
                   className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                 >
                   <option value="">Selecione um professor</option>
-                  {teachers.map(teacher => (
+                  {teachers.map((teacher: any) => (
                     <option key={teacher.id} value={teacher.id}>
                       {teacher.full_name}
                     </option>
@@ -897,7 +897,7 @@ export default function AdminTeacherAvailability({
                   onClick={() => {
                     const isSelected = selectedSlots.includes(availability.id);
                     if (isSelected) {
-                      setSelectedSlots(prev => prev.filter(id => id !== availability.id));
+                      setSelectedSlots(prev => prev.filter((id: any) => id !== availability.id));
                     } else {
                       setSelectedSlots(prev => [...prev, availability.id]);
                     }
@@ -1075,7 +1075,7 @@ export default function AdminTeacherAvailability({
               <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg">
                 <h4 className="font-medium text-green-900 dark:text-green-100">Horários Ativos</h4>
                 <p className="text-2xl font-bold text-green-600 dark:text-green-400">
-                  {availabilities.filter(a => a.is_active).length}
+                  {availabilities.filter((a: any) => a.is_active).length}
                 </p>
               </div>
               <div className="bg-yellow-50 dark:bg-yellow-900/20 p-4 rounded-lg">
@@ -1094,7 +1094,7 @@ export default function AdminTeacherAvailability({
               <h4 className="font-medium">Distribuição por Dia da Semana</h4>
               <div className="grid grid-cols-7 gap-2">
                 {DAYS_OF_WEEK.map((day, index) => {
-                  const dayCount = availabilities.filter(a => a.day_of_week === index && a.is_active).length;
+                  const dayCount = availabilities.filter((a: any) => a.day_of_week === index && a.is_active).length;
                   return (
                     <div key={index} className="text-center">
                       <div className="bg-gray-100 dark:bg-gray-800 p-2 rounded-lg">
@@ -1122,7 +1122,7 @@ export default function AdminTeacherAvailability({
             </div>
             <div className="flex items-center gap-2">
               <span className="text-sm text-gray-600 dark:text-gray-400">
-                {filteredAvailabilities.filter(a => a.is_active).length} ativas
+                {filteredAvailabilities.filter((a: any) => a.is_active).length} ativas
               </span>
             </div>
             <div className="flex items-center gap-2">

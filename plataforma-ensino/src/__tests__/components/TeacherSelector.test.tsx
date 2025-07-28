@@ -17,7 +17,7 @@ import { render, screen, fireEvent, waitFor, within } from '@testing-library/rea
 import userEvent from '@testing-library/user-event'
 import '@testing-library/jest-dom'
 import { createBrowserClient } from '@supabase/ssr'
-import { TeacherSelector, Teacher } from '@/components/enrollment/TeacherSelector'
+import type { TeacherSelector, Teacher } from '@/components/enrollment/TeacherSelector'
 import { aggregateAvailabilityForCalendar, subscribeToAvailabilityUpdates } from '@/utils/teacherAvailabilityLogic'
 
 // Mock dependencies
@@ -453,7 +453,7 @@ describe('TeacherSelector Component', () => {
         const teacherCards = screen.getAllByRole('button')
         expect(teacherCards).toHaveLength(2) // 2 active teachers
         
-        teacherCards.forEach(card => {
+        teacherCards.forEach((card: any) => {
           expect(card).toHaveAttribute('aria-label')
           expect(card).toHaveAttribute('aria-pressed')
         })

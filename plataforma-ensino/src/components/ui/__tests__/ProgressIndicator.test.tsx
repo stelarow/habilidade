@@ -1,7 +1,7 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
-import ProgressIndicator, { ProgressIndicatorProps } from '../ProgressIndicator'
+import ProgressIndicator, { type ProgressIndicatorProps } from '../ProgressIndicator'
 
 // Mock the utils function
 jest.mock('@/lib/utils', () => ({
@@ -77,7 +77,7 @@ describe('ProgressIndicator', () => {
       'video', 'material', 'exercise', 'default'
     ]
     
-    variants.forEach(variant => {
+    variants.forEach((variant: any) => {
       const { container } = render(
         <ProgressIndicator {...defaultProps} variant={variant} />
       )

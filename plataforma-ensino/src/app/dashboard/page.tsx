@@ -55,7 +55,7 @@ export default function DashboardPage() {
 
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
+      (event: any, session: any) => {
         if (session?.user) {
           setUserId(session.user.id)
           setUserEmail(session.user.email || null)

@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { getRedirectUrlForCurrentUser } from '@/lib/auth/redirect-helpers'
-import { logDebug, logError } from '@/lib/utils/logger'
 
 export default function AuthLayout({
   children,
@@ -21,7 +20,7 @@ export default function AuthLayout({
     
     const checkAuthStatus = async () => {
       try {
-        logDebug(`[AUTH-LAYOUT-${sessionId}] 🔍 Client-side auth check starting for: ${pathname}`)
+        console.log(`[AUTH-LAYOUT-${sessionId}] 🔍 Client-side auth check starting for: ${pathname}`)
         
         const supabase = createClient()
         
@@ -29,14 +28,14 @@ export default function AuthLayout({
         const { data: { user }, error } = await supabase.auth.getUser()
         
         if (error) {
-          logDebug(`[AUTH-LAYOUT-${sessionId}] ❌ Error getting user:`, error.message)
+          console.log(`[AUTH-LAYOUT-${sessionId}] ❌ Error getting user:`, error.message)
           setShouldRender(true)
           return
         }
 
         if (user) {
-          logDebug(`[AUTH-LAYOUT-${sessionId}] ✅ User authenticated (ID: ${user.id})`)
-          logDebug(`[AUTH-LAYOUT-${sessionId}] 👤 User details:`, {
+          console.log(`[AUTH-LAYOUT-${sessionId}] ✅ User authenticated (ID: ${user.id})`)
+          console.log(`[AUTH-LAYOUT-${sessionId}] 👤 User details:`, {
             email: user.email,
             role: user.user_metadata?.role || 'not_set',
             created_at: user.created_at
@@ -44,40 +43,40 @@ export default function AuthLayout({
 
           // Check if this is a restricted auth route (login/register)
           const restrictedRoutes = ['/auth/login', '/auth/register']
-          const isRestrictedRoute = restrictedRoutes.some(route => 
+          const isRestrictedRoute = restrictedRoutes.some((route: any) => 
             pathname === route || pathname.startsWith(route + '/')
           )
 
           if (isRestrictedRoute) {
-            logDebug(`[AUTH-LAYOUT-${sessionId}] 🚫 Authenticated user on restricted route - redirecting`)
+            console.log(`[AUTH-LAYOUT-${sessionId}] 🚫 Authenticated user on restricted route - redirecting`)
             
             try {
               const redirectUrl = await getRedirectUrlForCurrentUser()
-              logDebug(`[AUTH-LAYOUT-${sessionId}] ↗️ Redirecting to: ${redirectUrl}`)
+              console.log(`[AUTH-LAYOUT-${sessionId}] ↗️ Redirecting to: ${redirectUrl}`)
               router.replace(redirectUrl)
               return
             } catch (error) {
-              logError(`[AUTH-LAYOUT-${sessionId}] ❌ Error getting redirect URL:`, error)
-              logDebug(`[AUTH-LAYOUT-${sessionId}] 🔄 Falling back to dashboard redirect`)
+              console.error(`[AUTH-LAYOUT-${sessionId}] ❌ Error getting redirect URL:`, error)
+              console.log(`[AUTH-LAYOUT-${sessionId}] 🔄 Falling back to dashboard redirect`)
               router.replace('/dashboard')
               return
             }
           } else {
-            logDebug(`[AUTH-LAYOUT-${sessionId}] ℹ️ Non-restricted auth route: ${pathname} - allowing render`)
+            console.log(`[AUTH-LAYOUT-${sessionId}] ℹ️ Non-restricted auth route: ${pathname} - allowing render`)
           }
         } else {
-          logDebug(`[AUTH-LAYOUT-${sessionId}] 👤 No authenticated user found - allowing access`)
+          console.log(`[AUTH-LAYOUT-${sessionId}] 👤 No authenticated user found - allowing access`)
         }
 
         setShouldRender(true)
         
       } catch (error) {
-        logError(`[AUTH-LAYOUT-${sessionId}] ❌ Unexpected error in auth check:`, error)
+        console.error(`[AUTH-LAYOUT-${sessionId}] ❌ Unexpected error in auth check:`, error)
         // Allow rendering on error to avoid blocking the page
         setShouldRender(true)
       } finally {
         setIsChecking(false)
-        logDebug(`[AUTH-LAYOUT-${sessionId}] ✅ Auth check completed`)
+        console.log(`[AUTH-LAYOUT-${sessionId}] ✅ Auth check completed`)
       }
     }
 

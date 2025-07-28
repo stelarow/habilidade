@@ -2,7 +2,6 @@
 // Helps validate and debug instructor-related issues in enrollment process
 
 import { createClient } from '@/lib/supabase/client'
-import { logDebug, logWarn, logError } from '@/lib/utils/logger'
 
 export interface InstructorValidationResult {
   isValid: boolean
@@ -52,8 +51,8 @@ export async function validateInstructors(
     result.foundInstructors = instructors || []
     
     // Check for missing instructors
-    const foundIds = result.foundInstructors.map(i => i.id)
-    result.missingInstructors = instructorIds.filter(id => !foundIds.includes(id))
+    const foundIds = result.foundInstructors.map((i: any) => i.id)
+    result.missingInstructors = instructorIds.filter((id: any) => !foundIds.includes(id))
     
     if (result.missingInstructors.length > 0) {
       result.errors.push(
@@ -69,7 +68,7 @@ export async function validateInstructors(
     if (result.invalidRoleInstructors.length > 0) {
       result.errors.push(
         `Instrutores com função inválida: ${result.invalidRoleInstructors
-          .map(i => `${i.full_name} (${i.role})`)
+          .map((i: any) => `${i.full_name} (${i.role})`)
           .join(', ')}`
       )
     }
@@ -176,11 +175,11 @@ export function logInstructorValidationIssues(
 ) {
   console.group(`🔍 ${context} - Instructor Validation`)
   
-  logDebug('📋 Requested Instructor IDs:', validation.instructorIds)
-  logDebug('✅ Found Instructors:', validation.foundInstructors.length)
+  console.log('📋 Requested Instructor IDs:', validation.instructorIds)
+  console.log('✅ Found Instructors:', validation.foundInstructors.length)
   
   if (validation.foundInstructors.length > 0) {
-    console.table(validation.foundInstructors.map(i => ({
+    console.table(validation.foundInstructors.map((i: any) => ({
       ID: i.id,
       Name: i.full_name,
       Email: i.email,
@@ -189,12 +188,12 @@ export function logInstructorValidationIssues(
   }
   
   if (validation.missingInstructors.length > 0) {
-    logWarn('❌ Missing Instructors:', validation.missingInstructors)
+    console.warn('❌ Missing Instructors:', validation.missingInstructors)
   }
   
   if (validation.invalidRoleInstructors.length > 0) {
-    logWarn('⚠️ Invalid Role Instructors:')
-    console.table(validation.invalidRoleInstructors.map(i => ({
+    console.warn('⚠️ Invalid Role Instructors:')
+    console.table(validation.invalidRoleInstructors.map((i: any) => ({
       ID: i.id,
       Name: i.full_name,
       Current_Role: i.role,
@@ -203,15 +202,15 @@ export function logInstructorValidationIssues(
   }
   
   if (validation.errors.length > 0) {
-    logError('❌ Validation Errors:')
-    validation.errors.forEach(error => logError(`   - ${error}`))
+    console.error('❌ Validation Errors:')
+    validation.errors.forEach((error: any) => console.error(`   - ${error}`))
   }
   
   if (validation.warnings.length > 0) {
-    logWarn('⚠️ Validation Warnings:')
-    validation.warnings.forEach(warning => logWarn(`   - ${warning}`))
+    console.warn('⚠️ Validation Warnings:')
+    validation.warnings.forEach((warning: any) => console.warn(`   - ${warning}`))
   }
   
-  logDebug('🏁 Validation Result:', validation.isValid ? 'PASSED' : 'FAILED')
+  console.log('🏁 Validation Result:', validation.isValid ? 'PASSED' : 'FAILED')
   console.groupEnd()
 }

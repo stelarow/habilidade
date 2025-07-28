@@ -89,6 +89,7 @@ export const LessonCompletionCelebration: React.FC<LessonCompletionCelebrationPr
         clearTimeout(timer)
       }
     }
+    return undefined;
   }, [isVisible]) // FIXED: Only depend on isVisible to prevent callback dependency loops
 
   // Generate confetti particles

@@ -107,7 +107,7 @@ export const SecureVideoPlayer: React.FC<SecureVideoPlayerProps> = ({
   useEffect(() => {
     if (!enableScreenCaptureDetection) return
 
-    const detectScreenCapture = async () => {
+    const detectScreenCapture = async (): Promise<(() => void) | void> => {
       try {
         // Detectar mudanças na API de mídia
         const checkScreenShare = () => {
@@ -141,6 +141,7 @@ export const SecureVideoPlayer: React.FC<SecureVideoPlayerProps> = ({
         }
       } catch (error) {
         console.warn('Screen capture detection setup failed:', error)
+        return undefined
       }
     }
 

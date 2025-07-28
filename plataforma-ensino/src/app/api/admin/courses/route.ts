@@ -1,8 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { type NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { requireAdmin } from '@/lib/auth/session'
 import { z } from 'zod'
-import { logError } from '@/lib/utils/logger'
 
 // Force dynamic rendering for admin routes that require authentication
 export const dynamic = 'force-dynamic'
@@ -75,7 +74,7 @@ export async function GET(request: NextRequest) {
     const { data: courses, error } = await query
     
     if (error) {
-      logError('Error fetching courses', error, { component: 'AdminCoursesAPI' })
+      console.error('Error fetching courses', error, { component: 'AdminCoursesAPI' })
       return NextResponse.json(
         { error: 'Failed to fetch courses' },
         { status: 500 }
@@ -87,7 +86,7 @@ export async function GET(request: NextRequest) {
     })
     
   } catch (error) {
-    logError('Courses API error', error, { component: 'AdminCoursesAPI' })
+    console.error('Courses API error', error, { component: 'AdminCoursesAPI' })
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -175,7 +174,7 @@ export async function POST(request: NextRequest) {
       .single()
     
     if (error) {
-      logError('Error creating course', error, { component: 'AdminCoursesAPI' })
+      console.error('Error creating course', error, { component: 'AdminCoursesAPI' })
       return NextResponse.json(
         { error: 'Erro ao criar curso' },
         { status: 500 }
@@ -194,7 +193,7 @@ export async function POST(request: NextRequest) {
       )
     }
     
-    logError('Course creation error', error, { component: 'AdminCoursesAPI' })
+    console.error('Course creation error', error, { component: 'AdminCoursesAPI' })
     return NextResponse.json(
       { error: 'Erro interno do servidor' },
       { status: 500 }

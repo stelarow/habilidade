@@ -3,7 +3,7 @@
 import React, { useState, useCallback } from 'react'
 import { LessonHeader } from './header/LessonHeader'
 import { EnhancedLessonCompletion } from './completion/EnhancedLessonCompletion'
-import { LessonProgressData } from '@/types/lesson'
+import type { LessonProgressData } from '@/types/lesson'
 import { cn } from '@/lib/utils'
 
 interface EnhancedLessonPageProps {

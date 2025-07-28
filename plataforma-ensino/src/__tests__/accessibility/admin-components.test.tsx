@@ -85,7 +85,7 @@ describe('Admin Components Accessibility', () => {
       const headings = container.querySelectorAll('h1, h2, h3, h4, h5, h6')
       let previousLevel = 0
       
-      headings.forEach(heading => {
+      headings.forEach((heading: any) => {
         const level = parseInt(heading.tagName.charAt(1))
         expect(level).toBeLessThanOrEqual(previousLevel + 1)
         previousLevel = level

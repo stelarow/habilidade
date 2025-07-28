@@ -2,6 +2,8 @@
   "extends": [
     "next/core-web-vitals"
   ],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
   "rules": {
     // Performance-focused rules
     "react/no-unused-prop-types": "warn",
@@ -24,7 +26,14 @@
     // Next.js performance best practices
     "react/no-unescaped-entities": "off",
     "@next/next/no-img-element": "warn",
-    "@next/next/no-html-link-for-pages": "error"
+    "@next/next/no-html-link-for-pages": "error",
+    
+    // TypeScript import optimization
+    "@typescript-eslint/consistent-type-imports": ["error", {
+      "prefer": "type-imports",
+      "fixStyle": "inline-type-imports"
+    }],
+    "@typescript-eslint/no-import-type-side-effects": "error"
   },
   "env": {
     "browser": true,

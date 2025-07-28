@@ -82,7 +82,7 @@ describe('Real-time Performance Tests', () => {
 
       // Check performance measurement
       const measures = performance.getEntriesByType('measure')
-      const updateMeasure = measures.find(m => m.name === 'update-processing')
+      const updateMeasure = measures.find((m: any) => m.name === 'update-processing')
       expect(updateMeasure).toBeDefined()
       expect(updateMeasure!.duration).toBeLessThan(50) // Internal processing should be even faster
     })
@@ -112,7 +112,7 @@ describe('Real-time Performance Tests', () => {
       performance.measure('batch-processing', 'batch-start', 'batch-end')
       
       const measures = performance.getEntriesByType('measure')
-      const batchMeasure = measures.find(m => m.name === 'batch-processing')
+      const batchMeasure = measures.find((m: any) => m.name === 'batch-processing')
       
       // Batch processing should be efficient
       expect(batchMeasure!.duration).toBeLessThan(200) // 200ms for 10 updates
@@ -232,7 +232,7 @@ describe('Real-time Performance Tests', () => {
       ]
 
       const checkTimeConflict = (newBooking: any) => {
-        return existingBookings.some(existing => 
+        return existingBookings.some((existing: any) => 
           existing.date === newBooking.date &&
           (
             (newBooking.startTime >= existing.startTime && newBooking.startTime < existing.endTime) ||

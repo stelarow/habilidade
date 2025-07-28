@@ -1,8 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { type NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { requireAdmin } from '@/lib/auth/session'
 import { z } from 'zod'
-import { logError } from '@/lib/utils/logger'
 
 // Force dynamic rendering for admin routes that require authentication
 export const dynamic = 'force-dynamic'
@@ -58,7 +57,7 @@ export async function GET(
       .single()
     
     if (error) {
-      logError('Error fetching progress:', error)
+      console.error('Error fetching progress:', error)
       if (error.code === 'PGRST116') {
         return NextResponse.json(
           { error: 'Progresso não encontrado' },
@@ -76,7 +75,7 @@ export async function GET(
     })
     
   } catch (error) {
-    logError('Progress detail API error:', error)
+    console.error('Progress detail API error:', error)
     return NextResponse.json(
       { error: 'Erro interno do servidor' },
       { status: 500 }
@@ -156,7 +155,7 @@ export async function PUT(
       .single()
     
     if (error) {
-      logError('Error updating progress:', error)
+      console.error('Error updating progress:', error)
       return NextResponse.json(
         { error: 'Erro ao atualizar progresso' },
         { status: 500 }
@@ -183,7 +182,7 @@ export async function PUT(
       )
     }
     
-    logError('Progress update error:', error)
+    console.error('Progress update error:', error)
     return NextResponse.json(
       { error: 'Erro interno do servidor' },
       { status: 500 }
@@ -233,7 +232,7 @@ export async function DELETE(
       .eq('id', progressId)
     
     if (error) {
-      logError('Error deleting progress:', error)
+      console.error('Error deleting progress:', error)
       return NextResponse.json(
         { error: 'Erro ao remover progresso' },
         { status: 500 }
@@ -252,7 +251,7 @@ export async function DELETE(
     })
     
   } catch (error) {
-    logError('Progress deletion error:', error)
+    console.error('Progress deletion error:', error)
     return NextResponse.json(
       { error: 'Erro interno do servidor' },
       { status: 500 }

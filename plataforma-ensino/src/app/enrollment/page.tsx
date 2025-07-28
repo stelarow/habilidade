@@ -204,14 +204,14 @@ function EnrollmentContent() {
 
   const handleSlotSelect = useCallback(async (slot: TimeSlot) => {
     setEnrollmentState(prev => {
-      const isSelected = prev.selectedSlots.some(s => 
+      const isSelected = prev.selectedSlots.some((s: any) => 
         s.slotId === slot.slotId && s.date.getTime() === slot.date.getTime()
       )
 
       let newSlots: TimeSlot[]
       if (isSelected) {
         // Deselect slot
-        newSlots = prev.selectedSlots.filter(s => 
+        newSlots = prev.selectedSlots.filter((s: any) => 
           !(s.slotId === slot.slotId && s.date.getTime() === slot.date.getTime())
         )
       } else {
@@ -308,7 +308,7 @@ function EnrollmentContent() {
     ]
     
     // Filter steps based on course requirements
-    const steps = allSteps.filter(step => stepOrder.includes(step.key))
+    const steps = allSteps.filter((step: any) => stepOrder.includes(step.key))
 
     return (
       <div className="flex items-center justify-center mb-8">
@@ -409,7 +409,7 @@ function EnrollmentContent() {
               requires_teacher_selection: false,
               self_paced: false
             }
-          ].map(course => (
+          ].map((course: any) => (
             <Card
               key={course.id}
               className="p-6 border-white/20 hover:border-[#d400ff]/50 cursor-pointer transition-all duration-200"
@@ -777,7 +777,7 @@ function EnrollmentContent() {
                     const enrollmentData = {
                       courseId: enrollmentState.selectedCourse?.id || '',
                       teacherId: enrollmentState.selectedTeacher?.id || null,
-                      selectedSlots: enrollmentState.selectedSlots.map(slot => ({
+                      selectedSlots: enrollmentState.selectedSlots.map((slot: any) => ({
                         slotId: slot.slotId,
                         date: slot.date.toISOString().split('T')[0],
                         startTime: slot.startTime,

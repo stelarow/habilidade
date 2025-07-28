@@ -145,7 +145,7 @@ export const usePDFPerformance = (
 
   // Track errors
   const trackError = useCallback((error: Error, context?: string) => {
-    logError(`PDF Performance Tracking - Error in ${context}:`, error);
+    console.error(`PDF Performance Tracking - Error in ${context}:`, error);
     
     setMetrics(prev => ({ ...prev, errorCount: prev.errorCount + 1 }));
     
@@ -179,7 +179,7 @@ export const usePDFPerformance = (
       onThresholdExceeded?.('blankSpaceRatio', blankSpaceRatio, mergedConfig.reportingThreshold.blankSpaceRatio);
       setAlerts(prev => [...prev, { metric: 'blankSpaceRatio', value: blankSpaceRatio, timestamp: Date.now() }]);
       
-      logWarn(`PDF Blank Space Detected:`, {
+      console.warn(`PDF Blank Space Detected:`, {
         containerHeight,
         contentHeight,
         blankSpaceRatio: `${(blankSpaceRatio * 100).toFixed(1)}%`
@@ -231,7 +231,7 @@ export const usePDFPerformance = (
         
         entries.forEach((entry) => {
           if (entry.name.includes('pdf') || entry.name.includes('canvas')) {
-            logDebug(`PDF Performance Entry:`, {
+            console.log(`PDF Performance Entry:`, {
               name: entry.name,
               duration: entry.duration,
               startTime: entry.startTime
@@ -244,7 +244,7 @@ export const usePDFPerformance = (
         entryTypes: ['measure', 'navigation', 'resource'] 
       });
     } catch (error) {
-      logWarn('Performance Observer not supported:', error);
+      console.warn('Performance Observer not supported:', error);
     }
 
     return () => {
@@ -257,7 +257,7 @@ export const usePDFPerformance = (
   // Auto-cleanup alerts after 30 seconds
   useEffect(() => {
     const cleanup = setTimeout(() => {
-      setAlerts(prev => prev.filter(alert => Date.now() - alert.timestamp < 30000));
+      setAlerts(prev => prev.filter((alert: any) => Date.now() - alert.timestamp < 30000));
     }, 30000);
 
     return () => clearTimeout(cleanup);
@@ -275,7 +275,7 @@ export const usePDFPerformance = (
       }
     };
 
-    logDebug('PDF Performance Report:', report);
+    console.log('PDF Performance Report:', report);
     return report;
   }, [metrics, alerts, mergedConfig.reportingThreshold]);
 

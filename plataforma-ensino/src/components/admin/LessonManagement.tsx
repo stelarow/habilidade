@@ -51,7 +51,7 @@ export function LessonManagement({
 
     // Filter by search term
     if (searchTerm) {
-      filtered = filtered.filter(lesson => 
+      filtered = filtered.filter((lesson: any) => 
         lesson.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         lesson.description?.toLowerCase().includes(searchTerm.toLowerCase())
       )
@@ -59,14 +59,14 @@ export function LessonManagement({
 
     // Filter by status
     if (statusFilter !== 'all') {
-      filtered = filtered.filter(lesson => 
+      filtered = filtered.filter((lesson: any) => 
         statusFilter === 'published' ? lesson.is_published : !lesson.is_published
       )
     }
 
     // Filter by course
     if (courseFilter !== 'all') {
-      filtered = filtered.filter(lesson => lesson.course_id === courseFilter)
+      filtered = filtered.filter((lesson: any) => lesson.course_id === courseFilter)
     }
 
     setFilteredLessons(filtered)
@@ -87,7 +87,7 @@ export function LessonManagement({
 
       if (error) throw error
 
-      setLessons(lessons.map(lesson => 
+      setLessons(lessons.map((lesson: any) => 
         lesson.id === lessonId ? { ...lesson, is_published: !currentStatus } : lesson
       ))
     } catch (error) {
@@ -112,7 +112,7 @@ export function LessonManagement({
 
       if (!response.ok) throw new Error('Failed to delete lesson')
 
-      setLessons(lessons.filter(lesson => lesson.id !== lessonId))
+      setLessons(lessons.filter((lesson: any) => lesson.id !== lessonId))
       setShowDeleteModal(false)
       setSelectedLesson(null)
     } catch (error) {
@@ -163,7 +163,7 @@ export function LessonManagement({
       if (!response.ok) throw new Error('Failed to update lesson')
 
       const result = await response.json()
-      setLessons(lessons.map(lesson => 
+      setLessons(lessons.map((lesson: any) => 
         lesson.id === selectedLesson.id ? result.data : lesson
       ))
       setShowEditModal(false)
@@ -177,7 +177,7 @@ export function LessonManagement({
   }
 
   const getCourseTitle = (courseId: string) => {
-    const course = courses.find(c => c.id === courseId)
+    const course = courses.find((c: any) => c.id === courseId)
     return course?.title || 'Curso não encontrado'
   }
 
@@ -247,7 +247,7 @@ export function LessonManagement({
                 className="w-full px-4 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500 appearance-none"
               >
                 <option value="all">Todos os cursos</option>
-                {courses.map(course => (
+                {courses.map((course: any) => (
                   <option key={course.id} value={course.id}>
                     {course.title}
                   </option>

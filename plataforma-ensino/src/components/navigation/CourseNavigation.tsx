@@ -61,7 +61,7 @@ export default function CourseNavigation({
         title: `Módulo ${moduleNumber}`,
         lessons: moduleLessons,
         totalDuration: moduleLessons.reduce((total, lesson) => total + lesson.video_duration, 0),
-        completedCount: moduleLessons.filter(lesson => userProgress[lesson.id]?.completed).length
+        completedCount: moduleLessons.filter((lesson: any) => userProgress[lesson.id]?.completed).length
       })
     }
     
@@ -108,7 +108,7 @@ export default function CourseNavigation({
     if (lessonIndex === 0) return true
     
     // Check if previous lesson is completed
-    const previousLesson = lessons.find(l => l.order_index === lesson.order_index - 1)
+    const previousLesson = lessons.find((l: any) => l.order_index === lesson.order_index - 1)
     if (previousLesson) {
       return userProgress[previousLesson.id]?.completed || false
     }
@@ -123,7 +123,7 @@ export default function CourseNavigation({
     return Math.round((progress.last_position / lesson.video_duration) * 100)
   }
 
-  const totalCompletedLessons = lessons.filter(lesson => userProgress[lesson.id]?.completed).length
+  const totalCompletedLessons = lessons.filter((lesson: any) => userProgress[lesson.id]?.completed).length
   const overallProgress = lessons.length > 0 ? Math.round((totalCompletedLessons / lessons.length) * 100) : 0
 
   return (

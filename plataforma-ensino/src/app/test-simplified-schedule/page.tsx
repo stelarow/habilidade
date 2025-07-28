@@ -81,7 +81,7 @@ export default function TestSimplifiedSchedulePage() {
             className="bg-gray-800 border border-gray-600 rounded-md p-2 text-white"
           >
             <option value="">Selecione um professor</option>
-            {teachers.map(teacher => (
+            {teachers.map((teacher: any) => (
               <option key={teacher.id} value={teacher.id}>
                 {teacher.name}
               </option>
@@ -107,7 +107,7 @@ export default function TestSimplifiedSchedulePage() {
         {selectedTeacher && (
           <SimplifiedWeeklySchedule
             teacherId={selectedTeacher}
-            teacherUserId={teachers.find(t => t.id === selectedTeacher)?.userId}
+            teacherUserId={teachers.find((t: any) => t.id === selectedTeacher)?.userId}
             onSlotSelect={handleSlotSelect}
             selectedSlots={selectedSlots}
             maxSelectableSlots={2}

@@ -312,8 +312,8 @@ describe('getCompletionIndicatorsForDate', () => {
   it('should identify last class correctly', () => {
     const indicators = getCompletionIndicatorsForDate(mockStudents, '2025-08-15');
     
-    const joaoIndicator = indicators.find(i => i.student_name === 'João');
-    const mariaIndicator = indicators.find(i => i.student_name === 'Maria');
+    const joaoIndicator = indicators.find((i: any) => i.student_name === 'João');
+    const mariaIndicator = indicators.find((i: any) => i.student_name === 'Maria');
     
     expect(joaoIndicator?.indicator_type).toBe('last_class');
     expect(mariaIndicator?.indicator_type).toBe('one_month_remaining');

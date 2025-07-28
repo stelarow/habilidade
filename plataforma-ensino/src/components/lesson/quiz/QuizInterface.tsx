@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
-import { QuizData } from '@/types/lesson'
+import type { QuizData } from '@/types/lesson'
 
 // Extended interfaces for detailed quiz functionality
 interface QuizQuestion {
@@ -72,12 +72,12 @@ export function QuizInterface({
 
   // Calculate score
   const currentScore = answers.length > 0 
-    ? Math.round((answers.filter(a => a.isCorrect).length / answers.length) * 100)
+    ? Math.round((answers.filter((a: any) => a.isCorrect).length / answers.length) * 100)
     : 0
 
   const totalPossibleScore = questions.reduce((sum, q) => sum + q.points, 0)
   const earnedScore = answers.reduce((sum, a) => 
-    sum + (a.isCorrect ? questions.find(q => q.id === a.questionId)?.points || 0 : 0), 0
+    sum + (a.isCorrect ? questions.find((q: any) => q.id === a.questionId)?.points || 0 : 0), 0
   )
 
   // Current question e isLastQuestion
@@ -101,6 +101,7 @@ export function QuizInterface({
     } else if (timeRemaining === 0) {
       handleQuizComplete()
     }
+    return undefined;
   }, [timeRemaining, isStarted, isCompleted, handleQuizComplete])
 
   // Start quiz
@@ -271,7 +272,7 @@ export function QuizInterface({
               {finalScore}%
             </div>
             <p className="text-gray-300">
-              {answers.filter(a => a.isCorrect).length} de {questions.length} corretas
+              {answers.filter((a: any) => a.isCorrect).length} de {questions.length} corretas
             </p>
           </div>
 
@@ -318,7 +319,7 @@ export function QuizInterface({
 
           <div className="space-y-4">
             {questions.map((question, index) => {
-              const userAnswer = answers.find(a => a.questionId === question.id)
+              const userAnswer = answers.find((a: any) => a.questionId === question.id)
               const isCorrect = userAnswer?.isCorrect || false
 
               return (

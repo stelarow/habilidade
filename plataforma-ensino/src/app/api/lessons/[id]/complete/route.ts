@@ -1,6 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { type NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
-import { logError, logDebug } from '@/lib/utils/logger'
 import { cookies } from 'next/headers'
 
 // Force dynamic rendering for authentication and database queries
@@ -98,7 +97,7 @@ export async function POST(
     }
 
     // SIMPLIFIED validation - only check quiz if exists
-    logDebug('Received completion data:', { quizScore, completionCriteria })
+    console.log('Received completion data:', { quizScore, completionCriteria })
     
     // Ultra simple validation
     const hasQuiz = completionCriteria?.hasQuiz || false
@@ -111,7 +110,7 @@ export async function POST(
       )
     }
     
-    logDebug('Simplified validation passed:', { hasQuiz, passesValidation })
+    console.log('Simplified validation passed:', { hasQuiz, passesValidation })
 
     // Start transaction to mark lesson complete and unlock next lesson
     const completedAt = new Date().toISOString()
@@ -143,7 +142,7 @@ export async function POST(
       })
 
     if (updateError) {
-      logError('Error updating lesson progress:', updateError)
+      console.error('Error updating lesson progress:', updateError)
       return NextResponse.json(
         { error: 'Failed to mark lesson as completed' },
         { status: 500 }
@@ -214,7 +213,7 @@ export async function POST(
     })
 
   } catch (error) {
-    logError('Lesson completion error:', error)
+    console.error('Lesson completion error:', error)
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -253,7 +252,7 @@ async function updateCourseProgress(supabase: any, userId: string, courseId: str
         })
     }
   } catch (error) {
-    logError('Error updating course progress:', error)
+    console.error('Error updating course progress:', error)
   }
 }
 

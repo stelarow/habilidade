@@ -1,7 +1,6 @@
 import { requireAdmin } from '@/lib/auth/session'
 import { createClient } from '@/lib/supabase/server'
 import EnrollmentsManagementLazy from '@/components/admin/EnrollmentsManagementLazy'
-import { logError } from '@/lib/utils/logger'
 
 // Force dynamic rendering for admin pages that use server-side Supabase client
 export const dynamic = 'force-dynamic'
@@ -22,7 +21,7 @@ export default async function EnrollmentsPage() {
     .order('created_at', { ascending: false })
 
   if (error) {
-    logError('Error fetching enrollments:', error)
+    console.error('Error fetching enrollments:', error)
     return (
       <div className="text-center py-8">
         <p className="text-red-400">Erro ao carregar matrículas</p>

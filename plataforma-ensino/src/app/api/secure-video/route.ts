@@ -1,7 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { type NextRequest, NextResponse } from 'next/server'
 import { VideoSecurity } from '@/lib/video-security'
 import { createClient } from '@/lib/supabase/server'
-import { logError } from '@/lib/utils/logger'
 
 // Force dynamic rendering for authentication and database queries
 export const dynamic = 'force-dynamic'
@@ -144,7 +143,7 @@ export async function GET(request: NextRequest) {
     })
 
   } catch (error) {
-    logError('Secure video API error:', error)
+    console.error('Secure video API error:', error)
     return NextResponse.json(
       { error: 'Erro interno do servidor' },
       { status: 500 }
@@ -179,7 +178,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ success: true })
 
   } catch (error) {
-    logError('Video heartbeat error:', error)
+    console.error('Video heartbeat error:', error)
     return NextResponse.json(
       { error: 'Erro interno do servidor' },
       { status: 500 }

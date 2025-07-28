@@ -1,5 +1,5 @@
 import { createServerClient } from '@supabase/ssr'
-import { NextRequest, NextResponse } from 'next/server'
+import type { NextRequest, NextResponse } from 'next/server'
 import { convertBase64CookiesToSSRFormat } from './cookie-converter'
 
 /**
@@ -43,7 +43,7 @@ export async function isAuthenticatedInMiddleware(request: NextRequest): Promise
     console.log(`[MIDDLEWARE_AUTH-${requestId}] 🔍 Checking authentication...`)
     console.log(`[MIDDLEWARE_AUTH-${requestId}] 📊 Available cookies:`, {
       count: request.cookies.getAll().length,
-      names: request.cookies.getAll().map(c => c.name)
+      names: request.cookies.getAll().map((c: any) => c.name)
     })
     
     const supabase = createMiddlewareClient(request)

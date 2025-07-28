@@ -21,8 +21,8 @@ export default function DebugEnvPage() {
     })
 
     // Check cookies
-    const cookies = document.cookie.split(';').filter(c => c.trim())
-    setCookieCheck(cookies.map(c => c.trim().substring(0, 50) + '...'))
+    const cookies = document.cookie.split(';').filter((c: any) => c.trim())
+    setCookieCheck(cookies.map((c: any) => c.trim().substring(0, 50) + '...'))
   }, [])
 
   return (

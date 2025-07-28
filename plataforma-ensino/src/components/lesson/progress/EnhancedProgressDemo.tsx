@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
-import { LessonProgressData } from '@/types/lesson'
+import type { LessonProgressData } from '@/types/lesson'
 import { useProgressStateManager } from '@/hooks/useProgressStateManager'
 import { EnhancedCompletionProgress } from './EnhancedCompletionProgress'
 import { LessonHeader } from '../header/LessonHeader'

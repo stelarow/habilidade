@@ -1,8 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { type NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { requireAdmin } from '@/lib/auth/session'
 import { z } from 'zod'
-import { logError } from '@/lib/utils/logger'
 import type {
   ApiErrorResponse,
   ApiSuccessResponse,
@@ -66,13 +65,13 @@ export async function POST(request: NextRequest) {
     const supabase = createClient()
     
     // Check for existing holidays on the same dates
-    const dates = validatedData.holidays.map(h => h.date)
+    const dates = validatedData.holidays.map((h: any) => h.date)
     const { data: existingHolidays } = await supabase
       .from('holidays')
       .select('date')
       .in('date', dates)
     
-    const existingDates = existingHolidays?.map(h => h.date) || []
+    const existingDates = existingHolidays?.map((h: any) => h.date) || []
     
     if (existingDates.length > 0) {
       return createErrorResponse(
@@ -85,7 +84,7 @@ export async function POST(request: NextRequest) {
     }
     
     // Prepare holidays with year field
-    const holidaysToInsert = validatedData.holidays.map(holiday => ({
+    const holidaysToInsert = validatedData.holidays.map((holiday: any) => ({
       ...holiday,
       year: parseInt(holiday.date.substring(0, 4))
     }))
@@ -97,7 +96,7 @@ export async function POST(request: NextRequest) {
       .select('*')
     
     if (error) {
-      logError('Database error creating holidays:', error)
+      console.error('Database error creating holidays:', error)
       return createErrorResponse(
         'VALIDATION_ERROR',
         'Failed to create holidays',
@@ -125,7 +124,7 @@ export async function POST(request: NextRequest) {
                      'unknown'
         })
     } catch (auditError) {
-      logError('Failed to log audit event:', auditError)
+      console.error('Failed to log audit event:', auditError)
       // Don't fail the request if audit logging fails
     }
     
@@ -158,7 +157,7 @@ export async function POST(request: NextRequest) {
       )
     }
     
-    logError('Bulk holidays POST error:', error)
+    console.error('Bulk holidays POST error:', error)
     return createErrorResponse(
       'VALIDATION_ERROR',
       'Internal server error',
@@ -209,7 +208,7 @@ export async function DELETE(request: NextRequest) {
       .in('id', ids)
     
     if (error) {
-      logError('Database error deleting holidays:', error)
+      console.error('Database error deleting holidays:', error)
       return createErrorResponse(
         'VALIDATION_ERROR',
         'Failed to delete holidays',
@@ -237,7 +236,7 @@ export async function DELETE(request: NextRequest) {
                      'unknown'
         })
     } catch (auditError) {
-      logError('Failed to log audit event:', auditError)
+      console.error('Failed to log audit event:', auditError)
       // Don't fail the request if audit logging fails
     }
     
@@ -270,7 +269,7 @@ export async function DELETE(request: NextRequest) {
       )
     }
     
-    logError('Bulk holidays DELETE error:', error)
+    console.error('Bulk holidays DELETE error:', error)
     return createErrorResponse(
       'VALIDATION_ERROR',
       'Internal server error',

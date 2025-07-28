@@ -2,7 +2,7 @@
 
 import React, { useMemo } from 'react'
 import { cn } from '@/lib/utils'
-import { LessonContent, LayoutState, Breakpoint, GRID_TEMPLATES } from '@/types/lesson'
+import { type LessonContent, type LayoutState, Breakpoint, GRID_TEMPLATES } from '@/types/lesson'
 import { useLessonLayout } from './LayoutProvider'
 
 interface LessonContainerProps {

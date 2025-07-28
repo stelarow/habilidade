@@ -14,7 +14,7 @@ export const createDebugClient = () => {
     const allCookies = cookieStore.getAll()
     
     // Detailed cookie analysis
-    const supabaseCookies = allCookies.filter(c => 
+    const supabaseCookies = allCookies.filter((c: any) => 
       c.name.includes('supabase') || 
       c.name.includes('sb-') ||
       c.name.includes('auth')
@@ -23,8 +23,8 @@ export const createDebugClient = () => {
     console.log(`[DEBUG_SERVER_CLIENT-${clientId}] 🍪 Cookie Analysis:`, {
       total: allCookies.length,
       supabaseCount: supabaseCookies.length,
-      allNames: allCookies.map(c => c.name),
-      supabaseDetails: supabaseCookies.map(c => ({
+      allNames: allCookies.map((c: any) => c.name),
+      supabaseDetails: supabaseCookies.map((c: any) => ({
         name: c.name,
         valueLength: c.value?.length || 0,
         valuePrefix: c.value?.substring(0, 20) + '...',
@@ -33,7 +33,7 @@ export const createDebugClient = () => {
     })
     
     // Check for specific auth token patterns
-    const authToken = allCookies.find(c => c.name === 'supabase.auth.token')
+    const authToken = allCookies.find((c: any) => c.name === 'supabase.auth.token')
     if (authToken) {
       console.log(`[DEBUG_SERVER_CLIENT-${clientId}] 🔑 Auth Token Found:`, {
         name: authToken.name,
@@ -72,7 +72,7 @@ export const createDebugClient = () => {
             console.log(`[DEBUG_SERVER_CLIENT-${clientId}] 📋 getAll() returning ${cookies.length} cookies`)
             
             // Log each cookie being returned
-            cookies.forEach(cookie => {
+            cookies.forEach((cookie: any) => {
               if (cookie.name.includes('supabase') || cookie.name.includes('sb-')) {
                 console.log(`[DEBUG_SERVER_CLIENT-${clientId}] 🔄 Returning cookie: ${cookie.name} (${cookie.value?.length} chars)`)
               }

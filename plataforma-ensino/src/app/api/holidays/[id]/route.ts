@@ -1,8 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { type NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { requireAdmin } from '@/lib/auth/session'
 import { z } from 'zod'
-import { logError } from '@/lib/utils/logger'
 import type {
   UpdateHolidayRequest,
   Holiday,
@@ -135,7 +134,7 @@ export async function PUT(
       .single()
     
     if (error) {
-      logError('Database error updating holiday:', error)
+      console.error('Database error updating holiday:', error)
       return createErrorResponse(
         'VALIDATION_ERROR',
         'Failed to update holiday',
@@ -163,7 +162,7 @@ export async function PUT(
                      'unknown'
         })
     } catch (auditError) {
-      logError('Failed to log audit event:', auditError)
+      console.error('Failed to log audit event:', auditError)
       // Don't fail the request if audit logging fails
     }
     
@@ -190,7 +189,7 @@ export async function PUT(
       )
     }
     
-    logError('Holiday PUT error:', error)
+    console.error('Holiday PUT error:', error)
     return createErrorResponse(
       'VALIDATION_ERROR',
       'Internal server error',
@@ -253,7 +252,7 @@ export async function DELETE(
       .eq('id', id)
     
     if (error) {
-      logError('Database error deleting holiday:', error)
+      console.error('Database error deleting holiday:', error)
       return createErrorResponse(
         'VALIDATION_ERROR',
         'Failed to delete holiday',
@@ -280,7 +279,7 @@ export async function DELETE(
                      'unknown'
         })
     } catch (auditError) {
-      logError('Failed to log audit event:', auditError)
+      console.error('Failed to log audit event:', auditError)
       // Don't fail the request if audit logging fails
     }
     
@@ -298,7 +297,7 @@ export async function DELETE(
       )
     }
     
-    logError('Holiday DELETE error:', error)
+    console.error('Holiday DELETE error:', error)
     return createErrorResponse(
       'VALIDATION_ERROR',
       'Internal server error',

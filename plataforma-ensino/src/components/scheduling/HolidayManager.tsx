@@ -105,7 +105,7 @@ export default function HolidayManager({
       
       // Ensure we have a valid array and filter out invalid items
       const validHolidays = Array.isArray(holidaysData) 
-        ? holidaysData.filter(holiday => 
+        ? holidaysData.filter((holiday: any) => 
             holiday && 
             typeof holiday === 'object' && 
             typeof holiday.name === 'string' &&
@@ -166,11 +166,11 @@ export default function HolidayManager({
       }
 
       const updatedHoliday = await response.json();
-      setHolidays(prev => prev.map(h => h.id === id ? updatedHoliday : h));
+      setHolidays(prev => prev.map((h: any) => h.id === id ? updatedHoliday : h));
       setIsEditing(false);
       setSelectedHoliday(null);
       form.reset();
-      onHolidayChange?.(holidays.map(h => h.id === id ? updatedHoliday : h));
+      onHolidayChange?.(holidays.map((h: any) => h.id === id ? updatedHoliday : h));
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to update holiday');
     }
@@ -188,7 +188,7 @@ export default function HolidayManager({
         throw new Error(errorData.message || 'Failed to delete holiday');
       }
 
-      const updatedHolidays = holidays.filter(h => h.id !== id);
+      const updatedHolidays = holidays.filter((h: any) => h.id !== id);
       setHolidays(updatedHolidays);
       setShowDeleteConfirm(null);
       onHolidayChange?.(updatedHolidays);
@@ -248,7 +248,7 @@ export default function HolidayManager({
   };
 
   // Filter holidays
-  const filteredHolidays = holidays.filter(holiday => {
+  const filteredHolidays = holidays.filter((holiday: any) => {
     // Ensure holiday is a valid object with required properties
     if (!holiday || typeof holiday !== 'object') {
       return false;
@@ -533,12 +533,12 @@ export default function HolidayManager({
             </div>
             <div className="flex items-center gap-2">
               <span className="text-sm text-gray-600 dark:text-gray-400">
-                {filteredHolidays.filter(h => h.is_national).length} nacionais
+                {filteredHolidays.filter((h: any) => h.is_national).length} nacionais
               </span>
             </div>
             <div className="flex items-center gap-2">
               <span className="text-sm text-gray-600 dark:text-gray-400">
-                {filteredHolidays.filter(h => !h.is_national).length} locais
+                {filteredHolidays.filter((h: any) => !h.is_national).length} locais
               </span>
             </div>
           </div>

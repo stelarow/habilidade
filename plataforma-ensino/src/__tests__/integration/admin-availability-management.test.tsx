@@ -144,9 +144,9 @@ describe('Teacher Availability Management Integration', () => {
       expect(screen.getByText('Professor João')).toBeInTheDocument()
     })
     
-    expect(mockApiCalls.some(call => call.url.includes('/api/admin/teachers'))).toBe(true)
-    expect(mockApiCalls.some(call => call.url.includes('/api/admin/teacher-availability'))).toBe(true)
-    expect(mockApiCalls.some(call => call.url.includes('/api/admin/availability-approvals'))).toBe(true)
+    expect(mockApiCalls.some((call: any) => call.url.includes('/api/admin/teachers'))).toBe(true)
+    expect(mockApiCalls.some((call: any) => call.url.includes('/api/admin/teacher-availability'))).toBe(true)
+    expect(mockApiCalls.some((call: any) => call.url.includes('/api/admin/availability-approvals'))).toBe(true)
     
     // 2. Create new availability
     fireEvent.click(screen.getByText('Nova Disponibilidade'))
@@ -166,7 +166,7 @@ describe('Teacher Availability Management Integration', () => {
     fireEvent.click(screen.getByText('Criar'))
     
     await waitFor(() => {
-      const createCall = mockApiCalls.find(call => 
+      const createCall = mockApiCalls.find((call: any) => 
         call.url.includes('/api/admin/teacher-availability') && call.options?.method === 'POST'
       )
       expect(createCall).toBeDefined()
@@ -195,7 +195,7 @@ describe('Teacher Availability Management Integration', () => {
     fireEvent.click(screen.getByText('Aprovar'))
     
     await waitFor(() => {
-      const approveCall = mockApiCalls.find(call => 
+      const approveCall = mockApiCalls.find((call: any) => 
         call.url.includes('/approve') && call.options?.method === 'POST'
       )
       expect(approveCall).toBeDefined()
@@ -275,7 +275,7 @@ describe('Teacher Availability Management Integration', () => {
     fireEvent.click(screen.getByText('Detectar Conflitos'))
     
     await waitFor(() => {
-      const conflictCalls = mockApiCalls.filter(call => call.url.includes('/conflicts'))
+      const conflictCalls = mockApiCalls.filter((call: any) => call.url.includes('/conflicts'))
       expect(conflictCalls.length).toBeGreaterThan(1) // Initial load + manual refresh
     })
   })
@@ -299,7 +299,7 @@ describe('Teacher Availability Management Integration', () => {
     fireEvent.click(screen.getByText('Ativar Todos'))
     
     await waitFor(() => {
-      const bulkCall = mockApiCalls.find(call => 
+      const bulkCall = mockApiCalls.find((call: any) => 
         call.url.includes('/bulk') && call.options?.method === 'PUT'
       )
       expect(bulkCall).toBeDefined()
@@ -416,7 +416,7 @@ describe('Teacher Availability Management Integration', () => {
     expect(screen.getByText('Distribuição por Dia da Semana')).toBeInTheDocument()
     
     // Close modal
-    fireEvent.click(screen.getAllByRole('button').find(btn => 
+    fireEvent.click(screen.getAllByRole('button').find((btn: any) => 
       btn.innerHTML.includes('X')
     )!)
     
@@ -548,7 +548,7 @@ describe('Teacher Availability Management Integration', () => {
     await Promise.all(promises)
     
     // Should have made multiple POST requests
-    const postCalls = mockApiCalls.filter(call => 
+    const postCalls = mockApiCalls.filter((call: any) => 
       call.url.includes('/api/admin/teacher-availability') && call.options?.method === 'POST'
     )
     expect(postCalls.length).toBeGreaterThan(0)

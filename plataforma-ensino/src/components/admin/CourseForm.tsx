@@ -210,8 +210,8 @@ export function CourseForm({
     // Clean up arrays by removing empty items
     const cleanedData = {
       ...formData,
-      requirements: formData.requirements.filter(req => req.trim()),
-      what_you_learn: formData.what_you_learn.filter(item => item.trim())
+      requirements: formData.requirements.filter((req: any) => req.trim()),
+      what_you_learn: formData.what_you_learn.filter((item: any) => item.trim())
     }
 
     await onSubmit(cleanedData)
@@ -318,7 +318,7 @@ export function CourseForm({
                   }`}
                 >
                   <option value="">Selecionar categoria</option>
-                  {categories.map(category => (
+                  {categories.map((category: any) => (
                     <option key={category.id} value={category.id}>
                       {category.name}
                     </option>

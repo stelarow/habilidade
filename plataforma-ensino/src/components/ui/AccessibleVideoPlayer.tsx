@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { LazyVideoPlayer } from './LazyVideoPlayer'
 import type { LazyVideoPlayerProps } from './LazyVideoPlayer'
-import { VideoPlayerRef } from './ReactVideoPlayer'
+import type { VideoPlayerRef } from './ReactVideoPlayer'
 import { cn } from '@/lib/utils'
 
 export interface AccessibleVideoPlayerProps extends LazyVideoPlayerProps {

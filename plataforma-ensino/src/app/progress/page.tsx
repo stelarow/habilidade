@@ -83,7 +83,7 @@ export default function ProgressPage() {
       }
 
       // Use real data if available, otherwise fallback to mock
-      const realCourseProgress: CourseProgress[] = progressData?.map(p => ({
+      const realCourseProgress: CourseProgress[] = progressData?.map((p: any) => ({
         course_id: p.course_id,
         course_title: p.course_title,
         course_slug: p.course_slug,
@@ -154,8 +154,8 @@ export default function ProgressPage() {
       const courseData = realCourseProgress.length > 0 ? realCourseProgress : mockCourseProgress
       const totalWatchTime = courseData.reduce((sum, course) => sum + course.total_watch_time, 0)
       const totalLessons = courseData.reduce((sum, course) => sum + course.completed_lessons, 0)
-      const activeCourses = courseData.filter(course => course.progress_percentage > 0 && course.progress_percentage < 100).length
-      const completedCourses = courseData.filter(course => course.progress_percentage === 100).length
+      const activeCourses = courseData.filter((course: any) => course.progress_percentage > 0 && course.progress_percentage < 100).length
+      const completedCourses = courseData.filter((course: any) => course.progress_percentage === 100).length
       
       // Calcular sequência atual
       const currentStreak = calculateCurrentStreak(mockStudySessions)

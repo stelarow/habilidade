@@ -99,7 +99,7 @@ export default function CoursesPage() {
 
   // Function to check if user is enrolled in a course
   const isEnrolled = (courseId: string) => {
-    return enrollments.some(e => e.course_id === courseId && ['active', 'completed'].includes(e.status))
+    return enrollments.some((e: any) => e.course_id === courseId && ['active', 'completed'].includes(e.status))
   }
 
   // Function to handle course enrollment
@@ -127,7 +127,7 @@ export default function CoursesPage() {
       setEnrollments(newEnrollments || [])
       
       // Navigate to course
-      const course = courses.find(c => c.id === courseId)
+      const course = courses.find((c: any) => c.id === courseId)
       if (course) {
         router.push(`/course/${course.slug}`)
       }
@@ -142,7 +142,7 @@ export default function CoursesPage() {
     router.push(`/course/${courseSlug}`)
   }
 
-  const filteredCourses = courses.filter(course => {
+  const filteredCourses = courses.filter((course: any) => {
     const matchesSearch = course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          course.description?.toLowerCase().includes(searchTerm.toLowerCase())
     const matchesLevel = selectedLevel === 'all' || course.level === selectedLevel

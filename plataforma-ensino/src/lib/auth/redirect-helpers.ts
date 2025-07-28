@@ -103,7 +103,7 @@ export function hasRouteAccess(userRole: string, route: string): boolean {
   const roleConfig = ROLE_HIERARCHY[userRole as keyof typeof ROLE_HIERARCHY]
   if (!roleConfig) return false
   
-  return roleConfig.allowedRoutes.some(allowedRoute => 
+  return roleConfig.allowedRoutes.some((allowedRoute: any) => 
     route.startsWith(allowedRoute)
   )
 }

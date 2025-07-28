@@ -1,11 +1,10 @@
 'use client'
 
 import { useState, useEffect, useCallback, useMemo } from 'react'
-import { LessonProgressData } from '@/types/lesson'
+import type { LessonProgressData } from '@/types/lesson'
 import { usePageTimer } from './usePageTimer'
 import { usePDFProgress } from './usePDFProgress'
 import { getCompletionIcon } from '@/utils/completionIcons'
-import { logDebug } from '@/lib/utils/logger'
 
 export interface CompletionCriterion {
   id: string
@@ -62,7 +61,7 @@ export function useCompletionCriteria({
     totalPages: pdfTotalPages,
     lessonId,
     onFullyRead: () => {
-      logDebug('PDF fully read!')
+      console.log('PDF fully read!')
     }
   })
 
@@ -106,7 +105,7 @@ export function useCompletionCriteria({
       }
     ]
 
-    const completedCount = criteria.filter(c => c.isCompleted).length
+    const completedCount = criteria.filter((c: any) => c.isCompleted).length
     const totalCount = criteria.length
     const canComplete = completedCount === totalCount
 
@@ -153,7 +152,7 @@ export function useCompletionCriteria({
 
   // Get specific criterion
   const getCriterion = useCallback((id: string): CompletionCriterion | undefined => {
-    return criteriaState.criteria.find(c => c.id === id)
+    return criteriaState.criteria.find((c: any) => c.id === id)
   }, [criteriaState.criteria])
 
   // Check if specific criterion is completed
@@ -164,12 +163,12 @@ export function useCompletionCriteria({
 
   // Get completion summary
   const getCompletionSummary = useCallback(() => {
-    const completed = criteriaState.criteria.filter(c => c.isCompleted)
-    const pending = criteriaState.criteria.filter(c => !c.isCompleted)
+    const completed = criteriaState.criteria.filter((c: any) => c.isCompleted)
+    const pending = criteriaState.criteria.filter((c: any) => !c.isCompleted)
     
     return {
-      completed: completed.map(c => ({ id: c.id, name: c.name })),
-      pending: pending.map(c => ({ 
+      completed: completed.map((c: any) => ({ id: c.id, name: c.name })),
+      pending: pending.map((c: any) => ({ 
         id: c.id, 
         name: c.name, 
         progress: c.progress,
@@ -182,7 +181,7 @@ export function useCompletionCriteria({
 
   // Get next requirement to complete
   const getNextRequirement = useCallback((): CompletionCriterion | null => {
-    const pending = criteriaState.criteria.filter(c => !c.isCompleted)
+    const pending = criteriaState.criteria.filter((c: any) => !c.isCompleted)
     if (pending.length === 0) return null
     
     // Return the one with highest progress (closest to completion)

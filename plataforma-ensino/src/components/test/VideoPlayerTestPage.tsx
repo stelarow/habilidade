@@ -6,8 +6,8 @@ import {
   VideoPlayerWrapper, 
   LazyVideoPlayer, 
   AccessibleVideoPlayer,
-  VideoPlayerRef,
-  VideoTrack 
+  type VideoPlayerRef,
+  type VideoTrack 
 } from '@/components/ui'
 import { createClient } from '@/lib/supabase/client'
 
@@ -139,7 +139,7 @@ export const VideoPlayerTestPage: React.FC = () => {
 
         {/* Tabs */}
         <div className="flex flex-wrap gap-2 mb-6">
-          {tabs.map(tab => (
+          {tabs.map((tab: any) => (
             <button
               key={tab.id}
               onClick={() => setSelectedTab(tab.id)}
@@ -363,7 +363,7 @@ export const VideoPlayerTestPage: React.FC = () => {
                       <div>
                         <label className="text-gray-300 text-sm">Velocidade: {playbackRate}x</label>
                         <div className="flex gap-1 mt-1">
-                          {[0.25, 0.5, 0.75, 1, 1.25, 1.5, 2].map(rate => (
+                          {[0.25, 0.5, 0.75, 1, 1.25, 1.5, 2].map((rate: any) => (
                             <button
                               key={rate}
                               onClick={() => setPlaybackRate(rate)}
@@ -515,7 +515,7 @@ export const VideoPlayerTestPage: React.FC = () => {
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-400">Falhou:</span>
                   <span className="text-red-400">
-                    {Object.values(testResults).filter(r => !r).length}
+                    {Object.values(testResults).filter((r: any) => !r).length}
                   </span>
                 </div>
               </div>

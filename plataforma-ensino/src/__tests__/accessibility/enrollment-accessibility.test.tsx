@@ -366,7 +366,7 @@ describe('Enrollment Accessibility Tests', () => {
       const slots = screen.getAllByRole('gridcell')
       expect(slots.length).toBeGreaterThan(0)
       
-      slots.forEach(slot => {
+      slots.forEach((slot: any) => {
         // Each slot should have proper semantic meaning
         expect(slot).toHaveAttribute('aria-label')
       })
@@ -380,7 +380,7 @@ describe('Enrollment Accessibility Tests', () => {
       const slots = screen.getAllByRole('gridcell')
       
       // Ensure buttons are large enough for touch (minimum 44px)
-      slots.forEach(slot => {
+      slots.forEach((slot: any) => {
         // In a real test, we'd check computed styles
         expect(slot).toBeInTheDocument()
       })

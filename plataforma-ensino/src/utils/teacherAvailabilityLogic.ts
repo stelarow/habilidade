@@ -117,7 +117,7 @@ async function generateSlotsForPattern(
   // Generate slots for each occurrence of this day within the range
   while (currentDate <= dateRange.end) {
     // Convert API Holiday format to date-calculation Holiday format
-    const dateCalculationHolidays = holidays.map(h => ({
+    const dateCalculationHolidays = holidays.map((h: any) => ({
       date: h.date,
       name: h.name,
       type: h.is_national ? 'national' as const : 'regional' as const
@@ -252,7 +252,7 @@ async function checkSlotConflicts(
 ): Promise<ConflictInfo> {
   // Check holiday conflicts
   const dateStr = toISODateString(date)
-  const isHoliday = holidays.some(holiday => 
+  const isHoliday = holidays.some((holiday: any) => 
     holiday.date === dateStr
   )
 

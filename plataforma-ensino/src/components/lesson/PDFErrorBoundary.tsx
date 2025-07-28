@@ -57,7 +57,7 @@ export class PDFErrorBoundary extends Component<PDFErrorBoundaryProps, PDFErrorB
 
   componentWillUnmount() {
     // Clean up any pending retry timeouts
-    this.retryTimeouts.forEach(timeout => clearTimeout(timeout));
+    this.retryTimeouts.forEach((timeout: any) => clearTimeout(timeout));
   }
 
   private trackError = (error: Error, errorInfo: React.ErrorInfo) => {

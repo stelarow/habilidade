@@ -260,7 +260,7 @@ export function LessonForm({
                     className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500 disabled:opacity-50"
                   >
                     <option value="">Selecione um curso</option>
-                    {courses.map(course => (
+                    {courses.map((course: any) => (
                       <option key={course.id} value={course.id}>
                         {course.title}
                       </option>

@@ -24,12 +24,12 @@ export function convertBase64CookiesToSSRFormat(cookies: { name: string; value: 
   console.log(`[COOKIE_CONVERTER-${converterId}] 🔄 Converting cookies to SSR format`)
   
   // Handle both single and split cookie formats
-  let authTokenCookie = cookies.find(c => c.name === 'supabase.auth.token')
+  let authTokenCookie = cookies.find((c: any) => c.name === 'supabase.auth.token')
   
   // If no single cookie, try to reconstruct from split cookies
   if (!authTokenCookie) {
     console.log(`[COOKIE_CONVERTER-${converterId}] 🔍 Looking for split cookies...`)
-    const splitCookies = cookies.filter(c => c.name.startsWith('supabase.auth.token.'))
+    const splitCookies = cookies.filter((c: any) => c.name.startsWith('supabase.auth.token.'))
       .sort((a, b) => {
         const aIndex = parseInt(a.name.split('.').pop() || '0')
         const bIndex = parseInt(b.name.split('.').pop() || '0')
@@ -38,7 +38,7 @@ export function convertBase64CookiesToSSRFormat(cookies: { name: string; value: 
     
     if (splitCookies.length > 0) {
       console.log(`[COOKIE_CONVERTER-${converterId}] 🔗 Found ${splitCookies.length} split cookies, reconstructing...`)
-      const combinedValue = splitCookies.map(c => c.value).join('')
+      const combinedValue = splitCookies.map((c: any) => c.value).join('')
       authTokenCookie = { name: 'supabase.auth.token', value: combinedValue }
       console.log(`[COOKIE_CONVERTER-${converterId}] ✅ Reconstructed combined cookie`)
     }
@@ -46,7 +46,7 @@ export function convertBase64CookiesToSSRFormat(cookies: { name: string; value: 
   
   if (!authTokenCookie || !authTokenCookie.value.startsWith('base64-')) {
     console.log(`[COOKIE_CONVERTER-${converterId}] ℹ️ No valid base64 auth token found, returning cookies as-is`)
-    console.log(`[COOKIE_CONVERTER-${converterId}] 📊 Available cookies:`, cookies.map(c => ({ name: c.name, valueLength: c.value.length })))
+    console.log(`[COOKIE_CONVERTER-${converterId}] 📊 Available cookies:`, cookies.map((c: any) => ({ name: c.name, valueLength: c.value.length })))
     return cookies
   }
   
@@ -83,7 +83,7 @@ export function convertBase64CookiesToSSRFormat(cookies: { name: string; value: 
     ]
     
     // Remove all auth token cookies (single and split) and add the new SSR format cookies
-    const otherCookies = cookies.filter(c => 
+    const otherCookies = cookies.filter((c: any) => 
       c.name !== 'supabase.auth.token' && !c.name.startsWith('supabase.auth.token.')
     )
     const result = [...otherCookies, ...ssrCookies]
@@ -91,7 +91,7 @@ export function convertBase64CookiesToSSRFormat(cookies: { name: string; value: 
     console.log(`[COOKIE_CONVERTER-${converterId}] 🎯 Conversion complete`, {
       originalCookies: cookies.length,
       convertedCookies: result.length,
-      newCookieNames: ssrCookies.map(c => c.name)
+      newCookieNames: ssrCookies.map((c: any) => c.name)
     })
     
     return result

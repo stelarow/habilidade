@@ -380,7 +380,7 @@ const EdicaoVideoBackground: React.FC<BackgroundProps> = ({
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // Desenhar e atualizar film frames
-    filmFramesRef.current.forEach(element => {
+    filmFramesRef.current.forEach((element: any) => {
       element.update();
       element.draw(ctx);
     });

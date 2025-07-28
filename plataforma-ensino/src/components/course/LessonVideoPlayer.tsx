@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import { AccessibleVideoPlayer } from '../ui/AccessibleVideoPlayer'
-import { VideoPlayerRef, VideoTrack } from '../ui/ReactVideoPlayer'
+import type { VideoPlayerRef, VideoTrack } from '../ui/ReactVideoPlayer'
 import { createClient } from '@/lib/supabase/client'
 import type { Lesson, Progress } from '@/types'
 
@@ -135,8 +135,8 @@ export const LessonVideoPlayer: React.FC<LessonVideoPlayerProps> = ({
   const videoTracks: VideoTrack[] = []
   
   // Add Portuguese subtitles if available
-  if (lesson.materials?.some(m => m.type === 'subtitle' && m.url)) {
-    const subtitleMaterial = lesson.materials.find(m => m.type === 'subtitle' && m.url)
+  if (lesson.materials?.some((m: any) => m.type === 'subtitle' && m.url)) {
+    const subtitleMaterial = lesson.materials.find((m: any) => m.type === 'subtitle' && m.url)
     if (subtitleMaterial?.url) {
       videoTracks.push({
         kind: 'subtitles',

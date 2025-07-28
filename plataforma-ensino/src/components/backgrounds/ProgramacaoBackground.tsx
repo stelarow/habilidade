@@ -272,7 +272,7 @@ const ProgramacaoBackground: React.FC<ProgramacaoBackgroundProps> = ({
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // Atualizar e desenhar snippets de código
-    codeSnippetsRef.current.forEach(snippet => {
+    codeSnippetsRef.current.forEach((snippet: any) => {
       snippet.update();
       snippet.draw(ctx);
     });

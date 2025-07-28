@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { cn } from '@/lib/utils'
-import { ReactVideoPlayer, VideoPlayerProps, VideoPlayerRef } from './ReactVideoPlayer'
+import { ReactVideoPlayer, type VideoPlayerProps, type VideoPlayerRef } from './ReactVideoPlayer'
 
 export interface VideoPlayerWrapperProps extends VideoPlayerProps {
   aspectRatio?: '16/9' | '4/3' | '1/1' | '21/9' | string
