@@ -8,7 +8,7 @@ import {
   Twitter, 
   Facebook, 
   Linkedin, 
-  WhatsApp, 
+  MessageCircle, 
   Copy, 
   Mail,
   Link as LinkIcon,
@@ -63,7 +63,7 @@ export function ShareButtons({
     },
     {
       name: 'WhatsApp',
-      icon: WhatsApp,
+      icon: MessageCircle,
       url: `https://wa.me/?text=${shareData.title}%20${shareData.url}`,
       color: 'hover:bg-green-50 hover:text-green-600',
       bgColor: 'bg-green-500'

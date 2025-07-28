@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
+import { createClient as createServiceClient } from '@supabase/supabase-js';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -61,39 +62,45 @@ export default function InstructorValidationTest() {
 
   const loadDatabaseData = async () => {
     setLoading(true);
-    addLog('Loading database data...');
+    addLog('Loading database data via API...');
 
     try {
-      // Load all users
-      const { data: usersData, error: usersError } = await supabase
-        .from('users')
-        .select('id, full_name, role, email')
-        .order('full_name');
-
-      if (usersError) {
-        addLog(`Error loading users: ${usersError.message}`);
-      } else {
-        setUsers(usersData || []);
-        addLog(`Loaded ${usersData?.length || 0} users`);
+      const response = await fetch('/api/test/instructor-validation-data');
+      
+      if (!response.ok) {
+        throw new Error(`API Error: ${response.status} ${response.statusText}`);
+      }
+      
+      const result = await response.json();
+      
+      if (!result.success) {
+        addLog(`API Error: ${result.error}`);
+        setLoading(false);
+        return;
       }
 
-      // Load all instructors
-      const { data: instructorsData, error: instructorsError } = await supabase
-        .from('instructors')
-        .select('id, user_id, specializations, expertise, created_at')
-        .order('created_at');
+      const { users: usersData, instructors: instructorsData, usersError, instructorsError, debug } = result.data;
+
+      addLog(`API Debug: ${debug.userCount} users, ${debug.instructorCount} instructors at ${debug.timestamp}`);
+
+      if (usersError) {
+        addLog(`Database error loading users: ${usersError}`);
+      } else {
+        setUsers(usersData || []);
+        addLog(`Loaded ${usersData?.length || 0} users from database`);
+      }
 
       if (instructorsError) {
-        addLog(`Error loading instructors: ${instructorsError.message}`);
+        addLog(`Database error loading instructors: ${instructorsError}`);
       } else {
         setInstructors(instructorsData || []);
-        addLog(`Loaded ${instructorsData?.length || 0} instructors`);
+        addLog(`Loaded ${instructorsData?.length || 0} instructors from database`);
       }
 
       // Find Maria Eduarda specifically
       const mariaUser = usersData?.find((user: any) => 
         user.full_name.toLowerCase().includes('maria eduarda') ||
-        user.full_name.toLowerCase().includes('maria') && user.full_name.toLowerCase().includes('eduarda')
+        (user.full_name.toLowerCase().includes('maria') && user.full_name.toLowerCase().includes('eduarda'))
       );
 
       if (mariaUser) {
@@ -113,7 +120,7 @@ export default function InstructorValidationTest() {
       }
 
     } catch (error) {
-      addLog(`Database error: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      addLog(`API call error: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
 
     setLoading(false);

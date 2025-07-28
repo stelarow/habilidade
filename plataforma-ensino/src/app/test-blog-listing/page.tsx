@@ -112,7 +112,7 @@ export default function TestBlogListingPage() {
               <CardContent className="p-4">
                 <CategoryFilter
                   categories={mockCategories}
-                  selectedCategory={selectedCategory}
+                  selectedCategory={selectedCategory ?? undefined}
                   onCategoryChange={setSelectedCategory}
                   variant="default"
                 />
