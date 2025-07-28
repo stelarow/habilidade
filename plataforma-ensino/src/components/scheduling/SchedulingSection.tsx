@@ -169,7 +169,8 @@ export function SchedulingSection({
   // Handle teacher selection from TeacherSelector
   const handleTeacherSelect = useCallback((teacher: Teacher) => {
     setSelectedTeacher(teacher)
-    onTeacherChange(teacher.id)
+    // CRITICAL: Pass the userId (for student_schedules table), not the instructor.id
+    onTeacherChange(teacher.userId)
   }, [onTeacherChange])
 
   const isCalendarEnabled = isVisible && !!teacherId && !!selectedTeacher

@@ -57,7 +57,7 @@ export interface EnrollmentApiPayload {
 export interface ScheduleSlot {
   day: number // 1-7 for Monday-Sunday
   time: string // "HH:MM-HH:MM" format
-  teacherId: string
+  teacherUserId: string // user.id from users table (for student_schedules.instructor_id)
 }
 
 // Validation error structure

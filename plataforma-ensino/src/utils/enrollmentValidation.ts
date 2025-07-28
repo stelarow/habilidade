@@ -95,7 +95,7 @@ export function parseScheduleSlot(slotString: string): ScheduleSlot | null {
       return null
     }
     
-    // Expected format: "teacherId:day:HH:MM-HH:MM"
+    // Expected format: "teacherUserId:day:HH:MM-HH:MM"
     const parts = slotString.split(':')
     console.log('parseScheduleSlot - Parts:', parts)
     
@@ -104,13 +104,13 @@ export function parseScheduleSlot(slotString: string): ScheduleSlot | null {
       return null
     }
     
-    const [teacherId, dayStr] = parts
+    const [teacherUserId, dayStr] = parts
     const timeRange = parts.slice(2).join(':') // Handle HH:MM-HH:MM format with colons
     const day = parseInt(dayStr)
     
-    // Validate teacherId (should be a UUID)
-    if (!teacherId || !uuidRegex.test(teacherId)) {
-      console.warn('parseScheduleSlot - Invalid teacherId format:', teacherId)
+    // Validate teacherUserId (should be a UUID)
+    if (!teacherUserId || !uuidRegex.test(teacherUserId)) {
+      console.warn('parseScheduleSlot - Invalid teacherUserId format:', teacherUserId)
       return null
     }
     
@@ -136,7 +136,7 @@ export function parseScheduleSlot(slotString: string): ScheduleSlot | null {
     const result = {
       day,
       time: timeRange,
-      teacherId
+      teacherUserId
     }
     
     console.log('parseScheduleSlot - Successfully parsed result:', result)
@@ -182,7 +182,7 @@ export function transformFormDataToApiPayload(
       const [startTime, endTime] = slot1.time.split('-')
       if (startTime && endTime) {
         schedules.push({
-          instructor_id: slot1.teacherId,
+          instructor_id: slot1.teacherUserId,
           day_of_week: slot1.day,
           start_time: `${startTime}:00`,
           end_time: `${endTime}:00`
@@ -198,7 +198,7 @@ export function transformFormDataToApiPayload(
         const [startTime, endTime] = slot2.time.split('-')
         if (startTime && endTime) {
           schedules.push({
-            instructor_id: slot2.teacherId,
+            instructor_id: slot2.teacherUserId,
             day_of_week: slot2.day,
             start_time: `${startTime}:00`,
             end_time: `${endTime}:00`

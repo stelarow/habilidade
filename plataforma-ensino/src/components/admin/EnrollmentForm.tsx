@@ -546,10 +546,10 @@ export function EnrollmentForm({
                   selectedCourse={selectedCourse ? convertToTeacherSelectorCourse(selectedCourse) || undefined : undefined}
                   teacherId={formData.teacher_id || ''}
                   hasTwoClassesPerWeek={formData.has_two_classes_per_week}
-                  onTeacherChange={(teacherId) => {
-                    const safeTeacherId = teacherId || ''
-                    console.log('Teacher changed:', safeTeacherId)
-                    handleInputChange('teacher_id', safeTeacherId)
+                  onTeacherChange={(teacherUserId) => {
+                    const safeTeacherUserId = teacherUserId || ''
+                    console.log('Teacher changed - userId:', safeTeacherUserId)
+                    handleInputChange('teacher_id', safeTeacherUserId)
                   }}
                   onTwoClassesChange={(checked) => handleInputChange('has_two_classes_per_week', checked)}
                   onSlotSelect={(slot1, slot2) => {

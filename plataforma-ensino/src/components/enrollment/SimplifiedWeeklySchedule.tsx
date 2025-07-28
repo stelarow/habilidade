@@ -293,7 +293,7 @@ export default function SimplifiedWeeklySchedule({
   }, [scheduleSlots])
 
   const handleSlotClick = useCallback((slotId: string) => {
-    if (!onSlotSelect || !slotId || !teacherId) return
+    if (!onSlotSelect || !slotId || !teacherId || !teacherUserId) return
 
     const isSelected = selectedSlots.includes(slotId)
     let newSelection: string[] = []
@@ -316,7 +316,8 @@ export default function SimplifiedWeeklySchedule({
     }
 
     // Format slots for parseScheduleSlot function
-    // Expected format: "teacherId:day:HH:MM-HH:MM"
+    // Expected format: "teacherUserId:day:HH:MM-HH:MM"
+    // CRITICAL: Use teacherUserId (user.id) for student_schedules.instructor_id, not teacherId (instructor.id)
     const formatSlotForSubmission = (selectedSlotId: string): string => {
       const slot = scheduleSlots.find((s: any) => s.id === selectedSlotId)
       if (!slot) {
@@ -324,12 +325,18 @@ export default function SimplifiedWeeklySchedule({
         return ''
       }
       
+      // Use teacherUserId instead of teacherId for API submission
+      if (!teacherUserId) {
+        console.error('formatSlotForSubmission - teacherUserId is required for schedule submission')
+        return ''
+      }
+      
       // Ensure we have valid time format (remove seconds if present)
       const startTime = slot.startTime.includes(':') ? slot.startTime.slice(0, 5) : slot.startTime
       const endTime = slot.endTime.includes(':') ? slot.endTime.slice(0, 5) : slot.endTime
       
-      const formattedSlot = `${teacherId}:${slot.dayOfWeek}:${startTime}-${endTime}`
-      console.log('formatSlotForSubmission - Input:', selectedSlotId, 'Output:', formattedSlot)
+      const formattedSlot = `${teacherUserId}:${slot.dayOfWeek}:${startTime}-${endTime}`
+      console.log('formatSlotForSubmission - Input:', selectedSlotId, 'teacherUserId:', teacherUserId, 'Output:', formattedSlot)
       return formattedSlot
     }
 

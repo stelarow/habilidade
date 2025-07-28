@@ -29,6 +29,36 @@ jest.mock('next/image', () => ({
   },
 }))
 
+// Mock NextRequest and NextResponse for API tests
+global.NextRequest = class MockNextRequest {
+  constructor(url, options = {}) {
+    this.url = url || ''
+    this.method = options.method || 'GET'
+    this.headers = new Map(Object.entries(options.headers || {}))
+    this.body = options.body
+  }
+  
+  nextUrl = {
+    searchParams: new URLSearchParams(typeof this.url === 'string' ? this.url.split('?')[1] || '' : '')
+  }
+  
+  json() {
+    return Promise.resolve(JSON.parse(this.body || '{}'))
+  }
+}
+
+global.NextResponse = {
+  json: (data, init) => ({
+    json: () => Promise.resolve(data),
+    status: init?.status || 200,
+    headers: init?.headers || {}
+  }),
+  error: () => ({
+    json: () => Promise.resolve({ error: 'Internal Server Error' }),
+    status: 500
+  })
+}
+
 // Mock environment variables
 process.env.NEXT_PUBLIC_SUPABASE_URL = 'http://localhost:54321'
 process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = 'test-key'
