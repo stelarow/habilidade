@@ -17,8 +17,6 @@ const Home = React.lazy(() => import('./pages/Home'));
 const CoursePage = React.lazy(() => import('./pages/CoursePage'));
 const BlogIndex = React.lazy(() => import('./pages/BlogIndex'));
 const BlogPost = React.lazy(() => import('./pages/BlogPost'));
-const TestBlogListing = React.lazy(() => import('./pages/TestBlogListing'));
-const TestBlogPost = React.lazy(() => import('./pages/TestBlogPost'));
 const NotFound = React.lazy(() => import('./pages/NotFound'));
 
 // Otimizações de performance
@@ -82,8 +80,6 @@ function App() {
                 <Route path="/cursos/:courseSlug" element={<CoursePage />} />
                 <Route path="/blog" element={<BlogIndex />} />
                 <Route path="/blog/:slug" element={<BlogPost />} />
-                <Route path="/test-blog-listing" element={<TestBlogListing />} />
-                <Route path="/test-blog-post" element={<TestBlogPost />} />
                 <Route path="/habilidade" element={<Navigate to="/" replace />} />
                 <Route path="/habilidade/" element={<Navigate to="/" replace />} />
                 <Route 

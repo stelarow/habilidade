@@ -18,15 +18,15 @@ ON CONFLICT (id) DO UPDATE SET
   updated_at = NOW();
 
 -- Insert/Update instructor profile for Maria Eduarda
-INSERT INTO instructors (id, user_id, bio, expertise, rating, total_reviews, max_students_per_class, created_at, updated_at)
+INSERT INTO instructors (id, user_id, bio, expertise, specializations, rating, total_reviews, created_at, updated_at)
 VALUES (
   '3834f9e6-2fd9-447f-9d74-757cdd6b6e44',
   '355f9ed5-c838-4c66-8671-2cfbf87121fa',
   'Professora especializada em ensino personalizado e acompanhamento pedagógico.',
   ARRAY['Educação', 'Pedagogia', 'Acompanhamento Escolar'],
+  ARRAY['Educação', 'Pedagogia', 'Acompanhamento Escolar'],
   5.0,
   0,
-  3,
   NOW(),
   NOW()
 )
@@ -34,9 +34,9 @@ ON CONFLICT (id) DO UPDATE SET
   user_id = EXCLUDED.user_id,
   bio = EXCLUDED.bio,
   expertise = EXCLUDED.expertise,
+  specializations = EXCLUDED.specializations,
   rating = EXCLUDED.rating,
   total_reviews = EXCLUDED.total_reviews,
-  max_students_per_class = EXCLUDED.max_students_per_class,
   updated_at = NOW();
 
 -- Insert teacher availability for Maria Eduarda (Monday to Saturday)

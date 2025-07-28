@@ -16,7 +16,8 @@ interface User {
 interface Instructor {
   id: string;
   user_id: string;
-  specializations: string[];
+  specializations?: string[];
+  expertise?: string[];
   created_at: string;
 }
 
@@ -79,7 +80,7 @@ export default function InstructorValidationTest() {
       // Load all instructors
       const { data: instructorsData, error: instructorsError } = await supabase
         .from('instructors')
-        .select('id, user_id, specializations, created_at')
+        .select('id, user_id, specializations, expertise, created_at')
         .order('created_at');
 
       if (instructorsError) {
@@ -319,7 +320,7 @@ export default function InstructorValidationTest() {
                     <h4 className="font-semibold text-green-800">Instructor Profile</h4>
                     <div><strong>Instructor ID:</strong> {mariaInstructor.id}</div>
                     <div><strong>User ID Link:</strong> {mariaInstructor.user_id}</div>
-                    <div><strong>Specializations:</strong> {mariaInstructor.specializations.join(', ')}</div>
+                    <div><strong>Specializations:</strong> {(mariaInstructor.specializations || mariaInstructor.expertise || []).join(', ')}</div>
                   </div>
                 ) : (
                   <div className="mt-3 p-2 bg-red-100 rounded">
