@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import type { User, Course as DBCourse, Enrollment } from '@/types'
 import type { EnhancedEnrollmentFormData, EnrollmentValidationErrors } from '@/types/enrollment'
 import type { Course as TeacherSelectorCourse } from '@/components/enrollment/TeacherSelector'
@@ -56,6 +56,8 @@ export function EnrollmentForm({
   const [searchCourse, setSearchCourse] = useState('')
   const [loadingUsers, setLoadingUsers] = useState(false)
   const [loadingCourses, setLoadingCourses] = useState(false)
+  const [localSelectedSlots, setLocalSelectedSlots] = useState<string[]>([])
+  const [formattedSelectedSlots, setFormattedSelectedSlots] = useState<{ slot1: string; slot2: string }>({ slot1: '', slot2: '' })
   
   // Toast hook for enhanced error handling (AC: 4)
   const { toastError, toastSuccess, toastWarning } = useToast()
@@ -220,19 +222,34 @@ export function EnrollmentForm({
     return isValid
   }
 
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
+    // Convert local slots to form data before validation if in preview mode
+    let finalFormData = { ...formData }
+    if (formData.is_in_person && localSelectedSlots.length > 0) {
+      // Use the formatted slots that we've been tracking
+      finalFormData = {
+        ...formData,
+        schedule_slot_1: formattedSelectedSlots.slot1,
+        schedule_slot_2: formattedSelectedSlots.slot2
+      }
+    }
+    
     // Enhanced validation with specific error messages (AC: 4)
-    if (!validateForm()) {
+    const { isValid, errors: validationErrors } = validateEnrollmentForm(finalFormData)
+    setErrors(validationErrors)
+    
+    if (!isValid) {
       // Show specific error messages for common validation failures
-      if (formData.is_in_person && !formData.teacher_id) {
+      if (finalFormData.is_in_person && !finalFormData.teacher_id) {
         toastError(validationMessages.teacher_required, 'Erro de Validação')
       }
-      if (formData.is_in_person && !formData.schedule_slot_1) {
+      if (finalFormData.is_in_person && !finalFormData.schedule_slot_1 && localSelectedSlots.length === 0) {
         toastError(validationMessages.schedule_required, 'Erro de Validação')
       }
-      if (formData.has_two_classes_per_week && (!formData.schedule_slot_2 || formData.schedule_slot_1 === formData.schedule_slot_2)) {
+      if (finalFormData.has_two_classes_per_week && localSelectedSlots.length < 2) {
         toastError(validationMessages.two_schedules_required, 'Erro de Validação')
       }
       return
@@ -240,7 +257,7 @@ export function EnrollmentForm({
 
     try {
       // Transform form data to API payload format (AC: 3)
-      const apiPayload = transformFormDataToApiPayload(formData)
+      const apiPayload = transformFormDataToApiPayload(finalFormData)
       await onSubmit(apiPayload)
       
       // Success notification (AC: 4)
@@ -546,16 +563,31 @@ export function EnrollmentForm({
                   selectedCourse={selectedCourse ? convertToTeacherSelectorCourse(selectedCourse) || undefined : undefined}
                   teacherId={formData.teacher_id || ''}
                   hasTwoClassesPerWeek={formData.has_two_classes_per_week}
+                  previewMode={true} // Enable preview mode to prevent automatic submission
                   onTeacherChange={(teacherUserId) => {
                     const safeTeacherUserId = teacherUserId || ''
                     console.log('Teacher changed - userId:', safeTeacherUserId)
                     handleInputChange('teacher_id', safeTeacherUserId)
+                    // Clear local selection when teacher changes
+                    setLocalSelectedSlots([])
+                    setFormattedSelectedSlots({ slot1: '', slot2: '' })
                   }}
-                  onTwoClassesChange={(checked) => handleInputChange('has_two_classes_per_week', checked)}
+                  onTwoClassesChange={(checked) => {
+                    handleInputChange('has_two_classes_per_week', checked)
+                    // Clear local selection when changing number of classes
+                    setLocalSelectedSlots([])
+                    setFormattedSelectedSlots({ slot1: '', slot2: '' })
+                  }}
+                  onLocalSelectionChange={(selectedSlots, formattedSlots) => {
+                    console.log('Local slots selection changed:', selectedSlots, 'Formatted:', formattedSlots)
+                    setLocalSelectedSlots(selectedSlots)
+                    setFormattedSelectedSlots(formattedSlots)
+                  }}
                   onSlotSelect={(slot1, slot2) => {
+                    // This will only be called in non-preview mode
                     const safeSlot1 = slot1 || ''
                     const safeSlot2 = slot2 || ''
-                    console.log('Slots selected:', { slot1: safeSlot1, slot2: safeSlot2 })
+                    console.log('Slots directly selected (non-preview):', { slot1: safeSlot1, slot2: safeSlot2 })
                     handleInputChange('schedule_slot_1', safeSlot1)
                     handleInputChange('schedule_slot_2', safeSlot2)
                   }}
@@ -564,9 +596,16 @@ export function EnrollmentForm({
                 {/* Enhanced scheduling validation feedback (AC: 4) */}
                 {formData.is_in_person && (
                   <div className="space-y-2">
-                    {!formData.schedule_slot_1 && (
+                    {localSelectedSlots.length === 0 && !formData.schedule_slot_1 && (
                       <p className="text-sm text-yellow-400">
                         ⚠️ {validationMessages.schedule_required}
+                      </p>
+                    )}
+                    
+                    {localSelectedSlots.length > 0 && (
+                      <p className="text-sm text-green-400">
+                        ✅ {localSelectedSlots.length} horário{localSelectedSlots.length > 1 ? 's' : ''} selecionado{localSelectedSlots.length > 1 ? 's' : ''}. 
+                        Clique em "Cadastrar" para confirmar a matrícula.
                       </p>
                     )}
                     
@@ -576,7 +615,7 @@ export function EnrollmentForm({
                     
                     {formData.has_two_classes_per_week && (
                       <>
-                        {!formData.schedule_slot_2 && (
+                        {localSelectedSlots.length < 2 && !formData.schedule_slot_2 && (
                           <p className="text-sm text-yellow-400">
                             ⚠️ {validationMessages.two_schedules_required}
                           </p>
@@ -616,9 +655,9 @@ export function EnrollmentForm({
               </button>
               <button
                 type="submit"
-                disabled={loading || !selectedUser || !selectedCourse || (formData.is_in_person && (!formData.teacher_id || !formData.schedule_slot_1))}
+                disabled={loading || !selectedUser || !selectedCourse || (formData.is_in_person && (!formData.teacher_id || (localSelectedSlots.length === 0 && !formData.schedule_slot_1) || (formData.has_two_classes_per_week && localSelectedSlots.length < 2)))}
                 className={`px-4 py-2 text-sm font-medium text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                  loading || !selectedUser || !selectedCourse || (formData.is_in_person && (!formData.teacher_id || !formData.schedule_slot_1))
+                  loading || !selectedUser || !selectedCourse || (formData.is_in_person && (!formData.teacher_id || (localSelectedSlots.length === 0 && !formData.schedule_slot_1) || (formData.has_two_classes_per_week && localSelectedSlots.length < 2)))
                     ? 'bg-gray-600 cursor-not-allowed'
                     : mode === 'create'
                     ? 'bg-blue-600 hover:bg-blue-700'

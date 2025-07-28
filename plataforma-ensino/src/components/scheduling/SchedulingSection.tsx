@@ -39,6 +39,8 @@ export interface SchedulingSectionProps {
   onTwoClassesChange: (checked: boolean) => void
   onSlotSelect?: (slot1: string, slot2?: string) => void
   className?: string
+  previewMode?: boolean
+  onLocalSelectionChange?: (selectedSlots: string[], formattedSlots: { slot1: string; slot2: string }) => void
 }
 
 /**
@@ -77,12 +79,16 @@ function CalendarSection({
   selectedTeacher,
   hasTwoClassesPerWeek,
   isEnabled,
-  onSlotSelect
+  onSlotSelect,
+  previewMode,
+  onLocalSelectionChange
 }: {
   selectedTeacher: Teacher | null
   hasTwoClassesPerWeek: boolean
   isEnabled: boolean
   onSlotSelect?: (slot1: string, slot2?: string) => void
+  previewMode?: boolean
+  onLocalSelectionChange?: (selectedSlots: string[], formattedSlots: { slot1: string; slot2: string }) => void
 }) {
   return (
     <div className="space-y-4">
@@ -93,6 +99,8 @@ function CalendarSection({
         maxSelectableSlots={hasTwoClassesPerWeek ? 2 : 1}
         hasTwoClassesPerWeek={hasTwoClassesPerWeek}
         className="simplified-calendar-section"
+        previewMode={previewMode}
+        onLocalSelectionChange={onLocalSelectionChange}
       />
     </div>
   )
@@ -158,7 +166,9 @@ export function SchedulingSection({
   onTeacherChange,
   onTwoClassesChange,
   onSlotSelect,
-  className = ''
+  className = '',
+  previewMode = true,
+  onLocalSelectionChange
 }: SchedulingSectionProps) {
   const [selectedTeacher, setSelectedTeacher] = useState<Teacher | null>(null)
 
@@ -220,6 +230,8 @@ export function SchedulingSection({
         hasTwoClassesPerWeek={hasTwoClassesPerWeek}
         isEnabled={isCalendarEnabled}
         onSlotSelect={onSlotSelect}
+        previewMode={previewMode}
+        onLocalSelectionChange={onLocalSelectionChange}
       />
 
       {/* Information Panel */}

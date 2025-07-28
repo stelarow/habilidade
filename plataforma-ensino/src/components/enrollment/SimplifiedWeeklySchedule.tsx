@@ -40,6 +40,8 @@ interface SimplifiedWeeklyScheduleProps {
   maxSelectableSlots?: number
   hasTwoClassesPerWeek?: boolean
   className?: string
+  previewMode?: boolean // When true, only visual selection without calling onSlotSelect
+  onLocalSelectionChange?: (selectedSlots: string[], formattedSlots: { slot1: string; slot2: string }) => void // Callback for local selection changes
 }
 
 const DAYS_OF_WEEK = [
@@ -58,12 +60,15 @@ export default function SimplifiedWeeklySchedule({
   selectedSlots = [],
   maxSelectableSlots = 1,
   hasTwoClassesPerWeek = false,
-  className = ''
+  className = '',
+  previewMode = true, // Default to preview mode to prevent automatic counter increments
+  onLocalSelectionChange
 }: SimplifiedWeeklyScheduleProps) {
   const [scheduleSlots, setScheduleSlots] = useState<WeeklyScheduleSlot[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [errorCount, setErrorCount] = useState(0)
+  const [localSelectedSlots, setLocalSelectedSlots] = useState<string[]>([])
   
   // Track component mount status to prevent setState on unmounted component
   const mountedRef = useRef(true)
@@ -293,31 +298,110 @@ export default function SimplifiedWeeklySchedule({
   }, [scheduleSlots])
 
   const handleSlotClick = useCallback((slotId: string) => {
-    if (!onSlotSelect || !slotId || !teacherId || !teacherUserId) return
+    if (!slotId || !teacherId || !teacherUserId) return
 
-    const isSelected = selectedSlots.includes(slotId)
+    // Use local selection in preview mode, external selection otherwise
+    const currentSelection = previewMode ? localSelectedSlots : selectedSlots
+    const isSelected = currentSelection.includes(slotId)
     let newSelection: string[] = []
 
     if (isSelected) {
       // Remove slot
-      newSelection = selectedSlots.filter((id: any) => id !== slotId)
+      newSelection = currentSelection.filter((id: any) => id !== slotId)
     } else {
       // Add slot
-      if (hasTwoClassesPerWeek && selectedSlots.length < 2) {
-        newSelection = [...selectedSlots, slotId]
+      if (hasTwoClassesPerWeek && currentSelection.length < 2) {
+        newSelection = [...currentSelection, slotId]
       } else if (!hasTwoClassesPerWeek) {
         newSelection = [slotId]
-      } else if (selectedSlots.length >= maxSelectableSlots) {
+      } else if (currentSelection.length >= maxSelectableSlots) {
         // Replace oldest slot
-        newSelection = [...selectedSlots.slice(1), slotId]
+        newSelection = [...currentSelection.slice(1), slotId]
       } else {
-        newSelection = [...selectedSlots, slotId]
+        newSelection = [...currentSelection, slotId]
       }
     }
 
-    // Format slots for parseScheduleSlot function
-    // Expected format: "teacherUserId:day:HH:MM-HH:MM"
-    // CRITICAL: Use teacherUserId (user.id) for student_schedules.instructor_id, not teacherId (instructor.id)
+    if (previewMode) {
+      // In preview mode, only update local state for visual selection
+      setLocalSelectedSlots(newSelection)
+      console.log('Preview mode - Local selection updated:', newSelection)
+      
+      // Format slots for parent component
+      const formatSlotForSubmission = (selectedSlotId: string): string => {
+        const slot = scheduleSlots.find((s: any) => s.id === selectedSlotId)
+        if (!slot) {
+          console.warn('formatSlotForSubmission - Slot not found:', selectedSlotId)
+          return ''
+        }
+        
+        // Use teacherUserId instead of teacherId for API submission
+        if (!teacherUserId) {
+          console.error('formatSlotForSubmission - teacherUserId is required for schedule submission')
+          return ''
+        }
+        
+        // Ensure we have valid time format (remove seconds if present)
+        const startTime = slot.startTime.includes(':') ? slot.startTime.slice(0, 5) : slot.startTime
+        const endTime = slot.endTime.includes(':') ? slot.endTime.slice(0, 5) : slot.endTime
+        
+        const formattedSlot = `${teacherUserId}:${slot.dayOfWeek}:${startTime}-${endTime}`
+        return formattedSlot
+      }
+
+      const formattedSlots = {
+        slot1: newSelection[0] ? formatSlotForSubmission(newSelection[0]) : '',
+        slot2: newSelection[1] ? formatSlotForSubmission(newSelection[1]) : ''
+      }
+      
+      // Notify parent component about local selection changes with formatted slots
+      if (onLocalSelectionChange) {
+        onLocalSelectionChange(newSelection, formattedSlots)
+      }
+    } else {
+      // In normal mode, format and submit slots
+      const formatSlotForSubmission = (selectedSlotId: string): string => {
+        const slot = scheduleSlots.find((s: any) => s.id === selectedSlotId)
+        if (!slot) {
+          console.warn('formatSlotForSubmission - Slot not found:', selectedSlotId)
+          return ''
+        }
+        
+        // Use teacherUserId instead of teacherId for API submission
+        if (!teacherUserId) {
+          console.error('formatSlotForSubmission - teacherUserId is required for schedule submission')
+          return ''
+        }
+        
+        // Ensure we have valid time format (remove seconds if present)
+        const startTime = slot.startTime.includes(':') ? slot.startTime.slice(0, 5) : slot.startTime
+        const endTime = slot.endTime.includes(':') ? slot.endTime.slice(0, 5) : slot.endTime
+        
+        const formattedSlot = `${teacherUserId}:${slot.dayOfWeek}:${startTime}-${endTime}`
+        console.log('formatSlotForSubmission - Input:', selectedSlotId, 'teacherUserId:', teacherUserId, 'Output:', formattedSlot)
+        return formattedSlot
+      }
+
+      // Always pass valid formatted strings - never undefined
+      const slot1 = newSelection[0] ? formatSlotForSubmission(newSelection[0]) : ''
+      const slot2 = newSelection[1] ? formatSlotForSubmission(newSelection[1]) : ''
+      
+      console.log('Normal mode - Slot selection:', { 
+        slot1,
+        slot2,
+        newSelection
+      })
+      
+      if (onSlotSelect) {
+        onSlotSelect(slot1, slot2)
+      }
+    }
+  }, [onSlotSelect, selectedSlots, localSelectedSlots, hasTwoClassesPerWeek, maxSelectableSlots, teacherId, teacherUserId, scheduleSlots, previewMode])
+
+  // Function to get formatted slots for form submission
+  const getFormattedSelectedSlots = useCallback((): { slot1: string; slot2: string } => {
+    const currentSelection = previewMode ? localSelectedSlots : selectedSlots
+    
     const formatSlotForSubmission = (selectedSlotId: string): string => {
       const slot = scheduleSlots.find((s: any) => s.id === selectedSlotId)
       if (!slot) {
@@ -336,22 +420,15 @@ export default function SimplifiedWeeklySchedule({
       const endTime = slot.endTime.includes(':') ? slot.endTime.slice(0, 5) : slot.endTime
       
       const formattedSlot = `${teacherUserId}:${slot.dayOfWeek}:${startTime}-${endTime}`
-      console.log('formatSlotForSubmission - Input:', selectedSlotId, 'teacherUserId:', teacherUserId, 'Output:', formattedSlot)
       return formattedSlot
     }
 
-    // Always pass valid formatted strings - never undefined
-    const slot1 = newSelection[0] ? formatSlotForSubmission(newSelection[0]) : ''
-    const slot2 = newSelection[1] ? formatSlotForSubmission(newSelection[1]) : ''
+    const slot1 = currentSelection[0] ? formatSlotForSubmission(currentSelection[0]) : ''
+    const slot2 = currentSelection[1] ? formatSlotForSubmission(currentSelection[1]) : ''
     
-    console.log('Slot selection:', { 
-      slot1,
-      slot2,
-      newSelection
-    })
-    
-    onSlotSelect(slot1, slot2)
-  }, [onSlotSelect, selectedSlots, hasTwoClassesPerWeek, maxSelectableSlots, teacherId, scheduleSlots])
+    return { slot1, slot2 }
+  }, [localSelectedSlots, selectedSlots, previewMode, scheduleSlots, teacherUserId])
+
 
   const formatTime = (time: string) => {
     return time.slice(0, 5) // Remove seconds
@@ -366,7 +443,10 @@ export default function SimplifiedWeeklySchedule({
 
   const getSlotStatusColor = (slot: WeeklyScheduleSlot, isSelected: boolean) => {
     if (isSelected) {
-      return 'bg-purple-600 border-purple-500 text-white'
+      // Use orange/pastel orange for selected slots in preview mode
+      return previewMode 
+        ? 'bg-orange-400/70 border-orange-400 text-white shadow-lg transform scale-105' 
+        : 'bg-purple-600 border-purple-500 text-white'
     }
     if (!slot.isAvailable) {
       return 'bg-red-500/20 border-red-500/50 text-red-300 cursor-not-allowed'
@@ -449,9 +529,11 @@ export default function SimplifiedWeeklySchedule({
               {daySlots.length > 0 ? (
                 <div className="space-y-2">
                   {daySlots.map((slot: any) => {
-                    const isSelected = selectedSlots.includes(slot.id)
+                    // Use appropriate selection state based on mode
+                    const currentSelection = previewMode ? localSelectedSlots : selectedSlots
+                    const isSelected = currentSelection.includes(slot.id)
                     const canSelect = slot.isAvailable && (
-                      selectedSlots.length < maxSelectableSlots || isSelected
+                      currentSelection.length < maxSelectableSlots || isSelected
                     )
                     
                     return (
@@ -497,34 +579,49 @@ export default function SimplifiedWeeklySchedule({
       </div>
 
       {/* Selection Summary */}
-      {selectedSlots.length > 0 && (
-        <Card className="mt-6 p-4 border-purple-500/30 bg-purple-900/20">
-          <div className="flex items-center gap-2 mb-3">
-            <CheckCircleIcon className="w-5 h-5 text-purple-400" />
-            <h4 className="text-sm font-semibold text-white">
-              Horários Selecionados ({selectedSlots.length}/{maxSelectableSlots})
-            </h4>
-          </div>
-          
-          <div className="space-y-2">
-            {selectedSlots.map((slotId: any) => {
-              const slot = scheduleSlots.find((s: any) => s.id === slotId)
-              if (!slot) return null
-              
-              const dayName = DAYS_OF_WEEK.find((d: any) => d.id === slot.dayOfWeek)?.name || ''
-              
-              return (
-                <div key={slotId} className="text-sm bg-black/20 rounded p-2">
-                  <div className="text-purple-300 font-medium">{dayName}</div>
-                  <div className="text-gray-300">
-                    {formatTime(slot.startTime)} - {formatTime(slot.endTime)}
+      {(() => {
+        const currentSelection = previewMode ? localSelectedSlots : selectedSlots
+        const summaryColor = previewMode ? 'orange' : 'purple'
+        const bgColor = previewMode ? 'bg-orange-900/20' : 'bg-purple-900/20'
+        const borderColor = previewMode ? 'border-orange-500/30' : 'border-purple-500/30'
+        const iconColor = previewMode ? 'text-orange-400' : 'text-purple-400'
+        const textColor = previewMode ? 'text-orange-300' : 'text-purple-300'
+        
+        return currentSelection.length > 0 && (
+          <Card className={`mt-6 p-4 ${borderColor} ${bgColor}`}>
+            <div className="flex items-center gap-2 mb-3">
+              <CheckCircleIcon className={`w-5 h-5 ${iconColor}`} />
+              <h4 className="text-sm font-semibold text-white">
+                {previewMode ? 'Horários Pré-Selecionados' : 'Horários Selecionados'} ({currentSelection.length}/{maxSelectableSlots})
+              </h4>
+            </div>
+            
+            {previewMode && (
+              <div className="mb-3 p-2 bg-orange-500/10 rounded text-xs text-orange-300">
+                ⚠️ Estes horários foram selecionados mas ainda não confirmados. Clique em "Cadastrar" para confirmar a matrícula.
+              </div>
+            )}
+            
+            <div className="space-y-2">
+              {currentSelection.map((slotId: any) => {
+                const slot = scheduleSlots.find((s: any) => s.id === slotId)
+                if (!slot) return null
+                
+                const dayName = DAYS_OF_WEEK.find((d: any) => d.id === slot.dayOfWeek)?.name || ''
+                
+                return (
+                  <div key={slotId} className="text-sm bg-black/20 rounded p-2">
+                    <div className={`${textColor} font-medium`}>{dayName}</div>
+                    <div className="text-gray-300">
+                      {formatTime(slot.startTime)} - {formatTime(slot.endTime)}
+                    </div>
                   </div>
-                </div>
-              )
-            })}
-          </div>
-        </Card>
-      )}
+                )
+              })}
+            </div>
+          </Card>
+        )
+      })()}
     </div>
   )
 }
