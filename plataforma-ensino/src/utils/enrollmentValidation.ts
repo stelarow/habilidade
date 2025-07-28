@@ -163,7 +163,16 @@ export function transformFormDataToApiPayload(
     end_time: string
   }[]
 } {
-  console.log('enrollmentValidation - Transforming form data:', formData)
+  console.log('enrollmentValidation - DETAILED form data transformation:', {
+    input_form_data: formData,
+    extracted_fields: {
+      user_id: formData.user_id,
+      course_id: formData.course_id,
+      is_in_person: formData.is_in_person,
+      schedule_slot_1: formData.schedule_slot_1,
+      schedule_slot_2: formData.schedule_slot_2
+    }
+  })
   
   const payload = {
     student_id: formData.user_id,
@@ -178,16 +187,22 @@ export function transformFormDataToApiPayload(
     
     // Parse first schedule slot
     const slot1 = parseScheduleSlot(formData.schedule_slot_1)
-    console.log('enrollmentValidation - Parsed slot1:', slot1)
+    console.log('enrollmentValidation - DETAILED slot1 parsing:', {
+      original_slot: formData.schedule_slot_1,
+      parsed_slot: slot1,
+      will_use_instructor_id: slot1?.teacherUserId
+    })
     if (slot1) {
       const [startTime, endTime] = slot1.time.split('-')
       if (startTime && endTime) {
-        schedules.push({
+        const scheduleEntry = {
           instructor_id: slot1.teacherUserId,
           day_of_week: slot1.day,
           start_time: `${startTime}:00`,
           end_time: `${endTime}:00`
-        })
+        }
+        console.log('enrollmentValidation - Adding schedule entry:', scheduleEntry)
+        schedules.push(scheduleEntry)
       }
     }
     
@@ -208,8 +223,9 @@ export function transformFormDataToApiPayload(
       }
     }
     
-    console.log('enrollmentValidation - Generated schedules:', schedules)
-    return { ...payload, schedules }
+    const finalPayload = { ...payload, schedules }
+    console.log('enrollmentValidation - FINAL PAYLOAD TO API:', JSON.stringify(finalPayload, null, 2))
+    return finalPayload
   }
   
   // For online enrollments, ensure schedules is an empty array

@@ -313,13 +313,17 @@ export async function POST(request: NextRequest) {
         ['admin', 'instructor'].includes(u.role) && foundInstructorUserIds.includes(u.id)
       ) || []
       
-      console.log('Enrollment API - Validation results:', {
-        expected: instructorIds.length,
-        foundUsers: foundUserIds.length,
-        foundInstructorProfiles: foundInstructorUserIds.length,
-        missingUsers: missingUserIds,
-        usersWithoutProfiles: usersWithoutInstructorProfile,
-        validInstructors: instructorUsers.length
+      console.log('Enrollment API - DETAILED VALIDATION DEBUG:', {
+        'Instructor IDs provided': instructorIds,
+        'Found users (all)': allUsers?.map((u: any) => ({ id: u.id, name: u.full_name, role: u.role })),
+        'Found instructor profiles': instructorProfiles?.map((i: any) => ({ instructor_id: i.id, user_id: i.user_id })),
+        'Expected count': instructorIds.length,
+        'Found users count': foundUserIds.length,
+        'Found instructor profiles count': foundInstructorUserIds.length,
+        'Missing users': missingUserIds,
+        'Users without instructor profiles': usersWithoutInstructorProfile,
+        'Valid instructor users': instructorUsers.map((u: any) => ({ id: u.id, name: u.full_name, role: u.role })),
+        'Valid instructors count': instructorUsers.length
       })
       
       // Check for missing users
