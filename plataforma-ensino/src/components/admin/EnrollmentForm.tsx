@@ -357,6 +357,7 @@ export function EnrollmentForm({
               {mode === 'create' ? 'Adicionar Matrícula' : 'Remover Matrícula'}
             </h2>
             <button
+              type="button"
               onClick={onCancel}
               className="text-gray-400 hover:text-gray-300"
             >

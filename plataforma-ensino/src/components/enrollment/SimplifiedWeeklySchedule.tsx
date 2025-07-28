@@ -297,7 +297,11 @@ export default function SimplifiedWeeklySchedule({
     return grouped
   }, [scheduleSlots])
 
-  const handleSlotClick = useCallback((slotId: string) => {
+  const handleSlotClick = useCallback((event: React.MouseEvent<HTMLButtonElement>, slotId: string) => {
+    // Prevent form submission and event bubbling
+    event.preventDefault()
+    event.stopPropagation()
+    
     if (!slotId || !teacherId || !teacherUserId) return
 
     // Use local selection in preview mode, external selection otherwise
@@ -486,7 +490,10 @@ export default function SimplifiedWeeklySchedule({
           <p className="text-gray-300 mb-4">{error}</p>
           {errorCount > 3 && (
             <button
-              onClick={() => {
+              type="button"
+              onClick={(event) => {
+                event.preventDefault()
+                event.stopPropagation()
                 if (mountedRef.current) {
                   setErrorCount(0)
                   setError(null)
@@ -539,7 +546,8 @@ export default function SimplifiedWeeklySchedule({
                     return (
                       <button
                         key={slot.id}
-                        onClick={() => canSelect && handleSlotClick(slot.id)}
+                        type="button"
+                        onClick={(event) => canSelect && handleSlotClick(event, slot.id)}
                         disabled={!canSelect}
                         className={`
                           w-full p-3 rounded-md border transition-all duration-200
