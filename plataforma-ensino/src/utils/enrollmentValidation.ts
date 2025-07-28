@@ -7,7 +7,6 @@ import type { EnhancedEnrollmentFormData, EnrollmentValidationErrors, ScheduleSl
 const baseEnrollmentSchema = z.object({
   user_id: z.string().min(1, { message: 'Usuário é obrigatório' }),
   course_id: z.string().min(1, { message: 'Curso é obrigatório' }),
-  teacher_id: z.string().min(1, { message: 'Professor é obrigatório' }),
   access_until: z.string().optional()
     .refine((date) => {
       if (!date) return true
@@ -20,6 +19,7 @@ const baseEnrollmentSchema = z.object({
 // Online enrollment schema (AC: 1) - No scheduling fields required
 const onlineEnrollmentSchema = baseEnrollmentSchema.extend({
   is_in_person: z.literal(false),
+  teacher_id: z.string().optional(),
   has_two_classes_per_week: z.boolean().optional(),
   schedule_slot_1: z.string().optional(),
   schedule_slot_2: z.string().optional()
@@ -28,6 +28,7 @@ const onlineEnrollmentSchema = baseEnrollmentSchema.extend({
 // In-person enrollment schema (AC: 2) - Scheduling fields required
 const inPersonEnrollmentSchema = baseEnrollmentSchema.extend({
   is_in_person: z.literal(true),
+  teacher_id: z.string().min(1, { message: 'Professor é obrigatório para aulas presenciais' }),
   has_two_classes_per_week: z.boolean(),
   schedule_slot_1: z.string().min(1, { 
     message: 'Primeiro horário é obrigatório para aulas presenciais' 

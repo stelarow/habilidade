@@ -246,7 +246,7 @@ export function EnrollmentForm({
       if (finalFormData.is_in_person && !finalFormData.teacher_id) {
         toastError(validationMessages.teacher_required, 'Erro de Validação')
       }
-      if (finalFormData.is_in_person && !finalFormData.schedule_slot_1 && localSelectedSlots.length === 0) {
+      if (finalFormData.is_in_person && localSelectedSlots.length === 0 && !finalFormData.schedule_slot_1) {
         toastError(validationMessages.schedule_required, 'Erro de Validação')
       }
       if (finalFormData.has_two_classes_per_week && localSelectedSlots.length < 2) {
@@ -593,40 +593,50 @@ export function EnrollmentForm({
                   }}
                 />
                 
-                {/* Enhanced scheduling validation feedback (AC: 4) */}
+                {/* Enhanced scheduling validation feedback */}
                 {formData.is_in_person && (
                   <div className="space-y-2">
-                    {localSelectedSlots.length === 0 && !formData.schedule_slot_1 && (
+                    {/* Teacher validation feedback */}
+                    {!formData.teacher_id && (
                       <p className="text-sm text-yellow-400">
-                        ⚠️ {validationMessages.schedule_required}
+                        ⚠️ Selecione um professor para continuar
                       </p>
                     )}
                     
-                    {localSelectedSlots.length > 0 && (
+                    {/* Schedule slots validation feedback */}
+                    {formData.teacher_id && localSelectedSlots.length === 0 && (
+                      <p className="text-sm text-yellow-400">
+                        ⚠️ Selecione pelo menos um horário para prosseguir
+                      </p>
+                    )}
+                    
+                    {/* Success feedback for single class */}
+                    {formData.teacher_id && localSelectedSlots.length > 0 && !formData.has_two_classes_per_week && (
                       <p className="text-sm text-green-400">
-                        ✅ {localSelectedSlots.length} horário{localSelectedSlots.length > 1 ? 's' : ''} selecionado{localSelectedSlots.length > 1 ? 's' : ''}. 
-                        Clique em "Cadastrar" para confirmar a matrícula.
+                        ✅ Professor e horário selecionados. O botão "Adicionar Matrícula" está habilitado.
                       </p>
                     )}
                     
-                    {errors.schedule_slot_1 && (
-                      <p className="text-sm text-red-400">{errors.schedule_slot_1}</p>
-                    )}
-                    
+                    {/* Two classes per week validation */}
                     {formData.has_two_classes_per_week && (
                       <>
-                        {localSelectedSlots.length < 2 && !formData.schedule_slot_2 && (
+                        {localSelectedSlots.length < 2 && (
                           <p className="text-sm text-yellow-400">
-                            ⚠️ {validationMessages.two_schedules_required}
+                            ⚠️ Selecione 2 horários para aulas duas vezes por semana
                           </p>
                         )}
                         
-                        {formData.schedule_slot_1 === formData.schedule_slot_2 && formData.schedule_slot_2 && (
-                          <p className="text-sm text-red-400">
-                            ❌ {validationMessages.schedules_must_differ}
+                        {localSelectedSlots.length === 2 && (
+                          <p className="text-sm text-green-400">
+                            ✅ Dois horários selecionados. O botão "Adicionar Matrícula" está habilitado.
                           </p>
                         )}
                       </>
+                    )}
+                    
+                    {/* Error messages */}
+                    {errors.schedule_slot_1 && (
+                      <p className="text-sm text-red-400">{errors.schedule_slot_1}</p>
                     )}
                     
                     {errors.schedule_slot_2 && (
@@ -635,10 +645,10 @@ export function EnrollmentForm({
                   </div>
                 )}
                 
-                {/* Success feedback for online enrollments (AC: 1) */}
-                {!formData.is_in_person && (
+                {/* Success feedback for online enrollments */}
+                {!formData.is_in_person && selectedUser && selectedCourse && (
                   <p className="text-sm text-green-400">
-                    ✅ {validationMessages.online_validation_passed}
+                    ✅ Matrícula online configurada. O botão "Adicionar Matrícula" está habilitado.
                   </p>
                 )}
               </div>
@@ -655,9 +665,25 @@ export function EnrollmentForm({
               </button>
               <button
                 type="submit"
-                disabled={loading || !selectedUser || !selectedCourse || (formData.is_in_person && (!formData.teacher_id || (localSelectedSlots.length === 0 && !formData.schedule_slot_1) || (formData.has_two_classes_per_week && localSelectedSlots.length < 2)))}
+                disabled={
+                  loading || 
+                  !selectedUser || 
+                  !selectedCourse || 
+                  (formData.is_in_person && (
+                    !formData.teacher_id || 
+                    localSelectedSlots.length === 0 || 
+                    (formData.has_two_classes_per_week && localSelectedSlots.length < 2)
+                  ))
+                }
                 className={`px-4 py-2 text-sm font-medium text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                  loading || !selectedUser || !selectedCourse || (formData.is_in_person && (!formData.teacher_id || (localSelectedSlots.length === 0 && !formData.schedule_slot_1) || (formData.has_two_classes_per_week && localSelectedSlots.length < 2)))
+                  loading || 
+                  !selectedUser || 
+                  !selectedCourse || 
+                  (formData.is_in_person && (
+                    !formData.teacher_id || 
+                    localSelectedSlots.length === 0 || 
+                    (formData.has_two_classes_per_week && localSelectedSlots.length < 2)
+                  ))
                     ? 'bg-gray-600 cursor-not-allowed'
                     : mode === 'create'
                     ? 'bg-blue-600 hover:bg-blue-700'
