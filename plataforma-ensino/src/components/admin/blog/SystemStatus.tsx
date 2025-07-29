@@ -24,9 +24,11 @@ import { healthChecker } from '@/utils/healthCheck';
 import { uptimeMonitor } from '@/services/uptimeMonitor';
 
 interface HealthStatus {
-  overall_status: string;
-  overall_message: string;
-  services: Record<string, any>;
+  results: Record<string, any>;
+  overallHealth: {
+    status: string;
+    message: string;
+  };
   timestamp: string;
 }
 
@@ -41,7 +43,7 @@ interface SLAMetrics {
 
 interface UptimeStatus {
   current_health: HealthStatus;
-  sla_metrics: Record<string, SLAMetrics>;
+  sla_metrics: Record<string, SLAMetrics> | {};
   current_incident: any;
   recent_alerts: any[];
   uptime_target: number;
@@ -195,10 +197,10 @@ const SystemStatus: React.FC = () => {
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
             <CardTitle className="flex items-center gap-3">
-              {getStatusIcon(current_health.overall_status)}
+              {getStatusIcon(current_health.overallHealth.status)}
               System Status
-              <Badge className={getStatusColor(current_health.overall_status)}>
-                {current_health.overall_status.toUpperCase()}
+              <Badge className={getStatusColor(current_health.overallHealth.status)}>
+                {current_health.overallHealth.status.toUpperCase()}
               </Badge>
             </CardTitle>
             <div className="flex items-center gap-2">
@@ -221,7 +223,7 @@ const SystemStatus: React.FC = () => {
             </div>
           </div>
           <p className="text-sm text-muted-foreground">
-            {current_health.overall_message}
+            {current_health.overallHealth.message}
           </p>
           <p className="text-xs text-muted-foreground">
             Last updated: {lastUpdated.toLocaleTimeString()}
@@ -253,7 +255,7 @@ const SystemStatus: React.FC = () => {
 
         <TabsContent value="services" className="space-y-4">
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-            {Object.entries(current_health.services).map(([serviceName, serviceData]) => (
+            {Object.entries(current_health.results).map(([serviceName, serviceData]) => (
               <Card key={serviceName}>
                 <CardContent className="p-4">
                   <div className="flex items-center justify-between mb-2">
@@ -288,43 +290,46 @@ const SystemStatus: React.FC = () => {
 
         <TabsContent value="uptime" className="space-y-4">
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-            {Object.entries(sla_metrics).map(([window, metrics]) => (
+            {Object.entries(sla_metrics || {}).map(([window, metrics]) => {
+              const slaMetrics = metrics as SLAMetrics;
+              return (
               <Card key={window}>
                 <CardContent className="p-4">
                   <div className="flex items-center justify-between mb-2">
                     <h3 className="font-medium capitalize">{window}</h3>
-                    <TrendingUp className={`h-4 w-4 ${metrics.sla_compliant ? 'text-green-500' : 'text-red-500'}`} />
+                    <TrendingUp className={`h-4 w-4 ${slaMetrics.sla_compliant ? 'text-green-500' : 'text-red-500'}`} />
                   </div>
                   <div className="space-y-2">
                     <div className="flex justify-between items-center">
                       <span className="text-lg font-bold">
-                        {formatUptime(metrics.uptime)}
+                        {formatUptime(slaMetrics.uptime)}
                       </span>
                       <Badge 
-                        variant={metrics.sla_compliant ? "default" : "destructive"}
+                        variant={slaMetrics.sla_compliant ? "default" : "destructive"}
                         className="text-xs"
                       >
-                        {metrics.sla_compliant ? 'SLA OK' : 'SLA BREACH'}
+                        {slaMetrics.sla_compliant ? 'SLA OK' : 'SLA BREACH'}
                       </Badge>
                     </div>
                     <div className="text-sm text-muted-foreground space-y-1">
                       <div className="flex justify-between">
                         <span>Checks:</span>
-                        <span>{metrics.healthy_checks}/{metrics.total_checks}</span>
+                        <span>{slaMetrics.healthy_checks}/{slaMetrics.total_checks}</span>
                       </div>
                       <div className="flex justify-between">
                         <span>Incidents:</span>
-                        <span>{metrics.downtime_incidents}</span>
+                        <span>{slaMetrics.downtime_incidents}</span>
                       </div>
                       <div className="flex justify-between">
                         <span>Avg Response:</span>
-                        <span>{formatResponseTime(metrics.avg_response_time)}</span>
+                        <span>{formatResponseTime(slaMetrics.avg_response_time)}</span>
                       </div>
                     </div>
                   </div>
                 </CardContent>
               </Card>
-            ))}
+            );
+            })}
           </div>
 
           <Card>
@@ -394,7 +399,7 @@ const SystemStatus: React.FC = () => {
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
-                  {Object.entries(current_health.services).map(([serviceName, serviceData]) => (
+                  {Object.entries(current_health.results).map(([serviceName, serviceData]) => (
                     <div key={serviceName} className="flex justify-between items-center">
                       <div className="flex items-center gap-2">
                         {getServiceIcon(serviceName)}
@@ -420,21 +425,24 @@ const SystemStatus: React.FC = () => {
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
-                  {Object.entries(sla_metrics).map(([window, metrics]) => (
+                  {Object.entries(sla_metrics || {}).map(([window, metrics]) => {
+                    const slaMetrics = metrics as SLAMetrics;
+                    return (
                     <div key={window} className="flex justify-between items-center">
                       <span className="capitalize">{window}</span>
                       <div className="flex items-center gap-2">
-                        <span className={`font-mono text-sm ${metrics.sla_compliant ? 'text-green-600' : 'text-red-600'}`}>
-                          {formatUptime(metrics.uptime)}
+                        <span className={`font-mono text-sm ${slaMetrics.sla_compliant ? 'text-green-600' : 'text-red-600'}`}>
+                          {formatUptime(slaMetrics.uptime)}
                         </span>
-                        {metrics.sla_compliant ? (
+                        {slaMetrics.sla_compliant ? (
                           <CheckCircle className="h-4 w-4 text-green-500" />
                         ) : (
                           <XCircle className="h-4 w-4 text-red-500" />
                         )}
                       </div>
                     </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </CardContent>
             </Card>

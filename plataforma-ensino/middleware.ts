@@ -1,8 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { isAuthenticatedInMiddleware, hasRoleInMiddleware } from './src/lib/supabase/middleware-client'
+import { createClient } from './src/lib/supabase/server'
 
 // Rate limiting store (in-memory for simplicity)
 const rateLimitStore = new Map<string, { count: number; resetTime: number }>()
+
+// Maintenance status cache for performance optimization
+interface MaintenanceCacheEntry {
+  isActive: boolean;
+  windowId?: string;
+  expiry: number;
+}
+
+const maintenanceCache = new Map<string, MaintenanceCacheEntry>()
+const MAINTENANCE_CACHE_TTL = parseInt(process.env.MAINTENANCE_CACHE_TTL || '60') * 1000 // 1 minute default
 
 // Rate limiting configuration
 const RATE_LIMIT_CONFIG = {
@@ -100,6 +111,104 @@ function applySecurityHeaders(response: NextResponse) {
   )
 }
 
+// Check maintenance status function
+async function checkMaintenanceStatus(requestId: string): Promise<{ isActive: boolean; windowId?: string }> {
+  try {
+    const cacheKey = 'maintenance_status'
+    const now = Date.now()
+    
+    // Check cache first
+    const cached = maintenanceCache.get(cacheKey)
+    if (cached && now < cached.expiry) {
+      console.log(`[MIDDLEWARE-${requestId}] 🔧 Maintenance status from cache: ${cached.isActive ? 'ACTIVE' : 'INACTIVE'}`)
+      return { isActive: cached.isActive, windowId: cached.windowId }
+    }
+    
+    // Query database for active maintenance
+    const supabase = createClient()
+    const { data: activeMaintenance, error } = await supabase
+      .from('maintenance_windows')
+      .select('id')
+      .eq('status', 'active')
+      .limit(1)
+      .single()
+    
+    if (error && error.code !== 'PGRST116') {
+      console.error(`[MIDDLEWARE-${requestId}] ❌ Error checking maintenance status:`, error)
+      // Return cached result if available, otherwise assume no maintenance
+      return cached ? { isActive: cached.isActive, windowId: cached.windowId } : { isActive: false }
+    }
+    
+    const isActive = !!activeMaintenance
+    const windowId = activeMaintenance?.id
+    
+    // Cache the result
+    maintenanceCache.set(cacheKey, {
+      isActive,
+      windowId,
+      expiry: now + MAINTENANCE_CACHE_TTL
+    })
+    
+    console.log(`[MIDDLEWARE-${requestId}] 🔧 Maintenance status from DB: ${isActive ? 'ACTIVE' : 'INACTIVE'}`)
+    return { isActive, windowId }
+    
+  } catch (error) {
+    console.error(`[MIDDLEWARE-${requestId}] ❌ Error in maintenance check:`, error)
+    // Return cached result if available, otherwise assume no maintenance
+    const cached = maintenanceCache.get('maintenance_status')
+    return cached ? { isActive: cached.isActive, windowId: cached.windowId } : { isActive: false }
+  }
+}
+
+// Check if user has maintenance bypass
+async function checkMaintenanceBypass(request: NextRequest, requestId: string, windowId?: string): Promise<boolean> {
+  try {
+    // Check for bypass cookie/header first
+    const bypassSecret = process.env.MAINTENANCE_BYPASS_SECRET
+    const bypassHeader = request.headers.get('x-maintenance-bypass')
+    const bypassCookie = request.cookies.get('maintenance-bypass')?.value
+    
+    if (bypassSecret && (bypassHeader === bypassSecret || bypassCookie === bypassSecret)) {
+      console.log(`[MIDDLEWARE-${requestId}] 🔓 Maintenance bypass via secret`)
+      return true
+    }
+    
+    // Check if user is admin (admins have automatic bypass)
+    const isAdmin = await hasRoleInMiddleware(request, 'admin')
+    if (isAdmin) {
+      console.log(`[MIDDLEWARE-${requestId}] 🔓 Maintenance bypass for admin user`)
+      return true
+    }
+    
+    // TODO: Check database for user-specific bypass (requires user authentication)
+    // This would be more complex as we'd need to get the user ID from the request
+    
+    return false
+  } catch (error) {
+    console.error(`[MIDDLEWARE-${requestId}] ❌ Error checking maintenance bypass:`, error)
+    return false
+  }
+}
+
+// Routes that should always work during maintenance
+const MAINTENANCE_EXEMPT_ROUTES = [
+  '/maintenance',
+  '/api/health',
+  '/api/maintenance',
+  '/admin/blog/maintenance',
+  '/_next',
+  '/favicon.ico',
+  '/api/auth',
+  '/auth/callback'
+]
+
+// Check if route is exempt from maintenance blocking
+function isMaintenanceExempt(pathname: string): boolean {
+  return MAINTENANCE_EXEMPT_ROUTES.some(route => 
+    pathname === route || pathname.startsWith(route + '/')
+  )
+}
+
 /**
  * 🔥 NEXT.JS MIDDLEWARE
  * 
@@ -132,6 +241,45 @@ export async function middleware(request: NextRequest) {
   })
   
   try {
+    // 🔧 MAINTENANCE MODE: Check if maintenance is active (high priority check)
+    if (process.env.NEXT_PUBLIC_MAINTENANCE_ENABLED !== 'false') {
+      const maintenanceStatus = await checkMaintenanceStatus(requestId)
+      
+      if (maintenanceStatus.isActive) {
+        console.log(`[MIDDLEWARE-${requestId}] 🔧 Maintenance mode is ACTIVE`)
+        
+        // Check if this route is exempt from maintenance blocking
+        if (isMaintenanceExempt(pathname)) {
+          console.log(`[MIDDLEWARE-${requestId}] ✅ Route ${pathname} is exempt from maintenance`)
+        } else {
+          // Check if user has bypass
+          const hasBypass = await checkMaintenanceBypass(request, requestId, maintenanceStatus.windowId)
+          
+          if (hasBypass) {
+            console.log(`[MIDDLEWARE-${requestId}] 🔓 User has maintenance bypass - allowing access`)
+            
+            // Add bypass headers for components to use
+            const response = NextResponse.next()
+            response.headers.set('x-maintenance-bypass', 'true')
+            response.headers.set('x-maintenance-window-id', maintenanceStatus.windowId || '')
+            return response
+          } else {
+            console.log(`[MIDDLEWARE-${requestId}] 🚫 Redirecting to maintenance page`)
+            
+            // Preserve query parameters for potential future use
+            const maintenanceUrl = new URL('/maintenance', request.url)
+            if (maintenanceStatus.windowId) {
+              maintenanceUrl.searchParams.set('window', maintenanceStatus.windowId)
+            }
+            
+            return NextResponse.redirect(maintenanceUrl)
+          }
+        }
+      } else {
+        console.log(`[MIDDLEWARE-${requestId}] ✅ No active maintenance`)
+      }
+    }
+
     // Admin route protection
     if (pathname.startsWith('/admin')) {
       console.log(`[MIDDLEWARE-${requestId}] 🔒 Admin route detected - checking authorization`)
@@ -229,6 +377,8 @@ export async function middleware(request: NextRequest) {
 }
 export const config = {
   matcher: [
+    // All routes for maintenance checking (excluding static files)
+    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
     // Admin and auth routes protection
     '/admin/:path*',
     '/auth/:path*',

@@ -1,4 +1,4 @@
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 import SystemStatus from '@/components/admin/blog/SystemStatus';
 
 export const metadata: Metadata = {

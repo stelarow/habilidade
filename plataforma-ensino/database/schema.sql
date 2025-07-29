@@ -545,6 +545,83 @@ LEFT JOIN public.lessons l ON c.id = l.course_id AND l.is_published = true
 LEFT JOIN public.progress p ON u.id = p.user_id AND l.id = p.lesson_id
 GROUP BY u.id, u.full_name, c.id, c.title, c.slug, e.enrolled_at, e.progress_percentage, e.status;
 
+-- Email Follow-up System Tables
+-- Tabela para sequências de follow-up
+CREATE TABLE IF NOT EXISTS followup_sequences (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  contact_email TEXT NOT NULL,
+  sequence_type TEXT NOT NULL,
+  article_slug TEXT,
+  article_category TEXT,
+  current_step INTEGER DEFAULT 0,
+  started_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  last_sent TIMESTAMP WITH TIME ZONE,
+  is_active BOOLEAN DEFAULT true,
+  unsubscribed_at TIMESTAMP WITH TIME ZONE,
+  context_data JSONB,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Tabela para tasks agendadas
+CREATE TABLE IF NOT EXISTS scheduled_tasks (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  task_type TEXT NOT NULL,
+  execute_at TIMESTAMP WITH TIME ZONE NOT NULL,
+  status TEXT CHECK (status IN ('pending', 'processing', 'completed', 'failed')) DEFAULT 'pending',
+  payload JSONB NOT NULL,
+  retry_count INTEGER DEFAULT 0,
+  error_message TEXT,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Tabela para métricas de email
+CREATE TABLE IF NOT EXISTS email_metrics (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  sequence_id UUID REFERENCES followup_sequences(id),
+  email_step INTEGER NOT NULL,
+  event_type TEXT CHECK (event_type IN ('sent', 'opened', 'clicked', 'unsubscribed')) NOT NULL,
+  event_data JSONB,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Índices para performance
+CREATE INDEX idx_followup_sequences_email_active ON followup_sequences(contact_email, is_active);
+CREATE INDEX idx_scheduled_tasks_execute_at_status ON scheduled_tasks(execute_at, status);
+CREATE INDEX idx_email_metrics_sequence_step ON email_metrics(sequence_id, email_step);
+
+-- RLS Policies para follow-up tables
+ALTER TABLE followup_sequences ENABLE ROW LEVEL SECURITY;
+ALTER TABLE scheduled_tasks ENABLE ROW LEVEL SECURITY;
+ALTER TABLE email_metrics ENABLE ROW LEVEL SECURITY;
+
+-- Admins podem gerenciar todas as sequências de follow-up
+CREATE POLICY "Admins can manage all followup sequences" ON followup_sequences
+    FOR ALL USING (
+        EXISTS (
+            SELECT 1 FROM public.users
+            WHERE id = auth.uid() AND role = 'admin'
+        )
+    );
+
+-- Admins podem gerenciar todas as tarefas agendadas
+CREATE POLICY "Admins can manage all scheduled tasks" ON scheduled_tasks
+    FOR ALL USING (
+        EXISTS (
+            SELECT 1 FROM public.users
+            WHERE id = auth.uid() AND role = 'admin'
+        )
+    );
+
+-- Admins podem visualizar todas as métricas de email
+CREATE POLICY "Admins can view all email metrics" ON email_metrics
+    FOR SELECT USING (
+        EXISTS (
+            SELECT 1 FROM public.users
+            WHERE id = auth.uid() AND role = 'admin'
+        )
+    );
+
 -- Grant necessary permissions
 GRANT USAGE ON SCHEMA public TO postgres, anon, authenticated, service_role;
 GRANT ALL ON ALL TABLES IN SCHEMA public TO postgres, service_role;
