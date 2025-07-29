@@ -9,17 +9,17 @@ const BlogError = ({ error, onRetry }) => {
     
     if (errorMessage.includes('indisponivel') || errorMessage.includes('ECONNREFUSED')) {
       return {
-        title: 'Servidor Temporariamente Indisponivel',
-        description: 'Nosso servidor esta passando por manutencao. Tente novamente em alguns minutos.',
-        icon: '=à',
+        title: 'Servidor Temporariamente Indisponível',
+        description: 'Nosso servidor está passando por manutenção. Tente novamente em alguns minutos.',
+        icon: '™',
         showRetry: true,
       };
     }
     
     if (errorMessage.includes('timeout') || errorMessage.includes('rede')) {
       return {
-        title: 'Problema de Conexao',
-        description: 'Verifique sua conexao com a internet e tente novamente.',
+        title: 'Problema de Conexão',
+        description: 'Verifique sua conexão com a internet e tente novamente.',
         icon: '<',
         showRetry: true,
       };
@@ -27,9 +27,9 @@ const BlogError = ({ error, onRetry }) => {
     
     if (errorMessage.includes('404') || errorMessage.includes('nao encontrado')) {
       return {
-        title: 'Conteudo Nao Encontrado',
-        description: 'Os artigos que voce esta procurando nao foram encontrados.',
-        icon: '=',
+        title: 'Conteúdo Não Encontrado',
+        description: 'Os artigos que você está procurando não foram encontrados.',
+        icon: '=Ä',
         showRetry: false,
       };
     }
@@ -37,7 +37,7 @@ const BlogError = ({ error, onRetry }) => {
     return {
       title: 'Erro Inesperado',
       description: 'Algo deu errado ao carregar os artigos. Tente novamente.',
-      icon: 'L',
+      icon: ' ',
       showRetry: true,
     };
   };
@@ -68,7 +68,7 @@ const BlogError = ({ error, onRetry }) => {
           {process.env.NODE_ENV === 'development' && error?.message && (
             <details className="mt-4 text-left">
               <summary className="text-sm text-zinc-500 cursor-pointer hover:text-zinc-400">
-                Detalhes tecnicos
+                Detalhes técnicos
               </summary>
               <div className="mt-2 p-3 bg-zinc-800 rounded-lg text-xs text-zinc-400 font-mono">
                 {error.message}
@@ -94,7 +94,7 @@ const BlogError = ({ error, onRetry }) => {
             className="inline-flex items-center gap-2 px-6 py-3 bg-zinc-700 hover:bg-zinc-600 text-zinc-200 rounded-lg font-medium transition-colors w-full justify-center"
           >
             <House size={20} />
-            Voltar ao Inicio
+            Voltar ao Início
           </Link>
         </div>
 

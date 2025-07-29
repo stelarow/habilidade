@@ -1,0 +1,348 @@
+/**
+ * CTA Responsive Styles - Otimizações para mobile e diferentes dispositivos
+ * Sistema de estilos responsivos para CTAs contextuais
+ */
+
+/* Base CTA Styles */
+.cta-container {
+  position: relative;
+  isolation: isolate;
+}
+
+.cta-button {
+  min-height: 44px; /* Touch-friendly minimum */
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cta-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+}
+
+.cta-button:active {
+  transform: translateY(0);
+  transition-duration: 0.1s;
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+  .cta-container {
+    margin: 1rem 0;
+    padding: 0 1rem;
+  }
+
+  .cta-main {
+    padding: 1.5rem;
+    border-radius: 1rem;
+  }
+
+  .cta-main .grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .cta-main h3 {
+    font-size: 1.25rem;
+    line-height: 1.4;
+  }
+
+  .cta-main p {
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+
+  .cta-button {
+    width: 100%;
+    justify-content: center;
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+    min-height: 48px; /* Larger touch target on mobile */
+  }
+
+  .cta-inline {
+    margin: 1.5rem 0;
+    padding: 1rem;
+  }
+
+  .cta-inline .flex {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .cta-inline h4 {
+    font-size: 1.125rem;
+  }
+
+  .cta-inline p {
+    font-size: 0.8125rem;
+  }
+
+  .cta-inline .cta-button {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.875rem;
+    min-height: 44px;
+  }
+
+  /* Mobile-specific urgency badges */
+  .urgency-badge {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    font-size: 0.75rem;
+    padding: 0.375rem 0.75rem;
+  }
+}
+
+/* Tablet Optimizations */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .cta-main {
+    padding: 2rem;
+  }
+
+  .cta-main .grid {
+    grid-template-columns: 1fr 2fr;
+    gap: 1.5rem;
+  }
+
+  .cta-button {
+    padding: 0.75rem 1.5rem;
+    min-height: 46px;
+  }
+
+  .cta-inline {
+    margin: 2rem 0;
+  }
+}
+
+/* Desktop Optimizations */
+@media (min-width: 1024px) {
+  .cta-main {
+    padding: 2.5rem;
+  }
+
+  .cta-main .grid {
+    grid-template-columns: 1fr 2fr;
+    gap: 2rem;
+  }
+
+  .cta-button {
+    min-height: 44px;
+    transition: all 0.3s ease;
+  }
+
+  .cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.15);
+  }
+
+  .cta-inline {
+    margin: 2.5rem 0;
+  }
+}
+
+/* High-DPI Display Optimizations */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .cta-container {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Reduced Motion Preferences */
+@media (prefers-reduced-motion: reduce) {
+  .cta-button {
+    transition: none;
+  }
+
+  .cta-button:hover {
+    transform: none;
+  }
+
+  .cta-container * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .cta-container {
+    border: 2px solid;
+  }
+
+  .cta-button {
+    border: 2px solid transparent;
+    outline: 2px solid transparent;
+  }
+
+  .cta-button:focus {
+    outline-color: currentColor;
+  }
+}
+
+/* Dark Mode Enhancements */
+@media (prefers-color-scheme: dark) {
+  .cta-container {
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+  }
+}
+
+/* Print Styles */
+@media print {
+  .cta-container {
+    display: none;
+  }
+}
+
+/* Focus Management */
+.cta-button:focus {
+  outline: 2px solid #d400ff;
+  outline-offset: 2px;
+}
+
+.cta-button:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.cta-button:focus-visible {
+  outline: 2px solid #d400ff;
+  outline-offset: 2px;
+}
+
+/* Loading States */
+.cta-button[data-loading="true"] {
+  position: relative;
+  color: transparent;
+  pointer-events: none;
+}
+
+.cta-button[data-loading="true"]::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 2px solid transparent;
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: cta-spinner 1s linear infinite;
+}
+
+@keyframes cta-spinner {
+  to { transform: rotate(360deg); }
+}
+
+/* Error States */
+.cta-button[data-error="true"] {
+  background: #ef4444;
+  border-color: #dc2626;
+}
+
+.cta-button[data-error="true"]:hover {
+  background: #dc2626;
+}
+
+/* Success States */
+.cta-button[data-success="true"] {
+  background: #10b981;
+  border-color: #059669;
+}
+
+.cta-button[data-success="true"]:hover {
+  background: #059669;
+}
+
+/* Accessibility Enhancements */
+.cta-container [role="button"] {
+  cursor: pointer;
+}
+
+.cta-container [aria-disabled="true"] {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+/* Performance Optimizations */
+.cta-container * {
+  will-change: auto;
+}
+
+.cta-button {
+  contain: layout style;
+}
+
+/* Image Loading States */
+.cta-image-placeholder {
+  background: linear-gradient(90deg, #374151 25%, #4b5563 50%, #374151 75%);
+  background-size: 200% 100%;
+  animation: cta-shimmer 1.5s infinite;
+}
+
+@keyframes cta-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Sticky CTA for Mobile */
+@media (max-width: 768px) {
+  .cta-sticky {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+  }
+
+  .cta-sticky.active {
+    transform: translateY(0);
+  }
+
+  .cta-sticky .cta-button {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+  }
+}
+
+/* Intersection Observer Animations */
+.cta-container[data-visible="false"] {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.cta-container[data-visible="true"] {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+/* CTA Type Specific Styles */
+.cta-type-leadmagnet .cta-button {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+}
+
+.cta-type-webinar .cta-button {
+  background: linear-gradient(135deg, #10b981, #047857);
+}
+
+.cta-type-newsletter .cta-button {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+.cta-type-course .cta-button {
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+}

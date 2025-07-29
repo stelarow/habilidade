@@ -1,0 +1,404 @@
+/* Blog Typography Styles
+ * Optimized for reading experience and accessibility
+ * Based on Escola Habilidade design system
+ */
+
+/* Custom font loading (optional - using system fonts for performance) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap');
+
+:root {
+  /* Typography scale for optimal reading */
+  --blog-font-size-xs: 0.75rem;     /* 12px */
+  --blog-font-size-sm: 0.875rem;    /* 14px */
+  --blog-font-size-base: 1rem;      /* 16px */
+  --blog-font-size-lg: 1.125rem;    /* 18px */
+  --blog-font-size-xl: 1.25rem;     /* 20px */
+  --blog-font-size-2xl: 1.5rem;     /* 24px */
+  --blog-font-size-3xl: 1.875rem;   /* 30px */
+  --blog-font-size-4xl: 2.25rem;    /* 36px */
+  
+  /* Line heights for optimal readability */
+  --blog-line-height-tight: 1.25;
+  --blog-line-height-snug: 1.375;
+  --blog-line-height-normal: 1.5;
+  --blog-line-height-relaxed: 1.625;
+  --blog-line-height-loose: 2;
+  
+  /* Font families */
+  --blog-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  --blog-font-mono: 'Fira Code', 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+  
+  /* Reading-optimized measurements */
+  --blog-reading-width: 65ch;        /* Optimal line length */
+  --blog-reading-width-narrow: 45ch;  /* For narrow content */
+  --blog-reading-width-wide: 80ch;    /* For wider content */
+  
+  /* Spacing for vertical rhythm */
+  --blog-space-xs: 0.25rem;
+  --blog-space-sm: 0.5rem;
+  --blog-space-md: 1rem;
+  --blog-space-lg: 1.5rem;
+  --blog-space-xl: 2rem;
+  --blog-space-2xl: 3rem;
+}
+
+/* Base typography reset and optimization */
+.blog-typography {
+  font-family: var(--blog-font-sans);
+  font-size: var(--blog-font-size-base);
+  line-height: var(--blog-line-height-normal);
+  color: #e4e4e7; /* zinc-200 */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeReadability;
+}
+
+/* Heading hierarchy with optimal contrast and spacing */
+.blog-typography h1,
+.blog-h1 {
+  font-size: var(--blog-font-size-3xl);
+  font-weight: 700;
+  line-height: var(--blog-line-height-tight);
+  color: #ffffff;
+  margin-bottom: var(--blog-space-lg);
+  letter-spacing: -0.025em;
+}
+
+.blog-typography h2,
+.blog-h2 {
+  font-size: var(--blog-font-size-2xl);
+  font-weight: 600;
+  line-height: var(--blog-line-height-snug);
+  color: #f4f4f5; /* zinc-100 */
+  margin-top: var(--blog-space-xl);
+  margin-bottom: var(--blog-space-md);
+  letter-spacing: -0.015em;
+}
+
+.blog-typography h3,
+.blog-h3 {
+  font-size: var(--blog-font-size-xl);
+  font-weight: 600;
+  line-height: var(--blog-line-height-snug);
+  color: #f4f4f5; /* zinc-100 */
+  margin-top: var(--blog-space-lg);
+  margin-bottom: var(--blog-space-sm);
+}
+
+.blog-typography h4,
+.blog-h4 {
+  font-size: var(--blog-font-size-lg);
+  font-weight: 600;
+  line-height: var(--blog-line-height-normal);
+  color: #f4f4f5; /* zinc-100 */
+  margin-top: var(--blog-space-lg);
+  margin-bottom: var(--blog-space-sm);
+}
+
+.blog-typography h5,
+.blog-h5 {
+  font-size: var(--blog-font-size-base);
+  font-weight: 600;
+  line-height: var(--blog-line-height-normal);
+  color: #f4f4f5; /* zinc-100 */
+  margin-top: var(--blog-space-md);
+  margin-bottom: var(--blog-space-sm);
+}
+
+.blog-typography h6,
+.blog-h6 {
+  font-size: var(--blog-font-size-sm);
+  font-weight: 600;
+  line-height: var(--blog-line-height-normal);
+  color: #d4d4d8; /* zinc-300 */
+  margin-top: var(--blog-space-md);
+  margin-bottom: var(--blog-space-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Body text optimization */
+.blog-typography p,
+.blog-p {
+  font-size: var(--blog-font-size-base);
+  line-height: var(--blog-line-height-relaxed);
+  color: #d4d4d8; /* zinc-300 */
+  margin-bottom: var(--blog-space-md);
+  max-width: var(--blog-reading-width);
+}
+
+/* Lead paragraph styling */
+.blog-typography .lead,
+.blog-lead {
+  font-size: var(--blog-font-size-lg);
+  line-height: var(--blog-line-height-relaxed);
+  color: #f4f4f5; /* zinc-100 */
+  font-weight: 400;
+  margin-bottom: var(--blog-space-lg);
+}
+
+/* Small text and captions */
+.blog-typography small,
+.blog-small {
+  font-size: var(--blog-font-size-sm);
+  line-height: var(--blog-line-height-normal);
+  color: #a1a1aa; /* zinc-400 */
+}
+
+.blog-caption {
+  font-size: var(--blog-font-size-xs);
+  line-height: var(--blog-line-height-normal);
+  color: #71717a; /* zinc-500 */
+  font-style: italic;
+  text-align: center;
+  margin-top: var(--blog-space-sm);
+}
+
+/* Links with enhanced accessibility */
+.blog-typography a,
+.blog-link {
+  color: #c084fc; /* purple-400 */
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+  transition: all 0.2s ease;
+}
+
+.blog-typography a:hover,
+.blog-link:hover {
+  color: #d8b4fe; /* purple-300 */
+  text-decoration-thickness: 2px;
+}
+
+.blog-typography a:focus,
+.blog-link:focus {
+  outline: 2px solid #c084fc;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Lists with proper spacing */
+.blog-typography ul,
+.blog-typography ol {
+  margin-bottom: var(--blog-space-md);
+  padding-left: var(--blog-space-lg);
+  max-width: var(--blog-reading-width);
+}
+
+.blog-typography li {
+  line-height: var(--blog-line-height-relaxed);
+  color: #d4d4d8; /* zinc-300 */
+  margin-bottom: var(--blog-space-xs);
+}
+
+.blog-typography li::marker {
+  color: #a1a1aa; /* zinc-400 */
+}
+
+/* Blockquotes */
+.blog-typography blockquote {
+  border-left: 4px solid #d400ff; /* Primary brand color */
+  padding-left: var(--blog-space-lg);
+  margin: var(--blog-space-xl) 0;
+  font-style: italic;
+  font-size: var(--blog-font-size-lg);
+  line-height: var(--blog-line-height-relaxed);
+  color: #f4f4f5; /* zinc-100 */
+  position: relative;
+  max-width: var(--blog-reading-width);
+}
+
+.blog-typography blockquote::before {
+  content: '"';
+  font-size: 4rem;
+  color: #d400ff;
+  position: absolute;
+  left: -0.5rem;
+  top: -1rem;
+  opacity: 0.3;
+  font-family: Georgia, serif;
+  line-height: 1;
+}
+
+/* Code styling */
+.blog-typography code {
+  font-family: var(--blog-font-mono);
+  font-size: 0.875em;
+  background-color: #27272a; /* zinc-800 */
+  color: #e4e4e7; /* zinc-200 */
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.25rem;
+  font-weight: 400;
+}
+
+.blog-typography pre {
+  font-family: var(--blog-font-mono);
+  background-color: #18181b; /* zinc-900 */
+  color: #e4e4e7; /* zinc-200 */
+  padding: var(--blog-space-md);
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  margin: var(--blog-space-lg) 0;
+  border: 1px solid #3f3f46; /* zinc-700 */
+}
+
+.blog-typography pre code {
+  background: none;
+  padding: 0;
+  font-size: var(--blog-font-size-sm);
+  line-height: var(--blog-line-height-relaxed);
+}
+
+/* Tables */
+.blog-typography table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: var(--blog-space-lg) 0;
+  background-color: #27272a; /* zinc-800 */
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.blog-typography th,
+.blog-typography td {
+  padding: var(--blog-space-sm) var(--blog-space-md);
+  text-align: left;
+  border-bottom: 1px solid #3f3f46; /* zinc-700 */
+}
+
+.blog-typography th {
+  background-color: #3f3f46; /* zinc-700 */
+  font-weight: 600;
+  color: #f4f4f5; /* zinc-100 */
+  font-size: var(--blog-font-size-sm);
+}
+
+.blog-typography td {
+  color: #d4d4d8; /* zinc-300 */
+}
+
+/* Horizontal rules */
+.blog-typography hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(to right, transparent, #3f3f46, transparent);
+  margin: var(--blog-space-2xl) 0;
+}
+
+/* Image captions */
+.blog-typography figure {
+  margin: var(--blog-space-lg) 0;
+}
+
+.blog-typography figcaption {
+  font-size: var(--blog-font-size-sm);
+  color: #a1a1aa; /* zinc-400 */
+  text-align: center;
+  margin-top: var(--blog-space-sm);
+  font-style: italic;
+}
+
+/* Responsive typography */
+@media (max-width: 768px) {
+  :root {
+    --blog-font-size-3xl: 1.5rem;    /* 24px */
+    --blog-font-size-2xl: 1.25rem;   /* 20px */
+    --blog-font-size-xl: 1.125rem;   /* 18px */
+    --blog-reading-width: 100%;
+  }
+  
+  .blog-typography {
+    font-size: var(--blog-font-size-sm);
+  }
+  
+  .blog-typography h1,
+  .blog-h1 {
+    margin-bottom: var(--blog-space-md);
+  }
+  
+  .blog-typography h2,
+  .blog-h2 {
+    margin-top: var(--blog-space-lg);
+  }
+  
+  .blog-typography ul,
+  .blog-typography ol {
+    padding-left: var(--blog-space-md);
+  }
+  
+  .blog-typography blockquote {
+    padding-left: var(--blog-space-md);
+    margin: var(--blog-space-lg) 0;
+  }
+  
+  .blog-typography pre {
+    margin: var(--blog-space-md) 0;
+    padding: var(--blog-space-sm);
+  }
+}
+
+/* Tablet optimizations */
+@media (min-width: 769px) and (max-width: 1024px) {
+  :root {
+    --blog-reading-width: 60ch;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .blog-typography {
+    color: #ffffff;
+  }
+  
+  .blog-typography a,
+  .blog-link {
+    color: #ffffff;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+  }
+  
+  .blog-typography code {
+    background-color: #000000;
+    color: #ffffff;
+    border: 1px solid #ffffff;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .blog-typography a,
+  .blog-link {
+    transition: none;
+  }
+}
+
+/* Print styles */
+@media print {
+  .blog-typography {
+    color: #000000;
+    font-size: 12pt;
+    line-height: 1.5;
+  }
+  
+  .blog-typography h1,
+  .blog-h1 {
+    font-size: 18pt;
+    color: #000000;
+  }
+  
+  .blog-typography h2,
+  .blog-h2 {
+    font-size: 16pt;
+    color: #000000;
+  }
+  
+  .blog-typography a,
+  .blog-link {
+    color: #000000;
+    text-decoration: underline;
+  }
+  
+  .blog-typography blockquote {
+    border-left: 2pt solid #000000;
+  }
+}

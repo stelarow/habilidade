@@ -1,15 +1,37 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import { generateSitemap } from './src/utils/sitemapGenerator.js'
+
+// Custom plugin for sitemap generation
+const sitemapPlugin = () => {
+  return {
+    name: 'sitemap-plugin',
+    generateBundle: async () => {
+      try {
+        const sitemap = await generateSitemap();
+        this.emitFile({
+          type: 'asset',
+          fileName: 'sitemap.xml',
+          source: sitemap
+        });
+        console.log('Sitemap generated successfully');
+      } catch (error) {
+        console.warn('Failed to generate sitemap:', error);
+      }
+    }
+  };
+};
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
-    react()
+    react(),
+    sitemapPlugin()
   ],
   base: '/',
   
   build: {
-    // Code splitting otimizado para 2025
+    // Code splitting otimizado para 2025 com foco em blog
     rollupOptions: {
       output: {
         manualChunks: {
@@ -22,7 +44,23 @@ export default defineConfig({
             './src/hooks/useInView.js',
             './src/hooks/useViewportSize.js',
             './src/hooks/usePerformanceLevel.js',
-            './src/utils/memoryManager.js'
+            './src/utils/memoryManager.js',
+            './src/utils/performanceUtils.js'
+          ],
+          // Blog-specific chunk for better caching
+          blog: [
+            './src/services/blogAPI.js',
+            './src/utils/blogCache.js',
+            './src/hooks/useBlogCache.js',
+            './src/services/cacheService.js',
+            './src/utils/imageOptimizer.js',
+            './src/services/imageService.js'
+          ],
+          // Blog components chunk
+          'blog-components': [
+            './src/components/blog/OptimizedImage.jsx',
+            './src/components/blog/BlogCard.jsx',
+            './src/components/blog/CategoryFilter.jsx'
           ],
           // Backgrounds em chunk separado (lazy load)
           backgrounds: [

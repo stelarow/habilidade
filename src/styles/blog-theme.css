@@ -1,0 +1,272 @@
+/* Blog Theme Styles 
+ * Extends main site design system for blog-specific contexts
+ * Consistent with Escola Habilidade brand identity
+ */
+
+:root {
+  /* Blog-specific color extensions */
+  
+  /* Category colors - aligned with course colors from main site */
+  --blog-category-tecnologia: #60a5fa;
+  --blog-category-educacao: #4ade80;
+  --blog-category-carreira: #a78bfa;
+  --blog-category-design: #f472b6;
+  --blog-category-programacao: #fb7185;
+  --blog-category-marketing: #f97316;
+  --blog-category-ia: #22d3ee;
+  --blog-category-bi: #818cf8;
+  
+  /* Blog state colors */
+  --blog-success: #10b981;
+  --blog-warning: #f59e0b;
+  --blog-error: #ef4444;
+  --blog-info: #3b82f6;
+  
+  /* Blog content colors */
+  --blog-text-highlight: #fbbf24;
+  --blog-quote-bg: rgba(212, 0, 255, 0.1);
+  --blog-quote-border: var(--color-primary);
+  --blog-code-bg: #1e293b;
+  --blog-code-text: #e2e8f0;
+  
+  /* Blog gradients */
+  --blog-gradient-category: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  --blog-gradient-featured: linear-gradient(135deg, #f59e0b, #f97316);
+  --blog-gradient-premium: linear-gradient(135deg, #eab308, #f59e0b);
+  
+  /* Blog shadows and glows */
+  --blog-shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --blog-shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --blog-glow-category: 0 0 20px rgba(212, 0, 255, 0.3);
+  --blog-glow-featured: 0 0 20px rgba(245, 158, 11, 0.3);
+}
+
+/* Blog-specific utility classes */
+@layer utilities {
+  /* Category background utilities */
+  .blog-bg-tecnologia { background-color: rgba(96, 165, 250, 0.1); }
+  .blog-bg-educacao { background-color: rgba(74, 222, 128, 0.1); }
+  .blog-bg-carreira { background-color: rgba(167, 139, 250, 0.1); }
+  .blog-bg-design { background-color: rgba(244, 114, 182, 0.1); }
+  .blog-bg-programacao { background-color: rgba(251, 113, 133, 0.1); }
+  .blog-bg-marketing { background-color: rgba(249, 115, 22, 0.1); }
+  .blog-bg-ia { background-color: rgba(34, 211, 238, 0.1); }
+  .blog-bg-bi { background-color: rgba(129, 140, 248, 0.1); }
+  
+  /* Category text utilities */
+  .blog-text-tecnologia { color: var(--blog-category-tecnologia); }
+  .blog-text-educacao { color: var(--blog-category-educacao); }
+  .blog-text-carreira { color: var(--blog-category-carreira); }
+  .blog-text-design { color: var(--blog-category-design); }
+  .blog-text-programacao { color: var(--blog-category-programacao); }
+  .blog-text-marketing { color: var(--blog-category-marketing); }
+  .blog-text-ia { color: var(--blog-category-ia); }
+  .blog-text-bi { color: var(--blog-category-bi); }
+  
+  /* Category border utilities */
+  .blog-border-tecnologia { border-color: rgba(96, 165, 250, 0.3); }
+  .blog-border-educacao { border-color: rgba(74, 222, 128, 0.3); }
+  .blog-border-carreira { border-color: rgba(167, 139, 250, 0.3); }
+  .blog-border-design { border-color: rgba(244, 114, 182, 0.3); }
+  .blog-border-programacao { border-color: rgba(251, 113, 133, 0.3); }
+  .blog-border-marketing { border-color: rgba(249, 115, 22, 0.3); }
+  .blog-border-ia { border-color: rgba(34, 211, 238, 0.3); }
+  .blog-border-bi { border-color: rgba(129, 140, 248, 0.3); }
+  
+  /* Blog content styles */
+  .blog-quote {
+    background: var(--blog-quote-bg);
+    border-left: 4px solid var(--blog-quote-border);
+    padding: 1rem 1.5rem;
+    font-style: italic;
+    position: relative;
+  }
+  
+  .blog-quote::before {
+    content: '"';
+    font-size: 3rem;
+    color: var(--color-primary);
+    position: absolute;
+    top: -0.5rem;
+    left: 0.5rem;
+    opacity: 0.3;
+  }
+  
+  .blog-code {
+    background: var(--blog-code-bg);
+    color: var(--blog-code-text);
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.375rem;
+    font-family: 'Fira Code', 'Courier New', monospace;
+    font-size: 0.875rem;
+  }
+  
+  .blog-highlight {
+    background: linear-gradient(120deg, transparent 0%, var(--blog-text-highlight) 0%);
+    background-size: 100% 0.2em;
+    background-repeat: no-repeat;
+    background-position: 0 88%;
+    padding: 0 0.125rem;
+  }
+  
+  /* Blog card enhancements */
+  .blog-card-featured {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(249, 115, 22, 0.1));
+    border: 1px solid rgba(245, 158, 11, 0.3);
+  }
+  
+  .blog-card-featured:hover {
+    box-shadow: var(--blog-glow-featured);
+  }
+  
+  .blog-card-premium {
+    background: linear-gradient(135deg, rgba(234, 179, 8, 0.1), rgba(245, 158, 11, 0.1));
+    border: 1px solid rgba(234, 179, 8, 0.3);
+  }
+  
+  /* Blog typography enhancements */
+  .blog-title-gradient {
+    background: var(--blog-gradient-category);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  
+  .blog-meta-divider {
+    width: 1px;
+    height: 1rem;
+    background: var(--color-text-muted);
+    opacity: 0.3;
+  }
+  
+  /* Blog loading states */
+  .blog-skeleton {
+    background: linear-gradient(90deg, 
+      rgba(255, 255, 255, 0.1) 25%, 
+      rgba(255, 255, 255, 0.2) 50%, 
+      rgba(255, 255, 255, 0.1) 75%
+    );
+    background-size: 200% 100%;
+    animation: blogSkeleton 1.5s ease-in-out infinite;
+  }
+  
+  /* Blog hover effects */
+  .blog-hover-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .blog-hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--blog-shadow-hover);
+  }
+  
+  /* Blog grid layouts */
+  .blog-grid-responsive {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .blog-grid-masonry {
+    columns: 1;
+    column-gap: 1.5rem;
+  }
+  
+  @media (min-width: 768px) {
+    .blog-grid-masonry {
+      columns: 2;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .blog-grid-masonry {
+      columns: 3;
+    }
+  }
+  
+  .blog-grid-masonry > * {
+    break-inside: avoid;
+    margin-bottom: 1.5rem;
+  }
+}
+
+/* Blog animations */
+@keyframes blogSkeleton {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes blogFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes blogSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Animation classes */
+@layer utilities {
+  .blog-fade-in {
+    animation: blogFadeIn 0.6s ease-out forwards;
+  }
+  
+  .blog-slide-in {
+    animation: blogSlideIn 0.6s ease-out forwards;
+  }
+  
+  /* Animation delays for staggered effects */
+  .blog-delay-100 { animation-delay: 100ms; }
+  .blog-delay-200 { animation-delay: 200ms; }
+  .blog-delay-300 { animation-delay: 300ms; }
+  .blog-delay-400 { animation-delay: 400ms; }
+  .blog-delay-500 { animation-delay: 500ms; }
+}
+
+/* Dark mode consistency (when applicable) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Ensure blog colors work well in dark mode */
+    --blog-code-bg: #0f172a;
+    --blog-code-text: #f1f5f9;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    /* Increase contrast for accessibility */
+    --blog-quote-border: #ffffff;
+    --blog-text-highlight: #ffff00;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .blog-fade-in,
+  .blog-slide-in,
+  .blog-skeleton {
+    animation: none;
+  }
+  
+  .blog-hover-lift {
+    transition: none;
+  }
+}

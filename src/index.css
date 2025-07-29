@@ -1,6 +1,9 @@
 @import "tailwindcss";
 @import './styles/accessibility.css';
 @import './styles/curriculum-mobile.css';
+@import './styles/blog-theme.css';
+@import './styles/blog-typography.css';
+@import './styles/cta-responsive.css';
 
 /* Scroll offset para compensar header fixo */
 section[id], 

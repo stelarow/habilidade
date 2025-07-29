@@ -1,9 +1,17 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
+import { 
+  generateMetaTags, 
+  generateStructuredData, 
+  generateCanonicalUrl,
+  generateBreadcrumbStructuredData,
+  sanitizeTitle,
+  truncateDescription
+} from '../../utils/seoUtils';
 
 const SEOHead = ({
   title = 'Escola Habilidade',
-  description = 'Transforme sua carreira com cursos de tecnologia, design e negócios. Educação de qualidade para o mercado digital.',
+  description = 'Transforme sua carreira com cursos de tecnologia, design e negï¿½cios. Educaï¿½ï¿½o de qualidade para o mercado digital.',
   keywords = '',
   path = '',
   image = null,

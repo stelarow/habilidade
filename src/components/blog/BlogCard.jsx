@@ -2,6 +2,10 @@ import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Clock, Calendar, User, Tag } from 'phosphor-react';
 import LazyImage from '../LazyImage';
+import { usePrefetchPost } from '../../hooks/useBlogAPI';
+import { useBlogResponsive } from '../../hooks/useBlogResponsive';
+import BlogBadge from './BlogBadge';
+import { combineClasses, getAnimationClasses } from '../../utils/blogTheme';
 
 // Calculate reading time based on content length
 const calculateReadingTime = (content) => {
@@ -20,8 +24,8 @@ const formatDate = (dateString) => {
   
   if (diffInDays === 0) return 'Hoje';
   if (diffInDays === 1) return 'Ontem';
-  if (diffInDays < 7) return `${diffInDays} dias atrás`;
-  if (diffInDays < 30) return `${Math.floor(diffInDays / 7)} semanas atrás`;
+  if (diffInDays < 7) return `${diffInDays} dias atrÃ¡s`;
+  if (diffInDays < 30) return `${Math.floor(diffInDays / 7)} semanas atrÃ¡s`;
   
   return date.toLocaleDateString('pt-BR', {
     day: 'numeric',
@@ -56,10 +60,16 @@ const getCategoryColor = (categorySlug) => {
   return colors[categorySlug] || 'bg-zinc-500/20 text-zinc-300 border-zinc-500/30';
 };
 
-const BlogCard = ({ post }) => {
+const BlogCard = ({ post, variant = 'standard', index = 0 }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
+  const [isPrefetched, setIsPrefetched] = useState(false);
   const cardRef = useRef(null);
+  const prefetchTimeoutRef = useRef(null);
+
+  // Hooks
+  const prefetchPost = usePrefetchPost();
+  const { getTypographyClasses, shouldUseAnimations, getResponsiveImageProps } = useBlogResponsive();
 
   const readingTime = calculateReadingTime(post.content);
   const formattedDate = formatDate(post.created_at || post.published_at);
@@ -70,14 +80,68 @@ const BlogCard = ({ post }) => {
   const categorySlug = primaryCategory?.slug || 'tecnologia';
   const categoryName = primaryCategory?.name || 'Tecnologia';
 
+  // Prefetch post content on hover with delay
+  const handleMouseEnter = () => {
+    if (!isPrefetched && post.slug) {
+      prefetchTimeoutRef.current = setTimeout(() => {
+        prefetchPost(post.slug);
+        setIsPrefetched(true);
+      }, 300); // 300ms delay to avoid unnecessary prefetches
+    }
+  };
+
+  // Cancel prefetch if user moves away quickly
+  const handleMouseLeave = () => {
+    if (prefetchTimeoutRef.current) {
+      clearTimeout(prefetchTimeoutRef.current);
+      prefetchTimeoutRef.current = null;
+    }
+  };
+
+  // Cleanup timeout on unmount
+  React.useEffect(() => {
+    return () => {
+      if (prefetchTimeoutRef.current) {
+        clearTimeout(prefetchTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  // Animation classes
+  const animationClasses = shouldUseAnimations() ? getAnimationClasses('fade') : '';
+  
+  // Card variant styles
+  const variantStyles = {
+    standard: 'bg-zinc-800/50 backdrop-blur-sm border border-zinc-700/50',
+    featured: 'blog-card-featured border-2',
+    compact: 'bg-zinc-800/40 border border-zinc-700/40'
+  };
+
+  // Mobile responsiveness detection
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const isTouchDevice = typeof window !== 'undefined' && ('ontouchstart' in window || navigator.maxTouchPoints > 0);
+
+  // Combined card classes with mobile optimization
+  const cardClasses = combineClasses(
+    'group rounded-xl overflow-hidden transition-all duration-300',
+    // Reduced hover effects on mobile for better performance
+    isMobile 
+      ? 'active:border-purple-500/50 active:shadow-lg active:shadow-purple-500/10' 
+      : 'hover:border-purple-500/50 hover:transform hover:scale-[1.02] hover:shadow-xl hover:shadow-purple-500/10 blog-hover-lift',
+    variantStyles[variant],
+    animationClasses
+  );
+
   return (
     <article 
       ref={cardRef}
-      className="group bg-zinc-800/50 backdrop-blur-sm border border-zinc-700/50 rounded-xl overflow-hidden hover:border-purple-500/50 transition-all duration-300 hover:transform hover:scale-[1.02] hover:shadow-xl hover:shadow-purple-500/10"
+      className={cardClasses}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       <Link to={`/blog/${post.slug}`} className="block">
         {/* Featured Image */}
-        <div className="relative h-48 bg-zinc-700/50 overflow-hidden">
+        <div className={`relative bg-zinc-700/50 overflow-hidden ${isMobile ? 'h-40' : 'h-48'}`}>
           {post.featured_image_url && !imageError ? (
             <LazyImage
               src={post.featured_image_url}
@@ -110,10 +174,14 @@ const BlogCard = ({ post }) => {
           {/* Category Badge */}
           {primaryCategory && (
             <div className="absolute top-4 left-4">
-              <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium border ${getCategoryColor(categorySlug)}`}>
-                <Tag size={12} />
+              <BlogBadge 
+                variant="category" 
+                categorySlug={categorySlug} 
+                size="small"
+                icon={Tag}
+              >
                 {categoryName}
-              </span>
+              </BlogBadge>
             </div>
           )}
 
@@ -127,15 +195,21 @@ const BlogCard = ({ post }) => {
         </div>
 
         {/* Content */}
-        <div className="p-6">
+        <div className={`${isMobile ? 'p-4' : 'p-6'}`}>
           {/* Title */}
-          <h2 className="text-xl font-bold text-zinc-100 mb-3 line-clamp-2 group-hover:text-purple-300 transition-colors">
+          <h2 className={combineClasses(
+            "font-bold text-zinc-100 mb-3 line-clamp-2 group-hover:text-purple-300 transition-colors",
+            getTypographyClasses('title')
+          )}>
             {post.title}
           </h2>
 
           {/* Excerpt */}
           {excerpt && (
-            <p className="text-zinc-400 text-sm mb-4 line-clamp-3 leading-relaxed">
+            <p className={combineClasses(
+              "text-zinc-400 mb-4 line-clamp-3 leading-relaxed",
+              getTypographyClasses('body')
+            )}>
               {excerpt}
             </p>
           )}

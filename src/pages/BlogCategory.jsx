@@ -6,6 +6,7 @@ import BlogCard from '../components/blog/BlogCard';
 import BlogLoading from '../components/blog/BlogLoading';
 import BlogError from '../components/blog/BlogError';
 import BlogEmpty from '../components/blog/BlogEmpty';
+import BlogNavigation from '../components/blog/BlogNavigation';
 import SEOHead from '../components/shared/SEOHead';
 import Breadcrumbs from '../components/blog/Breadcrumbs';
 import useInView from '../hooks/useInView';
@@ -182,34 +183,52 @@ const BlogCategory = () => {
           )}
         </div>
 
-        {/* Search */}
+        {/* Search with Navigation */}
         <div className="mb-8">
-          <div className="max-w-2xl mx-auto">
-            <div className="relative">
-              <MagnifyingGlass className="absolute left-3 top-1/2 transform -translate-y-1/2 text-zinc-400" size={20} />
-              <input
-                type="text"
-                placeholder={`Buscar em ${currentCategory.name}...`}
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 bg-zinc-800 border border-zinc-700 rounded-lg text-zinc-100 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-              />
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Main Search */}
+            <div className="lg:col-span-2">
+              <div className="relative">
+                <MagnifyingGlass className="absolute left-3 top-1/2 transform -translate-y-1/2 text-zinc-400" size={20} />
+                <input
+                  type="text"
+                  placeholder={`Buscar em ${currentCategory.name}...`}
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-10 pr-4 py-3 bg-zinc-800 border border-zinc-700 rounded-lg text-zinc-100 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                />
+              </div>
+
+              {/* Active Search Filter */}
+              {debouncedSearchQuery && (
+                <div className="flex items-center gap-2 mt-4">
+                  <span className="inline-flex items-center gap-2 px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-sm">
+                    Busca: "{debouncedSearchQuery}"
+                  </span>
+                  <button
+                    onClick={clearSearch}
+                    className="text-zinc-400 hover:text-zinc-300 text-sm underline"
+                  >
+                    Limpar
+                  </button>
+                </div>
+              )}
             </div>
 
-            {/* Active Search Filter */}
-            {debouncedSearchQuery && (
-              <div className="flex items-center gap-2 mt-4">
-                <span className="inline-flex items-center gap-2 px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-sm">
-                  Busca: "{debouncedSearchQuery}"
-                </span>
-                <button
-                  onClick={clearSearch}
-                  className="text-zinc-400 hover:text-zinc-300 text-sm underline"
-                >
-                  Limpar
-                </button>
-              </div>
-            )}
+            {/* Navigation Sidebar */}
+            <div className="lg:col-span-1">
+              <BlogNavigation
+                searchQuery={searchQuery}
+                onSearchChange={setSearchQuery}
+                selectedCategory={categorySlug}
+                onCategoryChange={() => {}} // Disabled in category page
+                showSearch={false} // Hide search since we have main search
+                showCategories={true}
+                showPopular={true}
+                variant="sidebar"
+                className="sticky top-8"
+              />
+            </div>
           </div>
         </div>
 
@@ -244,7 +263,7 @@ const BlogCategory = () => {
             {/* No more posts */}
             {!debouncedSearchQuery && !hasNextPage && posts.length > 0 && (
               <div className="text-center py-8">
-                <p className="text-zinc-400">Você chegou ao final dos artigos de {currentCategory.name}</p>
+                <p className="text-zinc-400">VocÃª chegou ao final dos artigos de {currentCategory.name}</p>
               </div>
             )}
           </>

@@ -7,7 +7,9 @@ import BlogCard from '../components/blog/BlogCard';
 import BlogLoading from '../components/blog/BlogLoading';
 import BlogError from '../components/blog/BlogError';
 import BlogEmpty from '../components/blog/BlogEmpty';
-import SEOHead from '../components/shared/SEOHead';
+import BlogLayout from '../components/blog/BlogLayout';
+import ResponsiveBlogGrid, { BlogGridContainer, BlogGridSection } from '../components/blog/ResponsiveBlogGrid';
+import { BlogTitle, BlogSubtitle } from '../components/blog/BlogTypography';
 import useInView from '../hooks/useInView';
 
 const BlogIndex = () => {
@@ -97,67 +99,52 @@ const BlogIndex = () => {
   // Loading state
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950">
-        <SEOHead 
-          title="Blog - Escola Habilidade"
-          description="Artigos sobre tecnologia, educação e carreira. Aprenda com nossos especialistas."
-          path="/blog"
-        />
+      <BlogLayout
+        title="Blog - Escola Habilidade"
+        description="Artigos sobre tecnologia, educação e carreira. Aprenda com nossos especialistas."
+      >
         <BlogLoading />
-      </div>
+      </BlogLayout>
     );
   }
 
   // Error state
   if (isError) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950">
-        <SEOHead 
-          title="Blog - Escola Habilidade"
-          description="Artigos sobre tecnologia, educação e carreira."
-          path="/blog"
-        />
+      <BlogLayout
+        title="Blog - Escola Habilidade"
+        description="Artigos sobre tecnologia, educação e carreira."
+      >
         <BlogError error={error} onRetry={() => window.location.reload()} />
-      </div>
+      </BlogLayout>
     );
   }
 
   // No posts state
   if (posts.length === 0 && !isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950">
-        <SEOHead 
-          title="Blog - Escola Habilidade"
-          description="Artigos sobre tecnologia, educação e carreira."
-          path="/blog"
-        />
+      <BlogLayout
+        title="Blog - Escola Habilidade"
+        description="Artigos sobre tecnologia, educação e carreira."
+      >
         <BlogEmpty 
           hasFilters={!!(debouncedSearchQuery || selectedCategory)}
           onClearFilters={clearFilters}
         />
-      </div>
+      </BlogLayout>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950">
-      <SEOHead 
-        title="Blog - Escola Habilidade"
-        description="Artigos sobre tecnologia, educação e carreira. Aprenda com nossos especialistas e mantenha-se atualizado com as últimas tendências."
-        path="/blog"
-        keywords="blog, tecnologia, educação, carreira, artigos, escola habilidade"
-      />
-
-      <div className="container mx-auto px-4 py-8">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-            Blog
-          </h1>
-          <p className="text-xl text-zinc-300 max-w-3xl mx-auto">
-            Artigos sobre tecnologia, educação e carreira para impulsionar seu crescimento profissional
-          </p>
-        </div>
+    <BlogLayout
+      title="Blog - Escola Habilidade"
+      description="Artigos sobre tecnologia, educação e carreira. Aprenda com nossos especialistas e mantenha-se atualizado com as últimas tendências."
+    >
+      <BlogGridContainer>
+        <BlogGridSection
+          title="Blog"
+          subtitle="Artigos sobre tecnologia, educação e carreira para impulsionar seu crescimento profissional"
+        >
 
         {/* Search and Filters */}
         <div className="mb-8 space-y-4">
@@ -243,12 +230,18 @@ const BlogIndex = () => {
           )}
         </div>
 
-        {/* Posts Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {posts.map((post, index) => (
-            <BlogCard key={`${post.id}-${index}`} post={post} />
-          ))}
-        </div>
+          {/* Posts Grid */}
+          <ResponsiveBlogGrid 
+            variant="standard" 
+            columns="auto" 
+            gap="large"
+            animation="fade"
+            className="mb-12"
+          >
+            {posts.map((post, index) => (
+              <BlogCard key={`${post.id}-${index}`} post={post} index={index} />
+            ))}
+          </ResponsiveBlogGrid>
 
         {/* Load More / Loading */}
         {hasNextPage && (
@@ -275,7 +268,8 @@ const BlogIndex = () => {
             <p className="text-zinc-400">Você chegou ao final dos artigos</p>
           </div>
         )}
-      </div>
+        </BlogGridSection>
+      </BlogGridContainer>
 
       {/* Click outside to close filters */}
       {showFilters && (
@@ -284,7 +278,7 @@ const BlogIndex = () => {
           onClick={() => setShowFilters(false)}
         />
       )}
-    </div>
+    </BlogLayout>
   );
 };
 

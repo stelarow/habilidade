@@ -11,9 +11,24 @@ import {
 
 const ShareButtons = ({ url, title, compact = false }) => {
   const [copied, setCopied] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const [isWebShareSupported, setIsWebShareSupported] = useState(
     typeof navigator !== 'undefined' && navigator.share
   );
+
+  // Detect mobile device
+  React.useEffect(() => {
+    const checkMobile = () => {
+      const mobile = window.innerWidth < 768 || 
+                   ('ontouchstart' in window) ||
+                   (navigator.maxTouchPoints > 0);
+      setIsMobile(mobile);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Share URLs
   const shareUrls = {
@@ -62,8 +77,15 @@ const ShareButtons = ({ url, title, compact = false }) => {
     }
   };
 
-  // Handle social share
+  // Handle social share with mobile optimization
   const handleSocialShare = (platform) => {
+    // On mobile, open in same tab for better UX
+    if (isMobile) {
+      window.open(shareUrls[platform], '_blank');
+      return;
+    }
+    
+    // Desktop popup window
     const width = 600;
     const height = 400;
     const left = (window.innerWidth - width) / 2;
@@ -116,7 +138,7 @@ const ShareButtons = ({ url, title, compact = false }) => {
       )}
 
       {/* Social Media Buttons */}
-      <div className="grid grid-cols-2 gap-3">
+      <div className={`grid gap-3 ${isMobile ? 'grid-cols-1' : 'grid-cols-2'}`}>
         {/* Facebook */}
         <button
           onClick={() => handleSocialShare('facebook')}
