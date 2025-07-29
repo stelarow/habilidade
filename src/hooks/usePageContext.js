@@ -27,6 +27,8 @@ export const usePageContext = () => {
     } else if (currentPath.startsWith('/cursos/') || currentPath.includes('/cursos/')) {
       newContext.pageType = 'coursePage';
       newContext.currentCourse = courseSlug;
+    } else if (currentPath.startsWith('/blog')) {
+      newContext.pageType = 'blogPage';
     } else {
       newContext.pageType = 'other';
     }

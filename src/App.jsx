@@ -11,12 +11,15 @@ import Loading from './components/Loading';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import AccessibilityControls from './components/AccessibilityControls';
+import QueryProvider from './providers/QueryProvider';
+import { HelmetProvider } from 'react-helmet-async';
 
 // Importações com lazy loading para code splitting
 const Home = React.lazy(() => import('./pages/Home'));
 const CoursePage = React.lazy(() => import('./pages/CoursePage'));
 const BlogIndex = React.lazy(() => import('./pages/BlogIndex'));
 const BlogPost = React.lazy(() => import('./pages/BlogPost'));
+const BlogCategory = React.lazy(() => import('./pages/BlogCategory'));
 const NotFound = React.lazy(() => import('./pages/NotFound'));
 
 // Otimizações de performance
@@ -61,11 +64,13 @@ function App() {
 
   return (
     <ErrorBoundary>
-      <Router future={{
-        v7_startTransition: true,
-        v7_relativeSplatPath: true
-      }}>
-        <div className="App bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 min-h-screen text-zinc-50">
+      <HelmetProvider>
+        <QueryProvider>
+          <Router future={{
+            v7_startTransition: true,
+            v7_relativeSplatPath: true
+          }}>
+          <div className="App bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 min-h-screen text-zinc-50">
           {/* Accessibility Controls */}
           <AccessibilityControls />
           
@@ -79,6 +84,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/cursos/:courseSlug" element={<CoursePage />} />
                 <Route path="/blog" element={<BlogIndex />} />
+                <Route path="/blog/categoria/:categorySlug" element={<BlogCategory />} />
                 <Route path="/blog/:slug" element={<BlogPost />} />
                 <Route path="/habilidade" element={<Navigate to="/" replace />} />
                 <Route path="/habilidade/" element={<Navigate to="/" replace />} />
@@ -93,8 +99,10 @@ function App() {
           
           {/* Footer */}
           <Footer />
-        </div>
-      </Router>
+          </div>
+          </Router>
+        </QueryProvider>
+      </HelmetProvider>
     </ErrorBoundary>
   );
 }
