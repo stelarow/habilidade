@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { BlogCategory } from '@/lib/blog-mockdata';
+import type { BlogCategory } from '@/lib/blog-mockdata';
 import { Filter, X } from 'lucide-react';
 
 interface CategoryFilterProps {

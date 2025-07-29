@@ -1,10 +1,13 @@
-import { createClient } from '@/lib/supabase/server';
+import { createClient } from '@supabase/supabase-js';
 import { NextResponse } from 'next/server';
 
 export async function GET() {
   try {
-    // Use server client with service role for admin access
-    const supabase = createClient();
+    // Create service client with service role for admin access (bypasses RLS)
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
     
     // Get all users
     const { data: usersData, error: usersError } = await supabase

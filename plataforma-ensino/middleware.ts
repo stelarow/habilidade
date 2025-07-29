@@ -1,6 +1,105 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { isAuthenticatedInMiddleware, hasRoleInMiddleware } from './src/lib/supabase/middleware-client'
 
+// Rate limiting store (in-memory for simplicity)
+const rateLimitStore = new Map<string, { count: number; resetTime: number }>()
+
+// Rate limiting configuration
+const RATE_LIMIT_CONFIG = {
+  windowMs: 60 * 1000, // 1 minute
+  maxRequests: 60, // 60 requests per minute
+  keyGenerator: (request: NextRequest) => {
+    // Use IP address or fallback to user-agent
+    const forwarded = request.headers.get('x-forwarded-for')
+    const realIp = request.headers.get('x-real-ip')
+    return forwarded?.split(',')[0] || realIp || 'unknown'
+  }
+}
+
+// Rate limiting function
+async function applyRateLimit(request: NextRequest, requestId: string): Promise<NextResponse | null> {
+  const key = RATE_LIMIT_CONFIG.keyGenerator(request)
+  const now = Date.now()
+  
+  // Clean up expired entries
+  for (const [k, v] of rateLimitStore.entries()) {
+    if (now > v.resetTime) {
+      rateLimitStore.delete(k)
+    }
+  }
+  
+  // Get or create rate limit entry
+  let rateLimitData = rateLimitStore.get(key)
+  if (!rateLimitData || now > rateLimitData.resetTime) {
+    rateLimitData = {
+      count: 0,
+      resetTime: now + RATE_LIMIT_CONFIG.windowMs
+    }
+  }
+  
+  rateLimitData.count++
+  rateLimitStore.set(key, rateLimitData)
+  
+  // Check if rate limit exceeded
+  if (rateLimitData.count > RATE_LIMIT_CONFIG.maxRequests) {
+    console.warn(`[MIDDLEWARE-${requestId}] 🚫 Rate limit exceeded for ${key}: ${rateLimitData.count}/${RATE_LIMIT_CONFIG.maxRequests}`)
+    
+    const response = NextResponse.json(
+      {
+        error: 'RATE_LIMIT_EXCEEDED',
+        message: 'Too many requests, please try again later',
+        code: 429,
+        timestamp: new Date().toISOString(),
+        retry_after: Math.ceil((rateLimitData.resetTime - now) / 1000)
+      },
+      { status: 429 }
+    )
+    
+    response.headers.set('X-RateLimit-Limit', RATE_LIMIT_CONFIG.maxRequests.toString())
+    response.headers.set('X-RateLimit-Remaining', '0')
+    response.headers.set('X-RateLimit-Reset', rateLimitData.resetTime.toString())
+    response.headers.set('Retry-After', Math.ceil((rateLimitData.resetTime - now) / 1000).toString())
+    
+    return response
+  }
+  
+  console.log(`[MIDDLEWARE-${requestId}] ✅ Rate limit OK for ${key}: ${rateLimitData.count}/${RATE_LIMIT_CONFIG.maxRequests}`)
+  return null
+}
+
+// Apply CORS headers function
+function applyCORSHeaders(response: NextResponse, origin?: string | null) {
+  const allowedOrigins = [
+    'https://www.escolahabilidade.com.br',
+    'https://escolahabilidade.com.br',
+    process.env.NODE_ENV === 'development' ? 'http://localhost:5173' : null,
+    process.env.NODE_ENV === 'development' ? 'http://127.0.0.1:5173' : null
+  ].filter(Boolean) as string[]
+
+  const requestOrigin = origin || '*'
+  const isOriginAllowed = allowedOrigins.includes(requestOrigin) || process.env.NODE_ENV === 'development'
+
+  if (isOriginAllowed) {
+    response.headers.set('Access-Control-Allow-Origin', requestOrigin)
+  }
+  
+  response.headers.set('Access-Control-Allow-Methods', 'GET, OPTIONS')
+  response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+  response.headers.set('Access-Control-Max-Age', '86400')
+}
+
+// Apply security headers function
+function applySecurityHeaders(response: NextResponse) {
+  response.headers.set('X-Content-Type-Options', 'nosniff')
+  response.headers.set('X-Frame-Options', 'DENY')
+  response.headers.set('X-XSS-Protection', '1; mode=block')
+  response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin')
+  response.headers.set(
+    'Content-Security-Policy',
+    "default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'"
+  )
+}
+
 /**
  * 🔥 NEXT.JS MIDDLEWARE
  * 
@@ -11,6 +110,7 @@ import { isAuthenticatedInMiddleware, hasRoleInMiddleware } from './src/lib/supa
  * - Admin route protection: Only authenticated admin users can access /admin/*
  * - Auth route blocking: Authenticated users are redirected away from login/register
  * - Role-based redirects: Admin users → /admin, Regular users → /dashboard
+ * - Blog API protection: CORS, rate limiting, and security headers
  * - Lightweight checks: Fast authentication/role verification
  * 
  * Based on Next.js best practices:
@@ -83,6 +183,33 @@ export async function middleware(request: NextRequest) {
       }
     }
 
+    // Blog API handling for CORS and rate limiting
+    if (pathname.startsWith('/api/blog')) {
+      console.log(`[MIDDLEWARE-${requestId}] 📝 Blog API route detected: ${pathname}`)
+      
+      // Apply rate limiting
+      const rateLimitResult = await applyRateLimit(request, requestId)
+      if (rateLimitResult) {
+        return rateLimitResult
+      }
+
+      // For OPTIONS requests, handle CORS preflight
+      if (request.method === 'OPTIONS') {
+        console.log(`[MIDDLEWARE-${requestId}] 🔄 CORS preflight request`)
+        const response = new NextResponse(null, { status: 200 })
+        applyCORSHeaders(response, request.headers.get('origin'))
+        return response
+      }
+
+      // Apply security headers to API responses
+      const response = NextResponse.next()
+      applyCORSHeaders(response, request.headers.get('origin'))
+      applySecurityHeaders(response)
+      
+      console.log(`[MIDDLEWARE-${requestId}] 🔒 Applied CORS and security headers to blog API`)
+      return response
+    }
+
     const duration = Date.now() - startTime
     console.log(`[MIDDLEWARE-${requestId}] ✅ Completed in ${duration}ms`)
     
@@ -102,9 +229,11 @@ export async function middleware(request: NextRequest) {
 }
 export const config = {
   matcher: [
-    // 🔥 CRITICAL: Simplified matcher focusing on admin routes
+    // Admin and auth routes protection
     '/admin/:path*',
-    '/auth/:path*'
+    '/auth/:path*',
+    // Blog API routes for CORS and rate limiting
+    '/api/blog/:path*'
   ],
 }
 

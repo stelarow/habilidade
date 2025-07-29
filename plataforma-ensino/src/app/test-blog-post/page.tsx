@@ -27,11 +27,14 @@ import {
 export default function TestBlogPostPage() {
   // Using the first post as example
   const currentPost = mockPosts[0];
-  const relatedPosts = getRelatedPosts(currentPost);
+  const relatedPosts = getRelatedPosts(currentPost.id);
   const suggestedCourse = {
     name: 'Curso Design Gráfico Completo',
     description: 'Aprenda design do básico ao avançado',
-    slug: 'design-grafico-completo'
+    slug: 'design-grafico-completo',
+    image: '/images/courses/design-grafico.jpg',
+    price: '297,00',
+    duration: '40 horas'
   };
 
   const formatDate = (dateString: string) => {
@@ -311,18 +314,20 @@ export default function TestBlogPostPage() {
                   </p>
                   
                   <div className="flex items-center gap-4">
-                    {Object.entries(currentPost.author.socialLinks).map(([platform, handle]) => (
-                      <Button
-                        key={platform}
-                        variant="outline"
-                        size="sm"
-                        className="h-8 px-3 text-xs hover:scale-105 transition-all"
-                      >
-                        {platform === 'twitter' && '5O'}
-                        {platform === 'linkedin' && 'in'}
-                        {platform === 'instagram' && 'ig'}
-                        <span className="ml-1">{handle}</span>
-                      </Button>
+                    {Object.entries(currentPost.author.social || {}).map(([platform, handle]) => (
+                      handle && typeof handle === 'string' ? (
+                        <Button
+                          key={platform}
+                          variant="outline"
+                          size="sm"
+                          className="h-8 px-3 text-xs hover:scale-105 transition-all"
+                        >
+                          {platform === 'twitter' && 'X'}
+                          {platform === 'linkedin' && 'in'}
+                          {platform === 'instagram' && 'ig'}
+                          <span className="ml-1">{handle.replace('https://', '').replace('linkedin.com/in/', '').replace('twitter.com/', '').replace('instagram.com/', '')}</span>
+                        </Button>
+                      ) : null
                     ))}
                   </div>
                 </div>

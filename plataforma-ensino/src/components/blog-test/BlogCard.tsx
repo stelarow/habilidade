@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Clock, Eye, Heart, MessageCircle, User } from 'lucide-react';
-import { BlogPost } from '@/lib/blog-mockdata';
+import type { BlogPost } from '@/lib/blog-mockdata';
 
 interface BlogCardProps {
   post: BlogPost;
