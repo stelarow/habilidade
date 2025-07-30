@@ -66,3 +66,12 @@ const BlogPost = () => {
   const post = data?.post;
   const { trackClick, trackImpression } = useCTATracking();
 
+  return (
+    <div>
+      <h1>Blog Post Page</h1>
+      <p>Content will be implemented here</p>
+    </div>
+  );
+};
+
+export default BlogPost;
