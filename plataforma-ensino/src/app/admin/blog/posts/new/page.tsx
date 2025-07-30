@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { PostEditor } from '@/components/admin/blog/PostEditor'
+import PostEditor from '@/components/admin/blog/PostEditor'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { ArrowLeftIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link'
