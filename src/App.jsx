@@ -19,6 +19,7 @@ const Home = React.lazy(() => import('./pages/Home'));
 const CoursePage = React.lazy(() => import('./pages/CoursePage'));
 const BlogIndex = React.lazy(() => import('./pages/BlogIndex'));
 const BlogPost = React.lazy(() => import('./pages/BlogPost'));
+const BlogTestPage = React.lazy(() => import('./pages/BlogTestPage'));
 const BlogCategory = React.lazy(() => import('./pages/BlogCategory'));
 const NotFound = React.lazy(() => import('./pages/NotFound'));
 
@@ -84,6 +85,8 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/cursos/:courseSlug" element={<CoursePage />} />
                 <Route path="/blog" element={<BlogIndex />} />
+                <Route path="/blog-test" element={<BlogTestPage />} />
+                <Route path="/blog-test/:slug" element={<BlogTestPage />} />
                 <Route path="/blog/:slug" element={<BlogPost />} />
                 <Route path="/blog/categoria/:categorySlug" element={<BlogCategory />} />
                 <Route path="/habilidade" element={<Navigate to="/" replace />} />
