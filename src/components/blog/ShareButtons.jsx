@@ -42,7 +42,7 @@ const ShareButtons = ({ url, title, compact = false }) => {
   const handleNativeShare = async () => {
     if (navigator.share) {
       try {
-        await navigator.share({
+        await navigator.share.call(navigator, {
           title: title,
           url: url,
         });
