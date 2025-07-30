@@ -147,7 +147,7 @@ const BlogPost = () => {
               {post.author && (
                 <div className="flex items-center gap-2">
                   <User size={16} />
-                  <span>{post.author}</span>
+                  <span>{post.author.name || post.author}</span>
                 </div>
               )}
             </div>
