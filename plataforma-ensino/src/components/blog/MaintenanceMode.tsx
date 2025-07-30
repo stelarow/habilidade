@@ -1,11 +1,11 @@
 'use client';
 
 /**
- * MaintenanceMode Component - Interface de usuário para modo de manutenção
+ * MaintenanceMode Component - Interface de usuÃ¡rio para modo de manutenÃ§Ã£o
  * Feature: FEATURE_003_MAINTENANCE_MODE
  * 
- * Fornece uma interface fullscreen para informar usuários sobre manutenções ativas,
- * com bypass discreto para administradores e informações de contato.
+ * Fornece uma interface fullscreen para informar usuÃ¡rios sobre manutenÃ§Ãµes ativas,
+ * com bypass discreto para administradores e informaÃ§Ãµes de contato.
  */
 
 import React, { useState, useEffect } from 'react';
@@ -81,7 +81,7 @@ export function MaintenanceMode({
 
   // Format WhatsApp message
   const whatsappMessage = encodeURIComponent(
-    `Olá! Estou tentando acessar a plataforma Habilidade mas está em manutenção. Preciso de suporte urgente. Manutenção: ${maintenance.title}`
+    `Olï¿½! Estou tentando acessar a plataforma Habilidade mas estï¿½ em manutenï¿½ï¿½o. Preciso de suporte urgente. Manutenï¿½ï¿½o: ${maintenance.title}`
   );
 
   const whatsappUrl = `https://wa.me/5548988559491?text=${whatsappMessage}`;
@@ -137,7 +137,7 @@ export function MaintenanceMode({
               <div className="text-center">
                 <h3 className="text-xl font-semibold text-white mb-4 flex items-center justify-center gap-2">
                   <Clock className="w-5 h-5" />
-                  Tempo Estimado para Conclusão
+                  Tempo Estimado para Conclusï¿½o
                 </h3>
                 
                 <div className="flex justify-center gap-4">
@@ -147,7 +147,7 @@ export function MaintenanceMode({
                 </div>
                 
                 <p className="text-blue-200 mt-4">
-                  Previsão de conclusão: {format(maintenance.endTime, "dd/MM/yyyy 'às' HH:mm", { locale: ptBR })}
+                  Previsï¿½o de conclusï¿½o: {format(maintenance.endTime, "dd/MM/yyyy 'ï¿½s' HH:mm", { locale: ptBR })}
                 </p>
               </div>
 
@@ -156,7 +156,7 @@ export function MaintenanceMode({
                 <div className="text-center">
                   <h3 className="text-lg font-semibold text-white mb-3 flex items-center justify-center gap-2">
                     <AlertCircle className="w-5 h-5" />
-                    Serviços Afetados
+                    Serviï¿½os Afetados
                   </h3>
                   
                   <div className="flex flex-wrap justify-center gap-2">
@@ -204,13 +204,13 @@ export function MaintenanceMode({
                 </div>
                 
                 <p className="text-blue-200 text-sm">
-                  Nossa equipe estará disponível para emergências
+                  Nossa equipe estarï¿½ disponï¿½vel para emergï¿½ncias
                 </p>
               </div>
 
               {/* Social Links */}
               <div className="text-center pt-4 border-t border-white/20">
-                <p className="text-blue-200 mb-3">Acompanhe nossas atualizações:</p>
+                <p className="text-blue-200 mb-3">Acompanhe nossas atualizaï¿½ï¿½es:</p>
                 <div className="flex justify-center gap-4">
                   <Button
                     asChild

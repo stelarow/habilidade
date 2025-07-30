@@ -494,7 +494,7 @@ export class AlertService {
       if (!slackWebhook) throw new Error('Slack webhook not configured');
 
       const slackPayload = {
-        text: `=� Alert: ${alertInstance.title}`,
+        text: `🚨 Alert: ${alertInstance.title}`,
         attachments: [{
           color: this.getSeverityColor(alertInstance.severity),
           fields: [
@@ -699,7 +699,7 @@ export class AlertService {
   ): Promise<void> {
     const escalationAlert = {
       ...alert,
-      title: `=� ESCALATED: ${alert.title}`,
+      title: `🚨 ESCALATED: ${alert.title}`,
       message: `This alert has been escalated (escalation #${escalationCount}). Original message: ${alert.message}`,
       severity: 'critical' as AlertSeverity
     };
@@ -777,9 +777,14 @@ export class AlertService {
       endpoints.map(async endpoint => {
         const start = Date.now();
         try {
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 5000);
+          
           const response = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}${endpoint}`, {
-            timeout: 5000
+            signal: controller.signal
           });
+          
+          clearTimeout(timeoutId);
           const responseTime = Date.now() - start;
           return { endpoint, responseTime, success: response.ok };
         } catch {
@@ -880,13 +885,13 @@ export class AlertService {
   private generateAlertTitle(config: AlertConfig, currentValue: any): string {
     switch (config.type) {
       case 'downtime':
-        return `=4 System Downtime Detected - ${config.name}`;
+        return `⚠️ System Downtime Detected - ${config.name}`;
       case 'performance':
-        return `� Performance Issue - ${config.name}`;
+        return `📊 Performance Issue - ${config.name}`;
       case 'error':
-        return `=� Error Rate Alert - ${config.name}`;
+        return `🚨 Error Rate Alert - ${config.name}`;
       case 'custom':
-        return `=� Custom Alert - ${config.name}`;
+        return `🚨 Custom Alert - ${config.name}`;
       default:
         return `Alert - ${config.name}`;
     }
@@ -936,9 +941,9 @@ export class AlertService {
       if (error) throw error;
 
       const total_alerts = alerts?.length || 0;
-      const active_alerts = alerts?.filter(a => a.status === 'active').length || 0;
-      const resolved_alerts = alerts?.filter(a => a.status === 'resolved').length || 0;
-      const acknowledged_alerts = alerts?.filter(a => a.status === 'acknowledged').length || 0;
+      const active_alerts = alerts?.filter((a: any) => a.status === 'active').length || 0;
+      const resolved_alerts = alerts?.filter((a: any) => a.status === 'resolved').length || 0;
+      const acknowledged_alerts = alerts?.filter((a: any) => a.status === 'acknowledged').length || 0;
 
       const alerts_by_type: Record<AlertType, number> = {
         downtime: 0,
@@ -954,20 +959,21 @@ export class AlertService {
         critical: 0
       };
 
-      alerts?.forEach(alert => {
+      alerts?.forEach((alert: any) => {
         const type = alert.alert_configurations?.type as AlertType;
         if (type && alerts_by_type[type] !== undefined) {
           alerts_by_type[type]++;
         }
         
-        if (alerts_by_severity[alert.severity] !== undefined) {
-          alerts_by_severity[alert.severity]++;
+        const severity = alert.severity as AlertSeverity;
+        if (severity && alerts_by_severity[severity] !== undefined) {
+          alerts_by_severity[severity]++;
         }
       });
 
       // Calculate average resolution time
-      const resolvedAlerts = alerts?.filter(a => a.status === 'resolved' && a.resolved_at) || [];
-      const totalResolutionTime = resolvedAlerts.reduce((sum, alert) => {
+      const resolvedAlerts = alerts?.filter((a: any) => a.status === 'resolved' && a.resolved_at) || [];
+      const totalResolutionTime = resolvedAlerts.reduce((sum: number, alert: any) => {
         const triggered = new Date(alert.triggered_at).getTime();
         const resolved = new Date(alert.resolved_at!).getTime();
         return sum + (resolved - triggered);
@@ -978,7 +984,7 @@ export class AlertService {
         : 0;
 
       // Calculate escalation rate
-      const escalatedAlerts = alerts?.filter(a => a.escalation_count > 0).length || 0;
+      const escalatedAlerts = alerts?.filter((a: any) => a.escalation_count > 0).length || 0;
       const escalation_rate = total_alerts > 0 ? (escalatedAlerts / total_alerts) * 100 : 0;
 
       return {

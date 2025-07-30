@@ -153,7 +153,6 @@ export class ApiCacheManager {
 
     try {
       this.redis = new Redis(this.config.redis.url, {
-        retryDelayOnFailover: 100,
         enableReadyCheck: true,
         maxRetriesPerRequest: 3,
         lazyConnect: true,

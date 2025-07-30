@@ -46,6 +46,7 @@
     "src/**/*.test.*",
     "src/**/*.spec.*",
     "__tests__/**/*",
-    "tests/**/*"
+    "tests/**/*",
+    "temp_disabled/**/*"
   ]
 }

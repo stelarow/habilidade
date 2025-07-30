@@ -24,11 +24,12 @@ import {
   AlertTriangle
 } from 'lucide-react';
 import { sendLeadMagnetEmail, isValidEmail } from '@/lib/emailjs';
+import emailjs from '@emailjs/browser';
 
 // Lead Magnet Form Schema
 const leadMagnetSchema = z.object({
   name: z.string().min(2, 'Nome deve ter pelo menos 2 caracteres').max(50, 'Nome muito longo'),
-  email: z.string().email('Email inv�lido'),
+  email: z.string().email('Email invÃ¡lido'),
   company: z.string().max(50, 'Nome da empresa muito longo').optional(),
   role: z.string().max(50, 'Cargo muito longo').optional(),
   interests: z.array(z.string()).optional(),
@@ -47,11 +48,11 @@ interface LeadMagnetCTAProps {
 }
 
 const MATERIAL_ICONS = {
-  pdf: '=�',
-  guide: '=�',
-  template: '=�',
+  pdf: 'ð',
+  guide: 'ð',
+  template: 'ð',
   checklist: '',
-  ebook: '=�',
+  ebook: 'ð',
 };
 
 const MATERIAL_COLORS = {
@@ -124,8 +125,8 @@ export function LeadMagnetCTA({
           material_title: materialTitle || config.content.title,
           material_type: materialType,
           download_url: downloadUrl || '#',
-          company: data.company || 'N�o informado',
-          role: data.role || 'N�o informado',
+          company: data.company || 'NÃ£o informado',
+          role: data.role || 'NÃ£o informado',
         },
         process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
       );
@@ -460,7 +461,7 @@ export function LeadMagnetCTA({
 
               {/* Privacy Note */}
               <p className="text-xs text-gray-500 text-center pt-2">
-                Seus dados est�o seguros. N�o compartilhamos com terceiros.
+                Seus dados estï¿½o seguros. Nï¿½o compartilhamos com terceiros.
               </p>
             </form>
           )}

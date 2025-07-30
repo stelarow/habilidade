@@ -164,7 +164,7 @@ export class BlogErrorLogger {
           sessionId: this.sessionId,
           performanceMetrics: {
             ...context.performanceMetrics,
-            navigationTiming: this.collectPerformanceMetrics()
+            navigationTiming: this.collectPerformanceMetrics() || undefined
           }
         },
         session_id: this.sessionId,
@@ -178,7 +178,7 @@ export class BlogErrorLogger {
 
       // Log to console for development
       if (process.env.NODE_ENV === 'development') {
-        console.group('=¨ Blog Error Logged');
+        console.group('ðŸš¨ Blog Error Logged');
         console.error('Error:', error);
         console.log('Category:', category);
         console.log('Severity:', severity);
@@ -452,7 +452,7 @@ export class BlogErrorLogger {
         .select('severity, created_at')
         .gte('created_at', last24Hours.toISOString());
 
-      const criticalErrorsLast24h = errors?.filter(e => e.severity === ErrorSeverity.CRITICAL)?.length || 0;
+      const criticalErrorsLast24h = errors?.filter((e: any) => e.severity === ErrorSeverity.CRITICAL)?.length || 0;
       const errorRate = (errors?.length || 0) / 24; // errors per hour
 
       let memoryUsage;
@@ -481,5 +481,4 @@ export class BlogErrorLogger {
 // Singleton instance
 export const blogErrorLogger = new BlogErrorLogger();
 
-// Export types
-export type { BlogErrorContext, BlogErrorLog, AlertThreshold };
+// Types are already exported above with their definitions

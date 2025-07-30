@@ -1,4 +1,4 @@
-import { CTATemplate, CTAConfiguration } from '@/types/cta';
+import type { CTATemplate, CTAConfiguration } from '@/types/cta';
 import { ctaTemplates, getTemplatesByCategory, getTemplatesByType } from '@/data/ctaTemplates';
 
 // Variable interpolation for template content
@@ -198,7 +198,7 @@ export function generateABVariants(
     variantC.name = `${baseTemplate.name} (Variant C)`;
     
     const alternativeButtons = {
-      'Baixar Grátis': 'Obter Agora',
+      'Baixar Grï¿½tis': 'Obter Agora',
       'Inscrever-se': 'Quero Receber',
       'Ver Curso': 'Saber Mais',
       'Agendar Consultoria': 'Falar Conosco',
@@ -262,7 +262,7 @@ export function optimizeTemplate(
   // Slow action time - add urgency elements
   if (performanceData.avgTimeToAction > 30000) { // 30 seconds
     if (optimized.config.content) {
-      optimized.config.content.subtext = 'Oferta limitada · Ação rápida recomendada';
+      optimized.config.content.subtext = 'Oferta limitada ï¿½ Aï¿½ï¿½o rï¿½pida recomendada';
     }
   }
   
@@ -285,13 +285,13 @@ export function personalizeForSegment(
     },
     'returning-visitors': {
       contentSuffix: ' (Oferta Exclusiva)',
-      benefits: ['Conteúdo avançado', 'Acesso premium', 'Comunidade exclusiva'],
+      benefits: ['Conteï¿½do avanï¿½ado', 'Acesso premium', 'Comunidade exclusiva'],
       timing: 'scroll' as const,
       scrollPercent: 40,
     },
     'high-value': {
       contentSuffix: ' (Premium)',
-      benefits: ['Mentoria 1-on-1', 'Acesso vitalício', 'Suporte prioritário'],
+      benefits: ['Mentoria 1-on-1', 'Acesso vitalï¿½cio', 'Suporte prioritï¿½rio'],
       timing: 'immediate' as const,
     },
     'mobile-users': {
@@ -305,33 +305,33 @@ export function personalizeForSegment(
   
   if (customization) {
     // Apply content customizations
-    if (customization.contentSuffix && personalized.config.content) {
+    if ('contentSuffix' in customization && customization.contentSuffix && personalized.config.content) {
       personalized.config.content.title += customization.contentSuffix;
     }
     
-    if (customization.benefits && personalized.config.content) {
+    if ('benefits' in customization && customization.benefits && personalized.config.content) {
       personalized.config.content.benefits = customization.benefits;
     }
     
     // Apply targeting customizations
     if (personalized.config.targeting) {
-      if (customization.timing) {
+      if ('timing' in customization && customization.timing) {
         personalized.config.targeting.timing = customization.timing;
       }
-      if (customization.timeDelay) {
+      if ('timeDelay' in customization && customization.timeDelay) {
         personalized.config.targeting.timeDelay = customization.timeDelay;
       }
-      if (customization.scrollPercent) {
+      if ('scrollPercent' in customization && customization.scrollPercent) {
         personalized.config.targeting.scrollPercent = customization.scrollPercent;
       }
     }
     
     // Apply design customizations
     if (personalized.config.design) {
-      if (customization.layout) {
+      if ('layout' in customization && customization.layout) {
         personalized.config.design.layout = customization.layout;
       }
-      if (customization.borderRadius) {
+      if ('borderRadius' in customization && customization.borderRadius) {
         personalized.config.design.borderRadius = customization.borderRadius;
       }
     }
@@ -354,19 +354,19 @@ export function validateTemplate(template: CTATemplate): {
     const { title, description, buttonText } = template.config.content;
     
     if (title && title.length > 60) {
-      warnings.push('Título muito longo - pode ser cortado em dispositivos móveis');
+      warnings.push('Tï¿½tulo muito longo - pode ser cortado em dispositivos mï¿½veis');
     }
     
     if (description && description.length > 200) {
-      warnings.push('Descrição muito longa - pode reduzir conversões');
+      warnings.push('Descriï¿½ï¿½o muito longa - pode reduzir conversï¿½es');
     }
     
     if (buttonText && buttonText.length > 25) {
-      warnings.push('Texto do botão muito longo - pode não caber em mobile');
+      warnings.push('Texto do botï¿½o muito longo - pode nï¿½o caber em mobile');
     }
     
     if (template.config.content.benefits && template.config.content.benefits.length > 5) {
-      suggestions.push('Considere reduzir os benefícios para máximo 3-4 itens');
+      suggestions.push('Considere reduzir os benefï¿½cios para mï¿½ximo 3-4 itens');
     }
   }
   
@@ -376,7 +376,7 @@ export function validateTemplate(template: CTATemplate): {
     
     // Check color contrast (simplified)
     if (primaryColor === secondaryColor) {
-      warnings.push('Cores primária e secundária são iguais - pode reduzir legibilidade');
+      warnings.push('Cores primï¿½ria e secundï¿½ria sï¿½o iguais - pode reduzir legibilidade');
     }
   }
   
@@ -393,7 +393,7 @@ export function validateTemplate(template: CTATemplate): {
     }
     
     if (scrollPercent && scrollPercent > 90) {
-      suggestions.push('Porcentagem de scroll muito alta - muitos usuários podem não ver o CTA');
+      suggestions.push('Porcentagem de scroll muito alta - muitos usuï¿½rios podem nï¿½o ver o CTA');
     }
   }
   

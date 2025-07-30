@@ -8,21 +8,21 @@ export async function seedSampleCourses() {
 
   // Sample categories
   const categories = [
-    { id: '1', name: 'Inteligência Artificial', color_theme: 'ia', icon: '🤖', status: 'active' },
-    { id: '2', name: 'Design Gráfico', color_theme: 'design', icon: '🎨', status: 'active' },
-    { id: '3', name: 'Programação', color_theme: 'programacao', icon: '💻', status: 'active' },
-    { id: '4', name: 'Marketing Digital', color_theme: 'marketing', icon: '📈', status: 'active' },
-    { id: '5', name: 'Edição de Vídeo', color_theme: 'video', icon: '🎬', status: 'active' }
+    { id: '1', name: 'InteligÃªncia Artificial', color_theme: 'ia', icon: 'ð¤', status: 'active' },
+    { id: '2', name: 'Design GrÃ¡fico', color_theme: 'design', icon: 'ð¨', status: 'active' },
+    { id: '3', name: 'ProgramaÃ§Ã£o', color_theme: 'programacao', icon: 'ð»', status: 'active' },
+    { id: '4', name: 'Marketing Digital', color_theme: 'marketing', icon: 'ð', status: 'active' },
+    { id: '5', name: 'EdiÃ§Ã£o de VÃ­deo', color_theme: 'video', icon: 'ð¬', status: 'active' }
   ]
 
   // Sample courses
   const courses = [
     {
       id: '1',
-      title: 'Inteligência Artificial: Fundamentos e Aplicações',
+      title: 'InteligÃªncia Artificial: Fundamentos e AplicaÃ§Ãµes',
       slug: 'ia-fundamentos',
-      description: 'Aprenda os conceitos fundamentais de IA e suas aplicações práticas no mercado de trabalho.',
-      short_description: 'Fundamentos de IA com aplicações práticas',
+      description: 'Aprenda os conceitos fundamentais de IA e suas aplicaÃ§Ãµes prÃ¡ticas no mercado de trabalho.',
+      short_description: 'Fundamentos de IA com aplicaÃ§Ãµes prÃ¡ticas',
       category_id: '1',
       duration_minutes: 1200,
       level: 'beginner',
@@ -33,10 +33,10 @@ export async function seedSampleCourses() {
     },
     {
       id: '2',
-      title: 'Design Gráfico Profissional',
+      title: 'Design GrÃ¡fico Profissional',
       slug: 'design-grafico',
-      description: 'Domine as ferramentas e técnicas do design gráfico profissional.',
-      short_description: 'Design gráfico do básico ao avançado',
+      description: 'Domine as ferramentas e tÃ©cnicas do design grÃ¡fico profissional.',
+      short_description: 'Design grÃ¡fico do bÃ¡sico ao avanÃ§ado',
       category_id: '2',
       duration_minutes: 900,
       level: 'intermediate',
@@ -47,9 +47,9 @@ export async function seedSampleCourses() {
     },
     {
       id: '3',
-      title: 'Programação Web Moderna',
+      title: 'ProgramaÃ§Ã£o Web Moderna',
       slug: 'programacao-web',
-      description: 'Desenvolva aplicações web modernas com as tecnologias mais atuais.',
+      description: 'Desenvolva aplicaÃ§Ãµes web modernas com as tecnologias mais atuais.',
       short_description: 'Desenvolvimento web com tecnologias modernas',
       category_id: '3',
       duration_minutes: 1500,
@@ -61,10 +61,10 @@ export async function seedSampleCourses() {
     },
     {
       id: '4',
-      title: 'Marketing Digital Estratégico',
+      title: 'Marketing Digital EstratÃ©gico',
       slug: 'marketing-digital',
-      description: 'Estratégias completas de marketing digital para o mundo atual.',
-      short_description: 'Marketing digital estratégico e prático',
+      description: 'EstratÃ©gias completas de marketing digital para o mundo atual.',
+      short_description: 'Marketing digital estratÃ©gico e prÃ¡tico',
       category_id: '4',
       duration_minutes: 800,
       level: 'beginner',
@@ -75,10 +75,10 @@ export async function seedSampleCourses() {
     },
     {
       id: '5',
-      title: 'Edição de Vídeo Profissional',
+      title: 'EdiÃ§Ã£o de VÃ­deo Profissional',
       slug: 'edicao-video',
-      description: 'Técnicas avançadas de edição de vídeo para criação de conteúdo profissional.',
-      short_description: 'Edição de vídeo do básico ao profissional',
+      description: 'TÃ©cnicas avanÃ§adas de ediÃ§Ã£o de vÃ­deo para criaÃ§Ã£o de conteÃºdo profissional.',
+      short_description: 'EdiÃ§Ã£o de vÃ­deo do bÃ¡sico ao profissional',
       category_id: '5',
       duration_minutes: 1000,
       level: 'intermediate',
@@ -118,9 +118,9 @@ export async function seedSampleCourses() {
         lessons.push({
           id: `${course.id}-${i}`,
           course_id: course.id,
-          title: `Aula ${i}: Tópico ${i}`,
+          title: `Aula ${i}: TÃ³pico ${i}`,
           slug: `aula-${i}`,
-          description: `Descrição da aula ${i} do curso ${course.title}`,
+          description: `DescriÃ§Ã£o da aula ${i} do curso ${course.title}`,
           content_url: 'https://example.com/video',
           duration_minutes: 60,
           order_index: i,
@@ -208,7 +208,7 @@ export async function seedSampleInstructors() {
       {
         id: '1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p',
         email: 'prof.silva@habilidade.com',
-        full_name: 'Prof. João Silva',
+        full_name: 'Prof. JoÃ£o Silva',
         role: 'instructor'
       },
       {
@@ -241,16 +241,16 @@ export async function seedSampleInstructors() {
       {
         id: '1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p',
         user_id: '1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p',
-        bio: 'Especialista em Inteligência Artificial com 10 anos de experiência',
-        expertise: ['Inteligência Artificial', 'Machine Learning', 'Python'],
+        bio: 'Especialista em InteligÃªncia Artificial com 10 anos de experiÃªncia',
+        expertise: ['InteligÃªncia Artificial', 'Machine Learning', 'Python'],
         rating: 4.8,
         total_reviews: 45
       },
       {
         id: '2b3c4d5e-6f7g-8h9i-0j1k-2l3m4n5o6p7q',
         user_id: '2b3c4d5e-6f7g-8h9i-0j1k-2l3m4n5o6p7q',
-        bio: 'Designer gráfica profissional com foco em branding e identidade visual',
-        expertise: ['Design Gráfico', 'Branding', 'Adobe Creative Suite'],
+        bio: 'Designer grÃ¡fica profissional com foco em branding e identidade visual',
+        expertise: ['Design GrÃ¡fico', 'Branding', 'Adobe Creative Suite'],
         rating: 4.9,
         total_reviews: 62
       },
@@ -258,7 +258,7 @@ export async function seedSampleInstructors() {
         id: '3c4d5e6f-7g8h-9i0j-1k2l-3m4n5o6p7q8r',
         user_id: '3c4d5e6f-7g8h-9i0j-1k2l-3m4n5o6p7q8r',
         bio: 'Desenvolvedor full-stack com expertise em tecnologias web modernas',
-        expertise: ['Programação Web', 'JavaScript', 'React', 'Node.js'],
+        expertise: ['ProgramaÃ§Ã£o Web', 'JavaScript', 'React', 'Node.js'],
         rating: 4.7,
         total_reviews: 38
       }

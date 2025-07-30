@@ -1,5 +1,10 @@
 import { useCallback, useEffect, useRef } from 'react';
-import { CTAEvent, CTAHookConfig, CTAMetrics } from '@/types/cta';
+import type { CTAEvent, CTAHookConfig, CTAMetrics } from '@/types/cta';
+
+// Declare gtag global function
+declare global {
+  function gtag(command: string, targetId: string, config?: any): void;
+}
 
 interface CTATrackingConfig extends CTAHookConfig {
   ctaId: string;

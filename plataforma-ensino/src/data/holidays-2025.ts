@@ -2,32 +2,32 @@ import type { Holiday } from '@/types/date-calculation';
 
 /**
  * Brazilian holidays for 2025
- * Includes national holidays and São Paulo regional holidays
+ * Includes national holidays and SÃ£o Paulo regional holidays
  */
 export const BRAZILIAN_HOLIDAYS_2025: Holiday[] = [
   // National holidays
-  { date: '2025-01-01', name: 'Confraternização Universal', type: 'national' },
+  { date: '2025-01-01', name: 'ConfraternizaÃ§Ã£o Universal', type: 'national' },
   { date: '2025-04-18', name: 'Sexta-feira Santa', type: 'national' },
   { date: '2025-04-21', name: 'Tiradentes', type: 'national' },
   { date: '2025-05-01', name: 'Dia do Trabalhador', type: 'national' },
-  { date: '2025-09-07', name: 'Independência do Brasil', type: 'national' },
+  { date: '2025-09-07', name: 'IndependÃªncia do Brasil', type: 'national' },
   { date: '2025-10-12', name: 'Nossa Senhora Aparecida', type: 'national' },
   { date: '2025-11-02', name: 'Finados', type: 'national' },
-  { date: '2025-11-15', name: 'Proclamação da República', type: 'national' },
+  { date: '2025-11-15', name: 'ProclamaÃ§Ã£o da RepÃºblica', type: 'national' },
   { date: '2025-12-25', name: 'Natal', type: 'national' },
 
   // Carnival (national)
   { date: '2025-03-03', name: 'Carnaval - Segunda-feira', type: 'national' },
-  { date: '2025-03-04', name: 'Carnaval - Terça-feira', type: 'national' },
+  { date: '2025-03-04', name: 'Carnaval - TerÃ§a-feira', type: 'national' },
 
   // Corpus Christi (national)
   { date: '2025-06-19', name: 'Corpus Christi', type: 'national' },
 
-  // São Paulo regional holidays
-  { date: '2025-01-25', name: 'Aniversário de São Paulo', type: 'regional' },
-  { date: '2025-04-23', name: 'São Jorge', type: 'regional' },
-  { date: '2025-07-09', name: 'Revolução Constitucionalista', type: 'regional' },
-  { date: '2025-11-20', name: 'Consciência Negra', type: 'regional' },
+  // SÃ£o Paulo regional holidays
+  { date: '2025-01-25', name: 'AniversÃ¡rio de SÃ£o Paulo', type: 'regional' },
+  { date: '2025-04-23', name: 'SÃ£o Jorge', type: 'regional' },
+  { date: '2025-07-09', name: 'RevoluÃ§Ã£o Constitucionalista', type: 'regional' },
+  { date: '2025-11-20', name: 'ConsciÃªncia Negra', type: 'regional' },
 ];
 
 /**

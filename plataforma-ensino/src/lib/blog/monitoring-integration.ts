@@ -1,10 +1,11 @@
 /**
- * Sistema de Monitoramento Autom�tico
+ * Sistema de Monitoramento Automático
  * Task 2 - FEATURE_001_SISTEMA_ALERTAS
- * Integra��o com AlertService para monitoramento cont�nuo
+ * Integração com AlertService para monitoramento contínuo
  */
 
-import { alertService, AlertType } from '@/services/alertService';
+import { alertService } from '@/services/alertService';
+import type { AlertType } from '@/services/alertService';
 import { logger } from '@/utils/logger';
 
 // Performance Metrics Interface
@@ -87,9 +88,9 @@ const CRITICAL_ENDPOINTS = [
 ];
 
 export class MonitoringSystem {
-  private healthCheckTimer?: NodeJS.Timer;
-  private performanceTimer?: NodeJS.Timer;
-  private anomalyTimer?: NodeJS.Timer;
+  private healthCheckTimer?: NodeJS.Timeout;
+  private performanceTimer?: NodeJS.Timeout;
+  private anomalyTimer?: NodeJS.Timeout;
   
   private performanceHistory: PerformanceMetrics[] = [];
   private healthHistory: HealthCheckResult[] = [];
@@ -138,9 +139,14 @@ export class MonitoringSystem {
 
     // Test basic connectivity
     try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000);
+      
       const response = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/health`, {
-        timeout: 5000
+        signal: controller.signal
       });
+      
+      clearTimeout(timeoutId);
       
       if (!response.ok) {
         logger.warn('MonitoringSystem: Health endpoint not responding properly');
@@ -596,7 +602,14 @@ export class MonitoringSystem {
     // For now, simulate with actual network request
     const start = Date.now();
     try {
-      await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/health`, { timeout: 5000 });
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000);
+      
+      await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/health`, { 
+        signal: controller.signal 
+      });
+      
+      clearTimeout(timeoutId);
       return Date.now() - start;
     } catch {
       return 5000; // Return max time on error
@@ -617,9 +630,14 @@ export class MonitoringSystem {
     // Measure actual TTFB
     const start = Date.now();
     try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000);
+      
       const response = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/health`, {
-        timeout: 5000
+        signal: controller.signal
       });
+      
+      clearTimeout(timeoutId);
       return Date.now() - start;
     } catch {
       return 5000;
@@ -628,10 +646,15 @@ export class MonitoringSystem {
 
   private async measureAverageResponseTime(): Promise<number> {
     const start = Date.now();
-    const promises = CRITICAL_ENDPOINTS.slice(0, 3).map(endpoint =>
-      fetch(`${process.env.NEXT_PUBLIC_SITE_URL}${endpoint}`, { timeout: 3000 })
-        .catch(() => null)
-    );
+    const promises = CRITICAL_ENDPOINTS.slice(0, 3).map(endpoint => {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 3000);
+      
+      return fetch(`${process.env.NEXT_PUBLIC_SITE_URL}${endpoint}`, { 
+        signal: controller.signal 
+      }).finally(() => clearTimeout(timeoutId))
+        .catch(() => null);
+    });
     
     await Promise.allSettled(promises);
     return (Date.now() - start) / 3;

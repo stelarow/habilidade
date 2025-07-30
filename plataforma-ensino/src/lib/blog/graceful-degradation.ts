@@ -1,9 +1,9 @@
 /**
- * Sistema de Degradação Graceful - Mantém funcionalidades essenciais durante falhas
+ * Sistema de DegradaÃ§Ã£o Graceful - MantÃ©m funcionalidades essenciais durante falhas
  * Feature: FEATURE_003_MAINTENANCE_MODE
  * 
- * Este sistema monitora a saúde dos serviços e implementa fallbacks automáticos
- * para manter a experiência do usuário durante problemas parciais do sistema.
+ * Este sistema monitora a saÃºde dos serviÃ§os e implementa fallbacks automÃ¡ticos
+ * para manter a experiÃªncia do usuÃ¡rio durante problemas parciais do sistema.
  */
 
 import React from 'react';
@@ -299,7 +299,7 @@ export class GracefulDegradationService {
       const previousLevel = this.currentDegradationLevel;
       this.currentDegradationLevel = newLevel;
       
-      console.log(`[DEGRADATION] Level changed: ${previousLevel} ’ ${newLevel}`);
+      console.log(`[DEGRADATION] Level changed: ${previousLevel} â†’ ${newLevel}`);
       
       // Notify listeners
       this.notifyLevelChange();
@@ -529,9 +529,9 @@ export const DegradationUtils = {
     
     const messages = {
       normal: '',
-      degraded: 'Alguns recursos podem estar limitados devido a problemas técnicos.',
-      minimal: 'O sistema está operando com funcionalidade limitada.',
-      emergency: 'O sistema está em modo de emergência. Apenas funcionalidades essenciais estão disponíveis.'
+      degraded: 'Alguns recursos podem estar limitados devido a problemas tÃ©cnicos.',
+      minimal: 'O sistema estÃ¡ operando com funcionalidade limitada.',
+      emergency: 'O sistema estÃ¡ em modo de emergÃªncia. Apenas funcionalidades essenciais estÃ£o disponÃ­veis.'
     };
 
     return messages[level];

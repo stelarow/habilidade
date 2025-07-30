@@ -7,7 +7,7 @@ import { ptBR } from 'date-fns/locale';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
-import { CTAConfiguration, UrgencyConfig } from '@/types/cta';
+import type { CTAConfiguration, UrgencyConfig } from '@/types/cta';
 import { useCTATracking } from '@/hooks/useCTATracking';
 import { 
   Clock, 
@@ -80,6 +80,7 @@ export function UrgencyCTA({
       const interval = setInterval(updateTimer, 1000);
       return () => clearInterval(interval);
     }
+    return undefined;
   }, [urgencyConfig.type, urgencyConfig.deadline, urgencyConfig.showCountdown, onExpired]);
 
   // Simulate quantity decrease for quantity-based urgency
@@ -100,6 +101,7 @@ export function UrgencyCTA({
 
       return () => clearInterval(interval);
     }
+    return undefined;
   }, [urgencyConfig.type, urgencyConfig.quantity, onExpired]);
 
   // Simulate demand level changes
@@ -112,6 +114,7 @@ export function UrgencyCTA({
 
       return () => clearInterval(interval);
     }
+    return undefined;
   }, [urgencyConfig.type]);
 
   // Track view when component mounts
@@ -197,11 +200,11 @@ export function UrgencyCTA({
       case 'time':
         return 'OFERTA LIMITADA';
       case 'quantity':
-        return 'ÚLTIMAS VAGAS';
+        return 'ï¿½LTIMAS VAGAS';
       case 'demand':
         return demandLevel === 'high' ? 'ALTA DEMANDA' : 'EM ALTA';
       case 'seasonal':
-        return 'PROMOÇÃO ESPECIAL';
+        return 'PROMOï¿½ï¿½O ESPECIAL';
       default:
         return 'URGENTE';
     }
@@ -329,7 +332,7 @@ export function UrgencyCTA({
                       <span className="font-bold">
                         {demandLevel === 'high' 
                           ? '=% Muitas pessoas vendo isso agora!'
-                          : '=È Interesse crescente nesta oferta'
+                          : '=ï¿½ Interesse crescente nesta oferta'
                         }
                       </span>
                     </motion.div>
@@ -340,7 +343,7 @@ export function UrgencyCTA({
                     <div className={`flex items-center gap-2 ${colors.accent}`}>
                       <Star className="h-4 w-4" />
                       <span className="font-bold">
-                        Promoção válida até {format(new Date(urgencyConfig.deadline), 'dd/MM/yyyy', { locale: ptBR })}
+                        Promoï¿½ï¿½o vï¿½lida atï¿½ {format(new Date(urgencyConfig.deadline), 'dd/MM/yyyy', { locale: ptBR })}
                       </span>
                     </div>
                   )}
@@ -365,7 +368,7 @@ export function UrgencyCTA({
                       animate={{ x: [0, 4, 0] }}
                       transition={{ duration: 1, repeat: Infinity }}
                     >
-                      ’
+                      ï¿½
                     </motion.div>
                   </Button>
                 </motion.div>

@@ -1,26 +1,26 @@
-import { CTATemplate } from '@/types/cta';
+import type { CTATemplate } from '@/types/cta';
 
 export const ctaTemplates: CTATemplate[] = [
   // Lead Magnet Templates
   {
     id: 'tech-leadmagnet-guide',
-    name: 'Guia T�cnico - Tecnologia',
+    name: 'Guia TÃ©cnico - Tecnologia',
     category: 'tecnologia',
     type: 'leadmagnet',
-    description: 'Template para guias t�cnicos e tutoriais em tecnologia',
+    description: 'Template para guias tÃ©cnicos e tutoriais em tecnologia',
     usageCount: 245,
     config: {
       type: 'leadmagnet',
       content: {
         title: 'Guia Completo: {{articleTopic}}',
-        description: 'Baixe nosso guia pr�tico sobre {{articleTopic}} com exemplos reais e implementa��es passo a passo.',
-        buttonText: 'Baixar Guia Gr�tis',
-        subtext: 'Material exclusivo � Acesso imediato � Sem spam',
+        description: 'Baixe nosso guia prÃ¡tico sobre {{articleTopic}} com exemplos reais e implementaÃ§Ãµes passo a passo.',
+        buttonText: 'Baixar Guia GrÃ¡tis',
+        subtext: 'Material exclusivo Â· Acesso imediato Â· Sem spam',
         benefits: [
-          'Exemplos de c�digo pr�ticos',
-          'Checklist de implementa��o',
+          'Exemplos de cÃ³digo prÃ¡ticos',
+          'Checklist de implementaÃ§Ã£o',
           'Templates prontos para usar',
-          'Dicas de otimiza��o',
+          'Dicas de otimizaÃ§Ã£o',
           'Recursos adicionais'
         ]
       },
@@ -46,19 +46,19 @@ export const ctaTemplates: CTATemplate[] = [
     name: 'Checklist - Tecnologia',
     category: 'tecnologia',
     type: 'leadmagnet',
-    description: 'Template para checklists t�cnicos e listas de verifica��o',
+    description: 'Template para checklists tÃ©cnicos e listas de verificaÃ§Ã£o',
     usageCount: 189,
     config: {
       type: 'leadmagnet',
       content: {
         title: 'Checklist: {{articleTopic}}',
-        description: 'Garanta que voc� n�o esque�a nada importante com nosso checklist completo sobre {{articleTopic}}.',
+        description: 'Garanta que vocÃª nÃ£o esqueÃ§a nada importante com nosso checklist completo sobre {{articleTopic}}.',
         buttonText: 'Baixar Checklist',
-        subtext: 'PDF otimizado � Imprim�vel � Gratuito',
+        subtext: 'PDF otimizado Â· ImprimÃ­vel Â· Gratuito',
         benefits: [
-          'Lista completa de verifica��o',
-          'Formato PDF imprim�vel',
-          'Baseado em melhores pr�ticas',
+          'Lista completa de verificaÃ§Ã£o',
+          'Formato PDF imprimÃ­vel',
+          'Baseado em melhores prÃ¡ticas',
           'Atualizado regularmente'
         ]
       },
@@ -82,24 +82,24 @@ export const ctaTemplates: CTATemplate[] = [
   // Marketing Templates
   {
     id: 'marketing-leadmagnet-estrategia',
-    name: 'Estrat�gia - Marketing',
+    name: 'EstratÃ©gia - Marketing',
     category: 'marketing',
     type: 'leadmagnet',
-    description: 'Template para estrat�gias e planejamentos de marketing',
+    description: 'Template para estratÃ©gias e planejamentos de marketing',
     usageCount: 312,
     config: {
       type: 'leadmagnet',
       content: {
-        title: 'Estrat�gia Completa: {{articleTopic}}',
-        description: 'Descubra a estrat�gia completa sobre {{articleTopic}} que grandes empresas usam para gerar resultados.',
-        buttonText: 'Acessar Estrat�gia',
-        subtext: 'Conte�do exclusivo � Cases reais � Aplica��o pr�tica',
+        title: 'EstratÃ©gia Completa: {{articleTopic}}',
+        description: 'Descubra a estratÃ©gia completa sobre {{articleTopic}} que grandes empresas usam para gerar resultados.',
+        buttonText: 'Acessar EstratÃ©gia',
+        subtext: 'ConteÃºdo exclusivo Â· Cases reais Â· AplicaÃ§Ã£o prÃ¡tica',
         benefits: [
           'Framework comprovado',
           'Cases de sucesso reais',
-          'Templates para implementa��o',
-          'M�tricas para medir resultados',
-          'Cronograma de execu��o'
+          'Templates para implementaÃ§Ã£o',
+          'MÃ©tricas para medir resultados',
+          'Cronograma de execuÃ§Ã£o'
         ]
       },
       design: {
@@ -126,15 +126,15 @@ export const ctaTemplates: CTATemplate[] = [
     name: 'Newsletter Semanal - Tech',
     category: 'tecnologia',
     type: 'newsletter',
-    description: 'Newsletter semanal focada em tecnologia e programa��o',
+    description: 'Newsletter semanal focada em tecnologia e programaÃ§Ã£o',
     usageCount: 892,
     config: {
       type: 'newsletter',
       content: {
         title: 'Newsletter Tech Weekly',
-        description: 'Receba semanalmente as melhores novidades em tecnologia, tutoriais exclusivos e tend�ncias do mercado.',
+        description: 'Receba semanalmente as melhores novidades em tecnologia, tutoriais exclusivos e tendÃªncias do mercado.',
         buttonText: 'Quero Receber',
-        subtext: 'Toda ter�a-feira � Conte�do curado � Cancele quando quiser'
+        subtext: 'Toda terÃ§a-feira Â· ConteÃºdo curado Â· Cancele quando quiser'
       },
       design: {
         theme: 'gradient',
@@ -163,9 +163,9 @@ export const ctaTemplates: CTATemplate[] = [
       type: 'newsletter',
       content: {
         title: 'Marketing Insights',
-        description: 'Os melhores insights de marketing digital, cases de sucesso e tend�ncias direto na sua caixa de entrada.',
+        description: 'Os melhores insights de marketing digital, cases de sucesso e tendÃªncias direto na sua caixa de entrada.',
         buttonText: 'Inscrever-se',
-        subtext: 'Semanal � Cases exclusivos � Gratuito'
+        subtext: 'Semanal Â· Cases exclusivos Â· Gratuito'
       },
       design: {
         theme: 'gradient',
@@ -191,18 +191,18 @@ export const ctaTemplates: CTATemplate[] = [
     name: 'Curso Intensivo - Tech',
     category: 'tecnologia',
     type: 'course',
-    description: 'Promo��o de cursos intensivos de tecnologia',
+    description: 'PromoÃ§Ã£o de cursos intensivos de tecnologia',
     usageCount: 234,
     config: {
       type: 'course',
       content: {
         title: 'Curso Intensivo: {{articleTopic}}',
-        description: 'Domine {{articleTopic}} em apenas 4 semanas com nosso curso intensivo e pr�tico.',
+        description: 'Domine {{articleTopic}} em apenas 4 semanas com nosso curso intensivo e prÃ¡tico.',
         buttonText: 'Ver Curso',
-        subtext: 'Certificado incluso � Projetos pr�ticos � Suporte 24/7',
+        subtext: 'Certificado incluso Â· Projetos prÃ¡ticos Â· Suporte 24/7',
         benefits: [
-          '4 semanas de conte�do intensivo',
-          'Projetos pr�ticos do mercado',
+          '4 semanas de conteÃºdo intensivo',
+          'Projetos prÃ¡ticos do mercado',
           'Mentoria personalizada',
           'Certificado reconhecido',
           'Comunidade exclusiva'
@@ -229,23 +229,23 @@ export const ctaTemplates: CTATemplate[] = [
   // Consultation Templates
   {
     id: 'business-consultation-audit',
-    name: 'Consultoria Audit - Neg�cios',
+    name: 'Consultoria Audit - NegÃ³cios',
     category: 'negocios',
     type: 'consultation',
-    description: 'Consulta gratuita para audit de neg�cios',
+    description: 'Consulta gratuita para audit de negÃ³cios',
     usageCount: 156,
     config: {
       type: 'consultation',
       content: {
         title: 'Consultoria Gratuita de {{articleTopic}}',
-        description: 'Agende uma sess�o gratuita de 30 minutos para analisarmos seu {{articleTopic}} e identificar oportunidades.',
+        description: 'Agende uma sessÃ£o gratuita de 30 minutos para analisarmos seu {{articleTopic}} e identificar oportunidades.',
         buttonText: 'Agendar Consultoria',
-        subtext: '30 minutos � Online � Sem compromisso',
+        subtext: '30 minutos Â· Online Â· Sem compromisso',
         benefits: [
-          'An�lise completa da situa��o atual',
-          'Identifica��o de oportunidades',
-          'Plano de a��o personalizado',
-          'Recomenda��es espec�ficas'
+          'AnÃ¡lise completa da situaÃ§Ã£o atual',
+          'IdentificaÃ§Ã£o de oportunidades',
+          'Plano de aÃ§Ã£o personalizado',
+          'RecomendaÃ§Ãµes especÃ­ficas'
         ]
       },
       design: {
@@ -272,7 +272,7 @@ export const ctaTemplates: CTATemplate[] = [
     name: 'Oferta Limitada - Universal',
     category: 'universal',
     type: 'urgency',
-    description: 'Template de urg�ncia para ofertas com prazo limitado',
+    description: 'Template de urgÃªncia para ofertas com prazo limitado',
     usageCount: 423,
     config: {
       type: 'urgency',
@@ -280,7 +280,7 @@ export const ctaTemplates: CTATemplate[] = [
         title: 'Oferta Especial: {{articleTopic}}',
         description: 'Aproveite nossa oferta especial sobre {{articleTopic}} por tempo limitado.',
         buttonText: 'Aproveitar Oferta',
-        subtext: 'Oferta v�lida por tempo limitado'
+        subtext: 'Oferta vÃ¡lida por tempo limitado'
       },
       design: {
         theme: 'gradient',
@@ -300,18 +300,18 @@ export const ctaTemplates: CTATemplate[] = [
   },
   {
     id: 'course-urgency-enrollment',
-    name: '�ltimas Vagas - Curso',
+    name: 'Ãltimas Vagas - Curso',
     category: 'educacao',
     type: 'urgency',
-    description: 'Template de urg�ncia para matr�culas com vagas limitadas',
+    description: 'Template de urgÃªncia para matrÃ­culas com vagas limitadas',
     usageCount: 178,
     config: {
       type: 'urgency',
       content: {
-        title: '�ltimas Vagas: {{courseTitle}}',
-        description: 'Restam poucas vagas para o curso de {{courseTitle}}. Garante j� a sua!',
+        title: 'Ãltimas Vagas: {{courseTitle}}',
+        description: 'Restam poucas vagas para o curso de {{courseTitle}}. Garante jÃ¡ a sua!',
         buttonText: 'Garantir Vaga',
-        subtext: 'In�cio em breve � Turma limitada'
+        subtext: 'InÃ­cio em breve Â· Turma limitada'
       },
       design: {
         theme: 'gradient',
@@ -333,24 +333,24 @@ export const ctaTemplates: CTATemplate[] = [
   // Design Templates
   {
     id: 'design-leadmagnet-inspiration',
-    name: 'Inspira��o - Design',
+    name: 'InspiraÃ§Ã£o - Design',
     category: 'design',
     type: 'leadmagnet',
-    description: 'Cole��o de inspira��es e recursos de design',
+    description: 'ColeÃ§Ã£o de inspiraÃ§Ãµes e recursos de design',
     usageCount: 298,
     config: {
       type: 'leadmagnet',
       content: {
-        title: 'Cole��o: {{designTopic}}',
-        description: 'Baixe nossa cole��o exclusiva de {{designTopic}} com mais de 100 exemplos inspiradores.',
-        buttonText: 'Baixar Cole��o',
-        subtext: '100+ exemplos � Alta resolu��o � Uso comercial',
+        title: 'ColeÃ§Ã£o: {{designTopic}}',
+        description: 'Baixe nossa coleÃ§Ã£o exclusiva de {{designTopic}} com mais de 100 exemplos inspiradores.',
+        buttonText: 'Baixar ColeÃ§Ã£o',
+        subtext: '100+ exemplos Â· Alta resoluÃ§Ã£o Â· Uso comercial',
         benefits: [
           'Mais de 100 exemplos',
-          'Alta resolu��o (300 DPI)',
-          'Licen�a para uso comercial',
+          'Alta resoluÃ§Ã£o (300 DPI)',
+          'LicenÃ§a para uso comercial',
           'Categorizados por estilo',
-          'Atualiza��es mensais'
+          'AtualizaÃ§Ãµes mensais'
         ]
       },
       design: {
@@ -377,15 +377,15 @@ export const ctaTemplates: CTATemplate[] = [
     name: 'Newsletter Geral - Universal',
     category: 'universal',
     type: 'newsletter',
-    description: 'Template gen�rico para newsletter de qualquer nicho',
+    description: 'Template genÃ©rico para newsletter de qualquer nicho',
     usageCount: 756,
     config: {
       type: 'newsletter',
       content: {
         title: 'Newsletter {{siteName}}',
-        description: 'Receba conte�do exclusivo sobre {{mainTopic}} e fique sempre atualizado com as novidades.',
+        description: 'Receba conteÃºdo exclusivo sobre {{mainTopic}} e fique sempre atualizado com as novidades.',
         buttonText: 'Inscrever-se',
-        subtext: 'Conte�do exclusivo � Sem spam � Cancele quando quiser'
+        subtext: 'ConteÃºdo exclusivo Â· Sem spam Â· Cancele quando quiser'
       },
       design: {
         theme: 'gradient',
@@ -409,7 +409,7 @@ export const templateCategories = [
   {
     id: 'tecnologia',
     name: 'Tecnologia',
-    description: 'Templates para conte�do de tecnologia, programa��o e desenvolvimento',
+    description: 'Templates para conteÃºdo de tecnologia, programaÃ§Ã£o e desenvolvimento',
     color: '#3b82f6'
   },
   {
@@ -421,25 +421,25 @@ export const templateCategories = [
   {
     id: 'design',
     name: 'Design',
-    description: 'Templates para design gr�fico, UX/UI e criatividade',
+    description: 'Templates para design grÃ¡fico, UX/UI e criatividade',
     color: '#a855f7'
   },
   {
     id: 'negocios',
-    name: 'Neg�cios',
-    description: 'Templates para empreendedorismo, gest�o e consultoria',
+    name: 'NegÃ³cios',
+    description: 'Templates para empreendedorismo, gestÃ£o e consultoria',
     color: '#059669'
   },
   {
     id: 'educacao',
-    name: 'Educa��o',
-    description: 'Templates para cursos, treinamentos e conte�do educacional',
+    name: 'EducaÃ§Ã£o',
+    description: 'Templates para cursos, treinamentos e conteÃºdo educacional',
     color: '#d97706'
   },
   {
     id: 'universal',
     name: 'Universal',
-    description: 'Templates gen�ricos que funcionam para qualquer nicho',
+    description: 'Templates genÃ©ricos que funcionam para qualquer nicho',
     color: '#6b7280'
   }
 ];

@@ -33,6 +33,7 @@ export interface EmailParams {
   lead_magnet_title?: string;
   download_url?: string;
   user_preferences?: string[];
+  [key: string]: unknown; // Add index signature for EmailJS compatibility
 }
 
 // Send lead magnet email
@@ -49,7 +50,7 @@ export const sendLeadMagnetEmail = async (params: {
       to_email: params.email,
       to_name: params.name || 'Caro(a) visitante',
       subject: `Seu material: ${params.leadMagnetTitle}`,
-      message: `Obrigado por baixar "${params.leadMagnetTitle}". Seu material está anexado ou disponível no link abaixo.`,
+      message: `Obrigado por baixar "${params.leadMagnetTitle}". Seu material estï¿½ anexado ou disponï¿½vel no link abaixo.`,
       from_name: 'Stelarow Habilidade',
       reply_to: 'noreply@stelarowhabilidade.com',
       template_type: 'leadmagnet',
@@ -82,8 +83,8 @@ export const sendNewsletterConfirmation = async (params: {
     const templateParams: EmailParams = {
       to_email: params.email,
       to_name: params.name || 'Novo assinante',
-      subject: 'Bem-vindo(a) à Newsletter Stelarow Habilidade!',
-      message: 'Obrigado por se inscrever em nossa newsletter. Você receberá conteúdo exclusivo regularmente.',
+      subject: 'Bem-vindo(a) ï¿½ Newsletter Stelarow Habilidade!',
+      message: 'Obrigado por se inscrever em nossa newsletter. Vocï¿½ receberï¿½ conteï¿½do exclusivo regularmente.',
       from_name: 'Stelarow Habilidade',
       reply_to: 'newsletter@stelarowhabilidade.com',
       template_type: 'newsletter',
@@ -121,29 +122,29 @@ export const sendNotificationEmail = async (params: {
           Novo download de lead magnet:
           
           Email: ${params.data.email}
-          Nome: ${params.data.name || 'Não informado'}
+          Nome: ${params.data.name || 'Nï¿½o informado'}
           Material: ${params.data.leadMagnetTitle}
           Tipo: ${params.data.leadMagnetType}
           Data: ${new Date().toLocaleString('pt-BR')}
           
           CTA ID: ${params.data.ctaId}
-          Página: ${params.data.pageUrl}
+          Pï¿½gina: ${params.data.pageUrl}
         `;
         break;
         
       case 'new_subscriber':
-        subject = 'Nova Inscrição Newsletter';
+        subject = 'Nova Inscriï¿½ï¿½o Newsletter';
         message = `
-          Nova inscrição na newsletter:
+          Nova inscriï¿½ï¿½o na newsletter:
           
           Email: ${params.data.email}
-          Nome: ${params.data.name || 'Não informado'}
-          Preferências: ${params.data.preferences?.join(', ') || 'Nenhuma'}
+          Nome: ${params.data.name || 'Nï¿½o informado'}
+          Preferï¿½ncias: ${params.data.preferences?.join(', ') || 'Nenhuma'}
           Origem: ${params.data.source || 'Website'}
           Data: ${new Date().toLocaleString('pt-BR')}
           
           CTA ID: ${params.data.ctaId}
-          Página: ${params.data.pageUrl}
+          Pï¿½gina: ${params.data.pageUrl}
         `;
         break;
         
@@ -154,10 +155,10 @@ export const sendNotificationEmail = async (params: {
           
           CTA ID: ${params.data.ctaId}
           Tipo: ${params.data.ctaType}
-          Conversões (últimas 24h): ${params.data.conversions}
-          Taxa de conversão: ${params.data.conversionRate}%
+          Conversï¿½es (ï¿½ltimas 24h): ${params.data.conversions}
+          Taxa de conversï¿½o: ${params.data.conversionRate}%
           
-          Considere ampliar a promoção ou criar CTAs similares.
+          Considere ampliar a promoï¿½ï¿½o ou criar CTAs similares.
         `;
         break;
     }

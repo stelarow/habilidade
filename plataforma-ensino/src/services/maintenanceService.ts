@@ -1,17 +1,17 @@
 /**
- * MaintenanceService - Sistema de gerenciamento de janelas de manutenÁ„o
+ * MaintenanceService - Sistema de gerenciamento de janelas de manuten√ß√£o
  * Feature: FEATURE_003_MAINTENANCE_MODE
  * 
- * Respons·vel por:
- * - Agendar e gerenciar janelas de manutenÁ„o
- * - Controlar bypass de usu·rios administrativos
- * - Enviar notificaÁıes autom·ticas
+ * Respons√°vel por:
+ * - Agendar e gerenciar janelas de manuten√ß√£o
+ * - Controlar bypass de usu√°rios administrativos
+ * - Enviar notifica√ß√µes autom√°ticas
  * - Gerenciar cache de status para performance
  */
 
 import { createClient } from '@/lib/supabase/client';
-import { createServerClient } from '@/lib/supabase/server';
-import type { Database } from '@/types/database';
+import { createClient as createServerClient } from '@/lib/supabase/server';
+// import type { Database } from '@/types/database'; // Type file doesn't exist
 
 // Types
 export interface MaintenanceWindow {
@@ -104,7 +104,7 @@ export class MaintenanceService {
   }
 
   /**
-   * Agendar nova janela de manutenÁ„o
+   * Agendar nova janela de manuten√ß√£o
    */
   async scheduleMaintenanceWindow(data: {
     title: string;
@@ -167,7 +167,7 @@ export class MaintenanceService {
   }
 
   /**
-   * Ativar modo de manutenÁ„o manualmente ou automaticamente
+   * Ativar modo de manuten√ß√£o manualmente ou automaticamente
    */
   async activateMaintenanceMode(windowId?: string): Promise<MaintenanceWindow> {
     try {
@@ -224,7 +224,7 @@ export class MaintenanceService {
   }
 
   /**
-   * Desativar modo de manutenÁ„o
+   * Desativar modo de manuten√ß√£o
    */
   async deactivateMaintenanceMode(windowId?: string): Promise<void> {
     try {
@@ -256,7 +256,7 @@ export class MaintenanceService {
   }
 
   /**
-   * Verificar status atual do sistema de manutenÁ„o
+   * Verificar status atual do sistema de manuten√ß√£o
    */
   async checkMaintenanceStatus(userId?: string): Promise<MaintenanceStatus> {
     try {
@@ -310,7 +310,7 @@ export class MaintenanceService {
   }
 
   /**
-   * Adicionar usu·rio ao bypass tempor·rio
+   * Adicionar usu√°rio ao bypass tempor√°rio
    */
   async addBypassUser(data: {
     userId: string;
@@ -344,7 +344,7 @@ export class MaintenanceService {
   }
 
   /**
-   * Remover usu·rio do bypass
+   * Remover usu√°rio do bypass
    */
   async removeBypassUser(userId: string, maintenanceWindowId?: string): Promise<void> {
     try {
@@ -371,7 +371,7 @@ export class MaintenanceService {
   }
 
   /**
-   * Enviar notificaÁıes de manutenÁ„o
+   * Enviar notifica√ß√µes de manuten√ß√£o
    */
   async sendMaintenanceNotifications(
     windowId: string, 
@@ -421,7 +421,7 @@ export class MaintenanceService {
   }
 
   /**
-   * Listar janelas de manutenÁ„o
+   * Listar janelas de manuten√ß√£o
    */
   async listMaintenanceWindows(status?: MaintenanceWindow['status']): Promise<MaintenanceWindow[]> {
     try {
@@ -493,23 +493,23 @@ export class MaintenanceService {
   private getNotificationTemplate(type: string, maintenance: any): NotificationTemplate {
     const templates = {
       scheduled: {
-        subject: `ManutenÁ„o Programada: ${maintenance.title}`,
-        body: `Ol·,\n\nUma manutenÁ„o foi programada em nossa plataforma.\n\nDetalhes:\n- TÌtulo: ${maintenance.title}\n- DescriÁ„o: ${maintenance.description || 'N/A'}\n- InÌcio: ${new Date(maintenance.start_time).toLocaleString('pt-BR')}\n- Fim: ${new Date(maintenance.end_time).toLocaleString('pt-BR')}\n- ServiÁos afetados: ${maintenance.affected_services.join(', ')}\n\nDurante este perÌodo, alguns serviÁos podem ficar indisponÌveis.\n\nObrigado pela compreens„o.`,
+        subject: `Manuten√ß√£o Programada: ${maintenance.title}`,
+        body: `Ol√°,\n\nUma manuten√ß√£o foi programada em nossa plataforma.\n\nDetalhes:\n- T√≠tulo: ${maintenance.title}\n- Descri√ß√£o: ${maintenance.description || 'N/A'}\n- In√≠cio: ${new Date(maintenance.start_time).toLocaleString('pt-BR')}\n- Fim: ${new Date(maintenance.end_time).toLocaleString('pt-BR')}\n- Servi√ßos afetados: ${maintenance.affected_services.join(', ')}\n\nDurante este per√≠odo, alguns servi√ßos podem ficar indispon√≠veis.\n\nObrigado pela compreens√£o.`,
         variables: { title: maintenance.title, description: maintenance.description }
       },
       activated: {
-        subject: `ManutenÁ„o Ativada: ${maintenance.title}`,
-        body: `A manutenÁ„o "${maintenance.title}" foi ativada.\n\nServiÁos afetados: ${maintenance.affected_services.join(', ')}\nPrevis„o de conclus„o: ${new Date(maintenance.end_time).toLocaleString('pt-BR')}`,
+        subject: `Manuten√ß√£o Ativada: ${maintenance.title}`,
+        body: `A manuten√ß√£o "${maintenance.title}" foi ativada.\n\nServi√ßos afetados: ${maintenance.affected_services.join(', ')}\nPrevis√£o de conclus√£o: ${new Date(maintenance.end_time).toLocaleString('pt-BR')}`,
         variables: { title: maintenance.title }
       },
       completed: {
-        subject: `ManutenÁ„o ConcluÌda: ${maintenance.title}`,
-        body: `A manutenÁ„o "${maintenance.title}" foi concluÌda com sucesso.\n\nTodos os serviÁos est„o funcionando normalmente.`,
+        subject: `Manuten√ß√£o Conclu√≠da: ${maintenance.title}`,
+        body: `A manuten√ß√£o "${maintenance.title}" foi conclu√≠da com sucesso.\n\nTodos os servi√ßos est√£o funcionando normalmente.`,
         variables: { title: maintenance.title }
       },
       reminder: {
-        subject: `Lembrete: ManutenÁ„o em 1 hora - ${maintenance.title}`,
-        body: `Lembramos que a manutenÁ„o "${maintenance.title}" ser· iniciada em aproximadamente 1 hora.\n\nInÌcio previsto: ${new Date(maintenance.start_time).toLocaleString('pt-BR')}`,
+        subject: `Lembrete: Manuten√ß√£o em 1 hora - ${maintenance.title}`,
+        body: `Lembramos que a manuten√ß√£o "${maintenance.title}" ser√° iniciada em aproximadamente 1 hora.\n\nIn√≠cio previsto: ${new Date(maintenance.start_time).toLocaleString('pt-BR')}`,
         variables: { title: maintenance.title }
       }
     };
