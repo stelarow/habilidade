@@ -231,9 +231,10 @@ function CoursePage() {
       <meta name="twitter:image" content={metadata.twitter.image} />
       
       {/* Structured Data */}
-      <script type="application/ld+json">
-        {JSON.stringify(metadata.structuredData)}
-      </script>
+      <script 
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(metadata.structuredData) }}
+      />
       
       <div 
         className="min-h-screen bg-gradient-radial from-gray-900 via-black to-gray-900"
