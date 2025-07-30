@@ -28,6 +28,7 @@ const SEOHead = ({
   const safeDescription = String(description || 'Transforme sua carreira com cursos de tecnologia, design e negócios. Educação de qualidade para o mercado digital.');
   const safeKeywords = keywords ? String(keywords).trim() : '';
   const safeAuthor = String(author || 'Escola Habilidade');
+  
   // Base URL - adjust for production
   const baseUrl = process.env.NODE_ENV === 'production' 
     ? 'https://escolahabilidade.com.br'
@@ -84,21 +85,31 @@ const SEOHead = ({
     return baseSchema;
   };
 
+  // Pre-render conditional elements to avoid React Helmet issues
+  const keywordsMeta = safeKeywords ? <meta name="keywords" content={safeKeywords} /> : null;
+  const robotsMeta = noindex ? <meta name="robots" content="noindex, nofollow" /> : null;
+  
+  const articleMetas = [];
+  if (type === 'article' && publishedDate) {
+    articleMetas.push(<meta key="published" property="article:published_time" content={publishedDate} />);
+    if (modifiedDate) {
+      articleMetas.push(<meta key="modified" property="article:modified_time" content={modifiedDate} />);
+    }
+    articleMetas.push(<meta key="author" property="article:author" content={safeAuthor} />);
+    articleMetas.push(<meta key="section" property="article:section" content="Blog" />);
+  }
+
   return (
     <Helmet>
-      {/* Basic Meta Tags */}
       <title>{safeTitle}</title>
       <meta name="description" content={safeDescription} />
-      {safeKeywords && <meta name="keywords" content={safeKeywords} />}
+      {keywordsMeta}
       <meta name="author" content={safeAuthor} />
       
-      {/* Canonical URL */}
       <link rel="canonical" href={canonicalUrl} />
       
-      {/* Robots */}
-      {noindex && <meta name="robots" content="noindex, nofollow" />}
+      {robotsMeta}
       
-      {/* Open Graph Tags */}
       <meta property="og:type" content={type} />
       <meta property="og:title" content={safeTitle} />
       <meta property="og:description" content={safeDescription} />
@@ -109,7 +120,6 @@ const SEOHead = ({
       <meta property="og:site_name" content="Escola Habilidade" />
       <meta property="og:locale" content="pt_BR" />
       
-      {/* Twitter Card Tags */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={safeTitle} />
       <meta name="twitter:description" content={safeDescription} />
@@ -117,23 +127,11 @@ const SEOHead = ({
       <meta name="twitter:site" content="@escolahabilidade" />
       <meta name="twitter:creator" content="@escolahabilidade" />
       
-      {/* Article specific meta tags */}
-      {type === 'article' && publishedDate && (
-        <>
-          <meta property="article:published_time" content={publishedDate} />
-          {modifiedDate && (
-            <meta property="article:modified_time" content={modifiedDate} />
-          )}
-          <meta property="article:author" content={safeAuthor} />
-          <meta property="article:section" content="Blog" />
-        </>
-      )}
+      {articleMetas}
       
-      {/* Additional SEO Meta Tags */}
       <meta name="format-detection" content="telephone=no" />
       <meta name="theme-color" content="#d400ff" />
       
-      {/* Structured Data */}
       <script 
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(generateSchemaData()) }}
