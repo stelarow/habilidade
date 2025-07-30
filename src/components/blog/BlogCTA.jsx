@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Clock, Users, Star, BookOpen } from 'phosphor-react';
 import LazyImage from '../LazyImage';
-import { coursesData } from '../../data/coursesData';
+import COURSES_DATA from '../../data/coursesData';
 import { useCTAResponsive } from '../../hooks/useCTAResponsive';
 
 /**
@@ -29,7 +29,7 @@ const BlogCTA = ({
   // Fun��o para encontrar curso relacionado
   const findRelatedCourse = (post) => {
     if (post?.cta_course_id) {
-      return coursesData?.find(course => course.basicInfo.id === post.cta_course_id);
+      return COURSES_DATA?.find(course => course.basicInfo.id === post.cta_course_id);
     }
     
     // Fallback: tentar encontrar por matching de conte�do
@@ -50,7 +50,7 @@ const BlogCTA = ({
 
       for (const [courseSlug, keywords] of Object.entries(courseKeywords)) {
         if (keywords.some(keyword => content.includes(keyword))) {
-          return coursesData?.find(course => course.basicInfo.slug === courseSlug);
+          return COURSES_DATA?.find(course => course.basicInfo.slug === courseSlug);
         }
       }
     }

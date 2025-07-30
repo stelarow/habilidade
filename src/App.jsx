@@ -12,7 +12,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import AccessibilityControls from './components/AccessibilityControls';
 import QueryProvider from './providers/QueryProvider';
-import { HelmetProvider } from 'react-helmet-async';
+import { HelmetProvider } from '@dr.pogodin/react-helmet';
 
 // Importações com lazy loading para code splitting
 const Home = React.lazy(() => import('./pages/Home'));

@@ -70,4 +70,3 @@ const BlogEmpty = ({ hasFilters, onClearFilters }) => {
 };
 
 export default BlogEmpty;
-EOF < /dev/null

@@ -4,27 +4,26 @@
 export const whatsappTemplates = {
   // Generic template for general inquiries
   generic: {
-    message: 'Vi o site da Escola Habilidade e gostaria de saber mais sobre os cursos disponíveis. Pode me ajudar? =
-',
+    message: 'Vi o site da Escola Habilidade e gostaria de saber mais sobre os cursos disponÃ­veis. Pode me ajudar?',
     includeGreeting: true
   },
 
   // Templates by context (where the contact originated)
   byContext: {
     'floating-button': {
-      message: 'Vi seu site e tenho interesse nos cursos da Escola Habilidade. Pode me dar mais informações?',
+      message: 'Vi seu site e tenho interesse nos cursos da Escola Habilidade. Pode me dar mais informaÃ§Ãµes?',
       includeGreeting: true
     },
     'contact-section': {
-      message: 'Li o artigo "{article}" e fiquei interessado(a) em saber mais sobre os cursos relacionados. Vocês podem me ajudar?',
+      message: 'Li o artigo "{article}" e fiquei interessado(a) em saber mais sobre os cursos relacionados. VocÃªs podem me ajudar?',
       includeGreeting: true
     },
     'article': {
-      message: 'Acabei de ler o artigo "{article}" e gostaria de conversar sobre como posso me aprofundar nessa área através dos cursos de vocês.',
+      message: 'Acabei de ler o artigo "{article}" e gostaria de conversar sobre como posso me aprofundar nessa Ã¡rea atravÃ©s dos cursos de vocÃªs.',
       includeGreeting: true
     },
     'quick-contact': {
-      message: 'Gostaria de uma consulta rápida sobre os cursos da Escola Habilidade. Podem me atender?',
+      message: 'Gostaria de uma consulta rÃ¡pida sobre os cursos da Escola Habilidade. Podem me atender?',
       includeGreeting: true
     },
     'consultation-widget': {
@@ -36,15 +35,15 @@ export const whatsappTemplates = {
   // Templates by article category
   byCategory: {
     'tecnologia': {
-      message: 'Li sobre {category} no artigo "{article}" e quero saber mais sobre os cursos de tecnologia de vocês. Quais são as opções disponíveis?',
+      message: 'Li sobre {category} no artigo "{article}" e quero saber mais sobre os cursos de tecnologia de vocÃªs. Quais sÃ£o as opÃ§Ãµes disponÃ­veis?',
       includeGreeting: true
     },
     'educacao': {
-      message: 'O artigo "{article}" me interessou muito! Gostaria de saber como posso me capacitar melhor na área educacional com os cursos de vocês.',
+      message: 'O artigo "{article}" me interessou muito! Gostaria de saber como posso me capacitar melhor na Ã¡rea educacional com os cursos de vocÃªs.',
       includeGreeting: true
     },
     'carreira': {
-      message: 'Depois de ler "{article}", percebi que preciso me qualificar melhor. Quais cursos vocês recomendam para desenvolvimento de carreira?',
+      message: 'Depois de ler "{article}", percebi que preciso me qualificar melhor. Quais cursos vocÃªs recomendam para desenvolvimento de carreira?',
       includeGreeting: true
     },
     'design': {
@@ -52,19 +51,19 @@ export const whatsappTemplates = {
       includeGreeting: true
     },
     'programacao': {
-      message: 'O artigo "{article}" me motivou a aprender programação! Quais são os cursos disponíveis nessa área?',
+      message: 'O artigo "{article}" me motivou a aprender programaÃ§Ã£o! Quais sÃ£o os cursos disponÃ­veis nessa Ã¡rea?',
       includeGreeting: true
     },
     'marketing': {
-      message: 'Li sobre {category} no artigo "{article}" e quero me especializar em marketing digital. Que cursos vocês oferecem?',
+      message: 'Li sobre {category} no artigo "{article}" e quero me especializar em marketing digital. Que cursos vocÃªs oferecem?',
       includeGreeting: true
     },
     'inteligencia-artificial': {
-      message: 'Após ler "{article}", fiquei fascinado(a) com IA! Vocês têm cursos nessa área? Como posso começar?',
+      message: 'ApÃ³s ler "{article}", fiquei fascinado(a) com IA! VocÃªs tÃªm cursos nessa Ã¡rea? Como posso comeÃ§ar?',
       includeGreeting: true
     },
     'business-intelligence': {
-      message: 'O artigo "{article}" sobre BI me interessou muito. Gostaria de saber sobre os cursos de análise de dados de vocês.',
+      message: 'O artigo "{article}" sobre BI me interessou muito. Gostaria de saber sobre os cursos de anÃ¡lise de dados de vocÃªs.',
       includeGreeting: true
     }
   },
@@ -88,7 +87,7 @@ export const whatsappTemplates = {
       includeGreeting: true
     },
     'course-info': {
-      message: 'Preciso de informações detalhadas sobre os cursos: valores, duração, metodologia e certificação.',
+      message: 'Preciso de informaÃ§Ãµes detalhadas sobre os cursos: valores, duraÃ§Ã£o, metodologia e certificaÃ§Ã£o.',
       includeGreeting: true
     },
     'enrollment-help': {
@@ -96,11 +95,11 @@ export const whatsappTemplates = {
       includeGreeting: true
     },
     'payment-options': {
-      message: 'Gostaria de saber sobre formas de pagamento, parcelamento e se vocês têm alguma promoção vigente.',
+      message: 'Gostaria de saber sobre formas de pagamento, parcelamento e se vocÃªs tÃªm alguma promoÃ§Ã£o vigente.',
       includeGreeting: true
     },
     'technical-support': {
-      message: 'Preciso de ajuda técnica/suporte. Podem me atender?',
+      message: 'Preciso de ajuda tÃ©cnica/suporte. Podem me atender?',
       includeGreeting: true
     }
   },
@@ -109,7 +108,7 @@ export const whatsappTemplates = {
   timeSpecific: {
     morning: {
       prefix: 'Bom dia!',
-      suffix: 'Aproveitando a manhã para pesquisar sobre cursos!'
+      suffix: 'Aproveitando a manhÃ£ para pesquisar sobre cursos!'
     },
     afternoon: {
       prefix: 'Boa tarde!',
@@ -120,8 +119,8 @@ export const whatsappTemplates = {
       suffix: 'Aproveitando a noite para planejar meu desenvolvimento profissional.'
     },
     weekend: {
-      prefix: 'Olá!',
-      suffix: 'Aproveitando o fim de semana para pesquisar sobre qualificação profissional.'
+      prefix: 'OlÃ¡!',
+      suffix: 'Aproveitando o fim de semana para pesquisar sobre qualificaÃ§Ã£o profissional.'
     }
   }
 };
@@ -169,23 +168,23 @@ export const getTemplate = (criteria = {}) => {
  */
 export const courseTemplates = {
   'projetista-3d': {
-    message: 'Vi sobre design 3D e me interessei pelo curso de Projetista 3D. Quais são os pré-requisitos e como funciona?',
+    message: 'Vi sobre design 3D e me interessei pelo curso de Projetista 3D. Quais sÃ£o os prÃ©-requisitos e como funciona?',
     relatedKeywords: ['3d', 'design', 'modelagem', 'autocad', 'sketchup']
   },
   'edicao-video': {
-    message: 'Tenho interesse em edição de vídeo. O curso de vocês ensina quais programas? Adobe Premiere, After Effects?',
+    message: 'Tenho interesse em ediÃ§Ã£o de vÃ­deo. O curso de vocÃªs ensina quais programas? Adobe Premiere, After Effects?',
     relatedKeywords: ['video', 'edicao', 'premiere', 'after effects', 'audiovisual']
   },
   'informatica': {
-    message: 'Preciso melhorar minhas habilidades em informática. O curso cobre Office, internet e conceitos básicos?',
+    message: 'Preciso melhorar minhas habilidades em informÃ¡tica. O curso cobre Office, internet e conceitos bÃ¡sicos?',
     relatedKeywords: ['informatica', 'office', 'windows', 'basico', 'computador']
   },
   'design-grafico': {
-    message: 'Quero trabalhar com design gráfico. O curso ensina Photoshop, Illustrator e conceitos de design?',
+    message: 'Quero trabalhar com design grÃ¡fico. O curso ensina Photoshop, Illustrator e conceitos de design?',
     relatedKeywords: ['design', 'grafico', 'photoshop', 'illustrator', 'visual']
   },
   'programacao': {
-    message: 'Tenho interesse em aprender programação. Quais linguagens vocês ensinam? É para iniciantes?',
+    message: 'Tenho interesse em aprender programaÃ§Ã£o. Quais linguagens vocÃªs ensinam? Ã‰ para iniciantes?',
     relatedKeywords: ['programacao', 'codigo', 'desenvolvimento', 'web', 'javascript']
   },
   'marketing-digital': {
@@ -193,11 +192,11 @@ export const courseTemplates = {
     relatedKeywords: ['marketing', 'digital', 'redes sociais', 'google ads', 'seo']
   },
   'inteligencia-artificial': {
-    message: 'IA está em alta! O curso de vocês é prático? Ensina Machine Learning e aplicações reais?',
+    message: 'IA estÃ¡ em alta! O curso de vocÃªs Ã© prÃ¡tico? Ensina Machine Learning e aplicaÃ§Ãµes reais?',
     relatedKeywords: ['ia', 'inteligencia artificial', 'machine learning', 'python', 'dados']
   },
   'business-intelligence': {
-    message: 'Trabalho com dados e quero me especializar em BI. Vocês ensinam Power BI, Tableau, análise de dados?',
+    message: 'Trabalho com dados e quero me especializar em BI. VocÃªs ensinam Power BI, Tableau, anÃ¡lise de dados?',
     relatedKeywords: ['bi', 'business intelligence', 'dados', 'power bi', 'dashboard']
   }
 };
