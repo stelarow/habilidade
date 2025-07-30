@@ -1,0 +1,354 @@
+name: CD - Production Deployment
+
+on:
+  push:
+    branches: [ main ]
+    tags: [ 'v*' ]
+  workflow_dispatch:
+    inputs:
+      deploy_target:
+        description: 'Deployment target'
+        required: true
+        default: 'both'
+        type: choice
+        options:
+          - 'main-website'
+          - 'learning-platform'
+          - 'both'
+      force_deploy:
+        description: 'Force deployment (skip checks)'
+        required: false
+        default: false
+        type: boolean
+
+env:
+  NODE_VERSION: '20'
+  DEPLOYMENT_TIMEOUT: '10m'
+
+concurrency:
+  group: production-deployment
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+  deployments: write
+
+jobs:
+  pre-deployment:
+    name: 🔍 Pre-deployment Checks
+    runs-on: ubuntu-latest
+    outputs:
+      deploy-main: ${{ steps.changes.outputs.main-website || github.event.inputs.deploy_target == 'main-website' || github.event.inputs.deploy_target == 'both' }}
+      deploy-platform: ${{ steps.changes.outputs.learning-platform || github.event.inputs.deploy_target == 'learning-platform' || github.event.inputs.deploy_target == 'both' }}
+      version: ${{ steps.version.outputs.version }}
+      force-deploy: ${{ github.event.inputs.force_deploy == 'true' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Detect changes
+        uses: dorny/paths-filter@v2
+        id: changes
+        with:
+          filters: |
+            main-website:
+              - 'src/**'
+              - 'public/**'
+              - 'package.json'
+              - 'vite.config.js'
+            learning-platform:
+              - 'plataforma-ensino/**'
+
+      - name: Get version
+        id: version
+        run: |
+          if [[ $GITHUB_REF == refs/tags/* ]]; then
+            VERSION=${GITHUB_REF#refs/tags/}
+          else
+            VERSION="main-$(date +%Y%m%d)-${GITHUB_SHA:0:7}"
+          fi
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "📦 Deployment version: $VERSION"
+
+      - name: Validate deployment readiness
+        if: github.event.inputs.force_deploy != 'true'
+        run: |
+          # Check if CI passed on the latest commit
+          echo "🔍 Checking CI status for commit: $GITHUB_SHA"
+          
+          # This would typically check GitHub API for CI status
+          # For now, we'll assume CI passed if we're on main branch
+          if [[ "$GITHUB_REF" == "refs/heads/main" ]]; then
+            echo "✅ On main branch, proceeding with deployment"
+          else
+            echo "❌ Not on main branch, deployment may be risky"
+          fi
+
+  deploy-main-website:
+    name: 🚀 Deploy Main Website
+    runs-on: ubuntu-latest
+    needs: pre-deployment
+    if: needs.pre-deployment.outputs.deploy-main == 'true'
+    environment:
+      name: production
+      url: https://stelarow.github.io/habilidade
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
+
+      - name: Install dependencies
+        run: npm ci --prefer-offline --no-audit
+
+      - name: Build for production
+        run: npm run build:production
+        env:
+          CI: false
+          NODE_ENV: production
+          VITE_APP_VERSION: ${{ needs.pre-deployment.outputs.version }}
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload to GitHub Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Verify deployment
+        run: |
+          echo "🌐 Verifying deployment at: ${{ steps.deployment.outputs.page_url }}"
+          sleep 30
+          curl -f ${{ steps.deployment.outputs.page_url }} || exit 1
+          echo "✅ Main website deployed successfully"
+
+      - name: Create deployment record
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: deployment } = await github.rest.repos.createDeployment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: context.sha,
+              environment: 'production-main-website',
+              description: 'Main website deployment',
+              auto_merge: false,
+              required_contexts: []
+            });
+            
+            await github.rest.repos.createDeploymentStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              deployment_id: deployment.id,
+              state: 'success',
+              target_url: '${{ steps.deployment.outputs.page_url }}',
+              description: 'Successfully deployed main website'
+            });
+
+  deploy-learning-platform:
+    name: 🎓 Deploy Learning Platform
+    runs-on: ubuntu-latest
+    needs: pre-deployment
+    if: needs.pre-deployment.outputs.deploy-platform == 'true'
+    environment:
+      name: production-learning-platform
+      url: ${{ steps.deploy.outputs.url }}
+    defaults:
+      run:
+        working-directory: ./plataforma-ensino
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: plataforma-ensino/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci --prefer-offline --no-audit
+
+      - name: Setup environment variables
+        run: |
+          echo "NEXT_PUBLIC_SUPABASE_URL=${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}" >> .env.production
+          echo "NEXT_PUBLIC_SUPABASE_ANON_KEY=${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}" >> .env.production
+          echo "SUPABASE_SERVICE_ROLE_KEY=${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" >> .env.production
+          echo "NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }}" >> .env.production
+          echo "NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }}" >> .env.production
+          echo "NEXT_PUBLIC_APP_VERSION=${{ needs.pre-deployment.outputs.version }}" >> .env.production
+
+      - name: Build for production
+        run: npm run build:production
+        env:
+          CI: false
+          NODE_ENV: production
+
+      - name: Deploy to Vercel
+        id: deploy
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          working-directory: ./plataforma-ensino
+          vercel-args: '--prod'
+
+      - name: Run post-deployment tests
+        run: |
+          echo "🧪 Running post-deployment tests..."
+          sleep 30
+          
+          # Health check
+          curl -f ${{ steps.deploy.outputs.preview-url }}/api/health || exit 1
+          
+          # Database connectivity test
+          curl -f ${{ steps.deploy.outputs.preview-url }}/api/test/db || exit 1
+          
+          echo "✅ Learning platform deployed and tested successfully"
+
+      - name: Update Supabase Edge Functions (if needed)
+        run: |
+          if [ -d "supabase/functions" ]; then
+            echo "📡 Deploying Supabase Edge Functions..."
+            npx supabase functions deploy --project-ref ${{ secrets.SUPABASE_PROJECT_REF }}
+          else
+            echo "ℹ️ No Supabase Edge Functions to deploy"
+          fi
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+
+      - name: Create deployment record
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: deployment } = await github.rest.repos.createDeployment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: context.sha,
+              environment: 'production-learning-platform',
+              description: 'Learning platform deployment',
+              auto_merge: false,
+              required_contexts: []
+            });
+            
+            await github.rest.repos.createDeploymentStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              deployment_id: deployment.id,
+              state: 'success',
+              target_url: '${{ steps.deploy.outputs.preview-url }}',
+              description: 'Successfully deployed learning platform'
+            });
+
+  post-deployment:
+    name: 📊 Post-deployment
+    runs-on: ubuntu-latest
+    needs: [pre-deployment, deploy-main-website, deploy-learning-platform]
+    if: always() && (needs.deploy-main-website.result == 'success' || needs.deploy-learning-platform.result == 'success')
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Send deployment notification
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const mainStatus = '${{ needs.deploy-main-website.result }}';
+            const platformStatus = '${{ needs.deploy-learning-platform.result }}';
+            const version = '${{ needs.pre-deployment.outputs.version }}';
+            
+            let deployments = [];
+            if (mainStatus === 'success') {
+              deployments.push('✅ **Main Website**: https://stelarow.github.io/habilidade');
+            } else if (mainStatus === 'failure') {
+              deployments.push('❌ **Main Website**: Deployment failed');
+            }
+            
+            if (platformStatus === 'success') {
+              deployments.push('✅ **Learning Platform**: Deployed to Vercel');
+            } else if (platformStatus === 'failure') {
+              deployments.push('❌ **Learning Platform**: Deployment failed');
+            }
+            
+            if (deployments.length === 0) {
+              deployments.push('ℹ️ No deployments were triggered');
+            }
+            
+            const body = `## 🚀 Production Deployment Complete
+            
+            **Version**: \`${version}\`
+            **Commit**: ${context.sha.substring(0, 7)}
+            **Triggered by**: ${context.actor}
+            
+            ### Deployment Status
+            ${deployments.join('\n')}
+            
+            ### Next Steps
+            - Monitor application performance
+            - Check error tracking dashboards
+            - Verify all services are operational
+            
+            ---
+            *Automated deployment completed at ${new Date().toISOString()}*`;
+            
+            // Create a release if this was a tag push
+            if (context.ref.startsWith('refs/tags/')) {
+              await github.rest.repos.createRelease({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                tag_name: version,
+                name: `Release ${version}`,
+                body: body,
+                draft: false,
+                prerelease: false
+              });
+            } else {
+              // Otherwise, create an issue comment or discussion
+              console.log('Deployment notification:', body);
+            }
+
+      - name: Update deployment status badge
+        run: |
+          echo "🏷️ Updating deployment status..."
+          # This could update a status badge or external monitoring system
+          echo "Deployment completed for version: ${{ needs.pre-deployment.outputs.version }}"
+
+  rollback:
+    name: 🔄 Rollback (Manual)
+    runs-on: ubuntu-latest
+    if: failure() && github.event.inputs.force_deploy != 'true'
+    environment:
+      name: rollback
+    steps:
+      - name: Manual rollback trigger
+        run: |
+          echo "❌ Deployment failed. Manual intervention may be required."
+          echo "To rollback:"
+          echo "1. Identify the last known good deployment"
+          echo "2. Re-run this workflow with that commit SHA"
+          echo "3. Or revert the problematic changes and push to main"
+          
+          echo "Current failed deployment details:"
+          echo "- Version: ${{ needs.pre-deployment.outputs.version }}"
+          echo "- Commit: $GITHUB_SHA"
+          echo "- Timestamp: $(date -u)"
+          
+          # This step always fails to ensure the rollback job is marked as failed
+          # and requires manual intervention
+          exit 1

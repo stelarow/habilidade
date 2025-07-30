@@ -18,6 +18,7 @@ const Footer = () => {
               />
             </div>
             <p className="text-zinc-300 text-sm leading-relaxed">
+              {/* Cache validation test - pipeline fix 2025-07-30 */}
               Transformando vidas através da educação tecnológica. 
               Cursos práticos e atualizados para o mercado de trabalho.
             </p>

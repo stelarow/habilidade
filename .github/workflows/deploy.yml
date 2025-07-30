@@ -1,9 +1,23 @@
-name: Deploy to GitHub Pages
+name: Deploy Main Website to GitHub Pages
 
 on:
   push:
     branches: [ main ]
+    paths:
+      - 'src/**'
+      - 'public/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'vite.config.js'
+      - 'tailwind.config.js'
+      - 'postcss.config.js'
   workflow_dispatch:
+    inputs:
+      force_deploy:
+        description: 'Force deployment (skip change detection)'
+        required: false
+        default: false
+        type: boolean
 
 permissions:
   contents: read
@@ -11,12 +25,40 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "pages"
+  group: "github-pages-deploy"
   cancel-in-progress: false
 
 jobs:
-  build:
+  changes:
+    name: 🔍 Detect Changes
     runs-on: ubuntu-latest
+    outputs:
+      should-deploy: ${{ steps.changes.outputs.main-website || github.event.inputs.force_deploy == 'true' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check for main website changes
+        uses: dorny/paths-filter@v2
+        id: changes
+        with:
+          filters: |
+            main-website:
+              - 'src/**'
+              - 'public/**'
+              - 'package.json'
+              - 'package-lock.json'
+              - 'vite.config.js'
+              - 'tailwind.config.js'
+              - 'postcss.config.js'
+
+  build:
+    name: 🏗️ Build Main Website
+    runs-on: ubuntu-latest
+    needs: changes
+    if: needs.changes.outputs.should-deploy == 'true'
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -26,25 +68,47 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
+          cache-dependency-path: package-lock.json
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --prefer-offline --no-audit
 
-      - name: Build
-        run: npm run build
+      - name: Run basic checks
+        run: |
+          echo "🔍 Running pre-deployment checks..."
+          npm run lint || echo "⚠️ Linting issues found, continuing..."
+          
+      - name: Build for GitHub Pages
+        run: npm run build:production
         env:
           CI: false
           NODE_ENV: production
+          VITE_BASE_URL: /habilidade/
 
-      - name: Upload artifact
+      - name: Verify build output
+        run: |
+          echo "📦 Verifying build output..."
+          ls -la dist/
+          echo "Build size: $(du -sh dist/)"
+          
+          # Check for essential files
+          if [ ! -f "dist/index.html" ]; then
+            echo "❌ Missing index.html in build"
+            exit 1
+          fi
+          
+          echo "✅ Build verification completed"
+
+      - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
 
   deploy:
+    name: 🚀 Deploy to GitHub Pages
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -53,4 +117,52 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4 
+        uses: actions/deploy-pages@v4
+
+      - name: Verify deployment
+        run: |
+          echo "🌐 Verifying deployment..."
+          DEPLOY_URL="${{ steps.deployment.outputs.page_url }}"
+          echo "Deployment URL: $DEPLOY_URL"
+          
+          # Wait a moment for deployment to propagate
+          sleep 30
+          
+          # Basic health check
+          HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$DEPLOY_URL" || echo "000")
+          
+          if [ "$HTTP_STATUS" = "200" ]; then
+            echo "✅ Deployment successful and accessible"
+          else
+            echo "⚠️ Deployment may still be propagating (HTTP $HTTP_STATUS)"
+          fi
+
+  notify:
+    name: 📢 Notify Deployment
+    runs-on: ubuntu-latest
+    needs: [changes, build, deploy]
+    if: always() && needs.changes.outputs.should-deploy == 'true'
+    steps:
+      - name: Create deployment summary
+        run: |
+          echo "# 🚀 GitHub Pages Deployment Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## Status" >> $GITHUB_STEP_SUMMARY
+          
+          if [ "${{ needs.deploy.result }}" = "success" ]; then
+            echo "✅ **Deployment successful**" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "🌐 **Live URL**: https://stelarow.github.io/habilidade" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ **Deployment failed**" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "Check the workflow logs for details." >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## Build Details" >> $GITHUB_STEP_SUMMARY
+          echo "- **Commit**: $GITHUB_SHA" >> $GITHUB_STEP_SUMMARY
+          echo "- **Branch**: $GITHUB_REF_NAME" >> $GITHUB_STEP_SUMMARY
+          echo "- **Triggered by**: ${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Build status**: ${{ needs.build.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Deploy status**: ${{ needs.deploy.result }}" >> $GITHUB_STEP_SUMMARY 

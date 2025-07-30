@@ -1,0 +1,347 @@
+name: CI - Main Website (React + Vite)
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'src/**'
+      - 'public/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'vite.config.js'
+      - 'tailwind.config.js'
+      - 'postcss.config.js'
+      - '.github/workflows/ci-main-website.yml'
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - 'src/**'
+      - 'public/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'vite.config.js'
+      - 'tailwind.config.js'
+      - 'postcss.config.js'
+
+env:
+  NODE_VERSION: '20'
+  CACHE_NAME: 'main-website'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: write
+  checks: write
+
+jobs:
+  validate:
+    name: 🔍 Validate Changes
+    runs-on: ubuntu-latest
+    outputs:
+      should-run: ${{ steps.changes.outputs.main-website }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check for main website changes
+        uses: dorny/paths-filter@v2
+        id: changes
+        with:
+          filters: |
+            main-website:
+              - 'src/**'
+              - 'public/**'
+              - 'package.json'
+              - 'package-lock.json'
+              - 'vite.config.js'
+              - 'tailwind.config.js'
+              - 'postcss.config.js'
+
+  lint-and-format:
+    name: 🧹 Lint & Format
+    runs-on: ubuntu-latest
+    needs: validate
+    if: needs.validate.outputs.should-run == 'true'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
+
+      - name: Install dependencies
+        run: npm ci --prefer-offline --no-audit
+
+      - name: Run ESLint
+        run: npm run lint
+        continue-on-error: false
+
+      - name: Check for linting errors
+        if: failure()
+        run: |
+          echo "❌ Linting failed. Please fix the errors above."
+          exit 1
+
+  test:
+    name: 🧪 Test Suite
+    runs-on: ubuntu-latest
+    needs: validate
+    if: needs.validate.outputs.should-run == 'true'
+    strategy:
+      matrix:
+        test-type: ['unit', 'integration']
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
+
+      - name: Install dependencies
+        run: npm ci --prefer-offline --no-audit
+
+      - name: Run tests with coverage
+        run: npm run test:coverage
+        env:
+          CI: true
+
+      - name: Upload coverage reports
+        uses: codecov/codecov-action@v3
+        if: matrix.test-type == 'unit'
+        with:
+          file: ./coverage/lcov.info
+          flags: main-website
+          name: main-website-coverage
+
+  build:
+    name: 🏗️ Build & Bundle Analysis
+    runs-on: ubuntu-latest
+    needs: [validate, lint-and-format, test]
+    if: needs.validate.outputs.should-run == 'true'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
+
+      - name: Install dependencies
+        run: npm ci --prefer-offline --no-audit
+
+      - name: Build for production
+        run: npm run build:production
+        env:
+          CI: false
+          NODE_ENV: production
+
+      - name: Analyze bundle size
+        run: npm run analyze:bundle
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: main-website-build-${{ github.sha }}
+          path: |
+            dist/
+            !dist/**/*.map
+          retention-days: 7
+
+      - name: Check build size
+        run: |
+          BUILD_SIZE=$(du -sh dist/ | cut -f1)
+          echo "📦 Build size: $BUILD_SIZE"
+          echo "BUILD_SIZE=$BUILD_SIZE" >> $GITHUB_ENV
+
+  performance-audit:
+    name: ⚡ Performance Audit
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: main-website-build-${{ github.sha }}
+          path: dist/
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
+
+      - name: Install dependencies
+        run: npm ci --prefer-offline --no-audit
+
+      - name: Start preview server
+        run: npm run preview &
+        env:
+          PORT: 4173
+
+      - name: Wait for server
+        run: npx wait-on http://localhost:4173 --timeout 30000
+
+      - name: Run Lighthouse audit
+        run: npm run perf:audit
+
+      - name: Upload Lighthouse results
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-results-${{ github.sha }}
+          path: lighthouse-audit.json
+          retention-days: 7
+
+  security-scan:
+    name: 🔒 Security Scan
+    runs-on: ubuntu-latest
+    needs: validate
+    if: needs.validate.outputs.should-run == 'true'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run npm audit
+        run: npm audit --audit-level moderate
+        continue-on-error: true
+
+      - name: Run Snyk security scan
+        uses: snyk/actions/node@master
+        continue-on-error: true
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --severity-threshold=high
+
+  accessibility-test:
+    name: ♿ Accessibility Test
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: main-website-build-${{ github.sha }}
+          path: dist/
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci --prefer-offline --no-audit
+
+      - name: Start preview server
+        run: npm run preview &
+        env:
+          PORT: 4173
+
+      - name: Wait for server
+        run: npx wait-on http://localhost:4173 --timeout 30000
+
+      - name: Run accessibility tests
+        run: |
+          npm install -g @axe-core/cli
+          axe http://localhost:4173 --tags wcag2a,wcag2aa --reporter json --output-file accessibility-results.json
+        continue-on-error: true
+
+      - name: Upload accessibility results
+        uses: actions/upload-artifact@v4
+        with:
+          name: accessibility-results-${{ github.sha }}
+          path: accessibility-results.json
+          retention-days: 7
+
+  status-check:
+    name: ✅ Status Check
+    runs-on: ubuntu-latest
+    needs: [lint-and-format, test, build, security-scan]
+    if: always() && needs.validate.outputs.should-run == 'true'
+    steps:
+      - name: Check all jobs status
+        run: |
+          if [[ "${{ needs.lint-and-format.result }}" == "success" && 
+                "${{ needs.test.result }}" == "success" && 
+                "${{ needs.build.result }}" == "success" && 
+                "${{ needs.security-scan.result }}" != "failure" ]]; then
+            echo "✅ All checks passed for Main Website"
+            exit 0
+          else
+            echo "❌ Some checks failed for Main Website"
+            echo "Lint & Format: ${{ needs.lint-and-format.result }}"
+            echo "Tests: ${{ needs.test.result }}"
+            echo "Build: ${{ needs.build.result }}"
+            echo "Security: ${{ needs.security-scan.result }}"
+            exit 1
+          fi
+
+  notify:
+    name: 📢 Notify Results
+    runs-on: ubuntu-latest
+    needs: [status-check, performance-audit, accessibility-test]
+    if: always() && github.event_name == 'pull_request'
+    steps:
+      - name: Comment PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const status = '${{ needs.status-check.result }}';
+            const perfStatus = '${{ needs.performance-audit.result }}';
+            const a11yStatus = '${{ needs.accessibility-test.result }}';
+            
+            const emoji = status === 'success' ? '✅' : '❌';
+            const perfEmoji = perfStatus === 'success' ? '⚡' : '⚠️';
+            const a11yEmoji = a11yStatus === 'success' ? '♿' : '⚠️';
+            
+            const body = `## ${emoji} Main Website CI Results
+            
+            ### Core Checks
+            - **Linting & Formatting**: ${status === 'success' ? '✅ Passed' : '❌ Failed'}
+            - **Tests**: ${status === 'success' ? '✅ Passed' : '❌ Failed'}
+            - **Build**: ${status === 'success' ? '✅ Passed' : '❌ Failed'}
+            - **Security Scan**: ${status === 'success' ? '✅ Passed' : '⚠️ Review needed'}
+            
+            ### Additional Checks
+            - **Performance Audit**: ${perfEmoji} ${perfStatus || 'In progress'}
+            - **Accessibility Test**: ${a11yEmoji} ${a11yStatus || 'In progress'}
+            
+            ### Artifacts
+            - 📦 Build artifacts available for 7 days
+            - 📊 Performance results uploaded
+            - ♿ Accessibility scan results available
+            
+            ---
+            *Automated by GitHub Actions - Main Website CI*`;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body
+            });

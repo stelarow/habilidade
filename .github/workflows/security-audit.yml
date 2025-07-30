@@ -1,0 +1,400 @@
+name: Security Audit & Compliance
+
+on:
+  schedule:
+    # Run security audit daily at 2 AM UTC
+    - cron: '0 2 * * *'
+  push:
+    branches: [ main ]
+    paths:
+      - 'package*.json'
+      - 'plataforma-ensino/package*.json'
+      - '.github/workflows/security-audit.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'package*.json'
+      - 'plataforma-ensino/package*.json'
+  workflow_dispatch:
+    inputs:
+      scan_type:
+        description: 'Type of security scan'
+        required: true
+        default: 'full'
+        type: choice
+        options:
+          - 'dependencies'
+          - 'code'
+          - 'secrets'
+          - 'full'
+
+env:
+  NODE_VERSION: '20'
+
+permissions:
+  contents: read
+  security-events: write
+  pull-requests: write
+  issues: write
+
+concurrency:
+  group: security-audit-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  dependency-scan:
+    name: 🔍 Dependency Security Scan
+    runs-on: ubuntu-latest
+    if: github.event.inputs.scan_type == 'dependencies' || github.event.inputs.scan_type == 'full' || github.event.inputs.scan_type == null
+    strategy:
+      matrix:
+        project: ['main-website', 'learning-platform']
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: ${{ matrix.project == 'learning-platform' && 'plataforma-ensino/package-lock.json' || 'package-lock.json' }}
+
+      - name: Set working directory
+        id: workdir
+        run: |
+          if [ "${{ matrix.project }}" == "learning-platform" ]; then
+            echo "path=./plataforma-ensino" >> $GITHUB_OUTPUT
+          else
+            echo "path=." >> $GITHUB_OUTPUT
+          fi
+
+      - name: Install dependencies
+        working-directory: ${{ steps.workdir.outputs.path }}
+        run: npm ci --prefer-offline --no-audit
+
+      - name: Run npm audit
+        working-directory: ${{ steps.workdir.outputs.path }}
+        run: |
+          echo "🔍 Running npm audit for ${{ matrix.project }}..."
+          npm audit --audit-level=moderate --json > npm-audit-${{ matrix.project }}.json || true
+          npm audit --audit-level=moderate
+
+      - name: Run Snyk vulnerability scan
+        uses: snyk/actions/node@master
+        continue-on-error: true
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --file=${{ steps.workdir.outputs.path }}/package.json --json > snyk-results-${{ matrix.project }}.json
+
+      - name: Run OWASP Dependency Check
+        uses: dependency-check/Dependency-Check_Action@main
+        with:
+          project: 'habilidade-${{ matrix.project }}'
+          path: ${{ steps.workdir.outputs.path }}
+          format: 'JSON'
+          out: 'dependency-check-reports'
+          args: >
+            --enableRetired
+            --enableExperimental
+            --nodeAuditSkipDevDependencies
+
+      - name: Upload dependency scan results
+        uses: actions/upload-artifact@v4
+        with:
+          name: dependency-scan-${{ matrix.project }}-${{ github.sha }}
+          path: |
+            npm-audit-${{ matrix.project }}.json
+            snyk-results-${{ matrix.project }}.json
+            dependency-check-reports/
+          retention-days: 30
+
+      - name: Parse and report critical vulnerabilities
+        run: |
+          echo "📊 Analyzing vulnerability scan results for ${{ matrix.project }}..."
+          
+          # Parse npm audit results
+          if [ -f "npm-audit-${{ matrix.project }}.json" ]; then
+            HIGH_VULNS=$(jq '.metadata.vulnerabilities.high // 0' npm-audit-${{ matrix.project }}.json)
+            CRITICAL_VULNS=$(jq '.metadata.vulnerabilities.critical // 0' npm-audit-${{ matrix.project }}.json)
+            
+            echo "🔴 Critical vulnerabilities: $CRITICAL_VULNS"
+            echo "🟠 High vulnerabilities: $HIGH_VULNS"
+            
+            if [ "$CRITICAL_VULNS" -gt 0 ]; then
+              echo "❌ Critical vulnerabilities found in ${{ matrix.project }}!"
+              echo "CRITICAL_VULNS_${{ matrix.project }}=$CRITICAL_VULNS" >> $GITHUB_ENV
+            fi
+          fi
+
+  code-security-scan:
+    name: 🔒 Code Security Analysis
+    runs-on: ubuntu-latest
+    if: github.event.inputs.scan_type == 'code' || github.event.inputs.scan_type == 'full' || github.event.inputs.scan_type == null
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: javascript-typescript
+          queries: security-extended,security-and-quality
+
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v3
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: security-audit
+
+      - name: Run Semgrep security scan
+        uses: returntocorp/semgrep-action@v1
+        with:
+          config: >-
+            p/security-audit
+            p/javascript
+            p/typescript
+            p/react
+            p/nextjs
+        env:
+          SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
+
+      - name: Run ESLint security rules
+        run: |
+          echo "🔍 Running ESLint security analysis..."
+          
+          # Main website
+          echo "Analyzing main website..."
+          npx eslint src/ --ext .js,.jsx,.ts,.tsx --format json > eslint-security-main.json || true
+          
+          # Learning platform
+          echo "Analyzing learning platform..."
+          cd plataforma-ensino
+          npx eslint src/ --ext .js,.jsx,.ts,.tsx --format json > ../eslint-security-platform.json || true
+          cd ..
+
+      - name: Upload code analysis results
+        uses: actions/upload-artifact@v4
+        with:
+          name: code-security-scan-${{ github.sha }}
+          path: |
+            eslint-security-*.json
+          retention-days: 30
+
+  secrets-scan:
+    name: 🕵️ Secrets Detection
+    runs-on: ubuntu-latest
+    if: github.event.inputs.scan_type == 'secrets' || github.event.inputs.scan_type == 'full' || github.event.inputs.scan_type == null
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run TruffleHog secrets scan
+        uses: trufflesecurity/trufflehog@main
+        with:
+          path: ./
+          base: main
+          head: HEAD
+          extra_args: --debug --only-verified
+
+      - name: Run GitLeaks secrets scan
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE }}
+
+      - name: Scan for common secret patterns
+        run: |
+          echo "🔍 Scanning for common secret patterns..."
+          
+          # Create a comprehensive regex pattern file
+          cat > secret-patterns.txt << 'EOF'
+          # API Keys and Tokens
+          SUPABASE.*=.*[a-zA-Z0-9]{40,}
+          NEXT_PUBLIC_SUPABASE.*=.*[a-zA-Z0-9]{40,}
+          NEXTAUTH_SECRET.*=.*[a-zA-Z0-9]{32,}
+          VERCEL_TOKEN.*=.*[a-zA-Z0-9]{40,}
+          SNYK_TOKEN.*=.*[a-zA-Z0-9]{40,}
+          
+          # Database URLs
+          DATABASE_URL.*=.*postgres://
+          SUPABASE_DB_URL.*=.*postgres://
+          
+          # Email credentials
+          SMTP_PASSWORD.*=.*[a-zA-Z0-9]{8,}
+          EMAIL_PASSWORD.*=.*[a-zA-Z0-9]{8,}
+          
+          # Generic secrets
+          SECRET.*=.*[a-zA-Z0-9]{20,}
+          PASSWORD.*=.*[a-zA-Z0-9]{8,}
+          KEY.*=.*[a-zA-Z0-9]{20,}
+          TOKEN.*=.*[a-zA-Z0-9]{20,}
+          EOF
+          
+          # Scan files excluding legitimate config examples
+          echo "Scanning for potential secrets (excluding .example files)..."
+          grep -r -E -f secret-patterns.txt . \
+            --exclude-dir=node_modules \
+            --exclude-dir=.git \
+            --exclude-dir=dist \
+            --exclude-dir=.next \
+            --exclude="*.example*" \
+            --exclude="secret-patterns.txt" || echo "No secrets found"
+
+  license-compliance:
+    name: 📜 License Compliance Check
+    runs-on: ubuntu-latest
+    if: github.event.inputs.scan_type == 'full' || github.event.inputs.scan_type == null
+    strategy:
+      matrix:
+        project: ['main-website', 'learning-platform']
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: ${{ matrix.project == 'learning-platform' && 'plataforma-ensino/package-lock.json' || 'package-lock.json' }}
+
+      - name: Set working directory
+        id: workdir
+        run: |
+          if [ "${{ matrix.project }}" == "learning-platform" ]; then
+            echo "path=./plataforma-ensino" >> $GITHUB_OUTPUT
+          else
+            echo "path=." >> $GITHUB_OUTPUT
+          fi
+
+      - name: Install dependencies
+        working-directory: ${{ steps.workdir.outputs.path }}
+        run: npm ci --prefer-offline --no-audit
+
+      - name: Install license checker
+        run: npm install -g license-checker
+
+      - name: Check licenses
+        working-directory: ${{ steps.workdir.outputs.path }}
+        run: |
+          echo "📜 Checking licenses for ${{ matrix.project }}..."
+          license-checker --json > licenses-${{ matrix.project }}.json
+          license-checker --summary
+          
+          # Check for problematic licenses
+          echo "🔍 Checking for potentially problematic licenses..."
+          license-checker --failOn 'GPL-2.0;GPL-3.0;AGPL-1.0;AGPL-3.0' --summary || echo "Found potentially problematic licenses"
+
+      - name: Upload license results
+        uses: actions/upload-artifact@v4
+        with:
+          name: license-compliance-${{ matrix.project }}-${{ github.sha }}
+          path: ${{ steps.workdir.outputs.path }}/licenses-${{ matrix.project }}.json
+          retention-days: 30
+
+  security-report:
+    name: 📊 Security Report
+    runs-on: ubuntu-latest
+    needs: [dependency-scan, code-security-scan, secrets-scan, license-compliance]
+    if: always()
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: security-results
+
+      - name: Generate security report
+        run: |
+          echo "# 🔒 Security Audit Report" > security-report.md
+          echo "" >> security-report.md
+          echo "**Date**: $(date)" >> security-report.md
+          echo "**Commit**: $GITHUB_SHA" >> security-report.md
+          echo "**Triggered by**: ${{ github.event_name }}" >> security-report.md
+          echo "" >> security-report.md
+          
+          echo "## 📊 Summary" >> security-report.md
+          echo "" >> security-report.md
+          
+          # Check job results
+          echo "| Component | Status |" >> security-report.md
+          echo "|-----------|---------|" >> security-report.md
+          echo "| Dependency Scan | ${{ needs.dependency-scan.result == 'success' && '✅ Passed' || '❌ Failed' }} |" >> security-report.md
+          echo "| Code Security | ${{ needs.code-security-scan.result == 'success' && '✅ Passed' || '❌ Failed' }} |" >> security-report.md
+          echo "| Secrets Detection | ${{ needs.secrets-scan.result == 'success' && '✅ Passed' || '❌ Failed' }} |" >> security-report.md
+          echo "| License Compliance | ${{ needs.license-compliance.result == 'success' && '✅ Passed' || '❌ Failed' }} |" >> security-report.md
+          echo "" >> security-report.md
+          
+          echo "## 🔍 Detailed Results" >> security-report.md
+          echo "" >> security-report.md
+          echo "Detailed scan results are available in the workflow artifacts." >> security-report.md
+          echo "" >> security-report.md
+          
+          echo "## 🎯 Recommendations" >> security-report.md
+          echo "" >> security-report.md
+          echo "1. Review any critical or high-severity vulnerabilities" >> security-report.md
+          echo "2. Update dependencies with known security issues" >> security-report.md
+          echo "3. Address any detected secrets or sensitive data exposure" >> security-report.md
+          echo "4. Ensure license compliance for all dependencies" >> security-report.md
+          echo "" >> security-report.md
+          
+          echo "---" >> security-report.md
+          echo "*Generated by GitHub Actions Security Audit*" >> security-report.md
+
+      - name: Upload security report
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-audit-report-${{ github.sha }}
+          path: security-report.md
+          retention-days: 90
+
+      - name: Create issue for critical findings
+        if: needs.dependency-scan.result == 'failure' || needs.code-security-scan.result == 'failure'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const report = fs.readFileSync('security-report.md', 'utf8');
+            
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: 'security,automated',
+              state: 'open'
+            });
+            
+            // Only create issue if one doesn't already exist
+            if (issues.length === 0) {
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: '🚨 Critical Security Findings - Automated Scan',
+                body: `${report}\n\n**Action Required**: Please review the security scan results and address any critical findings.\n\nWorkflow Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}`,
+                labels: ['security', 'automated', 'high-priority']
+              });
+            }
+
+      - name: Comment on PR (if applicable)
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const report = fs.readFileSync('security-report.md', 'utf8');
+            
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `## 🔒 Security Audit Results\n\n${report}\n\n**Note**: Full detailed results are available in the workflow artifacts.`
+            });

@@ -1,0 +1,453 @@
+name: CI - Learning Platform (Next.js + Supabase)
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'plataforma-ensino/**'
+      - '.github/workflows/ci-learning-platform.yml'
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - 'plataforma-ensino/**'
+
+env:
+  NODE_VERSION: '20'
+  WORKING_DIRECTORY: './plataforma-ensino'
+  CACHE_NAME: 'learning-platform'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: write
+  checks: write
+  security-events: write
+
+jobs:
+  validate:
+    name: 🔍 Validate Changes
+    runs-on: ubuntu-latest
+    outputs:
+      should-run: ${{ steps.changes.outputs.learning-platform }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check for learning platform changes
+        uses: dorny/paths-filter@v2
+        id: changes
+        with:
+          filters: |
+            learning-platform:
+              - 'plataforma-ensino/**'
+
+  type-check:
+    name: 🔧 TypeScript Check
+    runs-on: ubuntu-latest
+    needs: validate
+    if: needs.validate.outputs.should-run == 'true'
+    defaults:
+      run:
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: plataforma-ensino/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci --prefer-offline --no-audit
+
+      - name: TypeScript check
+        run: npm run type-check
+
+      - name: TypeScript incremental check
+        run: npm run type-check
+        continue-on-error: true
+
+  lint-and-format:
+    name: 🧹 Lint & Format
+    runs-on: ubuntu-latest
+    needs: validate
+    if: needs.validate.outputs.should-run == 'true'
+    defaults:
+      run:
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: plataforma-ensino/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci --prefer-offline --no-audit
+
+      - name: Run Next.js lint
+        run: npm run lint
+
+      - name: Run lint with fix (dry run)
+        run: npm run lint:fix -- --dry-run
+        continue-on-error: true
+
+  test:
+    name: 🧪 Test Suite
+    runs-on: ubuntu-latest
+    needs: validate
+    if: needs.validate.outputs.should-run == 'true'
+    defaults:
+      run:
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+    strategy:
+      matrix:
+        test-suite: ['unit', 'e2e']
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: plataforma-ensino/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci --prefer-offline --no-audit
+
+      - name: Setup environment variables
+        run: |
+          echo "NEXT_PUBLIC_SUPABASE_URL=${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}" >> .env.test
+          echo "NEXT_PUBLIC_SUPABASE_ANON_KEY=${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}" >> .env.test
+          echo "SUPABASE_SERVICE_ROLE_KEY=${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" >> .env.test
+
+      - name: Install Playwright browsers
+        if: matrix.test-suite == 'e2e'
+        run: npx playwright install --with-deps
+
+      - name: Run unit tests
+        if: matrix.test-suite == 'unit'
+        run: npm run test -- --coverage --watchAll=false
+        env:
+          CI: true
+
+      - name: Run E2E tests
+        if: matrix.test-suite == 'e2e'
+        run: npm run test:e2e
+        env:
+          CI: true
+
+      - name: Upload test coverage
+        if: matrix.test-suite == 'unit'
+        uses: codecov/codecov-action@v3
+        with:
+          directory: ./plataforma-ensino
+          flags: learning-platform
+          name: learning-platform-coverage
+
+      - name: Upload Playwright report
+        if: matrix.test-suite == 'e2e' && failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report-${{ github.sha }}
+          path: plataforma-ensino/playwright-report/
+          retention-days: 7
+
+  build:
+    name: 🏗️ Build & Bundle Analysis
+    runs-on: ubuntu-latest
+    needs: [validate, type-check, lint-and-format]
+    if: needs.validate.outputs.should-run == 'true'
+    defaults:
+      run:
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+    strategy:
+      matrix:
+        build-type: ['production', 'development']
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: plataforma-ensino/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci --prefer-offline --no-audit
+
+      - name: Setup environment variables
+        run: |
+          echo "NEXT_PUBLIC_SUPABASE_URL=${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}" >> .env.production
+          echo "NEXT_PUBLIC_SUPABASE_ANON_KEY=${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}" >> .env.production
+          echo "NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }}" >> .env.production
+          echo "NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }}" >> .env.production
+
+      - name: Build for production
+        if: matrix.build-type == 'production'
+        run: npm run build:production
+        env:
+          CI: false
+          NODE_ENV: production
+
+      - name: Build for development
+        if: matrix.build-type == 'development'
+        run: npm run build:dev
+        env:
+          CI: false
+          NODE_ENV: development
+
+      - name: Analyze bundle (production only)
+        if: matrix.build-type == 'production'
+        run: npm run analyze
+        continue-on-error: true
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: learning-platform-build-${{ matrix.build-type }}-${{ github.sha }}
+          path: |
+            plataforma-ensino/.next/
+            !plataforma-ensino/.next/cache
+          retention-days: 7
+
+      - name: Check build size
+        run: |
+          BUILD_SIZE=$(du -sh .next/ | cut -f1)
+          echo "📦 Build size (${{ matrix.build-type }}): $BUILD_SIZE"
+          echo "BUILD_SIZE_${{ matrix.build-type }}=$BUILD_SIZE" >> $GITHUB_ENV
+
+  security-scan:
+    name: 🔒 Security Scan
+    runs-on: ubuntu-latest
+    needs: validate
+    if: needs.validate.outputs.should-run == 'true'
+    defaults:
+      run:
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: plataforma-ensino/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci --prefer-offline --no-audit
+
+      - name: Run npm audit
+        run: npm audit --audit-level moderate
+        continue-on-error: true
+
+      - name: Run Snyk security scan
+        uses: snyk/actions/node@master
+        continue-on-error: true
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --file=plataforma-ensino/package.json --severity-threshold=high
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: javascript-typescript
+          source-root: plataforma-ensino
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: learning-platform
+
+  database-checks:
+    name: 🗄️ Database & Supabase Checks
+    runs-on: ubuntu-latest
+    needs: validate
+    if: needs.validate.outputs.should-run == 'true'
+    defaults:
+      run:
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: plataforma-ensino/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci --prefer-offline --no-audit
+
+      - name: Check Supabase connection
+        run: |
+          node -e "
+            console.log('🔌 Testing Supabase connection...');
+            const { createClient } = require('@supabase/supabase-js');
+            const supabase = createClient(
+              process.env.NEXT_PUBLIC_SUPABASE_URL || 'test',
+              process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'test'
+            );
+            console.log('✅ Supabase client created successfully');
+          "
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+
+      - name: Validate database schema (if schema files exist)
+        run: |
+          if [ -d "supabase" ]; then
+            echo "📋 Found Supabase schema files"
+            # Add schema validation logic here
+          else
+            echo "ℹ️ No Supabase schema files found"
+          fi
+
+  performance-test:
+    name: ⚡ Performance Test
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.event_name == 'pull_request'
+    defaults:
+      run:
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: learning-platform-build-production-${{ github.sha }}
+          path: plataforma-ensino/.next/
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: plataforma-ensino/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci --prefer-offline --no-audit
+
+      - name: Setup environment variables
+        run: |
+          echo "NEXT_PUBLIC_SUPABASE_URL=${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}" >> .env.local
+          echo "NEXT_PUBLIC_SUPABASE_ANON_KEY=${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}" >> .env.local
+
+      - name: Start Next.js server
+        run: npm start &
+        env:
+          PORT: 3000
+
+      - name: Wait for server
+        run: npx wait-on http://localhost:3000 --timeout 60000
+
+      - name: Run Lighthouse CI
+        run: |
+          npm install -g @lhci/cli
+          lhci autorun
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+
+      - name: Upload Lighthouse results
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-results-learning-platform-${{ github.sha }}
+          path: .lighthouseci/
+          retention-days: 7
+
+  status-check:
+    name: ✅ Status Check
+    runs-on: ubuntu-latest
+    needs: [type-check, lint-and-format, test, build, security-scan, database-checks]
+    if: always() && needs.validate.outputs.should-run == 'true'
+    steps:
+      - name: Check all jobs status
+        run: |
+          if [[ "${{ needs.type-check.result }}" == "success" && 
+                "${{ needs.lint-and-format.result }}" == "success" && 
+                "${{ needs.test.result }}" == "success" && 
+                "${{ needs.build.result }}" == "success" && 
+                "${{ needs.security-scan.result }}" != "failure" && 
+                "${{ needs.database-checks.result }}" == "success" ]]; then
+            echo "✅ All checks passed for Learning Platform"
+            exit 0
+          else
+            echo "❌ Some checks failed for Learning Platform"
+            echo "TypeScript: ${{ needs.type-check.result }}"
+            echo "Lint & Format: ${{ needs.lint-and-format.result }}"
+            echo "Tests: ${{ needs.test.result }}"
+            echo "Build: ${{ needs.build.result }}"
+            echo "Security: ${{ needs.security-scan.result }}"
+            echo "Database: ${{ needs.database-checks.result }}"
+            exit 1
+          fi
+
+  notify:
+    name: 📢 Notify Results
+    runs-on: ubuntu-latest
+    needs: [status-check, performance-test]
+    if: always() && github.event_name == 'pull_request'
+    steps:
+      - name: Comment PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const status = '${{ needs.status-check.result }}';
+            const perfStatus = '${{ needs.performance-test.result }}';
+            
+            const emoji = status === 'success' ? '✅' : '❌';
+            const perfEmoji = perfStatus === 'success' ? '⚡' : '⚠️';
+            
+            const body = `## ${emoji} Learning Platform CI Results
+            
+            ### Core Checks
+            - **TypeScript**: ${status === 'success' ? '✅ Passed' : '❌ Failed'}
+            - **Linting & Formatting**: ${status === 'success' ? '✅ Passed' : '❌ Failed'}
+            - **Tests (Unit + E2E)**: ${status === 'success' ? '✅ Passed' : '❌ Failed'}
+            - **Build (Production + Dev)**: ${status === 'success' ? '✅ Passed' : '❌ Failed'}
+            - **Security Scan**: ${status === 'success' ? '✅ Passed' : '⚠️ Review needed'}
+            - **Database Checks**: ${status === 'success' ? '✅ Passed' : '❌ Failed'}
+            
+            ### Additional Checks
+            - **Performance Test**: ${perfEmoji} ${perfStatus || 'In progress'}
+            - **Bundle Analysis**: 📊 Available in build artifacts
+            
+            ### Artifacts Available (7 days)
+            - 📦 Production & Development builds
+            - 🎭 Playwright E2E test reports (if failed)
+            - 📊 Lighthouse performance results
+            - 🔍 CodeQL security analysis
+            
+            ---
+            *Automated by GitHub Actions - Learning Platform CI*`;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body
+            });

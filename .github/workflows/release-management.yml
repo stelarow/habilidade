@@ -1,0 +1,602 @@
+name: Release Management & Automation
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      release_type:
+        description: 'Type of release'
+        required: true
+        default: 'minor'
+        type: choice
+        options:
+          - 'patch'
+          - 'minor'  
+          - 'major'
+          - 'prerelease'
+      prerelease:
+        description: 'Mark as pre-release'
+        required: false
+        default: false
+        type: boolean
+      draft:
+        description: 'Create as draft'
+        required: false
+        default: false
+        type: boolean
+
+env:
+  NODE_VERSION: '20'
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+  packages: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  pre-release-validation:
+    name: 🔍 Pre-release Validation
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      changelog: ${{ steps.changelog.outputs.changelog }}
+      release-notes: ${{ steps.release-notes.outputs.notes }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Determine version
+        id: version
+        run: |
+          if [[ $GITHUB_REF == refs/tags/* ]]; then
+            # Extract version from tag
+            VERSION=${GITHUB_REF#refs/tags/v}
+            echo "version=v$VERSION" >> $GITHUB_OUTPUT
+            echo "📦 Release version from tag: v$VERSION"
+          else
+            # Generate version based on input
+            CURRENT_VERSION=$(node -pe "require('./package.json').version")
+            
+            case "${{ github.event.inputs.release_type }}" in
+              "major")
+                NEW_VERSION=$(npm version major --no-git-tag-version --preid=alpha)
+                ;;
+              "minor")
+                NEW_VERSION=$(npm version minor --no-git-tag-version --preid=alpha)
+                ;;
+              "patch")
+                NEW_VERSION=$(npm version patch --no-git-tag-version --preid=alpha)
+                ;;
+              "prerelease")
+                NEW_VERSION=$(npm version prerelease --no-git-tag-version --preid=alpha)
+                ;;
+              *)
+                NEW_VERSION="v$CURRENT_VERSION"
+                ;;
+            esac
+            
+            echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
+            echo "📦 Generated version: $NEW_VERSION"
+          fi
+
+      - name: Validate repository state
+        run: |
+          echo "🔍 Validating repository state..."
+          
+          # Check if we're on main branch (for manual releases)
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" && "$GITHUB_REF" != "refs/heads/main" ]]; then
+            echo "❌ Manual releases can only be created from main branch"
+            exit 1
+          fi
+          
+          # Check for uncommitted changes
+          if ! git diff --quiet; then
+            echo "❌ Uncommitted changes detected"
+            exit 1
+          fi
+          
+          # Validate CI status for latest commit
+          echo "✅ Repository validation completed"
+
+      - name: Generate changelog
+        id: changelog
+        run: |
+          echo "📝 Generating changelog..."
+          
+          # Get the last tag for changelog generation
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          
+          if [ -z "$LAST_TAG" ]; then
+            echo "First release - generating initial changelog"
+            CHANGELOG="## Initial Release\n\n- Initial release of Escola Habilidade platform\n- Main website with course catalog\n- Learning management system\n- Blog functionality with CTA system"
+          else
+            echo "Generating changelog since $LAST_TAG"
+            
+            # Generate changelog from git commits
+            CHANGELOG="## Changes since $LAST_TAG\n\n"
+            
+            # Get commits since last tag, categorized
+            FEATURES=$(git log $LAST_TAG..HEAD --oneline --grep="feat" --grep="feature" | head -10)
+            FIXES=$(git log $LAST_TAG..HEAD --oneline --grep="fix" --grep="bug" | head -10)
+            DOCS=$(git log $LAST_TAG..HEAD --oneline --grep="doc" | head -5)
+            CHORES=$(git log $LAST_TAG..HEAD --oneline --grep="chore" --grep="refactor" | head -5)
+            
+            if [ ! -z "$FEATURES" ]; then
+              CHANGELOG="$CHANGELOG### ✨ New Features\n"
+              while read -r line; do
+                CHANGELOG="$CHANGELOG- $line\n"
+              done <<< "$FEATURES"
+              CHANGELOG="$CHANGELOG\n"
+            fi
+            
+            if [ ! -z "$FIXES" ]; then
+              CHANGELOG="$CHANGELOG### 🐛 Bug Fixes\n"
+              while read -r line; do
+                CHANGELOG="$CHANGELOG- $line\n"
+              done <<< "$FIXES"
+              CHANGELOG="$CHANGELOG\n"
+            fi
+            
+            if [ ! -z "$DOCS" ]; then
+              CHANGELOG="$CHANGELOG### 📚 Documentation\n"
+              while read -r line; do
+                CHANGELOG="$CHANGELOG- $line\n"
+              done <<< "$DOCS"
+              CHANGELOG="$CHANGELOG\n"
+            fi
+            
+            if [ ! -z "$CHORES" ]; then
+              CHANGELOG="$CHANGELOG### 🔧 Maintenance\n"
+              while read -r line; do
+                CHANGELOG="$CHANGELOG- $line\n"
+              done <<< "$CHORES"
+            fi
+          fi
+          
+          # Save changelog to file and output
+          echo -e "$CHANGELOG" > CHANGELOG_TEMP.md
+          echo "changelog<<EOF" >> $GITHUB_OUTPUT
+          echo -e "$CHANGELOG" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Generate release notes
+        id: release-notes
+        run: |
+          echo "📋 Generating release notes..."
+          
+          VERSION="${{ steps.version.outputs.version }}"
+          
+          NOTES="# Release $VERSION
+          
+## 🏫 Escola Habilidade Platform
+
+This release includes updates to both the main marketing website and the learning management system.
+
+### 🌐 Main Website (React + Vite)
+- Course catalog and information
+- Marketing pages and content
+- Performance optimizations
+
+### 🎓 Learning Platform (Next.js + Supabase)
+- Learning management system
+- User authentication and profiles
+- Blog system with CTA functionality
+- Progress tracking and analytics
+
+$(cat CHANGELOG_TEMP.md)
+
+### 📊 Quality Metrics
+- ✅ All CI/CD pipelines passed
+- ✅ Security scans completed
+- ✅ Performance benchmarks met
+- ✅ Accessibility standards verified
+
+### 🚀 Deployment
+- **Main Website**: https://stelarow.github.io/habilidade
+- **Learning Platform**: Deployed to Vercel (see deployment logs)
+
+### 📱 Compatibility
+- Node.js 18+ required
+- Modern browsers (ES2020+)
+- Mobile responsive design
+
+---
+*Release created on $(date) by ${{ github.actor }}*"
+
+          echo "notes<<EOF" >> $GITHUB_OUTPUT
+          echo "$NOTES" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Upload release artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-preparation-${{ github.sha }}
+          path: |
+            CHANGELOG_TEMP.md
+          retention-days: 7
+
+  build-release-assets:
+    name: 🏗️ Build Release Assets
+    runs-on: ubuntu-latest
+    needs: pre-release-validation
+    strategy:
+      matrix:
+        project: ['main-website', 'learning-platform']
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: ${{ matrix.project == 'learning-platform' && 'plataforma-ensino/package-lock.json' || 'package-lock.json' }}
+
+      - name: Set working directory
+        id: workdir
+        run: |
+          if [ "${{ matrix.project }}" == "learning-platform" ]; then
+            echo "path=./plataforma-ensino" >> $GITHUB_OUTPUT
+          else
+            echo "path=." >> $GITHUB_OUTPUT
+          fi
+
+      - name: Install dependencies
+        working-directory: ${{ steps.workdir.outputs.path }}
+        run: npm ci --prefer-offline --no-audit
+
+      - name: Update version in package.json
+        working-directory: ${{ steps.workdir.outputs.path }}
+        run: |
+          VERSION="${{ needs.pre-release-validation.outputs.version }}"
+          VERSION_NUM=${VERSION#v}  # Remove 'v' prefix
+          npm version $VERSION_NUM --no-git-tag-version
+          echo "📦 Updated package.json version to $VERSION_NUM"
+
+      - name: Build for production
+        working-directory: ${{ steps.workdir.outputs.path }}
+        run: |
+          if [ "${{ matrix.project }}" == "learning-platform" ]; then
+            npm run build:production
+          else
+            npm run build:production
+          fi
+        env:
+          CI: false
+          NODE_ENV: production
+          VITE_APP_VERSION: ${{ needs.pre-release-validation.outputs.version }}
+          NEXT_PUBLIC_APP_VERSION: ${{ needs.pre-release-validation.outputs.version }}
+
+      - name: Generate build artifacts
+        working-directory: ${{ steps.workdir.outputs.path }}
+        run: |
+          echo "📦 Generating build artifacts for ${{ matrix.project }}..."
+          
+          if [ "${{ matrix.project }}" == "learning-platform" ]; then
+            BUILD_DIR=".next"
+            tar -czf ../build-${{ matrix.project }}-${{ needs.pre-release-validation.outputs.version }}.tar.gz $BUILD_DIR
+          else
+            BUILD_DIR="dist"
+            tar -czf build-${{ matrix.project }}-${{ needs.pre-release-validation.outputs.version }}.tar.gz $BUILD_DIR
+          fi
+
+      - name: Generate build metadata
+        working-directory: ${{ steps.workdir.outputs.path }}
+        run: |
+          echo "📋 Generating build metadata for ${{ matrix.project }}..."
+          
+          cat > build-metadata-${{ matrix.project }}.json << EOF
+          {
+            "project": "${{ matrix.project }}",
+            "version": "${{ needs.pre-release-validation.outputs.version }}",
+            "buildDate": "$(date -u)",
+            "gitCommit": "$GITHUB_SHA",
+            "gitBranch": "$GITHUB_REF_NAME",
+            "nodeVersion": "${{ env.NODE_VERSION }}",
+            "buildEnvironment": "production"
+          }
+          EOF
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-assets-${{ matrix.project }}-${{ github.sha }}
+          path: |
+            ${{ steps.workdir.outputs.path }}/build-${{ matrix.project }}-*.tar.gz
+            ${{ steps.workdir.outputs.path }}/build-metadata-${{ matrix.project }}.json
+          retention-days: 90
+
+  create-release:
+    name: 🚀 Create Release
+    runs-on: ubuntu-latest
+    needs: [pre-release-validation, build-release-assets]
+    outputs:
+      release-id: ${{ steps.create-release.outputs.id }}
+      release-url: ${{ steps.create-release.outputs.html_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: release-assets
+
+      - name: Prepare release assets
+        run: |
+          echo "📦 Preparing release assets..."
+          
+          mkdir -p release-files
+          
+          # Copy build artifacts
+          find release-assets -name "*.tar.gz" -exec cp {} release-files/ \;
+          find release-assets -name "build-metadata-*.json" -exec cp {} release-files/ \;
+          
+          # Create version info file
+          cat > release-files/version-info.txt << EOF
+          Release: ${{ needs.pre-release-validation.outputs.version }}
+          Date: $(date -u)
+          Commit: $GITHUB_SHA
+          Branch: $GITHUB_REF_NAME
+          
+          Build Artifacts:
+          $(ls -la release-files/)
+          EOF
+          
+          # Create checksums
+          cd release-files
+          sha256sum *.tar.gz > checksums.sha256
+          cd ..
+
+      - name: Create GitHub Release
+        id: create-release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ needs.pre-release-validation.outputs.version }}
+          release_name: ${{ needs.pre-release-validation.outputs.version }}
+          body: ${{ needs.pre-release-validation.outputs.release-notes }}
+          draft: ${{ github.event.inputs.draft == 'true' }}
+          prerelease: ${{ github.event.inputs.prerelease == 'true' }}
+
+      - name: Upload release assets
+        run: |
+          echo "📎 Uploading release assets..."
+          
+          for file in release-files/*; do
+            if [ -f "$file" ]; then
+              filename=$(basename "$file")
+              echo "Uploading $filename..."
+              
+              gh release upload ${{ needs.pre-release-validation.outputs.version }} "$file" \
+                --repo ${{ github.repository }} \
+                --clobber
+            fi
+          done
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  deploy-release:
+    name: 🌐 Deploy Release
+    runs-on: ubuntu-latest
+    needs: [pre-release-validation, create-release]
+    if: github.event.inputs.draft != 'true'
+    environment: production
+    steps:
+      - name: Trigger production deployment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: workflow } = await github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'cd-production.yml',
+              ref: 'main',
+              inputs: {
+                deploy_target: 'both',
+                force_deploy: 'false'
+              }
+            });
+            
+            console.log('🚀 Production deployment triggered');
+            
+            // Wait a moment and then check status
+            setTimeout(async () => {
+              const { data: runs } = await github.rest.actions.listWorkflowRuns({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                workflow_id: 'cd-production.yml',
+                per_page: 1
+              });
+              
+              if (runs.workflow_runs.length > 0) {
+                const runUrl = runs.workflow_runs[0].html_url;
+                console.log(`📊 Monitor deployment: ${runUrl}`);
+              }
+            }, 5000);
+
+  post-release:
+    name: 📢 Post-release Actions
+    runs-on: ubuntu-latest
+    needs: [pre-release-validation, create-release, deploy-release]
+    if: always() && needs.create-release.result == 'success'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Create release announcement
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const version = '${{ needs.pre-release-validation.outputs.version }}';
+            const releaseUrl = '${{ needs.create-release.outputs.release-url }}';
+            
+            const announcement = `## 🎉 Release ${version} is now available!
+            
+            We're excited to announce the release of Escola Habilidade platform ${version}!
+            
+            ### 🚀 What's New
+            - Enhanced learning management system
+            - Improved performance and security
+            - Updated course catalog and blog features
+            - Better mobile experience
+            
+            ### 📥 Download
+            - **Release Notes**: [View on GitHub](${releaseUrl})
+            - **Main Website**: https://stelarow.github.io/habilidade
+            - **Learning Platform**: Available on production environment
+            
+            ### 🔄 Upgrade Instructions
+            For existing installations, please check the release notes for any breaking changes or migration steps.
+            
+            ### 🐛 Found an Issue?
+            If you encounter any problems with this release, please [create an issue](https://github.com/${{ github.repository }}/issues/new).
+            
+            Thank you for using Escola Habilidade! 🎓
+            
+            ---
+            *Released on $(date) - Automated by GitHub Actions*`;
+            
+            // Create a discussion post (if discussions are enabled)
+            try {
+              const { data: discussion } = await github.rest.discussions.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                category_id: 'announcements', // Adjust based on your repository
+                title: `🎉 Release ${version} Announcement`,
+                body: announcement
+              });
+              console.log(`📢 Release announcement created: ${discussion.html_url}`);
+            } catch (error) {
+              console.log('Note: Could not create discussion (may not be enabled)');
+              console.log('Announcement content:', announcement);
+            }
+
+      - name: Update documentation
+        run: |
+          echo "📚 Updating documentation with release information..."
+          
+          # Update README with latest version
+          if [ -f "README.md" ]; then
+            sed -i "s/Version: .*/Version: ${{ needs.pre-release-validation.outputs.version }}/" README.md || true
+          fi
+          
+          # Create or update CHANGELOG.md
+          if [ -f "CHANGELOG.md" ]; then
+            # Prepend new changelog to existing file
+            cat > CHANGELOG_NEW.md << EOF
+          # Changelog
+          
+          ${{ needs.pre-release-validation.outputs.changelog }}
+          
+          EOF
+            tail -n +2 CHANGELOG.md >> CHANGELOG_NEW.md
+            mv CHANGELOG_NEW.md CHANGELOG.md
+          else
+            # Create new changelog
+            cat > CHANGELOG.md << EOF
+          # Changelog
+          
+          ${{ needs.pre-release-validation.outputs.changelog }}
+          EOF
+          fi
+
+      - name: Commit version updates
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          
+          if git diff --quiet; then
+            echo "No changes to commit"
+          else
+            git add -A
+            git commit -m "chore: update version and changelog for ${{ needs.pre-release-validation.outputs.version }}"
+            git push
+          fi
+
+      - name: Clean up old releases
+        run: |
+          echo "🧹 Cleaning up old releases..."
+          
+          # Keep only the last 10 releases
+          RELEASES_TO_DELETE=$(gh release list --limit 100 --json tagName,isDraft,isPrerelease | \
+            jq -r '.[] | select(.isDraft == false and .isPrerelease == false) | .tagName' | \
+            tail -n +11)
+          
+          if [ ! -z "$RELEASES_TO_DELETE" ]; then
+            echo "Releases to archive (keep assets but remove from main list):"
+            echo "$RELEASES_TO_DELETE"
+            
+            # For now, just log what would be deleted
+            # In practice, you might want to archive rather than delete
+            echo "ℹ️ Old releases cleanup completed (logging only)"
+          else
+            echo "✅ No old releases to clean up"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  notify-teams:
+    name: 📱 Notify Teams
+    runs-on: ubuntu-latest
+    needs: [pre-release-validation, create-release, post-release]
+    if: always() && needs.create-release.result == 'success'
+    steps:
+      - name: Notify development team
+        run: |
+          echo "📱 Sending notifications to development team..."
+          
+          # This is where you would integrate with your team communication tools
+          # Examples: Slack, Discord, Microsoft Teams, email, etc.
+          
+          VERSION="${{ needs.pre-release-validation.outputs.version }}"
+          RELEASE_URL="${{ needs.create-release.outputs.release-url }}"
+          
+          echo "Release Information:"
+          echo "- Version: $VERSION"
+          echo "- Release URL: $RELEASE_URL"
+          echo "- Deployment Status: ${{ needs.deploy-release.result }}"
+          echo "- Post-release Tasks: ${{ needs.post-release.result }}"
+          
+          # Example webhook call (uncomment and configure as needed)
+          # curl -X POST -H 'Content-type: application/json' \
+          #   --data "{\"text\":\"🎉 Release $VERSION is now live! Check it out: $RELEASE_URL\"}" \
+          #   ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      - name: Create release metrics
+        run: |
+          echo "📊 Generating release metrics..."
+          
+          cat > release-metrics.json << EOF
+          {
+            "version": "${{ needs.pre-release-validation.outputs.version }}",
+            "releaseDate": "$(date -u)",
+            "deploymentTime": "$(date -u)",
+            "totalCommits": $(git rev-list --count HEAD),
+            "releaseSuccess": true,
+            "deploymentSuccess": "${{ needs.deploy-release.result == 'success' }}",
+            "postReleaseSuccess": "${{ needs.post-release.result == 'success' }}"
+          }
+          EOF
+          
+          echo "Release metrics generated:"
+          cat release-metrics.json

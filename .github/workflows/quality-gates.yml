@@ -1,0 +1,555 @@
+name: Quality Gates & Code Standards
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  schedule:
+    # Run quality analysis weekly on Sundays at 3 AM UTC
+    - cron: '0 3 * * 0'
+  workflow_dispatch:
+    inputs:
+      analysis_type:
+        description: 'Type of quality analysis'
+        required: true
+        default: 'full'
+        type: choice
+        options:
+          - 'code-quality'
+          - 'test-coverage'
+          - 'performance'
+          - 'accessibility'
+          - 'full'
+
+env:
+  NODE_VERSION: '20'
+  QUALITY_GATE_COVERAGE: 80
+  QUALITY_GATE_MAINTAINABILITY: 'A'
+  QUALITY_GATE_RELIABILITY: 'A'
+  QUALITY_GATE_SECURITY: 'A'
+
+permissions:
+  contents: read
+  pull-requests: write
+  checks: write
+  issues: write
+
+concurrency:
+  group: quality-gates-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  code-quality-analysis:
+    name: 📊 Code Quality Analysis
+    runs-on: ubuntu-latest
+    if: github.event.inputs.analysis_type == 'code-quality' || github.event.inputs.analysis_type == 'full' || github.event.inputs.analysis_type == null
+    strategy:
+      matrix:
+        project: ['main-website', 'learning-platform']
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: ${{ matrix.project == 'learning-platform' && 'plataforma-ensino/package-lock.json' || 'package-lock.json' }}
+
+      - name: Set working directory
+        id: workdir
+        run: |
+          if [ "${{ matrix.project }}" == "learning-platform" ]; then
+            echo "path=./plataforma-ensino" >> $GITHUB_OUTPUT
+          else
+            echo "path=." >> $GITHUB_OUTPUT
+          fi
+
+      - name: Install dependencies
+        working-directory: ${{ steps.workdir.outputs.path }}
+        run: npm ci --prefer-offline --no-audit
+
+      - name: Run ESLint with detailed reporting
+        working-directory: ${{ steps.workdir.outputs.path }}
+        run: |
+          echo "🔍 Running ESLint analysis for ${{ matrix.project }}..."
+          npx eslint src/ --ext .js,.jsx,.ts,.tsx --format json > eslint-report-${{ matrix.project }}.json || true
+          npx eslint src/ --ext .js,.jsx,.ts,.tsx --format html > eslint-report-${{ matrix.project }}.html || true
+          npx eslint src/ --ext .js,.jsx,.ts,.tsx || true
+
+      - name: Run SonarJS analysis
+        working-directory: ${{ steps.workdir.outputs.path }}
+        run: |
+          echo "🎯 Running SonarJS analysis for ${{ matrix.project }}..."
+          npx eslint src/ --ext .js,.jsx,.ts,.tsx -c sonarjs.config.js --format json > sonarjs-report-${{ matrix.project }}.json || true
+        continue-on-error: true
+
+      - name: Analyze code complexity
+        working-directory: ${{ steps.workdir.outputs.path }}
+        run: |
+          echo "📏 Analyzing code complexity for ${{ matrix.project }}..."
+          npx plato -r -d complexity-report-${{ matrix.project }} src/ || echo "Plato analysis completed with warnings"
+
+      - name: Check TypeScript strict mode (Learning Platform only)
+        if: matrix.project == 'learning-platform'
+        working-directory: ${{ steps.workdir.outputs.path }}
+        run: |
+          echo "🔧 Checking TypeScript configuration..."
+          npx tsc --noEmit --strict || echo "TypeScript strict mode issues found"
+
+      - name: Upload code quality reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: code-quality-${{ matrix.project }}-${{ github.sha }}
+          path: |
+            ${{ steps.workdir.outputs.path }}/eslint-report-${{ matrix.project }}.*
+            ${{ steps.workdir.outputs.path }}/sonarjs-report-${{ matrix.project }}.json
+            ${{ steps.workdir.outputs.path }}/complexity-report-${{ matrix.project }}/
+          retention-days: 30
+
+  test-coverage-analysis:
+    name: 🧪 Test Coverage Analysis
+    runs-on: ubuntu-latest
+    if: github.event.inputs.analysis_type == 'test-coverage' || github.event.inputs.analysis_type == 'full' || github.event.inputs.analysis_type == null
+    strategy:
+      matrix:
+        project: ['main-website', 'learning-platform']
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: ${{ matrix.project == 'learning-platform' && 'plataforma-ensino/package-lock.json' || 'package-lock.json' }}
+
+      - name: Set working directory
+        id: workdir
+        run: |
+          if [ "${{ matrix.project }}" == "learning-platform" ]; then
+            echo "path=./plataforma-ensino" >> $GITHUB_OUTPUT
+          else
+            echo "path=." >> $GITHUB_OUTPUT
+          fi
+
+      - name: Install dependencies
+        working-directory: ${{ steps.workdir.outputs.path }}
+        run: npm ci --prefer-offline --no-audit
+
+      - name: Setup test environment (Learning Platform)
+        if: matrix.project == 'learning-platform'
+        working-directory: ${{ steps.workdir.outputs.path }}
+        run: |
+          echo "NEXT_PUBLIC_SUPABASE_URL=http://localhost:54321" >> .env.test
+          echo "NEXT_PUBLIC_SUPABASE_ANON_KEY=test-key" >> .env.test
+
+      - name: Run tests with coverage
+        working-directory: ${{ steps.workdir.outputs.path }}
+        run: |
+          echo "🧪 Running test suite with coverage for ${{ matrix.project }}..."
+          npm run test:coverage -- --coverage --watchAll=false --passWithNoTests
+        env:
+          CI: true
+
+      - name: Generate coverage reports
+        working-directory: ${{ steps.workdir.outputs.path }}
+        run: |
+          echo "📊 Generating coverage reports for ${{ matrix.project }}..."
+          
+          # Generate different coverage report formats
+          if [ -d "coverage" ]; then
+            # Create coverage summary
+            echo "## Coverage Summary for ${{ matrix.project }}" > coverage-summary.md
+            if [ -f "coverage/coverage-summary.json" ]; then
+              node -e "
+                const coverage = require('./coverage/coverage-summary.json').total;
+                console.log('| Metric | Percentage |');
+                console.log('|--------|------------|');
+                console.log('| Lines | ' + coverage.lines.pct + '% |');
+                console.log('| Functions | ' + coverage.functions.pct + '% |');
+                console.log('| Branches | ' + coverage.branches.pct + '% |');
+                console.log('| Statements | ' + coverage.statements.pct + '% |');
+              " >> coverage-summary.md
+            fi
+          fi
+
+      - name: Check coverage quality gate
+        working-directory: ${{ steps.workdir.outputs.path }}
+        run: |
+          echo "🎯 Checking coverage quality gate for ${{ matrix.project }}..."
+          
+          if [ -f "coverage/coverage-summary.json" ]; then
+            COVERAGE=$(node -e "console.log(require('./coverage/coverage-summary.json').total.lines.pct)")
+            echo "Current coverage: $COVERAGE%"
+            echo "Required coverage: ${{ env.QUALITY_GATE_COVERAGE }}%"
+            
+            if (( $(echo "$COVERAGE < ${{ env.QUALITY_GATE_COVERAGE }}" | bc -l) )); then
+              echo "❌ Coverage below quality gate threshold!"
+              echo "COVERAGE_FAILED_${{ matrix.project }}=true" >> $GITHUB_ENV
+            else
+              echo "✅ Coverage meets quality gate threshold"
+            fi
+          else
+            echo "⚠️ No coverage data found"
+          fi
+
+      - name: Upload coverage reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-coverage-${{ matrix.project }}-${{ github.sha }}
+          path: |
+            ${{ steps.workdir.outputs.path }}/coverage/
+            ${{ steps.workdir.outputs.path }}/coverage-summary.md
+          retention-days: 30
+
+      - name: Upload to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: ${{ steps.workdir.outputs.path }}
+          flags: ${{ matrix.project }}
+          name: ${{ matrix.project }}-coverage
+
+  performance-analysis:
+    name: ⚡ Performance Analysis
+    runs-on: ubuntu-latest
+    if: github.event.inputs.analysis_type == 'performance' || github.event.inputs.analysis_type == 'full' || github.event.inputs.analysis_type == null
+    strategy:
+      matrix:
+        project: ['main-website', 'learning-platform']
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: ${{ matrix.project == 'learning-platform' && 'plataforma-ensino/package-lock.json' || 'package-lock.json' }}
+
+      - name: Set working directory and build command
+        id: config
+        run: |
+          if [ "${{ matrix.project }}" == "learning-platform" ]; then
+            echo "path=./plataforma-ensino" >> $GITHUB_OUTPUT
+            echo "build-cmd=npm run build:production" >> $GITHUB_OUTPUT
+            echo "start-cmd=npm start" >> $GITHUB_OUTPUT
+            echo "port=3000" >> $GITHUB_OUTPUT
+          else
+            echo "path=." >> $GITHUB_OUTPUT
+            echo "build-cmd=npm run build:production" >> $GITHUB_OUTPUT
+            echo "start-cmd=npm run preview" >> $GITHUB_OUTPUT
+            echo "port=4173" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Install dependencies
+        working-directory: ${{ steps.config.outputs.path }}
+        run: npm ci --prefer-offline --no-audit
+
+      - name: Build application
+        working-directory: ${{ steps.config.outputs.path }}
+        run: ${{ steps.config.outputs.build-cmd }}
+        env:
+          CI: false
+          NODE_ENV: production
+
+      - name: Start application
+        working-directory: ${{ steps.config.outputs.path }}
+        run: ${{ steps.config.outputs.start-cmd }} &
+        env:
+          PORT: ${{ steps.config.outputs.port }}
+
+      - name: Wait for application
+        run: npx wait-on http://localhost:${{ steps.config.outputs.port }} --timeout 60000
+
+      - name: Install Lighthouse CLI
+        run: npm install -g @lhci/cli lighthouse
+
+      - name: Run Lighthouse performance audit
+        run: |
+          echo "⚡ Running Lighthouse performance audit for ${{ matrix.project }}..."
+          lighthouse http://localhost:${{ steps.config.outputs.port }} \
+            --only-categories=performance \
+            --output=json \
+            --output-path=lighthouse-performance-${{ matrix.project }}.json \
+            --chrome-flags="--headless --no-sandbox"
+
+      - name: Run comprehensive Lighthouse audit
+        run: |
+          echo "🔍 Running comprehensive Lighthouse audit for ${{ matrix.project }}..."
+          lighthouse http://localhost:${{ steps.config.outputs.port }} \
+            --output=json \
+            --output=html \
+            --output-path=lighthouse-full-${{ matrix.project }} \
+            --chrome-flags="--headless --no-sandbox"
+
+      - name: Analyze bundle size
+        working-directory: ${{ steps.config.outputs.path }}
+        run: |
+          echo "📦 Analyzing bundle size for ${{ matrix.project }}..."
+          
+          if [ "${{ matrix.project }}" == "learning-platform" ]; then
+            BUILD_DIR=".next"
+          else
+            BUILD_DIR="dist"
+          fi
+          
+          # Generate bundle size report
+          du -sh $BUILD_DIR > bundle-size-${{ matrix.project }}.txt
+          find $BUILD_DIR -name "*.js" -o -name "*.css" | xargs ls -lh > bundle-details-${{ matrix.project }}.txt
+
+      - name: Check performance quality gates
+        run: |
+          echo "🎯 Checking performance quality gates for ${{ matrix.project }}..."
+          
+          # Parse Lighthouse performance score
+          PERF_SCORE=$(node -e "console.log(require('./lighthouse-performance-${{ matrix.project }}.json').lhr.categories.performance.score * 100)")
+          echo "Performance score: $PERF_SCORE"
+          
+          # Set quality gate thresholds
+          PERF_THRESHOLD=85
+          
+          if (( $(echo "$PERF_SCORE < $PERF_THRESHOLD" | bc -l) )); then
+            echo "❌ Performance score below threshold ($PERF_THRESHOLD)!"
+            echo "PERF_FAILED_${{ matrix.project }}=true" >> $GITHUB_ENV
+          else
+            echo "✅ Performance score meets threshold"
+          fi
+
+      - name: Upload performance reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: performance-analysis-${{ matrix.project }}-${{ github.sha }}
+          path: |
+            lighthouse-*-${{ matrix.project }}.*
+            bundle-*-${{ matrix.project }}.txt
+          retention-days: 30
+
+  accessibility-analysis:
+    name: ♿ Accessibility Analysis
+    runs-on: ubuntu-latest
+    if: github.event.inputs.analysis_type == 'accessibility' || github.event.inputs.analysis_type == 'full' || github.event.inputs.analysis_type == null
+    strategy:
+      matrix:
+        project: ['main-website', 'learning-platform']
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: ${{ matrix.project == 'learning-platform' && 'plataforma-ensino/package-lock.json' || 'package-lock.json' }}
+
+      - name: Set working directory and build command
+        id: config
+        run: |
+          if [ "${{ matrix.project }}" == "learning-platform" ]; then
+            echo "path=./plataforma-ensino" >> $GITHUB_OUTPUT
+            echo "build-cmd=npm run build:production" >> $GITHUB_OUTPUT
+            echo "start-cmd=npm start" >> $GITHUB_OUTPUT
+            echo "port=3000" >> $GITHUB_OUTPUT
+          else
+            echo "path=." >> $GITHUB_OUTPUT
+            echo "build-cmd=npm run build:production" >> $GITHUB_OUTPUT
+            echo "start-cmd=npm run preview" >> $GITHUB_OUTPUT
+            echo "port=4173" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Install dependencies
+        working-directory: ${{ steps.config.outputs.path }}
+        run: npm ci --prefer-offline --no-audit
+
+      - name: Build application
+        working-directory: ${{ steps.config.outputs.path }}
+        run: ${{ steps.config.outputs.build-cmd }}
+        env:
+          CI: false
+          NODE_ENV: production
+
+      - name: Start application
+        working-directory: ${{ steps.config.outputs.path }}
+        run: ${{ steps.config.outputs.start-cmd }} &
+        env:
+          PORT: ${{ steps.config.outputs.port }}
+
+      - name: Wait for application
+        run: npx wait-on http://localhost:${{ steps.config.outputs.port }} --timeout 60000
+
+      - name: Install accessibility tools
+        run: |
+          npm install -g @axe-core/cli
+          npm install -g pa11y
+          npm install -g lighthouse
+
+      - name: Run Axe accessibility scan
+        run: |
+          echo "♿ Running Axe accessibility scan for ${{ matrix.project }}..."
+          axe http://localhost:${{ steps.config.outputs.port }} \
+            --tags wcag2a,wcag2aa,wcag21aa \
+            --reporter json \
+            --output-file axe-results-${{ matrix.project }}.json || true
+
+      - name: Run Pa11y accessibility scan
+        run: |
+          echo "🔍 Running Pa11y accessibility scan for ${{ matrix.project }}..."
+          pa11y http://localhost:${{ steps.config.outputs.port }} \
+            --standard WCAG2AA \
+            --reporter json > pa11y-results-${{ matrix.project }}.json || true
+
+      - name: Run Lighthouse accessibility audit
+        run: |
+          echo "💡 Running Lighthouse accessibility audit for ${{ matrix.project }}..."
+          lighthouse http://localhost:${{ steps.config.outputs.port }} \
+            --only-categories=accessibility \
+            --output=json \
+            --output-path=lighthouse-a11y-${{ matrix.project }}.json \
+            --chrome-flags="--headless --no-sandbox"
+
+      - name: Analyze accessibility results
+        run: |
+          echo "📊 Analyzing accessibility results for ${{ matrix.project }}..."
+          
+          # Parse Axe results
+          if [ -f "axe-results-${{ matrix.project }}.json" ]; then
+            VIOLATIONS=$(node -e "console.log(require('./axe-results-${{ matrix.project }}.json').violations.length)")
+            echo "Axe violations: $VIOLATIONS"
+          fi
+          
+          # Parse Lighthouse accessibility score
+          if [ -f "lighthouse-a11y-${{ matrix.project }}.json" ]; then
+            A11Y_SCORE=$(node -e "console.log(require('./lighthouse-a11y-${{ matrix.project }}.json').lhr.categories.accessibility.score * 100)")
+            echo "Lighthouse accessibility score: $A11Y_SCORE"
+            
+            # Check quality gate
+            A11Y_THRESHOLD=90
+            if (( $(echo "$A11Y_SCORE < $A11Y_THRESHOLD" | bc -l) )); then
+              echo "❌ Accessibility score below threshold ($A11Y_THRESHOLD)!"
+              echo "A11Y_FAILED_${{ matrix.project }}=true" >> $GITHUB_ENV
+            else
+              echo "✅ Accessibility score meets threshold"
+            fi
+          fi
+
+      - name: Upload accessibility reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: accessibility-analysis-${{ matrix.project }}-${{ github.sha }}
+          path: |
+            axe-results-${{ matrix.project }}.json
+            pa11y-results-${{ matrix.project }}.json
+            lighthouse-a11y-${{ matrix.project }}.json
+          retention-days: 30
+
+  quality-gates-summary:
+    name: 📋 Quality Gates Summary
+    runs-on: ubuntu-latest
+    needs: [code-quality-analysis, test-coverage-analysis, performance-analysis, accessibility-analysis]
+    if: always()
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: quality-results
+
+      - name: Generate quality report
+        run: |
+          echo "# 📊 Quality Gates Report" > quality-report.md
+          echo "" >> quality-report.md
+          echo "**Date**: $(date)" >> quality-report.md
+          echo "**Commit**: $GITHUB_SHA" >> quality-report.md
+          echo "**Branch**: $GITHUB_REF_NAME" >> quality-report.md
+          echo "" >> quality-report.md
+          
+          echo "## 🎯 Quality Gate Status" >> quality-report.md
+          echo "" >> quality-report.md
+          echo "| Check | Main Website | Learning Platform |" >> quality-report.md
+          echo "|-------|--------------|-------------------|" >> quality-report.md
+          echo "| Code Quality | ${{ needs.code-quality-analysis.result == 'success' && '✅ Passed' || '❌ Failed' }} | ${{ needs.code-quality-analysis.result == 'success' && '✅ Passed' || '❌ Failed' }} |" >> quality-report.md
+          echo "| Test Coverage | ${{ needs.test-coverage-analysis.result == 'success' && '✅ Passed' || '❌ Failed' }} | ${{ needs.test-coverage-analysis.result == 'success' && '✅ Passed' || '❌ Failed' }} |" >> quality-report.md
+          echo "| Performance | ${{ needs.performance-analysis.result == 'success' && '✅ Passed' || '❌ Failed' }} | ${{ needs.performance-analysis.result == 'success' && '✅ Passed' || '❌ Failed' }} |" >> quality-report.md
+          echo "| Accessibility | ${{ needs.accessibility-analysis.result == 'success' && '✅ Passed' || '❌ Failed' }} | ${{ needs.accessibility-analysis.result == 'success' && '✅ Passed' || '❌ Failed' }} |" >> quality-report.md
+          echo "" >> quality-report.md
+          
+          echo "## 📈 Detailed Metrics" >> quality-report.md
+          echo "" >> quality-report.md
+          echo "Detailed metrics and reports are available in the workflow artifacts." >> quality-report.md
+          echo "" >> quality-report.md
+          
+          echo "## 🔄 Next Actions" >> quality-report.md
+          echo "" >> quality-report.md
+          echo "1. Review any failed quality gates" >> quality-report.md
+          echo "2. Address code quality issues and test coverage gaps" >> quality-report.md
+          echo "3. Optimize performance bottlenecks" >> quality-report.md
+          echo "4. Fix accessibility violations" >> quality-report.md
+          echo "" >> quality-report.md
+          
+          echo "---" >> quality-report.md
+          echo "*Generated by GitHub Actions Quality Gates*" >> quality-report.md
+
+      - name: Check overall quality status
+        id: quality-status
+        run: |
+          FAILED_JOBS=0
+          
+          if [ "${{ needs.code-quality-analysis.result }}" != "success" ]; then
+            FAILED_JOBS=$((FAILED_JOBS + 1))
+          fi
+          
+          if [ "${{ needs.test-coverage-analysis.result }}" != "success" ]; then
+            FAILED_JOBS=$((FAILED_JOBS + 1))
+          fi
+          
+          if [ "${{ needs.performance-analysis.result }}" != "success" ]; then
+            FAILED_JOBS=$((FAILED_JOBS + 1))
+          fi
+          
+          if [ "${{ needs.accessibility-analysis.result }}" != "success" ]; then
+            FAILED_JOBS=$((FAILED_JOBS + 1))
+          fi
+          
+          echo "failed-jobs=$FAILED_JOBS" >> $GITHUB_OUTPUT
+          
+          if [ $FAILED_JOBS -gt 0 ]; then
+            echo "❌ $FAILED_JOBS quality gate(s) failed"
+            exit 1
+          else
+            echo "✅ All quality gates passed"
+          fi
+
+      - name: Upload quality report
+        uses: actions/upload-artifact@v4
+        with:
+          name: quality-gates-report-${{ github.sha }}
+          path: quality-report.md
+          retention-days: 90
+
+      - name: Comment on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const report = fs.readFileSync('quality-report.md', 'utf8');
+            const failedJobs = ${{ steps.quality-status.outputs.failed-jobs }};
+            
+            const emoji = failedJobs === 0 ? '✅' : '❌';
+            const status = failedJobs === 0 ? 'All quality gates passed!' : `${failedJobs} quality gate(s) failed`;
+            
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `## ${emoji} Quality Gates Results\n\n**Status**: ${status}\n\n${report}\n\n**Artifacts**: Detailed reports available in workflow artifacts for 30 days.`
+            });
