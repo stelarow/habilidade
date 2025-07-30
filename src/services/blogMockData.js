@@ -728,6 +728,140 @@ const age = now.toPlainDate().since(birthday).years;</code></pre>
     tags: ['javascript', 'es2024', 'programação', 'web'],
     views: 1823,
     likes: 134
+  },
+  {
+    id: 7,
+    title: 'Espaços Pequenos, Futuros Grandes: O Desafio Design Sprint 2025',
+    slug: 'espacos-pequenos-futuros-grandes-design-sprint-2025',
+    excerpt: 'Como 500 metros quadrados podem revolucionar nossa compreensão de arquitetura sustentável e focada na comunidade para 2050.',
+    content: `
+<h2>O futuro da arquitetura urbana está em espaços pequenos com grande impacto social</h2>
+
+<p>O SketchUp Design Sprint Challenge 2025 marcou um momento significativo na história do software, celebrando seu 25º aniversário com um desafio inovador: projetar 500 metros quadrados para 2050 que criem um impacto social positivo.</p>
+
+<h3>O Desafio: 500 metros quadrados de impacto</h3>
+
+<p>O espaço urbano limitado será um desafio determinante pelos próximos anos. Os participantes foram convidados a inovar dentro de apenas 500 metros quadrados, demonstrando como essa área compacta pode gerar um impacto profundo.</p>
+
+<p>O grande desafio? Eles tiveram apenas 60 minutos para criar seus projetos, testando verdadeiramente sua criatividade e habilidades técnicas sob pressão.</p>
+
+<h3>A comunidade criativa do SketchUp</h3>
+
+<p>Em verdadeiro espírito SketchUp, o desafio convidou a comunidade criativa a envisionear o ano de 2050 e projetar espaços (interiores/exteriores ou paisagismo) que tenham impacto social positivo para atender às necessidades ambientais, comunitárias ou de acessibilidade do futuro.</p>
+
+<h3>O projeto vencedor: vivendo melhor, juntos</h3>
+
+<p>Raphaël Craverio, estudante de arquitetura da LISAA Paris, conquistou o primeiro lugar com seu projeto criativo e focado na comunidade. Seu design aborda uma questão fundamental: e se nossas cidades futuras pudessem ajudar as pessoas a viverem melhor juntas?</p>
+
+<h4>Características inovadoras do projeto</h4>
+
+<p>Inspirado pelo modelo arquitetônico fornecido "Exterior", este design transforma a experiência urbana ao promover interação perfeita entre quem está dentro e fora do edifício:</p>
+
+<ul>
+<li><strong>Térreo aberto:</strong> Cria calçadas mais amplas e acessíveis - característica crucial para acessibilidade universal e cidades cada vez mais densas de 2050</li>
+<li><strong>Reposicionamento inteligente:</strong> As colunas arquitetônicas originais foram reposicionadas para melhorar o fluxo de pedestres</li>
+<li><strong>Mobilidade sustentável:</strong> Ciclovias dedicadas refletem a crescente importância do ciclismo no transporte urbano</li>
+</ul>
+
+<h3>Integração com a natureza</h3>
+
+<p>A natureza é central ao design, com elementos estratégicos que fazem a diferença:</p>
+
+<ul>
+<li><strong>Árvores estratégicas:</strong> Fornece sombra essencial no verão e permite a passagem da luz solar no inverno quando as folhas caem</li>
+<li><strong>Bancos integrados:</strong> Aninhados sob as árvores, convidam moradores a pausar, descansar e se conectar com a natureza</li>
+<li><strong>Jardim suspenso:</strong> Um jardim compartilhado no telhado capacita os moradores a cultivar sua própria comida</li>
+</ul>
+
+<h3>Tecnologia adaptável</h3>
+
+<p>O design incorpora soluções tecnológicas inovadoras:</p>
+
+<ul>
+<li><strong>Painéis de teto móveis:</strong> Os painéis de madeira distintos do edifício giram para otimizar a luz solar, adaptando-se às mudanças diárias e sazonais</li>
+<li><strong>Marcações no solo:</strong> Códigos de cores sutis delimitam zonas para pedestres e ciclistas, garantindo harmonia com elementos naturais</li>
+</ul>
+
+<h3>Lições para o design educacional</h3>
+
+<p>Este projeto oferece insights valiosos para educadores e designers:</p>
+
+<h4>1. Pensamento sistêmico</h4>
+<p>O projeto demonstra como pequenos espaços podem gerar grandes impactos quando pensamos de forma integrada sobre:</p>
+<ul>
+<li>Fluxos urbanos</li>
+<li>Sustentabilidade ambiental</li>
+<li>Interação social</li>
+<li>Acessibilidade universal</li>
+</ul>
+
+<h4>2. Design centrado no usuário</h4>
+<p>Cada elemento foi pensado considerando:</p>
+<ul>
+<li>Necessidades dos moradores</li>
+<li>Fluxo de pedestres</li>
+<li>Ciclistas urbanos</li>
+<li>Pessoas com mobilidade reduzida</li>
+</ul>
+
+<h4>3. Sustentabilidade integrada</h4>
+<p>O projeto mostra como sustentabilidade pode ser:</p>
+<ul>
+<li>Esteticamente atraente</li>
+<li>Funcionalmente eficiente</li>
+<li>Socialmente inclusiva</li>
+<li>Economicamente viável</li>
+</ul>
+
+<h3>Aplicações no ensino de design</h3>
+
+<p>Projetos como este podem inspirar exercícios educacionais:</p>
+
+<ol>
+<li><strong>Desafios de tempo limitado:</strong> Estimulam criatividade sob pressão</li>
+<li><strong>Restrições claras:</strong> 500m² força soluções inovadoras</li>
+<li><strong>Impacto social:</strong> Conecta design com responsabilidade social</li>
+<li><strong>Visão de futuro:</strong> Desenvolve pensamento prospectivo</li>
+</ol>
+
+<h3>Ferramentas digitais no design</h3>
+
+<p>O SketchUp continua sendo uma ferramenta fundamental para:</p>
+
+<ul>
+<li>Prototipagem rápida de ideias</li>
+<li>Visualização 3D intuitiva</li>
+<li>Comunicação eficaz de conceitos</li>
+<li>Iteração ágil de projetos</li>
+</ul>
+
+<h3>O futuro das cidades</h3>
+
+<p>Este projeto oferece uma visão esperançosa para cidades futuras:</p>
+
+<ul>
+<li><strong>Mais verdes:</strong> Integração natural estratégica</li>
+<li><strong>Mais pacíficas:</strong> Espaços de contemplação e descanso</li>
+<li><strong>Mais conectadas:</strong> Facilitando interações humanas autênticas</li>
+<li><strong>Mais inclusivas:</strong> Acessibilidade como prioridade de design</li>
+</ul>
+
+<h3>Conclusão: pequenos espaços, grandes possibilidades</h3>
+
+<p>O Design Sprint Challenge 2025 demonstra que limitações podem impulsionar inovação. Em apenas 500 metros quadrados e 60 minutos, Raphaël Craverio criou uma visão transformadora para o futuro urbano.</p>
+
+<p>Este projeto inspira educadores, designers e urbanistas a repensarem como pequenos espaços podem gerar grandes mudanças sociais. Na Escola Habilidade, acreditamos que projetos como este são fundamentais para formar profissionais capazes de criar soluções inovadoras para os desafios urbanos do futuro.</p>
+
+<p>Para designers e arquitetos em formação, este exemplo demonstra como criatividade, sustentabilidade e responsabilidade social podem convergir em soluções elegantes e impactantes. O futuro das nossas cidades depende dessa nova geração de pensadores sistêmicos.</p>
+    `,
+    author: { name: 'Escola Habilidade', avatar: '/assets/avatars/default.jpg' },
+    category: mockCategories[4], // Design
+    featuredImage: '/assets/blog/design-sprint-2025.jpg',
+    publishedAt: '2025-01-30T09:00:00.000Z',
+    readingTime: 8,
+    tags: ['design', 'arquitetura', 'sustentabilidade', 'sketchup', 'urbanismo'],
+    views: 0,
+    likes: 0
   }
 ];
 
