@@ -129,9 +129,10 @@ const SEOHead = ({
       <meta name="theme-color" content="#d400ff" />
       
       {/* Structured Data */}
-      <script type="application/ld+json">
-        {JSON.stringify(generateSchemaData())}
-      </script>
+      <script 
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(generateSchemaData()) }}
+      />
     </Helmet>
   );
 };
