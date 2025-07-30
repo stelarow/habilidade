@@ -120,13 +120,15 @@ const BlogCard = ({ post, variant = 'standard', index = 0 }) => {
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
   const isTouchDevice = typeof window !== 'undefined' && ('ontouchstart' in window || navigator.maxTouchPoints > 0);
 
-  // Combined card classes with mobile optimization
+  // Enhanced card classes with improved hover effects
   const cardClasses = combineClasses(
-    'group rounded-xl overflow-hidden transition-all duration-300',
-    // Reduced hover effects on mobile for better performance
+    'group rounded-xl overflow-hidden transition-all duration-500 ease-out',
+    // Enhanced hover effects with better performance considerations
     isMobile 
-      ? 'active:border-purple-500/50 active:shadow-lg active:shadow-purple-500/10' 
-      : 'hover:border-purple-500/50 hover:transform hover:scale-[1.02] hover:shadow-xl hover:shadow-purple-500/10 blog-hover-lift',
+      ? 'active:border-purple-500/50 active:shadow-lg active:shadow-purple-500/10 active:scale-[0.98]' 
+      : 'hover:border-purple-500/50 hover:transform hover:scale-[1.03] hover:shadow-2xl hover:shadow-purple-500/20 hover:-translate-y-2 blog-hover-lift cursor-pointer',
+    // Add subtle glow effect
+    !isMobile && 'hover:ring-1 hover:ring-purple-500/20',
     variantStyles[variant],
     animationClasses
   );
@@ -174,15 +176,25 @@ const BlogCard = ({ post, variant = 'standard', index = 0 }) => {
               }
             />
           ) : (
-            // Fallback gradient when no image or error
-            <div className="w-full h-full bg-gradient-to-br from-purple-600/20 via-blue-600/20 to-pink-600/20 flex items-center justify-center">
-              <div className="text-center text-zinc-400">
-                <div className="w-12 h-12 mx-auto mb-2 opacity-30">
-                  <svg viewBox="0 0 24 24" fill="currentColor">
+            // Enhanced fallback gradient with animated elements
+            <div className="w-full h-full bg-gradient-to-br from-purple-600/30 via-blue-600/25 to-pink-600/30 flex items-center justify-center relative overflow-hidden">
+              {/* Animated background pattern */}
+              <div className="absolute inset-0 opacity-10">
+                <div className="absolute top-4 left-4 w-8 h-8 border border-purple-300/30 rounded-full animate-pulse"></div>
+                <div className="absolute bottom-6 right-6 w-6 h-6 border border-blue-300/30 rounded-full animate-pulse delay-1000"></div>
+                <div className="absolute top-1/2 right-8 w-4 h-4 border border-pink-300/30 rounded-full animate-pulse delay-500"></div>
+              </div>
+              
+              <div className="text-center text-zinc-300 relative z-10">
+                <div className="w-16 h-16 mx-auto mb-3 opacity-60 transform group-hover:scale-110 transition-transform duration-300">
+                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full">
                     <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" />
                   </svg>
                 </div>
-                <p className="text-xs">Artigo</p>
+                <p className="text-sm font-medium opacity-80">Artigo</p>
+                <div className="mt-2 flex justify-center">
+                  <div className="w-12 h-1 bg-gradient-to-r from-purple-400/50 to-blue-400/50 rounded-full"></div>
+                </div>
               </div>
             </div>
           )}
@@ -212,9 +224,9 @@ const BlogCard = ({ post, variant = 'standard', index = 0 }) => {
 
         {/* Content */}
         <div className={`${isMobile ? 'p-4' : 'p-6'}`}>
-          {/* Title */}
+          {/* Enhanced Title with micro-interactions */}
           <h2 className={combineClasses(
-            "font-bold text-zinc-100 mb-3 line-clamp-2 group-hover:text-purple-300 transition-colors",
+            "font-bold text-zinc-100 mb-3 line-clamp-2 group-hover:text-purple-300 transition-all duration-300 transform group-hover:translate-x-1",
             getTypographyClasses('title')
           )}>
             {post.title}
@@ -230,27 +242,27 @@ const BlogCard = ({ post, variant = 'standard', index = 0 }) => {
             </p>
           )}
 
-          {/* Meta Information */}
-          <div className="flex items-center justify-between text-xs text-zinc-500">
-            <div className="flex items-center gap-4">
-              {/* Date */}
-              <span className="flex items-center gap-1">
-                <Calendar size={12} />
+          {/* Enhanced Meta Information with better mobile layout */}
+          <div className={`text-xs text-zinc-500 ${isMobile ? 'space-y-2' : 'flex items-center justify-between'}`}>
+            <div className={`flex items-center ${isMobile ? 'justify-between' : 'gap-4'}`}>
+              {/* Date with hover effect */}
+              <span className="flex items-center gap-1 hover:text-zinc-400 transition-colors">
+                <Calendar size={12} className="group-hover:text-purple-400 transition-colors" />
                 {formattedDate}
               </span>
 
-              {/* Author (if available) */}
+              {/* Author (if available) with hover effect */}
               {post.author_name && (
-                <span className="flex items-center gap-1">
-                  <User size={12} />
+                <span className="flex items-center gap-1 hover:text-zinc-400 transition-colors">
+                  <User size={12} className="group-hover:text-purple-400 transition-colors" />
                   {post.author_name}
                 </span>
               )}
             </div>
 
-            {/* Tags count (if available) */}
+            {/* Tags count (if available) with enhanced styling */}
             {post.tags && post.tags.length > 0 && (
-              <span className="text-zinc-600">
+              <span className="text-zinc-600 group-hover:text-zinc-500 transition-colors px-2 py-1 bg-zinc-800/50 rounded-full">
                 +{post.tags.length} tags
               </span>
             )}

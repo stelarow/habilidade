@@ -1,5 +1,6 @@
 import React, { Suspense, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useParams } from 'react-router-dom';
+import './styles/blog-animations.css';
 
 // Componente para redirecionamento de cursos
 const CourseRedirect = () => {

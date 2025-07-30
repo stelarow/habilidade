@@ -149,34 +149,55 @@ const BlogIndex = () => {
         {/* Search and Filters */}
         <div className="mb-8 space-y-4">
           <div className="flex flex-col md:flex-row gap-4 max-w-4xl mx-auto">
-            {/* Search Input */}
+            {/* Enhanced Search Input with visual feedback */}
             <div className="relative flex-1">
-              <MagnifyingGlass className="absolute left-3 top-1/2 transform -translate-y-1/2 text-zinc-400" size={20} />
+              <MagnifyingGlass 
+                className={`absolute left-3 top-1/2 transform -translate-y-1/2 transition-colors ${
+                  searchQuery ? 'text-purple-400' : 'text-zinc-400'
+                }`} 
+                size={20} 
+              />
               <input
                 type="text"
                 placeholder="Buscar artigos..."
                 value={searchQuery}
                 onChange={handleSearchChange}
-                className="w-full pl-10 pr-4 py-3 bg-zinc-800 border border-zinc-700 rounded-lg text-zinc-100 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                className={`w-full pl-10 pr-4 py-3 rounded-lg text-zinc-100 placeholder-zinc-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent ${
+                  searchQuery 
+                    ? 'bg-purple-500/10 border border-purple-500/50 shadow-lg' 
+                    : 'bg-zinc-800 border border-zinc-700 hover:border-zinc-600'
+                }`}
               />
+              {searchQuery && (
+                <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                  <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
+                </div>
+              )}
             </div>
 
-            {/* Category Filter */}
+            {/* Enhanced Category Filter with visual indicators */}
             <div className="relative">
               <button
                 onClick={() => setShowFilters(!showFilters)}
-                className="flex items-center gap-2 px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-lg text-zinc-100 hover:bg-zinc-700 transition-colors"
+                className={`flex items-center gap-2 px-4 py-3 rounded-lg text-zinc-100 transition-all duration-300 ${
+                  selectedCategory 
+                    ? 'bg-purple-500/20 border border-purple-500/50 hover:bg-purple-500/30 shadow-lg'
+                    : 'bg-zinc-800 border border-zinc-700 hover:bg-zinc-700'
+                }`}
               >
-                <Funnel size={20} />
-                <span>
+                <Funnel size={20} className={`transition-colors ${selectedCategory ? 'text-purple-300' : ''}`} />
+                <span className="font-medium">
                   {selectedCategory 
                     ? categories.find(cat => cat.slug === selectedCategory)?.name || 'Categoria' 
                     : 'Todas as categorias'
                   }
                 </span>
+                {selectedCategory && (
+                  <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
+                )}
                 <CaretDown 
                   size={16} 
-                  className={`transition-transform ${showFilters ? 'rotate-180' : ''}`} 
+                  className={`transition-transform duration-300 ${showFilters ? 'rotate-180' : ''}`} 
                 />
               </button>
 
@@ -207,23 +228,26 @@ const BlogIndex = () => {
             </div>
           </div>
 
-          {/* Active Filters */}
+          {/* Enhanced Active Filters with better visuals */}
           {(debouncedSearchQuery || selectedCategory) && (
-            <div className="flex flex-wrap gap-2 max-w-4xl mx-auto">
+            <div className="flex flex-wrap gap-3 max-w-4xl mx-auto animate-fadeIn">
               {debouncedSearchQuery && (
-                <span className="inline-flex items-center gap-2 px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-sm">
+                <span className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-500/20 to-purple-600/20 text-purple-300 rounded-full text-sm border border-purple-500/30 shadow-lg backdrop-blur-sm">
+                  <MagnifyingGlass size={14} />
                   Busca: "{debouncedSearchQuery}"
                 </span>
               )}
               {selectedCategory && (
-                <span className="inline-flex items-center gap-2 px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-sm">
-                  Categoria: {categories.find(cat => cat.slug === selectedCategory)?.name || selectedCategory}
+                <span className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500/20 to-blue-600/20 text-blue-300 rounded-full text-sm border border-blue-500/30 shadow-lg backdrop-blur-sm">
+                  <Funnel size={14} />
+                  {categories.find(cat => cat.slug === selectedCategory)?.name || selectedCategory}
                 </span>
               )}
               <button
                 onClick={clearFilters}
-                className="inline-flex items-center gap-1 px-3 py-1 text-zinc-400 hover:text-zinc-300 text-sm underline"
+                className="inline-flex items-center gap-2 px-4 py-2 text-zinc-400 hover:text-zinc-300 text-sm bg-zinc-800/50 rounded-full border border-zinc-700/50 hover:border-zinc-600/50 transition-all duration-300 backdrop-blur-sm"
               >
+                <span>✕</span>
                 Limpar filtros
               </button>
             </div>
