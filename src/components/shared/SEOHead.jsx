@@ -11,7 +11,7 @@ import {
 
 const SEOHead = ({
   title = 'Escola Habilidade',
-  description = 'Transforme sua carreira com cursos de tecnologia, design e neg�cios. Educa��o de qualidade para o mercado digital.',
+  description = 'Transforme sua carreira com cursos de tecnologia, design e negócios. Educação de qualidade para o mercado digital.',
   keywords = '',
   path = '',
   image = null,
@@ -23,6 +23,11 @@ const SEOHead = ({
   canonical = null,
   schemaData = null,
 }) => {
+  // Sanitize all string inputs to prevent invalid children
+  const safeTitle = String(title || 'Escola Habilidade');
+  const safeDescription = String(description || 'Transforme sua carreira com cursos de tecnologia, design e negócios. Educação de qualidade para o mercado digital.');
+  const safeKeywords = keywords ? String(keywords).trim() : '';
+  const safeAuthor = String(author || 'Escola Habilidade');
   // Base URL - adjust for production
   const baseUrl = process.env.NODE_ENV === 'production' 
     ? 'https://escolahabilidade.com.br'
@@ -42,8 +47,8 @@ const SEOHead = ({
     const baseSchema = {
       '@context': 'https://schema.org',
       '@type': type === 'article' ? 'Article' : 'WebPage',
-      name: title,
-      description: description,
+      name: safeTitle,
+      description: safeDescription,
       url: fullUrl,
       image: ogImage,
       author: {
@@ -67,7 +72,7 @@ const SEOHead = ({
     };
     
     if (type === 'article') {
-      baseSchema.headline = title;
+      baseSchema.headline = safeTitle;
       baseSchema.datePublished = publishedDate;
       baseSchema.dateModified = modifiedDate || publishedDate;
       baseSchema.mainEntityOfPage = {
@@ -82,10 +87,10 @@ const SEOHead = ({
   return (
     <Helmet>
       {/* Basic Meta Tags */}
-      <title>{title}</title>
-      <meta name="description" content={description} />
-      {keywords && <meta name="keywords" content={keywords} />}
-      <meta name="author" content={author} />
+      <title>{safeTitle}</title>
+      <meta name="description" content={safeDescription} />
+      {safeKeywords && <meta name="keywords" content={safeKeywords} />}
+      <meta name="author" content={safeAuthor} />
       
       {/* Canonical URL */}
       <link rel="canonical" href={canonicalUrl} />
@@ -95,8 +100,8 @@ const SEOHead = ({
       
       {/* Open Graph Tags */}
       <meta property="og:type" content={type} />
-      <meta property="og:title" content={title} />
-      <meta property="og:description" content={description} />
+      <meta property="og:title" content={safeTitle} />
+      <meta property="og:description" content={safeDescription} />
       <meta property="og:url" content={fullUrl} />
       <meta property="og:image" content={ogImage} />
       <meta property="og:image:width" content="1200" />
@@ -106,8 +111,8 @@ const SEOHead = ({
       
       {/* Twitter Card Tags */}
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content={title} />
-      <meta name="twitter:description" content={description} />
+      <meta name="twitter:title" content={safeTitle} />
+      <meta name="twitter:description" content={safeDescription} />
       <meta name="twitter:image" content={ogImage} />
       <meta name="twitter:site" content="@escolahabilidade" />
       <meta name="twitter:creator" content="@escolahabilidade" />
@@ -119,7 +124,7 @@ const SEOHead = ({
           {modifiedDate && (
             <meta property="article:modified_time" content={modifiedDate} />
           )}
-          <meta property="article:author" content={author} />
+          <meta property="article:author" content={safeAuthor} />
           <meta property="article:section" content="Blog" />
         </>
       )}
