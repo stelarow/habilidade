@@ -8,11 +8,10 @@ const getAPIBaseURL = () => {
   }
   
   if (process.env.NODE_ENV === 'production') {
-    // Production URLs with fallback chain
+    // Production URLs with fallback chain - Fixed DNS resolution issue
     const productionUrls = [
-      'https://plataforma.escolahabilidade.com/api',
-      'https://api.escolahabilidade.com',
-      'https://escolahabilidade.com/api'
+      'https://escolahabilidade.com/api',
+      'https://api.escolahabilidade.com'
     ];
     
     // Return first URL (primary production endpoint)
