@@ -1,5 +1,4 @@
 import React, { useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
 import { Clock, Calendar, User, Tag } from 'phosphor-react';
 import LazyImage from '../LazyImage';
 import { usePrefetchPost } from '../../hooks/useBlogAPI';
@@ -132,6 +131,19 @@ const BlogCard = ({ post, variant = 'standard', index = 0 }) => {
     animationClasses
   );
 
+  // Handle click navigation with forced page reload
+  const handleCardClick = (e) => {
+    e.preventDefault();
+    const targetUrl = `/blog/${post.slug}`;
+    
+    // Debug logging
+    console.log('[BlogCard] Navigating to:', targetUrl, 'Post:', post.title);
+    
+    // Force a complete page navigation (not SPA routing)
+    // This ensures the page fully reloads and navigates to the correct URL
+    window.location.href = targetUrl;
+  };
+
   return (
     <article 
       ref={cardRef}
@@ -139,7 +151,11 @@ const BlogCard = ({ post, variant = 'standard', index = 0 }) => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <Link to={`/blog/${post.slug}`} className="block">
+      <a 
+        href={`/blog/${post.slug}`}
+        onClick={handleCardClick}
+        className="block"
+      >
         {/* Featured Image */}
         <div className={`relative bg-zinc-700/50 overflow-hidden ${isMobile ? 'h-40' : 'h-48'}`}>
           {post.featured_image_url && !imageError ? (
@@ -259,7 +275,7 @@ const BlogCard = ({ post, variant = 'standard', index = 0 }) => {
             </div>
           )}
         </div>
-      </Link>
+      </a>
     </article>
   );
 };
