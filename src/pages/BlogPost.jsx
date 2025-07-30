@@ -62,15 +62,122 @@ const BlogPost = () => {
   const [showQuickModal, setShowQuickModal] = useState(false);
   const articleRef = useRef(null);
 
-  const { data, isLoading, isError, error } = usePost(slug);
-  const post = data?.post;
   const { trackClick, trackImpression } = useCTATracking();
 
+  // Fetch post data
+  const { data, isLoading, isError, error } = usePost(slug);
+  const post = data?.post;
+
+  // Loading state
+  if (isLoading) {
+    return <BlogLoading />;
+  }
+
+  // Error state
+  if (isError) {
+    return <BlogError error={error} />;
+  }
+
+  // No post found
+  if (!post) {
+    return <BlogError error={{ message: 'Post não encontrado' }} />;
+  }
+
+  const readingTime = calculateReadingTime(post.content);
+  const categoryColor = getCategoryColor(post.category?.slug);
+
   return (
-    <div>
-      <h1>Blog Post Page</h1>
-      <p>Content will be implemented here</p>
-    </div>
+    <article className="min-h-screen bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950">
+      <SEOHead 
+        title={post.title}
+        description={post.excerpt}
+        image={post.featuredImage?.url}
+        type="article"
+      />
+      
+      {/* Article Header */}
+      <header className="relative overflow-hidden">
+        {post.featuredImage && (
+          <div className="absolute inset-0">
+            <LazyImage
+              src={post.featuredImage.url}
+              alt={post.featuredImage.alt || post.title}
+              className="w-full h-full object-cover opacity-20"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent to-zinc-950" />
+          </div>
+        )}
+        
+        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-16">
+          <Breadcrumbs 
+            category={post.category}
+            postTitle={post.title}
+          />
+          
+          <div className="mt-8">
+            {post.category && (
+              <span className={`inline-block px-3 py-1 rounded-full text-sm font-medium border ${categoryColor} mb-4`}>
+                {post.category.name}
+              </span>
+            )}
+            
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
+              {post.title}
+            </h1>
+            
+            {post.excerpt && (
+              <p className="text-xl text-zinc-300 mb-8 max-w-3xl">
+                {post.excerpt}
+              </p>
+            )}
+            
+            <div className="flex flex-wrap items-center gap-6 text-zinc-400">
+              <div className="flex items-center gap-2">
+                <Calendar size={16} />
+                <time dateTime={post.publishedAt}>
+                  {formatDate(post.publishedAt)}
+                </time>
+              </div>
+              
+              <div className="flex items-center gap-2">
+                <Clock size={16} />
+                <span>{readingTime} min de leitura</span>
+              </div>
+              
+              {post.author && (
+                <div className="flex items-center gap-2">
+                  <User size={16} />
+                  <span>{post.author}</span>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* Article Content */}
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="prose prose-lg prose-invert max-w-none">
+          <div 
+            ref={articleRef}
+            dangerouslySetInnerHTML={{ __html: post.content }}
+            className="article-content"
+          />
+        </div>
+        
+        {/* Share Buttons */}
+        <div className="mt-12 pt-8 border-t border-zinc-800">
+          <ShareButtons 
+            url={window.location.href}
+            title={post.title}
+            description={post.excerpt}
+          />
+        </div>
+      </div>
+      
+      {/* WhatsApp Float */}
+      <WhatsAppFloat />
+    </article>
   );
 };
 
