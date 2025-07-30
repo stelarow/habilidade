@@ -1,8 +1,9 @@
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { MagnifyingGlass, Funnel, CaretDown } from 'phosphor-react';
-import { useInfinitePosts, useCategories } from '../hooks/useBlogAPI';
+import { useCategories } from '../hooks/useBlogAPI';
+import useOptimizedBlogSearch from '../hooks/useOptimizedBlogSearch';
 import BlogCard from '../components/blog/BlogCard';
 import BlogLoading from '../components/blog/BlogLoading';
 import BlogError from '../components/blog/BlogError';
@@ -14,47 +15,29 @@ import useInView from '../hooks/useInView';
 
 const BlogIndex = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [searchQuery, setSearchQuery] = useState(searchParams.get('search') || '');
-  const [selectedCategory, setSelectedCategory] = useState(searchParams.get('category') || '');
   const [showFilters, setShowFilters] = useState(false);
 
-  // Debounced search query
-  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState(searchQuery);
-
-  // Debounce search input
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedSearchQuery(searchQuery);
-    }, 500);
-
-    return () => clearTimeout(timer);
-  }, [searchQuery]);
-
-  // Update URL params when filters change
-  useEffect(() => {
-    const newParams = new URLSearchParams();
-    
-    if (debouncedSearchQuery) {
-      newParams.set('search', debouncedSearchQuery);
-    }
-    
-    if (selectedCategory) {
-      newParams.set('category', selectedCategory);
-    }
-
-    setSearchParams(newParams, { replace: true });
-  }, [debouncedSearchQuery, selectedCategory, setSearchParams]);
-
-  // Fetch data with React Query
+  // Use optimized search hook
   const {
-    data,
+    searchQuery,
+    selectedCategory,
+    debouncedSearchQuery,
+    isSearching,
+    posts,
     error,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
     isLoading,
     isError,
-  } = useInfinitePosts(12, selectedCategory || null, debouncedSearchQuery || null);
+    isFetchingNextPage,
+    hasNextPage,
+    hasActiveFilters,
+    handleSearchChange,
+    handleCategoryChange: handleCategoryChangeInternal,
+    clearFilters: clearFiltersInternal,
+    fetchNextPage,
+  } = useOptimizedBlogSearch(
+    searchParams.get('search') || '',
+    searchParams.get('category') || ''
+  );
 
   const { data: categoriesData } = useCategories();
 
@@ -70,31 +53,39 @@ const BlogIndex = () => {
     }
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-  // Flatten posts from all pages
-  const posts = useMemo(() => {
-    return data?.pages?.flatMap(page => page.posts) || [];
-  }, [data]);
-
   // Categories for filter dropdown
   const categories = categoriesData?.categories || [];
 
-  // Clear filters
-  const clearFilters = () => {
-    setSearchQuery('');
-    setSelectedCategory('');
-    setSearchParams({}, { replace: true });
-  };
+  // Update URL params when filters change (optimized)
+  useEffect(() => {
+    const newParams = new URLSearchParams();
+    
+    if (debouncedSearchQuery) {
+      newParams.set('search', debouncedSearchQuery);
+    }
+    
+    if (selectedCategory) {
+      newParams.set('category', selectedCategory);
+    }
 
-  // Handle search input
-  const handleSearchChange = (e) => {
-    setSearchQuery(e.target.value);
-  };
+    // Use replace: true to avoid creating history entries
+    setSearchParams(newParams, { replace: true });
+  }, [debouncedSearchQuery, selectedCategory, setSearchParams]);
 
-  // Handle category filter
-  const handleCategoryChange = (categorySlug) => {
-    setSelectedCategory(categorySlug);
+  // Enhanced handlers
+  const handleSearchInputChange = useCallback((e) => {
+    handleSearchChange(e.target.value);
+  }, [handleSearchChange]);
+
+  const handleCategoryChangeWrapper = useCallback((categorySlug) => {
+    handleCategoryChangeInternal(categorySlug);
     setShowFilters(false);
-  };
+  }, [handleCategoryChangeInternal]);
+
+  const clearFilters = useCallback(() => {
+    clearFiltersInternal();
+    setSearchParams({}, { replace: true });
+  }, [clearFiltersInternal, setSearchParams]);
 
   // Loading state
   if (isLoading) {
@@ -128,7 +119,7 @@ const BlogIndex = () => {
         description="Artigos sobre tecnologia, educação e carreira."
       >
         <BlogEmpty 
-          hasFilters={!!(debouncedSearchQuery || selectedCategory)}
+          hasFilters={hasActiveFilters}
           onClearFilters={clearFilters}
         />
       </BlogLayout>
@@ -149,11 +140,15 @@ const BlogIndex = () => {
         {/* Search and Filters */}
         <div className="mb-8 space-y-4">
           <div className="flex flex-col md:flex-row gap-4 max-w-4xl mx-auto">
-            {/* Enhanced Search Input with visual feedback */}
+            {/* Enhanced Search Input with smooth visual feedback */}
             <div className="relative flex-1">
               <MagnifyingGlass 
-                className={`absolute left-3 top-1/2 transform -translate-y-1/2 transition-colors ${
-                  searchQuery ? 'text-purple-400' : 'text-zinc-400'
+                className={`absolute left-3 top-1/2 transform -translate-y-1/2 transition-all duration-300 ${
+                  isSearching 
+                    ? 'text-purple-300 animate-pulse' 
+                    : searchQuery 
+                      ? 'text-purple-400' 
+                      : 'text-zinc-400'
                 }`} 
                 size={20} 
               />
@@ -161,18 +156,22 @@ const BlogIndex = () => {
                 type="text"
                 placeholder="Buscar artigos..."
                 value={searchQuery}
-                onChange={handleSearchChange}
-                className={`w-full pl-10 pr-4 py-3 rounded-lg text-zinc-100 placeholder-zinc-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent ${
-                  searchQuery 
-                    ? 'bg-purple-500/10 border border-purple-500/50 shadow-lg' 
-                    : 'bg-zinc-800 border border-zinc-700 hover:border-zinc-600'
+                onChange={handleSearchInputChange}
+                className={`w-full pl-10 pr-12 py-3 rounded-lg text-zinc-100 placeholder-zinc-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent ${
+                  isSearching 
+                    ? 'bg-purple-500/15 border border-purple-400/60 shadow-lg' 
+                    : searchQuery 
+                      ? 'bg-purple-500/10 border border-purple-500/50 shadow-lg' 
+                      : 'bg-zinc-800 border border-zinc-700 hover:border-zinc-600'
                 }`}
               />
-              {searchQuery && (
-                <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+              <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                {isSearching ? (
+                  <div className="w-4 h-4 border-2 border-purple-400 border-t-transparent rounded-full animate-spin"></div>
+                ) : searchQuery ? (
                   <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
-                </div>
-              )}
+                ) : null}
+              </div>
             </div>
 
             {/* Enhanced Category Filter with visual indicators */}
@@ -205,7 +204,7 @@ const BlogIndex = () => {
               {showFilters && (
                 <div className="absolute top-full mt-2 w-64 bg-zinc-800 border border-zinc-700 rounded-lg shadow-xl z-50">
                   <button
-                    onClick={() => handleCategoryChange('')}
+                    onClick={() => handleCategoryChangeWrapper('')}
                     className={`w-full text-left px-4 py-2 hover:bg-zinc-700 transition-colors ${
                       !selectedCategory ? 'bg-purple-500/20 text-purple-300' : 'text-zinc-300'
                     }`}
@@ -215,7 +214,7 @@ const BlogIndex = () => {
                   {categories.map((category) => (
                     <button
                       key={category.slug}
-                      onClick={() => handleCategoryChange(category.slug)}
+                      onClick={() => handleCategoryChangeWrapper(category.slug)}
                       className={`w-full text-left px-4 py-2 hover:bg-zinc-700 transition-colors ${
                         selectedCategory === category.slug ? 'bg-purple-500/20 text-purple-300' : 'text-zinc-300'
                       }`}
@@ -229,7 +228,7 @@ const BlogIndex = () => {
           </div>
 
           {/* Enhanced Active Filters with better visuals */}
-          {(debouncedSearchQuery || selectedCategory) && (
+          {hasActiveFilters && (
             <div className="flex flex-wrap gap-3 max-w-4xl mx-auto animate-fadeIn">
               {debouncedSearchQuery && (
                 <span className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-500/20 to-purple-600/20 text-purple-300 rounded-full text-sm border border-purple-500/30 shadow-lg backdrop-blur-sm">
@@ -254,18 +253,20 @@ const BlogIndex = () => {
           )}
         </div>
 
-          {/* Posts Grid */}
-          <ResponsiveBlogGrid 
-            variant="standard" 
-            columns="auto" 
-            gap="large"
-            animation="fade"
-            className="mb-12"
-          >
-            {posts.map((post, index) => (
-              <BlogCard key={`${post.id}-${index}`} post={post} index={index} />
-            ))}
-          </ResponsiveBlogGrid>
+          {/* Posts Grid with smooth transitions */}
+          <div className={`transition-all duration-300 ${isSearching ? 'opacity-70 scale-[0.99]' : 'opacity-100 scale-100'}`}>
+            <ResponsiveBlogGrid 
+              variant="standard" 
+              columns="auto" 
+              gap="large"
+              animation="fade"
+              className="mb-12"
+            >
+              {posts.map((post, index) => (
+                <BlogCard key={`${post.id}-${index}`} post={post} index={index} />
+              ))}
+            </ResponsiveBlogGrid>
+          </div>
 
         {/* Load More / Loading */}
         {hasNextPage && (
