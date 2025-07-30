@@ -1,0 +1,130 @@
+/* Enhanced Blog Article Styling */
+.article-content {
+  @apply space-y-6 text-zinc-300 leading-relaxed;
+}
+
+.article-content h1 {
+  @apply text-3xl font-bold text-white mb-6 mt-8 border-b border-zinc-700 pb-4;
+}
+
+.article-content h2 {
+  @apply text-2xl font-bold text-white mb-4 mt-8;
+}
+
+.article-content h3 {
+  @apply text-xl font-semibold text-white mb-3 mt-6;
+}
+
+.article-content h4 {
+  @apply text-lg font-medium text-white mb-2 mt-4;
+}
+
+.article-content p {
+  @apply text-zinc-300 leading-relaxed mb-4;
+}
+
+.article-content ul {
+  @apply space-y-3 mb-6;
+}
+
+.article-content ol {
+  @apply space-y-3 mb-6 counter-reset: list-counter;
+}
+
+.article-content li {
+  @apply text-zinc-300 leading-relaxed;
+}
+
+.article-content ul li {
+  @apply flex items-start;
+}
+
+.article-content ul li::before {
+  content: '';
+  @apply w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0;
+}
+
+.article-content ol li {
+  @apply flex items-start counter-increment: list-counter;
+}
+
+.article-content ol li::before {
+  content: counter(list-counter);
+  @apply bg-blue-500 text-white text-sm font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0;
+}
+
+.article-content strong {
+  @apply text-white font-semibold;
+}
+
+.article-content em {
+  @apply text-zinc-200 italic;
+}
+
+.article-content blockquote {
+  @apply border-l-4 border-blue-500 pl-4 py-2 my-6 bg-zinc-800/50 rounded-r-lg text-zinc-200 italic;
+}
+
+.article-content pre {
+  @apply bg-zinc-900 border border-zinc-700 rounded-lg p-4 my-6 overflow-x-auto;
+}
+
+.article-content code {
+  @apply bg-zinc-800 text-blue-300 px-2 py-1 rounded text-sm font-mono;
+}
+
+.article-content pre code {
+  @apply bg-transparent p-0 text-zinc-300;
+}
+
+.article-content a {
+  @apply text-blue-400 hover:text-blue-300 underline transition-colors duration-200;
+}
+
+.article-content img {
+  @apply rounded-lg shadow-lg my-6 max-w-full h-auto;
+}
+
+.article-content table {
+  @apply w-full border-collapse border border-zinc-700 my-6 rounded-lg overflow-hidden;
+}
+
+.article-content th {
+  @apply bg-zinc-800 text-white font-semibold p-3 border border-zinc-700;
+}
+
+.article-content td {
+  @apply p-3 border border-zinc-700 text-zinc-300;
+}
+
+.article-content hr {
+  @apply border-zinc-700 my-8;
+}
+
+/* Section spacing */
+.article-section {
+  @apply space-y-4 mb-8;
+}
+
+/* Improved readability for longer content */
+.article-content > div {
+  @apply space-y-4;
+}
+
+/* Special styling for intro paragraphs */
+.article-intro {
+  @apply text-lg text-zinc-200 leading-relaxed;
+}
+
+/* Highlight boxes */
+.article-highlight {
+  @apply bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 rounded-lg p-6 my-6;
+}
+
+.article-highlight h4 {
+  @apply text-blue-300 font-semibold mb-3;
+}
+
+.article-highlight p {
+  @apply text-zinc-300;
+}

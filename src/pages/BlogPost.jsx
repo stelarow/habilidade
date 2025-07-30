@@ -2,6 +2,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Clock, Calendar, User, Tag, Share, ArrowUp } from 'phosphor-react';
+import '../styles/blog-article.css';
 import { usePost } from '../hooks/useBlogAPI';
 import SEOHead from '../components/shared/SEOHead';
 import ShareButtons from '../components/blog/ShareButtons';
