@@ -84,8 +84,8 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/cursos/:courseSlug" element={<CoursePage />} />
                 <Route path="/blog" element={<BlogIndex />} />
-                <Route path="/blog/categoria/:categorySlug" element={<BlogCategory />} />
                 <Route path="/blog/:slug" element={<BlogPost />} />
+                <Route path="/blog/categoria/:categorySlug" element={<BlogCategory />} />
                 <Route path="/habilidade" element={<Navigate to="/" replace />} />
                 <Route path="/habilidade/" element={<Navigate to="/" replace />} />
                 <Route 
