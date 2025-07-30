@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useBlogAPI } from '../hooks/useBlogAPI';
+import { usePost } from '../hooks/useBlogAPI';
 
 const BlogTestPage = () => {
   const { slug } = useParams();
@@ -26,8 +26,7 @@ const BlogTestPage = () => {
     }));
   };
 
-  // Test blog API hook
-  const { usePost } = useBlogAPI();
+  // Test blog API hook - usePost is imported directly
   
   useEffect(() => {
     addLog('Component mounted');
