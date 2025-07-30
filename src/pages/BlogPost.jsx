@@ -66,6 +66,13 @@ const BlogPost = () => {
   const post = data?.post;
   const { trackClick, trackImpression } = useCTATracking();
 
+  // Debug logging
+  useEffect(() => {
+    console.log('[BlogPost Debug] Component mounted with slug:', slug);
+    console.log('[BlogPost Debug] Data:', { data, isLoading, isError, error });
+    console.log('[BlogPost Debug] Post:', post);
+  }, [slug, data, isLoading, isError, error, post]);
+
   // Scroll to top functionality
   useEffect(() => {
     const handleScroll = () => {
@@ -172,6 +179,21 @@ const BlogPost = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950">
+      {/* DEBUG: Temporary visual indicator */}
+      <div style={{
+        position: 'fixed',
+        top: '0',
+        right: '0',
+        background: '#00ff00',
+        color: '#000000',
+        padding: '10px',
+        zIndex: 9999,
+        fontSize: '14px',
+        fontWeight: 'bold'
+      }}>
+        BLOGPOST COMPONENT RENDERED - SLUG: {slug}
+      </div>
+      
       <SEOHead 
         title={`${post.title} - Blog Escola Habilidade`}
         description={post.excerpt || post.content?.slice(0, 160) + '...'}
