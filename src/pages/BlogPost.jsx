@@ -55,6 +55,11 @@ const getCategoryColor = (categorySlug) => {
 
 const BlogPost = () => {
   const { slug } = useParams();
+  
+  // Force component re-render when slug changes
+  useEffect(() => {
+    console.log('[BlogPost] Component mounted/updated with slug:', slug);
+  }, [slug]);
   const navigate = useNavigate();
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [processedContent, setProcessedContent] = useState('');
@@ -67,6 +72,11 @@ const BlogPost = () => {
   // Fetch post data
   const { data, isLoading, isError, error } = usePost(slug);
   const post = data?.post;
+  
+  // Debug logging
+  useEffect(() => {
+    console.log('[BlogPost] Data state changed:', { data, isLoading, isError, slug });
+  }, [data, isLoading, isError, slug]);
 
   // Loading state
   if (isLoading) {
