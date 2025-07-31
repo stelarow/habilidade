@@ -6,8 +6,8 @@ import { useContactAnalytics } from '../../hooks/useContactAnalytics';
 const WhatsAppFloat = ({ 
   article = null, 
   category = null, 
-  delaySeconds = 30, 
-  scrollThreshold = 0.5,
+  delaySeconds = 45, // Increased delay to be less intrusive
+  scrollThreshold = 0.6, // Higher threshold
   className = '',
   position = 'bottom-right' 
 }) => {
@@ -64,22 +64,7 @@ const WhatsAppFloat = ({
     return () => clearInterval(interval);
   }, [delaySeconds, scrollThreshold, scrollProgress, isDismissed]);
 
-  // Auto-expand with pulse effect after showing
-  useEffect(() => {
-    if (isVisible && !isExpanded) {
-      timeoutRef.current = setTimeout(() => {
-        setIsExpanded(true);
-        // Auto-collapse after 3 seconds
-        setTimeout(() => setIsExpanded(false), 3000);
-      }, 2000);
-    }
-
-    return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-    };
-  }, [isVisible, isExpanded]);
+  // Removed auto-expand effect - now only expands on user interaction
 
   const handleWhatsAppClick = () => {
     const message = generateWhatsAppMessage({
@@ -122,33 +107,33 @@ const WhatsAppFloat = ({
     <div className={`fixed z-50 ${positionClasses[position]} ${className}`}>
       {/* Main Button */}
       <div className="relative">
-        {/* Pulse animation ring */}
-        <div className="absolute inset-0 rounded-full bg-green-500 animate-ping opacity-20"></div>
+        {/* Subtle pulse animation ring - less intrusive */}
+        <div className="absolute inset-0 rounded-full bg-green-500 animate-pulse opacity-10"></div>
         
-        {/* Button */}
+        {/* Smaller, less intrusive button */}
         <button
           onClick={handleToggleExpand}
           className={`
-            relative w-14 h-14 rounded-full 
+            relative w-12 h-12 rounded-full 
             bg-gradient-to-r from-green-500 via-green-400 to-cyan-400 
             hover:from-green-600 hover:via-green-500 hover:to-cyan-500
             flex items-center justify-center
-            shadow-lg hover:shadow-xl hover:shadow-green-500/25
-            transition-all duration-300 hover:scale-110
+            shadow-lg hover:shadow-xl hover:shadow-green-500/20
+            transition-all duration-300 hover:scale-105
             focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2 focus:ring-offset-gray-900
-            ${isExpanded ? 'scale-110' : ''}
+            ${isExpanded ? 'scale-105' : ''}
           `}
           title="Conversar no WhatsApp"
           aria-label="Abrir chat do WhatsApp"
         >
-          <WhatsappLogo size={24} weight="bold" className="text-white" />
+          <WhatsappLogo size={20} weight="bold" className="text-white" />
         </button>
 
         {/* Expanded Message */}
         <div className={`
-          absolute bottom-16 right-0 mb-2
+          absolute bottom-14 right-0 mb-2
           bg-white rounded-lg shadow-xl border border-gray-200
-          p-4 min-w-[280px] max-w-[320px]
+          p-4 min-w-[260px] max-w-[300px]
           transform transition-all duration-300 origin-bottom-right
           ${isExpanded ? 'scale-100 opacity-100 visible' : 'scale-95 opacity-0 invisible'}
         `}>
@@ -163,18 +148,17 @@ const WhatsAppFloat = ({
 
           {/* Avatar and content */}
           <div className="flex items-start gap-3">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-r from-green-500 to-green-400 flex items-center justify-center flex-shrink-0">
-              <WhatsappLogo size={18} weight="bold" className="text-white" />
+            <div className="w-8 h-8 rounded-full bg-gradient-to-r from-green-500 to-green-400 flex items-center justify-center flex-shrink-0">
+              <WhatsappLogo size={16} weight="bold" className="text-white" />
             </div>
 
             <div className="flex-1">
               <div className="bg-gray-100 rounded-lg p-3 mb-2">
                 <p className="text-sm text-gray-800 leading-relaxed">
                   {article ? (
-                    <>Olá! Vi que você está lendo sobre <strong>{article.title}</strong>. Posso ajudar com informações sobre nossos cursos relacionados?</>
+                    <>OlÃ¡! Vi que vocÃª estÃ¡ lendo sobre <strong>{article.title}</strong>. Posso ajudar com informaÃ§Ãµes sobre nossos cursos relacionados?</>
                   ) : (
-                    <>Olá! Precisa de ajuda ou tem dúvidas sobre nossos cursos? Estou aqui para ajudar! =
-</>
+                    <>OlÃ¡! Precisa de ajuda ou tem dÃºvidas sobre nossos cursos? Estou aqui para ajudar! ðŸ˜Š</>
                   )}
                 </p>
               </div>
@@ -189,14 +173,10 @@ const WhatsAppFloat = ({
             </div>
           </div>
 
-          {/* Typing indicator */}
-          <div className="flex items-center gap-1 mt-2 text-xs text-gray-500">
-            <div className="flex gap-1">
-              <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-              <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-              <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
-            </div>
-            <span className="ml-2">Alessandro está digitando...</span>
+          {/* Simplified status indicator - no animation */}
+          <div className="flex items-center gap-2 mt-2 text-xs text-gray-500">
+            <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+            <span>Alessandro online</span>
           </div>
         </div>
       </div>
