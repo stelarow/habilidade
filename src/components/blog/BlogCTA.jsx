@@ -32,20 +32,28 @@ const BlogCTA = ({
       return COURSES_DATA?.find(course => course.basicInfo.id === post.cta_course_id);
     }
     
-    // Fallback: tentar encontrar por matching de conte�do
+    // Fallback: tentar encontrar por matching de conteúdo
     if (post?.content || post?.title || post?.categories) {
       const content = `${post.title} ${post.content} ${post.categories?.map(c => c.name).join(' ')}`.toLowerCase();
       
-      // Palavras-chave para matching
+      // Palavras-chave para matching - ATUALIZADAS COM MELHORES PRÁTICAS
       const courseKeywords = {
-        'informatica': ['inform�tica', 'office', 'windows', 'excel', 'word', 'powerpoint', 'canva'],
-        'design-grafico': ['design', 'gr�fico', 'photoshop', 'illustrator', 'indesign', 'cria��o', 'visual'],
-        'programacao-web': ['programa��o', 'web', 'html', 'css', 'javascript', 'desenvolvimento', 'site'],
+        'informatica': ['informática', 'office', 'windows', 'excel', 'word', 'powerpoint', 'canva'],
+        'design-grafico': ['design', 'gráfico', 'photoshop', 'illustrator', 'indesign', 'criação', 'visual'],
+        'programacao-web': ['programação', 'web', 'html', 'css', 'javascript', 'desenvolvimento', 'site'],
         'marketing-digital': ['marketing', 'digital', 'redes sociais', 'facebook', 'instagram', 'publicidade'],
-        'excel-avancado': ['excel', 'planilha', 'f�rmulas', 'gr�ficos', 'macros', 'vba'],
-        'autocad': ['autocad', 'desenho', 't�cnico', 'cad', 'projeto', 'arquitetura'],
-        'ingles': ['ingl�s', 'english', 'idioma', 'conversa��o', 'business english'],
-        'montagem-manutencao': ['montagem', 'manuten��o', 'hardware', 'computador', 't�cnico']
+        'excel-avancado': ['excel', 'planilha', 'fórmulas', 'gráficos', 'macros', 'vba'],
+        'autocad': [
+          // Termos específicos do AutoCAD
+          'autocad', 'desenho', 'técnico', 'cad', 'projeto', 'arquitetura',
+          // NOVOS: Termos relacionados ao SketchUp e Modelagem 3D
+          'sketchup', 'shape bender', 'modelagem 3d', 'modelagem', '3d', 'geometria',
+          'curvatura', 'extensão', 'plugin', 'arquitetônico', 'design arquitetônico',
+          'estruturas', 'fachadas', 'molduras', 'corrimão', 'ornamentos',
+          'visualização 3d', 'renderização', 'maquete eletrônica', 'projetos arquitetônicos'
+        ],
+        'ingles': ['inglês', 'english', 'idioma', 'conversação', 'business english'],
+        'montagem-manutencao': ['montagem', 'manutenção', 'hardware', 'computador', 'técnico']
       };
 
       for (const [courseSlug, keywords] of Object.entries(courseKeywords)) {
@@ -147,7 +155,7 @@ const BlogCTA = ({
                   className={`${classes.button} inline-flex items-center gap-2 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-purple-500/25`}
                   style={styles.button}
                 >
-                  <span>Conhecer o Curso</span>
+                  <span>Dominar Projetos Profissionais</span>
                   <ArrowRight size={18} />
                 </Link>
               </div>
@@ -218,7 +226,7 @@ const BlogCTA = ({
               className={`${classes.button} inline-flex items-center gap-2 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-purple-500/25`}
               style={styles.button}
             >
-              <span>Explorar Cursos</span>
+              <span>Acelerar Minha Carreira</span>
               <ArrowRight size={20} />
             </Link>
           </div>
