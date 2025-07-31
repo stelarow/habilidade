@@ -221,6 +221,7 @@ const BlogPost = () => {
       
       {/* WhatsApp Float */}
       <WhatsAppFloat />
+    </div>
     </article>
   );
 };
