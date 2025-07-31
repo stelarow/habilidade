@@ -682,6 +682,13 @@ const CONTENT_TEMPLATES: Record<string, ContentTemplate> = {
 
 ## INTEGRATION WITH EXISTING STACK
 
+### Blog System Architecture Understanding
+This project has TWO distinct blog systems:
+1. **Main Website Blog** (`/src/services/blogMockData.js`) - Used by homepage and main site
+2. **Learning Platform Blog** (`/plataforma-ensino/`) - Supabase-based system (currently temp_disabled)
+
+**CRITICAL: Always integrate with the Main Website Blog (`blogMockData.js`) unless explicitly instructed otherwise.**
+
 ### BlogMockData Integration
 ```typescript
 // Integration with existing blogMockData.js structure
@@ -1522,16 +1529,31 @@ When invoked, you MUST follow this comprehensive workflow:
 
 ### 4. CONTENT PROCESSING PIPELINE
 - **Translation Phase**: Smart translation with context preservation
-- **Image Processing**: Download, optimize, and enhance images
+- **Image Processing**: Download, optimize, and enhance images to `/public/images/blog/{article-slug}/`
 - **Content Structuring**: Apply template and educational enhancements
 - **SEO Optimization**: Generate metadata and optimize for search
 - **Quality Assurance**: Comprehensive validation and testing
 
 ### 5. FILE GENERATION AND INTEGRATION
-- Generate markdown file with proper frontmatter
-- Create optimized images in appropriate directories
+- Generate markdown file with proper frontmatter in `/blog-posts/` directory
+- Create optimized images in appropriate directories under `/public/images/blog/`
+- **CRITICAL: Update blogMockData.js Integration**:
+  - Read the existing `src/services/blogMockData.js` file
+  - Convert markdown content to HTML with proper Tailwind CSS classes
+  - Add new blog entry to the beginning of the `mockPosts` array with:
+    - Unique incremental ID
+    - Title, slug, excerpt from markdown frontmatter
+    - HTML content with article-content styling
+    - Featured image URL pointing to first image
+    - Author: "Escola Habilidade"
+    - Category matching article topic (map to existing categories)
+    - Current timestamp for publishedAt
+    - Estimated reading time
+    - Tags array from markdown frontmatter
+    - Views: 0, likes: 0
+  - Update corresponding category `postCount` in `mockCategories` array
+  - Commit both files together (markdown + blogMockData.js)
 - **Set featured_image_url**: Copy the first/main image from article content to use as the card image for the blog listing page (/blog)
-- Update blog data structures and indices
 - Generate static paths for Next.js routing
 
 ### 6. VERSION CONTROL AND DEPLOYMENT
