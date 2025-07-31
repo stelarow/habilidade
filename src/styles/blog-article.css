@@ -1,6 +1,10 @@
 /* Enhanced Blog Article Styling */
 .article-content {
-  @apply space-y-6 text-zinc-300 leading-relaxed;
+  @apply text-zinc-300 leading-relaxed;
+}
+
+.article-content > * + * {
+  margin-top: 1.5rem;
 }
 
 .article-content h1 {

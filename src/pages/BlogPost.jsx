@@ -1,7 +1,7 @@
 
-import React, { useEffect, useState, useRef } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Clock, Calendar, User, Tag, Share, ArrowUp } from 'phosphor-react';
+import React, { useEffect, useRef } from 'react';
+import { useParams } from 'react-router-dom';
+import { Clock, Calendar, User } from 'phosphor-react';
 import '../styles/blog-article.css';
 import { usePost } from '../hooks/useBlogAPI';
 import SEOHead from '../components/shared/SEOHead';
@@ -11,21 +11,16 @@ import BlogLoading from '../components/blog/BlogLoading';
 import BlogError from '../components/blog/BlogError';
 import LazyImage from '../components/LazyImage';
 import TableOfContents from '../components/blog/TableOfContents';
-import BlogCTA from '../components/blog/BlogCTA';
-import InlineCTA from '../components/blog/InlineCTA';
-import BlogContactSection from '../components/blog/BlogContactSection';
 import WhatsAppFloat from '../components/shared/WhatsAppFloat';
-import QuickContactModal from '../components/blog/QuickContactModal';
-import FreeConsultationWidget from '../components/blog/FreeConsultationWidget';
-import { generateContextualCTAs, insertInlineCTAs, processCtaPlaceholders, shouldShowInlineCTAs } from '../utils/ctaParser';
-import { useCTATracking } from '../utils/ctaAnalytics';
 
 // Calculate reading time
 const calculateReadingTime = (content) => {
   if (!content) return 1;
   const wordsPerMinute = 200;
-  const words = content.split(' ').length;
-  return Math.ceil(words / wordsPerMinute);
+  // Remove HTML tags and count actual words
+  const textContent = content.replace(/<[^>]*?>/g, '').trim();
+  const words = textContent.split(' ').filter(word => word.length > 0).length;
+  return Math.max(1, Math.ceil(words / wordsPerMinute));
 };
 
 // Format date
@@ -61,14 +56,7 @@ const BlogPost = () => {
   useEffect(() => {
     console.log('[BlogPost] Component mounted/updated with slug:', slug);
   }, [slug]);
-  const navigate = useNavigate();
-  const [showBackToTop, setShowBackToTop] = useState(false);
-  const [processedContent, setProcessedContent] = useState('');
-  const [inlineCTAs, setInlineCTAs] = useState([]);
-  const [showQuickModal, setShowQuickModal] = useState(false);
-  const articleRef = useRef(null);
-
-  const { trackClick, trackImpression } = useCTATracking();
+  const articleReference = useRef(null);
 
   // Fetch post data
   const { data, isLoading, isError, error } = usePost(slug);
@@ -97,13 +85,87 @@ const BlogPost = () => {
   const readingTime = calculateReadingTime(post.content);
   const categoryColor = getCategoryColor(post.category?.slug);
 
+  // Generate article-specific meta tags
+  const getArticleSpecificMeta = () => {
+    const baseUrl = 'https://www.escolahabilidade.com';
+    const articleUrl = `${baseUrl}/blog/${slug}`;
+    
+    // Article-specific descriptions based on slug
+    const articleDescriptions = {
+      'design-thinking-educacao-tecnologica': 'Descubra como o Design Thinking revoluciona a educação tecnológica. Aprenda os 5 estágios fundamentais e suas aplicações práticas no ensino de tecnologia.',
+    };
+    
+    // Article-specific keywords
+    const articleKeywords = {
+      'design-thinking-educacao-tecnologica': 'design thinking, educação tecnológica, metodologia de ensino, inovação educacional, aprendizado centrado no usuário, 5 estágios design thinking',
+    };
+
+    return {
+      description: articleDescriptions[slug] || post.excerpt,
+      keywords: articleKeywords[slug] || '',
+      url: articleUrl,
+      publishedDate: post.publishedAt,
+      modifiedDate: post.updatedAt || post.publishedAt,
+    };
+  };
+
+  const articleMeta = getArticleSpecificMeta();
+
+  // Generate structured data for the article
+  const generateArticleStructuredData = () => {
+    const baseUrl = 'https://www.escolahabilidade.com';
+    const wordCount = post.content ? post.content.replace(/<[^>]*?>/g, '').split(' ').length : 0;
+    
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      headline: post.title,
+      description: articleMeta.description,
+      author: {
+        '@type': 'Organization',
+        name: 'Escola Habilidade',
+        url: baseUrl,
+        logo: {
+          '@type': 'ImageObject',
+          url: `${baseUrl}/assets/logos/original/logo-original.png`
+        }
+      },
+      publisher: {
+        '@type': 'Organization',
+        name: 'Escola Habilidade',
+        url: baseUrl,
+        logo: {
+          '@type': 'ImageObject',
+          url: `${baseUrl}/assets/logos/original/logo-original.png`
+        }
+      },
+      datePublished: post.publishedAt,
+      dateModified: articleMeta.modifiedDate,
+      mainEntityOfPage: {
+        '@type': 'WebPage',
+        '@id': articleMeta.url
+      },
+      image: post.featuredImage?.url || `${baseUrl}/assets/logos/original/logo-original.png`,
+      wordCount: wordCount,
+      timeRequired: `PT${readingTime}M`,
+      articleSection: post.category?.name || 'Blog',
+      inLanguage: 'pt-BR',
+      url: articleMeta.url
+    };
+  };
+
   return (
     <article className="min-h-screen bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950">
       <SEOHead 
-        title={post.title}
-        description={post.excerpt}
+        title={`${post.title} | Escola Habilidade`}
+        description={articleMeta.description}
+        keywords={articleMeta.keywords}
+        path={`/blog/${slug}`}
         image={post.featuredImage?.url}
         type="article"
+        publishedDate={articleMeta.publishedDate}
+        modifiedDate={articleMeta.modifiedDate}
+        schemaData={generateArticleStructuredData()}
       />
       
       {/* Article Header */}
@@ -112,7 +174,7 @@ const BlogPost = () => {
           <div className="absolute inset-0">
             <LazyImage
               src={post.featuredImage.url}
-              alt={post.featuredImage.alt || post.title}
+              alt={post.featuredImage.alt || `Imagem do artigo: ${post.title}`}
               className="w-full h-full object-cover opacity-20"
             />
             <div className="absolute inset-0 bg-gradient-to-b from-transparent to-zinc-950" />
@@ -202,7 +264,7 @@ const BlogPost = () => {
             
             <div className="prose prose-lg prose-invert max-w-none">
           <div 
-            ref={articleRef}
+            ref={articleReference}
             dangerouslySetInnerHTML={{ __html: post.content }}
             className="article-content"
           />
@@ -211,7 +273,7 @@ const BlogPost = () => {
         {/* Share Buttons */}
         <div className="mt-12 pt-8 border-t border-zinc-800">
           <ShareButtons 
-            url={window.location.href}
+            url={globalThis.location.href}
             title={post.title}
             description={post.excerpt}
           />

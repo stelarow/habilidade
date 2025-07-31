@@ -247,9 +247,10 @@ const mockPosts = [
         </div>
 
         <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6 mt-8">Implementação do Design Thinking na Educação</h2>
           <h3 class="text-xl font-semibold text-white mb-4">Os 5 estágios do Design Thinking na educação</h3>
           
-          <div class="space-y-6">
+          <div class="flex flex-col gap-4">
             <div class="article-highlight bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 rounded-lg p-6">
               <h4 class="text-blue-300 font-semibold mb-3">1. Empatizar</h4>
               <p class="text-zinc-300">Compreender profundamente as necessidades, dificuldades e motivações dos estudantes.</p>
@@ -557,7 +558,7 @@ const mockPosts = [
           <h3 class="text-xl font-semibold text-white mb-4">1. Definindo seu caminho</h3>
           <p class="text-zinc-300 leading-relaxed mb-4">A área de tecnologia oferece diversos caminhos:</p>
           
-          <div class="space-y-6">
+          <div class="flex flex-col gap-4">
             <div class="article-highlight bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 rounded-lg p-6">
               <h4 class="text-blue-300 font-semibold mb-3">Desenvolvimento</h4>
               <ul class="space-y-2">
@@ -795,7 +796,7 @@ const mockPosts = [
         <div class="article-section">
           <h3 class="text-xl font-semibold text-white mb-4">Diferença entre UX e UI</h3>
           
-          <div class="space-y-6">
+          <div class="flex flex-col gap-4">
             <div class="article-highlight bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 rounded-lg p-6">
               <h4 class="text-blue-300 font-semibold mb-3">UX Design (User Experience)</h4>
               <p class="text-zinc-300 mb-3">Foca na experiência completa do usuário:</p>
@@ -823,7 +824,7 @@ const mockPosts = [
         <div class="article-section">
           <h3 class="text-xl font-semibold text-white mb-4">Princípios fundamentais de UX</h3>
           
-          <div class="space-y-6">
+          <div class="flex flex-col gap-4">
             <div class="article-highlight bg-gradient-to-r from-green-500/10 to-blue-500/10 border border-green-500/20 rounded-lg p-6">
               <h4 class="text-green-300 font-semibold mb-3">1. Usabilidade</h4>
               <p class="text-zinc-300 mb-3">A interface deve ser:</p>
@@ -862,7 +863,7 @@ const mockPosts = [
         <div class="article-section">
           <h3 class="text-xl font-semibold text-white mb-4">Princípios fundamentais de UI</h3>
           
-          <div class="space-y-4">
+          <div class="flex flex-col gap-4">
             <div>
               <h4 class="text-lg font-medium text-white mb-2">1. Hierarquia Visual</h4>
               <p class="text-zinc-300 leading-relaxed mb-3">Guiar o olhar do usuário:</p>
@@ -956,7 +957,7 @@ const mockPosts = [
         <div class="article-section">
           <h3 class="text-xl font-semibold text-white mb-4">Ferramentas essenciais</h3>
           
-          <div class="space-y-6">
+          <div class="flex flex-col gap-4">
             <div>
               <h4 class="text-lg font-medium text-white mb-2">Design</h4>
               <ul class="space-y-2">
@@ -1072,7 +1073,7 @@ const mockPosts = [
         <div class="article-section">
           <h3 class="text-xl font-semibold text-white mb-4">Principais novidades do ES2024</h3>
           
-          <div class="space-y-6">
+          <div class="flex flex-col gap-4">
             <div class="article-highlight bg-gradient-to-r from-yellow-500/10 to-orange-500/10 border border-yellow-500/20 rounded-lg p-6">
               <h4 class="text-yellow-300 font-semibold mb-3">1. Array.prototype.with()</h4>
               <p class="text-zinc-300 mb-3">Método imutável para modificar arrays:</p>
@@ -1175,7 +1176,7 @@ const result = input
         <div class="article-section">
           <h3 class="text-xl font-semibold text-white mb-4">Melhorias em Performance</h3>
           
-          <div class="space-y-4">
+          <div class="flex flex-col gap-4">
             <div>
               <h4 class="text-lg font-medium text-white mb-2">1. Shared Memory</h4>
               <p class="text-zinc-300 leading-relaxed mb-3">SharedArrayBuffer para comunicação entre workers:</p>
@@ -1201,7 +1202,7 @@ const age = now.toPlainDate().since(birthday).years;</code></pre>
         <div class="article-section">
           <h3 class="text-xl font-semibold text-white mb-4">Ferramentas e Ecossistema</h3>
           
-          <div class="space-y-6">
+          <div class="flex flex-col gap-4">
             <div>
               <h4 class="text-lg font-medium text-white mb-2">Vite 5.0</h4>
               <ul class="space-y-2">
@@ -1403,7 +1404,7 @@ const age = now.toPlainDate().since(birthday).years;</code></pre>
           <h3 class="text-xl font-semibold text-white mb-4">Lições para o design educacional</h3>
           <p class="text-zinc-300 leading-relaxed mb-4">Este projeto oferece insights valiosos para educadores e designers:</p>
           
-          <div class="space-y-6">
+          <div class="flex flex-col gap-4">
             <div class="article-highlight bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/20 rounded-lg p-6">
               <h4 class="text-purple-300 font-semibold mb-3">1. Pensamento sistêmico</h4>
               <p class="text-zinc-300 mb-3">O projeto demonstra como pequenos espaços podem gerar grandes impactos quando pensamos de forma integrada sobre:</p>
