@@ -230,12 +230,45 @@ const BlogPost = () => {
 
       {/* Article Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="flex gap-8">
+        {/* Table of Contents - Mobile */}
+        <div className="xl:hidden mb-6">
+          <TableOfContents 
+            containerSelector=".article-content"
+            title="Navegação do Artigo"
+            collapsible={true}
+            initiallyCollapsed={true}
+            minHeaders={2}
+            maxLevel={4}
+            showProgress={false}
+            className="bg-zinc-800/50"
+          />
+        </div>
+        
+        {/* Flex Container for Content and TOC */}
+        <div className="flex gap-8 max-w-none">
           {/* Main Content */}
-          <div className="flex-1">
+          <div className="flex-1 min-w-0 max-w-4xl">
+            <div className="prose prose-lg prose-invert max-w-none">
+              <div 
+                ref={articleReference}
+                dangerouslySetInnerHTML={{ __html: post.content }}
+                className="article-content"
+              />
+            </div>
             
-            {/* Table of Contents - Desktop */}
-            <div className="hidden lg:block fixed right-8 top-1/2 transform -translate-y-1/2 w-64 z-10">
+            {/* Share Buttons */}
+            <div className="mt-12 pt-8 border-t border-zinc-800">
+              <ShareButtons 
+                url={globalThis.location.href}
+                title={post.title}
+                description={post.excerpt}
+              />
+            </div>
+          </div>
+          
+          {/* Sidebar TOC - Desktop */}
+          <div className="hidden xl:block w-64 flex-shrink-0">
+            <div className="sticky top-24">
               <TableOfContents 
                 containerSelector=".article-content"
                 title="Navegação do Artigo"
@@ -247,43 +280,12 @@ const BlogPost = () => {
                 className="bg-zinc-900/95 backdrop-blur-sm"
               />
             </div>
-            
-            {/* Table of Contents - Mobile */}
-            <div className="lg:hidden mb-6">
-              <TableOfContents 
-                containerSelector=".article-content"
-                title="Navegação do Artigo"
-                collapsible={true}
-                initiallyCollapsed={true}
-                minHeaders={2}
-                maxLevel={4}
-                showProgress={false}
-                className="bg-zinc-800/50"
-              />
-            </div>
-            
-            <div className="prose prose-lg prose-invert max-w-none">
-          <div 
-            ref={articleReference}
-            dangerouslySetInnerHTML={{ __html: post.content }}
-            className="article-content"
-          />
-        </div>
-        
-        {/* Share Buttons */}
-        <div className="mt-12 pt-8 border-t border-zinc-800">
-          <ShareButtons 
-            url={globalThis.location.href}
-            title={post.title}
-            description={post.excerpt}
-          />
-            </div>
+          </div>
         </div>
       </div>
       
       {/* WhatsApp Float */}
       <WhatsAppFloat />
-    </div>
     </article>
   );
 };
