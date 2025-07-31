@@ -691,8 +691,8 @@ const mockPosts = [
               </div>
               
               <p class="text-zinc-200 text-lg mb-6 leading-relaxed">
-                Transforme teoria em prática com nossos cursos intensivos. 
-                <span class="text-blue-300 font-semibold">Mais de 500 alunos</span> já conseguiram seu primeiro emprego tech conosco.
+                Desenvolva habilidades práticas com metodologia comprovada. 
+                <span class="text-blue-300 font-semibold">Nossos alunos</span> têm se destacado no mercado de tecnologia.
               </p>
               
               <!-- Value Propositions -->
@@ -703,7 +703,7 @@ const mockPosts = [
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
-                  <span class="text-zinc-300">Projetos Reais</span>
+                  <span class="text-zinc-300">Projetos Práticos</span>
                 </div>
                 <div class="flex items-center gap-3 text-sm">
                   <div class="w-8 h-8 bg-blue-500/20 rounded-full flex items-center justify-center">
@@ -711,7 +711,7 @@ const mockPosts = [
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </div>
-                  <span class="text-zinc-300">Mentoria 1:1</span>
+                  <span class="text-zinc-300">Mentoria Individual</span>
                 </div>
                 <div class="flex items-center gap-3 text-sm">
                   <div class="w-8 h-8 bg-purple-500/20 rounded-full flex items-center justify-center">
@@ -719,7 +719,7 @@ const mockPosts = [
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </div>
-                  <span class="text-zinc-300">Garantia de Emprego</span>
+                  <span class="text-zinc-300">Suporte Contínuo</span>
                 </div>
               </div>
               
@@ -758,8 +758,8 @@ const mockPosts = [
                     <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
                       <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                     </svg>
-                    Últimas 3 vagas abertas
-                  </span> • Turma inicia em breve
+                    Vagas limitadas
+                  </span> • Próxima turma iniciando
                 </p>
               </div>
             </div>
