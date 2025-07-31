@@ -26,39 +26,173 @@ const BlogCTA = ({
     return () => clearTimeout(timer);
   }, []);
 
-  // Função para encontrar curso relacionado
+  // Mapeamento correto dos dados dos cursos da página principal
+  const COURSE_MAPPING = {
+    'projetista-3d': {
+      title: 'Projetista',
+      slug: 'projetista-3d', 
+      icon: 'Cube',
+      desc: 'SketchUp, Enscape, Renderização com IA, Projetos 3D…',
+      textColor: 'text-orange-400',
+      borderGradient: 'from-orange-500/60 to-amber-400/60',
+      hoverShadow: 'hover:shadow-[0_0_25px_#f97316aa]',
+    },
+    'edicao-video': {
+      title: 'Edição de Vídeo',
+      slug: 'edicao-video',
+      icon: 'FilmSlate', 
+      desc: 'Premiere, After Effects, DaVinci Resolve, Motion Graphics…',
+      textColor: 'text-red-400',
+      borderGradient: 'from-red-500/60 to-pink-400/60',
+      hoverShadow: 'hover:shadow-[0_0_25px_#f87171aa]',
+    },
+    'informatica': {
+      title: 'Informática',
+      slug: 'informatica',
+      icon: 'Desktop',
+      desc: 'Windows, Word, Excel (fundamental → avançado)…',
+      textColor: 'text-blue-400',
+      borderGradient: 'from-blue-500/60 to-indigo-400/60', 
+      hoverShadow: 'hover:shadow-[0_0_25px_#60a5faaa]',
+    },
+    'design-grafico': {
+      title: 'Design Gráfico',
+      slug: 'design-grafico',
+      icon: 'PenNib',
+      desc: 'Photoshop, Illustrator, InDesign, Canva, Social…',
+      textColor: 'text-pink-400',
+      borderGradient: 'from-pink-500/60 to-rose-400/60',
+      hoverShadow: 'hover:shadow-[0_0_25px_#f472b6aa]',
+    },
+    'programacao': {
+      title: 'Programação',
+      slug: 'programacao',
+      icon: 'Code',
+      desc: 'Lógica, Python, Java, PHP, Android Studio, Jogos…',
+      textColor: 'text-green-400',
+      borderGradient: 'from-green-500/60 to-emerald-400/60',
+      hoverShadow: 'hover:shadow-[0_0_25px_#4ade80aa]',
+    },
+    'marketing-digital': {
+      title: 'Marketing Digital',
+      slug: 'marketing-digital',
+      icon: 'ChartLine',
+      desc: 'Social Ads, SEO, Copywriting, Canva, Branding, Analytics…',
+      textColor: 'text-purple-400',
+      borderGradient: 'from-purple-500/60 to-violet-400/60',
+      hoverShadow: 'hover:shadow-[0_0_25px_#a78bfaaa]',
+    },
+    'inteligencia-artificial': {
+      title: 'Inteligência Artificial',
+      slug: 'inteligencia-artificial',
+      icon: 'Robot',
+      desc: 'Cursor, Prompt Engineering, ChatGPT, Visão…',
+      textColor: 'text-cyan-400',
+      borderGradient: 'from-cyan-500/60 to-teal-400/60',
+      hoverShadow: 'hover:shadow-[0_0_25px_#22d3eeaa]',
+    },
+    'business-intelligence': {
+      title: 'Business Intelligence',
+      slug: 'business-intelligence',
+      icon: 'ChartBar',
+      desc: 'Master Excel, Power BI, Dashboards, Storytelling de Dados…',
+      textColor: 'text-indigo-400',
+      borderGradient: 'from-indigo-500/60 to-blue-400/60',
+      hoverShadow: 'hover:shadow-[0_0_25px_#818cf8aa]',
+    },
+    'administracao': {
+      title: 'Administração',
+      slug: 'administracao',
+      icon: 'Briefcase',
+      desc: 'Office, Excel Avançado, DP, Matemática Financeira, Liderança…',
+      textColor: 'text-violet-400',
+      borderGradient: 'from-violet-500/60 to-purple-400/60',
+      hoverShadow: 'hover:shadow-[0_0_25px_#8b5cf6aa]',
+    },
+  };
+
+  // Função corrigida para encontrar curso relacionado
   const findRelatedCourse = (post) => {
     if (post?.cta_course_id) {
       return COURSES_DATA?.find(course => course.basicInfo.id === post.cta_course_id);
     }
     
-    // Fallback: tentar encontrar por matching de conteúdo
+    // Fallback: matching por conteúdo com algoritmo corrigido
     if (post?.content || post?.title || post?.categories) {
       const content = `${post.title} ${post.content} ${post.categories?.map(c => c.name).join(' ')}`.toLowerCase();
       
-      // Palavras-chave para matching - ATUALIZADAS COM MELHORES PRÁTICAS
+      // ALGORITMO CORRIGIDO: Palavras-chave mais específicas e ordenadas por prioridade
       const courseKeywords = {
-        'informatica': ['informática', 'office', 'windows', 'excel', 'word', 'powerpoint', 'canva'],
-        'design-grafico': ['design', 'gráfico', 'photoshop', 'illustrator', 'indesign', 'criação', 'visual'],
-        'programacao-web': ['programação', 'web', 'html', 'css', 'javascript', 'desenvolvimento', 'site'],
-        'marketing-digital': ['marketing', 'digital', 'redes sociais', 'facebook', 'instagram', 'publicidade'],
-        'excel-avancado': ['excel', 'planilha', 'fórmulas', 'gráficos', 'macros', 'vba'],
-        'autocad': [
-          // Termos específicos do AutoCAD
-          'autocad', 'desenho', 'técnico', 'cad', 'projeto', 'arquitetura',
-          // NOVOS: Termos relacionados ao SketchUp e Modelagem 3D
-          'sketchup', 'shape bender', 'modelagem 3d', 'modelagem', '3d', 'geometria',
-          'curvatura', 'extensão', 'plugin', 'arquitetônico', 'design arquitetônico',
-          'estruturas', 'fachadas', 'molduras', 'corrimão', 'ornamentos',
-          'visualização 3d', 'renderização', 'maquete eletrônica', 'projetos arquitetônicos'
+        // 1. PROJETISTA - Termos mais específicos primeiro
+        'projetista-3d': [
+          'sketchup', 'shape bender', 'enscape', 'modelagem 3d', 'renderização 3d',
+          'projetos arquitetônicos', 'arquitetura 3d', 'maquete eletrônica', 
+          'geometria 3d', 'curvatura 3d', 'extensão sketchup', 'plugin sketchup',
+          'visualização arquitetônica', 'projeto 3d', 'desenho arquitetônico 3d'
         ],
-        'ingles': ['inglês', 'english', 'idioma', 'conversação', 'business english'],
-        'montagem-manutencao': ['montagem', 'manutenção', 'hardware', 'computador', 'técnico']
+        
+        // 2. DESIGN GRÁFICO - Removidos termos conflitantes
+        'design-grafico': [
+          'photoshop', 'illustrator', 'indesign', 'design gráfico', 'identidade visual',
+          'logotipo', 'branding visual', 'diagramação', 'layout', 'tipografia',
+          'cores', 'composição visual', 'arte gráfica', 'criação gráfica'
+        ],
+        
+        // 3. INFORMÁTICA - Mantido
+        'informatica': [
+          'windows', 'word', 'powerpoint', 'office', 'informática básica',
+          'computador básico', 'digitação', 'internet básica'
+        ],
+        
+        // 4. PROGRAMAÇÃO - Mantido
+        'programacao': [
+          'programação', 'código', 'python', 'java', 'php', 'javascript', 'html', 'css',
+          'desenvolvimento', 'software', 'app', 'aplicativo', 'sistema'
+        ],
+        
+        // 5. MARKETING DIGITAL - Mantido
+        'marketing-digital': [
+          'marketing digital', 'redes sociais', 'facebook ads', 'instagram', 'google ads',
+          'seo', 'copywriting', 'tráfego pago', 'analytics', 'social media'
+        ],
+        
+        // 6. INTELIGÊNCIA ARTIFICIAL - Mantido
+        'inteligencia-artificial': [
+          'inteligência artificial', 'ia', 'chatgpt', 'prompt engineering', 'machine learning',
+          'cursor ai', 'copilot', 'automação ia'
+        ],
+        
+        // 7. BUSINESS INTELLIGENCE - Mantido 
+        'business-intelligence': [
+          'power bi', 'business intelligence', 'dashboard', 'kpi', 'data visualization',
+          'análise de dados', 'storytelling dados'
+        ],
+        
+        // 8. EDIÇÃO DE VÍDEO - Mantido
+        'edicao-video': [
+          'premiere', 'after effects', 'davinci resolve', 'edição vídeo', 'motion graphics',
+          'vídeo', 'montagem', 'pós-produção'
+        ],
+        
+        // 9. ADMINISTRAÇÃO - Mantido
+        'administracao': [
+          'administração', 'gestão', 'liderança', 'dp', 'departamento pessoal',
+          'matemática financeira', 'excel avançado admin'
+        ],
+        
+        // 10. EXCEL AVANÇADO - Casos específicos do Excel
+        'informatica': [
+          'excel', 'planilha', 'fórmulas excel', 'gráficos excel', 'macros', 'vba'
+        ]
       };
 
+      // Busca em ordem de prioridade - curso mais específico primeiro
       for (const [courseSlug, keywords] of Object.entries(courseKeywords)) {
         if (keywords.some(keyword => content.includes(keyword))) {
-          return COURSES_DATA?.find(course => course.basicInfo.slug === courseSlug);
+          const courseData = COURSES_DATA?.find(course => course.basicInfo.slug === courseSlug);
+          if (courseData) {
+            return courseData;
+          }
         }
       }
     }
@@ -67,6 +201,7 @@ const BlogCTA = ({
   };
 
   const relatedCourse = variant === 'specific' ? findRelatedCourse(post) : null;
+  const courseStyle = relatedCourse ? COURSE_MAPPING[relatedCourse.basicInfo.slug] : null;
 
   // Handle CTA click tracking
   const handleCtaClick = (ctaType, courseId = null) => {
@@ -81,100 +216,91 @@ const BlogCTA = ({
     }
   };
 
-  // CTA específico para curso
-  if (variant === 'specific' && relatedCourse) {
+  // CTA específico para curso - Usando design dos cards da página principal
+  if (variant === 'specific' && relatedCourse && courseStyle) {
     return (
       <div className={`${classes.container} cta-main cta-type-course transform transition-all duration-700 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'} ${className}`}>
-        <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden shadow-xl" style={styles.container}>
-          {/* Modern background gradient */}
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-indigo-500/5 to-purple-500/5"></div>
-          <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-blue-400/10 to-purple-400/10 rounded-full blur-3xl"></div>
-          
-          {/* Status badge - only if truly relevant */}
+        <div className="relative w-full max-w-2xl mx-auto">
+          {/* Status badge - similar to homepage */}
           {showUrgency && (
-            <div className="absolute top-4 right-4">
-              <span className="inline-flex items-center gap-1 px-3 py-1 bg-blue-500/10 text-blue-300 border border-blue-500/20 rounded-full text-sm font-medium">
+            <div className="absolute -top-3 right-4 z-10">
+              <span className="inline-flex items-center gap-1 px-4 py-2 bg-gradient-to-r from-orange-500 to-red-500 text-white text-sm font-bold rounded-full shadow-lg animate-pulse">
                 <Star size={14} />
                 {urgencyText}
               </span>
             </div>
           )}
 
-          <div className="relative grid grid-cols-1 md:grid-cols-3 gap-6 items-center p-6">
-            {/* Course image with better layout */}
-            <div className="md:col-span-1 flex justify-center">
-              <div className="relative rounded-xl overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 shadow-lg">
-                {relatedCourse.basicInfo?.image ? (
-                  <LazyImage
-                    src={relatedCourse.basicInfo.image}
-                    alt={relatedCourse.basicInfo.title}
-                    className="w-full h-48 object-cover"
-                  />
-                ) : (
-                  <div className="w-full h-48 bg-gradient-to-br from-blue-50 to-indigo-50 flex items-center justify-center">
-                    <div className="p-4 bg-blue-100 rounded-full">
-                      <BookOpen size={32} className="text-blue-600" />
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Content with better hierarchy */}
-            <div className="md:col-span-2 space-y-5">
-              <div className="space-y-3">
-                <h3 className="text-xl md:text-2xl font-semibold text-white leading-tight">
-                  {post?.cta_title || `Aprofunde seus conhecimentos em ${relatedCourse.basicInfo.title}`}
+          {/* Card principal - baseado no design da homepage */}
+          <Link
+            to={`/cursos/${courseStyle.slug}`}
+            onClick={() => handleCtaClick('specific_course', relatedCourse.basicInfo.id)}
+            className={`card-enter in-view relative clip-card w-full h-auto p-[3px] bg-gradient-to-r ${courseStyle.borderGradient} transition-transform duration-200 hover:-translate-y-1.5 hover:scale-[1.02] ${courseStyle.hoverShadow} focus-visible:ring-2 ring-fuchsia-500 focus:outline-none block`}
+          >
+            <div className="clip-card w-full h-full bg-[radial-gradient(ellipse_at_60%_40%,#181a2a_0%,#0a0a0a_100%)] hover:bg-[radial-gradient(ellipse_at_60%_40%,#1a1c2e_0%,#0a0a0a_100%)] transition">
+              
+              {/* Header com título personalizado */}
+              <div className="px-8 pt-6 pb-4">
+                <h3 className={`text-2xl font-bold leading-tight ${courseStyle.textColor}`}>
+                  {post?.cta_title || `Domine ${courseStyle.title} na Prática`}
                 </h3>
-                <p className="text-gray-300 leading-relaxed text-sm md:text-base">
-                  {post?.cta_description || `Desenvolva habilidades práticas e atualize seu conhecimento com nosso curso especializado.`}
+                <p className="text-gray-300 mt-3 leading-relaxed">
+                  {post?.cta_description || `Desenvolva habilidades práticas e atualize seu conhecimento com nosso curso especializado em ${courseStyle.title}.`}
                 </p>
               </div>
 
-              {/* Course highlights with better visual treatment */}
-              <div className="flex flex-wrap gap-4 text-sm text-gray-400">
-                <span className="flex items-center gap-2 bg-white/5 px-3 py-1 rounded-full">
-                  <Clock size={16} />
-                  {relatedCourse.basicInfo.duration}
-                </span>
-                <span className="flex items-center gap-2 bg-white/5 px-3 py-1 rounded-full">
-                  <Users size={16} />
-                  {relatedCourse.basicInfo.level}
-                </span>
-                {relatedCourse.basicInfo.certificate && (
-                  <span className="flex items-center gap-2 bg-white/5 px-3 py-1 rounded-full">
-                    <Star size={16} />
-                    Certificado incluso
-                  </span>
-                )}
-              </div>
+              {/* Content area - similar ao card da homepage mas expandido */}
+              <div className="flex items-center gap-6 px-8 pb-6">
+                
+                {/* Área do curso - sem ícone, mas com melhor destaque */}
+                <div className="flex flex-col gap-3 min-w-0 flex-1">
+                  <div className={`text-lg font-semibold ${courseStyle.textColor}`}>
+                    {courseStyle.title}
+                  </div>
+                  <p className="text-sm text-zinc-300 leading-snug">
+                    {courseStyle.desc}
+                  </p>
+                  
+                  {/* Course highlights */}
+                  <div className="flex flex-wrap gap-3 text-xs text-gray-400 mt-2">
+                    <span className="flex items-center gap-1 bg-white/5 px-2 py-1 rounded-full">
+                      <Clock size={12} />
+                      {relatedCourse.basicInfo.duration}
+                    </span>
+                    <span className="flex items-center gap-1 bg-white/5 px-2 py-1 rounded-full">
+                      <Users size={12} />
+                      {relatedCourse.basicInfo.level}
+                    </span>
+                    {relatedCourse.basicInfo.certificate && (
+                      <span className="flex items-center gap-1 bg-white/5 px-2 py-1 rounded-full">
+                        <Star size={12} />
+                        Certificado incluso
+                      </span>
+                    )}
+                  </div>
+                </div>
 
-              {/* CTA Button with modern design */}
-              <div className="pt-2">
-                <Link
-                  to={`/curso/${relatedCourse.basicInfo.slug}`}
-                  onClick={() => handleCtaClick('specific_course', relatedCourse.basicInfo.id)}
-                  className={`${classes.button} inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium px-6 py-3 rounded-xl transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-blue-500/25 focus:outline-none focus:ring-2 focus:ring-blue-500/50`}
-                  style={styles.button}
-                >
-                  <span>Ver Detalhes do Curso</span>
-                  <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
-                </Link>
+                {/* CTA Button */}
+                <div className="flex-shrink-0">
+                  <div className={`inline-flex items-center gap-2 bg-gradient-to-r ${courseStyle.borderGradient.replace('/60', '')} text-white font-medium px-6 py-3 rounded-xl transition-all duration-300 hover:scale-105 shadow-lg`}>
+                    <span>Ver Detalhes</span>
+                    <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
+          </Link>
         </div>
       </div>
     );
   }
 
-  // CTA genérico com melhor design
+  // CTA genérico - design simplificado
   return (
-    <div className={`${classes.container} cta-main cta-type-course transform transition-all duration-700 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'} ${className}`}>
-      <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl text-center overflow-hidden shadow-xl" style={styles.container}>
+    <div className={`${classes.container} cta-main cta-type-generic transform transition-all duration-700 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'} ${className}`}>
+      <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl text-center overflow-hidden shadow-xl max-w-2xl mx-auto" style={styles.container}>
         {/* Modern background */}
         <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-indigo-500/5 to-purple-500/5"></div>
-        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-40 h-40 bg-gradient-to-br from-blue-400/10 to-purple-400/10 rounded-full blur-3xl"></div>
         
         {/* Status badge */}
         {showUrgency && (
@@ -187,26 +313,17 @@ const BlogCTA = ({
         )}
 
         <div className="relative space-y-6 p-8">
-          {/* Icon with better design */}
-          <div className="flex justify-center">
-            <div className="p-4 bg-gradient-to-br from-blue-500/10 to-indigo-500/10 rounded-2xl">
-              <div className="p-3 bg-blue-100 rounded-xl">
-                <BookOpen size={32} className="text-blue-600" />
-              </div>
-            </div>
-          </div>
-
-          {/* Content with improved copy */}
+          {/* Content sem ícone */}
           <div className="space-y-4">
-            <h3 className="text-xl md:text-2xl font-semibold text-white leading-tight">
+            <h3 className="text-2xl md:text-3xl font-bold text-white leading-tight">
               {post?.cta_title || 'Desenvolva suas habilidades profissionais'}
             </h3>
-            <p className="text-gray-300 leading-relaxed max-w-2xl mx-auto text-sm md:text-base">
+            <p className="text-gray-300 leading-relaxed max-w-2xl mx-auto">
               {post?.cta_description || 'Explore nossos cursos especializados e aprimore seu conhecimento com conteúdo atualizado e certificação reconhecida.'}
             </p>
           </div>
 
-          {/* Value propositions with better visual treatment */}
+          {/* Value propositions */}
           <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-400">
             <span className="flex items-center gap-2 bg-white/5 px-3 py-1 rounded-full">
               <Star size={16} />
@@ -216,19 +333,14 @@ const BlogCTA = ({
               <Users size={16} />
               Instrutores especialistas
             </span>
-            <span className="flex items-center gap-2 bg-white/5 px-3 py-1 rounded-full">
-              <BookOpen size={16} />
-              Material didático incluso
-            </span>
           </div>
 
-          {/* CTA Button with modern design */}
+          {/* CTA Button */}
           <div className="pt-2">
             <Link
               to="/cursos"
               onClick={() => handleCtaClick('generic')}
-              className={`${classes.button} inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium px-8 py-3 rounded-xl transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-blue-500/25 focus:outline-none focus:ring-2 focus:ring-blue-500/50`}
-              style={styles.button}
+              className="inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium px-8 py-3 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-blue-500/25 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
             >
               <span>Explorar Cursos</span>
               <ArrowRight size={20} className="transition-transform group-hover:translate-x-1" />
