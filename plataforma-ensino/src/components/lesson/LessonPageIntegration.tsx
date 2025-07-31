@@ -252,6 +252,7 @@ const LessonPageIntegration: React.FC<LessonPageIntegrationProps> = ({
       materials={lesson.materials}
       exercises={exercises}
       quizzes={quizzes}
+      content={lesson.content}
     />
   )
 }

@@ -35,6 +35,7 @@ interface LessonPageRedesignedProps {
   materials?: any[]
   exercises?: any[]
   quizzes?: any[]
+  content?: string
 }
 
 const LessonPageRedesigned: React.FC<LessonPageRedesignedProps> = ({
@@ -45,7 +46,8 @@ const LessonPageRedesigned: React.FC<LessonPageRedesignedProps> = ({
   videoUrl,
   materials = [],
   exercises = [],
-  quizzes = []
+  quizzes = [],
+  content
 }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -131,6 +133,18 @@ const LessonPageRedesigned: React.FC<LessonPageRedesignedProps> = ({
                 Curso: {lesson.course.title}
               </p>
             </Card>
+
+            {/* Content Section - Lesson HTML Content */}
+            {content && (
+              <div id="content-section">
+                <Card className="p-6 border-border/50">
+                  <div 
+                    className="lesson-content prose prose-slate dark:prose-invert max-w-none"
+                    dangerouslySetInnerHTML={{ __html: content }}
+                  />
+                </Card>
+              </div>
+            )}
 
             {/* Video Section */}
             {videoUrl && (
