@@ -12,6 +12,7 @@ import BlogError from '../components/blog/BlogError';
 import LazyImage from '../components/LazyImage';
 import TableOfContents from '../components/blog/TableOfContents';
 import WhatsAppFloat from '../components/shared/WhatsAppFloat';
+import BlogCTA from '../components/blog/BlogCTA';
 
 // Calculate reading time
 const calculateReadingTime = (content) => {
@@ -253,6 +254,16 @@ const BlogPost = () => {
                 ref={articleReference}
                 dangerouslySetInnerHTML={{ __html: post.content }}
                 className="article-content"
+              />
+            </div>
+            
+            {/* Blog CTA Component */}
+            <div className="mt-12">
+              <BlogCTA 
+                post={post}
+                variant="specific"
+                showUrgency={true}
+                urgencyText="Vagas limitadas"
               />
             </div>
             
