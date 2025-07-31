@@ -17,7 +17,11 @@ const calculateReadingTime = (content) => {
 
 // Format date for display
 const formatDate = (dateString) => {
+  if (!dateString) return 'Data não disponível';
+  
   const date = new Date(dateString);
+  if (isNaN(date.getTime())) return 'Data inválida';
+  
   const now = new Date();
   const diffInDays = Math.floor((now - date) / (1000 * 60 * 60 * 24));
   
@@ -45,20 +49,6 @@ const truncateText = (text, maxLength = 150) => {
     : truncated + '...';
 };
 
-// Get category color based on category slug
-const getCategoryColor = (categorySlug) => {
-  const colors = {
-    'tecnologia': 'bg-blue-500/20 text-blue-300 border-blue-500/30',
-    'educacao': 'bg-green-500/20 text-green-300 border-green-500/30',
-    'carreira': 'bg-purple-500/20 text-purple-300 border-purple-500/30',
-    'design': 'bg-pink-500/20 text-pink-300 border-pink-500/30',
-    'programacao': 'bg-orange-500/20 text-orange-300 border-orange-500/30',
-    'marketing': 'bg-red-500/20 text-red-300 border-red-500/30',
-  };
-  
-  return colors[categorySlug] || 'bg-zinc-500/20 text-zinc-300 border-zinc-500/30';
-};
-
 const BlogCard = ({ post, variant = 'standard', index = 0 }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
@@ -71,7 +61,8 @@ const BlogCard = ({ post, variant = 'standard', index = 0 }) => {
   const { getTypographyClasses, shouldUseAnimations, getResponsiveImageProps } = useBlogResponsive();
 
   const readingTime = calculateReadingTime(post.content);
-  const formattedDate = formatDate(post.created_at || post.published_at);
+  // Fix date field - use publishedAt instead of created_at/published_at
+  const formattedDate = formatDate(post.publishedAt || post.created_at || post.published_at);
   const excerpt = truncateText(post.excerpt || post.content, 150);
 
   // Get first category for badge display
