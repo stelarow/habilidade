@@ -109,6 +109,11 @@ const mockPosts = [
               </ul>
             </div>
           </div>
+          
+          <div class="article-image mb-8">
+            <img src="/images/blog/ergonomia-cozinha-dicas/projeto-cozinha-exemplo.gif" alt="Exemplo prático de projeto de cozinha com aplicação de princípios ergonômicos" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Projeto prático demonstrando aplicação de medidas ergonômicas em cozinha residencial</p>
+          </div>
         </div>
 
         <div class="article-section">
@@ -172,10 +177,31 @@ const mockPosts = [
           
           <p class="text-zinc-300 leading-relaxed mb-6">O projeto luminotécnico deve contemplar iluminação geral uniforme, iluminação de tarefa nas áreas de trabalho, evitar sombras projetadas e utilizar temperatura de cor adequada para identificação precisa de alimentos.</p>
           
-          <div class="article-highlight bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-500/20 rounded-lg p-6 my-6">
-            <h4 class="text-green-300 font-semibold mb-3">🎓 Domine o Design de Interiores Profissional</h4>
-            <p class="text-zinc-300 mb-4">Quer aprender todos os fundamentos técnicos de ergonomia, antropometria e design de espaços funcionais?</p>
-            <p class="text-zinc-300">Nosso curso <strong>Design Gráfico</strong> inclui módulos especializados em design de interiores e ergonomia aplicada, ensinando desde conceitos básicos até projetos complexos de ambientes residenciais e comerciais.</p>
+          <div class="clip-card group relative overflow-hidden rounded-2xl border border-purple-200 bg-gradient-to-br from-purple-50 to-pink-50 p-6 transition-all duration-300 hover:border-purple-300 hover:shadow-lg hover:shadow-purple-100/50 hover:-translate-y-1">
+            <div class="absolute inset-0 bg-gradient-to-r from-purple-500/5 via-transparent to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div class="relative z-10">
+              <div class="flex items-start gap-4">
+                <div class="flex-1">
+                  <h3 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-purple-900 transition-colors">
+                    Projetista 3D Profissional
+                  </h3>
+                  <p class="text-gray-700 mb-4 leading-relaxed">
+                    Domine o SketchUp e técnicas avançadas de modelagem 3D para criar projetos arquitetônicos e de design de interiores impressionantes. Aprenda ergonomia aplicada, renderização profissional e muito mais.
+                  </p>
+                  <div class="flex flex-wrap gap-2 mb-4">
+                    <span class="px-3 py-1 bg-purple-100 text-purple-700 text-sm rounded-full font-medium">SketchUp</span>
+                    <span class="px-3 py-1 bg-pink-100 text-pink-700 text-sm rounded-full font-medium">Ergonomia</span>
+                    <span class="px-3 py-1 bg-blue-100 text-blue-700 text-sm rounded-full font-medium">Design de Interiores</span>
+                  </div>
+                  <div class="inline-flex items-center gap-2 text-purple-600 font-semibold group-hover:text-purple-700 transition-colors">
+                    <span>Saiba mais sobre o curso</span>
+                    <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         
