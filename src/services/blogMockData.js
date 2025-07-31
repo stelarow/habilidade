@@ -674,9 +674,95 @@ const mockPosts = [
           <h3 class="text-xl font-semibold text-white mb-4">Conclusão</h3>
           <p class="text-zinc-300 leading-relaxed mb-4">A jornada na programação requer dedicação e prática constante, mas as oportunidades são enormes. Comece hoje mesmo e seja consistente nos estudos. Lembre-se: todo programador experiente já foi um iniciante.</p>
           
-          <div class="article-highlight bg-gradient-to-r from-green-500/10 to-blue-500/10 border border-green-500/20 rounded-lg p-6 my-6">
-            <h4 class="text-green-300 font-semibold mb-3">🎯 Próximos Passos com a Escola Habilidade</h4>
-            <p class="text-zinc-300">Na Escola Habilidade, oferecemos cursos práticos que aceleram seu aprendizado. Conheça nossos programas e dê o próximo passo na sua carreira em tecnologia.</p>
+          <!-- Enhanced CTA Section with Best Practices -->
+          <div class="bg-gradient-to-br from-blue-600/20 via-purple-600/20 to-green-600/20 border-2 border-blue-500/30 rounded-xl p-8 my-8 relative overflow-hidden">
+            <!-- Background Pattern -->
+            <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMSIgZmlsbD0iIzMzNzNkYyIgZmlsbC1vcGFjaXR5PSIwLjEiLz4KPC9zdmc+')] opacity-30"></div>
+            
+            <!-- Main CTA Content -->
+            <div class="relative z-10">
+              <div class="flex items-center gap-3 mb-4">
+                <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                  <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
+                <h4 class="text-xl font-bold text-white">Acelere Sua Carreira em Programação</h4>
+              </div>
+              
+              <p class="text-zinc-200 text-lg mb-6 leading-relaxed">
+                Transforme teoria em prática com nossos cursos intensivos. 
+                <span class="text-blue-300 font-semibold">Mais de 500 alunos</span> já conseguiram seu primeiro emprego tech conosco.
+              </p>
+              
+              <!-- Value Propositions -->
+              <div class="grid md:grid-cols-3 gap-4 mb-8">
+                <div class="flex items-center gap-3 text-sm">
+                  <div class="w-8 h-8 bg-green-500/20 rounded-full flex items-center justify-center">
+                    <svg class="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <span class="text-zinc-300">Projetos Reais</span>
+                </div>
+                <div class="flex items-center gap-3 text-sm">
+                  <div class="w-8 h-8 bg-blue-500/20 rounded-full flex items-center justify-center">
+                    <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <span class="text-zinc-300">Mentoria 1:1</span>
+                </div>
+                <div class="flex items-center gap-3 text-sm">
+                  <div class="w-8 h-8 bg-purple-500/20 rounded-full flex items-center justify-center">
+                    <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <span class="text-zinc-300">Garantia de Emprego</span>
+                </div>
+              </div>
+              
+              <!-- CTA Buttons -->
+              <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <!-- Primary CTA -->
+                <a href="https://wa.me/5548988559491?text=Olá! Vi o artigo sobre programação e gostaria de conhecer os cursos da Escola Habilidade. Podem me ajudar?" 
+                   class="group bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-bold py-4 px-8 rounded-lg text-center transition-all duration-300 transform hover:scale-105 hover:shadow-xl hover:shadow-blue-500/25 relative overflow-hidden"
+                   onclick="gtag('event', 'click', {'event_category': 'CTA', 'event_label': 'WhatsApp_Blog_CTA_Primary'});">
+                  <span class="relative z-10 flex items-center justify-center gap-2">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.570-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.109"/>
+                    </svg>
+                    Falar com Especialista Agora
+                  </span>
+                  <div class="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12"></div>
+                </a>
+                
+                <!-- Secondary CTA -->
+                <a href="/#cursos?utm_source=blog&utm_medium=cta&utm_campaign=programacao_2024&utm_content=secondary" 
+                   class="group bg-transparent border-2 border-blue-400 hover:bg-blue-400/10 text-blue-300 hover:text-blue-200 font-semibold py-4 px-8 rounded-lg text-center transition-all duration-300 hover:border-blue-300"
+                   onclick="gtag('event', 'click', {'event_category': 'CTA', 'event_label': 'Cursos_Blog_CTA_Secondary'});">
+                  <span class="flex items-center justify-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    </svg>
+                    Ver Cursos Disponíveis
+                  </span>
+                </a>
+              </div>
+              
+              <!-- Urgency/Social Proof -->
+              <div class="mt-6 text-center">
+                <p class="text-zinc-400 text-sm">
+                  <span class="inline-flex items-center gap-1 text-green-400 font-medium">
+                    <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                    </svg>
+                    Últimas 3 vagas abertas
+                  </span> • Turma inicia em breve
+                </p>
+              </div>
+            </div>
           </div>
         </div>
         
