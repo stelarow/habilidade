@@ -274,6 +274,7 @@ const mockPosts = [
     author: { name: 'Escola Habilidade', avatar: '/assets/avatars/default.jpg' },
     category: { id: 4, name: 'Programação', slug: 'programacao', color: '#8B5CF6' },
     featuredImage: '/images/blog/agente-ia-n8n/n8n-ai-agent-hero.jpg',
+    featured_image_url: '/images/blog/agente-ia-n8n/n8n-ai-agent-hero.jpg',
     publishedAt: '2025-07-31T14:30:00.000Z',
     readingTime: 16,
     tags: ['ia', 'automacao', 'n8n', 'agentes-ia', 'workflow', 'tutorial', 'gemini', 'no-code'],
@@ -502,6 +503,7 @@ const mockPosts = [
     author: { name: 'Equipe Escola Habilidade', avatar: '/assets/avatars/escola-habilidade.jpg' },
     category: { id: 6, name: 'Arquitetura', slug: 'arquitetura', color: '#06B6D4' },
     featuredImage: '/assets/blog/five-ways-magnificent-views/2024_687205183_five_ways_to_1.jpg',
+    featured_image_url: '/assets/blog/five-ways-magnificent-views/2024_687205183_five_ways_to_1.jpg',
     publishedAt: '2025-07-31T10:00:00.000Z',
     readingTime: 12,
     tags: ['arquitetura', 'design', 'sketchup', 'casas-personalizadas', 'vistas', 'construção', 'paisagismo'],
@@ -680,6 +682,7 @@ const mockPosts = [
     author: { name: 'Escola Habilidade', avatar: '/assets/avatars/default.jpg' },
     category: mockCategories[3], // Programação
     featuredImage: '/assets/blog/programacao-2024.jpg',
+    featured_image_url: '/assets/blog/programacao-2024.jpg',
     publishedAt: '2024-01-15T10:00:00.000Z',
     readingTime: 8,
     tags: ['programação', 'iniciantes', 'carreira'],
@@ -792,6 +795,7 @@ const mockPosts = [
     author: { name: 'Escola Habilidade', avatar: '/assets/avatars/default.jpg' },
     category: mockCategories[1], // Educação
     featuredImage: '/assets/blog/design-thinking.jpg',
+    featured_image_url: '/assets/blog/design-thinking.jpg',
     publishedAt: '2024-01-10T14:30:00.000Z',
     readingTime: 6,
     tags: ['design thinking', 'educação', 'metodologia'],
@@ -993,6 +997,7 @@ const mockPosts = [
     author: { name: 'Escola Habilidade', avatar: '/assets/avatars/default.jpg' },
     category: mockCategories[0], // Tecnologia
     featuredImage: '/assets/blog/tendencias-2024.jpg',
+    featured_image_url: '/assets/blog/tendencias-2024.jpg',
     publishedAt: '2024-01-05T09:15:00.000Z',
     readingTime: 10,
     tags: ['tecnologia', 'tendências', 'futuro'],
@@ -1232,6 +1237,7 @@ const mockPosts = [
     author: { name: 'Escola Habilidade', avatar: '/assets/avatars/default.jpg' },
     category: mockCategories[2], // Carreira
     featuredImage: '/assets/blog/carreira-tech.jpg',
+    featured_image_url: '/assets/blog/carreira-tech.jpg',
     publishedAt: '2023-12-28T16:45:00.000Z',
     readingTime: 7,
     tags: ['carreira', 'tecnologia', 'crescimento'],
@@ -1509,6 +1515,7 @@ const mockPosts = [
     author: { name: 'Escola Habilidade', avatar: '/assets/avatars/default.jpg' },
     category: mockCategories[4], // Design
     featuredImage: '/assets/blog/ux-ui-design.jpg',
+    featured_image_url: '/assets/blog/ux-ui-design.jpg',
     publishedAt: '2023-12-20T11:20:00.000Z',
     readingTime: 9,
     tags: ['design', 'ux', 'ui', 'interface'],
@@ -1768,6 +1775,7 @@ const age = now.toPlainDate().since(birthday).years;</code></pre>
     author: { name: 'Escola Habilidade', avatar: '/assets/avatars/default.jpg' },
     category: mockCategories[3], // Programação
     featuredImage: '/assets/blog/javascript-es2024.jpg',
+    featured_image_url: '/assets/blog/javascript-es2024.jpg',
     publishedAt: '2023-12-15T13:10:00.000Z',
     readingTime: 12,
     tags: ['javascript', 'es2024', 'programação', 'web'],
@@ -1987,6 +1995,7 @@ const age = now.toPlainDate().since(birthday).years;</code></pre>
     author: { name: 'Escola Habilidade', avatar: '/assets/avatars/default.jpg' },
     category: mockCategories[4], // Design
     featuredImage: '/assets/blog/design-sprint-2025.svg',
+    featured_image_url: '/assets/blog/design-sprint-2025.svg',
     publishedAt: '2025-01-30T09:00:00.000Z',
     readingTime: 8,
     tags: ['design', 'arquitetura', 'sustentabilidade', 'sketchup', 'urbanismo'],
@@ -2309,6 +2318,7 @@ const age = now.toPlainDate().since(birthday).years;</code></pre>
     author: { name: 'Escola Habilidade', avatar: '/assets/avatars/default.jpg' },
     category: { id: 6, name: 'Arquitetura', slug: 'arquitetura', color: '#06B6D4' },
     featuredImage: '/images/blog/shape-bender/shape-bender-hero.jpg',
+    featured_image_url: '/images/blog/shape-bender/shape-bender-hero.jpg',
     publishedAt: '2025-01-31T10:00:00.000Z',
     readingTime: 12,
     tags: ['sketchup', 'arquitetura', 'design', 'modelagem-3d', 'shape-bender', 'tutorial', 'extensões'],
@@ -2574,6 +2584,7 @@ gemini-cli "Como posso otimizar este código Python?"
     author: { name: 'Escola Habilidade', avatar: '/assets/avatars/default.jpg' },
     category: { id: 1, name: 'Tecnologia', slug: 'tecnologia', color: '#3B82F6' },
     featuredImage: '/images/blog/gemini-cli/gemini-cli-hero.webp',
+    featured_image_url: '/images/blog/gemini-cli/gemini-cli-hero.webp',
     publishedAt: '2025-01-31T14:00:00.000Z',
     readingTime: 15,
     tags: ['gemini-cli', 'ia', 'google', 'open-source', 'terminal', 'desenvolvimento', 'automacao', 'cli'],
