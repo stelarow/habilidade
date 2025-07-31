@@ -234,50 +234,101 @@ const mockPosts = [
     slug: 'design-thinking-educacao-tecnologica',
     excerpt: 'Como aplicar metodologias de design para melhorar o aprendizado.',
     content: `
-<h2>O Design Thinking revoluciona a forma como aprendemos e ensinamos tecnologia</h2>
+      <div class="article-content space-y-8">
+        
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-4 mt-0">O Design Thinking revoluciona a forma como aprendemos e ensinamos tecnologia</h2>
+          <p class="text-zinc-300 leading-relaxed mb-6 text-lg">Esta metodologia cria experiências mais envolventes e eficazes, colocando o aluno no centro do processo educacional.</p>
+        </div>
 
-<p>Esta metodologia cria experiências mais envolventes e eficazes, colocando o aluno no centro do processo educacional.</p>
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-4">O que é Design Thinking?</h3>
+          <p class="text-zinc-300 leading-relaxed mb-4">Design Thinking é uma abordagem centrada no ser humano para inovação que integra as necessidades das pessoas, as possibilidades da tecnologia e os requisitos para o sucesso.</p>
+        </div>
 
-<h3>O que é Design Thinking?</h3>
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-4">Os 5 estágios do Design Thinking na educação</h3>
+          
+          <div class="space-y-6">
+            <div class="article-highlight bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 rounded-lg p-6">
+              <h4 class="text-blue-300 font-semibold mb-3">1. Empatizar</h4>
+              <p class="text-zinc-300">Compreender profundamente as necessidades, dificuldades e motivações dos estudantes.</p>
+            </div>
+            
+            <div class="article-highlight bg-gradient-to-r from-green-500/10 to-blue-500/10 border border-green-500/20 rounded-lg p-6">
+              <h4 class="text-green-300 font-semibold mb-3">2. Definir</h4>
+              <p class="text-zinc-300">Sintetizar as observações em uma declaração clara do problema a ser resolvido.</p>
+            </div>
+            
+            <div class="article-highlight bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/20 rounded-lg p-6">
+              <h4 class="text-purple-300 font-semibold mb-3">3. Idealizar</h4>
+              <p class="text-zinc-300">Gerar uma ampla gama de ideias criativas e soluções potenciais.</p>
+            </div>
+            
+            <div class="article-highlight bg-gradient-to-r from-orange-500/10 to-red-500/10 border border-orange-500/20 rounded-lg p-6">
+              <h4 class="text-orange-300 font-semibold mb-3">4. Prototipar</h4>
+              <p class="text-zinc-300">Criar versões experimentais de soluções para testar hipóteses.</p>
+            </div>
+            
+            <div class="article-highlight bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/20 rounded-lg p-6">
+              <h4 class="text-cyan-300 font-semibold mb-3">5. Testar</h4>
+              <p class="text-zinc-300">Avaliar os protótipos com usuários reais e refinar com base no feedback.</p>
+            </div>
+          </div>
+        </div>
 
-<p>Design Thinking é uma abordagem centrada no ser humano para inovação que integra as necessidades das pessoas, as possibilidades da tecnologia e os requisitos para o sucesso.</p>
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-4">Aplicações práticas na educação tecnológica</h3>
+          <ul class="space-y-3 mb-6">
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Desenvolvimento de currículos mais envolventes</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Criação de interfaces de aprendizado intuitivas</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Métodos de avaliação mais humanizados</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Ambientes de aprendizado colaborativo</span>
+            </li>
+          </ul>
+        </div>
 
-<h3>Os 5 estágios do Design Thinking na educação</h3>
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-4">Benefícios observados</h3>
+          <p class="text-zinc-300 leading-relaxed mb-4">Instituições que implementaram Design Thinking relatam:</p>
+          
+          <ul class="space-y-3 mb-6">
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Maior engajamento dos estudantes</strong> - Aumento significativo na participação ativa</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Redução nas taxas de evasão</strong> - Estudantes se sentem mais conectados</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Melhoria na retenção de conhecimento</strong> - Aprendizado mais duradouro</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Desenvolvimento de soft skills</strong> - Competências socioemocionais</span>
+            </li>
+          </ul>
+        </div>
 
-<h4>1. Empatizar</h4>
-<p>Compreender profundamente as necessidades, dificuldades e motivações dos estudantes.</p>
-
-<h4>2. Definir</h4> 
-<p>Sintetizar as observações em uma declaração clara do problema a ser resolvido.</p>
-
-<h4>3. Idealizar</h4>
-<p>Gerar uma ampla gama de ideias criativas e soluções potenciais.</p>
-
-<h4>4. Prototipar</h4>
-<p>Criar versões experimentais de soluções para testar hipóteses.</p>
-
-<h4>5. Testar</h4>
-<p>Avaliar os protótipos com usuários reais e refinar com base no feedback.</p>
-
-<h3>Aplicações práticas na educação tecnológica</h3>
-
-<ul>
-<li>Desenvolvimento de currículos mais envolventes</li>
-<li>Criação de interfaces de aprendizado intuitivas</li>
-<li>Métodos de avaliação mais humanizados</li>
-<li>Ambientes de aprendizado colaborativo</li>
-</ul>
-
-<h3>Benefícios observados</h3>
-
-<p>Instituições que implementaram Design Thinking relatam:</p>
-
-<ul>
-<li>Maior engajamento dos estudantes</li>
-<li>Redução nas taxas de evasão</li>
-<li>Melhoria na retenção de conhecimento</li>
-<li>Desenvolvimento de soft skills</li>
-</ul>
+        <div class="article-highlight bg-gradient-to-r from-green-500/10 to-blue-500/10 border border-green-500/20 rounded-lg p-6 my-6">
+          <h4 class="text-green-300 font-semibold mb-3">🎯 Design Thinking na Escola Habilidade</h4>
+          <p class="text-zinc-300">Aplicamos metodologias de Design Thinking em nossos cursos para criar experiências de aprendizado mais engajantes e eficazes. Venha descobrir como essa abordagem pode transformar sua jornada educacional.</p>
+        </div>
+        
+      </div>
     `,
     author: { name: 'Escola Habilidade', avatar: '/assets/avatars/default.jpg' },
     category: mockCategories[1], // Educação
@@ -294,87 +345,191 @@ const mockPosts = [
     slug: 'tendencias-tecnologicas-2024',
     excerpt: 'As principais tecnologias que vão dominar o mercado este ano.',
     content: `
-<h2>As tecnologias que estão moldando o futuro digital</h2>
+      <div class="article-content space-y-8">
+        
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-4 mt-0">As tecnologias que estão moldando o futuro digital</h2>
+          <p class="text-zinc-300 leading-relaxed mb-6 text-lg">Inteligência Artificial, Machine Learning, blockchain e outras tecnologias estão revolucionando a forma como vivemos e trabalhamos.</p>
+        </div>
 
-<p>Inteligência Artificial, Machine Learning, blockchain e outras tecnologias estão revolucionando a forma como vivemos e trabalhamos.</p>
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-4">1. Inteligência Artificial Generativa</h3>
+          <p class="text-zinc-300 leading-relaxed mb-4">2024 marca o ano da democratização da IA. Ferramentas como ChatGPT, Claude e Gemini estão transformando:</p>
+          
+          <ul class="space-y-3 mb-6">
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Produção de conteúdo</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Desenvolvimento de software</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Atendimento ao cliente</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Análise de dados</span>
+            </li>
+          </ul>
+        </div>
 
-<h3>1. Inteligência Artificial Generativa</h3>
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-4">2. Computação Edge</h3>
+          <p class="text-zinc-300 leading-relaxed mb-4">O processamento mais próximo do usuário final oferece:</p>
+          
+          <ul class="space-y-3 mb-6">
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Menor latência</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Maior privacidade dos dados</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Redução no consumo de banda</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Melhor performance em IoT</span>
+            </li>
+          </ul>
+        </div>
 
-<p>2024 marca o ano da democratização da IA. Ferramentas como ChatGPT, Claude e Gemini estão transformando:</p>
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-4">3. Desenvolvimento Low-Code/No-Code</h3>
+          <p class="text-zinc-300 leading-relaxed mb-4">Plataformas que permitem criar aplicações sem programação tradicional:</p>
+          
+          <ul class="space-y-3 mb-6">
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Democratização do desenvolvimento</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Agilidade na prototipagem</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Redução de custos</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Foco na lógica de negócio</span>
+            </li>
+          </ul>
+        </div>
 
-<ul>
-<li>Produção de conteúdo</li>
-<li>Desenvolvimento de software</li>
-<li>Atendimento ao cliente</li>
-<li>Análise de dados</li>
-</ul>
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-4">4. Blockchain e Web3</h3>
+          <p class="text-zinc-300 leading-relaxed mb-4">Além de criptomoedas, blockchain oferece:</p>
+          
+          <ul class="space-y-3 mb-6">
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Contratos inteligentes</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Supply chain transparente</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Identidade digital descentralizada</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">NFTs e ativos digitais</span>
+            </li>
+          </ul>
+        </div>
 
-<h3>2. Computação Edge</h3>
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-4">5. Computação Quântica</h3>
+          <p class="text-zinc-300 leading-relaxed mb-4">Embora ainda emergente, promete revolucionar:</p>
+          
+          <ul class="space-y-3 mb-6">
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Criptografia</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Simulações complexas</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Inteligência artificial</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Pesquisa farmacêutica</span>
+            </li>
+          </ul>
+        </div>
 
-<p>O processamento mais próximo do usuário final oferece:</p>
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-4">Impacto no mercado de trabalho</h3>
+          <p class="text-zinc-300 leading-relaxed mb-4">Essas tendências criam oportunidades em:</p>
+          
+          <ul class="space-y-3 mb-6">
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Especialistas em IA e Machine Learning</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Desenvolvedores de aplicações edge</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Arquitetos de soluções blockchain</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Cientistas de dados quânticos</span>
+            </li>
+          </ul>
+        </div>
 
-<ul>
-<li>Menor latência</li>
-<li>Maior privacidade dos dados</li>
-<li>Redução no consumo de banda</li>
-<li>Melhor performance em IoT</li>
-</ul>
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-4">Como se preparar</h3>
+          <p class="text-zinc-300 leading-relaxed mb-4">Para profissionais de tecnologia:</p>
+          
+          <ol class="space-y-3 mb-6 counter-reset: list-counter">
+            <li class="flex items-start counter-increment: list-counter">
+              <span class="bg-blue-500 text-white text-sm font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">1</span>
+              <span class="text-zinc-300 leading-relaxed">Mantenha-se atualizado com cursos online</span>
+            </li>
+            <li class="flex items-start counter-increment: list-counter">
+              <span class="bg-blue-500 text-white text-sm font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">2</span>
+              <span class="text-zinc-300 leading-relaxed">Pratique com projetos pessoais</span>
+            </li>
+            <li class="flex items-start counter-increment: list-counter">
+              <span class="bg-blue-500 text-white text-sm font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">3</span>
+              <span class="text-zinc-300 leading-relaxed">Participe de comunidades técnicas</span>
+            </li>
+            <li class="flex items-start counter-increment: list-counter">
+              <span class="bg-blue-500 text-white text-sm font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">4</span>
+              <span class="text-zinc-300 leading-relaxed">Desenvolva soft skills</span>
+            </li>
+            <li class="flex items-start counter-increment: list-counter">
+              <span class="bg-blue-500 text-white text-sm font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">5</span>
+              <span class="text-zinc-300 leading-relaxed">Considere certificações relevantes</span>
+            </li>
+          </ol>
+        </div>
 
-<h3>3. Desenvolvimento Low-Code/No-Code</h3>
-
-<p>Plataformas que permitem criar aplicações sem programação tradicional:</p>
-
-<ul>
-<li>Democratização do desenvolvimento</li>
-<li>Agilidade na prototipagem</li>
-<li>Redução de custos</li>
-<li>Foco na lógica de negócio</li>
-</ul>
-
-<h3>4. Blockchain e Web3</h3>
-
-<p>Além de criptomoedas, blockchain oferece:</p>
-
-<ul>
-<li>Contratos inteligentes</li>
-<li>Supply chain transparente</li>
-<li>Identidade digital descentralizada</li>
-<li>NFTs e ativos digitais</li>
-</ul>
-
-<h3>5. Computação Quântica</h3>
-
-<p>Embora ainda emergente, promete revolucionar:</p>
-
-<ul>
-<li>Criptografia</li>
-<li>Simulações complexas</li>
-<li>Inteligência artificial</li>
-<li>Pesquisa farmacêutica</li>
-</ul>
-
-<h3>Impacto no mercado de trabalho</h3>
-
-<p>Essas tendências criam oportunidades em:</p>
-
-<ul>
-<li>Especialistas em IA e Machine Learning</li>
-<li>Desenvolvedores de aplicações edge</li>
-<li>Arquitetos de soluções blockchain</li>
-<li>Cientistas de dados quânticos</li>
-</ul>
-
-<h3>Como se preparar</h3>
-
-<p>Para profissionais de tecnologia:</p>
-
-<ol>
-<li>Mantenha-se atualizado com cursos online</li>
-<li>Pratique com projetos pessoais</li>
-<li>Participe de comunidades técnicas</li>
-<li>Desenvolva soft skills</li>
-<li>Considere certificações relevantes</li>
-</ol>
+        <div class="article-highlight bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 rounded-lg p-6 my-6">
+          <h4 class="text-blue-300 font-semibold mb-3">🚀 Esteja Preparado para o Futuro</h4>
+          <p class="text-zinc-300">Na Escola Habilidade, mantemos nossos cursos sempre atualizados com as últimas tendências tecnológicas. Prepare-se para o futuro digital com conhecimento prático e aplicável no mercado.</p>
+        </div>
+        
+      </div>
     `,
     author: { name: 'Escola Habilidade', avatar: '/assets/avatars/default.jpg' },
     category: mockCategories[0], // Tecnologia
@@ -391,113 +546,229 @@ const mockPosts = [
     slug: 'construindo-carreira-solida-tech',
     excerpt: 'Estratégias essenciais para desenvolver uma carreira de sucesso na área tecnológica.',
     content: `
-<h2>O mercado de tecnologia oferece inúmeras oportunidades</h2>
+      <div class="article-content space-y-8">
+        
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-4 mt-0">O mercado de tecnologia oferece inúmeras oportunidades</h2>
+          <p class="text-zinc-300 leading-relaxed mb-6 text-lg">Saiba como se posicionar e crescer profissionalmente em uma das áreas mais dinâmicas do mercado atual.</p>
+        </div>
 
-<p>Saiba como se posicionar e crescer profissionalmente em uma das áreas mais dinâmicas do mercado atual.</p>
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-4">1. Definindo seu caminho</h3>
+          <p class="text-zinc-300 leading-relaxed mb-4">A área de tecnologia oferece diversos caminhos:</p>
+          
+          <div class="space-y-6">
+            <div class="article-highlight bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 rounded-lg p-6">
+              <h4 class="text-blue-300 font-semibold mb-3">Desenvolvimento</h4>
+              <ul class="space-y-2">
+                <li class="text-zinc-300 leading-relaxed">• Frontend (React, Vue, Angular)</li>
+                <li class="text-zinc-300 leading-relaxed">• Backend (Node, Python, Java)</li>
+                <li class="text-zinc-300 leading-relaxed">• Mobile (React Native, Flutter)</li>
+                <li class="text-zinc-300 leading-relaxed">• Full Stack</li>
+              </ul>
+            </div>
+            
+            <div class="article-highlight bg-gradient-to-r from-green-500/10 to-blue-500/10 border border-green-500/20 rounded-lg p-6">
+              <h4 class="text-green-300 font-semibold mb-3">Dados</h4>
+              <ul class="space-y-2">
+                <li class="text-zinc-300 leading-relaxed">• Data Science</li>
+                <li class="text-zinc-300 leading-relaxed">• Data Engineering</li>
+                <li class="text-zinc-300 leading-relaxed">• Business Intelligence</li>
+                <li class="text-zinc-300 leading-relaxed">• Machine Learning Engineer</li>
+              </ul>
+            </div>
+            
+            <div class="article-highlight bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/20 rounded-lg p-6">
+              <h4 class="text-purple-300 font-semibold mb-3">Infraestrutura</h4>
+              <ul class="space-y-2">
+                <li class="text-zinc-300 leading-relaxed">• DevOps</li>
+                <li class="text-zinc-300 leading-relaxed">• Cloud Engineer</li>
+                <li class="text-zinc-300 leading-relaxed">• Site Reliability Engineer</li>
+                <li class="text-zinc-300 leading-relaxed">• Cybersecurity</li>
+              </ul>
+            </div>
+          </div>
+        </div>
 
-<h3>1. Definindo seu caminho</h3>
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-4">2. Desenvolvendo habilidades técnicas</h3>
+          <p class="text-zinc-300 leading-relaxed mb-4">Competências fundamentais independente da área:</p>
+          
+          <ul class="space-y-3 mb-6">
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Versionamento com Git</strong> - Controle de versão é essencial</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Metodologias ágeis</strong> - Scrum, Kanban e outras</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Testes automatizados</strong> - Garantia de qualidade</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Arquitetura de software</strong> - Design patterns e estruturas</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Bancos de dados</strong> - SQL e NoSQL</span>
+            </li>
+          </ul>
+        </div>
 
-<p>A área de tecnologia oferece diversos caminhos:</p>
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-4">3. Soft skills essenciais</h3>
+          <p class="text-zinc-300 leading-relaxed mb-4">Habilidades comportamentais são diferenciais:</p>
+          
+          <ul class="space-y-3 mb-6">
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Comunicação clara e objetiva</strong> - Explicar conceitos técnicos</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Trabalho em equipe</strong> - Colaboração eficaz</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Resolução de problemas</strong> - Pensamento crítico</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Aprendizado contínuo</strong> - Adaptabilidade</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Gestão de tempo</strong> - Organização e produtividade</span>
+            </li>
+          </ul>
+        </div>
 
-<h4>Desenvolvimento</h4>
-<ul>
-<li>Frontend (React, Vue, Angular)</li>
-<li>Backend (Node, Python, Java)</li>
-<li>Mobile (React Native, Flutter)</li>
-<li>Full Stack</li>
-</ul>
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-4">4. Construindo um portfólio impressionante</h3>
+          <p class="text-zinc-300 leading-relaxed mb-4">Seu portfólio deve demonstrar:</p>
+          
+          <ul class="space-y-3 mb-6">
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-purple-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Projetos completos e funcionais</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-purple-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Código limpo e bem documentado</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-purple-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Diversidade de tecnologias</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-purple-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Evolução ao longo do tempo</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-purple-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Contribuições open source</span>
+            </li>
+          </ul>
+        </div>
 
-<h4>Dados</h4>
-<ul>
-<li>Data Science</li>
-<li>Data Engineering</li>
-<li>Business Intelligence</li>
-<li>Machine Learning Engineer</li>
-</ul>
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-4">5. Networking estratégico</h3>
+          <p class="text-zinc-300 leading-relaxed mb-4">Construa relacionamentos profissionais através de:</p>
+          
+          <ul class="space-y-3 mb-6">
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-orange-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">LinkedIn ativo e otimizado</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-orange-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Participação em eventos tech</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-orange-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Contribuições para comunidades</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-orange-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Mentoria (dar e receber)</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-orange-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Palestras e workshops</span>
+            </li>
+          </ul>
+        </div>
 
-<h4>Infraestrutura</h4>
-<ul>
-<li>DevOps</li>
-<li>Cloud Engineer</li>
-<li>Site Reliability Engineer</li>
-<li>Cybersecurity</li>
-</ul>
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-4">6. Planejamento de carreira</h3>
+          <p class="text-zinc-300 leading-relaxed mb-4">Estabeleça metas claras:</p>
+          
+          <ol class="space-y-3 mb-6 counter-reset: list-counter">
+            <li class="flex items-start counter-increment: list-counter">
+              <span class="bg-blue-500 text-white text-sm font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">1</span>
+              <span class="text-zinc-300 leading-relaxed">Defina onde quer estar em 1, 3 e 5 anos</span>
+            </li>
+            <li class="flex items-start counter-increment: list-counter">
+              <span class="bg-blue-500 text-white text-sm font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">2</span>
+              <span class="text-zinc-300 leading-relaxed">Identifique gaps de conhecimento</span>
+            </li>
+            <li class="flex items-start counter-increment: list-counter">
+              <span class="bg-blue-500 text-white text-sm font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">3</span>
+              <span class="text-zinc-300 leading-relaxed">Crie um plano de estudos estruturado</span>
+            </li>
+            <li class="flex items-start counter-increment: list-counter">
+              <span class="bg-blue-500 text-white text-sm font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">4</span>
+              <span class="text-zinc-300 leading-relaxed">Busque feedback regular</span>
+            </li>
+            <li class="flex items-start counter-increment: list-counter">
+              <span class="bg-blue-500 text-white text-sm font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">5</span>
+              <span class="text-zinc-300 leading-relaxed">Ajuste o plano conforme necessário</span>
+            </li>
+          </ol>
+        </div>
 
-<h3>2. Desenvolvendo habilidades técnicas</h3>
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-4">7. Negociação salarial</h3>
+          <p class="text-zinc-300 leading-relaxed mb-4">Dicas para negociar melhor:</p>
+          
+          <ul class="space-y-3 mb-6">
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Pesquise salários de mercado</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Documente suas conquistas</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Prepare argumentos baseados em valor</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Considere benefícios além do salário</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Pratique a negociação</span>
+            </li>
+          </ul>
+        </div>
 
-<p>Competências fundamentais independente da área:</p>
-
-<ul>
-<li>Versionamento com Git</li>
-<li>Metodologias ágeis</li>
-<li>Testes automatizados</li>
-<li>Arquitetura de software</li>
-<li>Bancos de dados</li>
-</ul>
-
-<h3>3. Soft skills essenciais</h3>
-
-<p>Habilidades comportamentais são diferenciais:</p>
-
-<ul>
-<li>Comunicação clara e objetiva</li>
-<li>Trabalho em equipe</li>
-<li>Resolução de problemas</li>
-<li>Aprendizado contínuo</li>
-<li>Gestão de tempo</li>
-</ul>
-
-<h3>4. Construindo um portfólio impressionante</h3>
-
-<p>Seu portfólio deve demonstrar:</p>
-
-<ul>
-<li>Projetos completos e funcionais</li>
-<li>Código limpo e documentado</li>
-<li>Diferentes tecnologias</li>
-<li>Evolução ao longo do tempo</li>
-<li>Contribuições open source</li>
-</ul>
-
-<h3>5. Networking estratégico</h3>
-
-<p>Construa relacionamentos profissionais através de:</p>
-
-<ul>
-<li>LinkedIn ativo e otimizado</li>
-<li>Participação em eventos tech</li>
-<li>Contribuições para comunidades</li>
-<li>Mentoria (dar e receber)</li>
-<li>Palestras e workshops</li>
-</ul>
-
-<h3>6. Planejamento de carreira</h3>
-
-<p>Estabeleça metas claras:</p>
-
-<ol>
-<li>Defina onde quer estar em 1, 3 e 5 anos</li>
-<li>Identifique gaps de conhecimento</li>
-<li>Crie um plano de estudos estruturado</li>
-<li>Busque feedback regular</li>
-<li>Ajuste o plano conforme necessário</li>
-</ol>
-
-<h3>7. Negociação salarial</h3>
-
-<p>Dicas para negociar melhor:</p>
-
-<ul>
-<li>Pesquise salários de mercado</li>
-<li>Documente suas conquistas</li>
-<li>Prepare argumentos baseados em valor</li>
-<li>Considere benefícios além do salário</li>
-<li>Pratique a negociação</li>
-</ul>
-
-<h3>Conclusão</h3>
-
-<p>Uma carreira sólida em tech requer planejamento, dedicação e adaptabilidade. O mercado está em constante evolução, mas as oportunidades são abundantes para quem se prepara adequadamente.</p>
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-4">Conclusão</h3>
+          <p class="text-zinc-300 leading-relaxed mb-4">Uma carreira sólida em tech requer planejamento, dedicação e adaptabilidade. O mercado está em constante evolução, mas as oportunidades são abundantes para quem se prepara adequadamente.</p>
+          
+          <div class="article-highlight bg-gradient-to-r from-green-500/10 to-blue-500/10 border border-green-500/20 rounded-lg p-6 my-6">
+            <h4 class="text-green-300 font-semibold mb-3">💼 Acelere sua Carreira Tech</h4>
+            <p class="text-zinc-300">Na Escola Habilidade, oferecemos programas focados no desenvolvimento de carreira em tecnologia. Desde habilidades técnicas até preparação para entrevistas e networking estratégico.</p>
+          </div>
+        </div>
+        
+      </div>
     `,
     author: { name: 'Escola Habilidade', avatar: '/assets/avatars/default.jpg' },
     category: mockCategories[2], // Carreira
@@ -514,138 +785,267 @@ const mockPosts = [
     slug: 'principios-fundamentais-ux-ui-design',
     excerpt: 'Entenda os conceitos básicos que todo designer deve conhecer.',
     content: `
-<h2>UX/UI Design vai muito além de fazer interfaces bonitas</h2>
+      <div class="article-content space-y-8">
+        
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-4 mt-0">UX/UI Design vai muito além de fazer interfaces bonitas</h2>
+          <p class="text-zinc-300 leading-relaxed mb-6 text-lg">Conheça os princípios que criam experiências memoráveis e funcionais para os usuários.</p>
+        </div>
 
-<p>Conheça os princípios que criam experiências memoráveis e funcionais para os usuários.</p>
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-4">Diferença entre UX e UI</h3>
+          
+          <div class="space-y-6">
+            <div class="article-highlight bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 rounded-lg p-6">
+              <h4 class="text-blue-300 font-semibold mb-3">UX Design (User Experience)</h4>
+              <p class="text-zinc-300 mb-3">Foca na experiência completa do usuário:</p>
+              <ul class="space-y-2">
+                <li class="text-zinc-300 leading-relaxed">• Pesquisa de usuário</li>
+                <li class="text-zinc-300 leading-relaxed">• Arquitetura da informação</li>
+                <li class="text-zinc-300 leading-relaxed">• Wireframes e protótipos</li>
+                <li class="text-zinc-300 leading-relaxed">• Testes de usabilidade</li>
+              </ul>
+            </div>
+            
+            <div class="article-highlight bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/20 rounded-lg p-6">
+              <h4 class="text-purple-300 font-semibold mb-3">UI Design (User Interface)</h4>
+              <p class="text-zinc-300 mb-3">Concentra-se nos elementos visuais:</p>
+              <ul class="space-y-2">
+                <li class="text-zinc-300 leading-relaxed">• Layout e composição</li>
+                <li class="text-zinc-300 leading-relaxed">• Tipografia</li>
+                <li class="text-zinc-300 leading-relaxed">• Cores e contrastes</li>
+                <li class="text-zinc-300 leading-relaxed">• Iconografia</li>
+              </ul>
+            </div>
+          </div>
+        </div>
 
-<h3>Diferença entre UX e UI</h3>
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-4">Princípios fundamentais de UX</h3>
+          
+          <div class="space-y-6">
+            <div class="article-highlight bg-gradient-to-r from-green-500/10 to-blue-500/10 border border-green-500/20 rounded-lg p-6">
+              <h4 class="text-green-300 font-semibold mb-3">1. Usabilidade</h4>
+              <p class="text-zinc-300 mb-3">A interface deve ser:</p>
+              <ul class="space-y-2">
+                <li class="text-zinc-300 leading-relaxed">• Fácil de aprender</li>
+                <li class="text-zinc-300 leading-relaxed">• Eficiente de usar</li>
+                <li class="text-zinc-300 leading-relaxed">• Fácil de lembrar</li>
+                <li class="text-zinc-300 leading-relaxed">• Livre de erros</li>
+                <li class="text-zinc-300 leading-relaxed">• Satisfatória de usar</li>
+              </ul>
+            </div>
+            
+            <div class="article-highlight bg-gradient-to-r from-orange-500/10 to-red-500/10 border border-orange-500/20 rounded-lg p-6">
+              <h4 class="text-orange-300 font-semibold mb-3">2. Acessibilidade</h4>
+              <p class="text-zinc-300 mb-3">Design inclusivo para todos os usuários:</p>
+              <ul class="space-y-2">
+                <li class="text-zinc-300 leading-relaxed">• Contraste adequado de cores</li>
+                <li class="text-zinc-300 leading-relaxed">• Navegação por teclado</li>
+                <li class="text-zinc-300 leading-relaxed">• Textos alternativos para imagens</li>
+                <li class="text-zinc-300 leading-relaxed">• Tamanhos de fonte legíveis</li>
+              </ul>
+            </div>
+            
+            <div class="article-highlight bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/20 rounded-lg p-6">
+              <h4 class="text-cyan-300 font-semibold mb-3">3. Consistência</h4>
+              <p class="text-zinc-300 mb-3">Manter padrões ao longo da experiência:</p>
+              <ul class="space-y-2">
+                <li class="text-zinc-300 leading-relaxed">• Visual consistency (cores, tipografia)</li>
+                <li class="text-zinc-300 leading-relaxed">• Functional consistency (comportamentos)</li>
+                <li class="text-zinc-300 leading-relaxed">• External consistency (padrões do mercado)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
 
-<h4>UX Design (User Experience)</h4>
-<p>Foca na experiência completa do usuário:</p>
-<ul>
-<li>Pesquisa de usuário</li>
-<li>Arquitetura da informação</li>
-<li>Wireframes e protótipos</li>
-<li>Testes de usabilidade</li>
-</ul>
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-4">Princípios fundamentais de UI</h3>
+          
+          <div class="space-y-4">
+            <div>
+              <h4 class="text-lg font-medium text-white mb-2">1. Hierarquia Visual</h4>
+              <p class="text-zinc-300 leading-relaxed mb-3">Guiar o olhar do usuário:</p>
+              <ul class="space-y-2 mb-4">
+                <li class="flex items-start">
+                  <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                  <span class="text-zinc-300 leading-relaxed">Tamanho e peso da tipografia</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                  <span class="text-zinc-300 leading-relaxed">Cores e contrastes</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                  <span class="text-zinc-300 leading-relaxed">Espaçamento e proximidade</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                  <span class="text-zinc-300 leading-relaxed">Posicionamento estratégico</span>
+                </li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 class="text-lg font-medium text-white mb-2">2. Lei de Fitts</h4>
+              <p class="text-zinc-300 leading-relaxed mb-3">Elementos mais usados devem ser:</p>
+              <ul class="space-y-2 mb-4">
+                <li class="flex items-start">
+                  <span class="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                  <span class="text-zinc-300 leading-relaxed">Maiores</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                  <span class="text-zinc-300 leading-relaxed">Mais próximos</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                  <span class="text-zinc-300 leading-relaxed">Fáceis de acertar</span>
+                </li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 class="text-lg font-medium text-white mb-2">3. Regra dos 8px</h4>
+              <p class="text-zinc-300 leading-relaxed mb-3">Sistema de grid baseado em múltiplos de 8:</p>
+              <ul class="space-y-2 mb-4">
+                <li class="flex items-start">
+                  <span class="w-2 h-2 bg-purple-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                  <span class="text-zinc-300 leading-relaxed">Consistência visual</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="w-2 h-2 bg-purple-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                  <span class="text-zinc-300 leading-relaxed">Alinhamento perfeito</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="w-2 h-2 bg-purple-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                  <span class="text-zinc-300 leading-relaxed">Escalabilidade</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
 
-<h4>UI Design (User Interface)</h4>
-<p>Concentra-se nos elementos visuais:</p>
-<ul>
-<li>Layout e composição</li>
-<li>Tipografia</li>
-<li>Cores e contrastes</li>
-<li>Iconografia</li>
-</ul>
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-4">Processo de Design</h3>
+          
+          <ol class="space-y-3 mb-6 counter-reset: list-counter">
+            <li class="flex items-start counter-increment: list-counter">
+              <span class="bg-blue-500 text-white text-sm font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">1</span>
+              <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Research</strong> - Entender usuários e contexto</span>
+            </li>
+            <li class="flex items-start counter-increment: list-counter">
+              <span class="bg-blue-500 text-white text-sm font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">2</span>
+              <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Define</strong> - Definir problemas e objetivos</span>
+            </li>
+            <li class="flex items-start counter-increment: list-counter">
+              <span class="bg-blue-500 text-white text-sm font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">3</span>
+              <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Ideate</strong> - Gerar soluções criativas</span>
+            </li>
+            <li class="flex items-start counter-increment: list-counter">
+              <span class="bg-blue-500 text-white text-sm font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">4</span>
+              <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Prototype</strong> - Criar versões testáveis</span>
+            </li>
+            <li class="flex items-start counter-increment: list-counter">
+              <span class="bg-blue-500 text-white text-sm font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">5</span>
+              <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Test</strong> - Validar com usuários reais</span>
+            </li>
+          </ol>
+        </div>
 
-<h3>Princípios fundamentais de UX</h3>
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-4">Ferramentas essenciais</h3>
+          
+          <div class="space-y-6">
+            <div>
+              <h4 class="text-lg font-medium text-white mb-2">Design</h4>
+              <ul class="space-y-2">
+                <li class="text-zinc-300 leading-relaxed">• Figma</li>
+                <li class="text-zinc-300 leading-relaxed">• Adobe XD</li>
+                <li class="text-zinc-300 leading-relaxed">• Sketch</li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 class="text-lg font-medium text-white mb-2">Prototipagem</h4>
+              <ul class="space-y-2">
+                <li class="text-zinc-300 leading-relaxed">• InVision</li>
+                <li class="text-zinc-300 leading-relaxed">• Principle</li>
+                <li class="text-zinc-300 leading-relaxed">• Framer</li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 class="text-lg font-medium text-white mb-2">Pesquisa</h4>
+              <ul class="space-y-2">
+                <li class="text-zinc-300 leading-relaxed">• Hotjar</li>
+                <li class="text-zinc-300 leading-relaxed">• Google Analytics</li>
+                <li class="text-zinc-300 leading-relaxed">• Maze</li>
+              </ul>
+            </div>
+          </div>
+        </div>
 
-<h4>1. Usabilidade</h4>
-<p>A interface deve ser:</p>
-<ul>
-<li>Fácil de aprender</li>
-<li>Eficiente de usar</li>
-<li>Fácil de lembrar</li>
-<li>Livre de erros</li>
-<li>Satisfatória de usar</li>
-</ul>
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-4">Tendências atuais</h3>
+          
+          <ul class="space-y-3 mb-6">
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-pink-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Dark mode</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-pink-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Microinterações</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-pink-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Design system</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-pink-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Voice interfaces</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-pink-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">AR/VR experiences</span>
+            </li>
+          </ul>
+        </div>
 
-<h4>2. Acessibilidade</h4>
-<p>Design inclusivo para todos os usuários:</p>
-<ul>
-<li>Contraste adequado de cores</li>
-<li>Navegação por teclado</li>
-<li>Textos alternativos para imagens</li>
-<li>Tamanhos de fonte legíveis</li>
-</ul>
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-4">Como começar na área</h3>
+          
+          <ol class="space-y-3 mb-6 counter-reset: list-counter">
+            <li class="flex items-start counter-increment: list-counter">
+              <span class="bg-pink-500 text-white text-sm font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">1</span>
+              <span class="text-zinc-300 leading-relaxed">Estude os fundamentos de design</span>
+            </li>
+            <li class="flex items-start counter-increment: list-counter">
+              <span class="bg-pink-500 text-white text-sm font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">2</span>
+              <span class="text-zinc-300 leading-relaxed">Pratique com projetos pessoais</span>
+            </li>
+            <li class="flex items-start counter-increment: list-counter">
+              <span class="bg-pink-500 text-white text-sm font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">3</span>
+              <span class="text-zinc-300 leading-relaxed">Construa um portfólio diversificado</span>
+            </li>
+            <li class="flex items-start counter-increment: list-counter">
+              <span class="bg-pink-500 text-white text-sm font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">4</span>
+              <span class="text-zinc-300 leading-relaxed">Busque feedback da comunidade</span>
+            </li>
+            <li class="flex items-start counter-increment: list-counter">
+              <span class="bg-pink-500 text-white text-sm font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">5</span>
+              <span class="text-zinc-300 leading-relaxed">Mantenha-se atualizado com tendências</span>
+            </li>
+          </ol>
+        </div>
 
-<h4>3. Consistência</h4>
-<p>Manter padrões ao longo da experiência:</p>
-<ul>
-<li>Visual consistency (cores, tipografia)</li>
-<li>Functional consistency (comportamentos)</li>
-<li>External consistency (padrões do mercado)</li>
-</ul>
-
-<h3>Princípios fundamentais de UI</h3>
-
-<h4>1. Hierarquia Visual</h4>
-<p>Guiar o olhar do usuário:</p>
-<ul>
-<li>Tamanho e peso da tipografia</li>
-<li>Cores e contrastes</li>
-<li>Espaçamento e proximidade</li>
-<li>Posicionamento estratégico</li>
-</ul>
-
-<h4>2. Lei de Fitts</h4>
-<p>Elementos mais usados devem ser:</p>
-<ul>
-<li>Maiores</li>
-<li>Mais próximos</li>
-<li>Fáceis de acertar</li>
-</ul>
-
-<h4>3. Regra dos 8px</h4>
-<p>Sistema de grid baseado em múltiplos de 8:</p>
-<ul>
-<li>Consistência visual</li>
-<li>Alinhamento perfeito</li>
-<li>Escalabilidade</li>
-</ul>
-
-<h3>Processo de Design</h3>
-
-<ol>
-<li><strong>Research</strong> - Entender usuários e contexto</li>
-<li><strong>Define</strong> - Definir problemas e objetivos</li>
-<li><strong>Ideate</strong> - Gerar soluções criativas</li>
-<li><strong>Prototype</strong> - Criar versões testáveis</li>
-<li><strong>Test</strong> - Validar com usuários reais</li>
-</ol>
-
-<h3>Ferramentas essenciais</h3>
-
-<h4>Design</h4>
-<ul>
-<li>Figma</li>
-<li>Adobe XD</li>
-<li>Sketch</li>
-</ul>
-
-<h4>Prototipagem</h4>
-<ul>
-<li>InVision</li>
-<li>Principle</li>
-<li>Framer</li>
-</ul>
-
-<h4>Pesquisa</h4>
-<ul>
-<li>Hotjar</li>
-<li>Google Analytics</li>
-<li>Maze</li>
-</ul>
-
-<h3>Tendências atuais</h3>
-
-<ul>
-<li>Dark mode</li>
-<li>Microinterações</li>
-<li>Design system</li>
-<li>Voice interfaces</li>
-<li>AR/VR experiences</li>
-</ul>
-
-<h3>Como começar na área</h3>
-
-<ol>
-<li>Estude os fundamentos de design</li>
-<li>Pratique com projetos pessoais</li>
-<li>Construa um portfólio diversificado</li>
-<li>Busque feedback da comunidade</li>
-<li>Mantenha-se atualizado com tendências</li>
-</ol>
+        <div class="article-highlight bg-gradient-to-r from-pink-500/10 to-purple-500/10 border border-pink-500/20 rounded-lg p-6 my-6">
+          <h4 class="text-pink-300 font-semibold mb-3">🎨 Design que Transforma</h4>
+          <p class="text-zinc-300">Na Escola Habilidade, ensinamos UX/UI Design com foco prático e projetos reais. Desenvolva habilidades que criam experiências digitais memoráveis e centradas no usuário.</p>
+        </div>
+        
+      </div>
     `,
     author: { name: 'Escola Habilidade', avatar: '/assets/avatars/default.jpg' },
     category: mockCategories[4], // Design
@@ -662,24 +1062,30 @@ const mockPosts = [
     slug: 'javascript-moderno-es2024-novidades',
     excerpt: 'Explore as mais recentes funcionalidades do JavaScript e como usá-las.',
     content: `
-<h2>O JavaScript continua evoluindo</h2>
+      <div class="article-content space-y-8">
+        
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-4 mt-0">O JavaScript continua evoluindo</h2>
+          <p class="text-zinc-300 leading-relaxed mb-6 text-lg">Descubra as novidades do ES2024 e como elas podem melhorar seu código e produtividade.</p>
+        </div>
 
-<p>Descubra as novidades do ES2024 e como elas podem melhorar seu código e produtividade.</p>
-
-<h3>Principais novidades do ES2024</h3>
-
-<h4>1. Array.prototype.with()</h4>
-<p>Método imutável para modificar arrays:</p>
-
-<pre><code>const arr = [1, 2, 3, 4, 5];
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-4">Principais novidades do ES2024</h3>
+          
+          <div class="space-y-6">
+            <div class="article-highlight bg-gradient-to-r from-yellow-500/10 to-orange-500/10 border border-yellow-500/20 rounded-lg p-6">
+              <h4 class="text-yellow-300 font-semibold mb-3">1. Array.prototype.with()</h4>
+              <p class="text-zinc-300 mb-3">Método imutável para modificar arrays:</p>
+              <pre class="bg-zinc-900 border border-zinc-700 rounded-lg p-4 overflow-x-auto"><code class="text-zinc-300">const arr = [1, 2, 3, 4, 5];
 const newArr = arr.with(2, 'three');
 console.log(newArr); // [1, 2, 'three', 4, 5]
 console.log(arr); // [1, 2, 3, 4, 5] (original inalterado)</code></pre>
-
-<h4>2. toSorted(), toReversed(), toSpliced()</h4>
-<p>Versões imutáveis dos métodos clássicos:</p>
-
-<pre><code>const numbers = [3, 1, 4, 1, 5];
+            </div>
+            
+            <div class="article-highlight bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border border-blue-500/20 rounded-lg p-6">
+              <h4 class="text-blue-300 font-semibold mb-3">2. toSorted(), toReversed(), toSpliced()</h4>
+              <p class="text-zinc-300 mb-3">Versões imutáveis dos métodos clássicos:</p>
+              <pre class="bg-zinc-900 border border-zinc-700 rounded-lg p-4 overflow-x-auto"><code class="text-zinc-300">const numbers = [3, 1, 4, 1, 5];
 
 // Versões mutáveis (antigas)
 numbers.sort(); // modifica o array original
@@ -687,11 +1093,12 @@ numbers.sort(); // modifica o array original
 // Versões imutáveis (novas)
 const sorted = numbers.toSorted(); // retorna novo array
 const reversed = numbers.toReversed(); // retorna novo array</code></pre>
-
-<h4>3. Array.prototype.findLast() e findLastIndex()</h4>
-<p>Busca elementos a partir do final do array:</p>
-
-<pre><code>const users = [
+            </div>
+            
+            <div class="article-highlight bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-500/20 rounded-lg p-6">
+              <h4 class="text-green-300 font-semibold mb-3">3. Array.prototype.findLast() e findLastIndex()</h4>
+              <p class="text-zinc-300 mb-3">Busca elementos a partir do final do array:</p>
+              <pre class="bg-zinc-900 border border-zinc-700 rounded-lg p-4 overflow-x-auto"><code class="text-zinc-300">const users = [
   { id: 1, active: true },
   { id: 2, active: false },
   { id: 3, active: true }
@@ -699,11 +1106,12 @@ const reversed = numbers.toReversed(); // retorna novo array</code></pre>
 
 const lastActive = users.findLast(user => user.active);
 console.log(lastActive); // { id: 3, active: true }</code></pre>
-
-<h4>4. Object.groupBy()</h4>
-<p>Agrupa elementos de array por critério:</p>
-
-<pre><code>const products = [
+            </div>
+            
+            <div class="article-highlight bg-gradient-to-r from-purple-500/10 to-violet-500/10 border border-purple-500/20 rounded-lg p-6">
+              <h4 class="text-purple-300 font-semibold mb-3">4. Object.groupBy()</h4>
+              <p class="text-zinc-300 mb-3">Agrupa elementos de array por critério:</p>
+              <pre class="bg-zinc-900 border border-zinc-700 rounded-lg p-4 overflow-x-auto"><code class="text-zinc-300">const products = [
   { name: 'Laptop', category: 'Electronics' },
   { name: 'Shirt', category: 'Clothing' },
   { name: 'Phone', category: 'Electronics' }
@@ -715,35 +1123,45 @@ console.log(grouped);
 //   Electronics: [{ name: 'Laptop', category: 'Electronics' }, ...],
 //   Clothing: [{ name: 'Shirt', category: 'Clothing' }]
 // }</code></pre>
+            </div>
+          </div>
+        </div>
 
-<h3>Melhorias em Pattern Matching</h3>
-
-<h4>Switch Expressions</h4>
-<p>Sintaxe mais concisa para switch:</p>
-
-<pre><code>const getDayType = (day) => switch (day) {
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-4">Melhorias em Pattern Matching</h3>
+          
+          <div class="article-highlight bg-gradient-to-r from-indigo-500/10 to-purple-500/10 border border-indigo-500/20 rounded-lg p-6">
+            <h4 class="text-indigo-300 font-semibold mb-3">Switch Expressions</h4>
+            <p class="text-zinc-300 mb-3">Sintaxe mais concisa para switch:</p>
+            <pre class="bg-zinc-900 border border-zinc-700 rounded-lg p-4 overflow-x-auto"><code class="text-zinc-300">const getDayType = (day) => switch (day) {
   case 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday' => 'Weekday'
   case 'Saturday', 'Sunday' => 'Weekend'
   default => 'Invalid day'
 };</code></pre>
+          </div>
+        </div>
 
-<h3>Async/Await Enhancements</h3>
-
-<h4>Top-level await</h4>
-<p>Uso de await no nível superior dos módulos:</p>
-
-<pre><code>// Agora é possível fazer isso diretamente em módulos
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-4">Async/Await Enhancements</h3>
+          
+          <div class="article-highlight bg-gradient-to-r from-teal-500/10 to-cyan-500/10 border border-teal-500/20 rounded-lg p-6">
+            <h4 class="text-teal-300 font-semibold mb-3">Top-level await</h4>
+            <p class="text-zinc-300 mb-3">Uso de await no nível superior dos módulos:</p>
+            <pre class="bg-zinc-900 border border-zinc-700 rounded-lg p-4 overflow-x-auto"><code class="text-zinc-300">// Agora é possível fazer isso diretamente em módulos
 const data = await fetch('/api/data');
 const result = await data.json();
 
 export { result };</code></pre>
+          </div>
+        </div>
 
-<h3>Novos operadores</h3>
-
-<h4>Pipeline Operator (|>)</h4>
-<p>Melhora a legibilidade de operações encadeadas:</p>
-
-<pre><code>// Ao invés de:
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-4">Novos operadores</h3>
+          
+          <div class="article-highlight bg-gradient-to-r from-rose-500/10 to-pink-500/10 border border-rose-500/20 rounded-lg p-6">
+            <h4 class="text-rose-300 font-semibold mb-3">Pipeline Operator (|>)</h4>
+            <p class="text-zinc-300 mb-3">Melhora a legibilidade de operações encadeadas:</p>
+            <pre class="bg-zinc-900 border border-zinc-700 rounded-lg p-4 overflow-x-auto"><code class="text-zinc-300">// Ao invés de:
 const result = doSomething(transform(validate(input)));
 
 // Agora podemos escrever:
@@ -751,66 +1169,142 @@ const result = input
   |> validate
   |> transform
   |> doSomething;</code></pre>
+          </div>
+        </div>
 
-<h3>Melhorias em Performance</h3>
-
-<h4>1. Shared Memory</h4>
-<p>SharedArrayBuffer para comunicação entre workers:</p>
-
-<pre><code>// Worker principal
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-4">Melhorias em Performance</h3>
+          
+          <div class="space-y-4">
+            <div>
+              <h4 class="text-lg font-medium text-white mb-2">1. Shared Memory</h4>
+              <p class="text-zinc-300 leading-relaxed mb-3">SharedArrayBuffer para comunicação entre workers:</p>
+              <pre class="bg-zinc-900 border border-zinc-700 rounded-lg p-4 overflow-x-auto mb-4"><code class="text-zinc-300">// Worker principal
 const sharedBuffer = new SharedArrayBuffer(1024);
 const sharedArray = new Int32Array(sharedBuffer);
 
 // Worker secundário pode acessar os mesmos dados
 worker.postMessage(sharedBuffer);</code></pre>
-
-<h4>2. Temporal API</h4>
-<p>Nova API para trabalhar com datas e tempo:</p>
-
-<pre><code>// API mais intuitiva que Date
+            </div>
+            
+            <div>
+              <h4 class="text-lg font-medium text-white mb-2">2. Temporal API</h4>
+              <p class="text-zinc-300 leading-relaxed mb-3">Nova API para trabalhar com datas e tempo:</p>
+              <pre class="bg-zinc-900 border border-zinc-700 rounded-lg p-4 overflow-x-auto mb-4"><code class="text-zinc-300">// API mais intuitiva que Date
 const now = Temporal.Now.plainDateTimeISO();
 const birthday = Temporal.PlainDate.from('1990-05-15');
 const age = now.toPlainDate().since(birthday).years;</code></pre>
+            </div>
+          </div>
+        </div>
 
-<h3>Ferramentas e Ecossistema</h3>
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-4">Ferramentas e Ecossistema</h3>
+          
+          <div class="space-y-6">
+            <div>
+              <h4 class="text-lg font-medium text-white mb-2">Vite 5.0</h4>
+              <ul class="space-y-2">
+                <li class="flex items-start">
+                  <span class="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                  <span class="text-zinc-300 leading-relaxed">Build ainda mais rápido</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                  <span class="text-zinc-300 leading-relaxed">Melhor suporte para monorepos</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                  <span class="text-zinc-300 leading-relaxed">Tree-shaking aprimorado</span>
+                </li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 class="text-lg font-medium text-white mb-2">Node.js 20+</h4>
+              <ul class="space-y-2">
+                <li class="flex items-start">
+                  <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                  <span class="text-zinc-300 leading-relaxed">V8 atualizado</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                  <span class="text-zinc-300 leading-relaxed">Performance melhorada</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                  <span class="text-zinc-300 leading-relaxed">Novos módulos built-in</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
 
-<h4>Vite 5.0</h4>
-<ul>
-<li>Build ainda mais rápido</li>
-<li>Melhor suporte para monorepos</li>
-<li>Tree-shaking aprimorado</li>
-</ul>
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-4">Boas práticas modernas</h3>
+          
+          <ol class="space-y-3 mb-6 counter-reset: list-counter">
+            <li class="flex items-start counter-increment: list-counter">
+              <span class="bg-orange-500 text-white text-sm font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">1</span>
+              <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Use métodos imutáveis</strong> quando possível</span>
+            </li>
+            <li class="flex items-start counter-increment: list-counter">
+              <span class="bg-orange-500 text-white text-sm font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">2</span>
+              <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Prefira const/let</strong> ao invés de var</span>
+            </li>
+            <li class="flex items-start counter-increment: list-counter">
+              <span class="bg-orange-500 text-white text-sm font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">3</span>
+              <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Utilize destructuring</strong> para código mais limpo</span>
+            </li>
+            <li class="flex items-start counter-increment: list-counter">
+              <span class="bg-orange-500 text-white text-sm font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">4</span>
+              <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Implemente error boundaries</strong> adequadamente</span>
+            </li>
+            <li class="flex items-start counter-increment: list-counter">
+              <span class="bg-orange-500 text-white text-sm font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">5</span>
+              <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Otimize bundles</strong> com tree-shaking</span>
+            </li>
+          </ol>
+        </div>
 
-<h4>Node.js 20+</h4>
-<ul>
-<li>V8 atualizado</li>
-<li>Performance melhorada</li>
-<li>Novos módulos built-in</li>
-</ul>
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-4">Como se manter atualizado</h3>
+          
+          <ul class="space-y-3 mb-6">
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-yellow-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Siga as propostas TC39</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-yellow-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Teste features em ambiente de desenvolvimento</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-yellow-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Participe de comunidades JavaScript</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-yellow-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Contribua para projetos open source</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-yellow-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Assista talks e conferências</span>
+            </li>
+          </ul>
+        </div>
 
-<h3>Boas práticas modernas</h3>
-
-<ol>
-<li><strong>Use métodos imutáveis</strong> quando possível</li>
-<li><strong>Prefira const/let</strong> ao invés de var</li>
-<li><strong>Utilize destructuring</strong> para código mais limpo</li>
-<li><strong>Implemente error boundaries</strong> adequadamente</li>
-<li><strong>Otimize bundles</strong> com tree-shaking</li>
-</ol>
-
-<h3>Como se manter atualizado</h3>
-
-<ul>
-<li>Siga as propostas TC39</li>
-<li>Teste features em ambiente de desenvolvimento</li>
-<li>Participe de comunidades JavaScript</li>
-<li>Contribua para projetos open source</li>
-<li>Assista talks e conferências</li>
-</ul>
-
-<h3>Conclusão</h3>
-
-<p>O ES2024 traz melhorias significativas para a produtividade e qualidade do código JavaScript. Adotar essas novidades gradualmente pode tornar seu código mais moderno, limpo e eficiente.</p>
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-4">Conclusão</h3>
+          <p class="text-zinc-300 leading-relaxed mb-4">O ES2024 traz melhorias significativas para a produtividade e qualidade do código JavaScript. Adotar essas novidades gradualmente pode tornar seu código mais moderno, limpo e eficiente.</p>
+          
+          <div class="article-highlight bg-gradient-to-r from-orange-500/10 to-yellow-500/10 border border-orange-500/20 rounded-lg p-6 my-6">
+            <h4 class="text-orange-300 font-semibold mb-3">⚡ JavaScript do Futuro, Hoje</h4>
+            <p class="text-zinc-300">Na Escola Habilidade, ensinamos as mais recentes funcionalidades do JavaScript com aplicação prática. Mantenha-se na vanguarda do desenvolvimento web moderno.</p>
+          </div>
+        </div>
+        
+      </div>
     `,
     author: { name: 'Escola Habilidade', avatar: '/assets/avatars/default.jpg' },
     category: mockCategories[3], // Programação
@@ -827,124 +1321,209 @@ const age = now.toPlainDate().since(birthday).years;</code></pre>
     slug: 'espacos-pequenos-futuros-grandes-design-sprint-2025',
     excerpt: 'Como 500 metros quadrados podem revolucionar nossa compreensão de arquitetura sustentável e focada na comunidade para 2050.',
     content: `
-<h2>O futuro da arquitetura urbana está em espaços pequenos com grande impacto social</h2>
+      <div class="article-content space-y-8">
+        
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-4 mt-0">O futuro da arquitetura urbana está em espaços pequenos com grande impacto social</h2>
+          <p class="text-zinc-300 leading-relaxed mb-6 text-lg">O SketchUp Design Sprint Challenge 2025 marcou um momento significativo na história do software, celebrando seu 25º aniversário com um desafio inovador: projetar 500 metros quadrados para 2050 que criem um impacto social positivo.</p>
+        </div>
 
-<p>O SketchUp Design Sprint Challenge 2025 marcou um momento significativo na história do software, celebrando seu 25º aniversário com um desafio inovador: projetar 500 metros quadrados para 2050 que criem um impacto social positivo.</p>
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-4">O Desafio: 500 metros quadrados de impacto</h3>
+          <p class="text-zinc-300 leading-relaxed mb-4">O espaço urbano limitado será um desafio determinante pelos próximos anos. Os participantes foram convidados a inovar dentro de apenas 500 metros quadrados, demonstrando como essa área compacta pode gerar um impacto profundo.</p>
+          <p class="text-zinc-300 leading-relaxed mb-4">O grande desafio? Eles tiveram apenas 60 minutos para criar seus projetos, testando verdadeiramente sua criatividade e habilidades técnicas sob pressão.</p>
+        </div>
 
-<h3>O Desafio: 500 metros quadrados de impacto</h3>
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-4">A comunidade criativa do SketchUp</h3>
+          <p class="text-zinc-300 leading-relaxed mb-4">Em verdadeiro espírito SketchUp, o desafio convidou a comunidade criativa a envisionear o ano de 2050 e projetar espaços (interiores/exteriores ou paisagismo) que tenham impacto social positivo para atender às necessidades ambientais, comunitárias ou de acessibilidade do futuro.</p>
+        </div>
 
-<p>O espaço urbano limitado será um desafio determinante pelos próximos anos. Os participantes foram convidados a inovar dentro de apenas 500 metros quadrados, demonstrando como essa área compacta pode gerar um impacto profundo.</p>
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-4">O projeto vencedor: vivendo melhor, juntos</h3>
+          <p class="text-zinc-300 leading-relaxed mb-4">Raphaël Craverio, estudante de arquitetura da LISAA Paris, conquistou o primeiro lugar com seu projeto criativo e focado na comunidade. Seu design aborda uma questão fundamental: e se nossas cidades futuras pudessem ajudar as pessoas a viverem melhor juntas?</p>
+          
+          <div class="article-highlight bg-gradient-to-r from-green-500/10 to-blue-500/10 border border-green-500/20 rounded-lg p-6 my-6">
+            <h4 class="text-green-300 font-semibold mb-3">Características inovadoras do projeto</h4>
+            <p class="text-zinc-300 mb-3">Inspirado pelo modelo arquitetônico fornecido "Exterior", este design transforma a experiência urbana ao promover interação perfeita entre quem está dentro e fora do edifício:</p>
+            <ul class="space-y-3">
+              <li class="flex items-start">
+                <span class="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Térreo aberto:</strong> Cria calçadas mais amplas e acessíveis - característica crucial para acessibilidade universal e cidades cada vez mais densas de 2050</span>
+              </li>
+              <li class="flex items-start">
+                <span class="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Reposicionamento inteligente:</strong> As colunas arquitetônicas originais foram reposicionadas para melhorar o fluxo de pedestres</span>
+              </li>
+              <li class="flex items-start">
+                <span class="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Mobilidade sustentável:</strong> Ciclovias dedicadas refletem a crescente importância do ciclismo no transporte urbano</span>
+              </li>
+            </ul>
+          </div>
+        </div>
 
-<p>O grande desafio? Eles tiveram apenas 60 minutos para criar seus projetos, testando verdadeiramente sua criatividade e habilidades técnicas sob pressão.</p>
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-4">Integração com a natureza</h3>
+          <p class="text-zinc-300 leading-relaxed mb-4">A natureza é central ao design, com elementos estratégicos que fazem a diferença:</p>
+          
+          <ul class="space-y-3 mb-6">
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-emerald-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Árvores estratégicas:</strong> Fornece sombra essencial no verão e permite a passagem da luz solar no inverno quando as folhas caem</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-emerald-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Bancos integrados:</strong> Aninhados sob as árvores, convidam moradores a pausar, descansar e se conectar com a natureza</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-emerald-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Jardim suspenso:</strong> Um jardim compartilhado no telhado capacita os moradores a cultivar sua própria comida</span>
+            </li>
+          </ul>
+        </div>
 
-<h3>A comunidade criativa do SketchUp</h3>
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-4">Tecnologia adaptável</h3>
+          <p class="text-zinc-300 leading-relaxed mb-4">O design incorpora soluções tecnológicas inovadoras:</p>
+          
+          <ul class="space-y-3 mb-6">
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Painéis de teto móveis:</strong> Os painéis de madeira distintos do edifício giram para otimizar a luz solar, adaptando-se às mudanças diárias e sazonais</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Marcações no solo:</strong> Códigos de cores sutis delimitam zonas para pedestres e ciclistas, garantindo harmonia com elementos naturais</span>
+            </li>
+          </ul>
+        </div>
 
-<p>Em verdadeiro espírito SketchUp, o desafio convidou a comunidade criativa a envisionear o ano de 2050 e projetar espaços (interiores/exteriores ou paisagismo) que tenham impacto social positivo para atender às necessidades ambientais, comunitárias ou de acessibilidade do futuro.</p>
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-4">Lições para o design educacional</h3>
+          <p class="text-zinc-300 leading-relaxed mb-4">Este projeto oferece insights valiosos para educadores e designers:</p>
+          
+          <div class="space-y-6">
+            <div class="article-highlight bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/20 rounded-lg p-6">
+              <h4 class="text-purple-300 font-semibold mb-3">1. Pensamento sistêmico</h4>
+              <p class="text-zinc-300 mb-3">O projeto demonstra como pequenos espaços podem gerar grandes impactos quando pensamos de forma integrada sobre:</p>
+              <ul class="space-y-2">
+                <li class="text-zinc-300 leading-relaxed">• Fluxos urbanos</li>
+                <li class="text-zinc-300 leading-relaxed">• Sustentabilidade ambiental</li>
+                <li class="text-zinc-300 leading-relaxed">• Interação social</li>
+                <li class="text-zinc-300 leading-relaxed">• Acessibilidade universal</li>
+              </ul>
+            </div>
+            
+            <div class="article-highlight bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/20 rounded-lg p-6">
+              <h4 class="text-cyan-300 font-semibold mb-3">2. Design centrado no usuário</h4>
+              <p class="text-zinc-300 mb-3">Cada elemento foi pensado considerando:</p>
+              <ul class="space-y-2">
+                <li class="text-zinc-300 leading-relaxed">• Necessidades dos moradores</li>
+                <li class="text-zinc-300 leading-relaxed">• Fluxo de pedestres</li>
+                <li class="text-zinc-300 leading-relaxed">• Ciclistas urbanos</li>
+                <li class="text-zinc-300 leading-relaxed">• Pessoas com mobilidade reduzida</li>
+              </ul>
+            </div>
+            
+            <div class="article-highlight bg-gradient-to-r from-teal-500/10 to-green-500/10 border border-teal-500/20 rounded-lg p-6">
+              <h4 class="text-teal-300 font-semibold mb-3">3. Sustentabilidade integrada</h4>
+              <p class="text-zinc-300 mb-3">O projeto mostra como sustentabilidade pode ser:</p>
+              <ul class="space-y-2">
+                <li class="text-zinc-300 leading-relaxed">• Esteticamente atraente</li>
+                <li class="text-zinc-300 leading-relaxed">• Funcionalmente eficiente</li>
+                <li class="text-zinc-300 leading-relaxed">• Socialmente inclusiva</li>
+                <li class="text-zinc-300 leading-relaxed">• Economicamente viável</li>
+              </ul>
+            </div>
+          </div>
+        </div>
 
-<h3>O projeto vencedor: vivendo melhor, juntos</h3>
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-4">Aplicações no ensino de design</h3>
+          <p class="text-zinc-300 leading-relaxed mb-4">Projetos como este podem inspirar exercícios educacionais:</p>
+          
+          <ol class="space-y-3 mb-6 counter-reset: list-counter">
+            <li class="flex items-start counter-increment: list-counter">
+              <span class="bg-pink-500 text-white text-sm font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">1</span>
+              <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Desafios de tempo limitado:</strong> Estimulam criatividade sob pressão</span>
+            </li>
+            <li class="flex items-start counter-increment: list-counter">
+              <span class="bg-pink-500 text-white text-sm font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">2</span>
+              <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Restrições claras:</strong> 500m² força soluções inovadoras</span>
+            </li>
+            <li class="flex items-start counter-increment: list-counter">
+              <span class="bg-pink-500 text-white text-sm font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">3</span>
+              <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Impacto social:</strong> Conecta design com responsabilidade social</span>
+            </li>
+            <li class="flex items-start counter-increment: list-counter">
+              <span class="bg-pink-500 text-white text-sm font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">4</span>
+              <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Visão de futuro:</strong> Desenvolve pensamento prospectivo</span>
+            </li>
+          </ol>
+        </div>
 
-<p>Raphaël Craverio, estudante de arquitetura da LISAA Paris, conquistou o primeiro lugar com seu projeto criativo e focado na comunidade. Seu design aborda uma questão fundamental: e se nossas cidades futuras pudessem ajudar as pessoas a viverem melhor juntas?</p>
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-4">Ferramentas digitais no design</h3>
+          <p class="text-zinc-300 leading-relaxed mb-4">O SketchUp continua sendo uma ferramenta fundamental para:</p>
+          
+          <ul class="space-y-3 mb-6">
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-orange-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Prototipagem rápida de ideias</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-orange-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Visualização 3D intuitiva</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-orange-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Comunicação eficaz de conceitos</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-orange-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed">Iteração ágil de projetos</span>
+            </li>
+          </ul>
+        </div>
 
-<h4>Características inovadoras do projeto</h4>
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-4">O futuro das cidades</h3>
+          <p class="text-zinc-300 leading-relaxed mb-4">Este projeto oferece uma visão esperançosa para cidades futuras:</p>
+          
+          <ul class="space-y-3 mb-6">
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-emerald-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Mais verdes:</strong> Integração natural estratégica</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-emerald-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Mais pacíficas:</strong> Espaços de contemplação e descanso</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-emerald-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Mais conectadas:</strong> Facilitando interações humanas autênticas</span>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-emerald-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+              <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Mais inclusivas:</strong> Acessibilidade como prioridade de design</span>
+            </li>
+          </ul>
+        </div>
 
-<p>Inspirado pelo modelo arquitetônico fornecido "Exterior", este design transforma a experiência urbana ao promover interação perfeita entre quem está dentro e fora do edifício:</p>
-
-<ul>
-<li><strong>Térreo aberto:</strong> Cria calçadas mais amplas e acessíveis - característica crucial para acessibilidade universal e cidades cada vez mais densas de 2050</li>
-<li><strong>Reposicionamento inteligente:</strong> As colunas arquitetônicas originais foram reposicionadas para melhorar o fluxo de pedestres</li>
-<li><strong>Mobilidade sustentável:</strong> Ciclovias dedicadas refletem a crescente importância do ciclismo no transporte urbano</li>
-</ul>
-
-<h3>Integração com a natureza</h3>
-
-<p>A natureza é central ao design, com elementos estratégicos que fazem a diferença:</p>
-
-<ul>
-<li><strong>Árvores estratégicas:</strong> Fornece sombra essencial no verão e permite a passagem da luz solar no inverno quando as folhas caem</li>
-<li><strong>Bancos integrados:</strong> Aninhados sob as árvores, convidam moradores a pausar, descansar e se conectar com a natureza</li>
-<li><strong>Jardim suspenso:</strong> Um jardim compartilhado no telhado capacita os moradores a cultivar sua própria comida</li>
-</ul>
-
-<h3>Tecnologia adaptável</h3>
-
-<p>O design incorpora soluções tecnológicas inovadoras:</p>
-
-<ul>
-<li><strong>Painéis de teto móveis:</strong> Os painéis de madeira distintos do edifício giram para otimizar a luz solar, adaptando-se às mudanças diárias e sazonais</li>
-<li><strong>Marcações no solo:</strong> Códigos de cores sutis delimitam zonas para pedestres e ciclistas, garantindo harmonia com elementos naturais</li>
-</ul>
-
-<h3>Lições para o design educacional</h3>
-
-<p>Este projeto oferece insights valiosos para educadores e designers:</p>
-
-<h4>1. Pensamento sistêmico</h4>
-<p>O projeto demonstra como pequenos espaços podem gerar grandes impactos quando pensamos de forma integrada sobre:</p>
-<ul>
-<li>Fluxos urbanos</li>
-<li>Sustentabilidade ambiental</li>
-<li>Interação social</li>
-<li>Acessibilidade universal</li>
-</ul>
-
-<h4>2. Design centrado no usuário</h4>
-<p>Cada elemento foi pensado considerando:</p>
-<ul>
-<li>Necessidades dos moradores</li>
-<li>Fluxo de pedestres</li>
-<li>Ciclistas urbanos</li>
-<li>Pessoas com mobilidade reduzida</li>
-</ul>
-
-<h4>3. Sustentabilidade integrada</h4>
-<p>O projeto mostra como sustentabilidade pode ser:</p>
-<ul>
-<li>Esteticamente atraente</li>
-<li>Funcionalmente eficiente</li>
-<li>Socialmente inclusiva</li>
-<li>Economicamente viável</li>
-</ul>
-
-<h3>Aplicações no ensino de design</h3>
-
-<p>Projetos como este podem inspirar exercícios educacionais:</p>
-
-<ol>
-<li><strong>Desafios de tempo limitado:</strong> Estimulam criatividade sob pressão</li>
-<li><strong>Restrições claras:</strong> 500m² força soluções inovadoras</li>
-<li><strong>Impacto social:</strong> Conecta design com responsabilidade social</li>
-<li><strong>Visão de futuro:</strong> Desenvolve pensamento prospectivo</li>
-</ol>
-
-<h3>Ferramentas digitais no design</h3>
-
-<p>O SketchUp continua sendo uma ferramenta fundamental para:</p>
-
-<ul>
-<li>Prototipagem rápida de ideias</li>
-<li>Visualização 3D intuitiva</li>
-<li>Comunicação eficaz de conceitos</li>
-<li>Iteração ágil de projetos</li>
-</ul>
-
-<h3>O futuro das cidades</h3>
-
-<p>Este projeto oferece uma visão esperançosa para cidades futuras:</p>
-
-<ul>
-<li><strong>Mais verdes:</strong> Integração natural estratégica</li>
-<li><strong>Mais pacíficas:</strong> Espaços de contemplação e descanso</li>
-<li><strong>Mais conectadas:</strong> Facilitando interações humanas autênticas</li>
-<li><strong>Mais inclusivas:</strong> Acessibilidade como prioridade de design</li>
-</ul>
-
-<h3>Conclusão: pequenos espaços, grandes possibilidades</h3>
-
-<p>O Design Sprint Challenge 2025 demonstra que limitações podem impulsionar inovação. Em apenas 500 metros quadrados e 60 minutos, Raphaël Craverio criou uma visão transformadora para o futuro urbano.</p>
-
-<p>Este projeto inspira educadores, designers e urbanistas a repensarem como pequenos espaços podem gerar grandes mudanças sociais. Na Escola Habilidade, acreditamos que projetos como este são fundamentais para formar profissionais capazes de criar soluções inovadoras para os desafios urbanos do futuro.</p>
-
-<p>Para designers e arquitetos em formação, este exemplo demonstra como criatividade, sustentabilidade e responsabilidade social podem convergir em soluções elegantes e impactantes. O futuro das nossas cidades depende dessa nova geração de pensadores sistêmicos.</p>
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-4">Conclusão: pequenos espaços, grandes possibilidades</h3>
+          <p class="text-zinc-300 leading-relaxed mb-4">O Design Sprint Challenge 2025 demonstra que limitações podem impulsionar inovação. Em apenas 500 metros quadrados e 60 minutos, Raphaël Craverio criou uma visão transformadora para o futuro urbano.</p>
+          <p class="text-zinc-300 leading-relaxed mb-4">Este projeto inspira educadores, designers e urbanistas a repensarem como pequenos espaços podem gerar grandes mudanças sociais. Na Escola Habilidade, acreditamos que projetos como este são fundamentais para formar profissionais capazes de criar soluções inovadoras para os desafios urbanos do futuro.</p>
+          <p class="text-zinc-300 leading-relaxed mb-4">Para designers e arquitetos em formação, este exemplo demonstra como criatividade, sustentabilidade e responsabilidade social podem convergir em soluções elegantes e impactantes. O futuro das nossas cidades depende dessa nova geração de pensadores sistêmicos.</p>
+          
+          <div class="article-highlight bg-gradient-to-r from-pink-500/10 to-purple-500/10 border border-pink-500/20 rounded-lg p-6 my-6">
+            <h4 class="text-pink-300 font-semibold mb-3">🏗️ Construindo o Futuro</h4>
+            <p class="text-zinc-300">Na Escola Habilidade, preparamos designers e arquitetos para enfrentar os desafios urbanos do futuro. Aprenda design thinking, sustentabilidade e tecnologias emergentes em nossos cursos especializados.</p>
+          </div>
+        </div>
+        
+      </div>
     `,
     author: { name: 'Escola Habilidade', avatar: '/assets/avatars/default.jpg' },
     category: mockCategories[4], // Design

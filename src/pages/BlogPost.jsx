@@ -167,8 +167,40 @@ const BlogPost = () => {
       </header>
 
       {/* Article Content */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="prose prose-lg prose-invert max-w-none">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="flex gap-8">
+          {/* Main Content */}
+          <div className="flex-1">
+            
+            {/* Table of Contents - Desktop */}
+            <div className="hidden lg:block fixed right-8 top-1/2 transform -translate-y-1/2 w-64 z-10">
+              <TableOfContents 
+                containerSelector=".article-content"
+                title="Navegação do Artigo"
+                collapsible={true}
+                initiallyCollapsed={false}
+                minHeaders={2}
+                maxLevel={4}
+                showProgress={true}
+                className="bg-zinc-900/95 backdrop-blur-sm"
+              />
+            </div>
+            
+            {/* Table of Contents - Mobile */}
+            <div className="lg:hidden mb-6">
+              <TableOfContents 
+                containerSelector=".article-content"
+                title="Navegação do Artigo"
+                collapsible={true}
+                initiallyCollapsed={true}
+                minHeaders={2}
+                maxLevel={4}
+                showProgress={false}
+                className="bg-zinc-800/50"
+              />
+            </div>
+            
+            <div className="prose prose-lg prose-invert max-w-none">
           <div 
             ref={articleRef}
             dangerouslySetInnerHTML={{ __html: post.content }}
@@ -183,6 +215,7 @@ const BlogPost = () => {
             title={post.title}
             description={post.excerpt}
           />
+            </div>
         </div>
       </div>
       
