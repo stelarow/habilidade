@@ -41,10 +41,246 @@ const mockCategories = [
     description: 'Tendências e técnicas de design',
     postCount: 4,
     color: '#EF4444'
+  },
+  {
+    id: 6,
+    name: 'Arquitetura',
+    slug: 'arquitetura',
+    description: 'Design arquitetônico e projetos de construção',
+    postCount: 1,
+    color: '#06B6D4'
   }
 ];
 
 const mockPosts = [
+  {
+    id: 100,
+    title: '5 Maneiras de Maximizar Vistas Magníficas para Casas Personalizadas',
+    slug: 'cinco-maneiras-maximizar-vistas-magnificas-casas-personalizadas',
+    excerpt: 'Aprenda cinco dicas de design da MGA Architecture para criar casas de alto padrão que otimizam vistas impressionantes da natureza. Descubra como posicionamento estratégico, estruturas adequadas e plantas inovadoras transformam projetos.',
+    content: `
+      <div class="article-content space-y-8">
+        
+        <div class="article-section">
+          <p class="text-zinc-300 leading-relaxed mb-6 text-lg">Aprenda cinco dicas de design de especialistas da MGA Architecture para criar casas de alto padrão que otimizam vistas impressionantes da natureza.</p>
+          
+          <div class="article-image mb-8">
+            <img src="/assets/blog/five-ways-magnificent-views/2024_687205183_five_ways_to_1.jpg" alt="Fotografia de uma sala de estar com vista para um corpo d'água" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Imagem cortesia da MGA Architecture. Fotógrafo: Trent Bell</p>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <p class="text-zinc-300 leading-relaxed mb-6">Os melhores designers residenciais projetam com as vistas em mente, criando casas que não são apenas espaços habitáveis, mas pontos de observação para o exterior. Cada escolha de design deve estar enraizada no que as pessoas que vivem no espaço irão experimentar e como funciona para suas necessidades diárias.</p>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">A MGA Architecture, um estúdio de design de Boston, Massachusetts, se destaca em otimizar vistas impressionantes para seus clientes. A empresa acredita que todo espaço merece beleza e propósito e tem dedicado mais de 20 anos a enriquecer a vida diária das pessoas através de design significativo.</p>
+          
+          <div class="article-highlight bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/20 rounded-lg p-6 my-6">
+            <h4 class="text-cyan-300 font-semibold mb-3">🏠 Navegação Rápida</h4>
+            <ul class="space-y-2">
+              <li><a href="#section1" class="text-zinc-300 hover:text-cyan-300 transition-colors">1. Posicionamento estratégico no terreno</a></li>
+              <li><a href="#section2" class="text-zinc-300 hover:text-cyan-300 transition-colors">2. Escolha estruturas que suportem janelas grandes</a></li>
+              <li><a href="#section3" class="text-zinc-300 hover:text-cyan-300 transition-colors">3. Projete plantas baixas inovadoras</a></li>
+              <li><a href="#section4" class="text-zinc-300 hover:text-cyan-300 transition-colors">4. Sequencie as vistas para uma revelação gradual</a></li>
+              <li><a href="#section5" class="text-zinc-300 hover:text-cyan-300 transition-colors">5. Integre espaços internos e externos</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="article-section" id="section1">
+          <h2 class="text-2xl font-bold text-white mb-6">1. Posicionamento estratégico no terreno</h2>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Determinar a localização e orientação perfeitas de uma casa maximiza as vistas que os moradores podem desfrutar. A MGA posiciona cuidadosamente cada habitação em um local específico no terreno.</p>
+          
+          <div class="article-image mb-6">
+            <img src="/assets/blog/five-ways-magnificent-views/2024_687205183_five_ways_to_2.jpg" alt="Vista aérea dos muitos edifícios da residência Governor's Island" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Vista aérea dos edifícios da residência Governor's Island, estrategicamente posicionados</p>
+          </div>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">O complexo residencial que projetaram na Ilha do Governador, Gilford, NH, é uma ilustração principal deste conceito. Este projeto, posicionado em uma península, oferece aos ocupantes um luxo raro — testemunhar o amanhecer e o pôr do sol sobre o Lago Winnipesaukee.</p>
+          
+          <div class="article-image mb-6">
+            <img src="/assets/blog/five-ways-magnificent-views/2024_687205183_five_ways_to_3.png" alt="Modelo SketchUp do complexo" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Modelo SketchUp mostra o planejamento detalhado. Imagem cortesia da MGA</p>
+          </div>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">A MGA usou o SketchUp para criar o projeto conceitual do local, importando dados do Google Maps para o software de modelagem 3D para melhor compreender a topografia e as sombras. Usando esses dados, posicionaram as estruturas de modo que cada uma proporcionasse linhas de visão claras.</p>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="article-image">
+              <img src="/assets/blog/five-ways-magnificent-views/2024_687205183_five_ways_to_4.png" alt="Modelo SketchUp da vista da casa principal" class="w-full rounded-lg shadow-lg" />
+              <p class="text-zinc-400 text-sm mt-2 text-center italic">Modelo SketchUp da vista principal</p>
+            </div>
+            <div class="article-image">
+              <img src="/assets/blog/five-ways-magnificent-views/2024_687205183_five_ways_to_5.jpg" alt="Foto da casa principal" class="w-full rounded-lg shadow-lg" />
+              <p class="text-zinc-400 text-sm mt-2 text-center italic">Resultado final construído</p>
+            </div>
+          </div>
+          
+          <div class="article-quote bg-gradient-to-r from-purple-500/10 to-blue-500/10 border-l-4 border-purple-500 p-6 my-6">
+            <blockquote class="text-zinc-300 leading-relaxed italic mb-4">
+              "Usamos o SketchUp para descobrir como todos os materiais de uma casa funcionarão juntos. Isso torna o processo de desenho no AutoCAD muito fácil. Não usamos Revit porque é muito desajeitado para nossos detalhes personalizados – o SketchUp é intuitivo."
+            </blockquote>
+            <cite class="text-zinc-400 text-sm">— Marcus Gleysteen, RA, Sócio Responsável da MGA</cite>
+          </div>
+        </div>
+
+        <div class="article-section" id="section2">
+          <h2 class="text-2xl font-bold text-white mb-6">2. Escolha estruturas que suportem janelas grandes</h2>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Ter vastas extensões de janelas é a melhor maneira de maximizar belas vistas, mas janelas grandes podem ser desafiadoras de suportar estruturalmente. A equipe da MGA conhece bem esse problema, pois muitos de seus projetos estão em zonas de terremotos e furacões.</p>
+          
+          <div class="article-image mb-6">
+            <img src="/assets/blog/five-ways-magnificent-views/2024_687205183_five_ways_to_7.jpg" alt="Vista do gramado da Lake Point House" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Vista externa da Lake Point House. Fotógrafo: Joshua McHugh</p>
+          </div>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Eles usam estruturas de aço em vez de madeira para essas condições. O vidro deve resistir a força horizontal pesada, e a natureza flexível da madeira faria o vidro sofrer tensão, flexionar e eventualmente quebrar.</p>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="article-image">
+              <img src="/assets/blog/five-ways-magnificent-views/2024_687205183_five_ways_to_9.jpg" alt="A estrutura de aço é recuada das janelas" class="w-full rounded-lg shadow-lg" />
+              <p class="text-zinc-400 text-sm mt-2 text-center italic">Estrutura de aço recuada das janelas</p>
+            </div>
+            <div class="article-image">
+              <img src="/assets/blog/five-ways-magnificent-views/2024_687205183_five_ways_to_10.jpg" alt="Modelo SketchUp correspondente" class="w-full rounded-lg shadow-lg" />
+              <p class="text-zinc-400 text-sm mt-2 text-center italic">Modelo SketchUp correspondente</p>
+            </div>
+          </div>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">A estrutura de aço da Lake Point House permite vistas panorâmicas da orla e incorpora colunas de aço esteticamente no design geral. Em vez de envolver as colunas de aço na montagem, a MGA conscientemente escolheu fazer esculturas das colunas.</p>
+          
+          <div class="article-image mb-6">
+            <img src="/assets/blog/five-ways-magnificent-views/2024_687205183_five_ways_to_11.jpg" alt="Vista da sala de estar da Lake Point House" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Interior com vistas panorâmicas. Fotógrafo: Joshua McHugh</p>
+          </div>
+        </div>
+
+        <div class="article-section" id="section3">
+          <h2 class="text-2xl font-bold text-white mb-6">3. Projete plantas baixas inovadoras</h2>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">O design inovador de plantas baixas é fundamental para maximizar as vistas. Isso envolve posicionar estrategicamente os cômodos principais — como salas de estar, cozinhas e quartos master — voltados para as melhores vistas.</p>
+          
+          <div class="article-tips bg-gradient-to-r from-emerald-500/10 to-green-500/10 border border-emerald-500/20 rounded-lg p-6 my-6">
+            <h4 class="text-emerald-300 font-semibold mb-4">✨ Estratégias de Layout</h4>
+            <ul class="space-y-3">
+              <li class="flex items-start">
+                <span class="w-2 h-2 bg-emerald-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Cozinhas abertas:</strong> Conectadas às salas de estar para vistas contínuas</span>
+              </li>
+              <li class="flex items-start">
+                <span class="w-2 h-2 bg-emerald-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Grandes aberturas:</strong> Entre cômodos para fluxo visual</span>
+              </li>
+              <li class="flex items-start">
+                <span class="w-2 h-2 bg-emerald-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Escadas estratégicas:</strong> Posicionadas para não bloquear vistas</span>
+              </li>
+              <li class="flex items-start">
+                <span class="w-2 h-2 bg-emerald-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Múltiplos níveis:</strong> Criando diferentes perspectivas da paisagem</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="article-section" id="section4">
+          <h2 class="text-2xl font-bold text-white mb-6">4. Sequencie as vistas para uma revelação gradual</h2>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="article-image">
+              <img src="/assets/blog/five-ways-magnificent-views/2024_687205183_five_ways_to_13.jpg" alt="Vista exterior mostrando sequenciamento" class="w-full rounded-lg shadow-lg" />
+              <p class="text-zinc-400 text-sm mt-2 text-center italic">Sequenciamento de vistas na arquitetura</p>
+            </div>
+            <div class="article-image">
+              <img src="/assets/blog/five-ways-magnificent-views/2024_687205183_five_ways_to_14.jpg" alt="Detalhe arquitetônico" class="w-full rounded-lg shadow-lg" />
+              <p class="text-zinc-400 text-sm mt-2 text-center italic">Detalhes que guiam o olhar</p>
+            </div>
+          </div>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Uma das técnicas mais sofisticadas no design de casas com vistas impressionantes é o sequenciamento cuidadoso das vistas. Em vez de revelar toda a vista de uma vez, designers experientes criam uma jornada visual que se desdobra gradualmente.</p>
+          
+          <div class="article-tips bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/20 rounded-lg p-6 my-6">
+            <h4 class="text-purple-300 font-semibold mb-4">🎭 Técnicas de Revelação</h4>
+            <ul class="space-y-3">
+              <li class="flex items-start">
+                <span class="w-2 h-2 bg-purple-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Vistas parciais:</strong> Vislumbres da paisagem através de aberturas estratégicas</span>
+              </li>
+              <li class="flex items-start">
+                <span class="w-2 h-2 bg-purple-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Revelação progressiva:</strong> Cada cômodo revela mais da vista total</span>
+              </li>
+              <li class="flex items-start">
+                <span class="w-2 h-2 bg-purple-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Pontos focais múltiplos:</strong> Diferentes aspectos da vista em cada área</span>
+              </li>
+              <li class="flex items-start">
+                <span class="w-2 h-2 bg-purple-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Transições dramáticas:</strong> Momentos de revelação completa para impacto emocional</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="article-section" id="section5">
+          <h2 class="text-2xl font-bold text-white mb-6">5. Integre espaços internos e externos</h2>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">A integração perfeita entre espaços internos e externos é crucial para maximizar vistas magníficas. Esta não é apenas uma questão estética, mas uma estratégia funcional que expande visualmente o espaço habitável.</p>
+          
+          <div class="article-tips bg-gradient-to-r from-cyan-500/10 to-teal-500/10 border border-cyan-500/20 rounded-lg p-6 my-6">
+            <h4 class="text-cyan-300 font-semibold mb-4">🌿 Técnicas de Integração</h4>
+            <ul class="space-y-3">
+              <li class="flex items-start">
+                <span class="w-2 h-2 bg-cyan-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Portas de vidro floor-to-ceiling:</strong> Transições perfeitas quando abertas</span>
+              </li>
+              <li class="flex items-start">
+                <span class="w-2 h-2 bg-cyan-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Materiais contínuos:</strong> Mesmos pisos e cores dentro e fora</span>
+              </li>
+              <li class="flex items-start">
+                <span class="w-2 h-2 bg-cyan-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Terraços estratégicos:</strong> Extensões naturais dos espaços internos</span>
+              </li>
+              <li class="flex items-start">
+                <span class="w-2 h-2 bg-cyan-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Paisagismo coordenado:</strong> Complementando vistas naturais existentes</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Conclusão</h2>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Maximizar vistas magníficas em casas personalizadas requer uma abordagem holística que considera localização, estrutura, layout, sequenciamento e integração de espaços. Os especialistas da MGA demonstram que com planejamento cuidadoso e uso inteligente de ferramentas como o SketchUp, é possível criar casas que não apenas habitamos, mas que nos conectam profundamente com a beleza natural ao nosso redor.</p>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Cada projeto é único, mas estes cinco princípios fornecem uma base sólida para qualquer um que deseje criar espaços que celebrem e otimizem as vistas disponíveis. O investimento em um design considerado resulta em casas que proporcionam prazer visual duradouro e uma conexão mais profunda com o ambiente natural.</p>
+          
+          <div class="article-highlight bg-gradient-to-r from-orange-500/10 to-red-500/10 border border-orange-500/20 rounded-lg p-6 my-6">
+            <h4 class="text-orange-300 font-semibold mb-3">🏗️ Aprenda Design Arquitetônico</h4>
+            <p class="text-zinc-300 mb-4">Interessado em dominar essas técnicas? Na Escola Habilidade, oferecemos cursos especializados em:</p>
+            <ul class="space-y-2">
+              <li class="text-zinc-300">• SketchUp para Arquitetura e Design</li>
+              <li class="text-zinc-300">• Modelagem 3D e Visualização Arquitetônica</li>
+              <li class="text-zinc-300">• Design Sustentável e Bioclimático</li>
+              <li class="text-zinc-300">• Paisagismo e Integração com o Ambiente</li>
+            </ul>
+          </div>
+        </div>
+        
+      </div>
+    `,
+    author: { name: 'Equipe Escola Habilidade', avatar: '/assets/avatars/escola-habilidade.jpg' },
+    category: { id: 6, name: 'Arquitetura', slug: 'arquitetura', color: '#06B6D4' },
+    featuredImage: '/assets/blog/five-ways-magnificent-views/2024_687205183_five_ways_to_1.jpg',
+    publishedAt: '2025-07-31T10:00:00.000Z',
+    readingTime: 12,
+    tags: ['arquitetura', 'design', 'sketchup', 'casas-personalizadas', 'vistas', 'construção', 'paisagismo'],
+    views: 0,
+    likes: 0
+  },
   {
     id: 1,
     title: 'Como Começar na Programação em 2024',

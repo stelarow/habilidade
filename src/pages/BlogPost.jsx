@@ -256,12 +256,13 @@ const BlogPost = () => {
               />
             </div>
             
-            {/* Share Buttons */}
+            {/* Share Buttons - Using minimal variant for elegance */}
             <div className="mt-12 pt-8 border-t border-zinc-800">
               <ShareButtons 
                 url={globalThis.location.href}
                 title={post.title}
                 description={post.excerpt}
+                variant="minimal"
               />
             </div>
           </div>
