@@ -1,6 +1,5 @@
 import React, { useState, useRef } from 'react';
 import { Clock, Calendar, User, Tag } from 'phosphor-react';
-import LazyImage from '../LazyImage';
 import { usePrefetchPost } from '../../hooks/useBlogAPI';
 import { useBlogResponsive } from '../../hooks/useBlogResponsive';
 import BlogBadge from './BlogBadge';
@@ -50,37 +49,118 @@ const truncateText = (text, maxLength = 150) => {
 };
 
 const BlogCard = ({ post, variant = 'standard', index = 0 }) => {
-  const [imageLoaded, setImageLoaded] = useState(false);
-  const [imageError, setImageError] = useState(false);
+  // Enhanced state management
+  const [imageState, setImageState] = useState({
+    loaded: false,
+    error: false,
+    isInView: false
+  });
   const [isPrefetched, setIsPrefetched] = useState(false);
   const cardRef = useRef(null);
   const prefetchTimeoutRef = useRef(null);
+  const imageRef = useRef(null);
 
   // Hooks
   const prefetchPost = usePrefetchPost();
-  const { getTypographyClasses, shouldUseAnimations, getResponsiveImageProps } = useBlogResponsive();
+  const { getTypographyClasses, shouldUseAnimations } = useBlogResponsive();
 
+  // Enhanced image handling with multiple fallbacks
+  const getImageSrc = () => {
+    // Priority order: featured_image_url > featuredImage
+    if (post.featured_image_url && post.featured_image_url !== null) return post.featured_image_url;
+    if (post.featuredImage && post.featuredImage !== null) return post.featuredImage;
+    return null; // Will trigger our enhanced placeholder
+  };
+
+  // Enhanced intersection observer for lazy loading
+  React.useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setImageState(prev => ({ ...prev, isInView: true }));
+          observer.disconnect();
+        }
+      },
+      {
+        threshold: 0.1,
+        rootMargin: '100px'
+      }
+    );
+
+    if (cardRef.current) {
+      observer.observe(cardRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  // Enhanced image loading handlers
+  const handleImageLoad = () => {
+    setImageState(prev => ({ ...prev, loaded: true, error: false }));
+  };
+
+  const handleImageError = () => {
+    setImageState(prev => ({ ...prev, error: true, loaded: true }));
+  };
+
+  // Computed values
   const readingTime = calculateReadingTime(post.content);
-  // Fix date field - use publishedAt instead of created_at/published_at
   const formattedDate = formatDate(post.publishedAt || post.created_at || post.published_at);
   const excerpt = truncateText(post.excerpt || post.content, 150);
-
-  // Get first category for badge display
   const primaryCategory = post.categories?.[0] || post.category;
   const categorySlug = primaryCategory?.slug || 'tecnologia';
   const categoryName = primaryCategory?.name || 'Tecnologia';
+  const imageSrc = getImageSrc();
 
-  // Prefetch post content on hover with delay
+  // Enhanced placeholder component
+  const EnhancedPlaceholder = () => {
+    const categoryGradients = {
+      'tecnologia': 'from-blue-600/30 via-purple-600/25 to-cyan-600/30',
+      'programacao': 'from-purple-600/30 via-blue-600/25 to-indigo-600/30',
+      'educacao': 'from-green-600/30 via-emerald-600/25 to-teal-600/30',
+      'carreira': 'from-orange-600/30 via-yellow-600/25 to-amber-600/30',
+      'design': 'from-pink-600/30 via-rose-600/25 to-red-600/30',
+      'arquitetura': 'from-cyan-600/30 via-teal-600/25 to-blue-600/30'
+    };
+
+    const gradient = categoryGradients[categorySlug] || categoryGradients.tecnologia;
+
+    return (
+      <div className={`w-full h-full bg-gradient-to-br ${gradient} flex items-center justify-center relative overflow-hidden`}>
+        {/* Enhanced animated background pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-6 left-6 w-8 h-8 border border-purple-300/30 rounded-full animate-pulse"></div>
+          <div className="absolute bottom-8 right-8 w-6 h-6 border border-blue-300/30 rounded-full animate-pulse delay-1000"></div>
+          <div className="absolute top-1/3 right-12 w-4 h-4 border border-pink-300/30 rounded-full animate-pulse delay-500"></div>
+          <div className="absolute bottom-1/3 left-12 w-5 h-5 border border-green-300/30 rounded-full animate-pulse delay-700"></div>
+        </div>
+        
+        {/* Content icon with category-specific styling */}
+        <div className="text-center text-zinc-300 relative z-10">
+          <div className="w-20 h-20 mx-auto mb-4 opacity-70 transform group-hover:scale-110 transition-transform duration-300">
+            <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full">
+              <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" />
+            </svg>
+          </div>
+          <p className="text-base font-semibold opacity-90 mb-2">{categoryName}</p>
+          <div className="flex justify-center">
+            <div className="w-16 h-1.5 bg-gradient-to-r from-purple-400/60 to-blue-400/60 rounded-full"></div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // Enhanced prefetch handlers
   const handleMouseEnter = () => {
     if (!isPrefetched && post.slug) {
       prefetchTimeoutRef.current = setTimeout(() => {
         prefetchPost(post.slug);
         setIsPrefetched(true);
-      }, 300); // 300ms delay to avoid unnecessary prefetches
+      }, 200);
     }
   };
 
-  // Cancel prefetch if user moves away quickly
   const handleMouseLeave = () => {
     if (prefetchTimeoutRef.current) {
       clearTimeout(prefetchTimeoutRef.current);
@@ -88,7 +168,7 @@ const BlogCard = ({ post, variant = 'standard', index = 0 }) => {
     }
   };
 
-  // Cleanup timeout on unmount
+  // Cleanup
   React.useEffect(() => {
     return () => {
       if (prefetchTimeoutRef.current) {
@@ -97,43 +177,29 @@ const BlogCard = ({ post, variant = 'standard', index = 0 }) => {
     };
   }, []);
 
-  // Animation classes
+  // Enhanced styling
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
   const animationClasses = shouldUseAnimations() ? getAnimationClasses('fade') : '';
   
-  // Card variant styles
   const variantStyles = {
     standard: 'bg-zinc-800/50 backdrop-blur-sm border border-zinc-700/50',
-    featured: 'blog-card-featured border-2',
+    featured: 'blog-card-featured border-2 border-purple-500/20',
     compact: 'bg-zinc-800/40 border border-zinc-700/40'
   };
 
-  // Mobile responsiveness detection
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-  const isTouchDevice = typeof window !== 'undefined' && ('ontouchstart' in window || navigator.maxTouchPoints > 0);
-
-  // Enhanced card classes with improved hover effects
   const cardClasses = combineClasses(
     'group rounded-xl overflow-hidden transition-all duration-500 ease-out',
-    // Enhanced hover effects with better performance considerations
     isMobile 
       ? 'active:border-purple-500/50 active:shadow-lg active:shadow-purple-500/10 active:scale-[0.98]' 
-      : 'hover:border-purple-500/50 hover:transform hover:scale-[1.03] hover:shadow-2xl hover:shadow-purple-500/20 hover:-translate-y-2 blog-hover-lift cursor-pointer',
-    // Add subtle glow effect
+      : 'hover:border-purple-500/50 hover:transform hover:scale-[1.02] hover:shadow-2xl hover:shadow-purple-500/20 hover:-translate-y-1 cursor-pointer',
     !isMobile && 'hover:ring-1 hover:ring-purple-500/20',
     variantStyles[variant],
     animationClasses
   );
 
-  // Handle click navigation with forced page reload
   const handleCardClick = (e) => {
     e.preventDefault();
     const targetUrl = `/blog/${post.slug}`;
-    
-    // Debug logging
-    console.log('[BlogCard] Navigating to:', targetUrl, 'Post:', post.title);
-    
-    // Force a complete page navigation (not SPA routing)
-    // This ensures the page fully reloads and navigates to the correct URL
     window.location.href = targetUrl;
   };
 
@@ -149,50 +215,37 @@ const BlogCard = ({ post, variant = 'standard', index = 0 }) => {
         onClick={handleCardClick}
         className="block"
       >
-        {/* Featured Image */}
+        {/* Enhanced Featured Image Section */}
         <div className={`relative bg-zinc-700/50 overflow-hidden ${isMobile ? 'h-40' : 'h-48'}`}>
-          {post.featured_image_url && !imageError ? (
-            <LazyImage
-              src={post.featured_image_url}
+          {imageSrc && imageState.isInView && !imageState.error ? (
+            <img
+              ref={imageRef}
+              src={imageSrc}
               alt={post.title}
               className={`w-full h-full object-cover transition-all duration-500 group-hover:scale-110 ${
-                imageLoaded ? 'opacity-100' : 'opacity-0'
+                imageState.loaded ? 'opacity-100' : 'opacity-0'
               }`}
-              onLoad={() => setImageLoaded(true)}
-              onError={() => setImageError(true)}
-              placeholder={
-                <div className="w-full h-full bg-gradient-to-br from-zinc-700 to-zinc-800 flex items-center justify-center">
-                  <div className="w-16 h-16 border-4 border-zinc-600 border-t-purple-500 rounded-full animate-spin"></div>
-                </div>
-              }
+              onLoad={handleImageLoad}
+              onError={handleImageError}
+              loading="lazy"
             />
-          ) : (
-            // Enhanced fallback gradient with animated elements
-            <div className="w-full h-full bg-gradient-to-br from-purple-600/30 via-blue-600/25 to-pink-600/30 flex items-center justify-center relative overflow-hidden">
-              {/* Animated background pattern */}
-              <div className="absolute inset-0 opacity-10">
-                <div className="absolute top-4 left-4 w-8 h-8 border border-purple-300/30 rounded-full animate-pulse"></div>
-                <div className="absolute bottom-6 right-6 w-6 h-6 border border-blue-300/30 rounded-full animate-pulse delay-1000"></div>
-                <div className="absolute top-1/2 right-8 w-4 h-4 border border-pink-300/30 rounded-full animate-pulse delay-500"></div>
-              </div>
-              
-              <div className="text-center text-zinc-300 relative z-10">
-                <div className="w-16 h-16 mx-auto mb-3 opacity-60 transform group-hover:scale-110 transition-transform duration-300">
-                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full">
-                    <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" />
-                  </svg>
-                </div>
-                <p className="text-sm font-medium opacity-80">Artigo</p>
-                <div className="mt-2 flex justify-center">
-                  <div className="w-12 h-1 bg-gradient-to-r from-purple-400/50 to-blue-400/50 rounded-full"></div>
-                </div>
-              </div>
+          ) : null}
+          
+          {/* Show placeholder when no image or error */}
+          {(!imageSrc || imageState.error || !imageState.loaded) && (
+            <EnhancedPlaceholder />
+          )}
+          
+          {/* Loading indicator */}
+          {imageSrc && imageState.isInView && !imageState.loaded && !imageState.error && (
+            <div className="absolute inset-0 flex items-center justify-center bg-zinc-800/50">
+              <div className="w-8 h-8 border-3 border-purple-400 border-t-transparent rounded-full animate-spin"></div>
             </div>
           )}
           
           {/* Category Badge */}
           {primaryCategory && (
-            <div className="absolute top-4 left-4">
+            <div className="absolute top-4 left-4 z-10">
               <BlogBadge 
                 variant="category" 
                 categorySlug={categorySlug} 
@@ -205,17 +258,16 @@ const BlogCard = ({ post, variant = 'standard', index = 0 }) => {
           )}
 
           {/* Reading Time Badge */}
-          <div className="absolute top-4 right-4">
-            <span className="inline-flex items-center gap-1 px-2 py-1 bg-black/50 backdrop-blur-sm text-white rounded-full text-xs">
+          <div className="absolute top-4 right-4 z-10">
+            <span className="inline-flex items-center gap-1 px-3 py-1.5 bg-black/60 backdrop-blur-sm text-white rounded-full text-xs font-medium">
               <Clock size={12} />
               {readingTime} min
             </span>
           </div>
         </div>
 
-        {/* Content */}
+        {/* Enhanced Content Section */}
         <div className={`${isMobile ? 'p-4' : 'p-6'}`}>
-          {/* Enhanced Title with micro-interactions */}
           <h2 className={combineClasses(
             "font-bold text-zinc-100 mb-3 line-clamp-2 group-hover:text-purple-300 transition-all duration-300 transform group-hover:translate-x-1",
             getTypographyClasses('title')
@@ -223,7 +275,6 @@ const BlogCard = ({ post, variant = 'standard', index = 0 }) => {
             {post.title}
           </h2>
 
-          {/* Excerpt */}
           {excerpt && (
             <p className={combineClasses(
               "text-zinc-400 mb-4 line-clamp-3 leading-relaxed",
@@ -233,16 +284,13 @@ const BlogCard = ({ post, variant = 'standard', index = 0 }) => {
             </p>
           )}
 
-          {/* Enhanced Meta Information with better mobile layout */}
           <div className={`text-xs text-zinc-500 ${isMobile ? 'space-y-2' : 'flex items-center justify-between'}`}>
             <div className={`flex items-center ${isMobile ? 'justify-between' : 'gap-4'}`}>
-              {/* Date with hover effect */}
               <span className="flex items-center gap-1 hover:text-zinc-400 transition-colors">
                 <Calendar size={12} className="group-hover:text-purple-400 transition-colors" />
                 {formattedDate}
               </span>
 
-              {/* Author (if available) with hover effect */}
               {post.author_name && (
                 <span className="flex items-center gap-1 hover:text-zinc-400 transition-colors">
                   <User size={12} className="group-hover:text-purple-400 transition-colors" />
@@ -251,7 +299,6 @@ const BlogCard = ({ post, variant = 'standard', index = 0 }) => {
               )}
             </div>
 
-            {/* Tags count (if available) with enhanced styling */}
             {post.tags && post.tags.length > 0 && (
               <span className="text-zinc-600 group-hover:text-zinc-500 transition-colors px-2 py-1 bg-zinc-800/50 rounded-full">
                 +{post.tags.length} tags
@@ -259,13 +306,12 @@ const BlogCard = ({ post, variant = 'standard', index = 0 }) => {
             )}
           </div>
 
-          {/* Tags Preview */}
           {post.tags && post.tags.length > 0 && (
             <div className="flex flex-wrap gap-1 mt-3 -mb-1">
-              {post.tags.slice(0, 3).map((tag, index) => (
+              {post.tags.slice(0, 3).map((tag, tagIndex) => (
                 <span
-                  key={index}
-                  className="inline-block px-2 py-1 bg-zinc-700/50 text-zinc-400 rounded text-xs"
+                  key={tagIndex}
+                  className="inline-block px-2 py-1 bg-zinc-700/50 text-zinc-400 rounded text-xs hover:bg-zinc-600/50 transition-colors"
                 >
                   #{tag}
                 </span>

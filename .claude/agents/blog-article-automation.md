@@ -153,7 +153,7 @@ interface ProcessedArticle {
     steps: Array<{
       step: 'content_extraction' | 'translation' | 'image_processing' | 
             'content_structuring' | 'seo_optimization' | 'quality_assurance' |
-            'file_generation' | 'integration';
+            'file_generation' | 'integration' | 'cta_generation';
       timestamp: string;
       status: 'pending' | 'running' | 'completed' | 'failed' | 'skipped';
       duration?: number; // milliseconds
@@ -171,6 +171,25 @@ interface ProcessedArticle {
     };
     configuration: object; // Settings used for this processing
   };
+}
+
+interface CTAValidationResult {
+  courseId: string;
+  courseName: string;
+  confidence: number; // 0-1 scale
+  matchingKeywords: string[];
+  potentialMismatches: Array<{
+    issue: string;
+    severity: 'low' | 'medium' | 'high';
+    recommendation: string;
+  }>;
+  designCompliance: {
+    usesHomepageDesign: boolean;
+    iconsRemoved: boolean;
+    hasGradientBorder: boolean;
+    hasHoverEffects: boolean;
+  };
+  manualReviewRequired: boolean;
 }
 ```
 
@@ -272,6 +291,66 @@ interface AgentConfiguration {
     difficultyAnalysis: boolean; // default: true
     createQuizzes: boolean; // default: false
     addCodeExplanations: boolean; // default: true
+  };
+
+  // CTA System Integration
+  ctaSystem: {
+    enabled: boolean; // default: true
+    placement: 'bottom' | 'multiple'; // default: 'bottom'
+    designConsistency: {
+      useHomepageCardDesign: boolean; // default: true
+      removeIcons: boolean; // default: true - NO MORE BOOK ICONS
+      gradientBorders: boolean; // default: true
+      hoverEffects: boolean; // default: true
+      clipCardStyling: boolean; // default: true
+    };
+    courseMapping: {
+      algorithm: 'keyword_priority' | 'content_analysis'; // default: 'keyword_priority'
+      fallbackCourse: string; // default: 'informatica'
+      confidenceThreshold: number; // default: 0.7
+      validateMapping: boolean; // default: true
+      prioritizedKeywords: {
+        'projetista-3d': [
+          'sketchup', 'shape bender', 'enscape', 'modelagem 3d',
+          'renderização 3d', 'projetos arquitetônicos', 'arquitetura 3d',
+          'maquete eletrônica', 'geometria 3d', 'curvatura 3d',
+          'extensão sketchup', 'plugin sketchup', 'visualização arquitetônica'
+        ];
+        'design-grafico': [
+          'photoshop', 'illustrator', 'indesign', 'design gráfico',
+          'identidade visual', 'logotipo', 'branding visual',
+          'diagramação', 'layout', 'tipografia', 'cores'
+        ];
+        'informatica': [
+          'windows', 'word', 'powerpoint', 'office', 'informática básica',
+          'excel', 'planilha', 'fórmulas excel', 'gráficos excel'
+        ];
+        'programacao': [
+          'programação', 'código', 'python', 'java', 'php', 'javascript',
+          'html', 'css', 'desenvolvimento', 'software', 'app'
+        ];
+        'marketing-digital': [
+          'marketing digital', 'redes sociais', 'facebook ads', 'instagram',
+          'google ads', 'seo', 'copywriting', 'tráfego pago'
+        ];
+        'inteligencia-artificial': [
+          'inteligência artificial', 'ia', 'chatgpt', 'prompt engineering',
+          'machine learning', 'cursor ai', 'copilot'
+        ];
+        'business-intelligence': [
+          'power bi', 'business intelligence', 'dashboard', 'kpi',
+          'data visualization', 'análise de dados', 'storytelling dados'
+        ];
+        'edicao-video': [
+          'premiere', 'after effects', 'davinci resolve', 'edição vídeo',
+          'motion graphics', 'vídeo', 'montagem', 'pós-produção'
+        ];
+        'administracao': [
+          'administração', 'gestão', 'liderança', 'dp',
+          'departamento pessoal', 'matemática financeira'
+        ];
+      };
+    };
   };
 }
 ```
@@ -424,6 +503,34 @@ async optimizeForSEO(content: StructuredContent): Promise<SEOOptimizedContent> {
   minifyContent();
   
   return seoOptimizedContent;
+}
+```
+
+### Phase 5.5: CTA Generation and Validation
+```typescript
+async generateIntelligentCTA(content: StructuredContent): Promise<CTAEnhancedContent> {
+  // 5.5.1 Analyze content for course relevance
+  const contentAnalysis = await this.analyzeContentForCourseMapping(content);
+  
+  // 5.5.2 Apply prioritized keyword matching
+  const suggestedCourse = await this.findBestMatchingCourse(content, contentAnalysis);
+  
+  // 5.5.3 Validate course mapping accuracy
+  const mappingValidation = await this.validateCourseMapping(content, suggestedCourse);
+  
+  // 5.5.4 Generate CTA with homepage card design
+  const ctaData = await this.generateCTAData(content, suggestedCourse, {
+    useHomepageDesign: true,
+    removeIcons: true,
+    includeGradients: true
+  });
+  
+  // 5.5.5 Flag potential mismatches for manual review
+  if (mappingValidation.confidence < config.ctaSystem.courseMapping.confidenceThreshold) {
+    this.flagForManualReview(content, suggestedCourse, mappingValidation);
+  }
+  
+  return { ...content, ctaData, mappingValidation };
 }
 ```
 
@@ -595,6 +702,7 @@ interface BlogDataIntegration {
       tags: processedArticle.tags,
       category: processedArticle.categories[0]?.name || "Tecnologia",
       image: processedArticle.content.images[0]?.localPath || "/images/default-blog.jpg",
+      featured_image_url: processedArticle.content.images[0]?.localPath, // Use first image as card image for /blog page
       featured: processedArticle.qualityMetrics.overallScore > 85,
       // Educational metadata for filtering and search
       difficulty: processedArticle.metadata.contentComplexity,
@@ -1366,6 +1474,30 @@ interface EducationalEnhancer {
 
 ---
 
+## CTA SYSTEM CRITICAL REQUIREMENTS
+
+### Course Mapping Priority Rules
+1. **SketchUp/3D Content** → Always map to 'projetista-3d', NEVER 'design-grafico'
+2. **Design Tools (Photoshop/Illustrator)** → Map to 'design-grafico'
+3. **Programming/Code** → Map to 'programacao'
+4. **Office Tools** → Map to 'informatica'
+5. **When in doubt** → Use confidence scoring and flag for manual review
+
+### Design Requirements
+- **NO ICONS**: Especially no BookOpen icons in CTAs
+- **Homepage Consistency**: Use exact same card design as homepage courses
+- **Gradient Borders**: Match course-specific gradient colors
+- **Hover Effects**: Include hover animations and shadows
+- **Clip-card Styling**: Use the clip-card CSS class structure
+
+### Validation Checks
+- Verify content-course alignment makes logical sense
+- Check for obvious mismatches (3D content → Design course)
+- Ensure CTA design matches homepage exactly
+- Flag low-confidence mappings for human review
+
+---
+
 ## INSTRUCTIONS FOR USAGE
 
 When invoked, you MUST follow this comprehensive workflow:
@@ -1398,6 +1530,7 @@ When invoked, you MUST follow this comprehensive workflow:
 ### 5. FILE GENERATION AND INTEGRATION
 - Generate markdown file with proper frontmatter
 - Create optimized images in appropriate directories
+- **Set featured_image_url**: Copy the first/main image from article content to use as the card image for the blog listing page (/blog)
 - Update blog data structures and indices
 - Generate static paths for Next.js routing
 
@@ -1422,6 +1555,10 @@ When invoked, you MUST follow this comprehensive workflow:
 - **Accessibility**: WCAG 2.1 AA compliance required
 - **Performance**: Maximum 30 seconds processing time per article
 - **SEO**: All metadata fields must be populated and optimized
+- **CTA Accuracy**: Course mapping must have >70% confidence score
+- **Design Consistency**: Must match homepage card design exactly
+- **No Icons**: Book icons and other decorative icons are prohibited
+- **Mapping Validation**: Critical mismatches (like SketchUp→Design Gráfico) must be flagged
 
 ## ERROR HANDLING PHILOSOPHY
 
@@ -1452,5 +1589,11 @@ Always provide:
 5. **Integration Status**: How the content integrates with existing system
 6. **Recommendations**: Suggestions for improvements or follow-up actions
 7. **Performance Report**: Processing time, resource usage, and efficiency metrics
+8. **CTA Integration Report**: 
+   - Course mapping accuracy and confidence score
+   - CTA design compliance with homepage standards
+   - Validation results for course-content alignment
+   - Manual review flags if automatic mapping has low confidence
+   - List of matching keywords that influenced the decision
 
 Execute with precision, educational focus, and unwavering commitment to quality.
