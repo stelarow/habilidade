@@ -31,7 +31,7 @@ const mockCategories = [
     name: 'Programação',
     slug: 'programacao',
     description: 'Tutoriais e conceitos de programação',
-    postCount: 12,
+    postCount: 13,
     color: '#8B5CF6'
   },
   {
@@ -53,6 +53,233 @@ const mockCategories = [
 ];
 
 const mockPosts = [
+  {
+    id: 101,
+    title: 'Como Construir seu Primeiro Agente de IA (+Template de Workflow Gratuito)',
+    slug: 'como-construir-seu-primeiro-agente-ia-n8n',
+    excerpt: 'Guia passo a passo para construir agentes de IA com três abordagens práticas: programação do zero, frameworks como LangChain ou ferramentas no-code como n8n para automação inteligente.',
+    content: `
+      <div class="article-content space-y-8">
+        
+        <div class="article-section">
+          <p class="text-zinc-300 leading-relaxed mb-6 text-lg">Imagine construir um assistente que pode pesquisar tópicos online, resumir as descobertas e salvá-las diretamente no seu Notion - automaticamente. Esse é o tipo de automação inteligente que os agentes de IA tornam possível.</p>
+          
+          <div class="article-image mb-8">
+            <img src="/images/blog/agente-ia-n8n/n8n-ai-agent-hero.jpg" alt="Como construir agentes de IA com n8n" class="w-full rounded-lg shadow-lg" />
+          </div>
+        </div>
+
+        <div class="article-section">
+          <p class="text-zinc-300 leading-relaxed mb-6">Mas aqui está o verdadeiro desafio: fazer com que uma IA aja de forma confiável no mundo real - interagindo com APIs, fazendo scraping de sites, atualizando bancos de dados. Como você conecta o raciocínio da IA com as ferramentas que ela precisa para executar tarefas reais?</p>
+          
+          <div class="article-highlight bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/20 rounded-lg p-6 my-6">
+            <h4 class="text-cyan-300 font-semibold mb-3">🤖 Três Abordagens para Construir Agentes de IA</h4>
+            <ul class="space-y-2">
+              <li><span class="text-cyan-300 font-semibold">Do zero:</span> <span class="text-zinc-300">Controle total, mas alta complexidade</span></li>
+              <li><span class="text-cyan-300 font-semibold">Com frameworks:</span> <span class="text-zinc-300">LangChain, CrewAI para flexibilidade</span></li>
+              <li><span class="text-cyan-300 font-semibold">Com n8n:</span> <span class="text-zinc-300">Visual, rápido e pronto para produção</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Componentes Fundamentais de Agentes de IA</h2>
+          
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="bg-zinc-800/30 rounded-lg p-6">
+              <h4 class="text-cyan-300 font-semibold mb-3">🔍 Percepção</h4>
+              <ul class="space-y-2 text-zinc-300">
+                <li>• Comandos de texto do usuário</li>
+                <li>• Eventos de outros sistemas</li>
+                <li>• Dados de APIs e websites</li>
+                <li>• Conteúdo de documentos</li>
+              </ul>
+            </div>
+            
+            <div class="bg-zinc-800/30 rounded-lg p-6">
+              <h4 class="text-purple-300 font-semibold mb-3">🧠 Tomada de Decisão</h4>
+              <ul class="space-y-2 text-zinc-300">
+                <li>• LLMs (GPT, Gemini, Claude)</li>
+                <li>• Sistemas baseados em regras</li>
+                <li>• Modelos de ML</li>
+                <li>• Planejamento de tarefas</li>
+              </ul>
+            </div>
+            
+            <div class="bg-zinc-800/30 rounded-lg p-6">
+              <h4 class="text-green-300 font-semibold mb-3">⚡ Ação</h4>
+              <ul class="space-y-2 text-zinc-300">
+                <li>• Chamadas de API</li>
+                <li>• Execução de workflows</li>
+                <li>• Atualização de bancos de dados</li>
+                <li>• Controle de dispositivos</li>
+              </ul>
+            </div>
+            
+            <div class="bg-zinc-800/30 rounded-lg p-6">
+              <h4 class="text-yellow-300 font-semibold mb-3">💾 Memória</h4>
+              <ul class="space-y-2 text-zinc-300">
+                <li>• Contexto de conversas</li>
+                <li>• Preferências do usuário</li>
+                <li>• Bases de conhecimento (RAG)</li>
+                <li>• Aprendizado contínuo</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Tutorial Prático: Agente de Pesquisa com n8n</h2>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Vamos construir um agente de pesquisa prático que faz scraping da web e salva o resumo para nós - automaticamente!</p>
+          
+          <div class="article-image mb-6">
+            <img src="/images/blog/agente-ia-n8n/n8n-research-agent-workflow.png" alt="Workflow do agente de pesquisa n8n" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Workflow do agente de pesquisa que vamos construir</p>
+          </div>
+          
+          <div class="article-highlight bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 rounded-lg p-6 my-6">
+            <h4 class="text-blue-300 font-semibold mb-3">📋 Pré-requisitos</h4>
+            <ul class="space-y-2 text-zinc-300">
+              <li>• Instância n8n (Cloud ou auto-hospedada)</li>
+              <li>• Acesso ao Browserless para web scraping</li>
+              <li>• Chave da API do Google AI (Gemini)</li>
+              <li>• Webhook do Discord para notificações</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h3 class="text-xl font-bold text-white mb-4">Passo 1: Configure o Gatilho</h3>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Todo workflow do n8n começa com um nó de gatilho. Para nosso agente, usamos o <strong>Chat Trigger</strong> que permite interação via mensagens.</p>
+          
+          <div class="bg-zinc-800/50 rounded-lg p-4 mb-6">
+            <p class="text-zinc-300"><strong>Dica:</strong> Você também pode usar Webhook Trigger para integrações customizadas ou Slack Trigger para comandos do Slack.</p>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h3 class="text-xl font-bold text-white mb-4">Passo 2: Configure o Núcleo do Agente</h3>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">O coração do workflow é o <strong>AI Agent node</strong>, que orquestra a comunicação entre o gatilho, o LLM e as ferramentas.</p>
+          
+          <div class="article-image mb-6">
+            <img src="/images/blog/agente-ia-n8n/ai-agent-node-config.png" alt="Configuração do nó AI Agent" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Configuração do nó AI Agent no n8n</p>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h3 class="text-xl font-bold text-white mb-4">Passo 3: Defina Instruções do Agente</h3>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Configure o modelo Gemini e defina as instruções do sistema para orientar o comportamento do agente.</p>
+          
+          <div class="article-image mb-6">
+            <img src="/images/blog/agente-ia-n8n/google-gemini-llm-config.png" alt="Configuração do LLM Google Gemini" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Configuração do Google Gemini como modelo de linguagem</p>
+          </div>
+          
+          <div class="bg-zinc-800/50 rounded-lg p-6 mb-6">
+            <h4 class="text-white font-semibold mb-3">📝 Exemplo de System Message</h4>
+            <code class="text-green-300 text-sm">
+              Você é um agente de pesquisa inteligente. Sua tarefa é:<br/>
+              1. Fazer scraping do website usando a ferramenta website_scraper<br/>
+              2. Resumir o conteúdo em português<br/>
+              3. Salvar no Notion usando save_to_notion<br/>
+              4. Notificar via Discord quando concluído
+            </code>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h3 class="text-xl font-bold text-white mb-4">Passo 4: Ferramentas do Agente</h3>
+          
+          <h4 class="text-lg font-semibold text-white mb-3">Ferramenta de Web Scraping</h4>
+          <p class="text-zinc-300 leading-relaxed mb-4">Configure o HTTP Request Tool para fazer scraping usando Browserless:</p>
+          
+          <div class="article-image mb-6">
+            <img src="/images/blog/agente-ia-n8n/browserless-scraping-tool.png" alt="Configuração da ferramenta de web scraping" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Configuração do Browserless para web scraping</p>
+          </div>
+          
+          <h4 class="text-lg font-semibold text-white mb-3 mt-8">Ferramenta Notion</h4>
+          <p class="text-zinc-300 leading-relaxed mb-4">Configure a integração com Notion para salvar os resultados da pesquisa automaticamente.</p>
+          
+          <h4 class="text-lg font-semibold text-white mb-3 mt-8">Notificações Discord</h4>
+          <p class="text-zinc-300 leading-relaxed mb-4">Configure notificações para acompanhar o progresso do agente em tempo real.</p>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Exercícios Práticos</h2>
+          
+          <div class="grid md:grid-cols-3 gap-6">
+            <div class="bg-green-500/10 border border-green-500/20 rounded-lg p-6">
+              <h4 class="text-green-300 font-semibold mb-3">🟢 Iniciante</h4>
+              <h5 class="text-white font-medium mb-2">Personalizando o Agente</h5>
+              <p class="text-zinc-300 text-sm mb-3">Tempo: 20 min</p>
+              <ul class="text-zinc-300 text-sm space-y-1">
+                <li>• Adicionar análise de sentimento</li>
+                <li>• Incluir resumo executivo</li>
+                <li>• Categorização automática</li>
+              </ul>
+            </div>
+            
+            <div class="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-6">
+              <h4 class="text-yellow-300 font-semibold mb-3">🟡 Intermediário</h4>
+              <h5 class="text-white font-medium mb-2">Multi-Plataforma</h5>
+              <p class="text-zinc-300 text-sm mb-3">Tempo: 45 min</p>
+              <ul class="text-zinc-300 text-sm space-y-1">
+                <li>• Integração Google Sheets</li>
+                <li>• Relatórios por email</li>
+                <li>• Posts no LinkedIn</li>
+              </ul>
+            </div>
+            
+            <div class="bg-red-500/10 border border-red-500/20 rounded-lg p-6">
+              <h4 class="text-red-300 font-semibold mb-3">🔴 Avançado</h4>
+              <h5 class="text-white font-medium mb-2">Monitoramento</h5>
+              <p class="text-zinc-300 text-sm mb-3">Tempo: 60 min</p>
+              <ul class="text-zinc-300 text-sm space-y-1">
+                <li>• Monitorar RSS feeds</li>
+                <li>• Filtros por palavra-chave</li>
+                <li>• Boletim automatizado</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Conclusão</h2>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Os agentes de IA representam uma evolução natural da automação, permitindo sistemas que não apenas executam tarefas, mas tomam decisões inteligentes sobre como executá-las.</p>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Com o n8n, você pode construir agentes poderosos sem a complexidade da programação tradicional, focando na lógica de negócio e na integração de ferramentas.</p>
+          
+          <div class="article-highlight bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/20 rounded-lg p-6 my-6">
+            <h4 class="text-purple-300 font-semibold mb-3">🚀 Próximos Passos</h4>
+            <ul class="space-y-2 text-zinc-300">
+              <li>• Experimente com diferentes LLMs (OpenAI, Claude, etc.)</li>
+              <li>• Construa agentes para casos de uso específicos</li>
+              <li>• Explore a comunidade n8n para inspiração</li>
+              <li>• Implemente monitoramento e logs avançados</li>
+            </ul>
+          </div>
+          
+          <p class="text-zinc-300 leading-relaxed">A automação inteligente está apenas começando. Com as ferramentas certas e o conhecimento adequado, você pode criar soluções que revolucionam a forma como trabalha e cria valor.</p>
+        </div>
+        
+      </div>
+    `,
+    author: { name: 'Escola Habilidade', avatar: '/assets/avatars/default.jpg' },
+    category: { id: 4, name: 'Programação', slug: 'programacao', color: '#8B5CF6' },
+    featuredImage: '/images/blog/agente-ia-n8n/n8n-ai-agent-hero.jpg',
+    publishedAt: '2025-07-31T14:30:00.000Z',
+    readingTime: 16,
+    tags: ['ia', 'automacao', 'n8n', 'agentes-ia', 'workflow', 'tutorial', 'gemini', 'no-code'],
+    views: 0,
+    likes: 0
+  },
   {
     id: 100,
     title: '5 Maneiras de Maximizar Vistas Magníficas para Casas Personalizadas',
