@@ -47,12 +47,126 @@ const mockCategories = [
     name: 'Arquitetura',
     slug: 'arquitetura',
     description: 'Design arquitetônico e projetos de construção',
-    postCount: 3,
+    postCount: 4,
     color: '#06B6D4'
   }
 ];
 
 const mockPosts = [
+  {
+    id: 102,
+    title: '10 Dicas de Especialistas para Fazer Suas Renderizações Enscape Se Destacarem',
+    slug: '10-dicas-especialistas-renderizacoes-enscape-destaque',
+    excerpt: 'Descubra as 10 dicas mais valiosas de especialistas em visualização arquitetônica para transformar suas renderizações Enscape de básicas em extraordinárias. Técnicas profissionais de sombras, materiais, composição e iluminação.',
+    content: `
+      <div class="article-content space-y-8">
+        
+        <div class="article-section">
+          <p class="text-zinc-300 leading-relaxed mb-6 text-lg">No mundo competitivo da visualização arquitetônica, a diferença entre uma renderização amadora e profissional pode determinar o sucesso de um projeto. O Enscape revolucionou o setor ao oferecer renderização em tempo real sem a complexidade de softwares tradicionais, mas para maximizar seu potencial, você precisa ir além do básico.</p>
+          
+          <div class="article-image mb-8">
+            <img src="/images/blog/enscape-dicas-especialista-renderizacao/enscape-hero-render-exterior.jpg" alt="10 dicas de especialistas para renderizações Enscape" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Renderização exterior profissional: resultado de técnicas avançadas bem aplicadas</p>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">1. Sombras e Reflexões: A Base da Profundidade Visual</h2>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Sombras e reflexões trabalham em conjunto para criar profundidade e realismo convincentes. Não são apenas efeitos visuais—são elementos narrativos que guiam o olhar e criam atmosfera.</p>
+          
+          <div class="article-highlight bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/20 rounded-lg p-6 my-6">
+            <h4 class="text-cyan-300 font-semibold mb-3">🌟 Estratégias Avançadas de Sombreamento</h4>
+            <ul class="space-y-2 text-zinc-300">
+              <li><strong>Árvores e vegetação:</strong> Coloque estrategicamente para criar sombras interessantes no primeiro plano</li>
+              <li><strong>Elementos arquitetônicos:</strong> Use paredes, pergolados e marquises como molduras naturais</li>
+              <li><strong>Intensidade solar:</strong> Ajuste entre 3.0-4.0 para exteriores</li>
+              <li><strong>Ângulo do sol:</strong> 45°-135° para sombras dinâmicas e interessantes</li>
+            </ul>
+          </div>
+          
+          <div class="article-image mb-6">
+            <img src="/images/blog/enscape-dicas-especialista-renderizacao/interior-kitchen-living.jpg" alt="Cozinha e sala integradas modernas" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Uso estratégico de luz natural e sombras interiores</p>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">2. Otimização de Modelo: Performance Encontra Qualidade</h2>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">A otimização eficiente permite renderizações rápidas sem sacrificar qualidade visual. A chave está em saber onde investir polígonos e onde economizar.</p>
+          
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="bg-zinc-800/30 rounded-lg p-6">
+              <h4 class="text-green-300 font-semibold mb-3">⚡ Fase de Composição</h4>
+              <ul class="space-y-2 text-zinc-300">
+                <li>• Use proxy objects para vegetação complexa</li>
+                <li>• Aplique materiais simples temporários</li>
+                <li>• Mantenha texturas em 1K-2K durante testes</li>
+                <li>• Desative layers desnecessários</li>
+              </ul>
+            </div>
+            
+            <div class="bg-zinc-800/30 rounded-lg p-6">
+              <h4 class="text-purple-300 font-semibold mb-3">🎯 Renderização Final</h4>
+              <ul class="space-y-2 text-zinc-300">
+                <li>• Substitua proxies por assets detalhados</li>
+                <li>• Upgrade texturas para 2K-4K onde necessário</li>
+                <li>• Mantenha objetos de fundo em baixa resolução</li>
+                <li>• Execute limpeza geral do modelo</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">3. Composição Fotográfica: Guiando o Olhar do Cliente</h2>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Grandes renderizações seguem os mesmos princípios da fotografia profissional. Composição não é acidente—é planejamento estratégico para contar uma história visual.</p>
+          
+          <div class="article-image mb-6">
+            <img src="/images/blog/enscape-dicas-especialista-renderizacao/modern-living-room.jpg" alt="Sala de estar moderna" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Composição usando regra dos terços e enquadramento natural</p>
+          </div>
+          
+          <div class="article-highlight bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 rounded-lg p-6 my-6">
+            <h4 class="text-blue-300 font-semibold mb-3">📸 Princípios Compositivos Essenciais</h4>
+            <ul class="space-y-2 text-zinc-300">
+              <li><strong>Regra dos Terços:</strong> Posicione elementos importantes nas intersecções da grade 3x3</li>
+              <li><strong>Linhas Condutoras:</strong> Use estradas, bordas arquitetônicas e elementos paisagísticos</li>
+              <li><strong>Enquadramento Natural:</strong> Vegetação e estruturas como molduras orgânicas</li>
+              <li><strong>Storytelling Visual:</strong> Cada renderização deve contar uma história</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <div class="article-image mb-6">
+            <img src="/images/blog/enscape-dicas-especialista-renderizacao/modern-chair-detail.jpg" alt="Detalhe de mobiliário moderno" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Detalhamento preciso em elementos de destaque</p>
+          </div>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Este artigo apresenta apenas as primeiras 3 das 10 técnicas essenciais. Outras dicas incluem configuração de materiais PBR, uso estratégico da biblioteca de assets, ajustes de câmera, iluminação interior, skyboxes HDRI, animações cinematográficas e recursos de IA.</p>
+          
+          <div class="article-highlight bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-500/20 rounded-lg p-6 my-6">
+            <h4 class="text-green-300 font-semibold mb-3">🎓 Domine Todas as Técnicas Profissionais</h4>
+            <p class="text-zinc-300 mb-4">Quer aprender todas as 10 técnicas avançadas de renderização e se tornar um especialista em visualização arquitetônica?</p>
+            <p class="text-zinc-300">Nosso curso <strong>Projetista 3D</strong> ensina essas e muitas outras técnicas profissionais usadas por escritórios de arquitetura renomados.</p>
+          </div>
+        </div>
+        
+      </div>
+    `,
+    author: { name: 'Escola Habilidade', avatar: '/assets/avatars/default.jpg' },
+    category: { id: 6, name: 'Arquitetura', slug: 'arquitetura', color: '#06B6D4' },
+    featuredImage: '/images/blog/enscape-dicas-especialista-renderizacao/enscape-hero-render-exterior.jpg',
+    featured_image_url: '/images/blog/enscape-dicas-especialista-renderizacao/enscape-hero-render-exterior.jpg',
+    publishedAt: '2025-07-31T16:00:00.000Z',
+    readingTime: 12,
+    tags: ['enscape', 'renderização', 'visualização-arquitetônica', 'sketchup', 'materiais', 'iluminação', 'composição', 'otimização'],
+    views: 0,
+    likes: 0
+  },
   {
     id: 101,
     title: 'Como Construir seu Primeiro Agente de IA (+Template de Workflow Gratuito)',
