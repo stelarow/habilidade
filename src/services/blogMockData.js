@@ -65,8 +65,8 @@ const mockPosts = [
           <p class="text-zinc-300 leading-relaxed mb-6 text-lg">No desenvolvimento de projetos de cozinhas, a aplicação correta dos princípios ergonômicos determina não apenas o conforto dos usuários, mas também a eficiência operacional e a segurança do ambiente. Este artigo apresenta os fundamentos técnicos essenciais para o dimensionamento e disposição espacial de elementos em cozinhas residenciais e comerciais.</p>
           
           <div class="article-image mb-8">
-            <img src="/images/blog/ergonomia-cozinha-dicas/cozinha-ergonomica-layout.jpg" alt="Layout ergonômico de cozinha com medidas técnicas" class="w-full rounded-lg shadow-lg" />
-            <p class="text-zinc-400 text-sm mt-2 text-center italic">Princípios técnicos de ergonomia aplicados ao design de cozinhas funcionais</p>
+            <img src="/images/blog/ergonomia-cozinha-dicas/setorizacao.jpg" alt="Setorização dos principais centros de atividade em cozinhas" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Esquema de setorização para organização funcional de cozinhas - Fonte: Clique Arquitetura</p>
           </div>
         </div>
 
@@ -183,8 +183,8 @@ const mockPosts = [
     `,
     author: { name: 'Professor Alessandro Ferreira', avatar: '/assets/avatars/default.jpg' },
     category: { id: 5, name: 'Design', slug: 'design', color: '#EF4444' },
-    featuredImage: '/images/blog/ergonomia-cozinha-dicas/cozinha-ergonomica-layout.jpg',
-    featured_image_url: '/images/blog/ergonomia-cozinha-dicas/cozinha-ergonomica-layout.jpg',
+    featuredImage: '/images/blog/ergonomia-cozinha-dicas/setorizacao.jpg',
+    featured_image_url: '/images/blog/ergonomia-cozinha-dicas/setorizacao.jpg',
     publishedAt: '2025-07-31T18:00:00.000Z',
     readingTime: 8,
     tags: ['ergonomia', 'design-de-interiores', 'cozinha', 'antropometria', 'projeto-arquitetonico', 'espacos-funcionais'],

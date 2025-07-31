@@ -5,7 +5,7 @@ excerpt: "Fundamentos técnicos de ergonomia aplicados ao design de cozinhas, in
 author: "Professor Alessandro Ferreira"
 category: "Design"
 tags: ["ergonomia", "design-de-interiores", "cozinha", "antropometria", "projeto-arquitetonico", "espacos-funcionais"]
-image: "/images/blog/ergonomia-cozinha-dicas/cozinha-ergonomica-layout.jpg"
+image: "/images/blog/ergonomia-cozinha-dicas/setorizacao.jpg"
 publishedAt: "2025-07-31"
 readingTime: 8
 featured: false
@@ -16,6 +16,8 @@ featured: false
 No desenvolvimento de projetos de cozinhas, a aplicação correta dos princípios ergonômicos determina não apenas o conforto dos usuários, mas também a eficiência operacional e a segurança do ambiente. Este artigo apresenta os fundamentos técnicos essenciais para o dimensionamento e disposição espacial de elementos em cozinhas residenciais e comerciais.
 
 ## 1. Triângulo de Trabalho: Fundamentos da Circulação Eficiente
+
+![Setorização da cozinha](/images/blog/ergonomia-cozinha-dicas/setorizacao.jpg)
 
 O conceito do triângulo de trabalho representa a base da organização espacial em cozinhas funcionais. Esta configuração estabelece a relação espacial otimizada entre os três centros de atividade principais: refrigeração, cocção e lavagem.
 
@@ -33,6 +35,10 @@ O conceito do triângulo de trabalho representa a base da organização espacial
 
 ### Fluxo Operacional Otimizado
 
+![Projetos de cozinha](/images/blog/ergonomia-cozinha-dicas/proj02.gif)
+
+![Cozinha Pullman](/images/blog/ergonomia-cozinha-dicas/cozinha-pullman.jpg)
+
 A sequência lógica de atividades (armazenamento → preparo → cocção → limpeza) deve ser respeitada na disposição dos equipamentos, criando um fluxo unidirecional que reduz conflitos de circulação e aumenta a produtividade.
 
 ## 2. Dimensionamento de Bancadas: Antropometria Aplicada
@@ -46,6 +52,8 @@ A sequência lógica de atividades (armazenamento → preparo → cocção → l
 
 ### Altura das Bancadas
 
+![Altura das bancadas](/images/blog/ergonomia-cozinha-dicas/alturas-bancadas.png)
+
 **Dimensionamento Vertical:**
 - Altura padrão: 85-90 centímetros
 - Base antropométrica: Adequada para usuários com estatura entre 1,60m e 1,80m
@@ -53,10 +61,14 @@ A sequência lógica de atividades (armazenamento → preparo → cocção → l
 
 ### Área de Circulação Inferior
 
+![Ergonomia módulos superiores](/images/blog/ergonomia-cozinha-dicas/ergo-3.jpg)
+
 **Reentrância Inferior:**
 - Dimensão: 10 centímetros de profundidade
 - Altura: 8 centímetros mínimo do piso
 - Função: Permite aproximação confortável e facilita posicionamento dos pés durante o trabalho
+
+![Ergonomia módulos inferiores](/images/blog/ergonomia-cozinha-dicas/ergo-4.jpg)
 
 ## 3. Dimensionamento de Corredores e Áreas de Circulação
 
@@ -72,10 +84,14 @@ A sequência lógica de atividades (armazenamento → preparo → cocção → l
 
 ### Cozinhas em Paralelo
 
+![Distância entre cuba e fogão](/images/blog/ergonomia-cozinha-dicas/ergo-5.jpg)
+
 **Configuração Dupla:**
 - Distância entre bancadas opostas: 120 centímetros mínimo
 - Justificativa: Permite abertura simultânea de armários e eletrodomésticos
 - Consideração: Garante circulação segura mesmo com portas abertas
+
+![Circulação em cozinhas](/images/blog/ergonomia-cozinha-dicas/ergo-6.jpg)
 
 ## 4. Posicionamento Estratégico de Elementos
 
@@ -94,6 +110,8 @@ A sequência lógica de atividades (armazenamento → preparo → cocção → l
 - Ventilação: Garantir exaustão adequada na área de cocção
 
 ### Utensílios e Acessórios
+
+![Altura bancada americana](/images/blog/ergonomia-cozinha-dicas/ergo-9.jpg)
 
 **Disposição Funcional:**
 - Utensílios de cocção: Próximos ao fogão
