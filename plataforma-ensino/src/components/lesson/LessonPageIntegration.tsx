@@ -75,6 +75,13 @@ const LessonPageIntegration: React.FC<LessonPageIntegrationProps> = ({
 }) => {
   const router = useRouter()
 
+  // Extract Canva material from lesson materials
+  const canvaMaterial = useMemo(() => {
+    return lesson.materials?.find(
+      (m: any) => m.type === 'canva' || m.url?.includes('canva.com')
+    )
+  }, [lesson.materials])
+
   // Transform existing data to match LessonPageRedesigned interface
   const adaptedLesson = useMemo(() => ({
     id: lesson.id,
@@ -253,12 +260,12 @@ const LessonPageIntegration: React.FC<LessonPageIntegrationProps> = ({
       exercises={exercises}
       quizzes={quizzes}
       content={lesson.content}
-      // Canva embed data - for now using the provided example
-      canvaEmbedUrl="https://www.canva.com/design/DAGuqW8uqiw/_HxYFw6YjdkL93523L-55w/view?embed"
-      canvaTitle="Apresentação Básica Minimalista Preto e Branco"
-      canvaDescription="Material introdutório visual da aula"
-      canvaAuthor="Maria Eduarda Weingartner"
-      canvaAuthorUrl="https://www.canva.com/design/DAGuqW8uqiw/_HxYFw6YjdkL93523L-55w/view?utm_content=DAGuqW8uqiw&utm_campaign=designshare&utm_medium=embeds&utm_source=link"
+      // Canva embed data from materials
+      canvaEmbedUrl={canvaMaterial?.url}
+      canvaTitle={canvaMaterial?.title}
+      canvaDescription={canvaMaterial?.description}
+      canvaAuthor={canvaMaterial?.author}
+      canvaAuthorUrl={canvaMaterial?.authorUrl}
     />
   )
 }
