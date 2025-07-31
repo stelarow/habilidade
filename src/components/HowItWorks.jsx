@@ -103,7 +103,7 @@ function HowItWorks() {
             Habilidades que destacam você no mercado
           </h2>
           <p className="text-zinc-300 text-lg max-w-2xl mx-auto mb-8 leading-relaxed">
-            Cursos práticos e objetivos para acelerar sua carreira. Aprenda fazendo e veja resultados reais na sua vida profissional.
+            Cursos práticos e objetivos para desenvolver suas habilidades. Aprenda fazendo e veja resultados reais na sua vida profissional.
           </p>
           <GradientButton href="#cursos" className="px-8 py-3">
             VEJA COMO FUNCIONA

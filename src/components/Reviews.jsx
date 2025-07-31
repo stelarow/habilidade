@@ -261,10 +261,10 @@ const Reviews = () => {
                 <span className="text-xl font-bold">Seja o próximo sucesso!</span>
               </div>
               <h3 className="text-2xl md:text-3xl font-bold mb-4">
-                Transforme sua carreira conosco
+                Desenvolva suas habilidades conosco
               </h3>
               <p className="text-blue-100 mb-8 max-w-2xl mx-auto leading-relaxed">
-                Junte-se aos nossos alunos que já conquistaram suas vagas no mercado de trabalho
+                Junte-se aos nossos alunos que já aprimoraram suas habilidades e conhecimentos
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <GradientButton href="#cursos" className="px-8 py-3">

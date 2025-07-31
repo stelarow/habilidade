@@ -11,7 +11,7 @@ import {
 
 const SEOHead = ({
   title = 'Escola Habilidade',
-  description = 'Transforme sua carreira com cursos de tecnologia, design e negócios. Educação de qualidade para o mercado digital.',
+  description = 'Desenvolva suas habilidades com cursos de tecnologia, design e negócios. Educação de qualidade para o mercado digital.',
   keywords = '',
   path = '',
   image = null,
@@ -25,7 +25,7 @@ const SEOHead = ({
 }) => {
   // Sanitize all string inputs to prevent invalid children
   const safeTitle = String(title || 'Escola Habilidade');
-  const safeDescription = String(description || 'Transforme sua carreira com cursos de tecnologia, design e negócios. Educação de qualidade para o mercado digital.');
+  const safeDescription = String(description || 'Desenvolva suas habilidades com cursos de tecnologia, design e negócios. Educação de qualidade para o mercado digital.');
   const safeKeywords = keywords ? String(keywords).trim() : '';
   const safeAuthor = String(author || 'Escola Habilidade');
   

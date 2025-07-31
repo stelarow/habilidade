@@ -198,15 +198,15 @@ export function UrgencyCTA({
   const getUrgencyBadge = () => {
     switch (urgencyConfig.type) {
       case 'time':
-        return 'OFERTA LIMITADA';
+        return 'INSCRIÇÕES ABERTAS';
       case 'quantity':
-        return '�LTIMAS VAGAS';
+        return 'INSCRIÇÕES ABERTAS';
       case 'demand':
         return demandLevel === 'high' ? 'ALTA DEMANDA' : 'EM ALTA';
       case 'seasonal':
-        return 'PROMO��O ESPECIAL';
+        return 'CURSO DISPONÍVEL';
       default:
-        return 'URGENTE';
+        return 'INSCRIÇÕES ABERTAS';
     }
   };
 
@@ -308,7 +308,7 @@ export function UrgencyCTA({
                     >
                       <Users className="h-4 w-4" />
                       <span className="font-bold">
-                        Apenas {currentQuantity} vagas restantes
+                        {currentQuantity} inscrições em aberto
                       </span>
                       {currentQuantity <= 5 && (
                         <motion.div
@@ -331,8 +331,8 @@ export function UrgencyCTA({
                       <TrendingUp className="h-4 w-4" />
                       <span className="font-bold">
                         {demandLevel === 'high' 
-                          ? '=% Muitas pessoas vendo isso agora!'
-                          : '=� Interesse crescente nesta oferta'
+                          ? '🎆 Curso em destaque hoje!'
+                          : '📈 Interesse crescente neste curso'
                         }
                       </span>
                     </motion.div>
@@ -343,7 +343,7 @@ export function UrgencyCTA({
                     <div className={`flex items-center gap-2 ${colors.accent}`}>
                       <Star className="h-4 w-4" />
                       <span className="font-bold">
-                        Promo��o v�lida at� {format(new Date(urgencyConfig.deadline), 'dd/MM/yyyy', { locale: ptBR })}
+                        Inscrições abertas até {format(new Date(urgencyConfig.deadline), 'dd/MM/yyyy', { locale: ptBR })}
                       </span>
                     </div>
                   )}

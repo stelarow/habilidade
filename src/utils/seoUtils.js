@@ -10,7 +10,7 @@ const BASE_URL = process.env.NODE_ENV === 'production'
 
 const SITE_CONFIG = {
   name: 'Escola Habilidade',
-  description: 'Transforme sua carreira com cursos de tecnologia, design e negócios. Educação de qualidade para o mercado digital.',
+  description: 'Desenvolva suas habilidades com cursos de tecnologia, design e negÃ³cios. EducaÃ§Ã£o de qualidade para o mercado digital.',
   logo: `${BASE_URL}/assets/logos/original/logo-original.png`,
   twitter: '@escolahabilidade',
   facebook: 'escolahabilidade',
@@ -299,16 +299,16 @@ export const extractKeywords = (content, options = {}) => {
   const stopWords = excludeCommon ? [
     'o', 'a', 'os', 'as', 'um', 'uma', 'uns', 'umas',
     'de', 'do', 'da', 'dos', 'das', 'em', 'no', 'na', 'nos', 'nas',
-    'para', 'por', 'com', 'sem', 'sob', 'sobre', 'ante', 'após',
+    'para', 'por', 'com', 'sem', 'sob', 'sobre', 'ante', 'apï¿½s',
     'que', 'se', 'quando', 'onde', 'como', 'porque', 'mas', 'mais',
-    'muito', 'bem', 'já', 'ainda', 'também', 'só', 'até', 'desde'
+    'muito', 'bem', 'jï¿½', 'ainda', 'tambï¿½m', 'sï¿½', 'atï¿½', 'desde'
   ] : [];
   
   // Extract words
   const words = content
     .toLowerCase()
     .replace(/<[^>]*>/g, '') // Remove HTML
-    .replace(/[^\w\sà-ÿ]/g, ' ') // Keep only letters and accented chars
+    .replace(/[^\w\sï¿½-ï¿½]/g, ' ') // Keep only letters and accented chars
     .split(/\s+/)
     .filter(word => 
       word.length >= minLength && 

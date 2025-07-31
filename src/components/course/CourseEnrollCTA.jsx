@@ -55,7 +55,7 @@ function CourseEnrollCTA({ course, onEnrollClick }) {
 
             {/* Subtítulo */}
             <p className="text-gray-300 text-base sm:text-lg md:text-xl mb-6 sm:mb-8 max-w-2xl mx-auto leading-relaxed">
-              Transforme sua carreira com o curso de{' '}
+              Desenvolva suas habilidades com o curso de{' '}
               <span 
                 className="font-semibold"
                 style={{ color: course?.themeColors?.primary || '#2196F3' }}

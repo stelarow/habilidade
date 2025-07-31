@@ -1,14 +1,14 @@
 /**
- * CTA Parser Utility - Sistema de análise e inserção de CTAs em conteúdo
+ * CTA Parser Utility - Sistema de anï¿½lise e inserï¿½ï¿½o de CTAs em conteï¿½do
  * Detecta artigos longos e insere CTAs de forma inteligente
  */
 
-// Configurações padrão
+// Configuraï¿½ï¿½es padrï¿½o
 const DEFAULT_CONFIG = {
-  minWordCount: 1000, // Mínimo de palavras para inserir CTAs inline
-  maxInlineCTAs: 2, // Máximo de CTAs inline por artigo
-  paragraphThreshold: 3, // Mínimo de parágrafos entre CTAs
-  preferredPositions: [0.3, 0.7], // Posições preferenciais (30% e 70% do conteúdo)
+  minWordCount: 1000, // Mï¿½nimo de palavras para inserir CTAs inline
+  maxInlineCTAs: 2, // Mï¿½ximo de CTAs inline por artigo
+  paragraphThreshold: 3, // Mï¿½nimo de parï¿½grafos entre CTAs
+  preferredPositions: [0.3, 0.7], // Posiï¿½ï¿½es preferenciais (30% e 70% do conteï¿½do)
 };
 
 /**
@@ -24,7 +24,7 @@ export const countWords = (htmlContent) => {
 };
 
 /**
- * Analisa se o artigo é longo o suficiente para CTAs inline
+ * Analisa se o artigo ï¿½ longo o suficiente para CTAs inline
  */
 export const shouldShowInlineCTAs = (content, config = DEFAULT_CONFIG) => {
   const wordCount = countWords(content);
@@ -32,32 +32,32 @@ export const shouldShowInlineCTAs = (content, config = DEFAULT_CONFIG) => {
 };
 
 /**
- * Extrai parágrafos de conteúdo HTML
+ * Extrai parï¿½grafos de conteï¿½do HTML
  */
 export const extractParagraphs = (htmlContent) => {
   if (!htmlContent) return [];
   
-  // Encontra todos os parágrafos
+  // Encontra todos os parï¿½grafos
   const paragraphMatches = htmlContent.match(/<p[^>]*>.*?<\/p>/gi);
   return paragraphMatches || [];
 };
 
 /**
- * Calcula posições ideais para inserir CTAs
+ * Calcula posiï¿½ï¿½es ideais para inserir CTAs
  */
 export const calculateOptimalPositions = (paragraphs, config = DEFAULT_CONFIG) => {
   if (paragraphs.length < config.paragraphThreshold * 2) {
-    return []; // Não inserir se há poucos parágrafos
+    return []; // Nï¿½o inserir se hï¿½ poucos parï¿½grafos
   }
 
   const positions = [];
   const totalParagraphs = paragraphs.length;
 
-  // Calcula posições baseadas nas preferências
+  // Calcula posiï¿½ï¿½es baseadas nas preferï¿½ncias
   config.preferredPositions.forEach(ratio => {
     const targetIndex = Math.floor(totalParagraphs * ratio);
     
-    // Garante que não seja muito próximo do início ou fim
+    // Garante que nï¿½o seja muito prï¿½ximo do inï¿½cio ou fim
     const minIndex = Math.max(config.paragraphThreshold, 0);
     const maxIndex = Math.min(totalParagraphs - config.paragraphThreshold, totalParagraphs - 1);
     
@@ -73,7 +73,7 @@ export const calculateOptimalPositions = (paragraphs, config = DEFAULT_CONFIG) =
 };
 
 /**
- * Gera CTAs contextuais baseados no conteúdo do artigo
+ * Gera CTAs contextuais baseados no conteï¿½do do artigo
  */
 export const generateContextualCTAs = (post) => {
   const ctas = [];
@@ -89,12 +89,12 @@ export const generateContextualCTAs = (post) => {
 
   // Templates de CTA baseados em palavras-chave
   const ctaTemplates = {
-    // Tecnologia e Programação
+    // Tecnologia e Programaï¿½ï¿½o
     programming: {
-      keywords: ['programação', 'javascript', 'html', 'css', 'web', 'desenvolvimento', 'código'],
+      keywords: ['programaï¿½ï¿½o', 'javascript', 'html', 'css', 'web', 'desenvolvimento', 'cï¿½digo'],
       cta: {
         type: 'course',
-        title: 'Quer dominar programação web?',
+        title: 'Quer dominar programaï¿½ï¿½o web?',
         description: 'Aprenda as tecnologias mais demandadas do mercado com nosso curso completo.',
         actionText: 'Ver Curso',
         actionLink: '/curso/programacao-web'
@@ -103,11 +103,11 @@ export const generateContextualCTAs = (post) => {
     
     // Design
     design: {
-      keywords: ['design', 'photoshop', 'illustrator', 'criação', 'visual', 'gráfico'],
+      keywords: ['design', 'photoshop', 'illustrator', 'criaï¿½ï¿½o', 'visual', 'grï¿½fico'],
       cta: {
         type: 'course',
-        title: 'Transforme ideias em designs incríveis',
-        description: 'Domine as ferramentas profissionais de design gráfico.',
+        title: 'Transforme ideias em designs incrï¿½veis',
+        description: 'Domine as ferramentas profissionais de design grï¿½fico.',
         actionText: 'Conhecer Curso',
         actionLink: '/curso/design-grafico'
       }
@@ -118,33 +118,33 @@ export const generateContextualCTAs = (post) => {
       keywords: ['marketing', 'digital', 'redes sociais', 'facebook', 'instagram', 'publicidade'],
       cta: {
         type: 'course',
-        title: 'Impulsione seu negócio online',
-        description: 'Aprenda estratégias de marketing digital que realmente funcionam.',
-        actionText: 'Ver Estratégias',
+        title: 'Impulsione seu negï¿½cio online',
+        description: 'Aprenda estratï¿½gias de marketing digital que realmente funcionam.',
+        actionText: 'Ver Estratï¿½gias',
         actionLink: '/curso/marketing-digital'
       }
     },
     
-    // Informática
+    // Informï¿½tica
     office: {
-      keywords: ['excel', 'word', 'powerpoint', 'office', 'planilha', 'informática', 'windows'],
+      keywords: ['excel', 'word', 'powerpoint', 'office', 'planilha', 'informï¿½tica', 'windows'],
       cta: {
         type: 'course',
-        title: 'Seja expert em informática',
-        description: 'Domine as ferramentas essenciais para qualquer profissão.',
-        actionText: 'Começar Agora',
+        title: 'Seja expert em informï¿½tica',
+        description: 'Domine as ferramentas essenciais para qualquer profissï¿½o.',
+        actionText: 'Comeï¿½ar Agora',
         actionLink: '/curso/informatica'
       }
     },
     
-    // Lead Magnets genéricos
+    // Lead Magnets genï¿½ricos
     ebook: {
       keywords: ['dicas', 'guia', 'tutorial', 'passo a passo', 'como fazer'],
       cta: {
         type: 'leadmagnet',
         title: 'E-book gratuito: Guia completo para iniciantes',
         description: 'Baixe nosso material exclusivo e acelere seu aprendizado.',
-        actionText: 'Baixar Grátis',
+        actionText: 'Baixar Grï¿½tis',
         actionLink: '#ebook-download'
       }
     },
@@ -155,14 +155,14 @@ export const generateContextualCTAs = (post) => {
       cta: {
         type: 'newsletter',
         title: 'Fique por dentro das novidades',
-        description: 'Receba dicas exclusivas e conteúdos especiais no seu email.',
+        description: 'Receba dicas exclusivas e conteï¿½dos especiais no seu email.',
         actionText: 'Assinar Newsletter',
         actionLink: '#newsletter-signup'
       }
     }
   };
 
-  // Verifica qual template é mais relevante
+  // Verifica qual template ï¿½ mais relevante
   let bestMatch = null;
   let bestScore = 0;
 
@@ -178,17 +178,17 @@ export const generateContextualCTAs = (post) => {
     }
   });
 
-  // Se encontrou uma correspondência, adiciona o CTA
+  // Se encontrou uma correspondï¿½ncia, adiciona o CTA
   if (bestMatch && bestScore > 0) {
     ctas.push(bestMatch);
   }
 
-  // Adiciona um CTA genérico se não houver correspondências específicas
+  // Adiciona um CTA genï¿½rico se nï¿½o houver correspondï¿½ncias especï¿½ficas
   if (ctas.length === 0) {
     ctas.push({
       type: 'course',
       title: 'Desenvolva novas habilidades',
-      description: 'Explore nossos cursos e transforme sua carreira profissional.',
+      description: 'Explore nossos cursos e desenvolva suas habilidades profissionais.',
       actionText: 'Ver Cursos',
       actionLink: '/cursos'
     });
@@ -198,7 +198,7 @@ export const generateContextualCTAs = (post) => {
   if (countWords(post.content) > 2000 && ctas.length === 1) {
     ctas.push({
       type: 'newsletter',
-      title: 'Gostou do conteúdo?',
+      title: 'Gostou do conteï¿½do?',
       description: 'Receba mais artigos como este diretamente no seu email.',
       actionText: 'Assinar',
       actionLink: '#newsletter'
@@ -209,7 +209,7 @@ export const generateContextualCTAs = (post) => {
 };
 
 /**
- * Insere CTAs inline no conteúdo HTML
+ * Insere CTAs inline no conteï¿½do HTML
  */
 export const insertInlineCTAs = (htmlContent, ctas, config = DEFAULT_CONFIG) => {
   if (!shouldShowInlineCTAs(htmlContent, config) || !ctas.length) {
@@ -226,16 +226,16 @@ export const insertInlineCTAs = (htmlContent, ctas, config = DEFAULT_CONFIG) => 
   let modifiedContent = htmlContent;
   let insertionOffset = 0;
 
-  // Insere CTAs nas posições calculadas
+  // Insere CTAs nas posiï¿½ï¿½es calculadas
   positions.forEach((position, index) => {
     if (index < ctas.length) {
       const cta = ctas[index];
       const ctaId = `inline-cta-${index}`;
       
-      // Cria o elemento CTA (será renderizado pelo React)
+      // Cria o elemento CTA (serï¿½ renderizado pelo React)
       const ctaPlaceholder = `<div class="inline-cta-placeholder" data-cta-id="${ctaId}" data-cta-type="${cta.type}" data-cta-title="${encodeURIComponent(cta.title)}" data-cta-description="${encodeURIComponent(cta.description)}" data-cta-action-text="${encodeURIComponent(cta.actionText)}" data-cta-action-link="${encodeURIComponent(cta.actionLink)}"></div>`;
       
-      // Encontra a posição do parágrafo no conteúdo modificado
+      // Encontra a posiï¿½ï¿½o do parï¿½grafo no conteï¿½do modificado
       const currentParagraphs = extractParagraphs(modifiedContent);
       const adjustedPosition = Math.min(position + insertionOffset, currentParagraphs.length - 1);
       

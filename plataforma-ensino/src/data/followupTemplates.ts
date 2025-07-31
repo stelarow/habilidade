@@ -297,7 +297,7 @@ export const followupTemplates: FollowUpSequence[] = [
           logoUrl: 'https://escolahabilidade.com.br/logo.png'
         },
         ctaUrl: '/cursos/carreira',
-        ctaText: 'Acelerar Minha Carreira'
+        ctaText: 'Explorar Cursos'
       },
       {
         id: 'career-value',
