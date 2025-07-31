@@ -13,20 +13,20 @@ const BlogCTA = ({
   post, 
   variant = 'specific', // 'specific' | 'generic'
   showUrgency = false,
-  urgencyText = 'Vagas limitadas',
+  urgencyText = 'Inscrições abertas',
   className = '',
   onCtaClick = null // Para tracking de analytics
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const { classes, styles, isMobile, shouldStack } = useCTAResponsive();
 
-  // Anima��o de entrada suave
+  // Animação de entrada suave
   useEffect(() => {
     const timer = setTimeout(() => setIsVisible(true), 300);
     return () => clearTimeout(timer);
   }, []);
 
-  // Fun��o para encontrar curso relacionado
+  // Função para encontrar curso relacionado
   const findRelatedCourse = (post) => {
     if (post?.cta_course_id) {
       return COURSES_DATA?.find(course => course.basicInfo.id === post.cta_course_id);
@@ -81,23 +81,164 @@ const BlogCTA = ({
     }
   };
 
-  // CTA espec�fico para curso
+  // CTA específico para curso
   if (variant === 'specific' && relatedCourse) {
     return (
       <div className={`${classes.container} cta-main cta-type-course transform transition-all duration-700 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'} ${className}`}>
-        <div className="relative bg-gradient-to-r from-purple-900/20 via-blue-900/20 to-purple-900/20 border border-purple-500/30 rounded-2xl overflow-hidden" style={styles.container}>
-          {/* Background pattern */}
-          <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-blue-500/5"></div>
-          <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl"></div>
+        <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden shadow-xl" style={styles.container}>
+          {/* Modern background gradient */}
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-indigo-500/5 to-purple-500/5"></div>
+          <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-blue-400/10 to-purple-400/10 rounded-full blur-3xl"></div>
           
-          {/* Urgency badge */}
+          {/* Status badge - only if truly relevant */}
           {showUrgency && (
             <div className="absolute top-4 right-4">
-              <span className="inline-flex items-center gap-1 px-3 py-1 bg-red-500/20 text-red-300 border border-red-500/30 rounded-full text-sm font-medium animate-pulse">
-                <Clock size={14} />
+              <span className="inline-flex items-center gap-1 px-3 py-1 bg-blue-500/10 text-blue-300 border border-blue-500/20 rounded-full text-sm font-medium">
+                <Star size={14} />
                 {urgencyText}
               </span>
             </div>
+          )}
+
+          <div className="relative grid grid-cols-1 md:grid-cols-3 gap-6 items-center p-6">
+            {/* Course image with better layout */}
+            <div className="md:col-span-1 flex justify-center">
+              <div className="relative rounded-xl overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 shadow-lg">
+                {relatedCourse.basicInfo?.image ? (
+                  <LazyImage
+                    src={relatedCourse.basicInfo.image}
+                    alt={relatedCourse.basicInfo.title}
+                    className="w-full h-48 object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-48 bg-gradient-to-br from-blue-50 to-indigo-50 flex items-center justify-center">
+                    <div className="p-4 bg-blue-100 rounded-full">
+                      <BookOpen size={32} className="text-blue-600" />
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Content with better hierarchy */}
+            <div className="md:col-span-2 space-y-5">
+              <div className="space-y-3">
+                <h3 className="text-xl md:text-2xl font-semibold text-white leading-tight">
+                  {post?.cta_title || `Aprofunde seus conhecimentos em ${relatedCourse.basicInfo.title}`}
+                </h3>
+                <p className="text-gray-300 leading-relaxed text-sm md:text-base">
+                  {post?.cta_description || `Desenvolva habilidades práticas e atualize seu conhecimento com nosso curso especializado.`}
+                </p>
+              </div>
+
+              {/* Course highlights with better visual treatment */}
+              <div className="flex flex-wrap gap-4 text-sm text-gray-400">
+                <span className="flex items-center gap-2 bg-white/5 px-3 py-1 rounded-full">
+                  <Clock size={16} />
+                  {relatedCourse.basicInfo.duration}
+                </span>
+                <span className="flex items-center gap-2 bg-white/5 px-3 py-1 rounded-full">
+                  <Users size={16} />
+                  {relatedCourse.basicInfo.level}
+                </span>
+                {relatedCourse.basicInfo.certificate && (
+                  <span className="flex items-center gap-2 bg-white/5 px-3 py-1 rounded-full">
+                    <Star size={16} />
+                    Certificado incluso
+                  </span>
+                )}
+              </div>
+
+              {/* CTA Button with modern design */}
+              <div className="pt-2">
+                <Link
+                  to={`/curso/${relatedCourse.basicInfo.slug}`}
+                  onClick={() => handleCtaClick('specific_course', relatedCourse.basicInfo.id)}
+                  className={`${classes.button} inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium px-6 py-3 rounded-xl transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-blue-500/25 focus:outline-none focus:ring-2 focus:ring-blue-500/50`}
+                  style={styles.button}
+                >
+                  <span>Ver Detalhes do Curso</span>
+                  <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // CTA genérico com melhor design
+  return (
+    <div className={`${classes.container} cta-main cta-type-course transform transition-all duration-700 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'} ${className}`}>
+      <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl text-center overflow-hidden shadow-xl" style={styles.container}>
+        {/* Modern background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-indigo-500/5 to-purple-500/5"></div>
+        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-40 h-40 bg-gradient-to-br from-blue-400/10 to-purple-400/10 rounded-full blur-3xl"></div>
+        
+        {/* Status badge */}
+        {showUrgency && (
+          <div className="absolute top-4 right-4">
+            <span className="inline-flex items-center gap-1 px-3 py-1 bg-blue-500/10 text-blue-300 border border-blue-500/20 rounded-full text-sm font-medium">
+              <Star size={14} />
+              {urgencyText}
+            </span>
+          </div>
+        )}
+
+        <div className="relative space-y-6 p-8">
+          {/* Icon with better design */}
+          <div className="flex justify-center">
+            <div className="p-4 bg-gradient-to-br from-blue-500/10 to-indigo-500/10 rounded-2xl">
+              <div className="p-3 bg-blue-100 rounded-xl">
+                <BookOpen size={32} className="text-blue-600" />
+              </div>
+            </div>
+          </div>
+
+          {/* Content with improved copy */}
+          <div className="space-y-4">
+            <h3 className="text-xl md:text-2xl font-semibold text-white leading-tight">
+              {post?.cta_title || 'Desenvolva suas habilidades profissionais'}
+            </h3>
+            <p className="text-gray-300 leading-relaxed max-w-2xl mx-auto text-sm md:text-base">
+              {post?.cta_description || 'Explore nossos cursos especializados e aprimore seu conhecimento com conteúdo atualizado e certificação reconhecida.'}
+            </p>
+          </div>
+
+          {/* Value propositions with better visual treatment */}
+          <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-400">
+            <span className="flex items-center gap-2 bg-white/5 px-3 py-1 rounded-full">
+              <Star size={16} />
+              Certificação reconhecida
+            </span>
+            <span className="flex items-center gap-2 bg-white/5 px-3 py-1 rounded-full">
+              <Users size={16} />
+              Instrutores especialistas
+            </span>
+            <span className="flex items-center gap-2 bg-white/5 px-3 py-1 rounded-full">
+              <BookOpen size={16} />
+              Material didático incluso
+            </span>
+          </div>
+
+          {/* CTA Button with modern design */}
+          <div className="pt-2">
+            <Link
+              to="/cursos"
+              onClick={() => handleCtaClick('generic')}
+              className={`${classes.button} inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium px-8 py-3 rounded-xl transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-blue-500/25 focus:outline-none focus:ring-2 focus:ring-blue-500/50`}
+              style={styles.button}
+            >
+              <span>Explorar Cursos</span>
+              <ArrowRight size={20} className="transition-transform group-hover:translate-x-1" />
+            </Link>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
           )}
 
           <div className="relative grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
