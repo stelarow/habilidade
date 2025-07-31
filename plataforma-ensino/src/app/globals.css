@@ -750,4 +750,44 @@ body {
       min-height: var(--header-button-size-mobile);
     }
   }
+
+  /* Fix for iframe hover issues and performance */
+  iframe {
+    /* Prevent layout shifts */
+    will-change: transform;
+    /* Isolate iframe rendering context */
+    isolation: isolate;
+  }
+
+  /* Prevent hover state propagation on lesson pages */
+  .lesson-page iframe,
+  .lesson-content iframe {
+    /* Create a stacking context */
+    z-index: 1;
+    position: relative;
+  }
+
+  /* Container for embedded content */
+  .embed-container {
+    /* Prevent hover state leaking */
+    isolation: isolate;
+    /* Hardware acceleration for better performance */
+    transform: translateZ(0);
+    /* Prevent cursor flickering */
+    cursor: default;
+  }
+
+  /* Disable hover effects near iframes */
+  .embed-container:hover {
+    cursor: default !important;
+  }
+
+  /* Prevent pointer events from bubbling through iframe containers */
+  .iframe-wrapper {
+    pointer-events: none;
+  }
+  
+  .iframe-wrapper > iframe {
+    pointer-events: auto;
+  }
 }

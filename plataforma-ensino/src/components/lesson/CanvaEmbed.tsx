@@ -53,7 +53,7 @@ const CanvaEmbed: React.FC<CanvaEmbedProps> = ({
   }
 
   return (
-    <Card className={`border-violet-200 dark:border-violet-800 ${className}`}>
+    <Card className={`border-violet-200 dark:border-violet-800 embed-container ${className}`}>
       {showHeader && (
         <CardHeader className="pb-4">
           <div className="flex items-start justify-between">
@@ -92,10 +92,12 @@ const CanvaEmbed: React.FC<CanvaEmbedProps> = ({
       <CardContent className="p-0">
         {/* Responsive iframe container with 16:9 aspect ratio */}
         <div 
-          className="relative w-full overflow-hidden rounded-b-lg"
+          className="relative w-full overflow-hidden rounded-b-lg iframe-wrapper"
           style={{
             paddingTop: '56.25%', // 16:9 aspect ratio
-            boxShadow: '0 2px 8px 0 rgba(139, 92, 246, 0.16)' // Violet shadow
+            boxShadow: '0 2px 8px 0 rgba(139, 92, 246, 0.16)', // Violet shadow
+            // Prevent hover state conflicts with iframe
+            pointerEvents: 'none'
           }}
         >
           <iframe
@@ -107,8 +109,14 @@ const CanvaEmbed: React.FC<CanvaEmbedProps> = ({
             title={title}
             style={{
               margin: 0,
-              padding: 0
+              padding: 0,
+              // Re-enable pointer events for the iframe itself
+              pointerEvents: 'auto'
             }}
+            // Sandbox the iframe to limit its capabilities and prevent excessive requests
+            sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-presentation"
+            // Add referrer policy to reduce tracking requests
+            referrerPolicy="no-referrer-when-downgrade"
           />
         </div>
         
