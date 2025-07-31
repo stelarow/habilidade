@@ -20,40 +20,29 @@ export default async function AdminCalendarPage() {
   
   const supabase = createClient()
 
-  // Fetch teachers from the system
-  // First, try to get from profiles table if it exists
+  // Fetch teachers from the instructors table
   let teachers: Teacher[] = []
   
   try {
-    // Try to fetch from profiles first
-    const { data: profilesData, error: profilesError } = await supabase
-      .from('profiles')
-      .select('id, email, full_name, role')
-      .eq('role', 'instructor')
-      .order('full_name')
+    // Get instructors from instructors table with proper join
+    const { data: instructorsData, error: instructorsError } = await supabase
+      .from('instructors')
+      .select(`
+        user_id,
+        users!inner (
+          email,
+          full_name
+        )
+      `)
 
-    if (!profilesError && profilesData) {
-      teachers = profilesData
-    } else {
-      // Fallback: Get instructors from instructors table
-      const { data: instructorsData, error: instructorsError } = await supabase
-        .from('instructors')
-        .select(`
-          user_id,
-          users!inner (
-            email,
-            full_name
-          )
-        `)
-        .order('users.full_name')
-
-      if (!instructorsError && instructorsData) {
-        teachers = instructorsData.map((instructor: any) => ({
-          id: instructor.user_id,
-          email: instructor.users[0]?.email || '',
-          full_name: instructor.users[0]?.full_name || ''
-        }))
-      }
+    if (!instructorsError && instructorsData) {
+      teachers = instructorsData.map((instructor: any) => ({
+        id: instructor.user_id,
+        email: instructor.users?.email || '',
+        full_name: instructor.users?.full_name || ''
+      }))
+      // Sort manually in JavaScript since Supabase order with joins can be tricky
+      teachers.sort((a, b) => (a.full_name || a.email).localeCompare(b.full_name || b.email))
     }
   } catch (error) {
     console.error('Error fetching teachers:', error)

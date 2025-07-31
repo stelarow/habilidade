@@ -46,7 +46,7 @@ export function EnhancedAdminCalendarInterface({ teachers }: EnhancedAdminCalend
                   onChange={(e) => setSelectedTeacher(e.target.value)}
                   className="block bg-transparent border-none focus:outline-none focus:ring-0 text-sm font-medium text-gray-700 dark:text-gray-200 min-w-[200px] appearance-none cursor-pointer"
                 >
-                  <option value="">Todos os professores</option>
+                  <option value="">Selecione um professor</option>
                   {teachers.map((teacher) => (
                     <option key={teacher.id} value={teacher.id}>
                       {teacher.full_name || teacher.email}
@@ -62,7 +62,21 @@ export function EnhancedAdminCalendarInterface({ teachers }: EnhancedAdminCalend
 
       {/* Enhanced Calendar Component */}
       <BlurFade delay={0.2}>
-        <EnhancedCalendarView teacherId={selectedTeacher || undefined} />
+        {selectedTeacher ? (
+          <EnhancedCalendarView teacherId={selectedTeacher} />
+        ) : (
+          <div className="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8 text-center">
+            <div className="text-gray-500 dark:text-gray-400">
+              <div className="w-16 h-16 mx-auto mb-4 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center">
+                <User className="h-8 w-8" />
+              </div>
+              <h3 className="text-lg font-medium mb-2">Selecione um Professor</h3>
+              <p className="text-sm">
+                Escolha um professor no filtro acima para visualizar o calendário de aulas.
+              </p>
+            </div>
+          </div>
+        )}
       </BlurFade>
 
       {/* Additional Admin Information */}
