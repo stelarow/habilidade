@@ -39,7 +39,7 @@ const mockCategories = [
     name: 'Design',
     slug: 'design',
     description: 'Tendências e técnicas de design',
-    postCount: 4,
+    postCount: 5,
     color: '#EF4444'
   },
   {
@@ -53,6 +53,144 @@ const mockCategories = [
 ];
 
 const mockPosts = [
+  {
+    id: 103,
+    title: 'Ergonomia na Cozinha: Princípios Técnicos para Projetos Funcionais e Seguros',
+    slug: 'ergonomia-cozinha-dicas-praticas',
+    excerpt: 'Fundamentos técnicos de ergonomia aplicados ao design de cozinhas, incluindo dimensionamentos precisos, disposição espacial otimizada e princípios de antropometria para máximo conforto e eficiência.',
+    content: `
+      <div class="article-content space-y-8">
+        
+        <div class="article-section">
+          <p class="text-zinc-300 leading-relaxed mb-6 text-lg">No desenvolvimento de projetos de cozinhas, a aplicação correta dos princípios ergonômicos determina não apenas o conforto dos usuários, mas também a eficiência operacional e a segurança do ambiente. Este artigo apresenta os fundamentos técnicos essenciais para o dimensionamento e disposição espacial de elementos em cozinhas residenciais e comerciais.</p>
+          
+          <div class="article-image mb-8">
+            <img src="/images/blog/ergonomia-cozinha-dicas/cozinha-ergonomica-layout.jpg" alt="Layout ergonômico de cozinha com medidas técnicas" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Princípios técnicos de ergonomia aplicados ao design de cozinhas funcionais</p>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">1. Triângulo de Trabalho: Fundamentos da Circulação Eficiente</h2>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">O conceito do triângulo de trabalho representa a base da organização espacial em cozinhas funcionais. Esta configuração estabelece a relação espacial otimizada entre os três centros de atividade principais: refrigeração, cocção e lavagem.</p>
+          
+          <div class="article-highlight bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border border-blue-500/20 rounded-lg p-6 my-6">
+            <h4 class="text-blue-300 font-semibold mb-3">📏 Especificações Técnicas do Triângulo</h4>
+            <ul class="space-y-2 text-zinc-300">
+              <li><strong>Distância entre Pia e Fogão:</strong> 0,90m a 1,20m para transferência eficiente</li>
+              <li><strong>Posicionamento do Refrigerador:</strong> Início do fluxo, sem cruzar área de cocção</li>
+              <li><strong>Fluxo Operacional:</strong> Sequência armazenamento → preparo → cocção → limpeza</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">2. Dimensionamento de Bancadas: Antropometria Aplicada</h2>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">A aplicação de dados antropométricos no dimensionamento de bancadas garante conforto e eficiência operacional para a maioria dos usuários.</p>
+          
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="bg-zinc-800/30 rounded-lg p-6">
+              <h4 class="text-green-300 font-semibold mb-3">📐 Dimensões Horizontais</h4>
+              <ul class="space-y-2 text-zinc-300">
+                <li>• <strong>Largura:</strong> 60-65 cm (alcance confortável)</li>
+                <li>• <strong>Reentrância:</strong> 10 cm para aproximação</li>
+                <li>• <strong>Base antropométrica:</strong> Alcance funcional padrão</li>
+              </ul>
+            </div>
+            
+            <div class="bg-zinc-800/30 rounded-lg p-6">
+              <h4 class="text-purple-300 font-semibold mb-3">📏 Dimensões Verticais</h4>
+              <ul class="space-y-2 text-zinc-300">
+                <li>• <strong>Altura:</strong> 85-90 cm (estatura 1,60-1,80m)</li>
+                <li>• <strong>Altura da base:</strong> 8 cm mínimo do piso</li>
+                <li>• <strong>Adaptação:</strong> Conforme perfil dos usuários</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">3. Dimensionamento de Corredores e Circulação</h2>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">O correto dimensionamento das áreas de circulação é fundamental para a segurança e funcionalidade do ambiente.</p>
+          
+          <div class="article-highlight bg-gradient-to-r from-orange-500/10 to-red-500/10 border border-orange-500/20 rounded-lg p-6 my-6">
+            <h4 class="text-orange-300 font-semibold mb-3">🚶 Larguras Mínimas de Circulação</h4>
+            <ul class="space-y-2 text-zinc-300">
+              <li><strong>Uma pessoa:</strong> 60 cm (corredores e áreas de passagem)</li>
+              <li><strong>Duas pessoas:</strong> 120 cm (uso simultâneo por múltiplos usuários)</li>
+              <li><strong>Cozinhas paralelas:</strong> 120 cm entre bancadas opostas</li>
+              <li><strong>Consideração:</strong> Permite abertura simultânea de armários</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">4. Posicionamento Estratégico de Elementos</h2>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">A localização adequada de cada elemento contribui para a eficiência operacional e conforto do usuário.</p>
+          
+          <div class="grid md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-zinc-800/30 rounded-lg p-6">
+              <h4 class="text-cyan-300 font-semibold mb-3">🚿 Área da Pia</h4>
+              <ul class="space-y-2 text-zinc-300 text-sm">
+                <li>• Próxima a janelas</li>
+                <li>• Iluminação natural</li>
+                <li>• Ventilação adequada</li>
+                <li>• Redução da fadiga visual</li>
+              </ul>
+            </div>
+            
+            <div class="bg-zinc-800/30 rounded-lg p-6">
+              <h4 class="text-yellow-300 font-semibold mb-3">🔥 Área de Cocção</h4>
+              <ul class="space-y-2 text-zinc-300 text-sm">
+                <li>• Distante de equipamentos delicados</li>
+                <li>• Proteção contra gordura</li>
+                <li>• Sistema de exaustão</li>
+                <li>• Ventilação forçada</li>
+              </ul>
+            </div>
+            
+            <div class="bg-zinc-800/30 rounded-lg p-6">
+              <h4 class="text-green-300 font-semibold mb-3">🍴 Utensílios</h4>
+              <ul class="space-y-2 text-zinc-300 text-sm">
+                <li>• Utensílios próximos ao fogão</li>
+                <li>• Temperos ao alcance</li>
+                <li>• Porta-panos junto à pia</li>
+                <li>• Lixeira na área de preparo</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Considerações Técnicas Complementares</h2>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Para eletrodomésticos embutidos, é fundamental garantir ventilação adequada conforme especificações do fabricante, sistemas de exaustão mecânica e prevenção do superaquecimento de componentes eletrônicos.</p>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">O projeto luminotécnico deve contemplar iluminação geral uniforme, iluminação de tarefa nas áreas de trabalho, evitar sombras projetadas e utilizar temperatura de cor adequada para identificação precisa de alimentos.</p>
+          
+          <div class="article-highlight bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-500/20 rounded-lg p-6 my-6">
+            <h4 class="text-green-300 font-semibold mb-3">🎓 Domine o Design de Interiores Profissional</h4>
+            <p class="text-zinc-300 mb-4">Quer aprender todos os fundamentos técnicos de ergonomia, antropometria e design de espaços funcionais?</p>
+            <p class="text-zinc-300">Nosso curso <strong>Design Gráfico</strong> inclui módulos especializados em design de interiores e ergonomia aplicada, ensinando desde conceitos básicos até projetos complexos de ambientes residenciais e comerciais.</p>
+          </div>
+        </div>
+        
+      </div>
+    `,
+    author: { name: 'Professor Alessandro Ferreira', avatar: '/assets/avatars/default.jpg' },
+    category: { id: 5, name: 'Design', slug: 'design', color: '#EF4444' },
+    featuredImage: '/images/blog/ergonomia-cozinha-dicas/cozinha-ergonomica-layout.jpg',
+    featured_image_url: '/images/blog/ergonomia-cozinha-dicas/cozinha-ergonomica-layout.jpg',
+    publishedAt: '2025-07-31T18:00:00.000Z',
+    readingTime: 8,
+    tags: ['ergonomia', 'design-de-interiores', 'cozinha', 'antropometria', 'projeto-arquitetonico', 'espacos-funcionais'],
+    views: 0,
+    likes: 0
+  },
   {
     id: 102,
     title: '10 Dicas de Especialistas para Fazer Suas Renderizações Enscape Se Destacarem',
