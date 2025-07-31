@@ -396,53 +396,6 @@ const TableOfContents = ({
     </div>
   );
 
-  // Return the TOC content
-  return tocContent;
-          )}
-        </div>
-        
-        {collapsible && (
-          <button
-            onClick={toggleCollapse}
-            className="p-1 text-zinc-400 hover:text-zinc-300 transition-colors"
-            aria-label={isCollapsed ? 'Expandir �ndice' : 'Recolher �ndice'}
-          >
-            {isCollapsed ? <CaretRight size={16} /> : <CaretDown size={16} />}
-          </button>
-        )}
-      </div>
-
-      {/* Progress Bar */}
-      {showProgress && !isCollapsed && (
-        <div className="px-4 py-2 border-b border-zinc-700/50">
-          <div className="w-full bg-zinc-700 rounded-full h-1">
-            <div 
-              className="bg-purple-500 h-1 rounded-full transition-all duration-300"
-              style={{ width: `${readingProgress}%` }}
-            />
-          </div>
-        </div>
-      )}
-
-      {/* TOC List */}
-      {!isCollapsed && (
-        <nav className={`toc-nav p-2 overflow-y-auto ${isMobile ? 'max-h-64' : 'max-h-96'}`} role="navigation" aria-label="Índice do artigo">
-          <ul className="space-y-1">
-            {headers.map((header, index) => (
-              <TOCItem
-                key={`${header.slug}-${index}`}
-                header={header}
-                isActive={activeHeader === header.slug}
-                onClick={handleHeaderClick}
-                isCollapsed={isCollapsed}
-              />
-            ))}
-          </ul>
-        </nav>
-      )}
-    </div>
-  );
-
   // Mobile rendering (can be dropdown or overlay)
   if (isMobile) {
     return (
