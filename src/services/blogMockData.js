@@ -7,7 +7,7 @@ const mockCategories = [
     name: 'Tecnologia',
     slug: 'tecnologia',
     description: 'Artigos sobre tecnologia e inovação',
-    postCount: 5,
+    postCount: 6,
     color: '#3B82F6'
   },
   {
@@ -673,97 +673,6 @@ const mockPosts = [
         <div class="article-section">
           <h3 class="text-xl font-semibold text-white mb-4">Conclusão</h3>
           <p class="text-zinc-300 leading-relaxed mb-4">A jornada na programação requer dedicação e prática constante, mas as oportunidades são enormes. Comece hoje mesmo e seja consistente nos estudos. Lembre-se: todo programador experiente já foi um iniciante.</p>
-          
-          <!-- Enhanced CTA Section with Best Practices -->
-          <div class="bg-gradient-to-br from-blue-600/20 via-purple-600/20 to-green-600/20 border-2 border-blue-500/30 rounded-xl p-8 my-8 relative overflow-hidden">
-            <!-- Background Pattern -->
-            <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMSIgZmlsbD0iIzMzNzNkYyIgZmlsbC1vcGFjaXR5PSIwLjEiLz4KPC9zdmc+')] opacity-30"></div>
-            
-            <!-- Main CTA Content -->
-            <div class="relative z-10">
-              <div class="flex items-center gap-3 mb-4">
-                <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                  <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                  </svg>
-                </div>
-                <h4 class="text-xl font-bold text-white">Acelere Sua Carreira em Programação</h4>
-              </div>
-              
-              <p class="text-zinc-200 text-lg mb-6 leading-relaxed">
-                Desenvolva habilidades práticas com metodologia comprovada. 
-                <span class="text-blue-300 font-semibold">Nossos alunos</span> têm se destacado no mercado de tecnologia.
-              </p>
-              
-              <!-- Value Propositions -->
-              <div class="grid md:grid-cols-3 gap-4 mb-8">
-                <div class="flex items-center gap-3 text-sm">
-                  <div class="w-8 h-8 bg-green-500/20 rounded-full flex items-center justify-center">
-                    <svg class="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <span class="text-zinc-300">Projetos Práticos</span>
-                </div>
-                <div class="flex items-center gap-3 text-sm">
-                  <div class="w-8 h-8 bg-blue-500/20 rounded-full flex items-center justify-center">
-                    <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  </div>
-                  <span class="text-zinc-300">Mentoria Individual</span>
-                </div>
-                <div class="flex items-center gap-3 text-sm">
-                  <div class="w-8 h-8 bg-purple-500/20 rounded-full flex items-center justify-center">
-                    <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  </div>
-                  <span class="text-zinc-300">Suporte Contínuo</span>
-                </div>
-              </div>
-              
-              <!-- CTA Buttons -->
-              <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <!-- Primary CTA -->
-                <a href="https://wa.me/5548988559491?text=Olá! Vi o artigo sobre programação e gostaria de conhecer os cursos da Escola Habilidade. Podem me ajudar?" 
-                   class="group bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-bold py-4 px-8 rounded-lg text-center transition-all duration-300 transform hover:scale-105 hover:shadow-xl hover:shadow-blue-500/25 relative overflow-hidden"
-                   onclick="gtag('event', 'click', {'event_category': 'CTA', 'event_label': 'WhatsApp_Blog_CTA_Primary'});">
-                  <span class="relative z-10 flex items-center justify-center gap-2">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.570-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.109"/>
-                    </svg>
-                    Falar com Especialista Agora
-                  </span>
-                  <div class="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12"></div>
-                </a>
-                
-                <!-- Secondary CTA -->
-                <a href="/#cursos?utm_source=blog&utm_medium=cta&utm_campaign=programacao_2024&utm_content=secondary" 
-                   class="group bg-transparent border-2 border-blue-400 hover:bg-blue-400/10 text-blue-300 hover:text-blue-200 font-semibold py-4 px-8 rounded-lg text-center transition-all duration-300 hover:border-blue-300"
-                   onclick="gtag('event', 'click', {'event_category': 'CTA', 'event_label': 'Cursos_Blog_CTA_Secondary'});">
-                  <span class="flex items-center justify-center gap-2">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                    </svg>
-                    Ver Cursos Disponíveis
-                  </span>
-                </a>
-              </div>
-              
-              <!-- Urgency/Social Proof -->
-              <div class="mt-6 text-center">
-                <p class="text-zinc-400 text-sm">
-                  <span class="inline-flex items-center gap-1 text-green-400 font-medium">
-                    <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                    </svg>
-                    Vagas limitadas
-                  </span> • Próxima turma iniciando
-                </p>
-              </div>
-            </div>
-          </div>
         </div>
         
       </div>
@@ -2403,6 +2312,271 @@ const age = now.toPlainDate().since(birthday).years;</code></pre>
     publishedAt: '2025-01-31T10:00:00.000Z',
     readingTime: 12,
     tags: ['sketchup', 'arquitetura', 'design', 'modelagem-3d', 'shape-bender', 'tutorial', 'extensões'],
+    views: 0,
+    likes: 0
+  },
+  {
+    id: 102,
+    title: 'Gemini CLI: Seu Agente de IA Open Source no Terminal',
+    slug: 'gemini-cli-agente-ia-open-source-terminal',
+    excerpt: 'Descubra o Gemini CLI do Google: uma ferramenta gratuita e open source que traz o poder do Gemini 2.5 Pro diretamente para o seu terminal. Perfeito para desenvolvedores, com acesso ilimitado e capacidades avançadas.',
+    content: `
+      <div class="article-content space-y-8">
+        
+        <div class="article-section">
+          <p class="text-zinc-300 leading-relaxed mb-6 text-lg">Para desenvolvedores, a interface de linha de comando (CLI) não é apenas uma ferramenta; é casa. A eficiência, ubiquidade e portabilidade do terminal o tornam o utilitário preferido para realizar trabalho. E conforme a dependência dos desenvolvedores no terminal perdura, também cresce a demanda por assistência integrada de IA.</p>
+          
+          <div class="article-image mb-8">
+            <img src="/images/blog/gemini-cli/gemini-cli-hero.webp" alt="Gemini CLI - Agente de IA Open Source" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center">Gemini CLI: Traga o poder do Gemini 2.5 Pro diretamente para seu terminal</p>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <p class="text-zinc-300 leading-relaxed mb-6">É por isso que o Google está introduzindo o <strong>Gemini CLI</strong>, um agente de IA open source que traz o poder do Gemini diretamente para o seu terminal. Ele fornece acesso leve ao Gemini, oferecendo o caminho mais direto do seu prompt para o modelo. Embora excele na programação, o Gemini CLI foi construído para fazer muito mais.</p>
+          
+          <div class="article-highlight bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 rounded-lg p-6 my-6">
+            <h4 class="text-blue-300 font-semibold mb-3">🚀 Características Principais do Gemini CLI</h4>
+            <ul class="space-y-2">
+              <li><span class="text-blue-300 font-semibold">Gratuito e Open Source:</span> <span class="text-zinc-300">Apache 2.0, código inspecionável</span></li>
+              <li><span class="text-blue-300 font-semibold">Acesso ao Gemini 2.5 Pro:</span> <span class="text-zinc-300">1 milhão de tokens de contexto</span></li>
+              <li><span class="text-blue-300 font-semibold">Limites Generosos:</span> <span class="text-zinc-300">60 requisições/min, 1.000/dia - GRÁTIS</span></li>
+              <li><span class="text-blue-300 font-semibold">Extensível:</span> <span class="text-zinc-300">Suporte MCP e extensões personalizadas</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Por Que o Gemini CLI É Revolucionário?</h2>
+          
+          <div class="article-image mb-8">
+            <img src="/images/blog/gemini-cli/gemini-cli-demo.gif" alt="Demonstração do Gemini CLI em ação" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center">Gemini CLI pode ser usado para uma ampla variedade de tarefas, incluindo criação de conteúdo e automação</p>
+          </div>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">O Gemini CLI representa uma evolução fundamental na experiência de linha de comando, permitindo que você escreva código, depure problemas e otimize seu fluxo de trabalho usando linguagem natural. É um utilitário local versátil que você pode usar para uma ampla gama de tarefas:</p>
+          
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="bg-zinc-800/30 rounded-lg p-6">
+              <h4 class="text-green-300 font-semibold mb-3">💻 Desenvolvimento</h4>
+              <ul class="space-y-2 text-zinc-300">
+                <li>• Geração e modificação de código</li>
+                <li>• Depuração inteligente</li>
+                <li>• Manipulação de arquivos</li>
+                <li>• Execução de comandos</li>
+              </ul>
+            </div>
+            
+            <div class="bg-zinc-800/30 rounded-lg p-6">
+              <h4 class="text-purple-300 font-semibold mb-3">🔍 Pesquisa e Conteúdo</h4>
+              <ul class="space-y-2 text-zinc-300">
+                <li>• Pesquisa com Google Search</li>
+                <li>• Geração de conteúdo</li>
+                <li>• Resolução de problemas</li>
+                <li>• Gerenciamento de tarefas</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Limites de Uso Incomparáveis</h2>
+          
+          <div class="article-image mb-8">
+            <img src="/images/blog/gemini-cli/gemini-cli-infographic.webp" alt="Infográfico dos limites do Gemini CLI" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center">Gemini CLI oferece os maiores limites de uso gratuito da indústria</p>
+          </div>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Para usar o Gemini CLI gratuitamente, basta fazer login com uma conta pessoal do Google para obter uma licença gratuita do Gemini Code Assist. Essa licença gratuita dá acesso ao Gemini 2.5 Pro e sua enorme janela de contexto de 1 milhão de tokens.</p>
+          
+          <div class="article-highlight bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-500/20 rounded-lg p-6 my-6">
+            <h4 class="text-green-300 font-semibold mb-3">💎 Limites de Uso Gratuito</h4>
+            <div class="grid md:grid-cols-2 gap-4">
+              <div>
+                <p class="text-zinc-300"><span class="text-green-300 font-bold">60</span> requisições por minuto</p>
+                <p class="text-zinc-300"><span class="text-green-300 font-bold">1.000</span> requisições por dia</p>
+              </div>
+              <div>
+                <p class="text-zinc-300"><span class="text-green-300 font-bold">1M</span> tokens de contexto</p>
+                <p class="text-zinc-300"><span class="text-green-300 font-bold">Gemini 2.5 Pro</span> - modelo mais avançado</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Capacidades Avançadas</h2>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">O poder do Gemini CLI vem de ferramentas integradas que permitem:</p>
+          
+          <div class="space-y-4 mb-8">
+            <div class="bg-zinc-800/30 rounded-lg p-6">
+              <h4 class="text-cyan-300 font-semibold mb-3">🌐 Fundamentação com Google Search</h4>
+              <p class="text-zinc-300">Busque páginas web e forneça contexto externo em tempo real para o modelo, mantendo suas respostas atualizadas e precisas.</p>
+            </div>
+            
+            <div class="bg-zinc-800/30 rounded-lg p-6">
+              <h4 class="text-orange-300 font-semibold mb-3">🔧 Extensibilidade</h4>
+              <p class="text-zinc-300">Suporte integrado para Model Context Protocol (MCP) ou extensões empacotadas para expandir as capacidades do Gemini CLI.</p>
+            </div>
+            
+            <div class="bg-zinc-800/30 rounded-lg p-6">
+              <h4 class="text-pink-300 font-semibold mb-3">⚙️ Personalização</h4>
+              <p class="text-zinc-300">Customize prompts e instruções para adaptar o Gemini às suas necessidades e fluxos de trabalho específicos.</p>
+            </div>
+            
+            <div class="bg-zinc-800/30 rounded-lg p-6">
+              <h4 class="text-violet-300 font-semibold mb-3">🤖 Automação</h4>
+              <p class="text-zinc-300">Automatize tarefas e integre com fluxos de trabalho existentes invocando o Gemini CLI de forma não-interativa em seus scripts.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Open Source e Extensível</h2>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Como o Gemini CLI é totalmente <strong>open source (Apache 2.0)</strong>, desenvolvedores podem inspecionar o código para entender como funciona e verificar suas implicações de segurança. O Google espera (e acolhe!) uma comunidade global de desenvolvedores para contribuir com este projeto:</p>
+          
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div>
+              <h4 class="text-blue-300 font-semibold mb-3">🔍 Transparência</h4>
+              <ul class="space-y-2 text-zinc-300">
+                <li>• Código totalmente inspecionável</li>
+                <li>• Verificação de segurança</li>
+                <li>• Licença Apache 2.0</li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 class="text-green-300 font-semibold mb-3">🤝 Comunidade</h4>
+              <ul class="space-y-2 text-zinc-300">
+                <li>• Reporte bugs no GitHub</li>
+                <li>• Sugira funcionalidades</li>
+                <li>• Contribua com melhorias</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Integração com Gemini Code Assist</h2>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">O Gemini CLI compartilha a mesma tecnologia com o <strong>Gemini Code Assist</strong>, o assistente de codificação de IA do Google para estudantes, hobbistas e desenvolvedores profissionais. No VS Code, você pode colocar qualquer prompt na janela de chat usando o modo agente, e o Code Assist trabalhará incansavelmente em seu nome.</p>
+          
+          <div class="article-highlight bg-gradient-to-r from-indigo-500/10 to-blue-500/10 border border-indigo-500/20 rounded-lg p-6 my-6">
+            <h4 class="text-indigo-300 font-semibold mb-3">🔗 Sincronização Perfeita</h4>
+            <p class="text-zinc-300">Trabalhe no terminal com Gemini CLI e no VS Code com Gemini Code Assist - ambos usando a mesma tecnologia subjacente para uma experiência consistente.</p>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Como Começar com o Gemini CLI</h2>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Começar é surpreendentemente simples. Tudo que você precisa é de um endereço de email para ter o Gemini praticamente ilimitado no seu terminal:</p>
+          
+          <div class="bg-zinc-900/50 rounded-lg p-6 mb-8">
+            <h4 class="text-cyan-300 font-semibold mb-4">💻 Instalação Rápida</h4>
+            <pre class="bg-zinc-800 rounded p-4 overflow-x-auto"><code class="text-green-400">
+# Instalar via npm (requer Node.js)
+npm install -g @google/gemini-cli
+
+# Ou baixar diretamente do GitHub
+git clone https://github.com/google-gemini/gemini-cli
+cd gemini-cli
+npm install
+npm run build
+
+# Fazer login com sua conta Google
+gemini-cli auth login
+
+# Começar a usar!
+gemini-cli "Como posso otimizar este código Python?"
+            </code></pre>
+          </div>
+          
+          <div class="article-warning bg-gradient-to-r from-yellow-500/10 to-orange-500/10 border border-yellow-500/20 rounded-lg p-6 my-6">
+            <h4 class="text-yellow-300 font-semibold mb-3">⚡ Dica de Produtividade</h4>
+            <p class="text-zinc-300">Configure um alias para o Gemini CLI em seu .bashrc ou .zshrc para acesso ainda mais rápido:</p>
+            <pre class="bg-zinc-800 rounded p-2 mt-2 text-green-400"><code>alias gemi="gemini-cli"</code></pre>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Casos de Uso Práticos para Desenvolvedores</h2>
+          
+          <div class="space-y-6 mb-8">
+            <div class="bg-zinc-800/30 rounded-lg p-6">
+              <h4 class="text-blue-300 font-semibold mb-3">🐛 Depuração Inteligente</h4>
+              <p class="text-zinc-300 mb-3">Analise logs de erro e obtenha sugestões de correção:</p>
+              <pre class="bg-zinc-900 rounded p-3 text-green-400 text-sm"><code>gemini-cli "Analise este erro: $(cat error.log)"</code></pre>
+            </div>
+            
+            <div class="bg-zinc-800/30 rounded-lg p-6">
+              <h4 class="text-purple-300 font-semibold mb-3">📝 Geração de Código</h4>
+              <p class="text-zinc-300 mb-3">Crie funções, classes ou scripts completos:</p>
+              <pre class="bg-zinc-900 rounded p-3 text-green-400 text-sm"><code>gemini-cli "Crie uma função Python para validar CPF"</code></pre>
+            </div>
+            
+            <div class="bg-zinc-800/30 rounded-lg p-6">
+              <h4 class="text-green-300 font-semibold mb-3">🔍 Análise de Código</h4>
+              <p class="text-zinc-300 mb-3">Revise e melhore código existente:</p>
+              <pre class="bg-zinc-900 rounded p-3 text-green-400 text-sm"><code>gemini-cli "Revise este código: $(cat script.py)"</code></pre>
+            </div>
+            
+            <div class="bg-zinc-800/30 rounded-lg p-6">
+              <h4 class="text-orange-300 font-semibold mb-3">📚 Documentação</h4>
+              <p class="text-zinc-300 mb-3">Gere documentação automaticamente:</p>
+              <pre class="bg-zinc-900 rounded p-3 text-green-400 text-sm"><code>gemini-cli "Crie documentação README para este projeto"</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">O Futuro da Programação com IA</h2>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">O Gemini CLI representa mais do que apenas uma ferramenta; é um vislumbre do futuro da programação onde a colaboração homem-IA acontece naturalmente no ambiente que os desenvolvedores já conhecem e amam - o terminal.</p>
+          
+          <div class="article-highlight bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/20 rounded-lg p-6 my-6">
+            <h4 class="text-purple-300 font-semibold mb-3">🔮 Impacto Educacional</h4>
+            <p class="text-zinc-300">Para estudantes e novos programadores, o Gemini CLI oferece:</p>
+            <ul class="space-y-2 mt-3">
+              <li><span class="text-purple-300">•</span> Aprendizado interativo com feedback instantâneo</li>
+              <li><span class="text-purple-300">•</span> Explicações detalhadas de conceitos complexos</li>
+              <li><span class="text-purple-300">•</span> Prática guiada com projetos reais</li>
+              <li><span class="text-purple-300">•</span> Acesso gratuito a tecnologia de ponta</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Conclusão</h2>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">O lançamento do Gemini CLI marca um momento significativo na evolução das ferramentas de desenvolvimento. Ao tornar a IA avançada acessível, gratuita e integrada ao ambiente natural do desenvolvedor, o Google está democratizando o acesso a capacidades que antes eram exclusivas de grandes corporações.</p>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Com seus limites generosos, natureza open source e integração perfeita com fluxos de trabalho existentes, o Gemini CLI não é apenas uma ferramenta - é um companheiro de programação que pode transformar como aprendemos, criamos e inovamos com código.</p>
+          
+          <div class="article-cta bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg p-8 text-center mt-8">
+            <h3 class="text-2xl font-bold text-white mb-4">Pronto para Revolucionar seu Fluxo de Trabalho?</h3>
+            <p class="text-blue-100 mb-6">Experimente o Gemini CLI hoje mesmo e descubra o futuro da programação assistida por IA.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+              <a href="https://github.com/google-gemini/gemini-cli" target="_blank" rel="noopener noreferrer" class="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors">
+                🚀 Começar Agora
+              </a>
+              <a href="https://github.com/google-gemini/gemini-cli/blob/main/README.md" target="_blank" rel="noopener noreferrer" class="border border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors">
+                📖 Ver Documentação
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    `,
+    author: { name: 'Escola Habilidade', avatar: '/assets/avatars/default.jpg' },
+    category: { id: 1, name: 'Tecnologia', slug: 'tecnologia', color: '#3B82F6' },
+    featuredImage: '/images/blog/gemini-cli/gemini-cli-hero.webp',
+    publishedAt: '2025-01-31T14:00:00.000Z',
+    readingTime: 15,
+    tags: ['gemini-cli', 'ia', 'google', 'open-source', 'terminal', 'desenvolvimento', 'automacao', 'cli'],
     views: 0,
     likes: 0
   }
