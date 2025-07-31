@@ -231,41 +231,56 @@ const TableOfContents = ({
   }, [headers, offsetTop, updateUrlHash]);
 
   /**
-   * Reading progress calculation
+   * Reading progress calculation - Fixed UI synchronization issue
    */
   useEffect(() => {
     if (!showProgress || headers.length === 0) return;
 
+    let ticking = false;
+
     const calculateProgress = () => {
-      const article = document.querySelector('article') || 
-                    document.querySelector('.blog-content') || 
-                    document.querySelector('main');
+      if (ticking) return;
       
-      if (!article) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        // Get current scroll position
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        
+        // Get total scrollable height
+        const documentHeight = document.documentElement.scrollHeight;
+        const windowHeight = window.innerHeight;
+        const maxScrollableDistance = documentHeight - windowHeight;
 
-      const rect = article.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-      const articleHeight = rect.height;
-      const articleTop = rect.top;
-
-      if (articleTop > windowHeight) {
-        setReadingProgress(0);
-      } else if (articleTop + articleHeight < 0) {
-        setReadingProgress(100);
-      } else {
-        const visibleHeight = Math.min(windowHeight - Math.max(articleTop, 0), articleHeight);
-        const progress = (visibleHeight / articleHeight) * 100;
-        setReadingProgress(Math.min(100, Math.max(0, progress)));
-      }
+        // Calculate progress percentage
+        if (maxScrollableDistance <= 0) {
+          setReadingProgress(100);
+        } else {
+          const progress = Math.round((scrollTop / maxScrollableDistance) * 100);
+          setReadingProgress(Math.min(100, Math.max(0, progress)));
+        }
+        
+        ticking = false;
+      });
     };
 
+    // Initial calculation
     calculateProgress();
-    window.addEventListener('scroll', calculateProgress);
-    window.addEventListener('resize', calculateProgress);
+    
+    // Use requestAnimationFrame for smooth scroll handling
+    const handleScroll = () => {
+      calculateProgress();
+    };
+
+    const handleResize = () => {
+      calculateProgress();
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleResize, { passive: true });
 
     return () => {
-      window.removeEventListener('scroll', calculateProgress);
-      window.removeEventListener('resize', calculateProgress);
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleResize);
     };
   }, [showProgress, headers]);
 
