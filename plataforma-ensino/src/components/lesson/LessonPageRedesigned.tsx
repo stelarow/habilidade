@@ -11,6 +11,7 @@ import PDFSectionLazy from './PDFSectionLazy'
 import QuizSectionLazy from './QuizSectionLazy'
 import CompletionSection from './CompletionSection'
 import LessonErrorBoundary from './LessonErrorBoundary'
+import CanvaEmbed from './CanvaEmbed'
 import type { UploadedFile } from './ExercisesSection'
 
 import { useLessonProgress } from '@/hooks/useLessonProgress'
@@ -36,6 +37,12 @@ interface LessonPageRedesignedProps {
   exercises?: any[]
   quizzes?: any[]
   content?: string
+  // Canva embed data
+  canvaEmbedUrl?: string
+  canvaTitle?: string
+  canvaDescription?: string
+  canvaAuthor?: string
+  canvaAuthorUrl?: string
 }
 
 const LessonPageRedesigned: React.FC<LessonPageRedesignedProps> = ({
@@ -47,7 +54,12 @@ const LessonPageRedesigned: React.FC<LessonPageRedesignedProps> = ({
   materials = [],
   exercises = [],
   quizzes = [],
-  content
+  content,
+  canvaEmbedUrl,
+  canvaTitle,
+  canvaDescription,
+  canvaAuthor,
+  canvaAuthorUrl
 }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -133,6 +145,20 @@ const LessonPageRedesigned: React.FC<LessonPageRedesignedProps> = ({
                 Curso: {lesson.course.title}
               </p>
             </Card>
+
+            {/* Canva Presentation Section - Featured at the beginning */}
+            {canvaEmbedUrl && (
+              <div id="canva-section">
+                <CanvaEmbed
+                  embedUrl={canvaEmbedUrl}
+                  title={canvaTitle || "Apresentação da Aula"}
+                  description={canvaDescription || "Apresentação visual complementar ao conteúdo da aula"}
+                  author={canvaAuthor}
+                  authorUrl={canvaAuthorUrl}
+                  className="mb-6"
+                />
+              </div>
+            )}
 
             {/* Content Section - Lesson HTML Content */}
             {content && (
