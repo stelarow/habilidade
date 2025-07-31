@@ -7,7 +7,7 @@ const mockCategories = [
     name: 'Tecnologia',
     slug: 'tecnologia',
     description: 'Artigos sobre tecnologia e inovação',
-    postCount: 6,
+    postCount: 7,
     color: '#3B82F6'
   },
   {
@@ -2588,6 +2588,271 @@ gemini-cli "Como posso otimizar este código Python?"
     publishedAt: '2025-01-31T14:00:00.000Z',
     readingTime: 15,
     tags: ['gemini-cli', 'ia', 'google', 'open-source', 'terminal', 'desenvolvimento', 'automacao', 'cli'],
+    views: 0,
+    likes: 0
+  },
+  {
+    id: 106,
+    title: 'Novidades no Excel (Julho 2025): Recursos que Vão Revolucionar Sua Produtividade',
+    slug: 'novidades-excel-julho-2025',
+    excerpt: 'Descubra as últimas atualizações do Microsoft Excel para julho de 2025, incluindo Versões de Compatibilidade, Atualização Automática de Tabelas Dinâmicas, nova interface Get Data e melhorias multiplataforma.',
+    content: `
+      <div class="article-content space-y-8">
+        
+        <div class="article-section">
+          <p class="text-zinc-300 leading-relaxed mb-6 text-lg">Bem-vindos à atualização de julho de 2025! Este mês, o Microsoft Excel apresenta diversos recursos novos que aprimoram a produtividade dos usuários e a colaboração entre plataformas.</p>
+          
+          <div class="article-image mb-8">
+            <img src="/images/blog/excel-julho-2025/compatibility-version.jpg" alt="Sistema de Versões de Compatibilidade do Excel" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Sistema de Versões de Compatibilidade permite controle preciso sobre comportamentos de cálculo</p>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Principais Atualizações de Julho 2025</h2>
+          
+          <div class="article-highlight bg-gradient-to-r from-blue-500/10 to-green-500/10 border border-blue-500/20 rounded-lg p-6 my-6">
+            <h4 class="text-blue-300 font-semibold mb-3">🚀 Recursos Multiplataforma</h4>
+            <ul class="space-y-2">
+              <li><span class="text-blue-300 font-semibold">Excel para Windows, Mac e Web:</span> <span class="text-zinc-300">Versões de Compatibilidade</span></li>
+              <li><span class="text-green-300 font-semibold">Windows e Mac:</span> <span class="text-zinc-300">Atualização Automática de Tabelas Dinâmicas</span></li>
+              <li><span class="text-purple-300 font-semibold">Windows:</span> <span class="text-zinc-300">Nova interface Get Data e catálogo OneLake</span></li>
+              <li><span class="text-cyan-300 font-semibold">Mac:</span> <span class="text-zinc-300">Visualização lado a lado</span></li>
+              <li><span class="text-yellow-300 font-semibold">Web:</span> <span class="text-zinc-300">Power Query para fontes autenticadas</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Versões de Compatibilidade: Controle Total</h2>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">As Versões de Compatibilidade são configuradas por pasta de trabalho individual. A <strong>Versão 1</strong> reflete o comportamento histórico de cálculo, enquanto a <strong>Versão 2</strong> contém melhorias nas funções de texto.</p>
+          
+          <div class="bg-zinc-800/30 rounded-lg p-6 mb-6">
+            <h4 class="text-white font-semibold mb-3">💡 Benefícios Práticos</h4>
+            <ul class="space-y-2 text-zinc-300">
+              <li>• <strong>Estabilidade:</strong> Projetos existentes mantêm comportamento consistente</li>
+              <li>• <strong>Flexibilidade:</strong> Novos projetos podem aproveitar melhorias</li>
+              <li>• <strong>Controle:</strong> Usuários decidem quando migrar versões</li>
+              <li>• <strong>Compatibilidade:</strong> Trabalho colaborativo sem conflitos</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Atualização Automática de Tabelas Dinâmicas</h2>
+          
+          <div class="article-image mb-6">
+            <img src="/images/blog/excel-julho-2025/pivottable-auto-refresh.jpg" alt="Atualização Automática de Tabelas Dinâmicas" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Com a Atualização Automática, suas Tabelas Dinâmicas se mantêm sempre atualizadas em tempo real</p>
+          </div>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Com a Atualização Automática, você não precisa mais atualizar manualmente suas Tabelas Dinâmicas. Qualquer atualização no intervalo de origem é instantaneamente refletida na Tabela Dinâmica.</p>
+          
+          <div class="article-highlight bg-gradient-to-r from-green-500/10 to-blue-500/10 border border-green-500/20 rounded-lg p-6 my-6">
+            <h4 class="text-green-300 font-semibold mb-3">⚡ Cenários de Uso Práticos</h4>
+            <div class="grid md:grid-cols-2 gap-4">
+              <div>
+                <h5 class="text-white font-semibold mb-2">Para Estudantes:</h5>
+                <ul class="space-y-1 text-zinc-300 text-sm">
+                  <li>• Análise de dados em tempo real</li>
+                  <li>• Acompanhamento de projetos</li>
+                  <li>• Dashboards acadêmicos</li>
+                </ul>
+              </div>
+              <div>
+                <h5 class="text-white font-semibold mb-2">Para Profissionais:</h5>
+                <ul class="space-y-1 text-zinc-300 text-sm">
+                  <li>• Relatórios executivos automáticos</li>
+                  <li>• Monitoramento de KPIs</li>
+                  <li>• Análises colaborativas dinâmicas</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Nova Interface Get Data</h2>
+          
+          <div class="article-image mb-6">
+            <img src="/images/blog/excel-julho-2025/get-data-dialog.jpg" alt="Nova Interface Get Data" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">A nova interface Get Data oferece busca inteligente e recomendações personalizadas</p>
+          </div>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">A nova interface Get Data para Power Query integra busca e recomendações em um layout simplificado, oferecendo também acesso direto aos dados do OneLake do Fabric.</p>
+          
+          <div class="bg-zinc-800/30 rounded-lg p-6 mb-6">
+            <h4 class="text-white font-semibold mb-3">🎯 Benefícios para Analistas</h4>
+            <div class="grid md:grid-cols-2 gap-4">
+              <div>
+                <h5 class="text-blue-300 font-semibold mb-2">Busca Inteligente:</h5>
+                <ul class="space-y-1 text-zinc-300 text-sm">
+                  <li>• Localização rápida de fontes</li>
+                  <li>• Sugestões contextuais</li>
+                  <li>• Interface intuitiva</li>
+                </ul>
+              </div>
+              <div>
+                <h5 class="text-green-300 font-semibold mb-2">Integração OneLake:</h5>
+                <ul class="space-y-1 text-zinc-300 text-sm">
+                  <li>• Dados organizacionais</li>
+                  <li>• Qualidade garantida</li>
+                  <li>• Colaboração aprimorada</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Visualização Lado a Lado no Mac</h2>
+          
+          <div class="article-image mb-6">
+            <img src="/images/blog/excel-julho-2025/side-by-side-view.jpg" alt="Visualização Lado a Lado no Mac" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Compare planilhas lado a lado com rolagem sincronizada, igual ao Excel Windows</p>
+          </div>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Agora você pode comparar rapidamente planilhas na mesma pasta de trabalho ou em pastas diferentes, visualizando-as lado a lado com rolagem síncrona.</p>
+          
+          <div class="article-highlight bg-gradient-to-r from-purple-500/10 to-cyan-500/10 border border-purple-500/20 rounded-lg p-6 my-6">
+            <h4 class="text-purple-300 font-semibold mb-3">📊 Casos de Uso Educacionais</h4>
+            <div class="grid md:grid-cols-2 gap-4">
+              <div>
+                <h5 class="text-white font-semibold mb-2">Para Estudantes:</h5>
+                <ul class="space-y-1 text-zinc-300 text-sm">
+                  <li>• Comparação de versões</li>
+                  <li>• Análise histórica vs. atual</li>
+                  <li>• Verificação de fórmulas</li>
+                </ul>
+              </div>
+              <div>
+                <h5 class="text-white font-semibold mb-2">Para Professores:</h5>
+                <ul class="space-y-1 text-zinc-300 text-sm">
+                  <li>• Correção comparativa</li>
+                  <li>• Demonstração de diferenças</li>
+                  <li>• Análise de progresso</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Power Query na Web</h2>
+          
+          <div class="article-image mb-6">
+            <img src="/images/blog/excel-julho-2025/power-query-web.jpg" alt="Power Query na Web" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Atualize consultas Power Query com fontes autenticadas diretamente na web</p>
+          </div>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Agora você pode atualizar consultas Power Query que obtêm dados de fontes autenticadas, com múltiplos métodos de autenticação disponíveis.</p>
+          
+          <div class="bg-zinc-800/30 rounded-lg p-6 mb-6">
+            <h4 class="text-white font-semibold mb-3">🔐 Métodos de Autenticação</h4>
+            <ul class="space-y-2 text-zinc-300">
+              <li>• <strong>Anônimo:</strong> Para fontes públicas</li>
+              <li>• <strong>Usuário e senha:</strong> Credenciais específicas</li>
+              <li>• <strong>Conta organizacional:</strong> Integração com Azure AD</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Exercícios Práticos</h2>
+          
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="bg-zinc-800/30 rounded-lg p-6">
+              <h4 class="text-cyan-300 font-semibold mb-3">🔧 Exercício 1: Versões de Compatibilidade</h4>
+              <p class="text-zinc-300 text-sm mb-3"><strong>Objetivo:</strong> Compreender e configurar versões</p>
+              <p class="text-zinc-300 text-sm mb-3"><strong>Tempo:</strong> 20 minutos</p>
+              <ul class="space-y-1 text-zinc-300 text-sm">
+                <li>• Verificar versão atual</li>
+                <li>• Testar funções em ambas versões</li>
+                <li>• Comparar resultados</li>
+                <li>• Definir versão apropriada</li>
+              </ul>
+            </div>
+            
+            <div class="bg-zinc-800/30 rounded-lg p-6">
+              <h4 class="text-green-300 font-semibold mb-3">📊 Exercício 2: Tabela Dinâmica Auto Refresh</h4>
+              <p class="text-zinc-300 text-sm mb-3"><strong>Objetivo:</strong> Implementar atualização automática</p>
+              <p class="text-zinc-300 text-sm mb-3"><strong>Tempo:</strong> 25 minutos</p>
+              <ul class="space-y-1 text-zinc-300 text-sm">
+                <li>• Preparar dados de vendas</li>
+                <li>• Configurar Tabela Dinâmica</li>
+                <li>• Ativar atualização automática</li>
+                <li>• Validar funcionamento</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Impacto na Análise de Dados</h2>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">As atualizações de julho 2025 representam um salto significativo na capacidade analítica, oferecendo automação inteligente, colaboração aprimorada e fluxos de trabalho mais eficientes.</p>
+          
+          <div class="article-highlight bg-gradient-to-r from-yellow-500/10 to-red-500/10 border border-yellow-500/20 rounded-lg p-6 my-6">
+            <h4 class="text-yellow-300 font-semibold mb-3">🎓 Para Estudantes da Escola Habilidade</h4>
+            <p class="text-zinc-300 mb-3">Essas funcionalidades preparam vocês para o mercado de trabalho atual:</p>
+            <ul class="space-y-2 text-zinc-300">
+              <li>• <strong>Vantagem Competitiva:</strong> Diferenciação no mercado</li>
+              <li>• <strong>Eficiência Profissional:</strong> Automação de tarefas</li>
+              <li>• <strong>Colaboração Moderna:</strong> Ferramentas atuais</li>
+              <li>• <strong>Base Sólida:</strong> Fundação para ferramentas avançadas</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Conclusão</h2>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">As atualizações de julho 2025 consolidam o Excel como ferramenta essencial para análise de dados moderna. Com automação inteligente, compatibilidade aprimorada e recursos multiplataforma, profissionais e estudantes têm agora acesso a capacidades que anteriormente exigiam ferramentas especializadas.</p>
+          
+          <div class="bg-zinc-800/30 rounded-lg p-6 mb-6">
+            <h4 class="text-white font-semibold mb-3">🚀 Próximos Passos Recomendados</h4>
+            <ul class="space-y-2 text-zinc-300">
+              <li>• Pratique regularmente com os exercícios propostos</li>
+              <li>• Explore todas as funcionalidades apresentadas</li>
+              <li>• Documente seu aprendizado e descobertas</li>
+              <li>• Compartilhe conhecimento com colegas</li>
+              <li>• Mantenha-se atualizado com mudanças mensais</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    `,
+    author: {
+      id: 1,
+      name: 'Escola Habilidade',
+      bio: 'Especialistas em educação tecnológica',
+      avatar: '/images/avatars/escola-logo.png',
+      social: {
+        linkedin: 'https://linkedin.com/company/escola-habilidade',
+        instagram: 'https://instagram.com/escolahabilidade'
+      }
+    },
+    category: {
+      id: 1,
+      name: 'Tecnologia',
+      slug: 'tecnologia',
+      color: '#3B82F6'
+    },
+    publishedAt: '2025-07-31T10:00:00.000Z',
+    updatedAt: '2025-07-31T10:00:00.000Z',
+    readingTime: 10,
+    featured: true,
+    featured_image_url: '/images/blog/excel-julho-2025/compatibility-version.jpg',
+    seo: {
+      title: 'Novidades no Excel (Julho 2025): Recursos que Vão Revolucionar Sua Produtividade | Escola Habilidade',
+      description: 'Descubra as últimas atualizações do Microsoft Excel para julho de 2025, incluindo Versões de Compatibilidade, Atualização Automática de Tabelas Dinâmicas, nova interface Get Data e melhorias multiplataforma.',
+      keywords: ['excel', 'microsoft', 'produtividade', 'power-query', 'pivottable', 'automação', 'análise-dados', 'versões-compatibilidade', 'onelake'],
+      canonical_url: '/blog/novidades-excel-julho-2025',
+      og_image: '/images/blog/excel-julho-2025/compatibility-version.jpg'
+    },
+    tags: ['excel', 'microsoft', 'produtividade', 'power-query', 'pivottable', 'automação', 'análise-dados', 'versões-compatibilidade'],
     views: 0,
     likes: 0
   }
