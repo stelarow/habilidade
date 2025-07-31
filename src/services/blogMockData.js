@@ -47,7 +47,7 @@ const mockCategories = [
     name: 'Arquitetura',
     slug: 'arquitetura',
     description: 'Design arquitetônico e projetos de construção',
-    postCount: 1,
+    postCount: 2,
     color: '#06B6D4'
   }
 ];
@@ -1768,6 +1768,328 @@ const age = now.toPlainDate().since(birthday).years;</code></pre>
     publishedAt: '2025-01-30T09:00:00.000Z',
     readingTime: 8,
     tags: ['design', 'arquitetura', 'sustentabilidade', 'sketchup', 'urbanismo'],
+    views: 0,
+    likes: 0
+  },
+  {
+    id: 101,
+    title: 'Dominando o Shape Bender: Curvando Geometrias no SketchUp',
+    slug: 'dominando-shape-bender-curvando-geometrias-sketchup',
+    excerpt: 'Aprenda a usar a extensão Shape Bender para transformar geometrias retas em curvas complexas no SketchUp. Tutorial completo com dicas profissionais e exercícios práticos para arquitetos e designers.',
+    content: `
+      <div class="article-content space-y-8">
+        
+        <div class="article-section">
+          <p class="text-zinc-300 leading-relaxed mb-6 text-lg">Descubra como usar a poderosa extensão Shape Bender para transformar geometrias retas em curvas impressionantes no SketchUp. Este tutorial completo abrange desde a instalação até técnicas avançadas.</p>
+          
+          <div class="article-image mb-8">
+            <img src="/images/blog/shape-bender/shape-bender-hero.jpg" alt="Extensão Shape Bender no SketchUp" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">A extensão Shape Bender permite criar geometrias curvas complexas a partir de formas retas</p>
+          </div>
+          
+          <div class="article-highlight bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/20 rounded-lg p-6 my-6">
+            <h4 class="text-cyan-300 font-semibold mb-3">📋 Objetivos de Aprendizagem</h4>
+            <ul class="space-y-2">
+              <li class="text-zinc-300">• Instalar e configurar a extensão Shape Bender</li>
+              <li class="text-zinc-300">• Compreender os conceitos de linha base e linha de curvatura</li>
+              <li class="text-zinc-300">• Aplicar técnicas de curvatura em projetos arquitetônicos</li>
+              <li class="text-zinc-300">• Dominar dicas profissionais para resultados otimizados</li>
+              <li class="text-zinc-300">• Resolver problemas comuns durante o processo</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">O que é o Shape Bender?</h2>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Desenhar uma linha reta no SketchUp é muito simples. Mas e se você precisar curvar essa linha, ou talvez uma forma mais complexa, em uma curva específica? É aí que entra o <strong class="text-white">Shape Bender</strong>, uma extensão do SketchUp que pode rapidamente transformar geometrias retas em curvas complexas.</p>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Chris Fullmer, o criador do Shape Bender, originalmente construiu esta ferramenta para resolver um problema que encontrou enquanto projetava uma paisagem. Ele modelou uma parede de pedra curva para a entrada frontal de um edifício de escritórios e queria modelar o nome do cliente em sinalização seguindo a curvatura da formação rochosa, mas não conseguiu encontrar uma maneira simples de fazê-lo.</p>
+          
+          <div class="article-quote bg-zinc-800/50 border-l-4 border-cyan-500 p-6 my-6">
+            <p class="text-zinc-300 italic mb-4">"Chris criou sua própria extensão para resolver o problema – isso é ser proativo! Com sua capacidade incomparável de transformar geometrias retas em curvas requintadas, esta extensão se tornou uma ferramenta inestimável para uma ampla gama de designers arquitetônicos."</p>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Como Funciona o Shape Bender</h2>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">O que o Shape Bender faz é bastante direto: ele pega qualquer objeto 3D em seu modelo e o estica ao longo de um caminho pré-desenhado que você seleciona. Veja os exemplos a seguir:</p>
+          
+          <div class="article-image mb-6">
+            <img src="/images/blog/shape-bender/shape-bender-text-example.jpg" alt="Exemplo de texto curvado com Shape Bender" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">O texto azul reto é o modelo original e o texto amarelo curvado é o resultado da operação do Shape Bender</p>
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="article-image">
+              <img src="/images/blog/shape-bender/shape-bender-spiral-path.jpg" alt="Caminho de curvatura em espiral 3D" class="w-full rounded-lg shadow-lg" />
+              <p class="text-zinc-400 text-sm mt-2 text-center italic">O caminho de curvatura (à esquerda) é uma espiral 3D</p>
+            </div>
+            <div class="article-image">
+              <img src="/images/blog/shape-bender/shape-bender-curved-result.jpg" alt="Resultado da aplicação do Shape Bender" class="w-full rounded-lg shadow-lg" />
+              <p class="text-zinc-400 text-sm mt-2 text-center italic">Resultado final após a aplicação da curvatura</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Primeiros Passos com o Shape Bender</h2>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Pronto para curvar a realidade com seus designs? Acesse o Extension Warehouse do SketchUp e <a href="https://extensions.sketchup.com/extension/8a4d10ff-40f3-4885-b8ba-1dac2b941885/clf-shape-bender" class="text-cyan-400 hover:text-cyan-300 underline" target="_blank" rel="noopener">baixe a extensão Shape Bender</a>.</p>
+          
+          <div class="article-highlight bg-gradient-to-r from-orange-500/10 to-red-500/10 border border-orange-500/20 rounded-lg p-6 my-6">
+            <h4 class="text-orange-300 font-semibold mb-3">⚡ Pré-requisitos</h4>
+            <ul class="space-y-2">
+              <li class="text-zinc-300">• SketchUp instalado (versão Pro ou Make)</li>
+              <li class="text-zinc-300">• Conexão com internet para download da extensão</li>
+              <li class="text-zinc-300">• Conhecimento básico de ferramentas do SketchUp</li>
+              <li class="text-zinc-300">• Objeto 3D convertido em grupo ou componente</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Guia Passo a Passo</h2>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Para dominar esta ferramenta, você precisa lembrar de dois elementos essenciais: a <strong class="text-white">"linha base"</strong> e a <strong class="text-white">"linha de curvatura"</strong>. A "linha base" é sua linha reta, definindo o tamanho e posição original da sua forma. A "linha de curvatura" é a curva que você quer que sua forma adote.</p>
+          
+          <div class="space-y-6">
+            <div class="flex items-start space-x-4">
+              <div class="flex-shrink-0 w-8 h-8 bg-cyan-500 text-black rounded-full flex items-center justify-center font-bold">1</div>
+              <div>
+                <h4 class="text-white font-semibold mb-2">Prepare o Objeto</h4>
+                <p class="text-zinc-300">Certifique-se de que o objeto que você quer curvar seja um grupo ou um componente.</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start space-x-4">
+              <div class="flex-shrink-0 w-8 h-8 bg-cyan-500 text-black rounded-full flex items-center justify-center font-bold">2</div>
+              <div>
+                <h4 class="text-white font-semibold mb-2">Alinhe ao Eixo Vermelho</h4>
+                <p class="text-zinc-300">Rotacione o objeto (se necessário) para que fique alinhado longitudinalmente ao longo do eixo vermelho.</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start space-x-4">
+              <div class="flex-shrink-0 w-8 h-8 bg-cyan-500 text-black rounded-full flex items-center justify-center font-bold">3</div>
+              <div>
+                <h4 class="text-white font-semibold mb-2">Desenhe a Linha Base</h4>
+                <p class="text-zinc-300">Use a ferramenta Linha para desenhar uma aresta reta paralela ao comprimento da forma que você quer curvar, garantindo que esteja paralela ao eixo vermelho.</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start space-x-4">
+              <div class="flex-shrink-0 w-8 h-8 bg-cyan-500 text-black rounded-full flex items-center justify-center font-bold">4</div>
+              <div>
+                <h4 class="text-white font-semibold mb-2">Crie o Caminho Curvo</h4>
+                <p class="text-zinc-300">Desenhe uma aresta curva que representa o caminho de curvatura para sua nova forma.</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start space-x-4">
+              <div class="flex-shrink-0 w-8 h-8 bg-cyan-500 text-black rounded-full flex items-center justify-center font-bold">5</div>
+              <div>
+                <h4 class="text-white font-semibold mb-2">Selecione o Objeto</h4>
+                <p class="text-zinc-300">Selecione o grupo ou componente que você quer curvar.</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start space-x-4">
+              <div class="flex-shrink-0 w-8 h-8 bg-cyan-500 text-black rounded-full flex items-center justify-center font-bold">6</div>
+              <div>
+                <h4 class="text-white font-semibold mb-2">Ative a Ferramenta</h4>
+                <p class="text-zinc-300">Escolha Plugins > Chris Fullmer Tools > Shape Bender para ativar a ferramenta.</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start space-x-4">
+              <div class="flex-shrink-0 w-8 h-8 bg-cyan-500 text-black rounded-full flex items-center justify-center font-bold">7</div>
+              <div>
+                <h4 class="text-white font-semibold mb-2">Selecione as Linhas</h4>
+                <p class="text-zinc-300">Clique uma vez na aresta reta que você desenhou no Passo 3, depois clique uma vez na curva que você criou no Passo 4.</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start space-x-4">
+              <div class="flex-shrink-0 w-8 h-8 bg-cyan-500 text-black rounded-full flex items-center justify-center font-bold">8</div>
+              <div>
+                <h4 class="text-white font-semibold mb-2">Visualize o Resultado</h4>
+                <p class="text-zinc-300">Revise através da visualização verde para ver o que você está prestes a obter. Se a forma parecer invertida, pressione a seta Para Cima no teclado para reverter a direção.</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start space-x-4">
+              <div class="flex-shrink-0 w-8 h-8 bg-cyan-500 text-black rounded-full flex items-center justify-center font-bold">9</div>
+              <div>
+                <h4 class="text-white font-semibold mb-2">Finalize a Transformação</h4>
+                <p class="text-zinc-300">Quando a visualização estiver como você imagina, pressione Enter para finalizar a transformação.</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="article-highlight bg-gradient-to-r from-blue-500/10 to-indigo-500/10 border border-blue-500/20 rounded-lg p-6 my-6">
+            <h4 class="text-blue-300 font-semibold mb-3">🎥 Recurso Adicional</h4>
+            <p class="text-zinc-300">Siga o <a href="https://www.youtube.com/watch?v=tGHTIOMm_34" class="text-blue-400 hover:text-blue-300 underline" target="_blank" rel="noopener">vídeo instrucional de Chris</a> sobre como fazer uma rampa ou estrada curva para mais prática.</p>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Dicas Profissionais para Dominar o Shape Bender</h2>
+          
+          <h3 class="text-xl font-semibold text-white mb-4">1. A Localização é Importante</h3>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Preste atenção à localização da aresta reta alinhada ao eixo vermelho que você desenha em relação ao objeto que planeja curvar. Ela atua como o ponto de origem para a operação. Se você quer que a linha central do seu objeto curvado siga o caminho de curvatura precisamente, desenhe a aresta reta bem através do centro do objeto original.</p>
+          
+          <div class="article-image mb-6">
+            <img src="/images/blog/shape-bender/shape-bender-position-examples.jpg" alt="Exemplos de posicionamento da linha base" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Note as diferentes posições da linha vermelha em relação ao cone azul original nos três exemplos. Onde você posiciona a linha reta afeta o resultado da operação de curvatura</p>
+          </div>
+          
+          <h3 class="text-xl font-semibold text-white mb-4">2. O Comprimento da Linha Reta Importa</h3>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">O comprimento afeta como o objeto que você está tentando curvar se estica ou encolhe quando você o curva. Se você quer que ele se estique, faça sua linha reta mais curta que a curva. Se você quer que ele encolha, inverta isso. Faça ambas as linhas com aproximadamente o mesmo comprimento para evitar esticamento ou encolhimento.</p>
+          
+          <h3 class="text-xl font-semibold text-white mb-4">3. Início e Fim Importam</h3>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Desenhe seu caminho de curvatura para que seus pontos de início e fim estejam em lugares diferentes ao longo do eixo vermelho.</p>
+          
+          <h3 class="text-xl font-semibold text-white mb-4">4. Solde Seu Caminho de Curvatura</h3>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">A aresta que você designa como caminho de curvatura precisa ser contínua; ela não pode ser feita de mais de um segmento. Para colar múltiplos segmentos juntos, use o comando <strong class="text-white">Weld Edges</strong> no SketchUp.</p>
+          
+          <div class="article-highlight bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-500/20 rounded-lg p-6 my-6">
+            <h4 class="text-green-300 font-semibold mb-3">💡 Dica Avançada</h4>
+            <p class="text-zinc-300">Para projetos complexos, experimente usar múltiplas operações de Shape Bender em sequência. Você pode curvar um objeto em uma direção, depois aplicar outra curvatura perpendicular para criar formas tridimensionais complexas.</p>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Exercícios Práticos</h2>
+          
+          <div class="space-y-6">
+            <div class="bg-zinc-800/50 rounded-lg p-6">
+              <h4 class="text-white font-semibold mb-3">Exercício 1: Texto Curvo Básico</h4>
+              <p class="text-zinc-300 mb-4"><strong>Objetivo:</strong> Criar texto 3D que segue uma curva suave</p>
+              <p class="text-zinc-300 mb-4"><strong>Passos:</strong></p>
+              <ol class="list-decimal list-inside space-y-2 text-zinc-300 mb-4">
+                <li>Crie um texto 3D usando a ferramenta Texto do SketchUp</li>
+                <li>Converta o texto em grupo</li>
+                <li>Desenhe uma linha reta paralela ao texto</li>
+                <li>Crie uma curva suave usando a ferramenta Arco</li>
+                <li>Aplique o Shape Bender</li>
+              </ol>
+              <p class="text-zinc-300"><strong>Tempo estimado:</strong> 15 minutos</p>
+            </div>
+            
+            <div class="bg-zinc-800/50 rounded-lg p-6">
+              <h4 class="text-white font-semibold mb-3">Exercício 2: Corrimão Curvo</h4>
+              <p class="text-zinc-300 mb-4"><strong>Objetivo:</strong> Modelar um corrimão que segue uma escada curva</p>
+              <p class="text-zinc-300 mb-4"><strong>Desafio:</strong> Criar um perfil de corrimão complexo e aplicá-lo a uma trajetória helicoidal</p>
+              <p class="text-zinc-300"><strong>Tempo estimado:</strong> 30 minutos</p>
+            </div>
+            
+            <div class="bg-zinc-800/50 rounded-lg p-6">
+              <h4 class="text-white font-semibold mb-3">Exercício 3: Moldura Arquitetônica</h4>
+              <p class="text-zinc-300 mb-4"><strong>Objetivo:</strong> Criar molduras decorativas que seguem arcos arquitectônicos</p>
+              <p class="text-zinc-300 mb-4"><strong>Aplicação prática:</strong> Elementos decorativos para fachadas de edifícios</p>
+              <p class="text-zinc-300"><strong>Tempo estimado:</strong> 45 minutos</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Resolução de Problemas Comuns</h2>
+          
+          <div class="space-y-6">
+            <div class="border border-zinc-700 rounded-lg p-6">
+              <h4 class="text-red-300 font-semibold mb-3">❌ Problema: Objeto fica distorcido</h4>
+              <p class="text-zinc-300 mb-2"><strong>Solução:</strong></p>
+              <ul class="list-disc list-inside space-y-1 text-zinc-300">
+                <li>Verifique se o objeto está alinhado com o eixo vermelho</li>
+                <li>Confirme se a linha base está paralela ao objeto</li>
+                <li>Ajuste o comprimento da linha base em relação à curva</li>
+              </ul>
+            </div>
+            
+            <div class="border border-zinc-700 rounded-lg p-6">
+              <h4 class="text-red-300 font-semibold mb-3">❌ Problema: Direção da curvatura está invertida</h4>
+              <p class="text-zinc-300 mb-2"><strong>Solução:</strong></p>
+              <ul class="list-disc list-inside space-y-1 text-zinc-300">
+                <li>Use a seta Para Cima durante a visualização</li>
+                <li>Ou redesenhe a curva na direção oposta</li>
+              </ul>
+            </div>
+            
+            <div class="border border-zinc-700 rounded-lg p-6">
+              <h4 class="text-red-300 font-semibold mb-3">❌ Problema: Ferramenta não funciona</h4>
+              <p class="text-zinc-300 mb-2"><strong>Solução:</strong></p>
+              <ul class="list-disc list-inside space-y-1 text-zinc-300">
+                <li>Certifique-se de que o objeto é um grupo ou componente</li>
+                <li>Verifique se a curva é uma aresta contínua (use Weld se necessário)</li>
+                <li>Reinicie o SketchUp se a extensão não responder</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Aplicações Profissionais</h2>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">O Shape Bender é especialmente útil para arquitetos e designers que trabalham com:</p>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="bg-zinc-800/30 rounded-lg p-6">
+              <h4 class="text-cyan-300 font-semibold mb-3">🏗️ Arquitetura</h4>
+              <ul class="space-y-2 text-zinc-300">
+                <li>• Fachadas curvas com elementos repetitivos</li>
+                <li>• Corrimãos e guarda-corpos</li>
+                <li>• Molduras e ornamentos</li>
+                <li>• Estruturas de cobertura curvas</li>
+              </ul>
+            </div>
+            
+            <div class="bg-zinc-800/30 rounded-lg p-6">
+              <h4 class="text-cyan-300 font-semibold mb-3">🎨 Design</h4>
+              <ul class="space-y-2 text-zinc-300">
+                <li>• Sinalização e letreiros curvos</li>
+                <li>• Mobiliário com formas orgânicas</li>
+                <li>• Elementos decorativos</li>
+                <li>• Paisagismo e jardins</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Conclusão: Criatividade Através da Curvatura</h2>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Criado especificamente para o SketchUp, a extensão Shape Bender é sobre transformar e ajustar objetos geométricos ao longo de uma linha ou caminho curvo personalizado. É sua ferramenta de escultura digital, permitindo que você molde seus designs como argila.</p>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Para estudantes de arquitetura e design da Escola Habilidade, dominar o Shape Bender abre possibilidades criativas infinitas. Esta ferramenta permite que você vá além das limitações das geometrias retas, criando formas orgânicas e elementos curvos que tornam seus projetos únicos e impressionantes.</p>
+          
+          <div class="article-highlight bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/20 rounded-lg p-6 my-6">
+            <h4 class="text-purple-300 font-semibold mb-3">🎓 Próximos Passos</h4>
+            <p class="text-zinc-300 mb-4">Continue sua jornada de aprendizado em modelagem 3D:</p>
+            <ul class="space-y-2 text-zinc-300">
+              <li>• Pratique com os exercícios propostos</li>
+              <li>• Experimente com diferentes tipos de curvas</li>
+              <li>• Combine Shape Bender com outras extensões</li>
+              <li>• Documente seus projetos para construir um portfólio</li>
+            </ul>
+          </div>
+          
+          <p class="text-zinc-300 leading-relaxed mb-4">Saia por aí e comece a curvar as regras. Você nunca sabe que maravilhas criativas pode descobrir quando domina as ferramentas certas para expressar sua visão arquitetônica.</p>
+        </div>
+        
+      </div>
+    `,
+    author: { name: 'Escola Habilidade', avatar: '/assets/avatars/default.jpg' },
+    category: { id: 6, name: 'Arquitetura', slug: 'arquitetura', color: '#06B6D4' },
+    featuredImage: '/images/blog/shape-bender/shape-bender-hero.jpg',
+    publishedAt: '2025-01-31T10:00:00.000Z',
+    readingTime: 12,
+    tags: ['sketchup', 'arquitetura', 'design', 'modelagem-3d', 'shape-bender', 'tutorial', 'extensões'],
     views: 0,
     likes: 0
   }
