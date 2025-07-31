@@ -111,7 +111,7 @@ const TableOfContents = ({
   content = null, 
   containerSelector = null,
   className = '',
-  title = '�ndice',
+  title = 'Índice',
   collapsible = true,
   initiallyCollapsed = false,
   minHeaders = 3,
@@ -322,6 +322,82 @@ const TableOfContents = ({
             <span className="text-xs text-zinc-500">
               {Math.round(readingProgress)}%
             </span>
+          )}
+        </div>
+        
+        {collapsible && (
+          <button
+            onClick={toggleCollapse}
+            className="p-1 text-zinc-400 hover:text-zinc-300 transition-colors"
+            aria-label={isCollapsed ? 'Expandir Índice' : 'Recolher Índice'}
+          >
+            {isCollapsed ? <CaretRight size={16} /> : <CaretDown size={16} />}
+          </button>
+        )}
+      </div>
+
+      {/* Progress Bar */}
+      {showProgress && !isCollapsed && (
+        <div className="px-4 py-2 border-b border-zinc-700/50">
+          <div className="w-full bg-zinc-700 rounded-full h-1">
+            <div 
+              className="bg-purple-500 h-1 rounded-full transition-all duration-300"
+              style={{ width: `${readingProgress}%` }}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* TOC List - Implementação da solução recomendada */}
+      {!isCollapsed && (
+        <nav 
+          className={`toc-nav p-2 ${
+            isMobile 
+              ? 'max-h-[50vh] overflow-y-auto' 
+              : 'max-h-[calc(100vh-200px)] overflow-visible'
+          }`} 
+          role="navigation" 
+          aria-label="Índice do artigo"
+          style={{
+            // Custom scrollbar styling para quando necessário no mobile
+            scrollbarWidth: 'thin',
+            scrollbarColor: '#4A5568 #2D3748'
+          }}
+        >
+          <style jsx>{`
+            .toc-nav::-webkit-scrollbar {
+              width: 4px;
+            }
+            .toc-nav::-webkit-scrollbar-track {
+              background: #2D3748;
+              border-radius: 2px;
+            }
+            .toc-nav::-webkit-scrollbar-thumb {
+              background: #4A5568;
+              border-radius: 2px;
+            }
+            .toc-nav::-webkit-scrollbar-thumb:hover {
+              background: #718096;
+            }
+          `}</style>
+          <ul className="space-y-1">
+            {headers.map((header, index) => (
+              <TOCItem
+                key={`${header.slug}-${index}`}
+                header={header}
+                isActive={activeHeader === header.slug}
+                onClick={handleHeaderClick}
+                isCollapsed={isCollapsed}
+              />
+            ))}
+          </ul>
+        </nav>
+      )}
+    </div>
+  );
+
+  // Return the TOC content
+  return tocContent;
           )}
         </div>
         

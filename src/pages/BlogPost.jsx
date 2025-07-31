@@ -269,7 +269,7 @@ const BlogPost = () => {
           
           {/* Sidebar TOC - Desktop */}
           <div className="hidden xl:block w-64 flex-shrink-0">
-            <div className="sticky top-24">
+            <div className="sticky top-24" style={{ maxHeight: 'calc(100vh - 8rem)' }}>
               <TableOfContents 
                 containerSelector=".article-content"
                 title="Navegação do Artigo"
