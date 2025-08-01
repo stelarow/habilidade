@@ -1,5 +1,5 @@
 import React, { Suspense, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate, useParams } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useParams, useLocation } from 'react-router-dom';
 import './styles/blog-animations.css';
 
 // Componente para redirecionamento de cursos
@@ -28,6 +28,30 @@ const NotFound = React.lazy(() => import('./pages/NotFound'));
 // Otimizações de performance
 import domOptimizer from './utils/domOptimizer';
 import usePerformanceLevel from './hooks/usePerformanceLevel';
+
+// Component to handle routes with cleanup
+function RoutesWithCleanup() {
+  const location = useLocation();
+  
+  return (
+    <Routes key={location.pathname}>
+      <Route path="/" element={<Home />} />
+      <Route path="/cursos/:courseSlug" element={<CoursePage />} />
+      <Route path="/blog" element={<BlogIndex />} />
+      <Route path="/blog-test" element={<BlogTestPage />} />
+      <Route path="/blog-test/:slug" element={<BlogTestPage />} />
+      <Route path="/blog/:slug" element={<BlogPost />} />
+      <Route path="/blog/categoria/:categorySlug" element={<BlogCategory />} />
+      <Route path="/habilidade" element={<Navigate to="/" replace />} />
+      <Route path="/habilidade/" element={<Navigate to="/" replace />} />
+      <Route 
+        path="/habilidade/cursos/:courseSlug" 
+        element={<CourseRedirect />} 
+      />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  );
+}
 
 function App() {
   const { performanceLevel } = usePerformanceLevel();
@@ -83,22 +107,7 @@ function App() {
           {/* Main Content com lazy loading otimizado */}
           <main id="main-content" className="relative z-10">
             <Suspense fallback={<Loading />}>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/cursos/:courseSlug" element={<CoursePage />} />
-                <Route path="/blog" element={<BlogIndex />} />
-                <Route path="/blog-test" element={<BlogTestPage />} />
-                <Route path="/blog-test/:slug" element={<BlogTestPage />} />
-                <Route path="/blog/:slug" element={<BlogPost />} />
-                <Route path="/blog/categoria/:categorySlug" element={<BlogCategory />} />
-                <Route path="/habilidade" element={<Navigate to="/" replace />} />
-                <Route path="/habilidade/" element={<Navigate to="/" replace />} />
-                <Route 
-                  path="/habilidade/cursos/:courseSlug" 
-                  element={<CourseRedirect />} 
-                />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
+              <RoutesWithCleanup />
             </Suspense>
           </main>
           

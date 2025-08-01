@@ -7,11 +7,19 @@ import BlogHeader from './BlogHeader';
 const BlogLayout = ({ 
   children, 
   title = "Blog - Escola Habilidade", 
-  description = "Artigos sobre tecnologia, educa��o e desenvolvimento de carreira",
+  description = "Artigos sobre tecnologia, educação e desenvolvimento de carreira",
   breadcrumbs = [],
   showBlogHeader = true,
   className = ""
 }) => {
+  // Cleanup effect to reset title when component unmounts
+  React.useEffect(() => {
+    return () => {
+      // Reset to default home title when leaving blog
+      document.title = 'Escola Habilidade - Transformando Vidas através da Educação Tecnológica';
+    };
+  }, []);
+
   return (
     <>
       <SEOHead 
@@ -20,7 +28,7 @@ const BlogLayout = ({
         type="website"
       />
       
-      {/* Header id�ntico ao site principal */}
+      {/* Header idêntico ao site principal */}
       <Header />
       
       {/* Blog-specific header with breadcrumbs */}
@@ -40,7 +48,7 @@ const BlogLayout = ({
         </div>
       </main>
       
-      {/* Footer id�ntico ao site principal */}
+      {/* Footer idêntico ao site principal */}
       <Footer />
     </>
   );
