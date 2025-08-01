@@ -1138,119 +1138,6 @@ const mockPosts = [
   },
   {
     id: 1,
-    title: 'Design Thinking na Educação Tecnológica',
-    slug: 'design-thinking-educacao-tecnologica',
-    excerpt: 'Como aplicar metodologias de design para melhorar o aprendizado.',
-    content: `
-      <div class="article-content space-y-8">
-        
-        <div class="article-section">
-          <h2 class="text-2xl font-bold text-white mb-4 mt-0">O Design Thinking revoluciona a forma como aprendemos e ensinamos tecnologia</h2>
-          <p class="text-zinc-300 leading-relaxed mb-6 text-lg">Esta metodologia cria experiências mais envolventes e eficazes, colocando o aluno no centro do processo educacional.</p>
-        </div>
-
-        <div class="article-section">
-          <h3 class="text-xl font-semibold text-white mb-4">O que é Design Thinking?</h3>
-          <p class="text-zinc-300 leading-relaxed mb-4">Design Thinking é uma abordagem centrada no ser humano para inovação que integra as necessidades das pessoas, as possibilidades da tecnologia e os requisitos para o sucesso.</p>
-        </div>
-
-        <div class="article-section">
-          <h2 class="text-2xl font-bold text-white mb-6 mt-8">Implementação do Design Thinking na Educação</h2>
-          <h3 class="text-xl font-semibold text-white mb-4">Os 5 estágios do Design Thinking na educação</h3>
-          
-          <div class="flex flex-col gap-4">
-            <div class="article-highlight bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 rounded-lg p-6">
-              <h4 class="text-blue-300 font-semibold mb-3">1. Empatizar</h4>
-              <p class="text-zinc-300">Compreender profundamente as necessidades, dificuldades e motivações dos estudantes.</p>
-            </div>
-            
-            <div class="article-highlight bg-gradient-to-r from-green-500/10 to-blue-500/10 border border-green-500/20 rounded-lg p-6">
-              <h4 class="text-green-300 font-semibold mb-3">2. Definir</h4>
-              <p class="text-zinc-300">Sintetizar as observações em uma declaração clara do problema a ser resolvido.</p>
-            </div>
-            
-            <div class="article-highlight bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/20 rounded-lg p-6">
-              <h4 class="text-purple-300 font-semibold mb-3">3. Idealizar</h4>
-              <p class="text-zinc-300">Gerar uma ampla gama de ideias criativas e soluções potenciais.</p>
-            </div>
-            
-            <div class="article-highlight bg-gradient-to-r from-orange-500/10 to-red-500/10 border border-orange-500/20 rounded-lg p-6">
-              <h4 class="text-orange-300 font-semibold mb-3">4. Prototipar</h4>
-              <p class="text-zinc-300">Criar versões experimentais de soluções para testar hipóteses.</p>
-            </div>
-            
-            <div class="article-highlight bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/20 rounded-lg p-6">
-              <h4 class="text-cyan-300 font-semibold mb-3">5. Testar</h4>
-              <p class="text-zinc-300">Avaliar os protótipos com usuários reais e refinar com base no feedback.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="article-section">
-          <h3 class="text-xl font-semibold text-white mb-4">Aplicações práticas na educação tecnológica</h3>
-          <ul class="space-y-3 mb-6">
-            <li class="flex items-start">
-              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-              <span class="text-zinc-300 leading-relaxed">Desenvolvimento de currículos mais envolventes</span>
-            </li>
-            <li class="flex items-start">
-              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-              <span class="text-zinc-300 leading-relaxed">Criação de interfaces de aprendizado intuitivas</span>
-            </li>
-            <li class="flex items-start">
-              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-              <span class="text-zinc-300 leading-relaxed">Métodos de avaliação mais humanizados</span>
-            </li>
-            <li class="flex items-start">
-              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-              <span class="text-zinc-300 leading-relaxed">Ambientes de aprendizado colaborativo</span>
-            </li>
-          </ul>
-        </div>
-
-        <div class="article-section">
-          <h3 class="text-xl font-semibold text-white mb-4">Benefícios observados</h3>
-          <p class="text-zinc-300 leading-relaxed mb-4">Instituições que implementaram Design Thinking relatam:</p>
-          
-          <ul class="space-y-3 mb-6">
-            <li class="flex items-start">
-              <span class="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-              <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Maior engajamento dos estudantes</strong> - Aumento significativo na participação ativa</span>
-            </li>
-            <li class="flex items-start">
-              <span class="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-              <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Redução nas taxas de evasão</strong> - Estudantes se sentem mais conectados</span>
-            </li>
-            <li class="flex items-start">
-              <span class="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-              <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Melhoria na retenção de conhecimento</strong> - Aprendizado mais duradouro</span>
-            </li>
-            <li class="flex items-start">
-              <span class="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-              <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Desenvolvimento de soft skills</strong> - Competências socioemocionais</span>
-            </li>
-          </ul>
-        </div>
-
-        <div class="article-highlight bg-gradient-to-r from-green-500/10 to-blue-500/10 border border-green-500/20 rounded-lg p-6 my-6">
-          <h4 class="text-green-300 font-semibold mb-3">🎯 Design Thinking na Escola Habilidade</h4>
-          <p class="text-zinc-300">Aplicamos metodologias de Design Thinking em nossos cursos para criar experiências de aprendizado mais engajantes e eficazes. Venha descobrir como essa abordagem pode transformar sua jornada educacional.</p>
-        </div>
-        
-      </div>
-    `,
-    author: { name: 'Escola Habilidade', avatar: '/assets/avatars/default.jpg' },
-    category: mockCategories[1], // Educação
-    featuredImage: null,
-    featured_image_url: null,
-    publishedAt: '2024-01-10T14:30:00.000Z',
-    readingTime: 6,
-    tags: ['design thinking', 'educação', 'metodologia'],
-    views: 892,
-    likes: 67
-  },
-  {
-    id: 2,
     title: 'Tendências Tecnológicas para 2024',
     slug: 'tendencias-tecnologicas-2024',
     excerpt: 'As principais tecnologias que vão dominar o mercado este ano.',
@@ -1452,7 +1339,7 @@ const mockPosts = [
     likes: 156
   },
   {
-    id: 3,
+    id: 2,
     title: 'Construindo uma Carreira Sólida em Tech',
     slug: 'construindo-carreira-solida-tech',
     excerpt: 'Estratégias essenciais para desenvolver uma carreira de sucesso na área tecnológica.',
@@ -1692,7 +1579,7 @@ const mockPosts = [
     likes: 98
   },
   {
-    id: 4,
+    id: 3,
     title: 'Princípios Fundamentais de UX/UI Design',
     slug: 'principios-fundamentais-ux-ui-design',
     excerpt: 'Entenda os conceitos básicos que todo designer deve conhecer.',
@@ -1970,7 +1857,7 @@ const mockPosts = [
     likes: 72
   },
   {
-    id: 5,
+    id: 4,
     title: 'JavaScript Moderno: ES2024 e Suas Novidades',
     slug: 'javascript-moderno-es2024-novidades',
     excerpt: 'Explore as mais recentes funcionalidades do JavaScript e como usá-las.',
@@ -2230,7 +2117,7 @@ const age = now.toPlainDate().since(birthday).years;</code></pre>
     likes: 134
   },
   {
-    id: 6,
+    id: 5,
     title: 'Espaços Pequenos, Futuros Grandes: O Desafio Design Sprint 2025',
     slug: 'espacos-pequenos-futuros-grandes-design-sprint-2025',
     excerpt: 'Como 500 metros quadrados podem revolucionar nossa compreensão de arquitetura sustentável e focada na comunidade para 2050.',
