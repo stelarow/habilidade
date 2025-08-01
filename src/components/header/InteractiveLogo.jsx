@@ -14,8 +14,16 @@ function InteractiveLogo() {
         top: 0, 
         behavior: 'smooth' 
       });
+    } else {
+      // Se não estamos na homepage, navegar para home e rolar para o topo após a navegação
+      // Não prevenir o comportamento padrão, mas agendar o scroll após a navegação
+      setTimeout(() => {
+        window.scrollTo({ 
+          top: 0, 
+          behavior: 'smooth' 
+        });
+      }, 100); // Pequeno delay para garantir que a navegação foi concluída
     }
-    // Se não estamos na homepage, o Link normal funcionará (ir para "/")
   };
 
   return (
