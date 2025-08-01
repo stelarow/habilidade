@@ -1,6 +1,4 @@
 import React from 'react';
-import Header from '../Header';
-import Footer from '../Footer';
 import SEOHead from '../shared/SEOHead';
 import BlogHeader from './BlogHeader';
 
@@ -29,25 +27,6 @@ const BlogLayout = ({
       <div className={`py-8 ${className}`}>
         {children}
       </div>
-    </>
-  );
-};
-      )}
-      
-      {/* Main content container with consistent spacing */}
-      <main 
-        id="main-content"
-        className={`min-h-screen bg-zinc-950 pt-16 ${className}`}
-        role="main"
-      >
-        {/* Container with consistent max-width and padding */}
-        <div className="max-w-7xl mx-auto px-4 py-8">
-          {children}
-        </div>
-      </main>
-      
-      {/* Footer idêntico ao site principal */}
-      <Footer />
     </>
   );
 };
