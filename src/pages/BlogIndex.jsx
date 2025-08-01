@@ -16,6 +16,16 @@ import useInView from '../hooks/useInView';
 const BlogIndex = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [showFilters, setShowFilters] = useState(false);
+  
+  // Cleanup on unmount to ensure proper navigation
+  useEffect(() => {
+    return () => {
+      // Reset document title on unmount
+      document.title = 'Escola Habilidade';
+      // Clear any blog-specific state
+      setShowFilters(false);
+    };
+  }, []);
 
   // Use optimized search hook
   const {
