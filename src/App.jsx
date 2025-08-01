@@ -44,9 +44,14 @@ function RoutesWithCleanup() {
     };
   }, [location.pathname]);
   
-  // Use location.key instead of pathname for better uniqueness
+  // Use a unique key based on pathname for blog routes
+  // This ensures components are properly unmounted when navigating
+  const routeKey = location.pathname.startsWith('/blog') 
+    ? `blog-${location.pathname}` 
+    : location.key;
+  
   return (
-    <Routes key={location.key}>
+    <Routes key={routeKey}>
       <Route path="/" element={<Home />} />
       <Route path="/cursos/:courseSlug" element={<CoursePage />} />
       <Route path="/blog" element={<BlogIndex />} />
