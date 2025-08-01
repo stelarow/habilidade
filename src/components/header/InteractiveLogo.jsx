@@ -1,28 +1,25 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { usePageContext } from '../../hooks/usePageContext';
 import LogoH from '../LogoH';
 
 function InteractiveLogo() {
   const { pageType } = usePageContext();
   const location = useLocation();
+  const navigate = useNavigate();
 
   const handleLogoClick = (e) => {
+    e.preventDefault();
+    
     // Se já estamos na homepage, fazer scroll para o topo
     if (location.pathname === '/') {
-      e.preventDefault();
       window.scrollTo({ 
         top: 0, 
         behavior: 'smooth' 
       });
     } else {
-      // Se não estamos na homepage, navegar para home e rolar para o topo após a navegação
-      // Não prevenir o comportamento padrão, mas agendar o scroll após a navegação
-      setTimeout(() => {
-        window.scrollTo({ 
-          top: 0, 
-          behavior: 'smooth' 
-        });
-      }, 100); // Pequeno delay para garantir que a navegação foi concluída
+      // Se não estamos na homepage, navegar para home usando o router
+      // e o scroll para o topo acontecerá automaticamente
+      navigate('/', { replace: false });
     }
   };
 
