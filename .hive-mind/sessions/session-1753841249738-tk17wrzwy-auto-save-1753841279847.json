@@ -1,0 +1,81 @@
+{
+  "sessionId": "session-1753841249738-tk17wrzwy",
+  "checkpointId": "checkpoint-1753841279847-zxp69arjf",
+  "checkpointName": "auto-save-1753841279847",
+  "timestamp": "2025-07-30T02:07:59.912Z",
+  "data": {
+    "timestamp": "2025-07-30T02:07:59.847Z",
+    "changeCount": 5,
+    "changesByType": {
+      "swarm_created": [
+        {
+          "type": "swarm_created",
+          "data": {
+            "swarmId": "swarm-1753841249422-7q9w2agmf",
+            "swarmName": "documentar_geral",
+            "objective": "documentar o projeto atual, de uma forma organizada e facil para outras IAs entenderem e conseguir trabalhar no projeto de forma mais eficiente. essa documentacao deve estar organizada em uma pasta especifica de documentacao do projeto. deve conter um indice que serve de consulta para encontrar o documento correspondente ao que estamos pesquisando, o documento correspondente é a documentacao mais densa a respeito. o indice serve apenas para que nao precisemos gastar muito tempo procurando em cada documento. depois devemos inserir no claud md uma ou 2 frases explicando que a documentacao do projeto se encontra em determinado local e que existe o indice para facilitar a pesquisa.",
+            "workerCount": 8
+          },
+          "timestamp": "2025-07-30T02:07:29.845Z"
+        }
+      ],
+      "agent_activity": [
+        {
+          "type": "agent_activity",
+          "data": {
+            "agentId": "worker-swarm-1753841249422-7q9w2agmf-0",
+            "activity": "spawned",
+            "data": {
+              "type": "researcher",
+              "name": "Researcher Worker 1"
+            }
+          },
+          "timestamp": "2025-07-30T02:07:29.979Z"
+        },
+        {
+          "type": "agent_activity",
+          "data": {
+            "agentId": "worker-swarm-1753841249422-7q9w2agmf-1",
+            "activity": "spawned",
+            "data": {
+              "type": "coder",
+              "name": "Coder Worker 2"
+            }
+          },
+          "timestamp": "2025-07-30T02:07:30.042Z"
+        },
+        {
+          "type": "agent_activity",
+          "data": {
+            "agentId": "worker-swarm-1753841249422-7q9w2agmf-2",
+            "activity": "spawned",
+            "data": {
+              "type": "analyst",
+              "name": "Analyst Worker 3"
+            }
+          },
+          "timestamp": "2025-07-30T02:07:30.101Z"
+        },
+        {
+          "type": "agent_activity",
+          "data": {
+            "agentId": "worker-swarm-1753841249422-7q9w2agmf-3",
+            "activity": "spawned",
+            "data": {
+              "type": "tester",
+              "name": "Tester Worker 4"
+            }
+          },
+          "timestamp": "2025-07-30T02:07:30.159Z"
+        }
+      ]
+    },
+    "statistics": {
+      "tasksProcessed": 0,
+      "tasksCompleted": 0,
+      "memoryUpdates": 0,
+      "agentActivities": 4,
+      "consensusDecisions": 0
+    }
+  }
+}
