@@ -1138,208 +1138,6 @@ const mockPosts = [
   },
   {
     id: 1,
-    title: 'Tendências Tecnológicas para 2024',
-    slug: 'tendencias-tecnologicas-2024',
-    excerpt: 'As principais tecnologias que vão dominar o mercado este ano.',
-    content: `
-      <div class="article-content space-y-8">
-        
-        <div class="article-section">
-          <h2 class="text-2xl font-bold text-white mb-4 mt-0">As tecnologias que estão moldando o futuro digital</h2>
-          <p class="text-zinc-300 leading-relaxed mb-6 text-lg">Inteligência Artificial, Machine Learning, blockchain e outras tecnologias estão revolucionando a forma como vivemos e trabalhamos.</p>
-        </div>
-
-        <div class="article-section">
-          <h3 class="text-xl font-semibold text-white mb-4">1. Inteligência Artificial Generativa</h3>
-          <p class="text-zinc-300 leading-relaxed mb-4">2024 marca o ano da democratização da IA. Ferramentas como ChatGPT, Claude e Gemini estão transformando:</p>
-          
-          <ul class="space-y-3 mb-6">
-            <li class="flex items-start">
-              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-              <span class="text-zinc-300 leading-relaxed">Produção de conteúdo</span>
-            </li>
-            <li class="flex items-start">
-              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-              <span class="text-zinc-300 leading-relaxed">Desenvolvimento de software</span>
-            </li>
-            <li class="flex items-start">
-              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-              <span class="text-zinc-300 leading-relaxed">Atendimento ao cliente</span>
-            </li>
-            <li class="flex items-start">
-              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-              <span class="text-zinc-300 leading-relaxed">Análise de dados</span>
-            </li>
-          </ul>
-        </div>
-
-        <div class="article-section">
-          <h3 class="text-xl font-semibold text-white mb-4">2. Computação Edge</h3>
-          <p class="text-zinc-300 leading-relaxed mb-4">O processamento mais próximo do usuário final oferece:</p>
-          
-          <ul class="space-y-3 mb-6">
-            <li class="flex items-start">
-              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-              <span class="text-zinc-300 leading-relaxed">Menor latência</span>
-            </li>
-            <li class="flex items-start">
-              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-              <span class="text-zinc-300 leading-relaxed">Maior privacidade dos dados</span>
-            </li>
-            <li class="flex items-start">
-              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-              <span class="text-zinc-300 leading-relaxed">Redução no consumo de banda</span>
-            </li>
-            <li class="flex items-start">
-              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-              <span class="text-zinc-300 leading-relaxed">Melhor performance em IoT</span>
-            </li>
-          </ul>
-        </div>
-
-        <div class="article-section">
-          <h3 class="text-xl font-semibold text-white mb-4">3. Desenvolvimento Low-Code/No-Code</h3>
-          <p class="text-zinc-300 leading-relaxed mb-4">Plataformas que permitem criar aplicações sem programação tradicional:</p>
-          
-          <ul class="space-y-3 mb-6">
-            <li class="flex items-start">
-              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-              <span class="text-zinc-300 leading-relaxed">Democratização do desenvolvimento</span>
-            </li>
-            <li class="flex items-start">
-              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-              <span class="text-zinc-300 leading-relaxed">Agilidade na prototipagem</span>
-            </li>
-            <li class="flex items-start">
-              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-              <span class="text-zinc-300 leading-relaxed">Redução de custos</span>
-            </li>
-            <li class="flex items-start">
-              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-              <span class="text-zinc-300 leading-relaxed">Foco na lógica de negócio</span>
-            </li>
-          </ul>
-        </div>
-
-        <div class="article-section">
-          <h3 class="text-xl font-semibold text-white mb-4">4. Blockchain e Web3</h3>
-          <p class="text-zinc-300 leading-relaxed mb-4">Além de criptomoedas, blockchain oferece:</p>
-          
-          <ul class="space-y-3 mb-6">
-            <li class="flex items-start">
-              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-              <span class="text-zinc-300 leading-relaxed">Contratos inteligentes</span>
-            </li>
-            <li class="flex items-start">
-              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-              <span class="text-zinc-300 leading-relaxed">Supply chain transparente</span>
-            </li>
-            <li class="flex items-start">
-              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-              <span class="text-zinc-300 leading-relaxed">Identidade digital descentralizada</span>
-            </li>
-            <li class="flex items-start">
-              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-              <span class="text-zinc-300 leading-relaxed">NFTs e ativos digitais</span>
-            </li>
-          </ul>
-        </div>
-
-        <div class="article-section">
-          <h3 class="text-xl font-semibold text-white mb-4">5. Computação Quântica</h3>
-          <p class="text-zinc-300 leading-relaxed mb-4">Embora ainda emergente, promete revolucionar:</p>
-          
-          <ul class="space-y-3 mb-6">
-            <li class="flex items-start">
-              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-              <span class="text-zinc-300 leading-relaxed">Criptografia</span>
-            </li>
-            <li class="flex items-start">
-              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-              <span class="text-zinc-300 leading-relaxed">Simulações complexas</span>
-            </li>
-            <li class="flex items-start">
-              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-              <span class="text-zinc-300 leading-relaxed">Inteligência artificial</span>
-            </li>
-            <li class="flex items-start">
-              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-              <span class="text-zinc-300 leading-relaxed">Pesquisa farmacêutica</span>
-            </li>
-          </ul>
-        </div>
-
-        <div class="article-section">
-          <h3 class="text-xl font-semibold text-white mb-4">Impacto no mercado de trabalho</h3>
-          <p class="text-zinc-300 leading-relaxed mb-4">Essas tendências criam oportunidades em:</p>
-          
-          <ul class="space-y-3 mb-6">
-            <li class="flex items-start">
-              <span class="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-              <span class="text-zinc-300 leading-relaxed">Especialistas em IA e Machine Learning</span>
-            </li>
-            <li class="flex items-start">
-              <span class="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-              <span class="text-zinc-300 leading-relaxed">Desenvolvedores de aplicações edge</span>
-            </li>
-            <li class="flex items-start">
-              <span class="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-              <span class="text-zinc-300 leading-relaxed">Arquitetos de soluções blockchain</span>
-            </li>
-            <li class="flex items-start">
-              <span class="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-              <span class="text-zinc-300 leading-relaxed">Cientistas de dados quânticos</span>
-            </li>
-          </ul>
-        </div>
-
-        <div class="article-section">
-          <h3 class="text-xl font-semibold text-white mb-4">Como se preparar</h3>
-          <p class="text-zinc-300 leading-relaxed mb-4">Para profissionais de tecnologia:</p>
-          
-          <ol class="space-y-3 mb-6 counter-reset: list-counter">
-            <li class="flex items-start counter-increment: list-counter">
-              <span class="bg-blue-500 text-white text-sm font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">1</span>
-              <span class="text-zinc-300 leading-relaxed">Mantenha-se atualizado com cursos online</span>
-            </li>
-            <li class="flex items-start counter-increment: list-counter">
-              <span class="bg-blue-500 text-white text-sm font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">2</span>
-              <span class="text-zinc-300 leading-relaxed">Pratique com projetos pessoais</span>
-            </li>
-            <li class="flex items-start counter-increment: list-counter">
-              <span class="bg-blue-500 text-white text-sm font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">3</span>
-              <span class="text-zinc-300 leading-relaxed">Participe de comunidades técnicas</span>
-            </li>
-            <li class="flex items-start counter-increment: list-counter">
-              <span class="bg-blue-500 text-white text-sm font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">4</span>
-              <span class="text-zinc-300 leading-relaxed">Desenvolva soft skills</span>
-            </li>
-            <li class="flex items-start counter-increment: list-counter">
-              <span class="bg-blue-500 text-white text-sm font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">5</span>
-              <span class="text-zinc-300 leading-relaxed">Considere certificações relevantes</span>
-            </li>
-          </ol>
-        </div>
-
-        <div class="article-highlight bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 rounded-lg p-6 my-6">
-          <h4 class="text-blue-300 font-semibold mb-3">🚀 Esteja Preparado para o Futuro</h4>
-          <p class="text-zinc-300">Na Escola Habilidade, mantemos nossos cursos sempre atualizados com as últimas tendências tecnológicas. Prepare-se para o futuro digital com conhecimento prático e aplicável no mercado.</p>
-        </div>
-        
-      </div>
-    `,
-    author: { name: 'Escola Habilidade', avatar: '/assets/avatars/default.jpg' },
-    category: mockCategories[0], // Tecnologia
-    featuredImage: null,
-    featured_image_url: null,
-    publishedAt: '2024-01-05T09:15:00.000Z',
-    readingTime: 10,
-    tags: ['tecnologia', 'tendências', 'futuro'],
-    views: 2104,
-    likes: 156
-  },
-  {
-    id: 2,
     title: 'Construindo uma Carreira Sólida em Tech',
     slug: 'construindo-carreira-solida-tech',
     excerpt: 'Estratégias essenciais para desenvolver uma carreira de sucesso na área tecnológica.',
@@ -1579,7 +1377,7 @@ const mockPosts = [
     likes: 98
   },
   {
-    id: 3,
+    id: 2,
     title: 'Princípios Fundamentais de UX/UI Design',
     slug: 'principios-fundamentais-ux-ui-design',
     excerpt: 'Entenda os conceitos básicos que todo designer deve conhecer.',
@@ -1857,7 +1655,7 @@ const mockPosts = [
     likes: 72
   },
   {
-    id: 4,
+    id: 3,
     title: 'JavaScript Moderno: ES2024 e Suas Novidades',
     slug: 'javascript-moderno-es2024-novidades',
     excerpt: 'Explore as mais recentes funcionalidades do JavaScript e como usá-las.',
@@ -2117,7 +1915,7 @@ const age = now.toPlainDate().since(birthday).years;</code></pre>
     likes: 134
   },
   {
-    id: 5,
+    id: 4,
     title: 'Espaços Pequenos, Futuros Grandes: O Desafio Design Sprint 2025',
     slug: 'espacos-pequenos-futuros-grandes-design-sprint-2025',
     excerpt: 'Como 500 metros quadrados podem revolucionar nossa compreensão de arquitetura sustentável e focada na comunidade para 2050.',
