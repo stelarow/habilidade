@@ -12,14 +12,6 @@ const BlogLayout = ({
   showBlogHeader = true,
   className = ""
 }) => {
-  // Cleanup effect to reset title when component unmounts
-  React.useEffect(() => {
-    return () => {
-      // Reset to default home title when leaving blog
-      document.title = 'Escola Habilidade - Transformando Vidas através da Educação Tecnológica';
-    };
-  }, []);
-
   return (
     <>
       <SEOHead 
