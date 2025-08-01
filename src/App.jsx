@@ -63,12 +63,7 @@ function RoutesWithCleanup() {
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
-} />
-      <Route path="/cursos/:courseSlug" element={<CoursePage />} />
-      <Route path="/blog" element={<BlogIndex />} />
-      <Route path="/blog-test" element={<BlogTestPage />} />
-      <Route path="/blog-test/:slug" element={<BlogTestPage />} />
-      <Route path="/blog/:slug" element={<BlogPost />} />
+}
       <Route path="/blog/categoria/:categorySlug" element={<BlogCategory />} />
       <Route path="/habilidade" element={<Navigate to="/" replace />} />
       <Route path="/habilidade/" element={<Navigate to="/" replace />} />
