@@ -33,9 +33,37 @@ import usePerformanceLevel from './hooks/usePerformanceLevel';
 function RoutesWithCleanup() {
   const location = useLocation();
   
+  // Force component cleanup on route change
+  useEffect(() => {
+    // Cleanup any lingering state when route changes
+    return () => {
+      // Force React to cleanup
+      document.querySelectorAll('[id="main-content"]').forEach((el, index) => {
+        if (index > 0) el.remove(); // Remove duplicate main content
+      });
+    };
+  }, [location.pathname]);
+  
+  // Use location.key instead of pathname for better uniqueness
   return (
-    <Routes key={location.pathname}>
+    <Routes key={location.key}>
       <Route path="/" element={<Home />} />
+      <Route path="/cursos/:courseSlug" element={<CoursePage />} />
+      <Route path="/blog" element={<BlogIndex />} />
+      <Route path="/blog-test" element={<BlogTestPage />} />
+      <Route path="/blog-test/:slug" element={<BlogTestPage />} />
+      <Route path="/blog/:slug" element={<BlogPost />} />
+      <Route path="/blog/categoria/:categorySlug" element={<BlogCategory />} />
+      <Route path="/habilidade" element={<Navigate to="/" replace />} />
+      <Route path="/habilidade/" element={<Navigate to="/" replace />} />
+      <Route 
+        path="/habilidade/cursos/:courseSlug" 
+        element={<CourseRedirect />} 
+      />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  );
+} />
       <Route path="/cursos/:courseSlug" element={<CoursePage />} />
       <Route path="/blog" element={<BlogIndex />} />
       <Route path="/blog-test" element={<BlogTestPage />} />
