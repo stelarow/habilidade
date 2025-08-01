@@ -1138,185 +1138,6 @@ const mockPosts = [
   },
   {
     id: 1,
-    title: 'Como Começar na Programação em 2024',
-    slug: 'como-comecar-programacao-2024',
-    excerpt: 'Guia completo para iniciantes que querem entrar no mundo da programação.',
-    content: `
-      <div class="article-content space-y-8">
-        
-        <div class="article-section">
-          <h2 class="text-2xl font-bold text-white mb-4 mt-0">A programação é uma das habilidades mais valiosas no mercado atual</h2>
-          <p class="text-zinc-300 leading-relaxed mb-6 text-lg">Neste guia, você aprenderá os primeiros passos para se tornar um programador, desde escolher sua primeira linguagem até conseguir seu primeiro emprego na área.</p>
-        </div>
-
-        <div class="article-section">
-          <h3 class="text-xl font-semibold text-white mb-4">1. Escolhendo sua primeira linguagem de programação</h3>
-          <p class="text-zinc-300 leading-relaxed mb-4">Para iniciantes, recomendamos começar com uma das seguintes linguagens:</p>
-          
-          <ul class="space-y-3 mb-6">
-            <li class="flex items-start">
-              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-              <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Python</strong> - Sintaxe simples e versatilidade para web, dados e automação</span>
-            </li>
-            <li class="flex items-start">
-              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-              <span class="text-zinc-300 leading-relaxed"><strong class="text-white">JavaScript</strong> - Essencial para desenvolvimento web e cada vez mais usado em outras áreas</span>
-            </li>
-            <li class="flex items-start">
-              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-              <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Java</strong> - Linguagem robusta, muito usada em empresas e com boa demanda no mercado</span>
-            </li>
-          </ul>
-        </div>
-
-        <div class="article-section">
-          <h3 class="text-xl font-semibold text-white mb-4">2. Recursos gratuitos para aprender</h3>
-          <p class="text-zinc-300 leading-relaxed mb-4">Existem muitos recursos gratuitos disponíveis:</p>
-          
-          <ul class="space-y-3 mb-6">
-            <li class="flex items-start">
-              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-              <span class="text-zinc-300 leading-relaxed"><strong class="text-white">freeCodeCamp</strong> - Cursos completos e gratuitos</span>
-            </li>
-            <li class="flex items-start">
-              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-              <span class="text-zinc-300 leading-relaxed"><strong class="text-white">Codecademy</strong> - Plataforma interativa de aprendizado</span>
-            </li>
-            <li class="flex items-start">
-              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-              <span class="text-zinc-300 leading-relaxed"><strong class="text-white">MDN Web Docs</strong> - Documentação completa para desenvolvimento web</span>
-            </li>
-            <li class="flex items-start">
-              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-              <span class="text-zinc-300 leading-relaxed"><strong class="text-white">YouTube</strong> - Canais como Curso em Vídeo, DevMedia</span>
-            </li>
-          </ul>
-        </div>
-
-        <div class="article-section">
-          <h3 class="text-xl font-semibold text-white mb-4">3. Prática é fundamental</h3>
-          <p class="text-zinc-300 leading-relaxed mb-4">A melhor forma de aprender programação é praticando. Comece com projetos simples:</p>
-          
-          <ol class="space-y-3 mb-6 counter-reset: list-counter">
-            <li class="flex items-start counter-increment: list-counter">
-              <span class="bg-blue-500 text-white text-sm font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">1</span>
-              <span class="text-zinc-300 leading-relaxed">Calculadora básica</span>
-            </li>
-            <li class="flex items-start counter-increment: list-counter">
-              <span class="bg-blue-500 text-white text-sm font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">2</span>
-              <span class="text-zinc-300 leading-relaxed">Lista de tarefas (To-Do List)</span>
-            </li>
-            <li class="flex items-start counter-increment: list-counter">
-              <span class="bg-blue-500 text-white text-sm font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">3</span>
-              <span class="text-zinc-300 leading-relaxed">Jogo da velha</span>
-            </li>
-            <li class="flex items-start counter-increment: list-counter">
-              <span class="bg-blue-500 text-white text-sm font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">4</span>
-              <span class="text-zinc-300 leading-relaxed">Sistema de cadastro simples</span>
-            </li>
-          </ol>
-        </div>
-
-        <div class="article-highlight bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 rounded-lg p-6 my-6">
-          <h4 class="text-blue-300 font-semibold mb-3">💡 Dica Importante</h4>
-          <p class="text-zinc-300">Não tenha medo de errar! Os erros são parte fundamental do aprendizado em programação. Cada bug que você resolve te torna um programador mais experiente.</p>
-        </div>
-
-        <div class="article-section">
-          <h3 class="text-xl font-semibold text-white mb-4">4. Construindo um portfólio</h3>
-          <p class="text-zinc-300 leading-relaxed mb-4">Um portfólio sólido é essencial para conseguir oportunidades. Crie uma conta no GitHub e publique seus projetos. Inclua:</p>
-          
-          <ul class="space-y-3 mb-6">
-            <li class="flex items-start">
-              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-              <span class="text-zinc-300 leading-relaxed">Código bem documentado</span>
-            </li>
-            <li class="flex items-start">
-              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-              <span class="text-zinc-300 leading-relaxed">README explicativo</span>
-            </li>
-            <li class="flex items-start">
-              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-              <span class="text-zinc-300 leading-relaxed">Projetos que demonstrem diferentes habilidades</span>
-            </li>
-            <li class="flex items-start">
-              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-              <span class="text-zinc-300 leading-relaxed">Contribuições para projetos open source</span>
-            </li>
-          </ul>
-        </div>
-
-        <div class="article-section">
-          <h3 class="text-xl font-semibold text-white mb-4">5. Networking e comunidade</h3>
-          <p class="text-zinc-300 leading-relaxed mb-4">Participar de comunidades é crucial para o crescimento profissional:</p>
-          
-          <ul class="space-y-3 mb-6">
-            <li class="flex items-start">
-              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-              <span class="text-zinc-300 leading-relaxed">Grupos no Discord e Slack</span>
-            </li>
-            <li class="flex items-start">
-              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-              <span class="text-zinc-300 leading-relaxed">Meetups locais</span>
-            </li>
-            <li class="flex items-start">
-              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-              <span class="text-zinc-300 leading-relaxed">Conferences e eventos online</span>
-            </li>
-            <li class="flex items-start">
-              <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-              <span class="text-zinc-300 leading-relaxed">LinkedIn para conexões profissionais</span>
-            </li>
-          </ul>
-        </div>
-
-        <div class="article-section">
-          <h3 class="text-xl font-semibold text-white mb-4">6. Preparando-se para o mercado de trabalho</h3>
-          <p class="text-zinc-300 leading-relaxed mb-4">Quando se sentir confortável com os conceitos básicos:</p>
-          
-          <ol class="space-y-3 mb-6 counter-reset: list-counter">
-            <li class="flex items-start counter-increment: list-counter">
-              <span class="bg-blue-500 text-white text-sm font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">1</span>
-              <span class="text-zinc-300 leading-relaxed">Estude estruturas de dados e algoritmos</span>
-            </li>
-            <li class="flex items-start counter-increment: list-counter">
-              <span class="bg-blue-500 text-white text-sm font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">2</span>
-              <span class="text-zinc-300 leading-relaxed">Aprenda sobre versionamento com Git</span>
-            </li>
-            <li class="flex items-start counter-increment: list-counter">
-              <span class="bg-blue-500 text-white text-sm font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">3</span>
-              <span class="text-zinc-300 leading-relaxed">Entenda conceitos de banco de dados</span>
-            </li>
-            <li class="flex items-start counter-increment: list-counter">
-              <span class="bg-blue-500 text-white text-sm font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">4</span>
-              <span class="text-zinc-300 leading-relaxed">Pratique entrevistas técnicas</span>
-            </li>
-            <li class="flex items-start counter-increment: list-counter">
-              <span class="bg-blue-500 text-white text-sm font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">5</span>
-              <span class="text-zinc-300 leading-relaxed">Considere fazer estágios ou trabalhos freelance</span>
-            </li>
-          </ol>
-        </div>
-
-        <div class="article-section">
-          <h3 class="text-xl font-semibold text-white mb-4">Conclusão</h3>
-          <p class="text-zinc-300 leading-relaxed mb-4">A jornada na programação requer dedicação e prática constante, mas as oportunidades são enormes. Comece hoje mesmo e seja consistente nos estudos. Lembre-se: todo programador experiente já foi um iniciante.</p>
-        </div>
-        
-      </div>
-    `,
-    author: { name: 'Escola Habilidade', avatar: '/assets/avatars/default.jpg' },
-    category: mockCategories[3], // Programação
-    featuredImage: null,
-    featured_image_url: null,
-    publishedAt: '2024-01-15T10:00:00.000Z',
-    readingTime: 8,
-    tags: ['programação', 'iniciantes', 'carreira'],
-    views: 1250,
-    likes: 89
-  },
-  {
-    id: 2,
     title: 'Design Thinking na Educação Tecnológica',
     slug: 'design-thinking-educacao-tecnologica',
     excerpt: 'Como aplicar metodologias de design para melhorar o aprendizado.',
@@ -1429,7 +1250,7 @@ const mockPosts = [
     likes: 67
   },
   {
-    id: 3,
+    id: 2,
     title: 'Tendências Tecnológicas para 2024',
     slug: 'tendencias-tecnologicas-2024',
     excerpt: 'As principais tecnologias que vão dominar o mercado este ano.',
@@ -1631,7 +1452,7 @@ const mockPosts = [
     likes: 156
   },
   {
-    id: 4,
+    id: 3,
     title: 'Construindo uma Carreira Sólida em Tech',
     slug: 'construindo-carreira-solida-tech',
     excerpt: 'Estratégias essenciais para desenvolver uma carreira de sucesso na área tecnológica.',
@@ -1871,7 +1692,7 @@ const mockPosts = [
     likes: 98
   },
   {
-    id: 5,
+    id: 4,
     title: 'Princípios Fundamentais de UX/UI Design',
     slug: 'principios-fundamentais-ux-ui-design',
     excerpt: 'Entenda os conceitos básicos que todo designer deve conhecer.',
@@ -2149,7 +1970,7 @@ const mockPosts = [
     likes: 72
   },
   {
-    id: 6,
+    id: 5,
     title: 'JavaScript Moderno: ES2024 e Suas Novidades',
     slug: 'javascript-moderno-es2024-novidades',
     excerpt: 'Explore as mais recentes funcionalidades do JavaScript e como usá-las.',
@@ -2409,7 +2230,7 @@ const age = now.toPlainDate().since(birthday).years;</code></pre>
     likes: 134
   },
   {
-    id: 7,
+    id: 6,
     title: 'Espaços Pequenos, Futuros Grandes: O Desafio Design Sprint 2025',
     slug: 'espacos-pequenos-futuros-grandes-design-sprint-2025',
     excerpt: 'Como 500 metros quadrados podem revolucionar nossa compreensão de arquitetura sustentável e focada na comunidade para 2050.',
