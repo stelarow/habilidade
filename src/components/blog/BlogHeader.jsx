@@ -5,7 +5,7 @@ import { CaretRight, House, Article } from 'phosphor-react';
 const BlogHeader = ({ breadcrumbs = [] }) => {
   // Default breadcrumbs structure
   const defaultBreadcrumbs = [
-    { label: 'Início', href: '/', icon: House },
+    { label: 'InÃ­cio', href: '/', icon: House },
     { label: 'Blog', href: '/blog', icon: Article }
   ];
 
@@ -39,6 +39,7 @@ const BlogHeader = ({ breadcrumbs = [] }) => {
                   ) : (
                     <Link 
                       to={crumb.href} 
+                      onClick={crumb.href === '/' ? (e) => { e.preventDefault(); window.location.href = '/'; } : undefined}
                       className="flex items-center gap-1 text-zinc-300 hover:text-fuchsia-300 transition-colors focus:outline-none focus:ring-2 focus:ring-fuchsia-400 focus:ring-offset-2 focus:ring-offset-zinc-900 rounded-sm px-1 py-0.5"
                     >
                       {Icon && <Icon size={16} />}
@@ -59,7 +60,7 @@ const BlogHeader = ({ breadcrumbs = [] }) => {
               Blog
             </h1>
             <p className="text-zinc-400 text-sm">
-              Artigos sobre tecnologia, educação e desenvolvimento de carreira
+              Artigos sobre tecnologia, educaÃ§Ã£o e desenvolvimento de carreira
             </p>
           </div>
         </div>
@@ -67,7 +68,7 @@ const BlogHeader = ({ breadcrumbs = [] }) => {
         {/* Optional sidebar navigation hint */}
         <div className="mt-4 pt-4 border-t border-zinc-800/50">
           <p className="text-xs text-zinc-500">
-            Navegue pelas categorias ou use a busca para encontrar conteúdo específico
+            Navegue pelas categorias ou use a busca para encontrar conteÃºdo especÃ­fico
           </p>
         </div>
       </div>
