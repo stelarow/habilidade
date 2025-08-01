@@ -20,12 +20,18 @@ const BlogLayout = ({
         type="website"
       />
       
-      {/* Header idêntico ao site principal */}
-      <Header />
-      
       {/* Blog-specific header with breadcrumbs */}
       {showBlogHeader && (
         <BlogHeader breadcrumbs={breadcrumbs} />
+      )}
+      
+      {/* Main content container with consistent spacing */}
+      <div className={`py-8 ${className}`}>
+        {children}
+      </div>
+    </>
+  );
+};
       )}
       
       {/* Main content container with consistent spacing */}
