@@ -64,17 +64,6 @@ function RoutesWithCleanup() {
     </Routes>
   );
 }
-      <Route path="/blog/categoria/:categorySlug" element={<BlogCategory />} />
-      <Route path="/habilidade" element={<Navigate to="/" replace />} />
-      <Route path="/habilidade/" element={<Navigate to="/" replace />} />
-      <Route 
-        path="/habilidade/cursos/:courseSlug" 
-        element={<CourseRedirect />} 
-      />
-      <Route path="*" element={<NotFound />} />
-    </Routes>
-  );
-}
 
 function App() {
   const { performanceLevel } = usePerformanceLevel();
