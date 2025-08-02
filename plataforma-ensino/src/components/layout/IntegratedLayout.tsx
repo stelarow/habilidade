@@ -80,7 +80,7 @@ function IntegratedLayoutContent({ children, courseId, lessonId, className }: In
   return (
     <div className={cn("flex h-screen bg-background", className)}>
       {/* Sidebar Navigation */}
-      <ErrorBoundary fallback={<div className="w-16 bg-background-overlay border-r" />}>
+      <ErrorBoundary fallback={() => <div className="w-16 bg-background-overlay border-r" />}>
         <SidebarNavigation
           courseStructure={courseStructure}
           currentLesson={lessonId || ''}
@@ -95,7 +95,7 @@ function IntegratedLayoutContent({ children, courseId, lessonId, className }: In
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Enhanced Header */}
-        <ErrorBoundary fallback={<div className="h-16 bg-background border-b" />}>
+        <ErrorBoundary fallback={() => <div className="h-16 bg-background border-b" />}>
           <EnhancedHeader
             breadcrumbs={breadcrumbs}
             progress={progressData}
