@@ -13,34 +13,34 @@
   --text-primary: #ffffff;
   --text-secondary: #d4d4d8;
 
-  /* Shadcn/ui Violet Theme Variables */
-  --background: 0 0% 8%;
-  --foreground: 0 0% 98%;
-  --card: 240 10% 12%;
-  --card-foreground: 0 0% 98%;
-  --popover: 240 10% 12%;
-  --popover-foreground: 0 0% 98%;
-  --primary: 263 85% 63%;
+  /* Shadcn/ui Violet Dark Theme Variables - Updated Design System */
+  --background: 259 22% 11%;        /* #1e1b2e - Dark purple base */
+  --foreground: 264 100% 97%;       /* #f5f3ff - Primary text (white-violet) */
+  --card: 254 19% 16%;              /* #2a2640 - Elevated surface */
+  --card-foreground: 264 100% 97%;  /* #f5f3ff - Primary text */
+  --popover: 254 19% 16%;           /* #2a2640 - Elevated surface */
+  --popover-foreground: 264 100% 97%;
+  --primary: 263 85% 63%;           /* #8b5cf6 - Violet main (primary) */
   --primary-foreground: 0 0% 100%;
-  --secondary: 240 10% 15%;
-  --secondary-foreground: 0 0% 98%;
-  --muted: 240 10% 15%;
-  --muted-foreground: 240 5% 65%;
-  --accent: 263 85% 63%;
+  --secondary: 254 23% 20%;         /* #332d4d - Card/modal background */
+  --secondary-foreground: 264 100% 97%;
+  --muted: 254 23% 20%;             /* #332d4d */
+  --muted-foreground: 263 57% 80%;  /* #c4b5fd - Secondary text */
+  --accent: 263 85% 63%;            /* #8b5cf6 - Primary violet */
   --accent-foreground: 0 0% 100%;
-  --destructive: 0 84% 60%;
+  --destructive: 0 84% 60%;         /* #ef4444 - Red */
   --destructive-foreground: 0 0% 98%;
-  --border: 240 10% 20%;
-  --input: 240 10% 15%;
-  --ring: 263 85% 63%;
-  --success: 142 76% 36%;
+  --border: 263 85% 63% / 0.2;      /* Primary with opacity */
+  --input: 254 23% 20%;             /* #332d4d */
+  --ring: 263 85% 63%;              /* #8b5cf6 - Focus states */
+  --success: 142 76% 36%;           /* #10b981 - Emerald */
   --success-foreground: 0 0% 98%;
-  --warning: 38 92% 50%;
+  --warning: 38 92% 50%;            /* #f59e0b - Amber */
   --warning-foreground: 0 0% 98%;
-  --header-bg: 0 0% 8%;
-  --header-foreground: 0 0% 98%;
-  --progress-bg: 240 10% 15%;
-  --progress-fill: 263 85% 63%;
+  --header-bg: 259 22% 11%;         /* #1e1b2e */
+  --header-foreground: 264 100% 97%;
+  --progress-bg: 254 23% 20%;       /* #332d4d */
+  --progress-fill: 263 85% 63%;     /* #8b5cf6 */
   --radius: 0.5rem;
 
   /* Header spacing and sizing design tokens */

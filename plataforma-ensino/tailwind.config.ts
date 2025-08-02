@@ -22,16 +22,16 @@ const config: Config = {
     extend: {
       colors: {
         primary: {
-          50: '#f8f0ff',
-          100: '#f2e6ff',
-          200: '#e6ccff',
-          300: '#d9b3ff',
-          400: '#cc99ff',
-          500: '#d400ff',
-          600: '#a000ff',
-          700: '#8000d4',
-          800: '#6000a0',
-          900: '#40006c',
+          50: '#f5f3ff',  // Violet lightest
+          100: '#ede9fe', // Violet very light
+          200: '#ddd6fe', // Violet light
+          300: '#c4b5fd', // Violet medium light
+          400: '#a78bfa', // Violet medium
+          500: '#8b5cf6', // Violet main (primary)
+          600: '#7c3aed', // Violet medium dark
+          700: '#6d28d9', // Violet dark
+          800: '#5b21b6', // Violet very dark
+          900: '#4c1d95', // Violet darkest
           DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))',
         },
@@ -67,6 +67,10 @@ const config: Config = {
           dark: '#0a0a0a',
           blue: '#181a2a',
           DEFAULT: 'hsl(var(--background))',
+          default: '#1e1b2e',    // Dark purple base
+          surface: '#2a2640',    // Elevated surface
+          elevated: '#332d4d',   // Card/modal background
+          overlay: '#1a1625',    // Overlay/sidebar
         },
         foreground: 'hsl(var(--foreground))',
         card: {

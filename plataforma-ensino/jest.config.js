@@ -32,8 +32,35 @@ const customJestConfig = {
     '^.+\\.(js|jsx|ts|tsx)$': ['babel-jest', { presets: ['next/babel'] }],
   },
   transformIgnorePatterns: [
-    '/node_modules/(?!(@radix-ui|@phosphor-icons)/)',
+    '/node_modules/(?!(@radix-ui|@phosphor-icons|@tanstack|msw)/)',
   ],
+  coverageThreshold: {
+    global: {
+      branches: 80,
+      functions: 80,
+      lines: 80,
+      statements: 80
+    },
+    // Phase 1 components have higher coverage requirements
+    'src/components/ui/sidebar-navigation.tsx': {
+      branches: 90,
+      functions: 90,
+      lines: 90,
+      statements: 90
+    },
+    'src/components/ui/enhanced-header.tsx': {
+      branches: 90,
+      functions: 90,
+      lines: 90,
+      statements: 90
+    },
+    'src/components/ui/interactive-quiz.tsx': {
+      branches: 90,
+      functions: 90,
+      lines: 90,
+      statements: 90
+    }
+  },
 }
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async

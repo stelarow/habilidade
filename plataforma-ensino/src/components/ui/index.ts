@@ -22,3 +22,56 @@ export type { LazyVideoPlayerProps } from './LazyVideoPlayer';
 export type { AccessibleVideoPlayerProps } from './AccessibleVideoPlayer';
 export type { TruncatedTextProps } from './TruncatedText';
 export type { ProgressIndicatorProps } from './ProgressIndicator';
+
+// Phase 1 Components - Violet Dark Theme
+export { SidebarNavigation } from './sidebar-navigation'
+export { EnhancedHeader } from './enhanced-header'
+export { EnhancedContentArea } from './enhanced-content-area'
+export { InteractiveQuiz } from './interactive-quiz'
+export { 
+  LinearProgress,
+  CircularProgress,
+  StepProgress,
+  ModuleProgress,
+  AchievementProgress,
+  GamificationProgress
+} from './enhanced-progress'
+
+// Phase 1 Type exports
+export type { 
+  Module,
+  Lesson,
+  CourseProgress,
+  SidebarNavigationProps 
+} from './sidebar-navigation'
+
+export type { 
+  Breadcrumb,
+  User,
+  EnhancedHeaderProps 
+} from './enhanced-header'
+
+export type { 
+  LessonContent,
+  ContentData,
+  NavigationInfo,
+  EnhancedContentAreaProps 
+} from './enhanced-content-area'
+
+export type { 
+  Quiz,
+  Question,
+  QuestionResult,
+  QuizResults,
+  InteractiveQuizProps 
+} from './interactive-quiz'
+
+export type { 
+  LinearProgressProps,
+  CircularProgressProps,
+  StepProgressProps,
+  StepItem,
+  ModuleProgressProps,
+  AchievementProgressProps,
+  GamificationProgressProps 
+} from './enhanced-progress'
