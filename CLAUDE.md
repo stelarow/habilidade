@@ -49,3 +49,10 @@ Dual-architecture educational platform for Escola Habilidade:
 - Always run lint and typecheck before committing
 - Use environment variables for configuration
 - Follow security best practices for authentication
+
+## Credentials
+- Use sudo password: `123` when needed for system commands
+
+## Learning Platform Login
+- Username: alessandrobatisp@gmail.com
+- Password: $Stelarow123
