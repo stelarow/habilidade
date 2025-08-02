@@ -1,7 +1,15 @@
 import { type NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { type Achievement } from '@/types/gamification'
 
 export const dynamic = 'force-dynamic'
+
+type EnrichedAchievement = Achievement & {
+  is_unlocked: boolean
+  unlocked_at: string | null
+  progress_percentage: number
+  progress_description: string
+}
 
 // GET /api/achievements - Get all available achievements and user's unlocked ones
 export async function GET(request: NextRequest) {
@@ -123,20 +131,20 @@ export async function GET(request: NextRequest) {
       }
       acc[achievement.category].push(achievement)
       return acc
-    }, {} as Record<string, any[]>)
+    }, {} as Record<string, EnrichedAchievement[]>)
 
     // Calculate category stats
     const categoryStats = Object.keys(categorizedAchievements).reduce((acc, category) => {
       const achievements = categorizedAchievements[category]
-      const unlocked = achievements.filter(a => a.is_unlocked).length
+      const unlocked = achievements.filter((a: EnrichedAchievement) => a.is_unlocked).length
       const total = achievements.length
       
       acc[category] = {
         total,
         unlocked,
         completion_percentage: Math.round((unlocked / total) * 100),
-        total_points: achievements.reduce((sum, a) => sum + (a.is_unlocked ? a.points : 0), 0),
-        max_points: achievements.reduce((sum, a) => sum + a.points, 0)
+        total_points: achievements.reduce((sum: number, a: EnrichedAchievement) => sum + (a.is_unlocked ? a.points : 0), 0),
+        max_points: achievements.reduce((sum: number, a: EnrichedAchievement) => sum + a.points, 0)
       }
       return acc
     }, {} as Record<string, any>)
