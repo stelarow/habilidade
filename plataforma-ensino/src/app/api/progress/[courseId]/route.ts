@@ -144,7 +144,7 @@ export async function GET(
         completed_lessons: completedLessons,
         progress_percentage: overallProgress,
         total_study_time: detailedProgress.reduce((sum, p) => sum + (p.progress.time_spent_minutes || 0), 0),
-        average_engagement: analytics?.length > 0 
+        average_engagement: analytics && analytics.length > 0 
           ? analytics.reduce((sum, a) => sum + (a.comprehension_score || 0), 0) / analytics.length
           : 0
       },
