@@ -120,9 +120,9 @@ export function useIntegratedHeader(courseId: string, lessonId?: string) {
     if (!currentLesson) return []
 
     return [
-      { label: 'Cursos', href: '/dashboard' },
-      { label: 'Curso Atual', href: `/courses/${courseId}` },
-      { label: currentLesson.lesson.title, href: '#', current: true }
+      { label: 'Cursos', href: '/dashboard', isActive: false },
+      { label: 'Curso Atual', href: `/courses/${courseId}`, isActive: false },
+      { label: currentLesson.lesson.title, href: '#', isActive: true }
     ]
   }, [courseData, courseId, lessonId])
 
