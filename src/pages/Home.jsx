@@ -3,6 +3,7 @@ import Hero from '../components/Hero';
 import Courses from '../components/Courses';
 import HowItWorksSimple from '../components/HowItWorksSimple';
 import Reviews from '../components/Reviews';
+import LatestBlogSection from '../components/LatestBlogSection';
 import ContactForm from '../components/ContactForm';
 import FAQ from '../components/FAQ';
 import SEOHead from '../components/shared/SEOHead';
@@ -21,6 +22,7 @@ function Home() {
       <Courses />
       <HowItWorksSimple />
       <Reviews />
+      <LatestBlogSection />
       <ContactForm />
       <FAQ />
     </>
