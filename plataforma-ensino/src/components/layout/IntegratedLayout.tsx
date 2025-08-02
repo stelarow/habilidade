@@ -98,14 +98,24 @@ function IntegratedLayoutContent({ children, courseId, lessonId, className }: In
         <ErrorBoundary fallback={() => <div className="h-16 bg-background border-b" />}>
           <EnhancedHeader
             breadcrumbs={breadcrumbs}
-            progress={progressData}
+            globalProgress={progressData?.percentage || 0}
             user={userProfile}
-            notifications={notifications}
-            unreadCount={unreadCount}
-            onThemeChange={(newTheme) => {
-              // Theme change is handled by the IntegrationProvider
-              document.documentElement.className = `theme-${newTheme}`
+            notifications={unreadCount}
+            onSidebarToggle={handleSidebarToggle}
+            onProfileClick={() => {
+              // Handle profile click
+              console.log('Profile clicked')
             }}
+            onSettingsClick={() => {
+              // Handle settings click
+              console.log('Settings clicked')
+            }}
+            onThemeToggle={() => {
+              // Theme change is handled by the IntegrationProvider
+              const currentTheme = document.documentElement.className.includes('theme-violet-light') ? 'violet-dark' : 'violet-light'
+              document.documentElement.className = `theme-${currentTheme}`
+            }}
+            isDarkMode={theme === 'violet-dark'}
             className="border-b border-border"
           />
         </ErrorBoundary>

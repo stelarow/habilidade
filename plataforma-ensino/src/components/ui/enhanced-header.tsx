@@ -42,13 +42,14 @@ export interface User {
   avatar?: string
   level: number
   xp: number
+  xpToNext: number
   email?: string
 }
 
 export interface EnhancedHeaderProps {
   breadcrumbs: Breadcrumb[]
   globalProgress: number
-  user: User
+  user: User | null
   onSidebarToggle?: () => void
   onProfileClick: () => void
   onSettingsClick: () => void
@@ -111,7 +112,7 @@ const BreadcrumbNavigation: React.FC<{
  * User profile dropdown component
  */
 const UserProfileDropdown: React.FC<{
-  user: User
+  user: User | null
   notifications?: number
   onProfileClick: () => void
   onSettingsClick: () => void
@@ -125,6 +126,55 @@ const UserProfileDropdown: React.FC<{
   onThemeToggle,
   isDarkMode = true 
 }) => {
+  // Handle case when user is null (loading state)
+  if (!user) {
+    return (
+      <div className="flex items-center gap-2">
+        {/* Notifications */}
+        <Button
+          variant="ghost"
+          size="sm"
+          className="relative h-9 w-9 p-0"
+          aria-label={`Notifications${notifications > 0 ? ` (${notifications})` : ''}`}
+        >
+          <Bell className="h-4 w-4" />
+          {notifications > 0 && (
+            <Badge 
+              variant="destructive"
+              className="absolute -top-1 -right-1 h-5 w-5 text-xs p-0 flex items-center justify-center"
+            >
+              {notifications > 99 ? '99+' : notifications}
+            </Badge>
+          )}
+        </Button>
+
+        {/* Theme Toggle */}
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={onThemeToggle}
+          className="h-9 w-9 p-0"
+          aria-label={`Switch to ${isDarkMode ? 'light' : 'dark'} mode`}
+        >
+          {isDarkMode ? (
+            <Sun className="h-4 w-4" />
+          ) : (
+            <Moon className="h-4 w-4" />
+          )}
+        </Button>
+
+        {/* Loading user placeholder */}
+        <div className="flex items-center gap-3 px-2 py-1">
+          <div className="h-7 w-7 bg-muted rounded-full animate-pulse" />
+          <div className="hidden md:flex flex-col gap-1">
+            <div className="h-3 w-20 bg-muted rounded animate-pulse" />
+            <div className="h-2 w-16 bg-muted rounded animate-pulse" />
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   const userInitials = user.name
     .split(' ')
     .map(n => n[0])
