@@ -190,7 +190,7 @@ const LessonHeaderRedesigned: React.FC<LessonHeaderRedesignedProps> = ({
                   variant="ghost"
                   size="sm"
                   onClick={() => setShowMobileNav(!showMobileNav)}
-                  className="text-header-foreground hover:bg-violet-500/10 transition-all duration-200 px-2 py-1"
+                  className="text-header-foreground hover:bg-white/10 transition-all duration-200 px-2 py-1"
                   aria-label="Menu de navegação da aula"
                 >
                   <Menu className="h-4 w-4" />
@@ -198,7 +198,7 @@ const LessonHeaderRedesigned: React.FC<LessonHeaderRedesignedProps> = ({
                 </Button>
                 
                 {showMobileNav && (
-                  <div className="absolute top-full right-0 mt-2 w-48 bg-background border border-violet-200/20 dark:border-violet-800/30 rounded-md shadow-lg shadow-violet-500/10 z-50">
+                  <div className="absolute top-full right-0 mt-2 w-48 bg-background border border-border rounded-md shadow-lg z-50">
                     {availableSections.map((section: any) => {
                       const IconComponent = section.icon
                       return (
@@ -208,7 +208,7 @@ const LessonHeaderRedesigned: React.FC<LessonHeaderRedesignedProps> = ({
                             scrollToSection(section.id)
                             setShowMobileNav(false)
                           }}
-                          className="w-full flex items-center gap-2 px-3 py-2 text-sm hover:bg-violet-50 dark:hover:bg-violet-950/50 transition-colors text-left"
+                          className="w-full flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted transition-colors text-left"
                         >
                           <IconComponent className="h-4 w-4" />
                           {section.label}
@@ -227,7 +227,7 @@ const LessonHeaderRedesigned: React.FC<LessonHeaderRedesignedProps> = ({
                   variant="ghost"
                   size="sm"
                   onClick={() => scrollToSection('video-section')}
-                  className="text-header-foreground hover:bg-violet-500/10 transition-all duration-200 px-2 py-1"
+                  className="text-header-foreground hover:bg-white/10 transition-all duration-200 px-2 py-1"
                   title="Ir para o vídeo"
                 >
                   <Play className="h-4 w-4" />
@@ -240,7 +240,7 @@ const LessonHeaderRedesigned: React.FC<LessonHeaderRedesignedProps> = ({
                   variant="ghost"
                   size="sm"
                   onClick={() => scrollToSection('pdf-section')}
-                  className="text-header-foreground hover:bg-violet-500/10 transition-all duration-200 px-2 py-1"
+                  className="text-header-foreground hover:bg-white/10 transition-all duration-200 px-2 py-1"
                   title="Ir para o material"
                 >
                   <FileText className="h-4 w-4" />
@@ -253,7 +253,7 @@ const LessonHeaderRedesigned: React.FC<LessonHeaderRedesignedProps> = ({
                   variant="ghost"
                   size="sm"
                   onClick={() => scrollToSection('exercises-section')}
-                  className="text-header-foreground hover:bg-violet-500/10 transition-all duration-200 px-2 py-1"
+                  className="text-header-foreground hover:bg-white/10 transition-all duration-200 px-2 py-1"
                   title="Ir para os exercícios"
                 >
                   <PenTool className="h-4 w-4" />
@@ -266,7 +266,7 @@ const LessonHeaderRedesigned: React.FC<LessonHeaderRedesignedProps> = ({
                   variant="ghost"
                   size="sm"
                   onClick={() => scrollToSection('quiz-section')}
-                  className="text-header-foreground hover:bg-violet-500/10 transition-all duration-200 px-2 py-1"
+                  className="text-header-foreground hover:bg-white/10 transition-all duration-200 px-2 py-1"
                   title="Ir para o quiz"
                 >
                   <Trophy className="h-4 w-4" />
@@ -290,7 +290,7 @@ const LessonHeaderRedesigned: React.FC<LessonHeaderRedesignedProps> = ({
             <Button 
               variant="outline" 
               size="sm" 
-              className="border-violet-500 text-violet-600 hover:bg-violet-600 hover:text-white hover:scale-105 hover:shadow-lg hover:shadow-violet-500/25 transition-all duration-200 px-3 py-2 dark:border-violet-400 dark:text-violet-400 dark:hover:bg-violet-500"
+              className="border-primary text-primary hover:bg-primary hover:text-primary-foreground hover:scale-105 hover:shadow-lg transition-all duration-200 px-3 py-2"
               onClick={handleExitLesson}
               aria-label="Sair da aula atual"
             >
