@@ -1,24 +1,25 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import LessonPageRedesigned from '@/components/lesson/LessonPageRedesigned'
+import { createClient } from '@/lib/supabase/client'
 
-// Dados da aula de Marketing Digital
-const lessonData = {
-  id: '4-1',
+// Dados da aula de Marketing Digital (fallback)
+const fallbackLessonData = {
+  id: 'd1a9caa2-f86d-4c2d-bf4d-6d2402237c95',
   title: 'Fundamentos do Marketing Digital',
-  slug: 'fundamentos-marketing-digital',
+  slug: 'introducao-marketing-digital',
   description: 'Introdução aos conceitos essenciais do marketing digital moderno, estratégias de posicionamento e ferramentas fundamentais para o sucesso online.',
   course: {
-    id: '4',
-    title: 'Marketing Digital Estratégico',
+    id: '2e6aa078-ec48-4ba1-86f9-b6fb1d8d758d',
+    title: 'Marketing Digital',
     slug: 'marketing-digital'
   }
 }
 
 // Dados de progresso inicial
 const initialProgressData = {
-  lessonId: '4-1',
+  lessonId: 'd1a9caa2-f86d-4c2d-bf4d-6d2402237c95',
   videoProgress: {
     percentageWatched: 0,
     currentTime: 0,
@@ -339,15 +340,107 @@ const canvaAuthor = "Escola Habilidade"
 const canvaAuthorUrl = "https://www.canva.com/design/DAGuqW8uqiw/_HxYFw6YjdkL93523L-55w/view?utm_content=DAGuqW8uqiw&utm_campaign=designshare&utm_medium=embeds&utm_source=link"
 
 export default function MarketingDigitalFundamentosPage() {
+  const [lessonData, setLessonData] = useState(fallbackLessonData)
+  const [exercises, setExercises] = useState([])
+  const [quizzes, setQuizzes] = useState([])
+  const [lessonContent, setLessonContent] = useState('')
+  const [materials, setMaterials] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  const supabase = createClient()
+
+  useEffect(() => {
+    async function fetchLessonData() {
+      try {
+        // Buscar dados da aula
+        const { data: lesson, error: lessonError } = await supabase
+          .from('lessons')
+          .select(`
+            *,
+            course:courses(id, title, slug)
+          `)
+          .eq('id', 'd1a9caa2-f86d-4c2d-bf4d-6d2402237c95')
+          .single()
+
+        if (lessonError) throw lessonError
+
+        if (lesson) {
+          setLessonData({
+            id: lesson.id,
+            title: lesson.title,
+            slug: lesson.slug,
+            description: lesson.description,
+            course: lesson.course
+          })
+          setLessonContent(lesson.content || '')
+          setMaterials(lesson.materials || [])
+        }
+
+        // Buscar exercícios
+        const { data: exercisesData, error: exercisesError } = await supabase
+          .from('exercises')
+          .select('*')
+          .eq('lesson_id', 'd1a9caa2-f86d-4c2d-bf4d-6d2402237c95')
+          .order('order_index')
+
+        if (exercisesError) throw exercisesError
+        if (exercisesData) setExercises(exercisesData)
+
+        // Buscar quiz
+        const { data: quizData, error: quizError } = await supabase
+          .from('quizzes')
+          .select(`
+            *,
+            quiz_questions(*)
+          `)
+          .eq('lesson_id', 'd1a9caa2-f86d-4c2d-bf4d-6d2402237c95')
+
+        if (quizError) throw quizError
+        if (quizData && quizData.length > 0) {
+          const quiz = quizData[0]
+          const formattedQuiz = {
+            id: quiz.id,
+            title: quiz.title,
+            description: quiz.description,
+            passing_score: quiz.passing_score,
+            questions: quiz.quiz_questions.map((q: any, index: number) => ({
+              id: index + 1,
+              question: q.question,
+              options: q.options,
+              correct_answer: q.correct_answer,
+              explanation: q.explanation
+            }))
+          }
+          setQuizzes([formattedQuiz])
+        }
+
+      } catch (error) {
+        console.error('Erro ao carregar dados da aula:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchLessonData()
+  }, [])
+
   const handleExit = () => {
-    // Redirecionar para o curso
     window.location.href = '/cursos/marketing-digital'
   }
 
   const handleLessonComplete = () => {
-    // Callback quando a aula for concluída
     console.log('Aula de Marketing Digital concluída!')
-    // Aqui poderia atualizar o progresso do usuário no banco de dados
+  }
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
+          <p>Carregando aula...</p>
+        </div>
+      </div>
+    )
   }
 
   return (
