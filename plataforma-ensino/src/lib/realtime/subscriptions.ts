@@ -85,7 +85,7 @@ export class RealtimeSubscriptionManager {
           table: 'progress',
           filter: `enrollment_id=eq.${enrollmentId}`
         },
-        (payload) => {
+        (payload: any) => {
           console.log('Progress update received:', payload)
           callback(payload.new as ProgressUpdateEvent)
         }
@@ -120,7 +120,7 @@ export class RealtimeSubscriptionManager {
           table: 'user_achievements',
           filter: `user_id=eq.${this.userId}`
         },
-        async (payload) => {
+        async (payload: any) => {
           console.log('Achievement unlocked:', payload)
           
           // Fetch the achievement details
@@ -168,7 +168,7 @@ export class RealtimeSubscriptionManager {
           table: 'user_notifications',
           filter: `user_id=eq.${this.userId}`
         },
-        (payload) => {
+        (payload: any) => {
           console.log('New notification:', payload)
           callback(payload.new as NotificationEvent)
         }
@@ -203,7 +203,7 @@ export class RealtimeSubscriptionManager {
           table: 'user_gamification_stats',
           filter: `user_id=eq.${this.userId}`
         },
-        (payload) => {
+        (payload: any) => {
           console.log('Gamification stats updated:', payload)
           callback(payload.new as GamificationUpdateEvent)
         }
@@ -235,7 +235,7 @@ export class RealtimeSubscriptionManager {
           table: 'enrollments',
           filter: `course_id=eq.${courseId}`
         },
-        (payload) => {
+        (payload: any) => {
           console.log('Course enrollment update:', payload)
           callback(payload)
         }
@@ -247,7 +247,7 @@ export class RealtimeSubscriptionManager {
           schema: 'public',
           table: 'progress'
         },
-        async (payload) => {
+        async (payload: any) => {
           // Filter for this course by checking enrollment
           const { data: enrollment } = await this.supabase
             .from('enrollments')

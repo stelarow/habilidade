@@ -349,6 +349,7 @@ export interface UseAuthReturn {
   user: AuthUser | null
   profile: UserProfile | null
   isLoading: boolean
+  isAuthenticated: boolean
   error: ApiError | null
   signIn: (email: string, password: string) => Promise<void>
   signOut: () => Promise<void>

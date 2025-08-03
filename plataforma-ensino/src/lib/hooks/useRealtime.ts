@@ -60,7 +60,7 @@ class RealtimeSubscriptionManager {
         schema: 'public',
         table: 'progress',
         filter: `user_id=eq.${userId}`
-      }, (payload) => {
+      }, (payload: any) => {
         this.notifySubscribers(channelName, { type: 'progress', payload })
       })
     } else if (channelName.startsWith('notifications-')) {
@@ -70,7 +70,7 @@ class RealtimeSubscriptionManager {
         schema: 'public',
         table: 'user_notifications',
         filter: `user_id=eq.${userId}`
-      }, (payload) => {
+      }, (payload: any) => {
         this.notifySubscribers(channelName, { type: 'notification', payload })
       })
     } else if (channelName.startsWith('achievements-')) {
@@ -80,7 +80,7 @@ class RealtimeSubscriptionManager {
         schema: 'public',
         table: 'user_achievements',
         filter: `user_id=eq.${userId}`
-      }, (payload) => {
+      }, (payload: any) => {
         this.notifySubscribers(channelName, { type: 'achievement', payload })
       })
     } else if (channelName.startsWith('gamification-')) {
@@ -90,12 +90,12 @@ class RealtimeSubscriptionManager {
         schema: 'public',
         table: 'user_gamification_stats',
         filter: `user_id=eq.${userId}`
-      }, (payload) => {
+      }, (payload: any) => {
         this.notifySubscribers(channelName, { type: 'gamification', payload })
       })
     }
 
-    channel.subscribe((status) => {
+    channel.subscribe((status: any) => {
       console.log(`Channel ${channelName} status:`, status)
     })
 
@@ -346,7 +346,7 @@ export function useConnectionStatus() {
   useEffect(() => {
     const channel = supabase.channel('connection-status')
     
-    channel.subscribe((status) => {
+    channel.subscribe((status: any) => {
       switch (status) {
         case 'SUBSCRIBED':
           setIsConnected(true)

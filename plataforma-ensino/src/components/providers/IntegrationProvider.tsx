@@ -61,17 +61,17 @@ export function IntegrationProvider({ children }: { children: React.ReactNode })
     unreadCount, 
     markAsRead, 
     markAllAsRead 
-  } = useRealTimeNotifications(user?.id)
+  } = useRealTimeNotifications(user?.id || '')
   
   const { 
     newAchievements, 
     dismissAchievement 
-  } = useRealTimeAchievements(user?.id)
+  } = useRealTimeAchievements(user?.id || '')
   
   const { 
     levelUpEvent, 
     dismissLevelUp 
-  } = useRealTimeGamification(user?.id)
+  } = useRealTimeGamification(user?.id || '')
 
   // Local state
   const [isOnline, setIsOnline] = useState(true)
@@ -189,6 +189,7 @@ export function IntegrationProvider({ children }: { children: React.ReactNode })
 
       return () => clearTimeout(timer)
     }
+    return undefined
   }, [levelUpEvent, dismissLevelUp])
 
   // Load saved sidebar state
@@ -237,7 +238,7 @@ export function IntegrationProvider({ children }: { children: React.ReactNode })
 
   const updateTheme = async (theme: string) => {
     if (updatePreferences) {
-      await updatePreferences.mutateAsync({ theme } as any)
+      updatePreferences({ theme } as any)
     }
   }
 

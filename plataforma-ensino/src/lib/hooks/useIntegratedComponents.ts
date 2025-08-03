@@ -2,7 +2,8 @@ import { useState, useCallback, useMemo, useEffect } from 'react'
 import { useAuth, useCourseProgress, useUpdateProgress, useUserPreferences, useGamificationStats } from './useSupabase'
 import { useRealTimeProgress, useRealTimeNotifications, useRealTimeAchievements } from './useRealtime'
 import type { Module, Lesson, CourseProgress } from '@/components/ui/sidebar-navigation'
-import type { QuizQuestion, QuizState } from '@/components/ui/interactive-quiz'
+import type { Question as QuizQuestion, QuizState } from '@/components/ui/interactive-quiz'
+import type { LessonWithProgress } from '@/types/phase1-components'
 
 /**
  * Integrated hook for sidebar navigation with real-time data
@@ -11,7 +12,7 @@ export function useIntegratedSidebar(courseId: string) {
   const { user } = useAuth()
   const { data: courseData, isLoading, error } = useCourseProgress(courseId)
   const { mutate: updateProgress } = useUpdateProgress()
-  const realTimeProgress = useRealTimeProgress(user?.id, courseId)
+  const realTimeProgress = useRealTimeProgress(user?.id || '', courseId)
 
   // Transform API data to sidebar component format
   const courseStructure: Module[] = useMemo(() => {
@@ -110,7 +111,7 @@ export function useIntegratedHeader(courseId: string, lessonId?: string) {
   const { user } = useAuth()
   const { data: courseData } = useCourseProgress(courseId)
   const { data: gamificationStats } = useGamificationStats()
-  const { notifications, unreadCount } = useRealTimeNotifications(user?.id)
+  const { notifications, unreadCount } = useRealTimeNotifications(user?.id || '')
   const { preferences } = useUserPreferences()
 
   const breadcrumbs = useMemo(() => {

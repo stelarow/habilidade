@@ -118,6 +118,7 @@ const mockUser = {
   avatar: '',
   level: 5,
   xp: 1250,
+  xpToNext: 750,
   email: 'joao@example.com'
 }
 

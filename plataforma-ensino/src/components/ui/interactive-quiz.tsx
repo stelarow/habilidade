@@ -83,7 +83,7 @@ export interface InteractiveQuizProps {
 /**
  * Quiz states
  */
-type QuizState = 'introduction' | 'in-progress' | 'question-answered' | 'completed'
+export type QuizState = 'introduction' | 'in-progress' | 'question-answered' | 'completed' | 'intro' | 'results'
 
 /**
  * Timer component

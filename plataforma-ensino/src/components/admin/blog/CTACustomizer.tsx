@@ -178,7 +178,36 @@ export function CTACustomizer({
     try {
       const config: CTAConfiguration = {
         id: initialConfig?.id || `cta_${Date.now()}`,
-        ...data,
+        type: data.type || 'course',
+        content: {
+          title: data.content?.title || 'Título padrão',
+          description: data.content?.description || 'Descrição padrão',
+          buttonText: data.content?.buttonText || 'Clique aqui',
+          subtext: data.content?.subtext,
+          image: data.content?.image,
+          icon: data.content?.icon,
+          benefits: data.content?.benefits,
+        },
+        design: data.design || {
+          layout: 'card',
+          style: 'minimal',
+          colors: {
+            background: '#ffffff',
+            text: '#000000',
+            button: '#3b82f6',
+            buttonText: '#ffffff',
+            accent: '#ef4444'
+          },
+          animation: 'none',
+          borderRadius: 8,
+          shadow: true
+        },
+        targeting: data.targeting || {
+          category: 'all',
+          timing: 'scroll',
+          scrollPercent: 50
+        },
+        isActive: data.isActive ?? true,
       };
       
       await onSave(config);

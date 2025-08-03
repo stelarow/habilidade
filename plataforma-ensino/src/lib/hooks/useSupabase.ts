@@ -1,13 +1,12 @@
 import { useState, useEffect, useCallback, useMemo } from 'react'
 import { createClient } from '@/lib/supabase/client'
-import { useQuery, useMutation, useQueryClient, UseQueryOptions } from '@tanstack/react-query'
+import { useQuery, useMutation, useQueryClient, type UseQueryOptions } from '@tanstack/react-query'
 import type { User as SupabaseUser } from '@supabase/supabase-js'
 import type { 
   CourseProgressDetail, 
   QuizSubmission, 
   QuizResult, 
-  UserPreferences, 
-  GamificationStats,
+  UserPreferences,
   Achievement,
   UserNotification,
   ProgressAnalytics,
@@ -23,6 +22,7 @@ import type {
   UseUpdateProgressReturn,
   UseGamificationStatsReturn,
   UseUserPreferencesReturn,
+  GamificationStats,
   ApiError
 } from '@/types/phase1-components'
 
@@ -46,7 +46,7 @@ export function useAuth(): UseAuthReturn {
 
   useEffect(() => {
     // Get initial session
-    supabase.auth.getSession().then(({ data: { session }, error: sessionError }) => {
+    supabase.auth.getSession().then(({ data: { session }, error: sessionError }: any) => {
       if (sessionError) {
         setError({ message: sessionError.message, code: sessionError.name })
       } else {
@@ -60,7 +60,7 @@ export function useAuth(): UseAuthReturn {
     })
 
     // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event: any, session: any) => {
       setUser(session?.user ?? null)
       if (session?.user) {
         fetchUserProfile(session.user.id)
@@ -141,9 +141,16 @@ export function useAuth(): UseAuthReturn {
   }, [user, supabase, fetchUserProfile])
 
   return {
-    user,
+    user: user ? {
+      id: user.id,
+      email: user.email || '',
+      user_metadata: user.user_metadata || {},
+      created_at: user.created_at || '',
+      updated_at: user.updated_at || ''
+    } : null,
     profile,
     isLoading: loading,
+    isAuthenticated: !!user,
     error,
     signIn,
     signOut,
@@ -182,7 +189,9 @@ export function useCourseProgress(courseId: string): UseCourseProgressReturn {
     data: query.data || null,
     isLoading: query.isLoading,
     error: query.error ? { message: query.error.message } : null,
-    refetch: query.refetch
+    refetch: async () => {
+      await query.refetch()
+    }
   }
 }
 
@@ -259,7 +268,14 @@ export function useUpdateProgress(): UseUpdateProgressReturn {
   })
 
   return {
-    mutate: mutation.mutate,
+    mutate: async (request: ProgressUpdateRequest) => {
+      return new Promise<void>((resolve, reject) => {
+        mutation.mutate(request, {
+          onSuccess: () => resolve(),
+          onError: (error) => reject(error)
+        })
+      })
+    },
     isLoading: mutation.isPending,
     error: mutation.error ? { message: mutation.error.message } : null
   }
@@ -382,6 +398,15 @@ export function useGamificationStats(): UseGamificationStatsReturn {
     gcTime: 10 * 60 * 1000, // 10 minutes
     refetchInterval: 5 * 60 * 1000 // Refetch every 5 minutes
   })
+
+  return {
+    data: query.data || null,
+    isLoading: query.isLoading,
+    error: query.error ? { message: query.error.message } : null,
+    refetch: async () => {
+      await query.refetch()
+    }
+  }
 }
 
 /**
