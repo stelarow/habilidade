@@ -25,7 +25,7 @@
   --secondary: 254 23% 20%;         /* #332d4d - Card/modal background */
   --secondary-foreground: 264 100% 97%;
   --muted: 254 23% 20%;             /* #332d4d */
-  --muted-foreground: 263 57% 80%;  /* #c4b5fd - Secondary text */
+  --muted-foreground: 264 100% 90%;  /* #f0ebff - Higher contrast secondary text */
   --accent: 263 85% 63%;            /* #8b5cf6 - Primary violet */
   --accent-foreground: 0 0% 100%;
   --destructive: 0 84% 60%;         /* #ef4444 - Red */
@@ -789,5 +789,174 @@ body {
   
   .iframe-wrapper > iframe {
     pointer-events: auto;
+  }
+
+  /* Lesson Content Legibility Improvements */
+  .lesson-content.prose {
+    /* Enhanced text contrast and readability */
+    color: hsl(var(--foreground)) !important;
+    line-height: 1.8 !important;
+    font-size: 1.1rem !important;
+  }
+
+  .lesson-content.prose p {
+    /* Better paragraph spacing and contrast */
+    color: hsl(var(--foreground)) !important;
+    margin-bottom: 1.5rem !important;
+    margin-top: 1rem !important;
+    line-height: 1.8 !important;
+  }
+
+  .lesson-content.prose h1,
+  .lesson-content.prose h2,
+  .lesson-content.prose h3,
+  .lesson-content.prose h4,
+  .lesson-content.prose h5,
+  .lesson-content.prose h6 {
+    /* High contrast headings with better spacing */
+    color: hsl(var(--foreground)) !important;
+    margin-top: 2.5rem !important;
+    margin-bottom: 1.5rem !important;
+    font-weight: 700 !important;
+  }
+
+  .lesson-content.prose h1 {
+    font-size: 2rem !important;
+    border-bottom: 2px solid hsl(var(--border)) !important;
+    padding-bottom: 0.5rem !important;
+  }
+
+  .lesson-content.prose h2 {
+    font-size: 1.75rem !important;
+    color: hsl(var(--primary)) !important;
+  }
+
+  .lesson-content.prose h3 {
+    font-size: 1.5rem !important;
+    color: hsl(var(--primary)) !important;
+  }
+
+  .lesson-content.prose ul,
+  .lesson-content.prose ol {
+    /* Better list spacing and contrast */
+    margin-top: 1.5rem !important;
+    margin-bottom: 1.5rem !important;
+    padding-left: 2rem !important;
+  }
+
+  .lesson-content.prose li {
+    color: hsl(var(--foreground)) !important;
+    margin-bottom: 0.75rem !important;
+    line-height: 1.8 !important;
+  }
+
+  .lesson-content.prose blockquote {
+    /* Enhanced blockquote styling */
+    background: hsl(var(--muted)) !important;
+    border-left: 4px solid hsl(var(--primary)) !important;
+    padding: 1.5rem !important;
+    margin: 2rem 0 !important;
+    color: hsl(var(--foreground)) !important;
+    border-radius: 0.5rem !important;
+  }
+
+  .lesson-content.prose strong,
+  .lesson-content.prose b {
+    /* High contrast bold text */
+    color: hsl(var(--foreground)) !important;
+    font-weight: 700 !important;
+  }
+
+  .lesson-content.prose em,
+  .lesson-content.prose i {
+    /* Enhanced italic text */
+    color: hsl(var(--primary)) !important;
+    font-style: italic !important;
+  }
+
+  .lesson-content.prose code {
+    /* Better inline code styling */
+    background: hsl(var(--muted)) !important;
+    color: hsl(var(--primary)) !important;
+    padding: 0.25rem 0.5rem !important;
+    border-radius: 0.25rem !important;
+    font-size: 0.9em !important;
+  }
+
+  .lesson-content.prose pre {
+    /* Code block improvements */
+    background: hsl(var(--muted)) !important;
+    border: 1px solid hsl(var(--border)) !important;
+    border-radius: 0.5rem !important;
+    padding: 1.5rem !important;
+    margin: 2rem 0 !important;
+    overflow-x: auto !important;
+  }
+
+  .lesson-content.prose a {
+    /* High contrast links */
+    color: hsl(var(--primary)) !important;
+    text-decoration: underline !important;
+    text-decoration-color: hsl(var(--primary) / 0.5) !important;
+    transition: all 0.2s ease !important;
+  }
+
+  .lesson-content.prose a:hover {
+    color: hsl(var(--primary) / 0.8) !important;
+    text-decoration-color: hsl(var(--primary)) !important;
+  }
+
+  .lesson-content.prose table {
+    /* Better table spacing and contrast */
+    margin: 2rem 0 !important;
+    border-collapse: collapse !important;
+    width: 100% !important;
+    border: 1px solid hsl(var(--border)) !important;
+    border-radius: 0.5rem !important;
+    overflow: hidden !important;
+  }
+
+  .lesson-content.prose th,
+  .lesson-content.prose td {
+    padding: 1rem !important;
+    border: 1px solid hsl(var(--border)) !important;
+    color: hsl(var(--foreground)) !important;
+  }
+
+  .lesson-content.prose th {
+    background: hsl(var(--muted)) !important;
+    font-weight: 700 !important;
+  }
+
+  .lesson-content.prose hr {
+    /* Enhanced section dividers */
+    margin: 3rem 0 !important;
+    border: none !important;
+    height: 2px !important;
+    background: linear-gradient(to right, transparent, hsl(var(--border)), transparent) !important;
+  }
+
+  /* Responsive adjustments for lesson content */
+  @media (max-width: 768px) {
+    .lesson-content.prose {
+      font-size: 1rem !important;
+    }
+
+    .lesson-content.prose h1 {
+      font-size: 1.75rem !important;
+    }
+
+    .lesson-content.prose h2 {
+      font-size: 1.5rem !important;
+    }
+
+    .lesson-content.prose h3 {
+      font-size: 1.25rem !important;
+    }
+
+    .lesson-content.prose p,
+    .lesson-content.prose li {
+      margin-bottom: 1.25rem !important;
+    }
   }
 }

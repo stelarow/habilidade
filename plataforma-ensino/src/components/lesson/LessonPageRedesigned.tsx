@@ -135,9 +135,9 @@ const LessonPageRedesigned: React.FC<LessonPageRedesignedProps> = ({
           />
 
           {/* Conteúdo principal */}
-          <main className="pt-24 lg:pt-20 container mx-auto px-4 py-6 space-y-8">
+          <main className="pt-24 lg:pt-20 container mx-auto px-4 py-8 space-y-12">
             {/* Título da aula */}
-            <Card className="p-6 border-border/50">
+            <Card className="p-8 border-border/50">
               <h1 className="text-2xl font-bold gradient-text">
                 {lesson.title}
               </h1>
@@ -163,7 +163,7 @@ const LessonPageRedesigned: React.FC<LessonPageRedesignedProps> = ({
             {/* Content Section - Lesson HTML Content */}
             {content && (
               <div id="content-section">
-                <Card className="p-6 border-border/50">
+                <Card className="p-8 border-border/50">
                   <div 
                     className="lesson-content prose prose-slate dark:prose-invert max-w-none"
                     dangerouslySetInnerHTML={{ __html: content }}
