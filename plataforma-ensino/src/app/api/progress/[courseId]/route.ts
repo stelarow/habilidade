@@ -52,7 +52,6 @@ export async function GET(
       `)
       .eq('user_id', user.id)
       .eq('enrollment_id', enrollment.id)
-      .order('lesson.order_index')
 
     if (progressError) {
       console.error('Error fetching lesson progress:', progressError)
@@ -61,6 +60,13 @@ export async function GET(
         { status: 500 }
       )
     }
+
+    // Sort lesson progress by lesson order_index
+    const sortedLessonProgress = lessonProgress?.sort((a, b) => {
+      const orderA = a.lesson?.order_index || 0
+      const orderB = b.lesson?.order_index || 0
+      return orderA - orderB
+    }) || []
 
     // Get all lessons in the course to identify locked ones
     const { data: allLessons, error: lessonsError } = await supabase
@@ -91,7 +97,7 @@ export async function GET(
     }, {} as Record<string, any>) || {}
 
     // Build comprehensive progress data
-    const progressMap = lessonProgress?.reduce((acc, item) => {
+    const progressMap = sortedLessonProgress?.reduce((acc, item) => {
       acc[item.lesson_id] = item
       return acc
     }, {} as Record<string, any>) || {}
