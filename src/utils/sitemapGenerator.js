@@ -1,4 +1,18 @@
-import { blogAPI } from '../services/blogAPI';
+// Conditional import to avoid Supabase loading during build time
+let blogAPI = null;
+
+const loadBlogAPI = async () => {
+  if (!blogAPI) {
+    try {
+      const module = await import('../services/blogAPI.js');
+      blogAPI = module.blogAPI || module.default;
+    } catch (error) {
+      console.warn('Failed to load blogAPI:', error);
+      return null;
+    }
+  }
+  return blogAPI;
+};
 
 /**
  * Sitemap Generator for SEO optimization
@@ -113,8 +127,11 @@ const generateSitemapEntry = ({ url, priority, changefreq, lastmod }) => {
  */
 const fetchBlogPosts = async () => {
   try {
+    const api = await loadBlogAPI();
+    if (!api) return [];
+    
     // Fetch all posts (large limit to get everything)
-    const response = await blogAPI.getAllPosts(1, 1000);
+    const response = await api.getAllPosts(1, 1000);
     
     if (response?.data?.posts) {
       return response.data.posts.filter(post => 
@@ -134,7 +151,10 @@ const fetchBlogPosts = async () => {
  */
 const fetchCategories = async () => {
   try {
-    const response = await blogAPI.getCategories();
+    const api = await loadBlogAPI();
+    if (!api) return [];
+    
+    const response = await api.getCategories();
     
     if (response?.data?.categories) {
       return response.data.categories.filter(category => category.slug);
