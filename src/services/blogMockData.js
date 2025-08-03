@@ -39,7 +39,7 @@ const mockCategories = [
     name: 'Design',
     slug: 'design',
     description: 'Tendências e técnicas de design',
-    postCount: 5,
+    postCount: 6,
     color: '#EF4444'
   },
   {
@@ -53,6 +53,283 @@ const mockCategories = [
 ];
 
 const mockPosts = [
+  {
+    id: 109,
+    title: 'Conheça 8 Tipos de Puxadores para Móveis e suas Características',
+    slug: 'tipos-puxadores-moveis',
+    excerpt: 'Descubra os principais tipos de puxadores para móveis, desde os clássicos coloniais até os modernos sistemas de clic. Guia completo com características, vantagens e aplicações ideais para cada modelo.',
+    content: `
+      <div class="article-content space-y-8">
+        
+        <div class="article-section">
+          <p class="text-zinc-300 leading-relaxed mb-6 text-lg">Amplos ou compactos, discretos ou chamativos. Se você é uma pessoa observadora, já deve ter notado que existem diversos tipos de puxadores para móveis, certo? A escolha desses elementos tem grande impacto na estética das peças e na rotina dos moradores, já que afeta questões de limpeza, funcionalidade e aproveitamento do espaço.</p>
+          
+          <div class="article-image mb-8">
+            <img src="/images/blog/tipos-puxadores-moveis/puxadores-hero.jpg" alt="Diferentes tipos de puxadores para móveis planejados" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Variedade de puxadores para móveis planejados</p>
+          </div>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Quem diria que itens básicos fariam tanta diferença na composição! Se você tem muitas dúvidas relacionadas aos puxadores, que tal conhecer os principais modelos disponíveis para tomar a sua decisão com mais segurança?</p>
+          
+          <div class="article-image mb-8">
+            <img src="/images/blog/tipos-puxadores-moveis/living-integrado.jpg" alt="Living integrado com móveis planejados" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Living integrado com móveis planejados modernos</p>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Quais são os Principais Tipos de Puxadores?</h2>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Dos clássicos aos modernos, não faltam opções para você chegar ao visual desejado. Uma boa dica para acertar na escolha dos puxadores é considerar o estilo da mobília e do ambiente onde ela ficará, assim como as necessidades de quem usará a peça no dia a dia.</p>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Veja abaixo um resumo com os principais modelos e suas indicações.</p>
+        </div>
+
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-6">1. Puxador Cava</h3>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">É um tipo muito usado em cozinhas planejadas por conta da praticidade que proporciona. Trata-se de uma espécie de chanfro embutido nas extremidades de portinhas e gavetas, formando uma linha contínua em toda a peça.</p>
+          
+          <div class="article-image mb-8">
+            <img src="/images/blog/tipos-puxadores-moveis/puxador-cava.jpg" alt="Puxador cava em cozinha planejada" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Puxador cava em cozinha com design clean</p>
+          </div>
+          
+          <div class="article-highlight bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border border-blue-500/20 rounded-lg p-6 my-6">
+            <h4 class="text-blue-300 font-semibold mb-3">✨ Características do Puxador Cava</h4>
+            <ul class="space-y-2 text-zinc-300">
+              <li><strong>Visual clean e moderno:</strong> Cria linhas limpas e contínuas</li>
+              <li><strong>Praticidade:</strong> Fácil de usar no dia a dia</li>
+              <li><strong>Limpeza:</strong> Não acumula sujeira ou gordura</li>
+              <li><strong>Segurança:</strong> Não há projeções que possam causar acidentes</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-6">2. Puxador Concha</h3>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">É um dos tipos de puxadores favoritos de quem curte o design tradicional, já que se assemelha bastante aos modelos presentes em móveis antigos. Como o nome indica, tem aparência curvada resultante no formato de concha.</p>
+          
+          <div class="article-image mb-8">
+            <img src="/images/blog/tipos-puxadores-moveis/puxador-concha.jpg" alt="Puxador concha em móveis de design clássico" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Puxador concha com design clássico e elegante</p>
+          </div>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Algumas versões foram repaginadas para deixar esse puxador mais atual. Assim, você encontrará desde conchas bem redondas até opções mais alongadas. De qualquer forma, é uma opção que funciona bem em gavetas.</p>
+        </div>
+
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-6">3. Puxador Alça</h3>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Esse puxador tem uma projeção um pouco maior que a dos demais, formando uma espécie de arco na parte externa dos móveis. Ele pode ter formato curvilíneo, de trave ou de T, com ângulos bem marcados.</p>
+          
+          <div class="article-image mb-8">
+            <img src="/images/blog/tipos-puxadores-moveis/puxador-alca.jpg" alt="Puxador alça dourado em móveis modernos" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Puxador alça com acabamento dourado</p>
+          </div>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">As alças são bem práticas porque permitem a pegada com a mão inteira. Isso garante mais firmeza na hora de abrir portas e gavetas, tornando esses modelos adequados para compor estruturas maiores e/ou pesadas.</p>
+        </div>
+
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-6">4. Puxador Botão</h3>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Está entre os tipos de puxadores conhecidos como bolinhas, devido ao formato circular. Também pode ser encontrado pela nomenclatura de ponto, dependendo da fabricante ou da loja que disponibiliza os modelos.</p>
+          
+          <div class="article-image mb-8">
+            <img src="/images/blog/tipos-puxadores-moveis/puxador-botao.jpg" alt="Puxador botão em home office moderno" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Puxadores botão em home office com tons terrosos</p>
+          </div>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Os puxadores em forma de botão são bem charmosos e favorecem a personalização. Assim, podem trazer uma superfície lisa ou composta por desenhos elaborados, incluindo rasgos e até figuras em alto-relevo.</p>
+        </div>
+
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-6">5. Puxador Colonial</h3>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Representa a categoria dos puxadores antigos, geralmente repletos de contornos, ornamentos e entalhes com aspecto artesanal. São características resultando em peças únicas, que não passam despercebidas.</p>
+          
+          <div class="article-image mb-8">
+            <img src="/images/blog/tipos-puxadores-moveis/puxador-colonial.jpg" alt="Puxador colonial antigo com detalhes ornamentais" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Puxador colonial com detalhes ornamentais artesanais</p>
+          </div>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">O puxador colonial também se diferencia pelo balanço, já que costuma ter dois pontos fixos e uma haste ou argola que se movimenta junto às mãos. Nesses casos, quando não está em uso, a peça fica recolhida rente ao móvel.</p>
+        </div>
+
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-6">6. Puxador Embutido</h3>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">É um dos tipos de puxadores preferidos para móveis que ocupam ambientes limitados ou com pouca área de circulação disponível. Ele pode ter diversos formatos e até configuração de rasgo, como se fosse um elemento vazado na peça.</p>
+          
+          <div class="article-image mb-8">
+            <img src="/images/blog/tipos-puxadores-moveis/puxador-embutido.jpg" alt="Puxador embutido em living moderno" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Puxadores embutidos em living com design minimalista</p>
+          </div>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">O puxador embutido se destaca por não avançar nenhum milímetro, o que evita enroscos e outros incômodos. Essa característica não só otimiza o espaço, como também contribui para um visual mais minimalista do projeto.</p>
+        </div>
+
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-6">7. Puxador Perfil (Linear)</h3>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Também chamado de puxador linear, é um modelo bem discreto e, portanto, indicado para locais que pedem um visual elegante. Apesar da pouca espessura, o modelo tem boa resistência e promove uma pegada firme.</p>
+          
+          <div class="article-image mb-8">
+            <img src="/images/blog/tipos-puxadores-moveis/puxador-perfil.jpg" alt="Puxador perfil linear em ambiente moderno" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Puxadores perfil em ambiente moderno e elegante</p>
+          </div>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Os puxadores em perfil podem ser concebidos em vários comprimentos e serem aplicados em sentido vertical ou horizontal. Tudo depende da configuração da mobília e dos usos pensados para seus compartimentos.</p>
+        </div>
+
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-6">8. Sistema Clic (Fecho-Toque)</h3>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Alguns profissionais se referem a ele como fecho-toque devido ao mecanismo de funcionamento. Isso porque o puxador de clic não corresponde a uma peça embutida ou acoplada ao móvel, mas a um sistema que permite abrir e fechar compartimentos com apenas um toque das mãos.</p>
+          
+          <div class="article-image mb-8">
+            <img src="/images/blog/tipos-puxadores-moveis/puxador-clic.jpg" alt="Sistema clic em móveis sem puxadores visíveis" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Sistema clic - móveis sem puxadores visíveis</p>
+          </div>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">A mobília com sistema clic exige que você exerça uma leve pressão sobre a porta ou gaveta a ser acessada. Com o mesmo tipo de comando, a parte pressionada vai abrir e fechar de forma suave, sem causar impacto e barulho.</p>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Como Escolher o Puxador Ideal?</h2>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">A escolha do puxador correto envolve diversos fatores que devem ser considerados para garantir funcionalidade e estética adequadas ao seu projeto.</p>
+          
+          <div class="article-image mb-8">
+            <img src="/images/blog/tipos-puxadores-moveis/variedade-modelos.jpg" alt="Variedade de modelos de puxadores" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Variedade de modelos e acabamentos disponíveis</p>
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
+            <div class="bg-gradient-to-r from-purple-500/10 to-blue-500/10 border border-purple-500/20 rounded-lg p-6">
+              <h4 class="text-purple-300 font-semibold mb-3">🎨 Estilo do Ambiente</h4>
+              <ul class="space-y-2 text-zinc-300 text-sm">
+                <li><strong>Clássico:</strong> Puxadores concha e colonial</li>
+                <li><strong>Moderno:</strong> Cava, embutido, perfil</li>
+                <li><strong>Contemporâneo:</strong> Sistema clic, alças minimalistas</li>
+              </ul>
+            </div>
+            
+            <div class="bg-gradient-to-r from-green-500/10 to-teal-500/10 border border-green-500/20 rounded-lg p-6">
+              <h4 class="text-green-300 font-semibold mb-3">⚙️ Funcionalidade</h4>
+              <ul class="space-y-2 text-zinc-300 text-sm">
+                <li><strong>Uso intenso:</strong> Alças e botões resistentes</li>
+                <li><strong>Espaços pequenos:</strong> Embutidos e cava</li>
+                <li><strong>Facilidade de limpeza:</strong> Perfil e sistema clic</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Tendências Atuais em Design de Móveis</h2>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">O mundo do design de móveis está em constante evolução, e os puxadores acompanham essas tendências. Atualmente, observamos três movimentos principais que definem as escolhas modernas.</p>
+          
+          <div class="article-highlight bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/20 rounded-lg p-6 my-6">
+            <h4 class="text-amber-300 font-semibold mb-3">🌱 Design Sustentável</h4>
+            <p class="text-zinc-300 mb-4">Materiais reciclados, acabamentos naturais e durabilidade como prioridade estão transformando a indústria moveleira.</p>
+          </div>
+          
+          <div class="article-image mb-8">
+            <img src="/images/blog/tipos-puxadores-moveis/sala-estar.jpg" alt="Sala de estar com móveis planejados" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Sala de estar com móveis planejados e design contemporâneo</p>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Dicas Práticas para Implementação</h2>
+          
+          <div class="space-y-6">
+            <div class="bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/20 rounded-lg p-6">
+              <h4 class="text-cyan-300 font-semibold mb-3">💡 Análise de Necessidades</h4>
+              <ol class="space-y-2 text-zinc-300 list-decimal list-inside">
+                <li>Identifique o estilo do ambiente existente</li>
+                <li>Avalie a frequência e tipo de uso dos móveis</li>
+                <li>Considere as necessidades de todos os usuários</li>
+                <li>Planeje a manutenção e limpeza futura</li>
+              </ol>
+            </div>
+            
+            <div class="bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-500/20 rounded-lg p-6">
+              <h4 class="text-green-300 font-semibold mb-3">🔧 Projeto e Execução</h4>
+              <ol class="space-y-2 text-zinc-300 list-decimal list-inside">
+                <li>Defina a função de cada compartimento</li>
+                <li>Escolha materiais adequados ao ambiente</li>
+                <li>Selecione puxadores baseado na análise anterior</li>
+                <li>Teste a ergonomia antes da instalação final</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <div class="article-highlight bg-gradient-to-r from-blue-600/10 via-purple-600/10 to-cyan-600/10 border border-blue-500/30 rounded-lg p-8 my-8">
+            <h4 class="text-blue-300 font-bold text-xl mb-4">🎓 Transforme Ideias em Projetos Reais</h4>
+            <p class="text-zinc-300 text-lg mb-6">Quer aprender a criar móveis planejados profissionais e dominar as técnicas de modelagem 3D para projetos de interiores? Nosso curso <strong class="text-white">Projetista 3D</strong> ensina você a usar ferramentas como SketchUp para criar projetos impressionantes.</p>
+            
+            <div class="bg-black/20 rounded-lg p-6 mb-6">
+              <h5 class="text-white font-semibold mb-3">No curso você aprende:</h5>
+              <ul class="space-y-2 text-zinc-300">
+                <li>✓ Modelagem 3D profissional de móveis</li>
+                <li>✓ Técnicas de visualização e renderização</li>
+                <li>✓ Planejamento de projetos de interiores</li>
+                <li>✓ Apresentação profissional para clientes</li>
+              </ul>
+            </div>
+            
+            <div class="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-lg text-center hover:from-blue-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+              <p class="font-bold text-lg mb-2">Comece Sua Jornada Profissional</p>
+              <p class="text-blue-100">Saiba mais sobre o curso Projetista 3D</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Conclusão</h2>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">A escolha dos puxadores pode parecer um detalhe menor, mas tem impacto significativo tanto na funcionalidade quanto na estética dos móveis. Cada tipo tem suas vantagens específicas, e a decisão ideal depende do contexto de uso, estilo do ambiente e preferências pessoais.</p>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Esperamos que este guia completo sirva de referência para você encontrar a melhor solução para cada ambiente. Lembre-se: investir em qualidade e funcionalidade sempre compensa a longo prazo.</p>
+          
+          <div class="article-highlight bg-gradient-to-r from-green-500/10 to-blue-500/10 border border-green-500/20 rounded-lg p-6 my-6">
+            <h4 class="text-green-300 font-semibold mb-3">🎯 Próximos Passos</h4>
+            <ul class="space-y-2 text-zinc-300">
+              <li>• Visite showrooms para ver e testar diferentes modelos</li>
+              <li>• Consulte profissionais de marcenaria especializados</li>
+              <li>• Considere fazer um projeto piloto antes da decisão final</li>
+              <li>• Avalie sempre o custo-benefício de cada opção</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    `,
+    author: { name: 'Escola Habilidade', avatar: '/assets/avatars/default.jpg' },
+    category: { id: 5, name: 'Design', slug: 'design', color: '#EF4444' },
+    featuredImage: '/images/blog/tipos-puxadores-moveis/puxadores-hero.jpg',
+    featured_image_url: '/images/blog/tipos-puxadores-moveis/puxadores-hero.jpg',
+    publishedAt: '2025-08-03T14:30:00.000Z',
+    updatedAt: '2025-08-03T14:30:00.000Z',
+    readingTime: 8,
+    featured: true,
+    seo: {
+      title: '8 Tipos de Puxadores para Móveis: Guia Completo 2025 | Escola Habilidade',
+      description: 'Conheça os 8 principais tipos de puxadores para móveis planejados. Características, vantagens e aplicações ideais de cada modelo. Guia completo para designers e marceneiros.',
+      keywords: ['puxadores móveis', 'tipos puxadores', 'móveis planejados', 'design interiores', 'marcenaria', 'puxador cava', 'puxador alça', 'puxador embutido'],
+      canonical_url: '/blog/tipos-puxadores-moveis',
+      og_image: '/images/blog/tipos-puxadores-moveis/puxadores-hero.jpg'
+    },
+    tags: ['design-móveis', 'puxadores', 'marcenaria', 'interiores', 'móveis-planejados', 'decoração', 'funcionalidade', 'estética'],
+    views: 0,
+    likes: 0
+  },
   {
     id: 108,
     title: '10 Extensões SketchUp Essenciais que Todo Arquiteto Deve Conhecer',
