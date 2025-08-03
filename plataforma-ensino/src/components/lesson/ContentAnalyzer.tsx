@@ -26,7 +26,7 @@ export class ContentAnalyzer {
       // No headings found, treat as single content section
       return [{
         id: 'main-content',
-        title: 'Conteúdo Principal',
+        title: 'Conteï¿½do Principal',
         type: 'content',
         content: htmlContent,
         estimatedTime: this.estimateReadingTime(htmlContent),
@@ -43,7 +43,7 @@ export class ContentAnalyzer {
       
       if (['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes(tagName)) {
         // Save previous section if exists
-        if (currentSection && contentBuffer.length > 0) {
+        if (currentSection !== null && contentBuffer.length > 0) {
           currentSection.content = contentBuffer.join('')
           currentSection.estimatedTime = this.estimateReadingTime(currentSection.content)
           sections.push(currentSection)
@@ -51,7 +51,7 @@ export class ContentAnalyzer {
         }
         
         // Start new section
-        const title = element.textContent || `Seção ${sections.length + 1}`
+        const title = element.textContent || `Seï¿½ï¿½o ${sections.length + 1}`
         const type = this.detectSectionType(title, element.innerHTML)
         
         currentSection = {
@@ -68,7 +68,7 @@ export class ContentAnalyzer {
     })
     
     // Add final section
-    if (currentSection && contentBuffer.length > 0) {
+    if (currentSection !== null && contentBuffer.length > 0) {
       currentSection.content = contentBuffer.join('')
       currentSection.estimatedTime = this.estimateReadingTime(currentSection.content)
       sections.push(currentSection)
@@ -76,7 +76,7 @@ export class ContentAnalyzer {
     
     return sections.length > 0 ? sections : [{
       id: 'main-content',
-      title: 'Conteúdo Principal',
+      title: 'Conteï¿½do Principal',
       type: 'content',
       content: htmlContent,
       estimatedTime: this.estimateReadingTime(htmlContent),
@@ -90,37 +90,37 @@ export class ContentAnalyzer {
     
     // Learning objectives patterns
     if (titleLower.includes('objetivo') || titleLower.includes('aprend') || 
-        titleLower.includes('meta') || titleLower.includes('<¯')) {
+        titleLower.includes('meta') || titleLower.includes('<ï¿½')) {
       return 'objectives'
     }
     
     // Overview patterns
-    if (titleLower.includes('visão geral') || titleLower.includes('introdução') || 
+    if (titleLower.includes('visï¿½o geral') || titleLower.includes('introduï¿½ï¿½o') || 
         titleLower.includes('resumo') || titleLower.includes('overview')) {
       return 'overview'
     }
     
     // Summary patterns
-    if (titleLower.includes('conclusão') || titleLower.includes('resumo') || 
-        titleLower.includes('síntese') || titleLower.includes('sumário')) {
+    if (titleLower.includes('conclusï¿½o') || titleLower.includes('resumo') || 
+        titleLower.includes('sï¿½ntese') || titleLower.includes('sumï¿½rio')) {
       return 'summary'
     }
     
     // Exercise patterns
-    if (titleLower.includes('exercício') || titleLower.includes('prática') || 
+    if (titleLower.includes('exercï¿½cio') || titleLower.includes('prï¿½tica') || 
         titleLower.includes('atividade') || titleLower.includes('tarefa')) {
       return 'exercise'
     }
     
     // Tips patterns
     if (titleLower.includes('dica') || titleLower.includes('tip') || 
-        titleLower.includes('=¡') || titleLower.includes('importante')) {
+        titleLower.includes('=ï¿½') || titleLower.includes('importante')) {
       return 'tip'
     }
     
     // Resources patterns
     if (titleLower.includes('recurso') || titleLower.includes('material') || 
-        titleLower.includes('referência') || titleLower.includes('link')) {
+        titleLower.includes('referï¿½ncia') || titleLower.includes('link')) {
       return 'resources'
     }
     
@@ -133,7 +133,7 @@ export class ContentAnalyzer {
     // High priority indicators
     if (type === 'objectives' || type === 'overview' || 
         titleLower.includes('essencial') || titleLower.includes('fundamental') ||
-        titleLower.includes('importante') || titleLower.includes('básico')) {
+        titleLower.includes('importante') || titleLower.includes('bï¿½sico')) {
       return 'high'
     }
     
