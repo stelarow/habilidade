@@ -28,6 +28,14 @@ const ShareButtons = ({ url, title, compact = false, variant = 'default' }) => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
+  // Check Web Share API support after component mounts  
+  React.useEffect(() => {
+    // Only check if we're in a browser environment
+    if (typeof navigator !== 'undefined' && typeof navigator.share === 'function') {
+      setIsWebShareSupported(true);
+    }
+  }, []);
+
   // Share URLs
   const shareUrls = {
     facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
@@ -108,13 +116,6 @@ const ShareButtons = ({ url, title, compact = false, variant = 'default' }) => {
           >
             <Share size={20} />
           </button>
-  // Check Web Share API support after component mounts
-  React.useEffect(() => {
-    // Only check if we're in a browser environment
-    if (typeof navigator !== 'undefined' && typeof navigator.share === 'function') {
-      setIsWebShareSupported(true);
-    }
-  }, []);
         )}
 
         {/* Copy Link */}
