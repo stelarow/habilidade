@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import { generateSitemap } from './src/utils/sitemapGenerator.js'
+import { generateSitemap } from "./src/utils/sitemapGenerator.js"
 
 // Custom plugin for sitemap generation
 const sitemapPlugin = () => {

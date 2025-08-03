@@ -15,7 +15,7 @@ export const usePosts = (page = 1, limit = 10, category = null, search = null) =
     queryFn: () => blogAPI.getAllPosts(page, limit, category, search),
     staleTime: CACHE_CONFIG.POSTS_LIST,
     retry: 3,
-    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
+    retryDelay: (attemptIndex) => Math.min(500 * 2 ** attemptIndex, 3000),
   });
 };
 
@@ -33,7 +33,7 @@ export const useInfinitePosts = (limit = 10, category = null, search = null) => 
     },
     staleTime: CACHE_CONFIG.POSTS_LIST,
     retry: 3,
-    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
+    retryDelay: (attemptIndex) => Math.min(500 * 2 ** attemptIndex, 3000),
   });
 };
 
@@ -45,7 +45,7 @@ export const usePost = (slug) => {
     staleTime: CACHE_CONFIG.POST_DETAIL,
     retry: 2,
     enabled: !!slug, // Only run query if slug is provided
-    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
+    retryDelay: (attemptIndex) => Math.min(500 * 2 ** attemptIndex, 3000),
   });
 };
 
@@ -57,7 +57,7 @@ export const usePostsByCategory = (categorySlug, page = 1, limit = 10) => {
     staleTime: CACHE_CONFIG.POSTS_LIST,
     retry: 3,
     enabled: !!categorySlug,
-    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
+    retryDelay: (attemptIndex) => Math.min(500 * 2 ** attemptIndex, 3000),
   });
 };
 
@@ -76,7 +76,7 @@ export const useInfinitePostsByCategory = (categorySlug, limit = 10) => {
     staleTime: CACHE_CONFIG.POSTS_LIST,
     retry: 3,
     enabled: !!categorySlug,
-    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
+    retryDelay: (attemptIndex) => Math.min(500 * 2 ** attemptIndex, 3000),
   });
 };
 
@@ -87,7 +87,7 @@ export const useCategories = () => {
     queryFn: () => blogAPI.getCategories(),
     staleTime: CACHE_CONFIG.CATEGORIES,
     retry: 3,
-    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
+    retryDelay: (attemptIndex) => Math.min(500 * 2 ** attemptIndex, 3000),
   });
 };
 
@@ -99,7 +99,7 @@ export const useSearchPosts = (query, page = 1, limit = 10, enabled = true) => {
     staleTime: CACHE_CONFIG.POSTS_LIST,
     retry: 2,
     enabled: enabled && !!query && query.length >= 3, // Only search if query is at least 3 chars
-    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
+    retryDelay: (attemptIndex) => Math.min(500 * 2 ** attemptIndex, 3000),
   });
 };
 
@@ -118,7 +118,7 @@ export const useInfiniteSearchPosts = (query, limit = 10) => {
     staleTime: CACHE_CONFIG.POSTS_LIST,
     retry: 2,
     enabled: !!query && query.length >= 3,
-    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
+    retryDelay: (attemptIndex) => Math.min(500 * 2 ** attemptIndex, 3000),
   });
 };
 

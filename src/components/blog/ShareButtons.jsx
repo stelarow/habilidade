@@ -12,9 +12,7 @@ import {
 const ShareButtons = ({ url, title, compact = false, variant = 'default' }) => {
   const [copied, setCopied] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [isWebShareSupported, setIsWebShareSupported] = useState(
-    typeof navigator !== 'undefined' && navigator.share
-  );
+  const [isWebShareSupported, setIsWebShareSupported] = useState(false);
 
   // Detect mobile device
   React.useEffect(() => {
@@ -110,6 +108,13 @@ const ShareButtons = ({ url, title, compact = false, variant = 'default' }) => {
           >
             <Share size={20} />
           </button>
+  // Check Web Share API support after component mounts
+  React.useEffect(() => {
+    // Only check if we're in a browser environment
+    if (typeof navigator !== 'undefined' && typeof navigator.share === 'function') {
+      setIsWebShareSupported(true);
+    }
+  }, []);
         )}
 
         {/* Copy Link */}

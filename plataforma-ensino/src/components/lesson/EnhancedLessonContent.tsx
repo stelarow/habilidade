@@ -175,14 +175,33 @@ export const EnhancedLessonContent: React.FC<EnhancedLessonContentProps> = ({
                   {estimatedReadingTime} min
                 </Badge>
               )}
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setViewType('structured')}
-              >
-                <Eye className="w-4 h-4 mr-1" />
-                Estruturado
-              </Button>
+              <div className="flex items-center gap-1 border rounded-lg p-1">
+                <Button
+                  variant="default"
+                  size="sm"
+                  onClick={() => setViewType('reading')}
+                  className="text-xs px-2 py-1"
+                >
+                  Leitura
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setViewType('structured')}
+                  className="text-xs px-2 py-1"
+                >
+                  <Eye className="w-4 h-4 mr-1" />
+                  Estruturado
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setViewType('outline')}
+                  className="text-xs px-2 py-1"
+                >
+                  Tópicos
+                </Button>
+              </div>
             </div>
           </div>
         </CardHeader>
@@ -227,20 +246,20 @@ export const EnhancedLessonContent: React.FC<EnhancedLessonContentProps> = ({
               
               <div className="flex items-center gap-1 border rounded-lg p-1">
                 <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setViewType('reading')}
+                  className="text-xs px-2 py-1"
+                >
+                  Leitura
+                </Button>
+                <Button
                   variant={viewType === 'structured' ? 'default' : 'ghost'}
                   size="sm"
                   onClick={() => setViewType('structured')}
                   className="text-xs px-2 py-1"
                 >
                   Estruturado
-                </Button>
-                <Button
-                  variant={viewType === 'reading' ? 'default' : 'ghost'}
-                  size="sm"
-                  onClick={() => setViewType('reading')}
-                  className="text-xs px-2 py-1"
-                >
-                  Leitura
                 </Button>
                 <Button
                   variant={viewType === 'outline' ? 'default' : 'ghost'}

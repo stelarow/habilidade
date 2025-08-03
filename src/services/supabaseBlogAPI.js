@@ -24,6 +24,10 @@ const transformBlogPost = (post, category = null) => {
     excerpt: post.excerpt,
     content: post.content,
     imageUrl: post.image_url,
+    featuredImage: post.image_url ? {
+      url: post.image_url,
+      alt: post.title
+    } : null,
     readingTime: post.reading_time || 5,
     views: post.views || 0,
     publishedAt: post.published_at,

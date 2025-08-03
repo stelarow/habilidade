@@ -1,5 +1,3 @@
-'use client'
-
 import * as React from 'react'
 
 interface ContentSection {
@@ -26,126 +24,109 @@ export class ContentAnalyzer {
       // No headings found, treat as single content section
       return [{
         id: 'main-content',
-        title: 'Conte�do Principal',
+        title: 'Conteúdo Principal',
         type: 'content',
         content: htmlContent,
         estimatedTime: this.estimateReadingTime(htmlContent),
-        priority: 'high'
+        priority: 'medium'
       }]
     }
     
-    let currentSection: ContentSection | null = null
-    let contentBuffer: string[] = []
+    const elements = Array.from(tempDiv.children)
+    let currentContent = ''
     
     // Process each element
-    Array.from(tempDiv.children).forEach((element, index) => {
+    for (let i = 0; i < elements.length; i++) {
+      const element = elements[i]
       const tagName = element.tagName.toLowerCase()
       
       if (['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes(tagName)) {
         // Save previous section if exists
-        if (currentSection && contentBuffer.length > 0) {
-          currentSection.content = contentBuffer.join('')
-          currentSection.estimatedTime = this.estimateReadingTime(currentSection.content)
-          sections.push(currentSection)
-          contentBuffer = []
+        if (currentContent.trim()) {
+          const lastSection = sections[sections.length - 1]
+          if (lastSection) {
+            lastSection.content = currentContent
+            lastSection.estimatedTime = this.estimateReadingTime(currentContent)
+          }
+          currentContent = ''
         }
         
         // Start new section
-        const title = element.textContent || `Se��o ${sections.length + 1}`
+        const title = element.textContent || `Seção ${sections.length + 1}`
         const type = this.detectSectionType(title, element.innerHTML)
         
-        currentSection = {
+        const newSection: ContentSection = {
           id: `section-${sections.length + 1}`,
           title: title,
           type: type,
           content: '',
           priority: this.detectPriority(title, type)
         }
+        
+        sections.push(newSection)
       } else {
         // Add content to current section
-        contentBuffer.push(element.outerHTML)
+        currentContent += element.outerHTML
       }
-    })
+    }
     
-    // Add final section
-    if (currentSection && contentBuffer.length > 0) {
-      currentSection.content = contentBuffer.join('')
-      currentSection.estimatedTime = this.estimateReadingTime(currentSection.content)
-      sections.push(currentSection)
+    // Add final content
+    if (currentContent.trim() && sections.length > 0) {
+      const lastSection = sections[sections.length - 1]
+      lastSection.content = currentContent
+      lastSection.estimatedTime = this.estimateReadingTime(currentContent)
     }
     
     return sections.length > 0 ? sections : [{
       id: 'main-content',
-      title: 'Conte�do Principal',
+      title: 'Conteúdo Principal',
       type: 'content',
       content: htmlContent,
       estimatedTime: this.estimateReadingTime(htmlContent),
-      priority: 'high'
+      priority: 'medium'
     }]
   }
-  
+
   private static detectSectionType(title: string, content: string): ContentSection['type'] {
     const titleLower = title.toLowerCase()
-    const contentLower = content.toLowerCase()
     
-    // Learning objectives patterns
-    if (titleLower.includes('objetivo') || titleLower.includes('aprend') || 
-        titleLower.includes('meta') || titleLower.includes('<�')) {
+    if (titleLower.includes('objetivo') || titleLower.includes('meta')) {
       return 'objectives'
-    }
-    
-    // Overview patterns
-    if (titleLower.includes('vis�o geral') || titleLower.includes('introdu��o') || 
-        titleLower.includes('resumo') || titleLower.includes('overview')) {
-      return 'overview'
-    }
-    
-    // Summary patterns
-    if (titleLower.includes('conclus�o') || titleLower.includes('resumo') || 
-        titleLower.includes('s�ntese') || titleLower.includes('sum�rio')) {
+    } else if (titleLower.includes('resumo') || titleLower.includes('conclus')) {
       return 'summary'
-    }
-    
-    // Exercise patterns
-    if (titleLower.includes('exerc�cio') || titleLower.includes('pr�tica') || 
-        titleLower.includes('atividade') || titleLower.includes('tarefa')) {
-      return 'exercise'
-    }
-    
-    // Tips patterns
-    if (titleLower.includes('dica') || titleLower.includes('tip') || 
-        titleLower.includes('=�') || titleLower.includes('importante')) {
-      return 'tip'
-    }
-    
-    // Resources patterns
-    if (titleLower.includes('recurso') || titleLower.includes('material') || 
-        titleLower.includes('refer�ncia') || titleLower.includes('link')) {
+    } else if (titleLower.includes('recurso') || titleLower.includes('material')) {
       return 'resources'
+    } else if (titleLower.includes('exercí') || titleLower.includes('atividade') || titleLower.includes('prática')) {
+      return 'exercise'
+    } else if (titleLower.includes('dica') || titleLower.includes('importante') || titleLower.includes('atenção')) {
+      return 'tip'
+    } else if (titleLower.includes('visão geral') || titleLower.includes('introdução') || titleLower.includes('overview')) {
+      return 'overview'
     }
     
     return 'content'
   }
-  
+
   private static detectPriority(title: string, type: ContentSection['type']): ContentSection['priority'] {
     const titleLower = title.toLowerCase()
     
-    // High priority indicators
-    if (type === 'objectives' || type === 'overview' || 
-        titleLower.includes('essencial') || titleLower.includes('fundamental') ||
-        titleLower.includes('importante') || titleLower.includes('b�sico')) {
+    // High priority sections
+    if (type === 'objectives' || type === 'overview') {
       return 'high'
     }
     
-    // Low priority indicators
-    if (type === 'resources' || titleLower.includes('adicional') || 
-        titleLower.includes('complementar') || titleLower.includes('extra')) {
+    if (titleLower.includes('importante') || titleLower.includes('crítico') || titleLower.includes('essencial')) {
+      return 'high'
+    }
+    
+    // Low priority sections
+    if (type === 'resources' || titleLower.includes('adicional') || titleLower.includes('complementar')) {
       return 'low'
     }
     
     return 'medium'
   }
-  
+
   private static estimateReadingTime(content: string): number {
     // Remove HTML tags for word count
     const textContent = content.replace(/<[^>]*>/g, ' ')
@@ -157,79 +138,72 @@ export class ContentAnalyzer {
     
     return Math.max(1, minutes) // Minimum 1 minute
   }
-  
-  static extractKeyTopics(content: string): string[] {
-    const tempDiv = document.createElement('div')
-    tempDiv.innerHTML = content
+
+  static generateProgress(sections: ContentSection[], currentSectionId: string): {
+    current: number
+    total: number
+    percentage: number
+    completed: string[]
+    remaining: string[]
+  } {
+    const currentIndex = sections.findIndex(section => section.id === currentSectionId)
+    const completed = sections.slice(0, currentIndex + 1).map(s => s.id)
+    const remaining = sections.slice(currentIndex + 1).map(s => s.id)
     
-    const topics: string[] = []
-    
-    // Extract from headings
-    const headings = tempDiv.querySelectorAll('h1, h2, h3, h4, h5, h6')
-    headings.forEach(heading => {
-      if (heading.textContent) {
-        topics.push(heading.textContent.trim())
-      }
-    })
-    
-    // Extract from strong/bold text (often key concepts)
-    const strongElements = tempDiv.querySelectorAll('strong, b')
-    strongElements.forEach(element => {
-      if (element.textContent && element.textContent.length < 50) {
-        topics.push(element.textContent.trim())
-      }
-    })
-    
-    // Extract from list items (often key points)
-    const listItems = tempDiv.querySelectorAll('li')
-    listItems.forEach(item => {
-      if (item.textContent && item.textContent.length < 100) {
-        const text = item.textContent.trim()
-        // Take first part if it's a complex sentence
-        const firstPart = text.split('.')[0] || text.split(':')[0] || text
-        if (firstPart.length < 80) {
-          topics.push(firstPart.trim())
-        }
-      }
-    })
-    
-    // Remove duplicates and return
-    return Array.from(new Set(topics)).slice(0, 10) // Limit to 10 topics
+    return {
+      current: currentIndex + 1,
+      total: sections.length,
+      percentage: Math.round(((currentIndex + 1) / sections.length) * 100),
+      completed,
+      remaining
+    }
   }
-  
-  static generateContentOutline(sections: ContentSection[]): { title: string; subsections: string[] }[] {
-    return sections.map(section => {
-      const tempDiv = document.createElement('div')
-      tempDiv.innerHTML = section.content
-      
-      const subsections: string[] = []
-      
-      // Extract subsection headings
-      const subHeadings = tempDiv.querySelectorAll('h3, h4, h5, h6')
-      subHeadings.forEach(heading => {
-        if (heading.textContent) {
-          subsections.push(heading.textContent.trim())
-        }
-      })
-      
-      // If no subsections, extract key points from lists
-      if (subsections.length === 0) {
-        const listItems = tempDiv.querySelectorAll('li')
-        listItems.forEach((item, index) => {
-          if (item.textContent && index < 5) { // Limit to 5 items
-            const text = item.textContent.trim()
-            const shortText = text.length > 60 ? text.substring(0, 60) + '...' : text
-            subsections.push(shortText)
-          }
-        })
-      }
-      
-      return {
-        title: section.title,
-        subsections: subsections.slice(0, 8) // Limit subsections
-      }
+
+  static getNextSection(sections: ContentSection[], currentSectionId: string): ContentSection | null {
+    const currentIndex = sections.findIndex(section => section.id === currentSectionId)
+    return currentIndex < sections.length - 1 ? sections[currentIndex + 1] : null
+  }
+
+  static getPreviousSection(sections: ContentSection[], currentSectionId: string): ContentSection | null {
+    const currentIndex = sections.findIndex(section => section.id === currentSectionId)
+    return currentIndex > 0 ? sections[currentIndex - 1] : null
+  }
+
+  static generateContentOutline(sections: ContentSection[]): any[] {
+    return sections.map((section, index) => ({
+      id: section.id,
+      title: section.title,
+      type: section.type,
+      level: 1,
+      order: index + 1,
+      estimatedTime: section.estimatedTime || 1
+    }))
+  }
+
+  static extractKeyTopics(content: string): string[] {
+    // Simple keyword extraction
+    const text = content.replace(/<[^>]*>/g, ' ').toLowerCase()
+    const words = text.split(/\s+/)
+    
+    // Filter common words and get meaningful keywords
+    const commonWords = ['o', 'a', 'de', 'da', 'do', 'que', 'e', 'em', 'um', 'uma', 'para', 'com', 'não', 'se', 'na', 'por', 'mais', 'as', 'os', 'como', 'mas', 'foi', 'ao', 'ele', 'das', 'tem', 'à', 'seu', 'sua', 'ou', 'ser', 'quando', 'muito', 'há', 'nos', 'já', 'está', 'eu', 'também', 'só', 'pelo', 'pela', 'até', 'isso', 'ela', 'entre', 'era', 'depois', 'sem', 'mesmo', 'aos', 'ter', 'seus', 'suas', 'nem', 'nos', 'meu', 'minha', 'numa', 'pelos', 'pelas', 'esse', 'essa', 'num', 'essa', 'onde', 'bem', 'te', 'dos', 'me', 'este', 'esta', 'então', 'antes', 'nunca', 'nos', 'eu', 'nem', 'sempre', 'aqui', 'são', 'dele', 'dela', 'outros', 'outras']
+    
+    const meaningfulWords = words
+      .filter(word => word.length > 3)
+      .filter(word => !commonWords.includes(word))
+      .filter(word => /^[a-záàâãéèêíïóôõöúçñ]+$/i.test(word))
+    
+    // Count frequency and return top keywords
+    const frequency: Record<string, number> = {}
+    meaningfulWords.forEach(word => {
+      frequency[word] = (frequency[word] || 0) + 1
     })
+    
+    return Object.entries(frequency)
+      .sort(([,a], [,b]) => b - a)
+      .slice(0, 10)
+      .map(([word]) => word)
   }
 }
 
-export default ContentAnalyzer
+export type { ContentSection }

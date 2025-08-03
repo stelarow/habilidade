@@ -16,7 +16,7 @@ import {
   Hash
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import ContentAnalyzer from './ContentAnalyzer'
+import { ContentAnalyzer } from './ContentAnalyzer'
 
 interface LessonOutlineProps {
   content: string
