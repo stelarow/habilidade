@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import * as React from 'react'
 
 interface ContentSection {
   id: string
@@ -43,7 +43,7 @@ export class ContentAnalyzer {
       
       if (['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes(tagName)) {
         // Save previous section if exists
-        if (currentSection !== null && contentBuffer.length > 0) {
+        if (currentSection && contentBuffer.length > 0) {
           currentSection.content = contentBuffer.join('')
           currentSection.estimatedTime = this.estimateReadingTime(currentSection.content)
           sections.push(currentSection)
@@ -68,7 +68,7 @@ export class ContentAnalyzer {
     })
     
     // Add final section
-    if (currentSection !== null && contentBuffer.length > 0) {
+    if (currentSection && contentBuffer.length > 0) {
       currentSection.content = contentBuffer.join('')
       currentSection.estimatedTime = this.estimateReadingTime(currentSection.content)
       sections.push(currentSection)
@@ -194,7 +194,7 @@ export class ContentAnalyzer {
     })
     
     // Remove duplicates and return
-    return [...new Set(topics)].slice(0, 10) // Limit to 10 topics
+    return Array.from(new Set(topics)).slice(0, 10) // Limit to 10 topics
   }
   
   static generateContentOutline(sections: ContentSection[]): { title: string; subsections: string[] }[] {
