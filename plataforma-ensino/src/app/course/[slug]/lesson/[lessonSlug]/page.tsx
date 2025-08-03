@@ -5,6 +5,7 @@ import { useRouter, useParams } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { Loading } from '@/components/ui'
 import LessonPageIntegration from '@/components/lesson/LessonPageIntegration'
+import IntegratedLayout from '@/components/layout/IntegratedLayout'
 
 // Types from existing lesson page
 interface Course {
@@ -365,18 +366,20 @@ export default function LessonPageRefactored() {
   }
 
   return (
-    <LessonPageIntegration
-      course={course}
-      lesson={lesson}
-      progress={progress}
-      exercises={exercises}
-      quizzes={quizzes}
-      submissions={submissions}
-      quizProgress={quizProgress}
-      onLessonComplete={handleLessonComplete}
-      onExit={handleExit}
-      userId={userId}
-      enrollmentId={enrollmentId}
-    />
+    <IntegratedLayout courseId={course.id} lessonId={lesson.id}>
+      <LessonPageIntegration
+        course={course}
+        lesson={lesson}
+        progress={progress}
+        exercises={exercises}
+        quizzes={quizzes}
+        submissions={submissions}
+        quizProgress={quizProgress}
+        onLessonComplete={handleLessonComplete}
+        onExit={handleExit}
+        userId={userId}
+        enrollmentId={enrollmentId}
+      />
+    </IntegratedLayout>
   )
 }
