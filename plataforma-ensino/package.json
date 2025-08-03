@@ -28,6 +28,7 @@
     "test:phase1:unit": "node scripts/test-phase1.js --unit",
     "test:phase1:integration": "node scripts/test-phase1.js --integration",
     "test:phase1:accessibility": "node scripts/test-phase1.js --accessibility",
+    "migrate:blog": "tsx scripts/migrate-blog-data.ts",
     "test:phase1:e2e": "node scripts/test-phase1.js --e2e",
     "test:phase1:performance": "node scripts/test-phase1.js --performance",
     "test:phase1:coverage": "node scripts/test-phase1.js --coverage",
@@ -149,7 +150,7 @@
     "postcss": "^8",
     "puppeteer": "^24.12.1",
     "tailwindcss": "^3.4.1",
-    "tsx": "^4.6.0",
+    "tsx": "^4.20.3",
     "typescript": "~5.4.4"
   },
   "engines": {
