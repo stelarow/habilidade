@@ -244,41 +244,6 @@ const mockPosts = [
           <p class="text-zinc-300 leading-relaxed mb-6 text-lg">Lembre-se: uma apresentação impactante não é apenas sobre tecnologia, mas sobre contar a história do seu design de forma convincente e profissional.</p>
         </div>
 
-        <!-- CTA Section matching homepage design for projetista-3d course -->
-        <div class="mt-16 mb-8">
-          <div class="clip-card bg-gradient-to-br from-cyan-900/20 to-blue-900/20 border border-cyan-500/30 rounded-2xl p-8 hover:from-cyan-800/30 hover:to-blue-800/30 hover:border-cyan-400/50 transition-all duration-300 hover:shadow-2xl hover:shadow-cyan-500/20 hover:-translate-y-1">
-            <div class="flex flex-col md:flex-row items-center gap-6">
-              <div class="flex-1">
-                <h3 class="text-2xl font-bold text-white mb-4">
-                  Domine o SketchUp como um Profissional
-                </h3>
-                <p class="text-cyan-100 mb-6 leading-relaxed">
-                  Transforme suas ideias em projetos 3D impressionantes. Aprenda SketchUp do básico ao avançado, incluindo LayOut, renderização e apresentação profissional de projetos.
-                </p>
-                <div class="flex flex-wrap gap-3 mb-6">
-                  <span class="px-3 py-1 bg-cyan-500/20 text-cyan-300 rounded-full text-sm font-medium">
-                    SketchUp Pro
-                  </span>
-                  <span class="px-3 py-1 bg-cyan-500/20 text-cyan-300 rounded-full text-sm font-medium">
-                    LayOut
-                  </span>
-                  <span class="px-3 py-1 bg-cyan-500/20 text-cyan-300 rounded-full text-sm font-medium">
-                    Renderização
-                  </span>
-                  <span class="px-3 py-1 bg-cyan-500/20 text-cyan-300 rounded-full text-sm font-medium">
-                    Apresentação 3D
-                  </span>
-                </div>
-                <a href="/course/projetista-3d" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold rounded-lg hover:from-cyan-600 hover:to-blue-700 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/25">
-                  Conhecer o Curso
-                  <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
 
       </div>
     `,
