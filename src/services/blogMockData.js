@@ -186,44 +186,6 @@ const mockPosts = [
           
           <p class="text-zinc-300 leading-relaxed mb-6">Pronto para implementar Grey Boxing em seus projetos? Comece com projetos simples e gradualmente incorpore técnicas mais avançadas conforme ganha experiência.</p>
           
-          <div class="bg-gradient-to-r from-blue-600/10 to-purple-600/10 border border-blue-500/20 rounded-xl p-8 my-8">
-            <h3 class="text-2xl font-bold text-white mb-6 text-center">Domine o SketchUp Profissionalmente</h3>
-            
-            <p class="text-zinc-300 leading-relaxed mb-6 text-center">Quer aprender mais técnicas avançadas como Grey Boxing e dominar o SketchUp para projetos arquitetônicos profissionais?</p>
-            
-            <div class="bg-gradient-to-r from-blue-500 to-purple-600 p-[2px] rounded-xl mb-6">
-              <div class="bg-zinc-900 rounded-xl p-6">
-                <h4 class="text-xl font-bold text-white mb-4">🎓 Curso Projetista 3D</h4>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                  <div>
-                    <h5 class="font-semibold text-blue-300 mb-3">O que você vai aprender:</h5>
-                    <ul class="space-y-2 text-sm text-zinc-300">
-                      <li>• Modelagem 3D profissional no SketchUp</li>
-                      <li>• Técnicas avançadas de workflow</li>
-                      <li>• Renderização com V-Ray</li>
-                      <li>• Integração com AutoCAD</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h5 class="font-semibold text-purple-300 mb-3">Competências desenvolvidas:</h5>
-                    <ul class="space-y-2 text-sm text-zinc-300">
-                      <li>• Grey Boxing e prototipagem rápida</li>
-                      <li>• Apresentação profissional de projetos</li>
-                      <li>• Workflows otimizados para arquitetura</li>
-                      <li>• Técnicas de visualização avançada</li>
-                    </ul>
-                  </div>
-                </div>
-                
-                <div class="text-center">
-                  <a href="https://escolahabilidade.com.br/curso/projetista-3d" class="inline-block bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 hover:shadow-lg hover:scale-105">
-                    Conheça o Curso Projetista 3D →
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
 
       </div>
