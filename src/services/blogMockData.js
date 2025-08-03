@@ -419,62 +419,6 @@ const mockPosts = [
           
           <p class="text-zinc-300 leading-relaxed mb-6">O futuro da arquitetura paisagística está intrinsecamente ligado à capacidade de integrar ferramentas digitais avançadas com uma compreensão profunda dos sistemas naturais e das necessidades humanas. Profissionais que dominam esses workflows posicionam-se na vanguarda de uma disciplina em constante evolução.</p>
           
-          <div class="clip-card bg-gradient-to-br from-cyan-500/10 via-blue-500/10 to-purple-600/10 border border-cyan-400/20 rounded-xl p-8 my-8">
-            <div class="flex flex-col lg:flex-row items-start lg:items-center gap-6">
-              <div class="flex-shrink-0">
-                <div class="w-20 h-20 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-xl flex items-center justify-center">
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white"/>
-                  </svg>
-                </div>
-              </div>
-              <div className="flex-1">
-                <h3 className="text-2xl font-bold text-white mb-3">
-                  Domine Workflows Profissionais de Arquitetura Paisagística
-                </h3>
-                <p className="text-zinc-300 mb-6 leading-relaxed">
-                  Quer ir além das técnicas básicas e se tornar um especialista em projetos paisagísticos avançados? Nosso curso de <strong>Projetista 3D</strong> ensina desde modelagem de terrenos complexos até análise ambiental quantitativa e documentação técnica profissional.
-                </p>
-                <div className="grid md:grid-cols-3 gap-4 mb-6">
-                  <div className="flex items-center space-x-2">
-                    <div className="w-2 h-2 bg-cyan-400 rounded-full"></div>
-                    <span className="text-zinc-300 text-sm">SketchUp Avançado</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-                    <span className="text-zinc-300 text-sm">Análise Ambiental</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
-                    <span className="text-zinc-300 text-sm">Renderização Profissional</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <div className="w-2 h-2 bg-emerald-400 rounded-full"></div>
-                    <span className="text-zinc-300 text-sm">Documentação BIM</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
-                    <span className="text-zinc-300 text-sm">Projetos Sustentáveis</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <div className="w-2 h-2 bg-pink-400 rounded-full"></div>
-                    <span className="text-zinc-300 text-sm">Certificação</span>
-                  </div>
-                </div>
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <a href="/cursos/projetista-3d" className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold rounded-lg hover:from-cyan-600 hover:to-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl">
-                    <span>Conhecer o Curso</span>
-                    <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"/>
-                    </svg>
-                  </a>
-                  <a href="/cursos/projetista-3d#aula-gratuita" className="inline-flex items-center px-6 py-3 border border-cyan-400/30 text-cyan-300 font-semibold rounded-lg hover:bg-cyan-500/10 transition-all duration-300">
-                    <span>Aula Gratuita</span>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
 
       </div>
