@@ -160,14 +160,24 @@ const LessonPageRedesigned: React.FC<LessonPageRedesignedProps> = ({
               </div>
             )}
 
-            {/* Content Section - Lesson HTML Content */}
+            {/* Content Section - Enhanced with Violet Theme */}
             {content && (
               <div id="content-section">
-                <Card className="p-8 border-border/50">
-                  <div 
-                    className="lesson-content prose prose-slate dark:prose-invert max-w-none"
-                    dangerouslySetInnerHTML={{ __html: content }}
-                  />
+                <Card className="border-primary/20 bg-gradient-to-br from-background to-background-elevated shadow-xl">
+                  <div className="p-8 sm:p-10 lg:p-12">
+                    <div className="mb-6 pb-4 border-b border-primary/20">
+                      <h2 className="text-2xl font-bold bg-gradient-to-r from-primary-400 to-primary-600 bg-clip-text text-transparent">
+                        Conteúdo da Aula
+                      </h2>
+                      <p className="text-muted-foreground mt-2">
+                        Material de estudo e conceitos fundamentais
+                      </p>
+                    </div>
+                    <div 
+                      className="lesson-content-enhanced prose prose-slate dark:prose-invert prose-violet max-w-none"
+                      dangerouslySetInnerHTML={{ __html: content }}
+                    />
+                  </div>
                 </Card>
               </div>
             )}
