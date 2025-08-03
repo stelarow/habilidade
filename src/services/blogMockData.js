@@ -327,57 +327,6 @@ const mockPosts = [
         </div>
 
         <div class="article-section">
-          <h2 class="text-2xl font-bold text-white mb-6 mt-8">Exercícios Práticos</h2>
-
-          <div class="space-y-6">
-            <div class="bg-gradient-to-r from-emerald-600/20 to-teal-600/20 border border-emerald-500/30 rounded-xl p-8">
-              <h3 class="text-xl font-bold text-emerald-300 mb-6">🏠 Exercício 1: Estudo de Massa Residencial (30 min)</h3>
-              <p class="text-zinc-300 mb-4"><strong class="text-white">Objetivo:</strong> Criar 3 variações de massa para uma residência unifamiliar</p>
-              <div class="bg-zinc-800/30 rounded-lg p-6">
-                <h4 class="text-white font-semibold mb-3">Tarefas:</h4>
-                <ul class="space-y-2 text-zinc-300">
-                  <li>1. Configure template com unidades métricas</li>
-                  <li>2. Defina terreno 15x25m</li>
-                  <li>3. Crie 3 estudos de massa diferentes</li>
-                  <li>4. Salve cada um como cena separada</li>
-                  <li>5. Exporte imagens comparativas</li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="bg-gradient-to-r from-yellow-600/20 to-orange-600/20 border border-yellow-500/30 rounded-xl p-8">
-              <h3 class="text-xl font-bold text-yellow-300 mb-6">☀️ Exercício 2: Análise Solar (20 min)</h3>
-              <p class="text-zinc-300 mb-4"><strong class="text-white">Objetivo:</strong> Testar insolação em diferentes épocas do ano</p>
-              <div class="bg-zinc-800/30 rounded-lg p-6">
-                <h4 class="text-white font-semibold mb-3">Tarefas:</h4>
-                <ul class="space-y-2 text-zinc-300">
-                  <li>1. Use um dos estudos do Exercício 1</li>
-                  <li>2. Configure sombras para 21 de junho (solstício)</li>
-                  <li>3. Teste orientações: Norte, Sul, Leste, Oeste</li>
-                  <li>4. Documente com screenshots</li>
-                  <li>5. Identifique melhor orientação</li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="bg-gradient-to-r from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-xl p-8">
-              <h3 class="text-xl font-bold text-purple-300 mb-6">🎨 Exercício 3: Apresentação Conceitual (25 min)</h3>
-              <p class="text-zinc-300 mb-4"><strong class="text-white">Objetivo:</strong> Criar prancha de apresentação profissional</p>
-              <div class="bg-zinc-800/30 rounded-lg p-6">
-                <h4 class="text-white font-semibold mb-3">Tarefas:</h4>
-                <ul class="space-y-2 text-zinc-300">
-                  <li>1. Selecione o melhor conceito dos exercícios anteriores</li>
-                  <li>2. Aplique estilo "Hand-drawn sketch"</li>
-                  <li>3. Crie 4 vistas: planta, 2 perspectivas, corte</li>
-                  <li>4. Exporte em alta resolução</li>
-                  <li>5. Organize em layout de apresentação</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="article-section">
           <h2 class="text-2xl font-bold text-white mb-6 mt-8">Glossário</h2>
 
           <div class="grid md:grid-cols-2 gap-4">

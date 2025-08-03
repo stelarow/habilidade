@@ -192,36 +192,6 @@ O SketchUp facilita a exploração de escala, forma e proporção rapidamente. S
 
 ---
 
-## Exercícios Práticos
-
-### Exercício 1: Estudo de Massa Residencial (30 min)
-**Objetivo:** Criar 3 variações de massa para uma residência unifamiliar
-**Tarefas:**
-1. Configure template com unidades métricas
-2. Defina terreno 15x25m 
-3. Crie 3 estudos de massa diferentes
-4. Salve cada um como cena separada
-5. Exporte imagens comparativas
-
-### Exercício 2: Análise Solar (20 min)  
-**Objetivo:** Testar insolação em diferentes épocas do ano
-**Tarefas:**
-1. Use um dos estudos do Exercício 1
-2. Configure sombras para 21 de junho (solstício)
-3. Teste orientações: Norte, Sul, Leste, Oeste
-4. Documente com screenshots
-5. Identifique melhor orientação
-
-### Exercício 3: Apresentação Conceitual (25 min)
-**Objetivo:** Criar prancha de apresentação profissional
-**Tarefas:**
-1. Selecione o melhor conceito dos exercícios anteriores
-2. Aplique estilo "Hand-drawn sketch"
-3. Crie 4 vistas: planta, 2 perspectivas, corte
-4. Exporte em alta resolução
-5. Organize em layout de apresentação
-
----
 
 ## Glossário
 

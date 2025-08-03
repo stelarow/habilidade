@@ -12,6 +12,7 @@ import QuizSectionLazy from './QuizSectionLazy'
 import CompletionSection from './CompletionSection'
 import LessonErrorBoundary from './LessonErrorBoundary'
 import CanvaEmbed from './CanvaEmbed'
+import EnhancedLessonContent from './EnhancedLessonContent'
 import type { UploadedFile } from './ExercisesSection'
 
 import { useLessonProgress } from '@/hooks/useLessonProgress'
@@ -160,25 +161,20 @@ const LessonPageRedesigned: React.FC<LessonPageRedesignedProps> = ({
               </div>
             )}
 
-            {/* Content Section - Enhanced with Violet Theme */}
+            {/* Enhanced Content Section - Refactored with Modern UX/UI */}
             {content && (
               <div id="content-section">
-                <Card className="border-primary/20 bg-gradient-to-br from-background to-background-elevated shadow-xl">
-                  <div className="p-8 sm:p-10 lg:p-12">
-                    <div className="mb-6 pb-4 border-b border-primary/20">
-                      <h2 className="text-2xl font-bold bg-gradient-to-r from-primary-400 to-primary-600 bg-clip-text text-transparent">
-                        Conteúdo da Aula
-                      </h2>
-                      <p className="text-muted-foreground mt-2">
-                        Material de estudo e conceitos fundamentais
-                      </p>
-                    </div>
-                    <div 
-                      className="lesson-content-enhanced prose prose-slate dark:prose-invert prose-violet max-w-none"
-                      dangerouslySetInnerHTML={{ __html: content }}
-                    />
-                  </div>
-                </Card>
+                <EnhancedLessonContent
+                  content={content}
+                  title="Conteúdo da Aula"
+                  description="Material de estudo e conceitos fundamentais"
+                  estimatedReadingTime={15}
+                  onProgressUpdate={(progress) => {
+                    // Track reading progress for analytics
+                    console.log('Content reading progress:', progress)
+                  }}
+                  className="mb-8"
+                />
               </div>
             )}
 

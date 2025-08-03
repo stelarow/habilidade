@@ -1506,4 +1506,248 @@ body {
       page-break-inside: avoid !important;
     }
   }
+
+  /* Enhanced Lesson Content Component Styles */
+  
+  /* Reading progress indicators */
+  .reading-progress-indicator {
+    position: sticky;
+    top: 80px;
+    z-index: 30;
+    backdrop-filter: blur(12px);
+    background: rgba(139, 92, 246, 0.05);
+    border: 1px solid rgba(139, 92, 246, 0.2);
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Section cards with improved hierarchy */
+  .content-section-card {
+    background: linear-gradient(135deg, 
+      rgba(139, 92, 246, 0.02), 
+      rgba(124, 58, 237, 0.01)
+    );
+    border: 1px solid rgba(139, 92, 246, 0.15);
+    border-radius: 12px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .content-section-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, 
+      transparent, 
+      rgba(139, 92, 246, 0.5), 
+      transparent
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .content-section-card:hover::before {
+    opacity: 1;
+  }
+
+  .content-section-card:hover {
+    border-color: rgba(139, 92, 246, 0.3);
+    box-shadow: 
+      0 8px 32px rgba(139, 92, 246, 0.15),
+      0 2px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+  }
+
+  /* Section completion states */
+  .content-section-completed {
+    background: linear-gradient(135deg, 
+      rgba(34, 197, 94, 0.05), 
+      rgba(16, 185, 129, 0.02)
+    );
+    border-color: rgba(34, 197, 94, 0.3);
+  }
+
+  .content-section-completed::before {
+    background: linear-gradient(90deg, 
+      transparent, 
+      rgba(34, 197, 94, 0.6), 
+      transparent
+    );
+    opacity: 1;
+  }
+
+  /* Reading preferences panel */
+  .reading-preferences-panel {
+    background: linear-gradient(135deg, 
+      rgba(15, 15, 35, 0.8), 
+      rgba(22, 33, 62, 0.6)
+    );
+    border: 1px solid rgba(139, 92, 246, 0.2);
+    border-radius: 12px;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+  }
+
+  /* View type switcher */
+  .view-type-switcher {
+    background: rgba(139, 92, 246, 0.1);
+    border: 1px solid rgba(139, 92, 246, 0.2);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .view-type-button {
+    transition: all 0.2s ease;
+    border: none;
+    background: transparent;
+    color: hsl(var(--muted-foreground));
+  }
+
+  .view-type-button.active {
+    background: rgba(139, 92, 246, 0.8);
+    color: white;
+    box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
+  }
+
+  /* Content outline mode */
+  .content-outline-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .content-outline-item {
+    position: relative;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(139, 92, 246, 0.1);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .content-outline-item:hover {
+    background: rgba(139, 92, 246, 0.05);
+    padding-left: 1rem;
+  }
+
+  .content-outline-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 0;
+    background: rgba(139, 92, 246, 0.8);
+    border-radius: 2px;
+    transition: height 0.2s ease;
+  }
+
+  .content-outline-item:hover::before {
+    height: 70%;
+  }
+
+  /* Reading time estimator */
+  .reading-time-badge {
+    background: linear-gradient(135deg, 
+      rgba(139, 92, 246, 0.2), 
+      rgba(124, 58, 237, 0.15)
+    );
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    color: rgba(139, 92, 246, 1);
+    font-weight: 600;
+    letter-spacing: 0.025em;
+  }
+
+  /* Section priority indicators */
+  .priority-high {
+    border-left: 4px solid rgba(239, 68, 68, 0.8);
+  }
+
+  .priority-medium {
+    border-left: 4px solid rgba(139, 92, 246, 0.8);
+  }
+
+  .priority-low {
+    border-left: 4px solid rgba(156, 163, 175, 0.8);
+  }
+
+  /* Responsive adaptations for content sections */
+  @media (max-width: 768px) {
+    .reading-progress-indicator {
+      position: relative;
+      top: 0;
+      margin-bottom: 1rem;
+      padding: 0.75rem;
+    }
+
+    .content-section-card {
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+
+    .reading-preferences-panel {
+      border-radius: 8px;
+      padding: 1rem;
+    }
+
+    .view-type-switcher {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+  }
+
+  /* Enhanced focus states for accessibility */
+  .content-section-card:focus-within {
+    outline: 3px solid rgba(139, 92, 246, 0.5);
+    outline-offset: 2px;
+  }
+
+  .view-type-button:focus {
+    outline: 2px solid rgba(139, 92, 246, 0.8);
+    outline-offset: 1px;
+  }
+
+  /* Smooth scrolling for section navigation */
+  #enhanced-lesson-content {
+    scroll-behavior: smooth;
+  }
+
+  /* Loading states for content sections */
+  .content-section-loading {
+    background: linear-gradient(90deg, 
+      rgba(139, 92, 246, 0.05), 
+      rgba(139, 92, 246, 0.15), 
+      rgba(139, 92, 246, 0.05)
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+  }
+
+  /* Content typography enhancements */
+  .enhanced-lesson-typography {
+    font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* High contrast mode improvements */
+  @media (prefers-contrast: high) {
+    .content-section-card {
+      border: 2px solid rgba(139, 92, 246, 1);
+      background: rgba(0, 0, 0, 0.9);
+    }
+
+    .reading-time-badge {
+      background: rgba(139, 92, 246, 1);
+      color: white;
+    }
+  }
 }
