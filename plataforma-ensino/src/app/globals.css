@@ -1190,21 +1190,125 @@ body {
     opacity: 0.8 !important;
   }
 
-  /* Enhanced content sections with subtle backgrounds for better engagement */
+  /* Distinct Content Cards to Prevent Floating Text Appearance */
   .lesson-content-enhanced.prose > div,
   .lesson-content-enhanced.prose > section {
-    background: rgba(26, 26, 46, 0.6) !important;
-    border-radius: 8px !important;
-    padding: 1.5rem !important;
-    margin: 2rem 0 !important;
-    border: 1px solid rgba(139, 92, 246, 0.1) !important;
+    /* Well-defined card structure */
+    background: linear-gradient(135deg, rgba(26, 26, 46, 0.8), rgba(22, 33, 62, 0.6)) !important;
+    border-radius: 12px !important;
+    padding: 2rem !important;
+    margin: 2.5rem 0 !important;
+    border: 1px solid rgba(139, 92, 246, 0.2) !important;
+    
+    /* Enhanced shadows for depth and separation */
+    box-shadow: 
+      0 4px 16px rgba(0, 0, 0, 0.3),
+      0 2px 8px rgba(139, 92, 246, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+    
+    /* Smooth transitions */
     transition: all 0.3s ease !important;
+    
+    /* Prevent text from touching edges */
+    position: relative !important;
   }
 
   .lesson-content-enhanced.prose > div:hover,
   .lesson-content-enhanced.prose > section:hover {
-    border-color: rgba(139, 92, 246, 0.3) !important;
-    box-shadow: 0 4px 20px rgba(139, 92, 246, 0.1) !important;
+    border-color: rgba(139, 92, 246, 0.4) !important;
+    box-shadow: 
+      0 8px 32px rgba(0, 0, 0, 0.4),
+      0 4px 16px rgba(139, 92, 246, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+    transform: translateY(-2px) !important;
+  }
+
+  /* Special styling for main content sections */
+  .lesson-content-enhanced.prose > div:first-child {
+    margin-top: 0 !important;
+    border-top: 3px solid rgba(139, 92, 246, 0.5) !important;
+  }
+
+  /* Content grouping for related elements */
+  .lesson-content-enhanced.prose h2 + div,
+  .lesson-content-enhanced.prose h2 + section {
+    margin-top: 1rem !important;
+    border-left: 4px solid rgba(139, 92, 246, 0.3) !important;
+    padding-left: 2.5rem !important;
+  }
+
+  /* Enhanced spacing within cards */
+  .lesson-content-enhanced.prose > div > *:first-child,
+  .lesson-content-enhanced.prose > section > *:first-child {
+    margin-top: 0 !important;
+  }
+
+  .lesson-content-enhanced.prose > div > *:last-child,
+  .lesson-content-enhanced.prose > section > *:last-child {
+    margin-bottom: 0 !important;
+  }
+
+  /* Specific Card Types for Better Content Organization */
+  
+  /* Learning objectives card styling */
+  .lesson-content-enhanced.prose div:has(> h2:contains("O que você vai aprender")),
+  .lesson-content-enhanced.prose div:has(> h2:contains("🎯")) {
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(16, 185, 129, 0.05)) !important;
+    border-color: rgba(34, 197, 94, 0.3) !important;
+  }
+
+  /* Essential concepts card styling */
+  .lesson-content-enhanced.prose div:has(> h2:contains("Fundamentos")),
+  .lesson-content-enhanced.prose div:has(> h2:contains("📚")) {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(37, 99, 235, 0.05)) !important;
+    border-color: rgba(59, 130, 246, 0.3) !important;
+  }
+
+  /* Tips and important info card styling */
+  .lesson-content-enhanced.prose div:has(> h2:contains("Dica")),
+  .lesson-content-enhanced.prose div:has(> h2:contains("💡")) {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(217, 119, 6, 0.05)) !important;
+    border-color: rgba(245, 158, 11, 0.3) !important;
+    border-left: 4px solid rgba(245, 158, 11, 0.6) !important;
+  }
+
+  /* Pillar/framework card styling */
+  .lesson-content-enhanced.prose div:has(> h2:contains("Pilares")),
+  .lesson-content-enhanced.prose div:has(> h2:contains("🎯")) {
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(124, 58, 237, 0.08)) !important;
+    border-color: rgba(139, 92, 246, 0.4) !important;
+  }
+
+  /* Grid layout for numbered content items */
+  .lesson-content-enhanced.prose div:has(> div:has(> div:has(> div))) {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
+    gap: 1.5rem !important;
+  }
+
+  /* Individual grid items styling */
+  .lesson-content-enhanced.prose div > div:has(> div:first-child:contains("1")),
+  .lesson-content-enhanced.prose div > div:has(> div:first-child:contains("2")),
+  .lesson-content-enhanced.prose div > div:has(> div:first-child:contains("3")),
+  .lesson-content-enhanced.prose div > div:has(> div:first-child:contains("4")),
+  .lesson-content-enhanced.prose div > div:has(> div:first-child:contains("5")),
+  .lesson-content-enhanced.prose div > div:has(> div:first-child:contains("6")) {
+    background: rgba(15, 15, 35, 0.6) !important;
+    border-radius: 8px !important;
+    padding: 1.5rem !important;
+    border: 1px solid rgba(139, 92, 246, 0.2) !important;
+    transition: all 0.3s ease !important;
+  }
+
+  .lesson-content-enhanced.prose div > div:has(> div:first-child:contains("1")):hover,
+  .lesson-content-enhanced.prose div > div:has(> div:first-child:contains("2")):hover,
+  .lesson-content-enhanced.prose div > div:has(> div:first-child:contains("3")):hover,
+  .lesson-content-enhanced.prose div > div:has(> div:first-child:contains("4")):hover,
+  .lesson-content-enhanced.prose div > div:has(> div:first-child:contains("5")):hover,
+  .lesson-content-enhanced.prose div > div:has(> div:first-child:contains("6")):hover {
+    border-color: rgba(139, 92, 246, 0.4) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.1) !important;
   }
 
   /* Responsive adjustments for enhanced lesson content */
@@ -1212,6 +1316,27 @@ body {
     .lesson-content-enhanced.prose,
     .lesson-content.prose {
       font-size: 1rem !important;
+      padding: 1.5rem !important;
+    }
+
+    /* Mobile card adjustments */
+    .lesson-content-enhanced.prose > div,
+    .lesson-content-enhanced.prose > section {
+      padding: 1.5rem !important;
+      margin: 1.5rem 0 !important;
+      border-radius: 10px !important;
+    }
+
+    /* Mobile grid layout adjustments */
+    .lesson-content-enhanced.prose div:has(> div:has(> div:has(> div))) {
+      grid-template-columns: 1fr !important;
+      gap: 1rem !important;
+    }
+
+    /* Mobile hover effects disabled for better touch experience */
+    .lesson-content-enhanced.prose > div:hover,
+    .lesson-content-enhanced.prose > section:hover {
+      transform: none !important;
     }
 
     .lesson-content-enhanced.prose h1,
@@ -1290,6 +1415,95 @@ body {
       height: 1.25rem !important;
       line-height: 1.25rem !important;
       font-size: 0.75rem !important;
+    }
+  }
+
+  /* Phase 4: Accessibility & Performance Optimizations */
+  
+  /* Enhanced focus states for keyboard navigation */
+  .lesson-content-enhanced.prose a:focus,
+  .lesson-content-enhanced.prose button:focus,
+  .lesson-content-enhanced.prose [tabindex]:focus {
+    outline: 3px solid rgba(139, 92, 246, 0.8) !important;
+    outline-offset: 2px !important;
+    border-radius: 4px !important;
+  }
+
+  /* Better color contrast ratios throughout */
+  .lesson-content-enhanced.prose {
+    /* Ensure minimum contrast ratios meet WCAG standards */
+    --text-primary: #ffffff;
+    --text-secondary: #e2e8f0;
+    --text-muted: #cbd5e1;
+    --accent-primary: #8b5cf6;
+    --accent-secondary: #a78bfa;
+  }
+
+  /* Performance optimizations */
+  .lesson-content-enhanced.prose * {
+    /* Optimize rendering performance */
+    will-change: auto !important;
+    contain: layout style !important;
+  }
+
+  .lesson-content-enhanced.prose > div,
+  .lesson-content-enhanced.prose > section {
+    /* Enable hardware acceleration for smooth animations */
+    transform: translateZ(0) !important;
+    backface-visibility: hidden !important;
+  }
+
+  /* Reduced motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    .lesson-content-enhanced.prose *,
+    .lesson-content-enhanced.prose *::before,
+    .lesson-content-enhanced.prose *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      transform: none !important;
+    }
+  }
+
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    .lesson-content-enhanced.prose {
+      background: #000000 !important;
+      color: #ffffff !important;
+      border: 2px solid #ffffff !important;
+    }
+    
+    .lesson-content-enhanced.prose h1,
+    .lesson-content-enhanced.prose h2,
+    .lesson-content-enhanced.prose h3 {
+      color: #ffffff !important;
+      text-shadow: none !important;
+    }
+    
+    .lesson-content-enhanced.prose > div,
+    .lesson-content-enhanced.prose > section {
+      background: #000000 !important;
+      border: 1px solid #ffffff !important;
+    }
+  }
+
+  /* Print styles optimization */
+  @media print {
+    .lesson-content-enhanced.prose {
+      background: white !important;
+      color: black !important;
+      box-shadow: none !important;
+      border: 1px solid #ccc !important;
+    }
+    
+    .lesson-content-enhanced.prose > div,
+    .lesson-content-enhanced.prose > section {
+      background: white !important;
+      color: black !important;
+      box-shadow: none !important;
+      border: 1px solid #ddd !important;
+      break-inside: avoid !important;
+      page-break-inside: avoid !important;
     }
   }
 }
