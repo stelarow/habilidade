@@ -44,6 +44,11 @@ Dual-architecture educational platform for Escola Habilidade:
 - **Context7**: Library documentation lookups
 - **Supabase MCP**: Database operations and migrations
 
+### Blog Article Automation Agent Rules
+- **CTA Policy**: Não escreva outro CTA além do CTA do final da página que é o card do curso, para que não fique CTAs duplicados. Vamos usar apenas o CTA do card do curso.
+- **Content Structure**: Evitar CTAs no meio dos artigos
+- **Duplication Prevention**: Remover qualquer CTA duplicado durante o processamento
+
 ## Important Notes
 - Set bash command timeouts to 10+ minutes for complex operations
 - Always run lint and typecheck before committing
