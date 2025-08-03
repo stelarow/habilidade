@@ -47,12 +47,504 @@ const mockCategories = [
     name: 'Arquitetura',
     slug: 'arquitetura',
     description: 'Design arquitetônico e projetos de construção',
-    postCount: 10,
+    postCount: 11,
     color: '#06B6D4'
   }
 ];
 
 const mockPosts = [
+  {
+    id: 114,
+    title: 'Como Usar SketchUp para Design Conceitual Arquitetônico: Guia Completo',
+    slug: 'como-usar-sketchup-para-design-conceitual-arquitetonico',
+    excerpt: 'Descubra como utilizar o SketchUp para transformar ideias abstratas em conceitos arquitetônicos buildáveis. Guia passo a passo para design conceitual eficiente.',
+    content: `
+      <div class="article-content space-y-8">
+        
+        <div class="article-section">
+          <h1 class="text-4xl font-bold text-white mb-8 border-b-4 border-blue-500 pb-4">Como Usar SketchUp para Design Conceitual Arquitetônico: Guia Completo</h1>
+
+          <div class="article-image mb-8">
+            <img src="/images/blog/sketchup-design-conceitual/home-banner-image.jpg" alt="Design conceitual arquitetônico no SketchUp" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Design conceitual arquitetônico no SketchUp</p>
+          </div>
+
+          <p class="text-zinc-300 leading-relaxed mb-6 text-lg">Quando se trata de explorar ideias iniciais em arquitetura, os profissionais precisam de uma ferramenta que seja rápida, intuitiva e flexível o suficiente para capturar a criatividade bruta. O <strong class="text-white font-semibold">SketchUp para design conceitual</strong> é exatamente essa ferramenta — uma plataforma leve, mas poderosa, que ajuda a transformar ideias abstratas em conceitos arquitetônicos viáveis.</p>
+
+          <p class="text-zinc-300 leading-relaxed mb-6 text-lg">Seja para estudos de massa, testes de arranjos espaciais ou esboços de volumes iniciais, o SketchUp oferece o equilíbrio ideal entre velocidade e precisão para o design esquemático. Neste artigo, apresentamos um <strong class="text-white font-semibold">guia passo a passo</strong> para aproveitar ao máximo as funcionalidades do SketchUp durante as fases iniciais de seu fluxo de trabalho arquitetônico.</p>
+        </div>
+
+        <div class="bg-gradient-to-r from-green-600/20 to-blue-600/20 border border-green-500/30 rounded-xl p-8 my-8">
+          <h3 class="text-xl font-bold text-green-300 mb-6">🎯 Objetivos de Aprendizagem</h3>
+          <p class="text-zinc-300 mb-4">Ao final deste tutorial, você será capaz de:</p>
+          <ul class="space-y-3 my-6">
+            <li class="text-zinc-300 flex items-start"><span class="text-green-400 mr-3">•</span><span>Configurar um ambiente de trabalho otimizado para design conceitual</span></li>
+            <li class="text-zinc-300 flex items-start"><span class="text-green-400 mr-3">•</span><span>Criar estudos de massa usando geometrias simples</span></li>
+            <li class="text-zinc-300 flex items-start"><span class="text-green-400 mr-3">•</span><span>Organizar projetos com layers e tags eficientemente</span></li>
+            <li class="text-zinc-300 flex items-start"><span class="text-green-400 mr-3">•</span><span>Utilizar ferramentas de sombra para análise solar</span></li>
+            <li class="text-zinc-300 flex items-start"><span class="text-green-400 mr-3">•</span><span>Exportar apresentações profissionais de conceitos</span></li>
+          </ul>
+        </div>
+
+        <div class="bg-gradient-to-r from-amber-600/20 to-orange-600/20 border border-amber-500/30 rounded-xl p-8 my-8">
+          <h3 class="text-xl font-bold text-amber-300 mb-6">📋 Pré-requisitos</h3>
+          <ul class="space-y-3 my-6">
+            <li class="text-zinc-300 flex items-start"><span class="text-amber-400 mr-3">•</span><span>Conhecimento básico do SketchUp</span></li>
+            <li class="text-zinc-300 flex items-start"><span class="text-amber-400 mr-3">•</span><span>Familiaridade com conceitos de design arquitetônico</span></li>
+            <li class="text-zinc-300 flex items-start"><span class="text-amber-400 mr-3">•</span><span>SketchUp instalado (versão Free ou Pro)</span></li>
+          </ul>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6 mt-8">Passo 1: Comece com um Template em Branco ou Template de Design Conceitual</h2>
+
+          <p class="text-zinc-300 leading-relaxed mb-6 text-lg">A maneira mais simples de começar é com uma tela em branco. Abra o SketchUp e escolha o template <strong class="text-white font-semibold">Architectural Design – Feet and Inches</strong> ou <strong class="text-white font-semibold">Millimeters</strong>, dependendo da sua região.</p>
+
+          <div class="bg-gradient-to-r from-blue-600/20 to-cyan-600/20 border border-blue-500/30 rounded-xl p-8 my-8">
+            <h3 class="text-xl font-bold text-blue-300 mb-6">💡 Dica Pro: Templates Gratuitos</h3>
+            <p class="text-zinc-300 mb-4">Você pode baixar templates gratuitos de design conceitual do <strong class="text-white">SketchUp 3D Warehouse</strong> ou Extension Warehouse para acelerar seu fluxo de trabalho. Estes frequentemente incluem:</p>
+            <ul class="space-y-3 my-6">
+              <li class="text-zinc-300 flex items-start"><span class="text-blue-400 mr-3">•</span><span>Cenas predefinidas</span></li>
+              <li class="text-zinc-300 flex items-start"><span class="text-blue-400 mr-3">•</span><span>Layers organizadas</span></li>
+              <li class="text-zinc-300 flex items-start"><span class="text-blue-400 mr-3">•</span><span>Blocos de massa customizados</span></li>
+              <li class="text-zinc-300 flex items-start"><span class="text-blue-400 mr-3">•</span><span>Configurações otimizadas para fases iniciais</span></li>
+            </ul>
+          </div>
+
+          <div class="bg-zinc-800/30 rounded-lg p-6 mb-6">
+            <h4 class="text-white font-semibold mb-3">💡 Exercício Prático</h4>
+            <p class="text-zinc-300">Configure um template personalizado com suas configurações preferidas de unidades, estilos visuais e cenas básicas para reutilizar em projetos futuros.</p>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6 mt-8">Passo 2: Crie o Contexto do Terreno ou Base</h2>
+
+          <p class="text-zinc-300 leading-relaxed mb-6 text-lg">Antes de mergulhar nos conceitos arquitetônicos, é importante definir o terreno. Importe um mapa, topografia ou planta do edifício usando:</p>
+
+          <ul class="space-y-3 my-6 text-zinc-300">
+            <li class="flex items-start"><span class="text-blue-400 mr-3">•</span><span>Ferramentas de geolocalização</span></li>
+            <li class="flex items-start"><span class="text-blue-400 mr-3">•</span><span>Imagens de referência</span></li>
+            <li class="flex items-start"><span class="text-blue-400 mr-3">•</span><span>Dados topográficos existentes</span></li>
+          </ul>
+
+          <div class="bg-gradient-to-r from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-xl p-8 my-8">
+            <h3 class="text-xl font-bold text-purple-300 mb-6">🔧 Ferramentas Essenciais:</h3>
+            <ul class="space-y-3 my-6">
+              <li class="text-zinc-300 flex items-start"><span class="text-purple-400 mr-3">•</span><span><strong class="text-white">Rectangle Tool</strong>: Para definir limites básicos</span></li>
+              <li class="text-zinc-300 flex items-start"><span class="text-purple-400 mr-3">•</span><span><strong class="text-white">Push/Pull Tool</strong>: Para extrudar elementos</span></li>
+              <li class="text-zinc-300 flex items-start"><span class="text-purple-400 mr-3">•</span><span><strong class="text-white">Sandbox Tools</strong>: Para modelagem de contornos em terrenos irregulares</span></li>
+            </ul>
+          </div>
+
+          <div class="bg-zinc-800/30 rounded-lg p-6 mb-6">
+            <h4 class="text-white font-semibold mb-3">🎯 Dica de Especialista</h4>
+            <p class="text-zinc-300">Use a ferramenta "Sandbox" para modelagem de contornos se seu projeto estiver em terreno irregular. Isso criará uma base realista para seu design.</p>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6 mt-8">Passo 3: Inicie a Massificação com Geometria Simples</h2>
+
+          <p class="text-zinc-300 leading-relaxed mb-6 text-lg">Use formas 3D básicas como cubos, cilindros e extrusões para explorar diferentes ideias de modelagem conceitual. Pense nisso como sua fase de "argila digital" — neste ponto, é menos sobre detalhes e mais sobre:</p>
+
+          <ul class="space-y-3 my-6 text-zinc-300">
+            <li class="flex items-start"><span class="text-green-400 mr-3">•</span><span><strong class="text-white">Forma e proporção</strong></span></li>
+            <li class="flex items-start"><span class="text-green-400 mr-3">•</span><span><strong class="text-white">Escala apropriada</strong></span></li>
+            <li class="flex items-start"><span class="text-green-400 mr-3">•</span><span><strong class="text-white">Relações espaciais</strong></span></li>
+          </ul>
+
+          <div class="bg-gradient-to-r from-green-600/20 to-teal-600/20 border border-green-500/30 rounded-xl p-8 my-8">
+            <h3 class="text-xl font-bold text-green-300 mb-6">🎨 Técnicas de Massa:</h3>
+            <ul class="space-y-3 my-6">
+              <li class="text-zinc-300 flex items-start"><span class="text-green-400 mr-3">1.</span><span><strong class="text-white">Combinação de volumes</strong>: Using Push/Pull e faces intersectantes</span></li>
+              <li class="text-zinc-300 flex items-start"><span class="text-green-400 mr-3">2.</span><span><strong class="text-white">Subtração de elementos</strong>: Criando vazios e aberturas</span></li>
+              <li class="text-zinc-300 flex items-start"><span class="text-green-400 mr-3">3.</span><span><strong class="text-white">Iteração rápida</strong>: Testando múltiplas configurações</span></li>
+            </ul>
+          </div>
+
+          <div class="bg-zinc-800/30 rounded-lg p-6 mb-6">
+            <h4 class="text-white font-semibold mb-3">✨ Por que o SketchUp se destaca</h4>
+            <p class="text-zinc-300">Permite iteração rápida sem complicar desnecessariamente o processo, ideal para a fase conceitual.</p>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6 mt-8">Passo 4: Aplique Layers e Tags para Organização</h2>
+
+          <p class="text-zinc-300 leading-relaxed mb-6 text-lg">Organizar seu modelo desde cedo é crucial, especialmente se você está trabalhando com múltiplas opções de design ou colaborando com outros profissionais.</p>
+
+          <div class="bg-gradient-to-r from-indigo-600/20 to-purple-600/20 border border-indigo-500/30 rounded-xl p-8 my-8">
+            <h3 class="text-xl font-bold text-indigo-300 mb-6">📋 Estratégias de Organização:</h3>
+            <ul class="space-y-3 my-6">
+              <li class="text-zinc-300 flex items-start"><span class="text-indigo-400 mr-3">•</span><span><strong class="text-white">Tags por programa</strong>: Separe áreas públicas vs privadas</span></li>
+              <li class="text-zinc-300 flex items-start"><span class="text-indigo-400 mr-3">•</span><span><strong class="text-white">Elementos de paisagismo</strong>: Mantenha separado da arquitetura</span></li>
+              <li class="text-zinc-300 flex items-start"><span class="text-indigo-400 mr-3">•</span><span><strong class="text-white">Iterações de design</strong>: Versões diferentes do mesmo projeto</span></li>
+              <li class="text-zinc-300 flex items-start"><span class="text-indigo-400 mr-3">•</span><span><strong class="text-white">Componentes repetidos</strong>: Agrupe e componentize para reduzir peso do arquivo</span></li>
+            </ul>
+          </div>
+
+          <div class="bg-zinc-800/30 rounded-lg p-6 mb-6">
+            <h4 class="text-white font-semibold mb-3">🔧 Funcionalidades Avançadas</h4>
+            <ul class="space-y-2 text-zinc-300">
+              <li>• Grouping para elementos relacionados</li>
+              <li>• Components para elementos que se repetem</li>
+              <li>• Layers para controle de visibilidade</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6 mt-8">Passo 5: Experimente com Sombras e Orientação</h2>
+
+          <p class="text-zinc-300 leading-relaxed mb-6 text-lg">Nas fases conceituais, o acesso solar e a orientação frequentemente guiam decisões críticas. Ative o recurso <strong class="text-white font-semibold">Shadows</strong> no SketchUp e ajuste os controles deslizantes de data/hora para testar como a luz interage com seu design.</p>
+
+          <div class="bg-gradient-to-r from-yellow-600/20 to-orange-600/20 border border-yellow-500/30 rounded-xl p-8 my-8">
+            <h3 class="text-xl font-bold text-yellow-300 mb-6">☀️ Benefícios da Análise Solar:</h3>
+            <ul class="space-y-3 my-6">
+              <li class="text-zinc-300 flex items-start"><span class="text-yellow-400 mr-3">•</span><span><strong class="text-white">Aquecimento solar passivo</strong>: Identificar oportunidades</span></li>
+              <li class="text-zinc-300 flex items-start"><span class="text-yellow-400 mr-3">•</span><span><strong class="text-white">Estratégias de sombreamento</strong>: Áreas que precisam de proteção</span></li>
+              <li class="text-zinc-300 flex items-start"><span class="text-yellow-400 mr-3">•</span><span><strong class="text-white">Eficiência energética</strong>: Considerações desde o primeiro dia</span></li>
+              <li class="text-zinc-300 flex items-start"><span class="text-yellow-400 mr-3">•</span><span><strong class="text-white">Conforto térmico</strong>: Análise de insolação</span></li>
+            </ul>
+          </div>
+
+          <div class="bg-zinc-800/30 rounded-lg p-6 mb-6">
+            <h4 class="text-white font-semibold mb-3">📊 Análise Prática</h4>
+            <p class="text-zinc-300">Teste seu design em diferentes épocas do ano (solstício de verão/inverno) para validar estratégias de iluminação natural.</p>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6 mt-8">Passo 6: Use Estilos do SketchUp para Apresentações Expressivas</h2>
+
+          <p class="text-zinc-300 leading-relaxed mb-6 text-lg">O design conceitual não é apenas sobre pensamento — é sobre <strong class="text-white font-semibold">comunicar ideias</strong> efetivamente. A biblioteca de Estilos do SketchUp permite apresentar seus modelos em diferentes estilos visuais:</p>
+
+          <div class="bg-gradient-to-r from-pink-600/20 to-rose-600/20 border border-pink-500/30 rounded-xl p-8 my-8">
+            <h3 class="text-xl font-bold text-pink-300 mb-6">🎨 Estilos Recomendados para Conceitual:</h3>
+            <ul class="space-y-3 my-6">
+              <li class="text-zinc-300 flex items-start"><span class="text-pink-400 mr-3">•</span><span><strong class="text-white">Hand-drawn sketch</strong>: Mantém o aspecto criativo</span></li>
+              <li class="text-zinc-300 flex items-start"><span class="text-pink-400 mr-3">•</span><span><strong class="text-white">Graphite</strong>: Apresentação técnica elegante</span></li>
+              <li class="text-zinc-300 flex items-start"><span class="text-pink-400 mr-3">•</span><span><strong class="text-white">Blueprint</strong>: Estilo arquitetônico tradicional</span></li>
+              <li class="text-zinc-300 flex items-start"><span class="text-pink-400 mr-3">•</span><span><strong class="text-white">Watercolor</strong>: Para apresentações artísticas</span></li>
+            </ul>
+          </div>
+
+          <div class="bg-zinc-800/30 rounded-lg p-6 mb-6">
+            <h4 class="text-white font-semibold mb-3">🎨 Dica de Apresentação</h4>
+            <p class="text-zinc-300">Para apresentações esquemáticas, escolha estilos não-fotorrealísticos para manter a sensação solta e criativa das ideias iniciais.</p>
+          </div>
+
+          <div class="article-image mb-8">
+            <img src="/images/blog/sketchup-design-conceitual/sketchup-conceitual-markup.png" alt="SketchUp com ferramentas de markup conceitual" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">SketchUp com ferramentas de markup conceitual</p>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6 mt-8">Passo 7: Salve Cenas para Iterações de Design</h2>
+
+          <p class="text-zinc-300 leading-relaxed mb-6 text-lg">Salve cenas diferentes para cada direção ou fase de design. Por exemplo:</p>
+
+          <div class="bg-gradient-to-r from-teal-600/20 to-cyan-600/20 border border-teal-500/30 rounded-xl p-8 my-8">
+            <h3 class="text-xl font-bold text-teal-300 mb-6">📂 Organização de Cenas:</h3>
+            <ul class="space-y-3 my-6">
+              <li class="text-zinc-300 flex items-start"><span class="text-teal-400 mr-3">•</span><span><strong class="text-white">Estudo de Massa 1</strong>: Primeira abordagem volumétrica</span></li>
+              <li class="text-zinc-300 flex items-start"><span class="text-teal-400 mr-3">•</span><span><strong class="text-white">Opção Pátio</strong>: Variante com espaço central</span></li>
+              <li class="text-zinc-300 flex items-start"><span class="text-teal-400 mr-3">•</span><span><strong class="text-white">Teste Volume Dupla Altura</strong>: Exploração vertical</span></li>
+            </ul>
+          </div>
+
+          <div class="bg-zinc-800/30 rounded-lg p-6 mb-6">
+            <h4 class="text-white font-semibold mb-3">⚡ Vantagem Competitiva</h4>
+            <p class="text-zinc-300">Isso permite alternar rapidamente entre conceitos de design e compartilhar opções durante críticas ou discussões com stakeholders.</p>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6 mt-8">Passo 8: Exporte ou Transfira para Layout para Pranchas de Apresentação</h2>
+
+          <p class="text-zinc-300 leading-relaxed mb-6 text-lg">Uma vez que sua modelagem conceitual esteja completa, você pode:</p>
+
+          <div class="bg-gradient-to-r from-violet-600/20 to-purple-600/20 border border-violet-500/30 rounded-xl p-8 my-8">
+            <h3 class="text-xl font-bold text-violet-300 mb-6">📋 Opções de Exportação:</h3>
+            <ul class="space-y-3 my-6">
+              <li class="text-zinc-300 flex items-start"><span class="text-violet-400 mr-3">1.</span><span><strong class="text-white">Exportação direta</strong>: Imagens PNG/JPEG de alta qualidade</span></li>
+              <li class="text-zinc-300 flex items-start"><span class="text-violet-400 mr-3">2.</span><span><strong class="text-white">LayOut Integration</strong>: Ferramenta de apresentação do SketchUp</span></li>
+              <li class="text-zinc-300 flex items-start"><span class="text-violet-400 mr-3">3.</span><span><strong class="text-white">Storyboards</strong>: Sequências narrativas do processo</span></li>
+              <li class="text-zinc-300 flex items-start"><span class="text-violet-400 mr-3">4.</span><span><strong class="text-white">Documentação inicial</strong>: Plantas e cortes básicos</span></li>
+            </ul>
+          </div>
+
+          <div class="bg-zinc-800/30 rounded-lg p-6 mb-6">
+            <h4 class="text-white font-semibold mb-3">📋 LayOut Advantages</h4>
+            <ul class="space-y-2 text-zinc-300">
+              <li>• Criação de storyboards profissionais</li>
+              <li>• Anotações e dimensionamento</li>
+              <li>• Desenvolvimento de documentação inicial</li>
+              <li>• Transição suave para fases posteriores</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6 mt-8">Do Esboço ao Conceito: Maximizando o Potencial</h2>
+
+          <p class="text-zinc-300 leading-relaxed mb-6 text-lg">Usar o SketchUp para design conceitual capacita arquitetos a testar, iterar e visualizar suas ideias rapidamente — uma necessidade durante a fase esquemática. Seu equilíbrio entre simplicidade e poder o torna ideal para moldar a direção do design sem se atolar em detalhes prematuramente.</p>
+
+          <div class="article-image mb-8">
+            <img src="/images/blog/sketchup-design-conceitual/sketchup-conceitual-multiplas-vistas.png" alt="Apresentação de design conceitual com múltiplas vistas no SketchUp" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Apresentação de design conceitual com múltiplas vistas no SketchUp</p>
+          </div>
+
+          <p class="text-zinc-300 leading-relaxed mb-6 text-lg">Seja você um estudante testando seus primeiros conceitos arquitetônicos ou um designer experiente explorando opções volumétricas, o SketchUp oferece a liberdade de projetar com clareza e velocidade.</p>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6 mt-8">Perguntas Frequentes</h2>
+
+          <div class="space-y-6">
+            <div class="bg-zinc-800/30 rounded-lg p-6">
+              <h3 class="text-lg font-semibold text-white mb-3">Como iniciar um design no SketchUp?</h3>
+              <p class="text-zinc-300">Comece selecionando um template que corresponda às unidades do seu projeto (mm, polegadas, etc.). Use formas simples e a ferramenta push/pull para definir massas, depois refine suas formas e organize com layers.</p>
+            </div>
+
+            <div class="bg-zinc-800/30 rounded-lg p-6">
+              <h3 class="text-lg font-semibold text-white mb-3">Existem templates gratuitos para design conceitual no SketchUp?</h3>
+              <p class="text-zinc-300">Sim! Você pode baixar templates gratuitos do SketchUp 3D Warehouse ou Extension Warehouse. Estes frequentemente incluem vistas predefinidas, estilos e geometria adequada para design inicial.</p>
+            </div>
+
+            <div class="bg-zinc-800/30 rounded-lg p-6">
+              <h3 class="text-lg font-semibold text-white mb-3">Posso usar o SketchUp Free para trabalho conceitual arquitetônico?</h3>
+              <p class="text-zinc-300">Absolutamente. O SketchUp Free (versão web) suporta modelagem básica e desenvolvimento conceitual. Porém, para recursos avançados como estilos, estudos de sombra e integração com LayOut, o SketchUp Pro é recomendado.</p>
+            </div>
+
+            <div class="bg-zinc-800/30 rounded-lg p-6">
+              <h3 class="text-lg font-semibold text-white mb-3">Por que o SketchUp é bom para design esquemático?</h3>
+              <p class="text-zinc-300">O SketchUp facilita a exploração de escala, forma e proporção rapidamente. Suporte fluxos de trabalho iterativos, testes de sombra e saídas de apresentação simples — tudo ideal para a fase esquemática.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6 mt-8">Exercícios Práticos</h2>
+
+          <div class="space-y-6">
+            <div class="bg-gradient-to-r from-emerald-600/20 to-teal-600/20 border border-emerald-500/30 rounded-xl p-8">
+              <h3 class="text-xl font-bold text-emerald-300 mb-6">🏠 Exercício 1: Estudo de Massa Residencial (30 min)</h3>
+              <p class="text-zinc-300 mb-4"><strong class="text-white">Objetivo:</strong> Criar 3 variações de massa para uma residência unifamiliar</p>
+              <div class="bg-zinc-800/30 rounded-lg p-6">
+                <h4 class="text-white font-semibold mb-3">Tarefas:</h4>
+                <ul class="space-y-2 text-zinc-300">
+                  <li>1. Configure template com unidades métricas</li>
+                  <li>2. Defina terreno 15x25m</li>
+                  <li>3. Crie 3 estudos de massa diferentes</li>
+                  <li>4. Salve cada um como cena separada</li>
+                  <li>5. Exporte imagens comparativas</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="bg-gradient-to-r from-yellow-600/20 to-orange-600/20 border border-yellow-500/30 rounded-xl p-8">
+              <h3 class="text-xl font-bold text-yellow-300 mb-6">☀️ Exercício 2: Análise Solar (20 min)</h3>
+              <p class="text-zinc-300 mb-4"><strong class="text-white">Objetivo:</strong> Testar insolação em diferentes épocas do ano</p>
+              <div class="bg-zinc-800/30 rounded-lg p-6">
+                <h4 class="text-white font-semibold mb-3">Tarefas:</h4>
+                <ul class="space-y-2 text-zinc-300">
+                  <li>1. Use um dos estudos do Exercício 1</li>
+                  <li>2. Configure sombras para 21 de junho (solstício)</li>
+                  <li>3. Teste orientações: Norte, Sul, Leste, Oeste</li>
+                  <li>4. Documente com screenshots</li>
+                  <li>5. Identifique melhor orientação</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="bg-gradient-to-r from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-xl p-8">
+              <h3 class="text-xl font-bold text-purple-300 mb-6">🎨 Exercício 3: Apresentação Conceitual (25 min)</h3>
+              <p class="text-zinc-300 mb-4"><strong class="text-white">Objetivo:</strong> Criar prancha de apresentação profissional</p>
+              <div class="bg-zinc-800/30 rounded-lg p-6">
+                <h4 class="text-white font-semibold mb-3">Tarefas:</h4>
+                <ul class="space-y-2 text-zinc-300">
+                  <li>1. Selecione o melhor conceito dos exercícios anteriores</li>
+                  <li>2. Aplique estilo "Hand-drawn sketch"</li>
+                  <li>3. Crie 4 vistas: planta, 2 perspectivas, corte</li>
+                  <li>4. Exporte em alta resolução</li>
+                  <li>5. Organize em layout de apresentação</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6 mt-8">Glossário</h2>
+
+          <div class="grid md:grid-cols-2 gap-4">
+            <div class="bg-zinc-800/30 rounded-lg p-6">
+              <h3 class="text-lg font-semibold text-white mb-3">Design Conceitual</h3>
+              <p class="text-zinc-300 text-sm">Fase inicial do processo de design focada em ideias e conceitos gerais, antes do detalhamento técnico.</p>
+            </div>
+
+            <div class="bg-zinc-800/30 rounded-lg p-6">
+              <h3 class="text-lg font-semibold text-white mb-3">Estudo de Massa</h3>
+              <p class="text-zinc-300 text-sm">Análise volumétrica básica que explora formas, proporções e relações espaciais sem detalhamento arquitetônico.</p>
+            </div>
+
+            <div class="bg-zinc-800/30 rounded-lg p-6">
+              <h3 class="text-lg font-semibold text-white mb-3">LayOut</h3>
+              <p class="text-zinc-300 text-sm">Software de apresentação integrado ao SketchUp Pro para criação de documentação e pranchas técnicas.</p>
+            </div>
+
+            <div class="bg-zinc-800/30 rounded-lg p-6">
+              <h3 class="text-lg font-semibold text-white mb-3">Sandbox Tools</h3>
+              <p class="text-zinc-300 text-sm">Conjunto de ferramentas do SketchUp para modelagem de terrenos e superfícies orgânicas.</p>
+            </div>
+
+            <div class="bg-zinc-800/30 rounded-lg p-6">
+              <h3 class="text-lg font-semibold text-white mb-3">Tags/Layers</h3>
+              <p class="text-zinc-300 text-sm">Sistema de organização do SketchUp que permite controlar visibilidade e agrupar elementos relacionados.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6 mt-8">Recursos Adicionais</h2>
+
+          <div class="grid md:grid-cols-3 gap-6">
+            <div class="bg-gradient-to-br from-blue-600/20 to-cyan-600/20 border border-blue-500/30 rounded-xl p-6">
+              <h3 class="text-lg font-bold text-blue-300 mb-4">📚 Documentação Oficial</h3>
+              <ul class="space-y-2 text-zinc-300 text-sm">
+                <li>• SketchUp Help Center - Documentação completa</li>
+                <li>• SketchUp Campus - Cursos oficiais gratuitos</li>
+              </ul>
+            </div>
+
+            <div class="bg-gradient-to-br from-green-600/20 to-emerald-600/20 border border-green-500/30 rounded-xl p-6">
+              <h3 class="text-lg font-bold text-green-300 mb-4">🔌 Extensões Recomendadas</h3>
+              <ul class="space-y-2 text-zinc-300 text-sm">
+                <li>• Enscape - Renderização em tempo real</li>
+                <li>• V-Ray - Renders fotorrealísticos profissionais</li>
+                <li>• Sandbox Tools - Modelagem de terrenos avançada</li>
+                <li>• CleanUp³ - Otimização de modelos</li>
+              </ul>
+            </div>
+
+            <div class="bg-gradient-to-br from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-xl p-6">
+              <h3 class="text-lg font-bold text-purple-300 mb-4">🌐 Comunidade e Recursos</h3>
+              <ul class="space-y-2 text-zinc-300 text-sm">
+                <li>• SketchUp 3D Warehouse - Biblioteca de modelos gratuitos</li>
+                <li>• Extension Warehouse - Plugins e ferramentas especializadas</li>
+                <li>• SketchUp Forum - Comunidade ativa de usuários</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-zinc-800/30 rounded-lg p-6 mb-6">
+          <h4 class="text-white font-semibold mb-3">📝 Conclusão</h4>
+          <p class="text-zinc-300 mb-4">Este tutorial foi desenvolvido para estudantes e profissionais que desejam dominar o SketchUp para design conceitual arquitetônico. Continue praticando os exercícios propostos e explorando as possibilidades criativas desta ferramenta poderosa.</p>
+          
+          <div class="bg-zinc-800/30 rounded-lg p-6 mb-6">
+            <h4 class="text-white font-semibold mb-3">🚀 Próximos Passos Recomendados</h4>
+            <ul class="space-y-2 text-zinc-300">
+              <li>• Pratique regularmente com os exercícios propostos</li>
+              <li>• Explore todas as funcionalidades apresentadas</li>
+              <li>• Documente seu aprendizado e descobertas</li>
+              <li>• Compartilhe conhecimento com colegas</li>
+              <li>• Mantenha-se atualizado com novas versões do SketchUp</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- CTA Section - Course Card for SketchUp/3D Design -->
+        <div class="bg-gradient-to-br from-cyan-600/10 to-blue-600/10 border border-cyan-500/20 rounded-2xl p-8 my-12">
+          <div class="text-center mb-8">
+            <h2 class="text-3xl font-bold text-white mb-4">Domine o SketchUp Profissionalmente</h2>
+            <p class="text-zinc-300 text-lg max-w-2xl mx-auto">Transforme suas ideias em projetos 3D impressionantes e desenvolva habilidades que o mercado procura com nosso curso completo de Projetista 3D.</p>
+          </div>
+          
+          <div class="clip-card bg-gradient-to-br from-zinc-900/90 to-zinc-800/90 border border-cyan-500/30 rounded-xl p-8 max-w-2xl mx-auto hover:border-cyan-400/50 transition-all duration-300 hover:shadow-2xl hover:shadow-cyan-500/10 hover:-translate-y-1">
+            <div class="text-center">
+              <div class="inline-block p-4 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-2xl mb-6">
+                <div class="w-12 h-12 text-white">
+                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full">
+                    <path d="M12 2L2 7L12 12L22 7L12 2Z" />
+                    <polyline points="2,17 12,22 22,17" />
+                    <polyline points="2,12 12,17 22,12" />
+                  </svg>
+                </div>
+              </div>
+              
+              <h3 class="text-2xl font-bold text-white mb-4">Curso de Projetista 3D</h3>
+              <p class="text-zinc-300 mb-6 leading-relaxed">
+                Aprenda SketchUp, Enscape, V-Ray e técnicas avançadas de modelagem 3D. 
+                Do conceito à apresentação profissional, desenvolva projetos que impressionam.
+              </p>
+              
+              <div class="flex flex-wrap justify-center gap-2 mb-6">
+                <span class="px-3 py-1 bg-cyan-500/20 text-cyan-300 rounded-full text-sm">SketchUp Pro</span>
+                <span class="px-3 py-1 bg-cyan-500/20 text-cyan-300 rounded-full text-sm">Enscape</span>
+                <span class="px-3 py-1 bg-cyan-500/20 text-cyan-300 rounded-full text-sm">Renderização</span>
+                <span class="px-3 py-1 bg-cyan-500/20 text-cyan-300 rounded-full text-sm">Projetos Reais</span>
+              </div>
+              
+              <div class="bg-gradient-to-r from-cyan-600/20 to-blue-600/20 border border-cyan-500/30 rounded-xl p-6 mb-6">
+                <div class="grid grid-cols-2 gap-4 text-center">
+                  <div>
+                    <div class="text-2xl font-bold text-cyan-300">40+</div>
+                    <div class="text-zinc-400 text-sm">Horas de Conteúdo</div>
+                  </div>
+                  <div>
+                    <div class="text-2xl font-bold text-cyan-300">15+</div>
+                    <div class="text-zinc-400 text-sm">Projetos Práticos</div>
+                  </div>
+                </div>
+              </div>
+              
+              <button class="group w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/25 hover:-translate-y-0.5">
+                <span class="group-hover:scale-105 inline-block transition-transform duration-300">
+                  Começar Agora →
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    `,
+    author: {
+      id: 1,
+      name: 'Escola Habilidade',
+      bio: 'Especialistas em educação tecnológica e design 3D',
+      avatar: '/images/avatars/escola-logo.png',
+      social: {
+        linkedin: 'https://linkedin.com/company/escola-habilidade',
+        instagram: 'https://instagram.com/escolahabilidade'
+      }
+    },
+    category: {
+      id: 6,
+      name: 'Arquitetura',
+      slug: 'arquitetura',
+      color: '#06B6D4'
+    },
+    publishedAt: '2025-01-03T10:00:00.000Z',
+    updatedAt: '2025-01-03T10:00:00.000Z',
+    readingTime: 8,
+    featured: true,
+    featured_image_url: '/images/blog/sketchup-design-conceitual/home-banner-image.jpg',
+    seo: {
+      title: 'SketchUp para Design Conceitual Arquitetônico: Guia Completo 2025 | Escola Habilidade',
+      description: 'Aprenda a usar SketchUp para design conceitual arquitetônico. Tutorial completo com 8 passos práticos para transformar ideias em projetos 3D profissionais.',
+      keywords: ['sketchup', 'design conceitual', 'arquitetura', 'modelagem 3d', 'projeto arquitetônico', 'design schematic', 'sketchup pro', 'layout', 'projetista-3d'],
+      canonical_url: '/blog/como-usar-sketchup-para-design-conceitual-arquitetonico',
+      og_image: '/images/blog/sketchup-design-conceitual/home-banner-image.jpg'
+    },
+    tags: ['sketchup', 'design-conceitual', 'arquitetura', 'modelagem-3d', 'projeto-arquitetônico', 'design-schematic', 'massa-conceitual', 'apresentação-3d'],
+    views: 0,
+    likes: 0
+  },
   {
     id: 113,
     title: 'Como Apresentar Projetos de Design Interior com SketchUp',
