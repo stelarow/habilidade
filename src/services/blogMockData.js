@@ -47,12 +47,219 @@ const mockCategories = [
     name: 'Arquitetura',
     slug: 'arquitetura',
     description: 'Design arquitetônico e projetos de construção',
-    postCount: 7,
+    postCount: 8,
     color: '#06B6D4'
   }
 ];
 
 const mockPosts = [
+  {
+    id: 112,
+    title: 'Acelere seu Workflow de Modelagem 3D com Grey Boxing no SketchUp',
+    slug: 'acelerando-workflow-grey-boxing-sketchup',
+    excerpt: 'Descubra como a técnica de Grey Boxing pode revolucionar seu workflow de projetos arquitetônicos e comerciais no SketchUp. Aprenda métodos profissionais para planejamento espacial eficiente.',
+    content: `
+      <div class="article-content space-y-8">
+        
+        <div class="article-section">
+          <p class="text-zinc-300 leading-relaxed mb-6 text-lg">Grey Boxing é uma técnica de design originária da indústria de desenvolvimento de jogos. O workflow estabelece o processo de design de níveis criando blocos simples sem textura para representar vários elementos de um nível ou ambiente de mundo aberto. É amplamente utilizado no desenvolvimento de jogos por várias razões. Hoje mostraremos como você pode adaptar essa técnica nos workflows de design comercial e arquitetônico.</p>
+          
+          <div class="article-image mb-8">
+            <img src="/images/blog/acelerando-workflow-grey-boxing-sketchup/grey-boxing-main.jpg" alt="Grey Boxing no SketchUp - Técnica de Modelagem Rápida" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Grey Boxing: acelere seu workflow de modelagem 3D no SketchUp</p>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Planejamento Espacial: Layout Básico e Fluxo</h2>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Vamos começar com algo simples. Você pode ter um planograma de um design de loja anterior ou um Manual de Diretrizes de Identidade de Marca para orientá-lo. Combinado com uma planta baixa de shopping center, você pode começar a posicionar blocos de equipamentos, displays e outros elementos.</p>
+          
+          <div class="bg-gradient-to-r from-blue-600/20 to-cyan-600/20 border border-blue-500/30 rounded-xl p-8 my-8">
+            <h3 class="text-xl font-bold text-blue-300 mb-6">Benefícios do Grey Boxing no Planejamento</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="space-y-3">
+                <div class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center font-bold text-white">1</div>
+                <h4 class="font-semibold text-white">Utilização do Espaço</h4>
+                <p class="text-sm text-gray-300">Foque na distribuição eficiente dos elementos sem se distrair com detalhes visuais</p>
+              </div>
+              <div class="space-y-3">
+                <div class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center font-bold text-white">2</div>
+                <h4 class="font-semibold text-white">Fluxo de Circulação</h4>
+                <p class="text-sm text-gray-300">Analise o movimento dos usuários e otimize os caminhos principais</p>
+              </div>
+              <div class="space-y-3">
+                <div class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center font-bold text-white">3</div>
+                <h4 class="font-semibold text-white">Visibilidade Externa</h4>
+                <p class="text-sm text-gray-300">Garanta que elementos importantes sejam visíveis do exterior</p>
+              </div>
+              <div class="space-y-3">
+                <div class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center font-bold text-white">4</div>
+                <h4 class="font-semibold text-white">Áreas de Serviço</h4>
+                <p class="text-sm text-gray-300">Organize eficientemente os espaços de retaguarda e apoio</p>
+              </div>
+            </div>
+          </div>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Esta abordagem permite que você se concentre na utilização do espaço, fluxo de clientes, visibilidade do exterior da loja e uso de áreas de retaguarda. Uma vez que você tenha organizado os elementos necessários, pode considerar o fluxo e conexões entre diferentes pontos estratégicos, zonas e muito mais.</p>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Processo de Design Iterativo: Prototipagem Rápida, Flexibilidade e Refinamento</h2>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Nesta etapa do processo de design, essas formas 3D simples podem ser facilmente reorganizadas. Durante reuniões e sessões de feedback, você pode coletar contribuições de todas as partes envolvidas e adaptar as iterações de layout em tempo real.</p>
+          
+          <div class="bg-green-600/20 border border-green-500/30 rounded-xl p-6 my-8">
+            <h4 class="text-green-300 font-semibold mb-3">💡 Vantagens da Abordagem Iterativa</h4>
+            <ul class="space-y-2 text-zinc-300">
+              <li>• <strong>Economia de Tempo:</strong> Mudanças rápidas sem refazer modelos detalhados</li>
+              <li>• <strong>Redução de Custos:</strong> Identificação precoce de problemas de design</li>
+              <li>• <strong>Colaboração Eficiente:</strong> Feedback visual imediato de todas as partes</li>
+              <li>• <strong>Flexibilidade Total:</strong> Teste múltiplas configurações rapidamente</li>
+            </ul>
+          </div>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Esta abordagem permite atender às necessidades do cliente desde cedo, sem comprometer tempo e recursos extensivos em um design mais detalhado. A simplicidade do grey boxing permite mudanças rápidas, possibilitando fazer ajustes sem implicações significativas de tempo ou custo.</p>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Visualizando Espaço e Interação</h2>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Ao visualizar o espaço no início do processo, ao invés de depender apenas de um planograma ou planta baixa, todas as partes interessadas podem se envolver com o ambiente, navegação e pontos de interação do espaço comercial.</p>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Esta abordagem 3D fornece uma experiência tangível, permitindo que não-designers compreendam melhor escala, navegação e pontos-chave de interação.</p>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Estudo de Caso: Joalheria Boutique</h2>
+          
+          <div class="article-image mb-8">
+            <img src="/images/blog/acelerando-workflow-grey-boxing-sketchup/case-study-empty.jpg" alt="Estudo de Caso - Espaço Inicial da Joalheria" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Análise inicial do espaço da joalheria boutique</p>
+          </div>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">O estudo de caso abaixo é um exemplo de uma joalheria boutique. O que torna o SketchUp e Layout únicos é a forma como o modelo 3D é atualizado no Layout cada vez que uma mudança é feita. Isso permite iteração rápida durante reuniões de design sendo traduzida no Layout para um PDF enviável para aqueles que não fazem parte da reunião ou que preferem um formato impresso em papel para fazer anotações.</p>
+          
+          <div class="article-image mb-8">
+            <img src="/images/blog/acelerando-workflow-grey-boxing-sketchup/case-study-iterations.jpg" alt="Iterações do Design da Joalheria" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Múltiplas iterações de layout testadas rapidamente</p>
+          </div>
+          
+          <h3 class="text-xl font-semibold text-white mb-4">Considerações Iniciais de Design</h3>
+          <p class="text-zinc-300 leading-relaxed mb-6">Neste estudo de caso, no estágio mais inicial do design, consideramos a entrada da loja pelo corredor do shopping e consideramos o layout em relação à entrada.</p>
+          
+          <div class="article-image mb-8">
+            <img src="/images/blog/acelerando-workflow-grey-boxing-sketchup/case-study-flow.jpg" alt="Análise de Fluxo da Joalheria" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Estudos de fluxo e circulação no espaço comercial</p>
+          </div>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Para as várias zonas privadas de atendimento e experiência do cliente, consideramos múltiplos layouts para criar o fluxo na loja.</p>
+          
+          <div class="article-image mb-8">
+            <img src="/images/blog/acelerando-workflow-grey-boxing-sketchup/case-study-detailed.jpg" alt="Projeto Final Detalhado" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Projeto final com detalhes de acabamento e ambientação</p>
+          </div>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Conforme ficamos mais alinhados entre as partes interessadas, decidimos por um fluxo e direcionamos nossa atenção para branding, sinalização, props de display, integração de tecnologia, atmosfera, aroma e música.</p>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Conclusão</h2>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Grey boxing é uma ferramenta poderosa para design em estágio inicial, oferecendo uma maneira de focar no layout principal e funcionalidade de um espaço antes de mergulhar nos detalhes mais refinados do design.</p>
+          
+          <div class="bg-cyan-600/20 border border-cyan-500/30 rounded-xl p-6 my-8">
+            <h4 class="text-cyan-300 font-semibold mb-3">🎯 Principais Benefícios da Técnica</h4>
+            <ul class="space-y-2 text-zinc-300">
+              <li>• <strong>Eficiência:</strong> Crie espaços bem planejados rapidamente</li>
+              <li>• <strong>Experiência do Cliente:</strong> Melhore a jornada do usuário</li>
+              <li>• <strong>Flexibilidade:</strong> Permita melhorias iterativas contínuas</li>
+              <li>• <strong>Comunicação:</strong> Facilite o entendimento entre equipes</li>
+            </ul>
+          </div>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">No design comercial, esta técnica ajuda a criar espaços eficientes e bem planejados que melhoram a experiência do cliente, permitindo flexibilidade e melhorias iterativas ao longo do processo de design. Ao emprestar este método da indústria de jogos, designers comerciais podem se beneficiar de uma abordagem simplificada para planejamento espacial e design.</p>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Próximos Passos</h2>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Pronto para implementar Grey Boxing em seus projetos? Comece com projetos simples e gradualmente incorpore técnicas mais avançadas conforme ganha experiência.</p>
+          
+          <div class="bg-gradient-to-r from-blue-600/10 to-purple-600/10 border border-blue-500/20 rounded-xl p-8 my-8">
+            <h3 class="text-2xl font-bold text-white mb-6 text-center">Domine o SketchUp Profissionalmente</h3>
+            
+            <p class="text-zinc-300 leading-relaxed mb-6 text-center">Quer aprender mais técnicas avançadas como Grey Boxing e dominar o SketchUp para projetos arquitetônicos profissionais?</p>
+            
+            <div class="bg-gradient-to-r from-blue-500 to-purple-600 p-[2px] rounded-xl mb-6">
+              <div class="bg-zinc-900 rounded-xl p-6">
+                <h4 class="text-xl font-bold text-white mb-4">🎓 Curso Projetista 3D</h4>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                  <div>
+                    <h5 class="font-semibold text-blue-300 mb-3">O que você vai aprender:</h5>
+                    <ul class="space-y-2 text-sm text-zinc-300">
+                      <li>• Modelagem 3D profissional no SketchUp</li>
+                      <li>• Técnicas avançadas de workflow</li>
+                      <li>• Renderização com V-Ray</li>
+                      <li>• Integração com AutoCAD</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 class="font-semibold text-purple-300 mb-3">Competências desenvolvidas:</h5>
+                    <ul class="space-y-2 text-sm text-zinc-300">
+                      <li>• Grey Boxing e prototipagem rápida</li>
+                      <li>• Apresentação profissional de projetos</li>
+                      <li>• Workflows otimizados para arquitetura</li>
+                      <li>• Técnicas de visualização avançada</li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <div class="text-center">
+                  <a href="https://escolahabilidade.com.br/curso/projetista-3d" class="inline-block bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 hover:shadow-lg hover:scale-105">
+                    Conheça o Curso Projetista 3D →
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    `,
+    author: {
+      id: 1,
+      name: 'Escola Habilidade',
+      bio: 'Especialistas em educação tecnológica e design 3D',
+      avatar: '/images/avatars/escola-logo.png',
+      social: {
+        linkedin: 'https://linkedin.com/company/escola-habilidade',
+        instagram: 'https://instagram.com/escolahabilidade'
+      }
+    },
+    category: {
+      id: 6,
+      name: 'Arquitetura',
+      slug: 'arquitetura',
+      color: '#06B6D4'
+    },
+    publishedAt: '2025-01-03T10:00:00.000Z',
+    updatedAt: '2025-01-03T10:00:00.000Z',
+    readingTime: 8,
+    featured: true,
+    featured_image_url: '/images/blog/acelerando-workflow-grey-boxing-sketchup/grey-boxing-main.jpg',
+    seo: {
+      title: 'Acelere seu Workflow de Modelagem 3D com Grey Boxing no SketchUp | Escola Habilidade',
+      description: 'Descubra como a técnica de Grey Boxing pode revolucionar seu workflow de projetos arquitetônicos e comerciais no SketchUp. Aprenda métodos profissionais para planejamento espacial eficiente.',
+      keywords: ['sketchup', 'grey-boxing', 'modelagem-3d', 'arquitetura', 'design-comercial', 'workflow', 'planejamento-espacial', 'prototipagem-rapida'],
+      canonical_url: '/blog/acelerando-workflow-grey-boxing-sketchup',
+      og_image: '/images/blog/acelerando-workflow-grey-boxing-sketchup/grey-boxing-main.jpg'
+    },
+    tags: ['SketchUp', 'Modelagem 3D', 'Workflow', 'Arquitetura', 'Design Comercial', 'Grey Boxing', 'Planejamento Espacial'],
+    views: 0,
+    likes: 0
+  },
   {
     id: 111,
     title: 'Workflows Avançados com SketchUp para Arquitetura Paisagística: Técnicas Profissionais e Melhores Práticas',
