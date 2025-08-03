@@ -103,7 +103,6 @@ const CanvaEmbed: React.FC<CanvaEmbedProps> = ({
           <iframe
             src={embedUrl}
             className="absolute top-0 left-0 w-full h-full border-0"
-            allowFullScreen
             loading="lazy"
             allow="fullscreen"
             title={title}

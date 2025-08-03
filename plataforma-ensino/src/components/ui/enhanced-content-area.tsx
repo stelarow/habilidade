@@ -225,8 +225,8 @@ const InteractiveEmbed: React.FC<{
           src={embedUrl}
           title={title}
           className="w-full h-full"
-          allowFullScreen
           onLoad={() => setIsLoading(false)}
+          allow="fullscreen"
           sandbox="allow-same-origin allow-scripts allow-forms"
         />
       </div>

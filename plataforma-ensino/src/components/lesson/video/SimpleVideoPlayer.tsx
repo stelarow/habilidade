@@ -100,8 +100,7 @@ export function SimpleVideoPlayer({ video, className }: SimpleVideoPlayerProps) 
         <iframe
           src={embedUrl}
           className="absolute inset-0 w-full h-full"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
           style={{ 
             border: 'none',
             minHeight: '100%'

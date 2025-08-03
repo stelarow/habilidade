@@ -76,9 +76,9 @@ export function useAuth(): UseAuthReturn {
   const fetchUserProfile = useCallback(async (userId: string) => {
     try {
       const { data, error: profileError } = await supabase
-        .from('user_profiles')
+        .from('users')
         .select('*')
-        .eq('user_id', userId)
+        .eq('id', userId)
         .single()
       
       if (profileError) {
@@ -125,9 +125,9 @@ export function useAuth(): UseAuthReturn {
     try {
       setError(null)
       const { error: updateError } = await supabase
-        .from('user_profiles')
+        .from('users')
         .update(data)
-        .eq('user_id', user.id)
+        .eq('id', user.id)
       
       if (updateError) {
         setError({ message: updateError.message, code: updateError.code })

@@ -389,8 +389,8 @@ export class MaintenanceService {
 
       // Get all users for notification
       const { data: users, error: usersError } = await this.supabase
-        .from('user_profiles')
-        .select('user_id, email, full_name')
+        .from('users')
+        .select('id, email, full_name')
         .not('email', 'is', null);
 
       if (usersError) throw usersError;
