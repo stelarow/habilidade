@@ -47,12 +47,457 @@ const mockCategories = [
     name: 'Arquitetura',
     slug: 'arquitetura',
     description: 'Design arquitetônico e projetos de construção',
-    postCount: 6,
+    postCount: 7,
     color: '#06B6D4'
   }
 ];
 
 const mockPosts = [
+  {
+    id: 111,
+    title: 'Workflows Avançados com SketchUp para Arquitetura Paisagística: Técnicas Profissionais e Melhores Práticas',
+    slug: 'sketchup-workflows-avancados-arquitetura-paisagistica',
+    excerpt: 'Domine técnicas avançadas do SketchUp para projetos de arquitetura paisagística. Aprenda workflows profissionais, integração de dados ambientais e otimização de projetos sustentáveis.',
+    content: `
+      <div class="article-content space-y-8">
+        
+        <div class="article-section">
+          <p class="text-zinc-300 leading-relaxed mb-6 text-lg">A arquitetura paisagística moderna exige uma compreensão profunda não apenas dos aspectos estéticos, mas também dos fatores ambientais, sociais e econômicos que influenciam o sucesso de um projeto. O SketchUp, quando utilizado com técnicas avançadas, torna-se uma ferramenta poderosa para desenvolver soluções paisagísticas inovadoras e sustentáveis.</p>
+          
+          <div class="article-image mb-8">
+            <img src="/images/blog/sketchup-arquitetura-paisagistica/sketchup-landscape-1a.jpg" alt="SketchUp Arquitetura Paisagística Overview" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">SketchUp: ferramenta poderosa para arquitetura paisagística profissional</p>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Metodologia Integrada: Os 5 Pilares do Projeto Paisagístico Profissional</h2>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">O workflow profissional em arquitetura paisagística vai muito além da simples modelagem. Requer uma abordagem sistemática que integra análise, design, documentação e implementação:</p>
+          
+          <div class="bg-gradient-to-r from-emerald-600/20 to-green-600/20 border border-emerald-500/30 rounded-xl p-8 my-8">
+            <h3 class="text-xl font-bold text-emerald-300 mb-6">Framework Metodológico Avançado</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div class="space-y-3">
+                <div class="w-12 h-12 bg-emerald-500 rounded-lg flex items-center justify-center font-bold text-white">1</div>
+                <h4 class="font-semibold text-white">Estratégias de Planejamento</h4>
+                <p class="text-sm text-gray-300">Análise de dados ambientais e definição de diretrizes sustentáveis</p>
+              </div>
+              <div class="space-y-3">
+                <div class="w-12 h-12 bg-emerald-500 rounded-lg flex items-center justify-center font-bold text-white">2</div>
+                <h4 class="font-semibold text-white">Funções e Características</h4>
+                <p class="text-sm text-gray-300">Desenvolvimento esquemático com foco na experiência do usuário</p>
+              </div>
+              <div class="space-y-3">
+                <div class="w-12 h-12 bg-emerald-500 rounded-lg flex items-center justify-center font-bold text-white">3</div>
+                <h4 class="font-semibold text-white">Conceitos de Design</h4>
+                <p class="text-sm text-gray-300">Refinamento conceitual e validação técnica</p>
+              </div>
+              <div class="space-y-3">
+                <div class="w-12 h-12 bg-emerald-500 rounded-lg flex items-center justify-center font-bold text-white">4</div>
+                <h4 class="font-semibold text-white">Visualização e Documentação</h4>
+                <p class="text-sm text-gray-300">Produção de documentos técnicos e materiais de apresentação</p>
+              </div>
+              <div class="space-y-3">
+                <div class="w-12 h-12 bg-emerald-500 rounded-lg flex items-center justify-center font-bold text-white">5</div>
+                <h4 class="font-semibold text-white">Controle de Qualidade</h4>
+                <p class="text-sm text-gray-300">Gestão de implementação e monitoramento pós-ocupação</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Fase 1: Estratégias de Planejamento Inteligente com Dados Ambientais</h2>
+          
+          <h3 class="text-xl font-semibold text-white mb-6">Integração de Dados Geoespaciais</h3>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">A análise preliminar em projetos paisagísticos profissionais requer a integração de múltiplas camadas de informação ambiental. O SketchUp, combinado com extensões especializadas, permite importar e analisar:</p>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
+            <div>
+              <img src="/images/blog/sketchup-arquitetura-paisagistica/sketchup-landscape-1b.jpg" alt="Análise de sombreamento e estudos microclimáticos" class="rounded-lg shadow-lg w-full">
+              <p class="text-sm text-gray-400 mt-2 italic">Análise de sombreamento e estudos microclimáticos avançados</p>
+            </div>
+            <div>
+              <img src="/images/blog/sketchup-arquitetura-paisagistica/sketchup-landscape-2.jpg" alt="Integração de dados topográficos" class="rounded-lg shadow-lg w-full">
+              <p class="text-sm text-gray-400 mt-2 italic">Integração de dados topográficos e análise de drenagem</p>
+            </div>
+          </div>
+
+          <h4 class="text-lg font-semibold text-white mb-4">Objetivos Estratégicos Prioritários</h4>
+          
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-blue-500/10 border border-blue-500/20 rounded-lg p-6">
+              <h5 class="font-semibold text-blue-300 mb-3">🌡️ Mitigação Ambiental</h5>
+              <ul class="space-y-2 text-sm text-zinc-300">
+                <li>• Redução do efeito ilha de calor urbana (metas de 2-4°C)</li>
+                <li>• Design de corredores de ventilação natural</li>
+                <li>• Estratégias de captação e reuso de águas pluviais</li>
+              </ul>
+            </div>
+            <div class="bg-green-500/10 border border-green-500/20 rounded-lg p-6">
+              <h5 class="font-semibold text-green-300 mb-3">🌤️ Conforto Bioclimático</h5>
+              <ul class="space-y-2 text-sm text-zinc-300">
+                <li>• Análise de sombreamento sazonal com simulação solar</li>
+                <li>• Mapeamento de zonas de conforto térmico</li>
+                <li>• Otimização de microclimas locais</li>
+              </ul>
+            </div>
+            <div class="bg-purple-500/10 border border-purple-500/20 rounded-lg p-6">
+              <h5 class="font-semibold text-purple-300 mb-3">🦋 Sustentabilidade Ecológica</h5>
+              <ul class="space-y-2 text-sm text-zinc-300">
+                <li>• Seleção de espécies nativas com base em dados climáticos</li>
+                <li>• Design de habitats para fauna urbana</li>
+                <li>• Corredores ecológicos e conectividade paisagística</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="bg-blue-600/20 border border-blue-500/30 rounded-lg p-6 my-8">
+            <h4 class="font-semibold text-blue-300 mb-3">💡 Técnica Avançada: Análise Solar Paramétrica</h4>
+            <p class="text-gray-300 mb-4">Utilize a extensão SketchUp Solar Analysis para criar estudos de sombreamento dinâmicos. Configure análises horárias para diferentes estações do ano, permitindo otimizar o posicionamento de elementos como:</p>
+            <ul class="space-y-2 text-gray-300">
+              <li>• <strong>Pergolados e estruturas de sombreamento</strong> - orientação ótima</li>
+              <li>• <strong>Áreas de estar</strong> - conforto térmico sazonal</li>
+              <li>• <strong>Jardins temáticos</strong> - zonas de sol/sombra para diferentes espécies</li>
+              <li>• <strong>Caminhos e circulação</strong> - proteção durante picos de radiação</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Fase 3: Desenvolvimento Conceitual com Validação Técnica</h2>
+          
+          <h3 class="text-xl font-semibold text-white mb-6">Estudo de Caso Avançado: Revitalização Urbana Sustentável</h3>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">O exemplo do Utah State Fairpark demonstra como o SketchUp pode ser usado para soluções complexas de reconexão urbana:</p>
+          
+          <div class="article-image mb-8">
+            <img src="/images/blog/sketchup-arquitetura-paisagistica/sketchup-landscape-4.jpg" alt="Projeto Utah State Fairpark - Análise da Situação Atual" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Projeto Utah State Fairpark - Análise da Situação Atual</p>
+          </div>
+
+          <h4 class="text-lg font-semibold text-white mb-4">Diagnóstico Técnico da Situação Existente</h4>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="bg-red-500/10 border border-red-500/20 rounded-lg p-6">
+              <h5 class="font-semibold text-red-300 mb-3">❌ Problemas Identificados</h5>
+              <ul class="space-y-2 text-sm text-zinc-300">
+                <li>• Desconexão visual e física entre o parque e o rio</li>
+                <li>• Barreira física (cercamento) limitando acesso público</li>
+                <li>• Diferença de cota excessiva (2,5m) sem tratamento paisagístico</li>
+                <li>• Ausência de drenagem adequada para eventos pluviais</li>
+              </ul>
+            </div>
+            <div class="bg-green-500/10 border border-green-500/20 rounded-lg p-6">
+              <h5 class="font-semibold text-green-300 mb-3">✅ Oportunidades de Design</h5>
+              <ul class="space-y-2 text-sm text-zinc-300">
+                <li>• Potencial para criação de anfiteatro natural</li>
+                <li>• Possibilidade de sistemas de biorretenção integrados</li>
+                <li>• Criação de mirantes e pontos de contemplação</li>
+                <li>• Integração de trilhas ecológicas educativas</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="article-image mb-8">
+            <img src="/images/blog/sketchup-arquitetura-paisagistica/sketchup-landscape-5.jpg" alt="Situação existente - Fairpark desconectado do rio" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Situação existente - Fairpark desconectado do rio</p>
+          </div>
+
+          <h4 class="text-lg font-semibold text-white mb-4">Solução Projetual Integrada</h4>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">A proposta desenvolvida no SketchUp demonstra como pequenas intervenções podem criar grandes impactos:</p>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div>
+              <h5 class="font-semibold text-white mb-3">1. Terraplanagem Estratégica</h5>
+              <ul class="space-y-2 text-sm text-zinc-300">
+                <li>• Criação de taludes suaves (inclinação máxima 1:3) para acessibilidade</li>
+                <li>• Sistemas de drenagem em cascata para gestão de águas pluviais</li>
+                <li>• Integração de muros de arrimo vegetados</li>
+              </ul>
+            </div>
+            <div>
+              <h5 class="font-semibold text-white mb-3">2. Programação Espacial Diversificada</h5>
+              <ul class="space-y-2 text-sm text-zinc-300">
+                <li>• Anfiteatro natural com capacidade para 200 pessoas</li>
+                <li>• Trilhas interpretativas com sinalização educativa</li>
+                <li>• Áreas de piquenique com infraestrutura integrada</li>
+                <li>• Espaços de contemplação e meditação</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="article-image mb-8">
+            <img src="/images/blog/sketchup-arquitetura-paisagistica/sketchup-landscape-7.jpg" alt="Proposta de intervenção paisagística" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Proposta de intervenção paisagística</p>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Documentação Técnica e Quantificação Profissional</h2>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">A documentação técnica em arquitetura paisagística requer precisão absoluta para garantir a viabilidade econômica e ambiental do projeto:</p>
+          
+          <div class="article-image mb-8">
+            <img src="/images/blog/sketchup-arquitetura-paisagistica/sketchup-landscape-6.jpg" alt="Quantificação de materiais e análise de sustentabilidade" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Quantificação de materiais e análise de sustentabilidade</p>
+          </div>
+
+          <div class="overflow-x-auto my-8">
+            <table class="w-full bg-gray-800 rounded-lg">
+              <thead class="bg-gray-700">
+                <tr>
+                  <th class="px-4 py-3 text-left text-white font-semibold">Categoria</th>
+                  <th class="px-4 py-3 text-left text-white font-semibold">Especificação</th>
+                  <th class="px-4 py-3 text-left text-white font-semibold">Quantidade</th>
+                  <th class="px-4 py-3 text-left text-white font-semibold">Impacto Ambiental</th>
+                </tr>
+              </thead>
+              <tbody class="text-gray-300">
+                <tr class="border-b border-gray-600">
+                  <td class="px-4 py-3">Vegetação Arbórea</td>
+                  <td class="px-4 py-3">Espécies nativas porte médio/grande</td>
+                  <td class="px-4 py-3">45 unidades</td>
+                  <td class="px-4 py-3 text-green-400">+180 tCO₂/ano</td>
+                </tr>
+                <tr class="border-b border-gray-600">
+                  <td class="px-4 py-3">Pavimento Permeável</td>
+                  <td class="px-4 py-3">Blocket ecológico 40% vazado</td>
+                  <td class="px-4 py-3">850 m²</td>
+                  <td class="px-4 py-3 text-blue-400">85% infiltração</td>
+                </tr>
+                <tr class="border-b border-gray-600">
+                  <td class="px-4 py-3">Sistema de Irrigação</td>
+                  <td class="px-4 py-3">Gotejamento + sensores umidade</td>
+                  <td class="px-4 py-3">1.200 m lineares</td>
+                  <td class="px-4 py-3 text-purple-400">-40% consumo hídrico</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3">Iluminação</td>
+                  <td class="px-4 py-3">LED solar com bateria</td>
+                  <td class="px-4 py-3">28 pontos</td>
+                  <td class="px-4 py-3 text-yellow-400">Zero emissões</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="bg-green-600/20 border border-green-500/30 rounded-lg p-6 my-8">
+            <h4 class="font-semibold text-green-300 mb-3">📊 Ferramentas de Análise Quantitativa</h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <h5 class="font-medium text-white mb-2">Extensões Recomendadas:</h5>
+                <ul class="space-y-1 text-sm text-gray-300">
+                  <li>• <strong>CuriC Section:</strong> cortes automáticos e cotas</li>
+                  <li>• <strong>Profile Builder:</strong> elementos lineares complexos</li>
+                  <li>• <strong>Quantifier Pro:</strong> levantamentos automáticos</li>
+                  <li>• <strong>CleanUp³:</strong> otimização de modelos</li>
+                </ul>
+              </div>
+              <div>
+                <h5 class="font-medium text-white mb-2">Outputs Técnicos:</h5>
+                <ul class="space-y-1 text-sm text-gray-300">
+                  <li>• Plantas baixas técnicas (1:200, 1:500)</li>
+                  <li>• Cortes e elevações cotados</li>
+                  <li>• Detalhes construtivos (1:20, 1:50)</li>
+                  <li>• Planilhas de quantitativos</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Gestão de Implementação e Monitoramento</h2>
+          
+          <div class="article-image mb-8">
+            <img src="/images/blog/sketchup-arquitetura-paisagistica/sketchup-landscape-8.jpg" alt="Acompanhamento da construção e controle de qualidade" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Acompanhamento da construção e controle de qualidade</p>
+          </div>
+
+          <h3 class="text-xl font-semibold text-white mb-6">Protocolos de Controle de Qualidade</h3>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="bg-orange-500/10 border border-orange-500/20 rounded-lg p-6">
+              <h4 class="font-semibold text-orange-300 mb-3">📋 Verificações Semanais</h4>
+              <ul class="space-y-2 text-sm text-zinc-300">
+                <li>• Conformidade com especificações técnicas de plantio</li>
+                <li>• Funcionamento de sistemas de irrigação e drenagem</li>
+                <li>• Qualidade de acabamentos e instalação de mobiliário</li>
+                <li>• Monitoramento de erosão e estabilidade de taludes</li>
+              </ul>
+            </div>
+            <div class="bg-cyan-500/10 border border-cyan-500/20 rounded-lg p-6">
+              <h4 class="font-semibold text-cyan-300 mb-3">📊 Avaliações Mensais</h4>
+              <ul class="space-y-2 text-sm text-zinc-300">
+                <li>• Taxa de sobrevivência da vegetação (meta: >95%)</li>
+                <li>• Eficiência dos sistemas de captação pluvial</li>
+                <li>• Satisfação dos usuários através de pesquisas</li>
+                <li>• Indicadores de biodiversidade (avifauna, insetos benéficos)</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="bg-indigo-600/20 border border-indigo-500/30 rounded-lg p-6 my-8">
+            <h4 class="font-semibold text-indigo-300 mb-3">🔄 Ciclo de Melhoria Contínua</h4>
+            <div class="space-y-4">
+              <div class="flex items-start space-x-3">
+                <div class="w-8 h-8 bg-indigo-500 rounded-full flex items-center justify-center text-white font-bold text-sm">1</div>
+                <div>
+                  <h5 class="font-medium text-white">Monitoramento Digital</h5>
+                  <p class="text-sm text-gray-300">Sensores IoT para umidade, temperatura e qualidade do ar</p>
+                </div>
+              </div>
+              <div class="flex items-start space-x-3">
+                <div class="w-8 h-8 bg-indigo-500 rounded-full flex items-center justify-center text-white font-bold text-sm">2</div>
+                <div>
+                  <h5 class="font-medium text-white">Análise de Dados</h5>
+                  <p class="text-sm text-gray-300">Dashboard em tempo real com indicadores de performance</p>
+                </div>
+              </div>
+              <div class="flex items-start space-x-3">
+                <div class="w-8 h-8 bg-indigo-500 rounded-full flex items-center justify-center text-white font-bold text-sm">3</div>
+                <div>
+                  <h5 class="font-medium text-white">Ajustes Calibradores</h5>
+                  <p class="text-sm text-gray-300">Modificações no modelo 3D baseadas em performance real</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Checklist de Desenvolvimento Profissional</h2>
+          
+          <div class="bg-gray-800 rounded-lg p-6 my-8">
+            <h4 class="font-semibold text-white mb-4">📋 Competências Essenciais do Paisagista Digital</h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <h5 class="font-medium text-green-300 mb-3">Habilidades Técnicas</h5>
+                <ul class="space-y-2 text-sm text-gray-300">
+                  <li>□ Modelagem 3D avançada de terrenos</li>
+                  <li>□ Integração de dados geoespaciais</li>
+                  <li>□ Análise ambiental quantitativa</li>
+                  <li>□ Documentação técnica BIM</li>
+                  <li>□ Visualização fotorrealística</li>
+                  <li>□ Gestão de bibliotecas de componentes</li>
+                </ul>
+              </div>
+              <div>
+                <h5 class="font-medium text-blue-300 mb-3">Conhecimentos Especializados</h5>
+                <ul class="space-y-2 text-sm text-gray-300">
+                  <li>□ Ecologia urbana e biodiversidade</li>
+                  <li>□ Sistemas de drenagem sustentável</li>
+                  <li>□ Conforto ambiental e microclimas</li>
+                  <li>□ Acessibilidade universal</li>
+                  <li>□ Legislação ambiental e urbana</li>
+                  <li>□ Economia de projetos paisagísticos</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Conclusão: Excelência na Prática Profissional</h2>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">O domínio de workflows avançados no SketchUp para arquitetura paisagística representa muito mais que conhecimento técnico de software - é uma competência estratégica que define profissionais capazes de criar soluções inovadoras para os desafios urbanos contemporâneos.</p>
+          
+          <div class="bg-gradient-to-r from-emerald-500/10 to-green-500/10 border border-emerald-500/20 rounded-lg p-6 my-6">
+            <h4 class="text-emerald-300 font-semibold mb-3">🏆 Principais Conquistas do Domínio Técnico</h4>
+            <ul class="space-y-2 text-zinc-300">
+              <li>• <strong>Redução de 60%</strong> no tempo de desenvolvimento de projetos</li>
+              <li>• <strong>Aumento de 40%</strong> na precisão de quantitativos e orçamentos</li>
+              <li>• <strong>Melhoria de 50%</strong> na comunicação com clientes e equipes</li>
+              <li>• <strong>Capacidade de analisar</strong> cenários alternativos em tempo real</li>
+              <li>• <strong>Integração eficiente</strong> com equipes multidisciplinares</li>
+            </ul>
+          </div>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">O futuro da arquitetura paisagística está intrinsecamente ligado à capacidade de integrar ferramentas digitais avançadas com uma compreensão profunda dos sistemas naturais e das necessidades humanas. Profissionais que dominam esses workflows posicionam-se na vanguarda de uma disciplina em constante evolução.</p>
+          
+          <div class="clip-card bg-gradient-to-br from-cyan-500/10 via-blue-500/10 to-purple-600/10 border border-cyan-400/20 rounded-xl p-8 my-8">
+            <div class="flex flex-col lg:flex-row items-start lg:items-center gap-6">
+              <div class="flex-shrink-0">
+                <div class="w-20 h-20 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-xl flex items-center justify-center">
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white"/>
+                  </svg>
+                </div>
+              </div>
+              <div className="flex-1">
+                <h3 className="text-2xl font-bold text-white mb-3">
+                  Domine Workflows Profissionais de Arquitetura Paisagística
+                </h3>
+                <p className="text-zinc-300 mb-6 leading-relaxed">
+                  Quer ir além das técnicas básicas e se tornar um especialista em projetos paisagísticos avançados? Nosso curso de <strong>Projetista 3D</strong> ensina desde modelagem de terrenos complexos até análise ambiental quantitativa e documentação técnica profissional.
+                </p>
+                <div className="grid md:grid-cols-3 gap-4 mb-6">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-2 h-2 bg-cyan-400 rounded-full"></div>
+                    <span className="text-zinc-300 text-sm">SketchUp Avançado</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
+                    <span className="text-zinc-300 text-sm">Análise Ambiental</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
+                    <span className="text-zinc-300 text-sm">Renderização Profissional</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <div className="w-2 h-2 bg-emerald-400 rounded-full"></div>
+                    <span className="text-zinc-300 text-sm">Documentação BIM</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
+                    <span className="text-zinc-300 text-sm">Projetos Sustentáveis</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <div className="w-2 h-2 bg-pink-400 rounded-full"></div>
+                    <span className="text-zinc-300 text-sm">Certificação</span>
+                  </div>
+                </div>
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <a href="/cursos/projetista-3d" className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold rounded-lg hover:from-cyan-600 hover:to-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl">
+                    <span>Conhecer o Curso</span>
+                    <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"/>
+                    </svg>
+                  </a>
+                  <a href="/cursos/projetista-3d#aula-gratuita" className="inline-flex items-center px-6 py-3 border border-cyan-400/30 text-cyan-300 font-semibold rounded-lg hover:bg-cyan-500/10 transition-all duration-300">
+                    <span>Aula Gratuita</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    `,
+    author: { name: 'Escola Habilidade', avatar: '/assets/avatars/default.jpg' },
+    category: { id: 6, name: 'Arquitetura', slug: 'arquitetura', color: '#06B6D4' },
+    featuredImage: '/images/blog/sketchup-arquitetura-paisagistica/sketchup-landscape-1a.jpg',
+    featured_image_url: '/images/blog/sketchup-arquitetura-paisagistica/sketchup-landscape-1a.jpg',
+    publishedAt: '2025-08-03T12:00:00.000Z',
+    updatedAt: '2025-08-03T12:00:00.000Z',
+    readingTime: 12,
+    featured: true,
+    tags: ['SketchUp', 'Arquitetura Paisagística', '3D', 'Sustentabilidade', 'Design Ambiental', 'Workflows Profissionais'],
+    views: 0,
+    likes: 0,
+    seo: {
+      title: 'SketchUp Avançado para Arquitetura Paisagística: Técnicas Profissionais | Escola Habilidade',
+      description: 'Aprenda workflows avançados do SketchUp para arquitetura paisagística. Técnicas profissionais, análise ambiental e documentação técnica especializada.',
+      keywords: ['SketchUp avançado', 'arquitetura paisagística profissional', 'workflows 3D', 'sustentabilidade', 'design ambiental', 'modelagem de terrenos'],
+      canonical_url: '/blog/sketchup-workflows-avancados-arquitetura-paisagistica',
+      og_image: '/images/blog/sketchup-arquitetura-paisagistica/sketchup-landscape-1a.jpg'
+    }
+  },
   {
     id: 1,
     title: 'Usando SketchUp em Fluxos de Trabalho de Arquitetura Paisagística',
