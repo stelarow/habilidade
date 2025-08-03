@@ -22,12 +22,17 @@
   --popover-foreground: 264 100% 97%;
   --primary: 263 85% 63%;           /* #8b5cf6 - Violet main (primary) */
   --primary-foreground: 0 0% 100%;
+  --primary-300: 263 94% 87%;       /* #c4b5fd - Light violet */
+  --primary-400: 263 89% 80%;       /* #a78bfa - Medium light violet */
+  --primary-500: 263 85% 70%;       /* #8b5cf6 - Base violet */
+  --primary-600: 263 85% 63%;       /* #7c3aed - Dark violet */
   --secondary: 254 23% 20%;         /* #332d4d - Card/modal background */
   --secondary-foreground: 264 100% 97%;
   --muted: 254 23% 20%;             /* #332d4d */
   --muted-foreground: 264 100% 90%;  /* #f0ebff - Higher contrast secondary text */
   --accent: 263 85% 63%;            /* #8b5cf6 - Primary violet */
   --accent-foreground: 0 0% 100%;
+  --accent-500: 263 85% 63%;        /* #8b5cf6 - Accent violet */
   --destructive: 0 84% 60%;         /* #ef4444 - Red */
   --destructive-foreground: 0 0% 98%;
   --border: 263 85% 63% / 0.2;      /* Primary with opacity */
@@ -875,8 +880,10 @@ body {
   .lesson-content.prose h4,
   .lesson-content.prose h5,
   .lesson-content.prose h6 {
-    /* Gradient text for headings using violet theme */
-    background: linear-gradient(135deg, hsl(var(--primary-400)), hsl(var(--primary-600))) !important;
+    /* Fallback color first */
+    color: hsl(var(--foreground)) !important;
+    /* Then apply gradient text for modern browsers */
+    background: linear-gradient(135deg, #a855f7, #7c3aed) !important;
     -webkit-background-clip: text !important;
     -webkit-text-fill-color: transparent !important;
     background-clip: text !important;
@@ -884,6 +891,8 @@ body {
     margin-bottom: 1.5rem !important;
     font-weight: 700 !important;
     letter-spacing: -0.025em !important;
+    /* Ensure visibility in browsers that don't support gradient text */
+    -webkit-text-stroke: 1px transparent !important;
   }
 
   .lesson-content-enhanced.prose h1,
@@ -892,9 +901,15 @@ body {
     margin-top: 0 !important;
     border-bottom: 3px solid hsl(var(--primary) / 0.3) !important;
     padding-bottom: 1rem !important;
-    background: linear-gradient(135deg, hsl(var(--primary-300)), hsl(var(--primary-500))) !important;
+    /* Fallback color first */
+    color: hsl(var(--foreground)) !important;
+    /* Then apply gradient for supported browsers */
+    background: linear-gradient(135deg, #c4b5fd, #8b5cf6) !important;
     -webkit-background-clip: text !important;
     -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    /* Ensure visibility fallback */
+    -webkit-text-stroke: 1px transparent !important;
   }
 
   .lesson-content-enhanced.prose h2,
