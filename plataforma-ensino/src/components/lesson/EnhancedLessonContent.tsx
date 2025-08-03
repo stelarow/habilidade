@@ -51,7 +51,7 @@ interface EnhancedLessonContentProps {
 
 export const EnhancedLessonContent: React.FC<EnhancedLessonContentProps> = ({
   content,
-  title = "Conteúdo da Aula",
+  title = "ConteÃºdo da Aula",
   description = "Material de estudo e conceitos fundamentais",
   estimatedReadingTime = 15,
   onProgressUpdate,
@@ -76,7 +76,7 @@ export const EnhancedLessonContent: React.FC<EnhancedLessonContentProps> = ({
     // Main content section
     sections.push({
       id: 'content',
-      title: 'Conteúdo Principal',
+      title: 'ConteÃºdo Principal',
       type: 'content',
       content: content,
       estimatedTime: estimatedReadingTime,
@@ -248,7 +248,7 @@ export const EnhancedLessonContent: React.FC<EnhancedLessonContentProps> = ({
                   onClick={() => setViewType('outline')}
                   className="text-xs px-2 py-1"
                 >
-                  Tópicos
+                  TÃ³picos
                 </Button>
               </div>
             </div>
@@ -267,7 +267,7 @@ export const EnhancedLessonContent: React.FC<EnhancedLessonContentProps> = ({
               <div>
                 <h3 className="font-semibold">Progresso de Leitura</h3>
                 <p className="text-sm text-muted-foreground">
-                  {completedSections.length} de {parsedSections.length} seções concluídas
+                  {completedSections.length} de {parsedSections.length} seÃ§Ãµes concluÃ­das
                 </p>
               </div>
             </div>
@@ -380,7 +380,7 @@ export const EnhancedLessonContent: React.FC<EnhancedLessonContentProps> = ({
         <CardHeader>
           <CardTitle className="text-lg flex items-center gap-2">
             <Type className="w-5 h-5" />
-            Preferências de Leitura
+            PreferÃªncias de Leitura
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -422,7 +422,7 @@ export const EnhancedLessonContent: React.FC<EnhancedLessonContentProps> = ({
             </div>
             
             <div>
-              <label className="text-sm font-medium mb-2 block">Espaçamento</label>
+              <label className="text-sm font-medium mb-2 block">EspaÃ§amento</label>
               <div className="flex gap-1">
                 {(['compact', 'normal', 'relaxed'] as const).map((height) => (
                   <Button
