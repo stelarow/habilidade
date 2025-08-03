@@ -3,7 +3,13 @@
     "allow": [
       "mcp__ruv-swarm",
       "mcp__claude-flow",
-      "Bash(chmod:*)"
+      "Bash(chmod:*)",
+      "mcp__playwright__browser_navigate",
+      "mcp__playwright__browser_snapshot",
+      "mcp__playwright__browser_evaluate",
+      "mcp__serena__read_file",
+      "mcp__firecrawl__firecrawl_search",
+      "mcp__firecrawl__firecrawl_scrape"
     ],
     "deny": []
   }

@@ -796,13 +796,23 @@ body {
     pointer-events: auto;
   }
 
-  /* Enhanced Lesson Content - Violet Theme with Balloon Override */
+  /* Enhanced Lesson Content - Research-Based Digital Reading Experience */
   .lesson-content-enhanced.prose {
-    /* Base text styling with enhanced readability */
-    color: hsl(var(--foreground)) !important;
-    line-height: 1.8 !important;
-    font-size: 1.1rem !important;
+    /* Research-based background system for reduced eye strain */
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%) !important;
+    border-radius: 12px !important;
+    padding: 2rem !important;
+    margin: 1rem 0 !important;
+    
+    /* Optimized typography for digital reading */
+    color: #e2e8f0 !important; /* Light gray for comfortable reading */
+    line-height: 1.6 !important; /* Optimal reading line height */
+    font-size: 1.125rem !important; /* 18px for better readability */
     font-weight: 400 !important;
+    
+    /* Enhanced visual appeal */
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+    border: 1px solid rgba(139, 92, 246, 0.2) !important;
   }
 
   /* Aggressive override for any balloon/bubble elements */
@@ -897,17 +907,18 @@ body {
 
   .lesson-content-enhanced.prose h1,
   .lesson-content.prose h1 {
-    font-size: 2.25rem !important;
+    font-size: 2.25rem !important; /* 36px - Research-based H1 size */
     margin-top: 0 !important;
-    border-bottom: 3px solid hsl(var(--primary) / 0.3) !important;
+    border-bottom: 3px solid rgba(139, 92, 246, 0.4) !important;
     padding-bottom: 1rem !important;
-    /* Already inherits white color from parent rule above */
+    font-weight: 800 !important; /* Extra bold for H1 emphasis */
   }
 
   .lesson-content-enhanced.prose h2,
   .lesson-content.prose h2 {
-    font-size: 1.875rem !important;
+    font-size: 1.875rem !important; /* 30px - Research-based H2 size */
     position: relative !important;
+    font-weight: 600 !important; /* Semibold for H2 */
   }
 
   .lesson-content-enhanced.prose h2::before,
@@ -925,8 +936,8 @@ body {
 
   .lesson-content-enhanced.prose h3,
   .lesson-content.prose h3 {
-    font-size: 1.5rem !important;
-    /* h3 already inherits white color from parent heading rule - no need for gradient */
+    font-size: 1.5rem !important; /* 24px - Research-based H3 size */
+    font-weight: 500 !important; /* Medium weight for H3 */
   }
 
   /* Enhanced list styling with violet theme accents */
@@ -982,7 +993,8 @@ body {
     position: absolute !important;
     left: -2rem !important;
     top: 0 !important;
-    background: #8b5cf6 !important; /* Solid violet background for better visibility */
+    /* Enhanced gradient background for better engagement */
+    background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%) !important;
     color: white !important;
     width: 1.5rem !important;
     height: 1.5rem !important;
@@ -991,7 +1003,8 @@ body {
     line-height: 1.5rem !important;
     font-size: 0.8rem !important;
     font-weight: 700 !important;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important; /* Add shadow for depth */
+    /* Enhanced shadow for depth and prominence */
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3) !important;
   }
 
   /* Enhanced blockquote styling with violet theme */
@@ -1159,7 +1172,7 @@ body {
     background: hsl(var(--muted) / 0.3) !important;
   }
 
-  /* Enhanced section dividers */
+  /* Enhanced Visual Separation and Engagement Elements */
   .lesson-content-enhanced.prose hr,
   .lesson-content.prose hr {
     margin: 4rem 0 !important;
@@ -1168,13 +1181,30 @@ body {
     background: linear-gradient(
       90deg, 
       transparent 0%, 
-      hsl(var(--primary-400)) 25%, 
-      hsl(var(--primary-600)) 50%, 
-      hsl(var(--primary-400)) 75%, 
+      #8b5cf6 25%, 
+      #a78bfa 50%, 
+      #8b5cf6 75%, 
       transparent 100%
     ) !important;
     border-radius: 1.5px !important;
-    opacity: 0.6 !important;
+    opacity: 0.8 !important;
+  }
+
+  /* Enhanced content sections with subtle backgrounds for better engagement */
+  .lesson-content-enhanced.prose > div,
+  .lesson-content-enhanced.prose > section {
+    background: rgba(26, 26, 46, 0.6) !important;
+    border-radius: 8px !important;
+    padding: 1.5rem !important;
+    margin: 2rem 0 !important;
+    border: 1px solid rgba(139, 92, 246, 0.1) !important;
+    transition: all 0.3s ease !important;
+  }
+
+  .lesson-content-enhanced.prose > div:hover,
+  .lesson-content-enhanced.prose > section:hover {
+    border-color: rgba(139, 92, 246, 0.3) !important;
+    box-shadow: 0 4px 20px rgba(139, 92, 246, 0.1) !important;
   }
 
   /* Responsive adjustments for enhanced lesson content */
