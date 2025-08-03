@@ -82,6 +82,11 @@ const mockPosts = [
             <p class="text-zinc-400 text-sm mt-2 text-center italic">StyleBuilder: crie estilos únicos para seus projetos</p>
           </div>
           
+          <div class="article-image mb-8">
+            <img src="/images/blog/como-apresentar-projetos-design-interior-sketchup/stylebuilder-custom-styles.jpg" alt="StyleBuilder - Estilos personalizados com traços únicos" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Estilos personalizados com diferentes traços e texturas</p>
+          </div>
+          
           <div class="bg-gradient-to-r from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-xl p-8 my-8">
             <h3 class="text-xl font-bold text-purple-300 mb-6">Por que Usar Estilos Personalizados?</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -117,6 +122,11 @@ const mockPosts = [
           <div class="article-image mb-8">
             <img src="/images/blog/como-apresentar-projetos-design-interior-sketchup/layout-presentation.jpg" alt="LayOut - Apresentações profissionais com SketchUp" class="w-full rounded-lg shadow-lg" />
             <p class="text-zinc-400 text-sm mt-2 text-center italic">LayOut: crie documentos de apresentação profissionais</p>
+          </div>
+          
+          <div class="article-image mb-8">
+            <img src="/images/blog/como-apresentar-projetos-design-interior-sketchup/layout-branded-presentation.jpg" alt="LayOut - Documentos de apresentação com marca profissional" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Documentos com identidade visual e marca profissional</p>
           </div>
           
           <p class="text-zinc-300 leading-relaxed mb-6"><strong class="text-white">Combine visualizações do modelo</strong> com texto e ilustração vetorial 2D para apresentar detalhes de design, materiais e opções de projeto. Muitas das ferramentas no LayOut funcionam como no SketchUp. Isso significa que você pode rapidamente começar a desenhar, redimensionar, adicionar detalhes, fazer cópias e alterar estilos e escala.</p>
@@ -156,6 +166,11 @@ const mockPosts = [
           <div class="article-image mb-8">
             <img src="/images/blog/como-apresentar-projetos-design-interior-sketchup/mobile-viewer.jpg" alt="SketchUp Viewer Mobile - Apresentações em dispositivos móveis" class="w-full rounded-lg shadow-lg" />
             <p class="text-zinc-400 text-sm mt-2 text-center italic">SketchUp Viewer: apresentações interativas em dispositivos móveis</p>
+          </div>
+          
+          <div class="article-image mb-8">
+            <img src="/images/blog/como-apresentar-projetos-design-interior-sketchup/sketchup-viewer-present-ideas.jpg" alt="SketchUp Viewer - Apresente suas ideias em movimento" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Apresente suas ideias de forma dinâmica e interativa</p>
           </div>
           
           <p class="text-zinc-300 leading-relaxed mb-6">Aproveite a <strong class="text-white">Realidade Aumentada</strong> para avaliar opções de design em escala do mundo real. Alterne entre cenas para mostrar designs em movimento, mantendo o estilo do seu modelo.</p>
@@ -215,6 +230,11 @@ const mockPosts = [
           <div class="article-image mb-8">
             <img src="/images/blog/como-apresentar-projetos-design-interior-sketchup/visualizer-render.jpg" alt="Trimble Connect Visualizer - Renderização no SketchUp" class="w-full rounded-lg shadow-lg" />
             <p class="text-zinc-400 text-sm mt-2 text-center italic">Trimble Connect Visualizer: renderizações profissionais integradas</p>
+          </div>
+          
+          <div class="article-image mb-8">
+            <img src="/images/blog/como-apresentar-projetos-design-interior-sketchup/trimble-connect-visualizer.jpg" alt="Trimble Connect Visualizer - Crie imagens renderizadas profissionais" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Interface do Trimble Connect Visualizer para renderização avançada</p>
           </div>
           
           <div class="bg-gradient-to-r from-teal-600/20 to-green-600/20 border border-teal-500/30 rounded-xl p-8 my-8">

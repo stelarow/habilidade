@@ -28,6 +28,8 @@ Adicionar seu **estilo pessoal** é uma parte importante da apresentação de de
 
 ![StyleBuilder - Criando estilos personalizados no SketchUp](/images/blog/como-apresentar-projetos-design-interior-sketchup/stylebuilder-example.jpg)
 
+![StyleBuilder - Estilos personalizados com traços únicos](/images/blog/como-apresentar-projetos-design-interior-sketchup/stylebuilder-custom-styles.jpg)
+
 ### Por que Usar Estilos Personalizados?
 
 Combine estilos de linha com texturas únicas, cores e marcas d'água para injetar seu toque criativo em modelos, renderizações e animações. Isso diferencia seu trabalho da concorrência e cria uma identidade visual consistente para seus projetos.
@@ -44,6 +46,8 @@ Combine estilos de linha com texturas únicas, cores e marcas d'água para injet
 Agora que você adicionou um estilo, é hora de inserir o modelo no LayOut. Quando você importa um modelo 3D, uma viewport é colocada na página. A boa notícia é que **as cenas** que você configurou em seu arquivo SketchUp estão prontas para usar no LayOut.
 
 ![LayOut - Apresentações profissionais com SketchUp](/images/blog/como-apresentar-projetos-design-interior-sketchup/layout-presentation.jpg)
+
+![LayOut - Documentos de apresentação com marca profissional](/images/blog/como-apresentar-projetos-design-interior-sketchup/layout-branded-presentation.jpg)
 
 ### Workflow Profissional no LayOut
 
@@ -70,6 +74,8 @@ Agora que você adicionou um estilo, é hora de inserir o modelo no LayOut. Quan
 Desenhos impressos ou PDF são a única maneira de mostrar seu trabalho? Claro que não! O SketchUp Viewer para Mobile oferece o poder de visualizar e **compartilhar seu portfólio** em dispositivos iOS e Android.
 
 ![SketchUp Viewer Mobile - Apresentações em dispositivos móveis](/images/blog/como-apresentar-projetos-design-interior-sketchup/mobile-viewer.jpg)
+
+![SketchUp Viewer - Apresente suas ideias em movimento](/images/blog/como-apresentar-projetos-design-interior-sketchup/sketchup-viewer-present-ideas.jpg)
 
 ### Vantagens da Apresentação Mobile
 
@@ -118,6 +124,8 @@ Vamos finalizar com algo muito empolgante: renderização! Com uma assinatura do
 **Nota:** Este recurso está atualmente disponível apenas para Windows.
 
 ![Trimble Connect Visualizer - Renderização no SketchUp](/images/blog/como-apresentar-projetos-design-interior-sketchup/visualizer-render.jpg)
+
+![Trimble Connect Visualizer - Crie imagens renderizadas profissionais](/images/blog/como-apresentar-projetos-design-interior-sketchup/trimble-connect-visualizer.jpg)
 
 ### Capacidades de Renderização
 
