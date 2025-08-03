@@ -47,12 +47,402 @@ const mockCategories = [
     name: 'Arquitetura',
     slug: 'arquitetura',
     description: 'Design arquitetônico e projetos de construção',
-    postCount: 8,
+    postCount: 9,
     color: '#06B6D4'
   }
 ];
 
 const mockPosts = [
+  {
+    id: 113,
+    title: 'Como Apresentar Projetos de Design de Interiores com SketchUp',
+    slug: 'como-apresentar-projetos-design-interior-sketchup',
+    excerpt: 'Descubra o ecossistema completo do SketchUp Pro para apresentar seus projetos de design de interiores de forma profissional. Do StyleBuilder à realidade virtual, aprenda todas as ferramentas para impressionar seus clientes.',
+    content: `
+      <div class="article-content space-y-8">
+        
+        <div class="article-section">
+          <p class="text-zinc-300 leading-relaxed mb-6 text-lg">Na primeira parte desta série, revelamos como criar opções vencedoras de design de interiores no SketchUp. Agora que você terminou a modelagem, qual é o próximo passo?</p>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Uma <strong class="text-white">assinatura do SketchUp Pro</strong> inclui um poderoso ecossistema de produtos para ajudá-lo a comunicar suas criações de forma profissional. Vamos explorar todas as possibilidades!</p>
+          
+          <div class="article-image mb-8">
+            <img src="/images/blog/como-apresentar-projetos-design-interior-sketchup/hero-image.jpg" alt="Como Apresentar Projetos de Design de Interiores com SketchUp" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Ecossistema SketchUp Pro para apresentações profissionais</p>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Adicione Estilos Personalizados ao Seu Design</h2>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Adicionar seu <strong class="text-white">estilo pessoal</strong> é uma parte importante da apresentação de designs. O <strong class="text-white">StyleBuilder</strong> permite criar estilos de linha personalizados usando traços digitais ou desenhados à mão importados. Pense em linhas nítidas de caneta, marcas onduladas de lápis ou marcas de um bastão grosso de grafite.</p>
+          
+          <div class="article-image mb-8">
+            <img src="/images/blog/como-apresentar-projetos-design-interior-sketchup/stylebuilder-example.jpg" alt="StyleBuilder - Criando estilos personalizados no SketchUp" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">StyleBuilder: crie estilos únicos para seus projetos</p>
+          </div>
+          
+          <div class="bg-gradient-to-r from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-xl p-8 my-8">
+            <h3 class="text-xl font-bold text-purple-300 mb-6">Por que Usar Estilos Personalizados?</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="space-y-3">
+                <div class="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center font-bold text-white">✨</div>
+                <h4 class="font-semibold text-white">Identidade Visual Única</h4>
+                <p class="text-sm text-gray-300">Desenvolva uma assinatura visual reconhecível</p>
+              </div>
+              <div class="space-y-3">
+                <div class="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center font-bold text-white">💬</div>
+                <h4 class="font-semibold text-white">Comunicação Efetiva</h4>
+                <p class="text-sm text-gray-300">Diferentes estilos enfatizam aspectos específicos</p>
+              </div>
+              <div class="space-y-3">
+                <div class="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center font-bold text-white">🎯</div>
+                <h4 class="font-semibold text-white">Versatilidade</h4>
+                <p class="text-sm text-gray-300">Use em modelos 3D, desenhos 2D e apresentações</p>
+              </div>
+              <div class="space-y-3">
+                <div class="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center font-bold text-white">👔</div>
+                <h4 class="font-semibold text-white">Profissionalismo</h4>
+                <p class="text-sm text-gray-300">Demonstre atenção aos detalhes</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Crie Desenhos 2D Impressionantes e Documentos de Apresentação Profissionais</h2>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Agora que você adicionou um estilo, é hora de inserir o modelo no LayOut. Quando você importa um modelo 3D, uma viewport é colocada na página. A boa notícia é que <strong class="text-white">as cenas</strong> que você configurou em seu arquivo SketchUp estão prontas para usar no LayOut.</p>
+          
+          <div class="article-image mb-8">
+            <img src="/images/blog/como-apresentar-projetos-design-interior-sketchup/layout-presentation.jpg" alt="LayOut - Apresentações profissionais com SketchUp" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">LayOut: crie documentos de apresentação profissionais</p>
+          </div>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6"><strong class="text-white">Combine visualizações do modelo</strong> com texto e ilustração vetorial 2D para apresentar detalhes de design, materiais e opções de projeto. Muitas das ferramentas no LayOut funcionam como no SketchUp. Isso significa que você pode rapidamente começar a desenhar, redimensionar, adicionar detalhes, fazer cópias e alterar estilos e escala.</p>
+          
+          <div class="bg-gradient-to-r from-blue-600/20 to-cyan-600/20 border border-blue-500/30 rounded-xl p-8 my-8">
+            <h3 class="text-xl font-bold text-blue-300 mb-6">Elementos Essenciais de uma Apresentação Profissional</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="space-y-3">
+                <div class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center font-bold text-white">📐</div>
+                <h4 class="font-semibold text-white">Plantas Baixas Detalhadas</h4>
+                <p class="text-sm text-gray-300">Com dimensões precisas e anotações claras</p>
+              </div>
+              <div class="space-y-3">
+                <div class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center font-bold text-white">📏</div>
+                <h4 class="font-semibold text-white">Cortes e Elevações</h4>
+                <p class="text-sm text-gray-300">Para mostrar alturas e proporções</p>
+              </div>
+              <div class="space-y-3">
+                <div class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center font-bold text-white">🎨</div>
+                <h4 class="font-semibold text-white">Perspectivas 3D</h4>
+                <p class="text-sm text-gray-300">Múltiplos ângulos do ambiente</p>
+              </div>
+              <div class="space-y-3">
+                <div class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center font-bold text-white">🔍</div>
+                <h4 class="font-semibold text-white">Detalhes Construtivos</h4>
+                <p class="text-sm text-gray-300">Ampliações de elementos importantes</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Apresente Suas Ideias com o SketchUp Viewer</h2>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Desenhos impressos ou PDF são a única maneira de mostrar seu trabalho? Claro que não! O SketchUp Viewer para Mobile oferece o poder de visualizar e <strong class="text-white">compartilhar seu portfólio</strong> em dispositivos iOS e Android.</p>
+          
+          <div class="article-image mb-8">
+            <img src="/images/blog/como-apresentar-projetos-design-interior-sketchup/mobile-viewer.jpg" alt="SketchUp Viewer Mobile - Apresentações em dispositivos móveis" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">SketchUp Viewer: apresentações interativas em dispositivos móveis</p>
+          </div>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Aproveite a <strong class="text-white">Realidade Aumentada</strong> para avaliar opções de design em escala do mundo real. Alterne entre cenas para mostrar designs em movimento, mantendo o estilo do seu modelo.</p>
+          
+          <div class="bg-green-600/20 border border-green-500/30 rounded-xl p-6 my-8">
+            <h4 class="text-green-300 font-semibold mb-3">💡 Benefícios do SketchUp Viewer Mobile</h4>
+            <ul class="space-y-2 text-zinc-300">
+              <li>• <strong>Portabilidade:</strong> Leve seus projetos para qualquer lugar</li>
+              <li>• <strong>Interatividade:</strong> Clientes podem explorar o modelo</li>
+              <li>• <strong>Realidade Aumentada:</strong> Visualize móveis e elementos in loco</li>
+              <li>• <strong>Apresentações Dinâmicas:</strong> Navegue entre diferentes opções rapidamente</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Modele em Movimento com SketchUp for Web</h2>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Nem todas as ferramentas CAD são totalmente editáveis na web, o SketchUp é! Útil se você precisar fazer alterações em tempo real quando estiver longe do seu computador desktop.</p>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Digamos que você está em uma reunião no escritório de um cliente e eles querem ver um projeto com um layout de móveis revisado. Abra um modelo no SketchUp for Web diretamente do Trimble Connect em qualquer dispositivo web para fazer as alterações em tempo real. Salve o arquivo no Trimble Connect para fácil acesso de volta ao escritório.</p>
+          
+          <div class="bg-gradient-to-r from-orange-600/20 to-red-600/20 border border-orange-500/30 rounded-xl p-8 my-8">
+            <h3 class="text-xl font-bold text-orange-300 mb-6">Vantagens do SketchUp Web</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="space-y-3">
+                <div class="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center font-bold text-white">🌐</div>
+                <h4 class="font-semibold text-white">Acesso Universal</h4>
+                <p class="text-sm text-gray-300">Trabalhe de qualquer computador com internet</p>
+              </div>
+              <div class="space-y-3">
+                <div class="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center font-bold text-white">🔄</div>
+                <h4 class="font-semibold text-white">Sincronização Automática</h4>
+                <p class="text-sm text-gray-300">Mudanças salvas no Trimble Connect</p>
+              </div>
+              <div class="space-y-3">
+                <div class="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center font-bold text-white">👥</div>
+                <h4 class="font-semibold text-white">Colaboração em Tempo Real</h4>
+                <p class="text-sm text-gray-300">Múltiplos usuários podem trabalhar simultaneamente</p>
+              </div>
+              <div class="space-y-3">
+                <div class="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center font-bold text-white">⚡</div>
+                <h4 class="font-semibold text-white">Sem Instalação</h4>
+                <p class="text-sm text-gray-300">Não requer software instalado localmente</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Crie Imagens Renderizadas com Trimble Connect Visualizer</h2>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Vamos finalizar com algo muito empolgante: renderização! Com uma assinatura do SketchUp Pro, você pode criar renderizações simplificadas usando o Trimble Connect for Desktop e o novo Trimble Connect Visualizer.</p>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6"><strong class="text-orange-400">Nota:</strong> Este recurso está atualmente disponível apenas para Windows.</p>
+          
+          <div class="article-image mb-8">
+            <img src="/images/blog/como-apresentar-projetos-design-interior-sketchup/visualizer-render.jpg" alt="Trimble Connect Visualizer - Renderização no SketchUp" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Trimble Connect Visualizer: renderizações profissionais integradas</p>
+          </div>
+          
+          <div class="bg-gradient-to-r from-teal-600/20 to-green-600/20 border border-teal-500/30 rounded-xl p-8 my-8">
+            <h3 class="text-xl font-bold text-teal-300 mb-6">Capacidades de Renderização</h3>
+            <ul class="space-y-3 text-zinc-300">
+              <li class="flex items-start space-x-3">
+                <span class="text-teal-400 font-bold">•</span>
+                <div>
+                  <strong class="text-white">Iluminação Realística:</strong> Simulação precisa de luz natural e artificial
+                </div>
+              </li>
+              <li class="flex items-start space-x-3">
+                <span class="text-teal-400 font-bold">•</span>
+                <div>
+                  <strong class="text-white">Materiais Avançados:</strong> Reflexões, transparências e texturas detalhadas
+                </div>
+              </li>
+              <li class="flex items-start space-x-3">
+                <span class="text-teal-400 font-bold">•</span>
+                <div>
+                  <strong class="text-white">Renderização em Nuvem:</strong> Processamento otimizado sem sobrecarregar seu equipamento
+                </div>
+              </li>
+              <li class="flex items-start space-x-3">
+                <span class="text-teal-400 font-bold">•</span>
+                <div>
+                  <strong class="text-white">Integração Seamless:</strong> Workflow direto do SketchUp para renderização
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Entre em AR/VR para Experimentar Designs Antes da Construção</h2>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Você tem acesso a um <strong class="text-white">dispositivo VR ou de Realidade Mista</strong>? Se sua resposta for sim, você pode dar vida aos modelos 3D em realidade mista ou virtual. Entre em uma nova e poderosa maneira de explorar, entender e compartilhar seu trabalho.</p>
+          
+          <div class="bg-gradient-to-r from-indigo-600/20 to-purple-600/20 border border-indigo-500/30 rounded-xl p-8 my-8">
+            <h3 class="text-xl font-bold text-indigo-300 mb-6">Benefícios da Visualização Imersiva</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="space-y-3">
+                <div class="w-12 h-12 bg-indigo-500 rounded-lg flex items-center justify-center font-bold text-white">📏</div>
+                <h4 class="font-semibold text-white">Escala Real</h4>
+                <p class="text-sm text-gray-300">Experimente proporções reais dos ambientes</p>
+              </div>
+              <div class="space-y-3">
+                <div class="w-12 h-12 bg-indigo-500 rounded-lg flex items-center justify-center font-bold text-white">🔍</div>
+                <h4 class="font-semibold text-white">Detecção de Problemas</h4>
+                <p class="text-sm text-gray-300">Identifique questões antes da construção</p>
+              </div>
+              <div class="space-y-3">
+                <div class="w-12 h-12 bg-indigo-500 rounded-lg flex items-center justify-center font-bold text-white">👥</div>
+                <h4 class="font-semibold text-white">Experiência do Cliente</h4>
+                <p class="text-sm text-gray-300">Permita que clientes "caminhem" pelo projeto</p>
+              </div>
+              <div class="space-y-3">
+                <div class="w-12 h-12 bg-indigo-500 rounded-lg flex items-center justify-center font-bold text-white">✅</div>
+                <h4 class="font-semibold text-white">Tomada de Decisão</h4>
+                <p class="text-sm text-gray-300">Facilite aprovações com experiência imersiva</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Fluxo de Trabalho Completo: Da Modelagem à Apresentação</h2>
+          
+          <div class="bg-gradient-to-r from-gray-600/20 to-slate-600/20 border border-gray-500/30 rounded-xl p-8 my-8">
+            <h3 class="text-xl font-bold text-gray-300 mb-6">Workflow Profissional em 4 Etapas</h3>
+            
+            <div class="space-y-6">
+              <div class="flex items-start space-x-4">
+                <div class="w-8 h-8 bg-cyan-500 rounded-full flex items-center justify-center font-bold text-white text-sm">1</div>
+                <div>
+                  <h4 class="font-semibold text-white mb-2">Preparação do Modelo</h4>
+                  <p class="text-zinc-300 text-sm">Organize camadas, configure cenas, aplique materiais e otimize geometria</p>
+                </div>
+              </div>
+              
+              <div class="flex items-start space-x-4">
+                <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center font-bold text-white text-sm">2</div>
+                <div>
+                  <h4 class="font-semibold text-white mb-2">Desenvolvimento Visual</h4>
+                  <p class="text-zinc-300 text-sm">Crie estilos personalizados, configure iluminação e ajuste câmeras</p>
+                </div>
+              </div>
+              
+              <div class="flex items-start space-x-4">
+                <div class="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center font-bold text-white text-sm">3</div>
+                <div>
+                  <h4 class="font-semibold text-white mb-2">Documentação Técnica</h4>
+                  <p class="text-zinc-300 text-sm">Export para LayOut, adicione dimensões e organize pranchas profissionalmente</p>
+                </div>
+              </div>
+              
+              <div class="flex items-start space-x-4">
+                <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center font-bold text-white text-sm">4</div>
+                <div>
+                  <h4 class="font-semibold text-white mb-2">Apresentação Interativa</h4>
+                  <p class="text-zinc-300 text-sm">Prepare modelos para Viewer, configure AR/VR e treine equipe</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Dicas Profissionais para Apresentações de Sucesso</h2>
+          
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 my-8">
+            <div class="bg-gradient-to-br from-emerald-600/10 to-teal-600/10 border border-emerald-500/20 rounded-xl p-6">
+              <h4 class="text-emerald-300 font-bold text-lg mb-4">🎯 Antes da Reunião</h4>
+              <ul class="space-y-2 text-zinc-300 text-sm">
+                <li>• Teste todos os dispositivos e aplicativos</li>
+                <li>• Prepare versões offline dos modelos</li>
+                <li>• Organize sequência lógica de visualizações</li>
+                <li>• Tenha planos B para problemas técnicos</li>
+              </ul>
+            </div>
+            
+            <div class="bg-gradient-to-br from-amber-600/10 to-orange-600/10 border border-amber-500/20 rounded-xl p-6">
+              <h4 class="text-amber-300 font-bold text-lg mb-4">💼 Durante a Apresentação</h4>
+              <ul class="space-y-2 text-zinc-300 text-sm">
+                <li>• Comece com overview geral do projeto</li>
+                <li>• Use AR/VR para momentos de maior impacto</li>
+                <li>• Permita interação controlada do cliente</li>
+                <li>• Documente feedback e solicitações</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Conclusão: Revolucione Suas Apresentações</h2>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">O ecossistema SketchUp Pro oferece todas as ferramentas necessárias para apresentações profissionais de design de interiores. Do StyleBuilder personalizado às experiências imersivas em VR, você tem o poder de impressionar clientes e comunicar suas visões de forma clara e impactante.</p>
+          
+          <div class="bg-gradient-to-r from-violet-600/20 to-purple-600/20 border border-violet-500/30 rounded-xl p-8 my-8">
+            <h3 class="text-xl font-bold text-violet-300 mb-6">🎯 Principais Takeaways</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="flex items-start space-x-3">
+                <span class="text-violet-400 font-bold">1.</span>
+                <span class="text-zinc-300">Desenvolva identidade visual com estilos personalizados</span>
+              </div>
+              <div class="flex items-start space-x-3">
+                <span class="text-violet-400 font-bold">2.</span>
+                <span class="text-zinc-300">Use LayOut para documentação técnica profissional</span>
+              </div>
+              <div class="flex items-start space-x-3">
+                <span class="text-violet-400 font-bold">3.</span>
+                <span class="text-zinc-300">Aproveite mobilidade do SketchUp Viewer</span>
+              </div>
+              <div class="flex items-start space-x-3">
+                <span class="text-violet-400 font-bold">4.</span>
+                <span class="text-zinc-300">Explore renderização com Trimble Visualizer</span>
+              </div>
+              <div class="flex items-start space-x-3">
+                <span class="text-violet-400 font-bold">5.</span>
+                <span class="text-zinc-300">Implemente AR/VR para experiências diferenciadas</span>
+              </div>
+            </div>
+          </div>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">A melhor parte? Tudo isso está incluído na assinatura do SketchUp Pro, oferecendo um valor excepcional para profissionais de design de interiores.</p>
+          
+          <p class="text-zinc-300 leading-relaxed mb-8"><strong class="text-white">Comece hoje mesmo a transformar suas apresentações e eleve seus projetos a um novo patamar de profissionalismo!</strong></p>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="mt-12 mb-8">
+          <div class="bg-gradient-to-br from-cyan-600/20 via-blue-700/20 to-purple-800/20 border border-cyan-500/30 rounded-xl p-8 relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-blue-600/10 rounded-xl"></div>
+            <div class="relative z-10">
+              <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+                <div class="flex-1">
+                  <h4 class="text-cyan-300 font-bold text-xl mb-4">🎓 Transforme Ideias em Projetos Reais</h4>
+                  <p class="text-zinc-300 text-lg mb-6">Quer dominar todas as técnicas de apresentação de projetos de interiores apresentadas neste artigo? Nosso curso <strong class="text-white">Projetista 3D</strong> ensina você a usar o ecossistema completo do SketchUp Pro para criar apresentações profissionais que impressionam clientes.</p>
+                  
+                  <div class="bg-black/20 rounded-lg p-6 mb-6">
+                    <h5 class="text-white font-semibold mb-3">No curso você aprende:</h5>
+                    <ul class="space-y-2 text-zinc-300">
+                      <li>✓ Modelagem 3D profissional para design de interiores</li>
+                      <li>✓ StyleBuilder e criação de estilos personalizados</li>
+                      <li>✓ LayOut para documentação técnica completa</li>
+                      <li>✓ Renderização com Trimble Connect Visualizer</li>
+                      <li>✓ Apresentações interativas e realidade aumentada</li>
+                      <li>✓ Workflow completo do conceito à apresentação final</li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <div class="lg:ml-8">
+                  <div class="bg-gradient-to-br from-cyan-600 to-blue-700 rounded-lg p-1 hover:from-cyan-500 hover:to-blue-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                    <a 
+                      href="/cursos/projetista-3d" 
+                      className="block bg-zinc-900 rounded-lg px-8 py-6 text-center hover:bg-zinc-800 transition-colors duration-200"
+                    >
+                      <p className="font-bold text-lg mb-2 text-white">Comece Sua Jornada Profissional</p>
+                      <p className="text-cyan-100">Saiba mais sobre o curso Projetista 3D</p>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `,
+    author: {
+      id: 1,
+      name: 'Escola Habilidade',
+      bio: 'Especialistas em educação tecnológica',
+      avatar: '/images/avatars/escola-logo.png',
+      social: {
+        linkedin: 'https://linkedin.com/company/escola-habilidade',
+        instagram: 'https://instagram.com/escolahabilidade'
+      }
+    },
+    category: { id: 6, name: 'Arquitetura', slug: 'arquitetura', color: '#06B6D4' },
+    featuredImage: '/images/blog/como-apresentar-projetos-design-interior-sketchup/hero-image.jpg',
+    featured_image_url: '/images/blog/como-apresentar-projetos-design-interior-sketchup/hero-image.jpg',
+    publishedAt: '2025-01-03T10:00:00.000Z',
+    readingTime: 8,
+    tags: ['sketchup', 'design-interiores', 'apresentacao', '3d', 'layout', 'renderizacao', 'visualizacao'],
+    views: 0,
+    likes: 0
+  },
   {
     id: 112,
     title: 'Acelere seu Workflow de Modelagem 3D com Grey Boxing no SketchUp',
