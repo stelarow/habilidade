@@ -47,14 +47,315 @@ const mockCategories = [
     name: 'Arquitetura',
     slug: 'arquitetura',
     description: 'Design arquitetônico e projetos de construção',
-    postCount: 5,
+    postCount: 6,
     color: '#06B6D4'
   }
 ];
 
 const mockPosts = [
   {
-    id: 109,
+    id: 1,
+    title: 'Usando SketchUp em Fluxos de Trabalho de Arquitetura Paisagística',
+    slug: 'sketchup-arquitetura-paisagistica',
+    excerpt: 'Descubra como o SketchUp revoluciona os fluxos de trabalho de arquitetos paisagistas, desde o planejamento inicial até a administração da construção.',
+    content: `
+      <div class="article-content space-y-8">
+        
+        <div class="article-section">
+          <p class="text-zinc-300 leading-relaxed mb-6 text-lg">Os arquitetos paisagistas precisam de uma compreensão sólida dos fatores ambientais que cercam o local de trabalho. Os fluxos de trabalho de um projeto de arquitetura paisagística podem incluir as seguintes fases essenciais para o sucesso do projeto.</p>
+          
+          <div class="article-image mb-8">
+            <img src="/images/blog/sketchup-arquitetura-paisagistica/sketchup-landscape-1a.jpg" alt="SketchUp Arquitetura Paisagística Overview" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">SketchUp oferece ferramentas completas para arquitetura paisagística</p>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">As 5 Fases Essenciais do Projeto Paisagístico</h2>
+          
+          <div class="bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-500/20 rounded-lg p-6 my-6">
+            <ol class="space-y-3 text-zinc-300">
+              <li><strong class="text-green-300">1. Estratégias de Planejamento</strong> (Pré-Design)</li>
+              <li><strong class="text-green-300">2. Funções e Características</strong> (Design Esquemático)</li>
+              <li><strong class="text-green-300">3. Conceitos de Design</strong> (Desenvolvimento do Design)</li>
+              <li><strong class="text-green-300">4. Design do Local e Visualização</strong> (Documentos de Construção)</li>
+              <li><strong class="text-green-300">5. Controle de Qualidade</strong> (Administração da Construção)</li>
+            </ol>
+          </div>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">O SketchUp possui todas as ferramentas necessárias para ajudar arquitetos paisagistas a planejar e navegar em seus projetos, do início ao fim.</p>
+        </div>
+
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-6">1. Estratégias de Planejamento (Pré-Design)</h3>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Arquitetos paisagistas fornecem consultoria desde o início de um projeto para avaliar um local existente e oferecer estratégias sustentáveis para:</p>
+          
+          <ul class="space-y-2 mb-6 text-zinc-300">
+            <li>• <strong>Redução do efeito ilha de calor urbana</strong></li>
+            <li>• <strong>Áreas de sombreamento benéfico</strong></li>
+            <li>• <strong>Redução da poluição luminosa</strong></li>
+          </ul>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Durante a fase de planejamento, eles avaliam e fornecem informações sobre a qualidade dos espaços externos. O recurso PreDesign do SketchUp é um excelente ponto de partida para compreender intervenções que afetam espaços externos e oferecer linhas de base úteis sobre quais são as estratégias mais eficazes em uma localização específica.</p>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
+            <div>
+              <img src="/images/blog/sketchup-arquitetura-paisagistica/sketchup-landscape-1b.jpg" alt="Análise de sombreamento no SketchUp" class="rounded-lg shadow-md w-full">
+              <p class="text-sm text-zinc-400 mt-2">Análise de sombreamento e estudos ambientais</p>
+            </div>
+            <div>
+              <img src="/images/blog/sketchup-arquitetura-paisagistica/sketchup-landscape-2.jpg" alt="Planejamento estratégico" class="rounded-lg shadow-md w-full">
+              <p class="text-sm text-zinc-400 mt-2">Estratégias de planejamento sustentável</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-6">2. Funções e Características (Design Esquemático)</h3>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Durante a fase de Design Esquemático, arquitetos paisagistas planejam e ilustram elementos do local e entorno usando muitas das mesmas ferramentas que outros designers. Suas principais preocupações são:</p>
+          
+          <ul class="space-y-2 mb-6 text-zinc-300">
+            <li>• Diretrizes e padrões de design do local</li>
+            <li>• Pavimentação e estruturas do local</li>
+            <li>• Irrigação</li>
+            <li>• Circulação de pedestres, bicicletas, equestres e veículos</li>
+            <li>• Mobiliário urbano</li>
+            <li>• Elementos aquáticos</li>
+          </ul>
+          
+          <div class="bg-blue-50/10 border-l-4 border-blue-400 p-4 my-6">
+            <div class="flex">
+              <div class="ml-3">
+                <p class="text-sm text-blue-300">
+                  <strong>Dica Profissional:</strong> Utilize o 3D Warehouse para encontrar elementos paisagísticos prontos, como árvores, arbustos, mobiliário urbano e equipamentos de playground.
+                </p>
+              </div>
+            </div>
+          </div>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Semelhante ao entorno e móveis que arquitetos e designers de interiores usam, arquitetos paisagistas também populam seus modelos e cenas. Eles apenas usam diferentes tipos de elementos. O 3D Warehouse do SketchUp é uma ferramenta excelente para todos os designers e apresenta muitos modelos 3D pré-fabricados úteis.</p>
+        </div>
+
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-6">3. Conceitos de Design (Desenvolvimento do Design)</h3>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Assim como arquitetos e designers de interiores moldam uma planta baixa, o arquiteto paisagista imagina como o plano do terreno do local pode parecer e projeta sua forma.</p>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">O SketchUp possui ferramentas intuitivas para modelar superfícies e planos de terreno facilmente. À medida que o projeto progride, o arquiteto paisagista precisará trabalhar os detalhes do design.</p>
+          
+          <div class="article-image mb-8">
+            <img src="/images/blog/sketchup-arquitetura-paisagistica/sketchup-landscape-4.jpg" alt="Projeto Utah State Fairpark" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Modelagem de terreno no SketchUp para projeto paisagístico</p>
+          </div>
+          
+          <h4 class="text-lg font-semibold text-white mb-4">Estudo de Caso: Utah State Fairpark</h4>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">O local do projeto para o Utah State Fairpark tem um plano de terreno muito plano e fica bem ao lado de um rio. No entanto, o rio é cercado e o Fairpark fica um pouco alto demais acima do rio para que alguém possa aproveitá-lo.</p>
+          
+          <div class="article-image mb-8">
+            <img src="/images/blog/sketchup-arquitetura-paisagistica/sketchup-landscape-5.jpg" alt="Situação atual do Fairpark" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Situação atual: acesso limitado ao rio</p>
+          </div>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Usando o SketchUp como modelo base para desenhar por cima, o Arquiteto Paisagista mostra como o Fairpark pode se conectar ao rio criando uma área de gramado inclinada e removendo a cerca. Alterar o plano do terreno ao redor do rio cria uma área de caminhada fluvial mais agradável.</p>
+          
+          <div class="article-image mb-8">
+            <img src="/images/blog/sketchup-arquitetura-paisagistica/sketchup-landscape-7.jpg" alt="Proposta de redesign" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Proposta: integração harmoniosa com o ambiente natural</p>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
+            <div>
+              <img src="/images/blog/sketchup-arquitetura-paisagistica/sketchup-landscape-3.jpg" alt="Plano de plantio detalhado" class="rounded-lg shadow-md w-full">
+              <p class="text-sm text-zinc-400 mt-2">Plano de plantio e especificações técnicas</p>
+            </div>
+            <div class="article-content">
+              <h4 class="text-lg font-semibold text-white mb-3">Elementos-chave do Design Paisagístico:</h4>
+              <ul class="list-disc list-inside space-y-2 text-zinc-300">
+                <li>Especificação de espécies vegetais nativas</li>
+                <li>Sistemas de irrigação eficientes</li>
+                <li>Mobiliário urbano sustentável</li>
+                <li>Caminhos acessíveis</li>
+                <li>Áreas de recreação integradas</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-6">4. Design do Local e Visualização (Documentos de Construção)</h3>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Uma das tarefas dos arquitetos paisagistas envolve medir as quantidades e qualidades das características e materiais do local, incluindo elementos relacionados a:</p>
+          
+          <ul class="space-y-2 mb-6 text-zinc-300">
+            <li>• Redução do efeito ilha de calor urbana</li>
+            <li>• Áreas de sombreamento benéfico</li>
+            <li>• Poluição luminosa</li>
+            <li>• Abordagens sustentáveis para água ou energia</li>
+            <li>• Plantio nativo</li>
+            <li>• Circulação do local</li>
+          </ul>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Trabalhando principalmente em 2D, arquitetos paisagistas são responsáveis pelos materiais no local e pela qualidade que eles criam. Eles tomam decisões importantes sobre quanto de certos materiais havia e como isso afetou a qualidade ambiental do local.</p>
+          
+          <div class="bg-green-50/10 border-l-4 border-green-400 p-4 my-6">
+            <div class="flex">
+              <div class="ml-3">
+                <p class="text-sm text-green-300">
+                  <strong>Benefício Sustentável:</strong> Use o SketchUp para calcular precisamente áreas de plantio, pavimentação permeável e superfícies reflexivas, otimizando o desempenho ambiental do projeto.
+                </p>
+              </div>
+            </div>
+          </div>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6"><strong>O SketchUp é uma ferramenta excelente para realizar levantamentos de áreas e mostrar materiais.</strong></p>
+          
+          <div class="article-image mb-8">
+            <img src="/images/blog/sketchup-arquitetura-paisagistica/sketchup-landscape-6.jpg" alt="Quantificação de materiais" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Quantificação precisa de materiais e superfícies</p>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h3 class="text-xl font-semibold text-white mb-6">5. Controle de Qualidade (Administração da Construção)</h3>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">Arquitetos, designers de interiores e arquitetos paisagistas são todos responsáveis por garantir que os designs sejam instalados e construídos corretamente e com a qualidade especificada em seus desenhos. As renderizações que eles criam mostram a intenção final; no entanto, os desenhos e especificações mostram o que eles verificarão conforme o design é construído.</p>
+          
+          <div class="article-image mb-8">
+            <img src="/images/blog/sketchup-arquitetura-paisagistica/sketchup-landscape-8.jpg" alt="Acompanhamento da construção" class="w-full rounded-lg shadow-lg" />
+            <p class="text-zinc-400 text-sm mt-2 text-center italic">Visualização final para controle de qualidade</p>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Conceitos-Chave Aprendidos</h2>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border border-blue-500/20 rounded-lg p-6">
+              <h4 class="text-blue-300 font-semibold mb-3">🔄 Workflow Integrado</h4>
+              <p class="text-zinc-300">As 5 fases do projeto paisagístico trabalham em conjunto para criar soluções completas.</p>
+            </div>
+            <div class="bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-500/20 rounded-lg p-6">
+              <h4 class="text-green-300 font-semibold mb-3">🛠️ Ferramentas Versáteis</h4>
+              <p class="text-zinc-300">SketchUp adapta-se a cada etapa do processo de design paisagístico.</p>
+            </div>
+            <div class="bg-gradient-to-r from-yellow-500/10 to-orange-500/10 border border-yellow-500/20 rounded-lg p-6">
+              <h4 class="text-yellow-300 font-semibold mb-3">🌱 Sustentabilidade</h4>
+              <p class="text-zinc-300">Considere sempre impactos ambientais nas decisões de design.</p>
+            </div>
+            <div class="bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/20 rounded-lg p-6">
+              <h4 class="text-purple-300 font-semibold mb-3">📐 Documentação</h4>
+              <p class="text-zinc-300">A precisão técnica é crucial para execução bem-sucedida.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <div class="bg-yellow-50/10 border-l-4 border-yellow-400 p-4 my-6">
+            <div class="flex">
+              <div class="ml-3">
+                <p class="text-sm text-yellow-300">
+                  <strong>Exercício Prático:</strong> Tente recriar um espaço paisagístico familiar usando as técnicas apresentadas neste artigo. Comece com um terreno simples e adicione gradualmente elementos como vegetação, caminhos e mobiliário urbano.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="article-section">
+          <h2 class="text-2xl font-bold text-white mb-6">Próximos Passos para Dominar o SketchUp</h2>
+          
+          <div class="bg-zinc-800/30 rounded-lg p-6 mb-6">
+            <h4 class="text-white font-semibold mb-3">🚀 Aprofunde seus Conhecimentos</h4>
+            <ul class="space-y-2 text-zinc-300">
+              <li>• Explore tutoriais avançados de modelagem de terrenos</li>
+              <li>• Pratique com projetos reais de paisagismo</li>
+              <li>• Integre plugins especializados para arquitetura paisagística</li>
+              <li>• Desenvolva bibliotecas personalizadas de plantas e materiais</li>
+            </ul>
+          </div>
+          
+          <p class="text-zinc-300 leading-relaxed mb-6">O SketchUp oferece um conjunto completo de ferramentas que permitem aos arquitetos paisagistas criar, analisar e comunicar seus designs de forma eficiente, desde os estudos conceituais iniciais até a documentação final para construção.</p>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="mt-12 mb-8">
+          <div class="bg-gradient-to-br from-cyan-600/20 via-blue-700/20 to-purple-800/20 border border-cyan-500/30 rounded-xl p-8 relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-blue-600/10 rounded-xl"></div>
+            <div class="relative z-10">
+              <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+                <div class="flex-1">
+                  <h4 class="text-cyan-300 font-bold text-xl mb-4">🎓 Transforme Ideias em Projetos Reais</h4>
+                  <p class="text-zinc-300 text-lg mb-6">Quer aprender a criar projetos paisagísticos profissionais e dominar as técnicas de modelagem 3D apresentadas neste artigo? Nosso curso <strong class="text-white">Projetista 3D</strong> ensina você a usar ferramentas como SketchUp para criar projetos impressionantes de arquitetura paisagística.</p>
+                  
+                  <div class="bg-black/20 rounded-lg p-6 mb-6">
+                    <h5 class="text-white font-semibold mb-3">No curso você aprende:</h5>
+                    <ul class="space-y-2 text-zinc-300">
+                      <li>✓ Modelagem 3D profissional para paisagismo</li>
+                      <li>✓ Técnicas de terreno e topografia no SketchUp</li>
+                      <li>✓ Planejamento de projetos sustentáveis</li>
+                      <li>✓ Renderização e visualização arquitetônica</li>
+                      <li>✓ Apresentação profissional para clientes</li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <div class="lg:ml-8">
+                  <div class="bg-gradient-to-br from-cyan-600 to-blue-700 rounded-lg p-1 hover:from-cyan-500 hover:to-blue-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                    <a 
+                      href="/cursos/projetista-3d" 
+                      className="block bg-zinc-900 rounded-lg px-8 py-6 text-center hover:bg-zinc-800 transition-colors duration-200"
+                    >
+                      <p className="font-bold text-lg mb-2 text-white">Comece Sua Jornada Profissional</p>
+                      <p className="text-cyan-100">Saiba mais sobre o curso Projetista 3D</p>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    `,
+    author: {
+      id: 1,
+      name: 'Escola Habilidade',
+      bio: 'Especialistas em educação tecnológica',
+      avatar: '/images/avatars/escola-logo.png',
+      social: {
+        linkedin: 'https://linkedin.com/company/escola-habilidade',
+        instagram: 'https://instagram.com/escolahabilidade'
+      }
+    },
+    category: {
+      id: 6,
+      name: 'Arquitetura',
+      slug: 'arquitetura',
+      color: '#06B6D4'
+    },
+    publishedAt: '2025-08-03T10:00:00.000Z',
+    updatedAt: '2025-08-03T10:00:00.000Z',
+    readingTime: 8,
+    featured: true,
+    featured_image_url: '/images/blog/sketchup-arquitetura-paisagistica/sketchup-landscape-1a.jpg',
+    seo: {
+      title: 'SketchUp para Arquitetura Paisagística: Guia Completo de Workflows | Escola Habilidade',
+      description: 'Aprenda a usar o SketchUp em projetos de arquitetura paisagística. Guia completo com 5 fases essenciais do processo de design paisagístico.',
+      keywords: ['SketchUp paisagismo', 'arquitetura paisagística 3D', 'design de jardins', 'modelagem paisagística', 'SketchUp terrain'],
+      canonical_url: '/blog/sketchup-arquitetura-paisagistica',
+      og_image: '/images/blog/sketchup-arquitetura-paisagistica/sketchup-landscape-1a.jpg'
+    },
+    tags: ['SketchUp', 'Arquitetura Paisagística', 'Design 3D', 'Modelagem', 'Projetos Arquitetônicos', 'Paisagismo', 'Sustentabilidade'],
+    views: 0,
+    likes: 0
+  },
+  {
+    id: 110,
     title: 'Conheça 8 Tipos de Puxadores para Móveis e suas Características',
     slug: 'tipos-puxadores-moveis',
     excerpt: 'Descubra os principais tipos de puxadores para móveis, desde os clássicos coloniais até os modernos sistemas de clic. Guia completo com características, vantagens e aplicações ideais para cada modelo.',

@@ -17,39 +17,60 @@ const fallbackLessonData = {
   }
 }
 
-// Dados de progresso inicial
+// Dados de progresso inicial usando o tipo correto LessonProgressData
 const initialProgressData = {
-  lessonId: 'd1a9caa2-f86d-4c2d-bf4d-6d2402237c95',
   videoProgress: {
-    percentageWatched: 0,
     currentTime: 0,
     duration: 0,
-    lastWatchedAt: null
+    percentageWatched: 0,
+    watchTime: 0,
+    lastPosition: 0,
+    playbackRate: 1.0,
+    completedSegments: []
   },
   pdfProgress: {
-    percentageRead: 0,
     currentPage: 1,
     totalPages: 25,
-    lastReadAt: null
+    percentageRead: 0,
+    bookmarks: [],
+    readingTime: 0,
+    lastPageViewed: 1
   },
   quizProgress: {
+    currentQuestion: 0,
+    totalQuestions: 5,
+    answeredQuestions: [],
     score: 0,
+    attempts: 0,
+    timeSpent: 0,
     isCompleted: false,
-    isPassed: false,
-    completedAt: null
+    isPassed: false
   },
   exerciseProgress: {
-    percentageComplete: 0,
-    uploadedFiles: [],
-    completedAt: null
+    completedExercises: [],
+    submittedFiles: [],
+    pendingReviews: [],
+    totalExercises: 3,
+    completionPercentage: 0
   },
   contentProgress: {
-    percentageRead: 0,
-    lastReadAt: null
+    scrollPercentage: 0,
+    readingTime: 0,
+    sectionsRead: [],
+    estimatedCompletionTime: 3600
   },
-  overallProgress: 0,
-  completedAt: null,
-  isCompleted: false
+  overallProgress: {
+    percentageComplete: 0,
+    estimatedTimeRemaining: 3600,
+    lastActivity: new Date().toISOString(),
+    isCompleted: false,
+    componentProgress: [
+      { component: 'video' as const, percentage: 0, timeSpent: 0, isCompleted: false, weight: 0.3 },
+      { component: 'content' as const, percentage: 0, timeSpent: 0, isCompleted: false, weight: 0.2 },
+      { component: 'quiz' as const, percentage: 0, timeSpent: 0, isCompleted: false, weight: 0.3 },
+      { component: 'exercises' as const, percentage: 0, timeSpent: 0, isCompleted: false, weight: 0.2 }
+    ]
+  }
 }
 
 // URL do vídeo (exemplo)
