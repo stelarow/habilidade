@@ -285,7 +285,7 @@ const mockPosts = [
               </ul>
             </div>
             
-            <a href="/courses" class="block bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-lg text-center hover:from-blue-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl cursor-pointer">
+            <a href="/course/projetista-3d" class="block bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-lg text-center hover:from-blue-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl cursor-pointer">
               <p class="font-bold text-lg mb-2">Comece Sua Jornada Profissional</p>
               <p class="text-blue-100">Saiba mais sobre o curso Projetista 3D</p>
             </a>

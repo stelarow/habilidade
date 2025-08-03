@@ -43,6 +43,10 @@ const initialProgressData = {
     uploadedFiles: [],
     completedAt: null
   },
+  contentProgress: {
+    percentageRead: 0,
+    lastReadAt: null
+  },
   overallProgress: 0,
   completedAt: null,
   isCompleted: false
@@ -341,10 +345,10 @@ const canvaAuthorUrl = "https://www.canva.com/design/DAGuqW8uqiw/_HxYFw6YjdkL935
 
 export default function MarketingDigitalFundamentosPage() {
   const [lessonData, setLessonData] = useState(fallbackLessonData)
-  const [exercises, setExercises] = useState([])
-  const [quizzes, setQuizzes] = useState([])
+  const [exercises, setExercises] = useState<any[]>([])
+  const [quizzes, setQuizzes] = useState<any[]>([])
   const [lessonContent, setLessonContent] = useState('')
-  const [materials, setMaterials] = useState([])
+  const [materials, setMaterials] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
 
   const supabase = createClient()
