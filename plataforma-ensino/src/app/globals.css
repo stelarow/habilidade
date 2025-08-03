@@ -1004,7 +1004,7 @@ body {
   /* Quote icon for blockquotes */
   .lesson-content-enhanced.prose blockquote::before,
   .lesson-content.prose blockquote::before {
-    content: """ !important;
+    content: "\201C" !important;
     position: absolute !important;
     top: 0.5rem !important;
     left: 0.75rem !important;
@@ -1100,7 +1100,6 @@ body {
   /* Animated underline effect */
   .lesson-content-enhanced.prose a::after,
   .lesson-content.prose a::after {
-    content: "" !important;
     position: absolute !important;
     bottom: -2px !important;
     left: 0 !important;
