@@ -65,6 +65,8 @@ Dual-architecture educational platform for Escola Habilidade:
 ## Playwright Guidelines
 - Quando usar o playwright para acessar algum site, sempre aguarde de 5 a 10 segundos depois de acessar para aguardar o tempo de carregamento.
 
-## Memória de Troubleshooting  
+## Memórias de Context/Troubleshooting  
 - **Problema de Imagens Blog**: Se imagens de artigos de blog não carregam, consulte a memória `troubleshooting-imagens-blog-historia-sketchup` para diagnóstico completo e soluções conhecidas
-- **Comando para consultar**: Use `mcp__structured-memory__get_full_memory` com memory_id `troubleshooting-imagens-blog-historia-sketchup`
+- **SEO Otimizações**: Para contexto completo sobre SEO implementado, consulte `seo-optimization-escolahabilidade` - inclui problemas resolvidos, configurações técnicas e próximos passos
+- **Comando para consultar**: Use `mcp__structured-memory__get_full_memory` com o memory_id relevante
+- **Playwright MCP Image Upload Error**: Tenha cuidado com upload de imagens no Playwright MCP para evitar erro de dimensão máxima de 8000 pixels - API retorna erro 400 se a imagem for muito grande

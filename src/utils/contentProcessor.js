@@ -268,11 +268,6 @@ export function processContent(content, slug) {
   if (isMarkdown(processedContent)) {
     console.log('[ContentProcessor] Converting markdown to HTML for slug:', slug);
     
-    // Temporary fix: Use basic fallback for debugging the marked.js error
-    if (slug === 'historia-sketchup-software-arquitetura') {
-      console.log('[ContentProcessor] Using basic fallback for historia-sketchup due to marked.js errors');
-      processedContent = basicMarkdownToHtml(processedContent);
-    } else {
       try {
         processedContent = marked(processedContent);
       } catch (error) {

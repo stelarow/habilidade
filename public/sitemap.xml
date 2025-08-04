@@ -74,14 +74,7 @@
   </url>
   
   <!-- Blog Posts -->
-  <url>
-    <loc>https://www.escolahabilidade.com/blog/historia-sketchup-software-arquitetura</loc>
-    <lastmod>2025-08-04</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <url>
+<url>
     <loc>https://www.escolahabilidade.com/blog/design-espacos-varejo-sketchup-pro</loc>
     <lastmod>2025-08-04</lastmod>
     <changefreq>monthly</changefreq>

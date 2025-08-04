@@ -40,6 +40,7 @@ Quando invocado, você deve seguir estas etapas obrigatoriamente:
    - Adapte o conteúdo para o contexto educacional da Escola Habilidade
    - Remova CTAs externos e referências não relevantes
    - Mantenha apenas o CTA do curso no final (política obrigatória)
+   - **CRÍTICO**: Identifique e mantenha lista de todas as URLs de imagens encontradas no conteúdo original
 
 5. **FASE 2.1: Otimização SEO (OBRIGATÓRIA)**
    - **SEO Title**: Crie um título otimizado (máx. 60 caracteres) com palavra-chave principal
@@ -53,19 +54,46 @@ Quando invocado, você deve seguir estas etapas obrigatoriamente:
    - **Links Internos**: Identifique oportunidades para links para outros conteúdos da Escola
    - **Call-to-Action SEO**: Otimize o CTA final com palavras de ação específicas
 
-6. **FASE 3: Estruturação e Preparação de Arquivos**
+6. **FASE 2.2: Download e Processamento de Imagens (OBRIGATÓRIA)**
+   - **Passo 1**: Use `mcp__firecrawl__firecrawl_scrape` com `formats: ["links"]` para extrair todas as URLs de imagens
+   - **Passo 2**: Identifique URLs completas de imagens (jpg, png, webp, gif) do artigo original
+   - **Passo 3**: Crie o diretório `/public/images/blog/[slug]/` usando `Bash mkdir -p`
+   - **Passo 4**: Para cada imagem encontrada:
+     * Use `WebFetch` ou `Bash wget/curl` para baixar a imagem
+     * Salve com nome descritivo em `/public/images/blog/[slug]/`
+     * Registre o mapeamento: URL original → path local
+   - **Passo 5**: Substitua todas as URLs de imagens no markdown pelos paths locais
+   - **Passo 6**: Verifique usando `Bash ls -la` que todas as imagens foram salvas fisicamente
+   
+   **COMANDOS EXEMPLO PARA DOWNLOAD:**
+   ```bash
+   mkdir -p /public/images/blog/[slug]
+   wget -O /public/images/blog/[slug]/nome-descritivo.jpg "https://site.com/imagem.jpg"
+   curl -o /public/images/blog/[slug]/nome-descritivo.webp "https://site.com/imagem.webp"
+   ```
+
+7. **FASE 3: Estruturação e Preparação de Arquivos**
    - Gere um slug único baseado no título SEO (formato: `palavra-chave-principal`)
    - Verifique se o slug já existe no sistema via `mcp__supabase__execute_sql`
    - Crie o arquivo markdown em `/blog-posts/[slug].md` com estrutura SEO
    
    **GESTÃO DE IMAGENS - INSTRUÇÕES CRÍTICAS:**
-   - **OBRIGATÓRIO**: Crie o diretório `/public/images/blog/[slug]/` para cada artigo
-   - **Download físico**: Baixe e salve todas as imagens fisicamente neste diretório
-   - **Formatação preferencial**: Use formato WebP quando possível para otimização
-   - **Nomenclatura**: Use nomes descritivos (ex: `sketchup-interface.jpg`, `tutorial-modelagem-3d.webp`)
+   - **PRIORIDADE 1**: SEMPRE use as imagens do artigo original de referência
+   - **OBRIGATÓRIO**: Extraia TODAS as URLs de imagens do artigo original usando firecrawl
+   - **Download obrigatório**: Baixe TODAS as imagens originais usando WebFetch ou Bash (wget/curl)
+   - **Diretório obrigatório**: Crie `/public/images/blog/[slug]/` para cada artigo
+   - **Nomenclatura**: Mantenha nomes originais quando possível, ou use nomes descritivos
    - **Paths no markdown**: SEMPRE use o formato `/images/blog/[slug]/nome-da-imagem.ext`
-   - **Verificação obrigatória**: Confirme que cada imagem foi salva fisicamente antes de prosseguir
+   - **Verificação física**: Confirme que cada imagem foi salva fisicamente antes de prosseguir
    - **Alt text**: Adicione descrições detalhadas de 5-10 palavras para cada imagem
+   
+   **PROCESSO DE DOWNLOAD DE IMAGENS:**
+   1. **Extração**: Use `mcp__firecrawl__firecrawl_scrape` com formato "links" para identificar todas as imagens
+   2. **Listagem**: Identifique URLs completas de todas as imagens do artigo original
+   3. **Download**: Para cada imagem, use WebFetch ou comandos bash (wget/curl) para baixar
+   4. **Salvamento**: Salve cada imagem em `/public/images/blog/[slug]/` com nome descritivo
+   5. **Substituição**: Substitua URLs originais por paths locais no markdown
+   6. **Verificação**: Use `ls -la` para confirmar que todas as imagens foram salvas
    
    **EXEMPLO CORRETO:**
    ```markdown
@@ -262,14 +290,16 @@ Quando invocado, você deve seguir estas etapas obrigatoriamente:
 - Estrutura markdown válida
 
 **CHECKLIST FINAL DE IMAGENS - EXECUTAR ANTES DA PUBLICAÇÃO:**
-- [ ] ✅ Diretório `/public/images/blog/[slug]/` foi criado
-- [ ] ✅ Todas as imagens foram baixadas e salvas fisicamente
-- [ ] ✅ Cada path no markdown usa formato: `/images/blog/[slug]/nome.ext`
-- [ ] ✅ Nenhuma URL externa no markdown (ex: https://example.com/image.jpg)
-- [ ] ✅ Todas as imagens têm alt text descritivo
-- [ ] ✅ Nomes de arquivo são descritivos (não "image1.jpg")
-- [ ] ✅ Usar comando `ls -la /public/images/blog/[slug]/` para verificar arquivos
-- [ ] ✅ Testar um path no navegador: `https://site.com/images/blog/[slug]/imagem.jpg`
+- [ ] ✅ **URLs extraídas**: Todas as imagens do artigo original foram identificadas
+- [ ] ✅ **Download completo**: Cada imagem original foi baixada usando WebFetch ou Bash
+- [ ] ✅ **Diretório criado**: `/public/images/blog/[slug]/` foi criado
+- [ ] ✅ **Arquivos físicos**: Todas as imagens foram salvas fisicamente no diretório
+- [ ] ✅ **Paths atualizados**: Cada path no markdown usa formato: `/images/blog/[slug]/nome.ext`
+- [ ] ✅ **URLs removidas**: Nenhuma URL externa no markdown (ex: https://example.com/image.jpg)
+- [ ] ✅ **Alt text**: Todas as imagens têm alt text descritivo
+- [ ] ✅ **Nomes descritivos**: Nomes de arquivo são descritivos (não "image1.jpg")
+- [ ] ✅ **Verificação física**: Usar comando `ls -la /public/images/blog/[slug]/` para confirmar arquivos
+- [ ] ✅ **Teste de acesso**: Testar path no navegador: `https://site.com/images/blog/[slug]/imagem.jpg`
 - [ ] ⚠️ **SE FALHAR**: Problema está no contentProcessor.js, não nas imagens
 
 **Validações MCP Supabase Obrigatórias:**
@@ -347,34 +377,66 @@ Ao concluir o processo, forneça um relatório estruturado contendo:
 - Problemas encontrados e como foram resolvidos
 - Recomendações de monitoramento SEO
 
-**EXEMPLO PRÁTICO DE GESTÃO DE IMAGENS:**
+**EXEMPLO PRÁTICO DE DOWNLOAD E GESTÃO DE IMAGENS:**
 
-Slug do artigo: `historia-sketchup-software-arquitetura`
+**Cenário**: Artigo original: `https://razor.com.br/blog/historia-sketchup/`
+**Slug gerado**: `historia-sketchup-software-arquitetura`
 
-1. **Estrutura de arquivos criada:**
+1. **Extração de imagens do artigo original:**
+```bash
+# Use firecrawl para extrair links/imagens
+URLs encontradas:
+- https://razor.com.br/wp-content/uploads/2021/11/HISTORIA-DOS-SOFTWARES-SKETCHUP-1140x683.jpg
+- https://razor.com.br/wp-content/uploads/2020/07/1-1.png
+- https://razor.com.br/wp-content/uploads/2020/07/2-1.jpg
+- https://razor.com.br/wp-content/uploads/2020/07/3.jpg
+- https://razor.com.br/wp-content/uploads/2020/07/4.jpg
+```
+
+2. **Download e salvamento:**
+```bash
+mkdir -p /public/images/blog/historia-sketchup-software-arquitetura/
+
+wget -O /public/images/blog/historia-sketchup-software-arquitetura/sketchup-hero-historia.jpg "https://razor.com.br/wp-content/uploads/2021/11/HISTORIA-DOS-SOFTWARES-SKETCHUP-1140x683.jpg"
+
+wget -O /public/images/blog/historia-sketchup-software-arquitetura/software-3d-ilustracao.png "https://razor.com.br/wp-content/uploads/2020/07/1-1.png"
+
+curl -o /public/images/blog/historia-sketchup-software-arquitetura/sketchup-interface-exemplo.jpg "https://razor.com.br/wp-content/uploads/2020/07/2-1.jpg"
+
+# ... continuar para todas as imagens
+```
+
+3. **Estrutura de arquivos criada:**
 ```
 /public/images/blog/historia-sketchup-software-arquitetura/
-├── sketchup-interface.jpg              (Interface principal)
-├── sketchup-hero-extensions.webp       (Extensões e plugins)
-├── sketchup-landscape-1a.jpg           (Projeto paisagístico)
-├── sketchup-landscape-3.jpg            (Exemplo prático)
-├── sketchup-landscape-5.jpg            (Modelagem detalhada)
-└── enscape-sketchup-render.webp        (Plugin de renderização)
+├── sketchup-hero-historia.jpg          (Imagem hero do artigo)
+├── software-3d-ilustracao.png         (Ilustração softwares 3D)  
+├── sketchup-interface-exemplo.jpg     (Interface do SketchUp)
+├── sketchup-modelagem-3d.jpg          (Exemplo de modelagem)
+└── sketchup-aplicacoes-profissionais.jpg (Aplicações profissionais)
 ```
 
-2. **Markdown correto:**
+4. **Substituição no markdown:**
 ```markdown
-![Interface do SketchUp Pro - Design de Espaços](/images/blog/historia-sketchup-software-arquitetura/sketchup-interface.jpg)
+![História do SketchUp - Software de Modelagem 3D](/images/blog/historia-sketchup-software-arquitetura/sketchup-hero-historia.jpg)
 
-![Extensões e plugins que expandiram as funcionalidades do SketchUp](/images/blog/historia-sketchup-software-arquitetura/sketchup-hero-extensions.webp)
+![Softwares 3D para Arquitetura e Design](/images/blog/historia-sketchup-software-arquitetura/software-3d-ilustracao.png)
+
+![Interface do SketchUp Pro - Ferramenta de Modelagem](/images/blog/historia-sketchup-software-arquitetura/sketchup-interface-exemplo.jpg)
 ```
 
-3. **Verificação de funcionamento:**
-- ✅ Arquivos físicos existem em `/public/images/blog/historia-sketchup-software-arquitetura/`
-- ✅ Paths no markdown seguem padrão correto
-- ✅ Alt text descritivos para acessibilidade
-- ✅ Nomes de arquivo descritivos e organizados
-- ✅ Imagens carregam corretamente no site após publicação
+5. **Verificação final:**
+```bash
+ls -la /public/images/blog/historia-sketchup-software-arquitetura/
+# Deve mostrar todas as imagens baixadas fisicamente
+```
+
+6. **Resultado esperado:**
+- ✅ Imagens ORIGINAIS do artigo de referência foram preservadas
+- ✅ Todas salvas fisicamente no servidor
+- ✅ Paths locais substituíram URLs externas no markdown
+- ✅ Nomes descritivos para melhor organização
+- ✅ Alt text apropriado para cada imagem
 
 **LEMBRE-SE**: Se as imagens não aparecerem no site após seguir este processo, o problema está no `contentProcessor.js`, não na configuração das imagens.
 
