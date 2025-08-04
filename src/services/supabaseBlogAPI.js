@@ -142,7 +142,7 @@ export const supabaseBlogAPI = {
         .from('blog_posts')
         .select(`
           *,
-          blog_categories!inner(id, name, slug, description, color),
+          blog_categories(id, name, slug, description, color),
           blog_post_tags!left(
             blog_tags!inner(id, name, slug)
           ),
@@ -205,7 +205,7 @@ export const supabaseBlogAPI = {
         .from('blog_posts')
         .select(`
           *,
-          blog_categories!inner(id, name, slug, description, color),
+          blog_categories(id, name, slug, description, color),
           blog_post_tags!left(
             blog_tags!inner(id, name, slug)
           ),
@@ -263,7 +263,7 @@ export const supabaseBlogAPI = {
         .from('blog_posts')
         .select(`
           *,
-          blog_categories!inner(id, name, slug, description, color),
+          blog_categories(id, name, slug, description, color),
           blog_post_tags!left(
             blog_tags!inner(id, name, slug)
           ),
@@ -351,7 +351,7 @@ export const supabaseBlogAPI = {
         .from('blog_posts')
         .select(`
           *,
-          blog_categories!inner(id, name, slug, description, color),
+          blog_categories(id, name, slug, description, color),
           blog_post_tags!left(
             blog_tags!inner(id, name, slug)
           ),

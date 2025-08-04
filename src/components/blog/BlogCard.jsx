@@ -200,7 +200,12 @@ const BlogCard = ({ post, variant = 'standard', index = 0 }) => {
   );
 
   const handleCardClick = (e) => {
-    e.preventDefault();
+    // Only prevent default if it's the anchor tag
+    if (e.target.tagName === 'A' || e.currentTarget.tagName === 'A') {
+      e.preventDefault();
+    }
+    
+    // Navigate to the blog post
     const targetUrl = `/blog/${post.slug}`;
     window.location.href = targetUrl;
   };
@@ -211,14 +216,12 @@ const BlogCard = ({ post, variant = 'standard', index = 0 }) => {
       className={cardClasses}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onClick={handleCardClick}
+      style={{ cursor: 'pointer' }}
     >
-      <a 
-        href={`/blog/${post.slug}`}
-        onClick={handleCardClick}
-        className="block"
-      >
+      <div className="block w-full h-full">
         {/* Enhanced Featured Image Section */}
-        <div className={`relative bg-zinc-700/50 overflow-hidden ${isMobile ? 'h-40' : 'h-48'}`}>
+        <div className={`relative bg-zinc-700/50 overflow-hidden ${isMobile ? 'h-40' : 'h-48'} pointer-events-none`}>
           {imageSrc ? (
             <>
               <img
@@ -275,7 +278,7 @@ const BlogCard = ({ post, variant = 'standard', index = 0 }) => {
         </div>
 
         {/* Enhanced Content Section */}
-        <div className={`${isMobile ? 'p-4' : 'p-6'}`}>
+        <div className={`${isMobile ? 'p-4' : 'p-6'} pointer-events-none`}>
           <h2 className={combineClasses(
             "font-bold text-zinc-100 mb-3 line-clamp-2 group-hover:text-purple-300 transition-all duration-300 transform group-hover:translate-x-1",
             getTypographyClasses('title')
@@ -332,7 +335,7 @@ const BlogCard = ({ post, variant = 'standard', index = 0 }) => {
             </div>
           )}
         </div>
-      </a>
+      </div>
     </article>
   );
 };

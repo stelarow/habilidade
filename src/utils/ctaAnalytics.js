@@ -1,34 +1,10 @@
 /**
  * CTA Analytics - Sistema de tracking e analytics para CTAs
- * Implementa tracking de impressões, cliques e conversões
+ * Implementa tracking de impressÃµes, cliques e conversÃµes
  */
 
-// Configuração do Google Analytics
-const GA_MEASUREMENT_ID = 'GA_MEASUREMENT_ID'; // Substituir pela ID real
+import gaService from '../services/googleAnalyticsService';
 
-/**
- * Envia evento para Google Analytics
- */
-const sendGAEvent = (eventName, parameters = {}) => {
-  if (typeof window !== 'undefined' && window.gtag) {
-    window.gtag('event', eventName, {
-      ...parameters,
-      send_to: GA_MEASUREMENT_ID
-    });
-  }
-};
-
-/**
- * Envia evento customizado para Google Analytics
- */
-const sendCustomEvent = (category, action, label = '', value = 0) => {
-  sendGAEvent('custom_event', {
-    event_category: category,
-    event_action: action,
-    event_label: label,
-    value: value
-  });
-};
 
 /**
  * Storage local para tracking offline
@@ -36,7 +12,7 @@ const sendCustomEvent = (category, action, label = '', value = 0) => {
 class CTAAnalyticsStorage {
   constructor() {
     this.storageKey = 'cta_analytics_data';
-    this.maxStorageSize = 1000; // Máximo de eventos armazenados
+    this.maxStorageSize = 1000; // Mï¿½ximo de eventos armazenados
   }
 
   // Adiciona evento ao storage local
@@ -82,12 +58,12 @@ class CTAAnalyticsStorage {
     }
   }
 
-  // Gera ID único para evento
+  // Gera ID ï¿½nico para evento
   generateEventId() {
     return `cta_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
   }
 
-  // Obtém estatísticas dos eventos armazenados
+  // Obtï¿½m estatï¿½sticas dos eventos armazenados
   getLocalStats() {
     const events = this.getStoredEvents();
     
@@ -132,12 +108,12 @@ class CTAAnalytics {
   constructor() {
     this.sessionData = new Map();
     this.observedElements = new WeakSet();
-    this.impressionThreshold = 0.5; // 50% visível
-    this.impressionDuration = 1000; // 1 segundo visível
+    this.impressionThreshold = 0.5; // 50% visï¿½vel
+    this.impressionDuration = 1000; // 1 segundo visï¿½vel
   }
 
   /**
-   * Registra impressão de CTA
+   * Registra impressï¿½o de CTA
    */
   trackImpression(ctaData) {
     const eventData = {
@@ -157,7 +133,7 @@ class CTAAnalytics {
     };
 
     // Envia para Google Analytics
-    sendGAEvent('cta_impression', {
+    gaService.sendEvent('cta_impression', {
       cta_type: eventData.ctaType,
       post_slug: eventData.postSlug,
       course_id: eventData.courseId,
@@ -189,7 +165,10 @@ class CTAAnalytics {
     };
 
     // Envia para Google Analytics
-    sendGAEvent('cta_click', {
+    gaService.trackCTAClick(eventData.ctaType, eventData.position, eventData.courseId);
+    
+    // Additional custom tracking
+    gaService.sendEvent('cta_click', {
       cta_type: eventData.ctaType,
       post_slug: eventData.postSlug,
       course_id: eventData.courseId,
@@ -204,7 +183,7 @@ class CTAAnalytics {
   }
 
   /**
-   * Registra conversão (quando usuário completa ação)
+   * Registra conversï¿½o (quando usuï¿½rio completa aï¿½ï¿½o)
    */
   trackConversion(ctaData, conversionData = {}) {
     const eventData = {
@@ -235,7 +214,7 @@ class CTAAnalytics {
   }
 
   /**
-   * Configura observer de intersecção para tracking automático de impressões
+   * Configura observer de intersecï¿½ï¿½o para tracking automï¿½tico de impressï¿½es
    */
   observeImpressions(element, ctaData) {
     if (this.observedElements.has(element)) return;
@@ -244,7 +223,7 @@ class CTAAnalytics {
       (entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting && entry.intersectionRatio >= this.impressionThreshold) {
-            // Aguarda duração mínima antes de registrar impressão
+            // Aguarda duraï¿½ï¿½o mï¿½nima antes de registrar impressï¿½o
             setTimeout(() => {
               if (entry.isIntersecting) {
                 this.trackImpression(ctaData);
@@ -265,7 +244,7 @@ class CTAAnalytics {
   }
 
   /**
-   * Obtém ID da sessão
+   * Obtï¿½m ID da sessï¿½o
    */
   getSessionId() {
     let sessionId = sessionStorage.getItem('cta_session_id');
@@ -277,7 +256,7 @@ class CTAAnalytics {
   }
 
   /**
-   * Obtém número de impressões na sessão atual
+   * Obtï¿½m nï¿½mero de impressï¿½es na sessï¿½o atual
    */
   getSessionImpressions(postSlug) {
     const key = `impressions_${postSlug}`;
@@ -285,7 +264,7 @@ class CTAAnalytics {
   }
 
   /**
-   * Incrementa contador de impressões da sessão
+   * Incrementa contador de impressï¿½es da sessï¿½o
    */
   incrementSessionImpressions(postSlug) {
     const key = `impressions_${postSlug}`;
@@ -294,7 +273,7 @@ class CTAAnalytics {
   }
 
   /**
-   * Calcula tempo na página
+   * Calcula tempo na pï¿½gina
    */
   getTimeOnPage() {
     const startTime = parseInt(sessionStorage.getItem('page_start_time') || Date.now().toString());
@@ -302,7 +281,7 @@ class CTAAnalytics {
   }
 
   /**
-   * Gera relatório de performance
+   * Gera relatï¿½rio de performance
    */
   generateReport(timeframe = '7d') {
     const events = analyticsStorage.getStoredEvents();
@@ -334,7 +313,7 @@ class CTAAnalytics {
       topPerformers: []
     };
 
-    // Calcula métricas
+    // Calcula mï¿½tricas
     if (report.summary.totalImpressions > 0) {
       report.summary.ctr = (report.summary.totalClicks / report.summary.totalImpressions * 100).toFixed(2);
     }
@@ -351,7 +330,7 @@ class CTAAnalytics {
       report.byCtaType[type][event.type]++;
     });
 
-    // Calcula métricas por tipo
+    // Calcula mï¿½tricas por tipo
     Object.keys(report.byCtaType).forEach(type => {
       const data = report.byCtaType[type];
       data.ctr = data.impressions > 0 ? (data.clicks / data.impressions * 100).toFixed(2) : 0;
@@ -362,12 +341,12 @@ class CTAAnalytics {
   }
 }
 
-// Instância singleton
+// Instï¿½ncia singleton
 const ctaAnalytics = new CTAAnalytics();
 
-// Inicialização quando o DOM estiver pronto
+// Inicializaï¿½ï¿½o quando o DOM estiver pronto
 if (typeof window !== 'undefined') {
-  // Registra timestamp de início da página
+  // Registra timestamp de inï¿½cio da pï¿½gina
   sessionStorage.setItem('page_start_time', Date.now().toString());
 
   // Limpa eventos antigos periodicamente
@@ -391,7 +370,7 @@ export const useCTATracking = () => {
 };
 
 /**
- * Funções exportadas
+ * Funï¿½ï¿½es exportadas
  */
 export const trackCTAImpression = (ctaData) => ctaAnalytics.trackImpression(ctaData);
 export const trackCTAClick = (ctaData) => ctaAnalytics.trackClick(ctaData);

@@ -28,10 +28,14 @@ const NotFound = React.lazy(() => import('./pages/NotFound'));
 // Otimizações de performance
 import domOptimizer from './utils/domOptimizer';
 import usePerformanceLevel from './hooks/usePerformanceLevel';
+import useGoogleAnalytics from './hooks/useGoogleAnalytics';
 
 // Component to handle routes with cleanup
 function RoutesWithCleanup() {
   const location = useLocation();
+  
+  // Track page views with Google Analytics
+  useGoogleAnalytics();
   
   // Force component cleanup on route change
   useEffect(() => {

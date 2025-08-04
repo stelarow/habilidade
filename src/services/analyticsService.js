@@ -3,6 +3,8 @@
  * Tracks user interactions without collecting personal data
  */
 
+import gaService from './googleAnalyticsService';
+
 class AnalyticsService {
   constructor() {
     this.isEnabled = this.checkConsent();
@@ -103,6 +105,9 @@ class AnalyticsService {
       viewStartTime: Date.now()
     });
 
+    // Send to Google Analytics
+    gaService.trackPostView(postSlug, postTitle, category, readingTime);
+
     // Start tracking time on page
     this.startTimeTracking(postSlug);
   }
@@ -117,6 +122,9 @@ class AnalyticsService {
       category,
       queryLength: query.length
     });
+
+    // Send to Google Analytics
+    gaService.trackSearch(query, resultsCount);
   }
 
   /**
@@ -128,6 +136,9 @@ class AnalyticsService {
       postSlug,
       postTitle: this.sanitizeText(postTitle)
     });
+
+    // Send to Google Analytics
+    gaService.trackShare(platform, postSlug, postTitle);
   }
 
   /**
@@ -139,6 +150,9 @@ class AnalyticsService {
       categoryName: this.sanitizeText(categoryName),
       postsCount
     });
+
+    // Send to Google Analytics
+    gaService.trackCategoryView(categorySlug, categoryName, postsCount);
   }
 
   /**
@@ -153,6 +167,9 @@ class AnalyticsService {
         percentage,
         milestone: `${percentage}%`
       });
+
+      // Send to Google Analytics
+      gaService.trackReadingProgress(postSlug, percentage);
     }
   }
 
@@ -238,11 +255,16 @@ class AnalyticsService {
     
     // Only track if user was active for at least 10 seconds
     if (timeSpent >= 10000) {
+      const engagementLevel = this.calculateEngagementLevel(timeSpent);
+      
       this.track('time_on_page', {
         postSlug: this.currentPost.slug,
         timeSpent: Math.round(timeSpent / 1000), // in seconds
-        engagementLevel: this.calculateEngagementLevel(timeSpent)
+        engagementLevel
       });
+
+      // Send to Google Analytics
+      gaService.trackEngagementTime(this.currentPost.slug, timeSpent, engagementLevel);
     }
 
     this.currentPost = null;
