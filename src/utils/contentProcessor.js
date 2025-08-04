@@ -135,17 +135,17 @@ renderer.tablecell = function(content, flags) {
   return `<${type} class="${className}">${content}</${type}>`;
 };
 
-// Configure marked with custom renderer and options
+// Configure marked with custom renderer and options - simplified for debugging
 marked.setOptions({
   renderer: renderer,
   highlight: null,
-  langPrefix: 'hljs language-',
+  langPrefix: '',
   breaks: true,
   gfm: true,
-  silent: false,
+  silent: true, // Suppress errors to prevent crashes
   pedantic: false,
   sanitize: false,
-  smartLists: true,
+  smartLists: false, // Disable smart lists to avoid potential issues
   smartypants: false
 });
 
