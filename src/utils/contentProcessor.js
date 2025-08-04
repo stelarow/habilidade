@@ -139,8 +139,13 @@ renderer.tablecell = function(content, flags) {
 marked.setOptions({
   renderer: renderer,
   highlight: function(code, lang) {
-    if (!lang || typeof lang !== 'string') {
-      return code;
+    // Temporarily disable highlighting to fix TypeError
+    try {
+      if (lang && typeof lang === 'string' && hljs.getLanguage(lang)) {
+        return hljs.highlight(code, { language: lang }).value;
+      }
+    } catch (error) {
+      console.warn('[ContentProcessor] Highlight error:', error);
     }
     return code;
   },
