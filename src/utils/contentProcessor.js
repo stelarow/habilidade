@@ -138,7 +138,14 @@ renderer.tablecell = function(content, flags) {
 // Configure marked with custom renderer and options - simplified for debugging
 marked.setOptions({
   renderer: renderer,
-  highlight: null,
+  highlight: function(code, lang) {
+    // Safely handle language parameter
+    if (!lang || typeof lang !== 'string') {
+      return code;
+    }
+    // For now, just return the code without highlighting to avoid errors
+    return code;
+  },
   langPrefix: '',
   breaks: true,
   gfm: true,
