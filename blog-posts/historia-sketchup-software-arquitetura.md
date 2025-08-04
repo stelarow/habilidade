@@ -2,6 +2,8 @@
 
 *Descubra a fascinante história do SketchUp desde sua criação em 1999 até se tornar a ferramenta preferida de arquitetos e designers em todo o mundo.*
 
+![Interface do SketchUp Pro - Design de Espaços](/images/blog/historia-sketchup-software-arquitetura/sketchup-interface.jpg)
+
 Como arquiteto ou designer de interiores, você possivelmente já teve alguma dificuldade em apresentar aos seus clientes suas ideias, não é mesmo?
 
 Considerando essa dificuldade, desenvolvedores criaram alguns softwares, e o **SketchUp se destaca nessa área**. O SketchUp é um instrumento desenvolvido para projetar imagens 3D, normalmente utilizado em desenhos arquitetônicos, componentes e modelos.
@@ -14,6 +16,8 @@ Atualmente, o programa já conta com comunidades e fóruns de usuários no mundo
 
 Antes de conhecer todos os benefícios que este software tem a oferecer para a sua atividade profissional, que tal compreender um pouco mais sobre a história do SketchUp?
 
+![Extensões e plugins que expandiram as funcionalidades do SketchUp](/images/blog/historia-sketchup-software-arquitetura/sketchup-hero-extensions.webp)
+
 O **SketchUp foi desenvolvido pela Startup Last D. Software**, em Boulder, no estado do Colorado em **1999**.
 
 Lançaram o SketchUp em **2000 como uma ferramenta para criar projetos em 3D**. Ou seja, devido à facilidade de uso, ele rapidamente conquistou o mercado da arquitetura e foi revisado para atender às demandas de trabalhos profissionais na área.
@@ -23,6 +27,8 @@ Lançaram o SketchUp em **2000 como uma ferramenta para criar projetos em 3D**. 
 O segredo do crescimento e do sucesso do Sketchup é a **grande facilidade de aprendizado do software**, ao contrário de outros softwares concorrentes que exigem mais do usuário final.
 
 ### As Mudanças de Propriedade
+
+![SketchUp sendo usado em projeto de arquitetura paisagística](/images/blog/historia-sketchup-software-arquitetura/sketchup-landscape-1a.jpg)
 
 Posteriormente, o **SketchUp foi comprado pela Google**, assim como a empresa que o desenvolveu, em **14 de março de 2006**. Após algumas atualizações, a ferramenta foi vendida para a **Trimble Navigation em 2012**, empresa responsável pela sua manutenção até os dias de hoje.
 
@@ -35,6 +41,8 @@ O SketchUp possui duas versões principais:
 No Brasil, sua revendedora autorizada é a totalCAD Softwares Técnicos, que disponibiliza em sua página downloads de avaliação da versão Pro em português. O programa está disponível para os sistemas Windows e Macintosh.
 
 ## Quais Profissionais Utilizam o SketchUp?
+
+![Exemplo de projeto paisagístico desenvolvido no SketchUp](/images/blog/historia-sketchup-software-arquitetura/sketchup-landscape-3.jpg)
 
 Atualmente diferentes profissionais são adeptos ao software, dentre eles:
 
@@ -58,6 +66,8 @@ A resposta é simples: você desenvolverá suas atividades com muito mais **faci
 ### Benefícios Práticos do SketchUp
 
 Esse software abriga toda estrutura necessária para **elaborar layouts e ampliar a sua visão espacial de cada criação**. Esse é o caso dos projetos com topografias bem definidas, como as modelagens de terrenos, que necessitam de percepções mais detalhadas e práticas.
+
+![Modelagem 3D detalhada de paisagismo no SketchUp](/images/blog/historia-sketchup-software-arquitetura/sketchup-landscape-5.jpg)
 
 Você sabia que com o SketchUp é possível projetar uma maquete eletrônica em 3D? Este também é um dos destaques desse software, mais um fator que justifica seu amplo uso em todo o mundo.
 
@@ -86,6 +96,8 @@ Com esta função o controle do projeto passa da modelagem 3D e se reflete tamb�
 Após a compra pela Google, a ferramenta também passa a aceitar diversos **plugins** (inclusive desenvolvidos por outras empresas) que podem ser utilizados até hoje.
 
 ### Os Principais Plugins
+
+![Plugin Enscape para renderização realista no SketchUp](/images/blog/historia-sketchup-software-arquitetura/enscape-sketchup-render.webp)
 
 Os principais plugins são:
 

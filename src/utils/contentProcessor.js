@@ -265,9 +265,7 @@ export function processContent(content, slug) {
   if (isMarkdown(processedContent)) {
     console.log('[ContentProcessor] Converting markdown to HTML for slug:', slug);
     try {
-      console.log('[ContentProcessor] DEBUGGING: Temporarily skipping marked.js parsing');
-      // Temporarily skip marked.js to isolate the error
-      processedContent = basicMarkdownToHtml(processedContent);
+      processedContent = marked(processedContent);
     } catch (error) {
       console.error('[ContentProcessor] Error parsing markdown:', error);
       // Last resort: return original content with basic HTML structure

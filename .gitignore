@@ -29,3 +29,6 @@ plataforma-ensino/Exemplo-pagina-aula/
 
 # Claude development files
 .claude/settings.local.json
+
+# Local Netlify folder
+.netlify
