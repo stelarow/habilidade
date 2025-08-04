@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1f2937;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#374151;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#111827;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="iconGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f59e0b;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#d97706;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#b45309;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="800" height="450" fill="url(#bgGrad)"/>
+  
+  <!-- Grid pattern -->
+  <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#374151" stroke-width="0.5" opacity="0.3"/>
+  </pattern>
+  <rect width="800" height="450" fill="url(#grid)"/>
+  
+  <!-- Central 3D cube icon representing SketchUp -->
+  <g transform="translate(400,225)">
+    <!-- 3D Cube -->
+    <g transform="scale(2.5)">
+      <!-- Front face -->
+      <path d="M-30,-20 L30,-20 L30,40 L-30,40 Z" fill="url(#iconGrad)" opacity="0.9"/>
+      <!-- Top face -->
+      <path d="M-30,-20 L-10,-40 L50,-40 L30,-20 Z" fill="#fbbf24" opacity="0.8"/>
+      <!-- Right face -->
+      <path d="M30,-20 L50,-40 L50,20 L30,40 Z" fill="#f59e0b" opacity="0.7"/>
+      
+      <!-- Grid lines on faces -->
+      <g stroke="#92400e" stroke-width="0.8" opacity="0.4">
+        <line x1="-10" y1="-20" x2="-10" y2="40"/>
+        <line x1="10" y1="-20" x2="10" y2="40"/>
+        <line x1="-30" y1="0" x2="30" y2="0"/>
+        <line x1="-30" y1="20" x2="30" y2="20"/>
+      </g>
+    </g>
+    
+    <!-- Title -->
+    <text x="0" y="80" text-anchor="middle" fill="#f3f4f6" font-family="Inter, sans-serif" font-size="28" font-weight="600">
+      História do SketchUp
+    </text>
+    
+    <!-- Subtitle -->
+    <text x="0" y="110" text-anchor="middle" fill="#9ca3af" font-family="Inter, sans-serif" font-size="16" font-weight="400">
+      Software Favorito dos Arquitetos
+    </text>
+  </g>
+  
+  <!-- Decorative elements -->
+  <circle cx="120" cy="80" r="3" fill="#f59e0b" opacity="0.6">
+    <animate attributeName="opacity" values="0.6;1;0.6" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="680" cy="370" r="4" fill="#d97706" opacity="0.5">
+    <animate attributeName="opacity" values="0.5;0.9;0.5" dur="3s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="720" cy="100" r="2" fill="#fbbf24" opacity="0.7">
+    <animate attributeName="opacity" values="0.7;1;0.7" dur="1.5s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- Bottom brand -->
+  <text x="400" y="420" text-anchor="middle" fill="#6b7280" font-family="Inter, sans-serif" font-size="12" font-weight="400">
+    Escola Habilidade
+  </text>
+</svg>

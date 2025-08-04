@@ -66,9 +66,11 @@ const BlogCard = ({ post, variant = 'standard', index = 0 }) => {
 
   // Enhanced image handling with multiple fallbacks
   const getImageSrc = () => {
-    // Priority order: featured_image_url > featuredImage
+    // Priority order: image_url > featured_image_url > featuredImage > imageUrl
+    if (post.image_url && post.image_url !== null) return post.image_url;
     if (post.featured_image_url && post.featured_image_url !== null) return post.featured_image_url;
     if (post.featuredImage && post.featuredImage !== null) return post.featuredImage;
+    if (post.imageUrl && post.imageUrl !== null) return post.imageUrl;
     return null; // Will trigger our enhanced placeholder
   };
 
