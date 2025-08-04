@@ -64,3 +64,7 @@ Dual-architecture educational platform for Escola Habilidade:
 
 ## Playwright Guidelines
 - Quando usar o playwright para acessar algum site, sempre aguarde de 5 a 10 segundos depois de acessar para aguardar o tempo de carregamento.
+
+## Memória de Troubleshooting  
+- **Problema de Imagens Blog**: Se imagens de artigos de blog não carregam, consulte a memória `troubleshooting-imagens-blog-historia-sketchup` para diagnóstico completo e soluções conhecidas
+- **Comando para consultar**: Use `mcp__structured-memory__get_full_memory` com memory_id `troubleshooting-imagens-blog-historia-sketchup`
