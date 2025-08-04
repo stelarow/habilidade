@@ -46,27 +46,47 @@ interface BlogPost {
 }
 
 import { getBlogPosts } from '@/lib/supabase/blog';
+import { extractFirstImageWithFallback } from '@/lib/utils/extract-first-image';
 
 async function getPosts() {
   try {
+    console.log('getPosts: Attempting to fetch from Supabase...');
     const posts = await getBlogPosts(50); // Get first 50 posts
+    console.log('getPosts: Successfully fetched from Supabase, count:', posts.length);
     return posts;
   } catch (error) {
     console.error('Error fetching blog posts:', error);
+    console.log('getPosts: Falling back to mock data...');
     // Fallback to mock data if Supabase fails
     const mockModule = await import('@/services/blogMockData');
     const posts = mockModule.mockPosts || mockModule.default?.posts || [];
     
+    console.log('getPosts: Mock posts count:', posts.length);
+    console.log('getPosts: First mock post fields:', posts[0] ? Object.keys(posts[0]) : 'No posts');
+    
     return posts.map((post: any) => ({
       ...post,
       id: post.id.toString(),
-      publishedAt: post.publishedAt || new Date().toISOString()
+      publishedAt: post.publishedAt || new Date().toISOString(),
+      imageUrl: extractFirstImageWithFallback(post.content, post.og_image || post.image || '/images/placeholder.jpg')
     }));
   }
 }
 
+import { DebugInfo } from './debug-info';
+
 export default async function BlogPage() {
   const posts = await getPosts();
+  
+  console.log('BlogPage - Total posts:', posts.length);
+  if (posts.length > 0) {
+    console.log('BlogPage - First post:', {
+      title: posts[0].title,
+      imageUrl: posts[0].imageUrl,
+      hasImageUrl: !!posts[0].imageUrl,
+      imageUrlValue: posts[0].imageUrl
+    });
+  }
   return (
     <main className="min-h-screen bg-zinc-950">
       <div className="container mx-auto px-4 py-12 max-w-7xl">
@@ -79,6 +99,8 @@ export default async function BlogPage() {
             Aprenda com tutoriais práticos e fique por dentro das últimas tendências.
           </p>
         </header>
+
+        <DebugInfo posts={posts} />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {posts.map((post) => (

@@ -63,11 +63,21 @@ export async function getBlogPosts(limit = 10, offset = 0) {
   
   if (error) throw error;
   
-  return data?.map(post => ({
-    ...post,
-    tags: post.tags?.map((t: any) => t.tag) || [],
-    imageUrl: extractFirstImageWithFallback(post.content, post.image_url)
-  })) || [];
+  const result = data?.map(post => {
+    const imageUrl = extractFirstImageWithFallback(post.content, post.image_url);
+    console.log('Post:', post.title);
+    console.log('Image URL from DB:', post.image_url);
+    console.log('Extracted imageUrl:', imageUrl);
+    console.log('---');
+    
+    return {
+      ...post,
+      tags: post.tags?.map((t: any) => t.tag) || [],
+      imageUrl
+    };
+  }) || [];
+  
+  return result;
 }
 
 export async function getBlogPostBySlug(slug: string) {
