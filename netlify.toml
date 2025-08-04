@@ -17,8 +17,9 @@
   status = 301
   force = true
 
-# SPA redirect
+# SPA redirect - exclude static assets
 [[redirects]]
   from = "/*"
   to = "/index.html"
-  status = 200 
+  status = 200
+  conditions = {Path = "!(/images/*,/assets/*,*.js,*.css,*.png,*.jpg,*.jpeg,*.gif,*.svg,*.webp,*.ico,*.woff,*.woff2,*.ttf,*.eot,*.pdf,*.txt,*.xml,*.json,*.map)"} 
