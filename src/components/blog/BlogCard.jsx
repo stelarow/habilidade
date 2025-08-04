@@ -219,30 +219,36 @@ const BlogCard = ({ post, variant = 'standard', index = 0 }) => {
       >
         {/* Enhanced Featured Image Section */}
         <div className={`relative bg-zinc-700/50 overflow-hidden ${isMobile ? 'h-40' : 'h-48'}`}>
-          {imageSrc && imageState.isInView && !imageState.error ? (
-            <img
-              ref={imageRef}
-              src={imageSrc}
-              alt={post.title}
-              className={`w-full h-full object-cover transition-all duration-500 group-hover:scale-110 ${
-                imageState.loaded ? 'opacity-100' : 'opacity-0'
-              }`}
-              onLoad={handleImageLoad}
-              onError={handleImageError}
-              loading="lazy"
-            />
-          ) : null}
-          
-          {/* Show placeholder when no image or error */}
-          {(!imageSrc || imageState.error || !imageState.loaded) && (
+          {imageSrc ? (
+            <>
+              <img
+                ref={imageRef}
+                src={imageSrc}
+                alt={post.title}
+                className={`w-full h-full object-cover transition-all duration-500 group-hover:scale-110 ${
+                  imageState.loaded ? 'opacity-100' : 'opacity-0'
+                }`}
+                onLoad={handleImageLoad}
+                onError={handleImageError}
+                loading="lazy"
+              />
+              
+              {/* Show placeholder only while loading or on error */}
+              {(!imageState.loaded || imageState.error) && (
+                <div className="absolute inset-0">
+                  <EnhancedPlaceholder />
+                </div>
+              )}
+              
+              {/* Loading indicator */}
+              {!imageState.loaded && !imageState.error && (
+                <div className="absolute inset-0 flex items-center justify-center bg-zinc-800/50">
+                  <div className="w-8 h-8 border-3 border-purple-400 border-t-transparent rounded-full animate-spin"></div>
+                </div>
+              )}
+            </>
+          ) : (
             <EnhancedPlaceholder />
-          )}
-          
-          {/* Loading indicator */}
-          {imageSrc && imageState.isInView && !imageState.loaded && !imageState.error && (
-            <div className="absolute inset-0 flex items-center justify-center bg-zinc-800/50">
-              <div className="w-8 h-8 border-3 border-purple-400 border-t-transparent rounded-full animate-spin"></div>
-            </div>
           )}
           
           {/* Category Badge */}
