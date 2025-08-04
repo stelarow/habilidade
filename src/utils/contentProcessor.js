@@ -139,20 +139,9 @@ renderer.tablecell = function(content, flags) {
 marked.setOptions({
   renderer: renderer,
   highlight: function(code, lang) {
-    // Ensure lang is a string and not null/undefined
-    if (lang && typeof lang === 'string' && hljs.getLanguage(lang)) {
-      try {
-        return hljs.highlight(code, { language: lang }).value;
-      } catch (err) {
-        console.warn('Highlight.js error:', err);
-      }
-    }
-    try {
-      return hljs.highlightAuto(code).value;
-    } catch (err) {
-      console.warn('Highlight.js auto error:', err);
-      return code; // Return plain code if highlighting fails
-    }
+    // Temporarily disable highlighting to isolate the error
+    console.log('[ContentProcessor] Highlight disabled for debugging - lang:', lang, 'type:', typeof lang);
+    return code;
   },
   langPrefix: 'hljs language-',
   breaks: true,
