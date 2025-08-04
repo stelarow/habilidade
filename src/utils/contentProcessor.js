@@ -250,19 +250,14 @@ export function processContent(content, slug) {
   if (isMarkdown(processedContent)) {
     console.log('[ContentProcessor] Converting markdown to HTML for slug:', slug);
     try {
-      // Ensure content is properly formatted for marked
-      const cleanContent = processedContent.trim();
-      processedContent = marked.parse(cleanContent);
+      console.log('[ContentProcessor] DEBUGGING: Temporarily skipping marked.js parsing');
+      // Temporarily skip marked.js to isolate the error
+      processedContent = basicMarkdownToHtml(processedContent);
     } catch (error) {
       console.error('[ContentProcessor] Error parsing markdown:', error);
-      // Fallback: try basic markdown-to-HTML conversion
-      try {
-        processedContent = basicMarkdownToHtml(processedContent);
-      } catch (fallbackError) {
-        console.error('[ContentProcessor] Fallback conversion also failed:', fallbackError);
-        // Last resort: return original content with basic HTML structure
-        return `<div class="prose prose-lg prose-invert max-w-none"><div class="text-gray-300">${content.replace(/\n/g, '<br>')}</div></div>`;
-      }
+      // Last resort: return original content with basic HTML structure
+      return `<div class="prose prose-lg prose-invert max-w-none"><div class="text-gray-300">${content.replace(/
+/g, '<br>')}</div></div>`;
     }
   }
   
