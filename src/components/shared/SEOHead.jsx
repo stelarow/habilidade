@@ -31,7 +31,7 @@ const SEOHead = ({
   
   // Base URL - adjust for production
   const baseUrl = process.env.NODE_ENV === 'production' 
-    ? 'https://escolahabilidade.com.br'
+    ? 'https://www.escolahabilidade.com'
     : 'http://localhost:5173';
   
   const fullUrl = `${baseUrl}${path}`;

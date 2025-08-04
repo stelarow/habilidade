@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://stelarow.github.io/habilidade/sitemap.xml 
+Sitemap: https://www.escolahabilidade.com/sitemap.xml 

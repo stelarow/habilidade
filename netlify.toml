@@ -4,6 +4,19 @@
   command = "npm install --include=dev && npm run build"
   publish = "dist"
 
+# Domain redirects
+[[redirects]]
+  from = "https://escolahabilidade.com/*"
+  to = "https://www.escolahabilidade.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://escolahabilidade.com.br/*"
+  to = "https://www.escolahabilidade.com/:splat"
+  status = 301
+  force = true
+
 # SPA redirect
 [[redirects]]
   from = "/*"

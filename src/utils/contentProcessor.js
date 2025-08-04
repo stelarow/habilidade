@@ -261,9 +261,12 @@ export function processContent(content, slug) {
   if (isMarkdown(processedContent)) {
     console.log('[ContentProcessor] Converting markdown to HTML for slug:', slug);
     
-    // Temporary fix: Use fallback processor for all articles due to marked.js TypeError
-    console.log('[ContentProcessor] Using fallback processor due to marked.js TypeError issues');
-    processedContent = basicMarkdownToHtml(processedContent);
+    try {
+      processedContent = marked(processedContent);
+    } catch (error) {
+      console.warn('[ContentProcessor] marked.js failed, using fallback:', error);
+      processedContent = basicMarkdownToHtml(processedContent);
+    }
   }
   
   // Apply client-side image optimization after content is processed

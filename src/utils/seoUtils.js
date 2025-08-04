@@ -5,7 +5,7 @@
 
 // Base configuration
 const BASE_URL = process.env.NODE_ENV === 'production' 
-  ? 'https://escolahabilidade.com.br'
+  ? 'https://www.escolahabilidade.com'
   : 'http://localhost:5173';
 
 const SITE_CONFIG = {
