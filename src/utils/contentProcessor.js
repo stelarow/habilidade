@@ -139,8 +139,9 @@ renderer.tablecell = function(content, flags) {
 marked.setOptions({
   renderer: renderer,
   highlight: function(code, lang) {
-    // Temporarily disable highlighting to isolate the error
-    console.log('[ContentProcessor] Highlight disabled for debugging - lang:', lang, 'type:', typeof lang);
+    if (!lang || typeof lang !== 'string') {
+      return code;
+    }
     return code;
   },
   langPrefix: 'hljs language-',
