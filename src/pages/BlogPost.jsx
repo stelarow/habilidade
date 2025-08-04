@@ -50,6 +50,39 @@ const getCategoryColor = (categorySlug) => {
   return colors[categorySlug] || 'bg-zinc-500/20 text-zinc-300 border-zinc-500/30';
 };
 
+// Function to fix image paths in blog content
+const fixImagePaths = (content, slug) => {
+  if (!content || !slug) return content;
+  
+  // Generic approach: fix image paths that don't include the slug directory
+  let fixedContent = content;
+  
+  // Find all image tags with paths like /images/blog/[filename]
+  const imgRegex = /<img[^>]+src="([^"]+)"/g;
+  const matches = [...content.matchAll(imgRegex)];
+  
+  matches.forEach(match => {
+    const fullMatch = match[0];
+    const imagePath = match[1];
+    
+    // Check if it's a blog image that needs fixing
+    if (imagePath.startsWith('/images/blog/') && !imagePath.includes(`/images/blog/${slug}/`)) {
+      // Extract filename from the path
+      const pathParts = imagePath.split('/');
+      const filename = pathParts[pathParts.length - 1];
+      
+      // Create new path with slug directory
+      const newPath = `/images/blog/${slug}/${filename}`;
+      
+      // Replace the old path with new path
+      const newImgTag = fullMatch.replace(imagePath, newPath);
+      fixedContent = fixedContent.replace(fullMatch, newImgTag);
+    }
+  });
+  
+  return fixedContent;
+};
+
 const BlogPost = () => {
   const { slug } = useParams();
   
@@ -252,7 +285,7 @@ const BlogPost = () => {
             <div className="prose prose-lg prose-invert max-w-none">
               <div 
                 ref={articleReference}
-                dangerouslySetInnerHTML={{ __html: post.content }}
+                dangerouslySetInnerHTML={{ __html: fixImagePaths(post.content, slug) }}
                 className="article-content"
               />
             </div>
