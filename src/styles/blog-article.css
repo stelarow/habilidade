@@ -32,7 +32,8 @@
 }
 
 .article-content ol {
-  @apply space-y-3 mb-6 counter-reset: list-counter;
+  @apply space-y-3 mb-6;
+  counter-reset: list-counter;
 }
 
 .article-content li {
@@ -49,7 +50,8 @@
 }
 
 .article-content ol li {
-  @apply flex items-start counter-increment: list-counter;
+  @apply flex items-start;
+  counter-increment: list-counter;
 }
 
 .article-content ol li::before {

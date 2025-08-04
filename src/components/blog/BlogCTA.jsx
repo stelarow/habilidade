@@ -180,8 +180,8 @@ const BlogCTA = ({
           'matemática financeira', 'excel avançado admin'
         ],
         
-        // 10. EXCEL AVANÇADO - Casos específicos do Excel
-        'informatica': [
+        // 10. EXCEL AVANÇADO - Incluído na categoria Business Intelligence
+        'business-intelligence-excel': [
           'excel', 'planilha', 'fórmulas excel', 'gráficos excel', 'macros', 'vba'
         ]
       };
