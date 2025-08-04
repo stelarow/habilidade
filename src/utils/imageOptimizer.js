@@ -86,7 +86,10 @@ class ImageOptimizer {
   /**
    * Generate optimized image URL
    */
-  generateUrl(src, options = {}) {
+  /**
+   * Generate optimized image URL with intelligent resizing
+   */
+  async generateUrl(src, options = {}) {
     if (!src) return '';
 
     const {
@@ -109,20 +112,22 @@ class ImageOptimizer {
     // Determine best format
     const targetFormat = format === 'auto' ? this.getBestFormat() : format;
 
-    // If no optimization service is configured, return original URL
-    if (!this.config.serviceEndpoints.default) {
+    // Use intelligent resizing system
+    try {
+      const optimizedUrl = await this.buildServiceUrl(src, {
+        width: effectiveWidth,
+        height,
+        format: targetFormat,
+        quality: effectiveQuality,
+        crop,
+        gravity
+      });
+      
+      return optimizedUrl;
+    } catch (error) {
+      console.warn('Image optimization failed, using original:', error);
       return src;
     }
-
-    // Generate optimized URL based on service
-    return this.buildServiceUrl(src, {
-      width: effectiveWidth,
-      height,
-      format: targetFormat,
-      quality: effectiveQuality,
-      crop,
-      gravity
-    });
   }
 
   /**
@@ -153,19 +158,56 @@ class ImageOptimizer {
   /**
    * Build service-specific URL (placeholder for future CDN integration)
    */
+  /**
+   * Build service-specific URL with intelligent resizing
+   */
   buildServiceUrl(src, params) {
-    // This is a placeholder - in a real implementation, you would:
-    // 1. Check if the image is already on a CDN
-    // 2. Transform URLs according to the service's API
-    // 3. Apply the optimization parameters
-    
-    // For now, return the original URL
-    // In production, you might use services like:
-    // - Cloudinary: c_fill,f_auto,q_auto,w_800/image.jpg
-    // - ImageKit: tr:w-800,h-600,f-auto,q-auto/image.jpg
-    // - Next.js Image API: /_next/image?url=...&w=800&q=75
-    
-    return src;
+    // Check if we can get image dimensions
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      
+      img.onload = () => {
+        const originalWidth = img.naturalWidth;
+        const originalHeight = img.naturalHeight;
+        const targetWidth = params.width;
+        
+        // If image is smaller than target and would be stretched, apply smart resizing
+        if (originalWidth < targetWidth && originalWidth < 600) {
+          // Use canvas to upscale with better quality
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+          
+          // Calculate better dimensions (max 2x upscale to maintain quality)
+          const maxUpscale = 2;
+          const effectiveWidth = Math.min(targetWidth, originalWidth * maxUpscale);
+          const effectiveHeight = (originalHeight * effectiveWidth) / originalWidth;
+          
+          canvas.width = effectiveWidth;
+          canvas.height = effectiveHeight;
+          
+          // Use image smoothing for better quality
+          ctx.imageSmoothingEnabled = true;
+          ctx.imageSmoothingQuality = 'high';
+          
+          // Draw and upscale
+          ctx.drawImage(img, 0, 0, effectiveWidth, effectiveHeight);
+          
+          // Return the enhanced image as data URL
+          resolve(canvas.toDataURL('image/jpeg', params.quality / 100));
+        } else {
+          // Image is adequate size, return original
+          resolve(src);
+        }
+      };
+      
+      img.onerror = () => {
+        // Fallback to original if we can't process
+        resolve(src);
+      };
+      
+      img.src = src;
+    });
   }
 
   /**

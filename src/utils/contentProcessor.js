@@ -243,8 +243,23 @@ export function fixImagePaths(content, slug) {
 export function processContent(content, slug) {
   if (!content || typeof content !== 'string') return '';
   
+  // Import image migration system
+  let processedContent = content;
+  
+  try {
+    // Apply smart image optimization to existing content
+    if (typeof window !== 'undefined') {
+      // Client-side: use dynamic import to avoid SSR issues
+      import('../utils/blogImageMigration.js').then(({ default: blogImageMigration }) => {
+        processedContent = blogImageMigration.migrateBlogContent(processedContent);
+      }).catch(console.error);
+    }
+  } catch (error) {
+    console.warn('[ContentProcessor] Image migration failed, continuing with original content:', error);
+  }
+  
   // Fix image paths first
-  let processedContent = fixImagePaths(content, slug);
+  processedContent = fixImagePaths(processedContent, slug);
   
   // Convert markdown to HTML if needed
   if (isMarkdown(processedContent)) {
@@ -256,8 +271,23 @@ export function processContent(content, slug) {
     } catch (error) {
       console.error('[ContentProcessor] Error parsing markdown:', error);
       // Last resort: return original content with basic HTML structure
-      return `<div class="prose prose-lg prose-invert max-w-none"><div class="text-gray-300">${content.replace(/\n/g, '<br>')}</div></div>`;
+      return `<div class="prose prose-lg prose-invert max-w-none"><div class="text-gray-300">${content.replace(/
+/g, '<br>')}</div></div>`;
     }
+  }
+  
+  // Apply client-side image optimization after content is processed
+  if (typeof window !== 'undefined') {
+    // Schedule image optimization for next tick to ensure DOM is ready
+    setTimeout(() => {
+      import('../utils/blogImageMigration.js').then(({ default: blogImageMigration }) => {
+        blogImageMigration.optimizeExistingImages().then(results => {
+          if (results.length > 0) {
+            console.log(`✅ Otimizadas ${results.filter(r => r.optimized).length} de ${results.length} imagens`);
+          }
+        });
+      }).catch(console.error);
+    }, 100);
   }
   
   return processedContent;
