@@ -261,18 +261,9 @@ export function processContent(content, slug) {
   if (isMarkdown(processedContent)) {
     console.log('[ContentProcessor] Converting markdown to HTML for slug:', slug);
     
-    // Temporary fix for historia-sketchup-software-arquitetura - use fallback processor
-    if (slug === 'historia-sketchup-software-arquitetura') {
-      console.log('[ContentProcessor] Using fallback processor for historia-sketchup-software-arquitetura');
-      processedContent = basicMarkdownToHtml(processedContent);
-    } else {
-      try {
-        processedContent = marked(processedContent);
-      } catch (error) {
-        console.warn('[ContentProcessor] Marked.js failed, using fallback processor:', error);
-        processedContent = basicMarkdownToHtml(processedContent);
-      }
-    }
+    // Temporary fix: Use fallback processor for all articles due to marked.js TypeError
+    console.log('[ContentProcessor] Using fallback processor due to marked.js TypeError issues');
+    processedContent = basicMarkdownToHtml(processedContent);
   }
   
   // Apply client-side image optimization after content is processed
