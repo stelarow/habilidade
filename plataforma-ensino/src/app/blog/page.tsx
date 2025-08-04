@@ -88,12 +88,15 @@ export default async function BlogPage() {
             >
               <Link href={`/blog/${post.slug}`} className="block">
                 {post.imageUrl && (
-                  <div className="aspect-video overflow-hidden">
+                  <div className="aspect-video overflow-hidden bg-zinc-800">
                     <img 
                       src={post.imageUrl} 
                       alt={post.title}
                       className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                       loading="lazy"
+                      onError={(e) => {
+                        e.currentTarget.src = 'https://placehold.co/600x400/1a1a1a/666666?text=Escola+Habilidade';
+                      }}
                     />
                   </div>
                 )}

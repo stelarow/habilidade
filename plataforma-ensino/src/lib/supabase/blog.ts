@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server';
+import { extractFirstImageWithFallback } from '@/lib/utils/extract-first-image';
 
 export interface BlogCategory {
   id: string;
@@ -36,6 +37,7 @@ export interface BlogPost {
   category?: BlogCategory;
   author?: BlogAuthor;
   tags?: BlogTag[];
+  imageUrl?: string; // Computed field from content extraction
 }
 
 export interface BlogTag {
@@ -63,7 +65,8 @@ export async function getBlogPosts(limit = 10, offset = 0) {
   
   return data?.map(post => ({
     ...post,
-    tags: post.tags?.map((t: any) => t.tag) || []
+    tags: post.tags?.map((t: any) => t.tag) || [],
+    imageUrl: extractFirstImageWithFallback(post.content, post.image_url)
   })) || [];
 }
 
@@ -92,7 +95,8 @@ export async function getBlogPostBySlug(slug: string) {
   
   return {
     ...data,
-    tags: data.tags?.map((t: any) => t.tag) || []
+    tags: data.tags?.map((t: any) => t.tag) || [],
+    imageUrl: extractFirstImageWithFallback(data.content, data.image_url)
   };
 }
 
@@ -125,7 +129,8 @@ export async function getBlogPostsByCategory(categorySlug: string, limit = 10, o
   
   return data?.map(post => ({
     ...post,
-    tags: post.tags?.map((t: any) => t.tag) || []
+    tags: post.tags?.map((t: any) => t.tag) || [],
+    imageUrl: extractFirstImageWithFallback(post.content, post.image_url)
   })) || [];
 }
 
@@ -175,6 +180,7 @@ export async function searchBlogPosts(query: string, limit = 10) {
   
   return data?.map(post => ({
     ...post,
-    tags: post.tags?.map((t: any) => t.tag) || []
+    tags: post.tags?.map((t: any) => t.tag) || [],
+    imageUrl: extractFirstImageWithFallback(post.content, post.image_url)
   })) || [];
 }

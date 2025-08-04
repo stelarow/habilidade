@@ -205,11 +205,14 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
           
           {/* Featured Image */}
           {post.imageUrl && (
-            <div className="mb-12 rounded-xl overflow-hidden">
+            <div className="relative h-96 w-full overflow-hidden rounded-lg">
               <img 
                 src={post.imageUrl} 
                 alt={post.title}
-                className="w-full h-auto"
+                className="h-full w-full object-cover"
+                onError={(e) => {
+                  e.currentTarget.src = 'https://placehold.co/1200x600/1a1a1a/666666?text=Escola+Habilidade';
+                }}
               />
             </div>
           )}
