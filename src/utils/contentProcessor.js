@@ -15,23 +15,6 @@ hljs.registerLanguage('sql', sql);
 hljs.registerLanguage('css', css);
 hljs.registerLanguage('html', html);
 
-// Configure marked with highlight.js
-marked.setOptions({
-  highlight: function(code, lang) {
-    if (lang && hljs.getLanguage(lang)) {
-      try {
-        return hljs.highlight(code, { language: lang }).value;
-      } catch (err) {
-        console.warn('Highlight.js error:', err);
-      }
-    }
-    return hljs.highlightAuto(code).value;
-  },
-  langPrefix: 'hljs language-',
-  breaks: true,
-  gfm: true
-});
-
 // Custom renderer to add Tailwind classes
 const renderer = new marked.Renderer();
 
@@ -152,8 +135,28 @@ renderer.tablecell = function(content, flags) {
   return `<${type} class="${className}">${content}</${type}>`;
 };
 
-// Set the custom renderer
-marked.setOptions({ renderer });
+// Configure marked with custom renderer and options
+marked.setOptions({
+  renderer: renderer,
+  highlight: function(code, lang) {
+    if (lang && hljs.getLanguage(lang)) {
+      try {
+        return hljs.highlight(code, { language: lang }).value;
+      } catch (err) {
+        console.warn('Highlight.js error:', err);
+      }
+    }
+    return hljs.highlightAuto(code).value;
+  },
+  langPrefix: 'hljs language-',
+  breaks: true,
+  gfm: true,
+  silent: false,
+  pedantic: false,
+  sanitize: false,
+  smartLists: true,
+  smartypants: false
+});
 
 /**
  * Detects if content is markdown or HTML
@@ -243,7 +246,7 @@ export function fixImagePaths(content, slug) {
  * @returns {string} - Processed HTML content ready for rendering
  */
 export function processContent(content, slug) {
-  if (!content) return '';
+  if (!content || typeof content !== 'string') return '';
   
   // Fix image paths first
   let processedContent = fixImagePaths(content, slug);
@@ -252,15 +255,48 @@ export function processContent(content, slug) {
   if (isMarkdown(processedContent)) {
     console.log('[ContentProcessor] Converting markdown to HTML for slug:', slug);
     try {
-      processedContent = marked.parse(processedContent);
+      // Ensure content is properly formatted for marked
+      const cleanContent = processedContent.trim();
+      processedContent = marked.parse(cleanContent);
     } catch (error) {
       console.error('[ContentProcessor] Error parsing markdown:', error);
-      // Fallback to original content if parsing fails
-      return content;
+      // Fallback: try basic markdown-to-HTML conversion
+      try {
+        processedContent = basicMarkdownToHtml(processedContent);
+      } catch (fallbackError) {
+        console.error('[ContentProcessor] Fallback conversion also failed:', fallbackError);
+        // Last resort: return original content with basic HTML structure
+        return `<div class="prose prose-lg prose-invert max-w-none"><div class="text-gray-300">${content.replace(/\n/g, '<br>')}</div></div>`;
+      }
     }
   }
   
   return processedContent;
+}
+
+/**
+ * Basic markdown to HTML converter as fallback
+ * @param {string} markdown - Markdown content
+ * @returns {string} - Basic HTML
+ */
+function basicMarkdownToHtml(markdown) {
+  return markdown
+    // Headers
+    .replace(/^### (.*$)/gim, '<h3 class="text-2xl md:text-3xl font-semibold text-white mb-4 mt-6">$1</h3>')
+    .replace(/^## (.*$)/gim, '<h2 class="text-3xl md:text-4xl font-bold text-white mb-4 mt-8">$1</h2>')
+    .replace(/^# (.*$)/gim, '<h1 class="text-4xl md:text-5xl font-bold text-white mb-6 mt-8">$1</h1>')
+    // Bold
+    .replace(/\*\*(.*)\*\*/gim, '<strong class="font-bold text-white">$1</strong>')
+    // Italic
+    .replace(/\*(.*)\*/gim, '<em class="italic text-gray-200">$1</em>')
+    // Images
+    .replace(/!\[([^\]]*)\]\(([^)]+)\)/gim, '<div class="mb-6"><img src="$2" alt="$1" class="w-full rounded-lg shadow-lg" /><p class="text-gray-500 text-sm text-center mt-2 italic">$1</p></div>')
+    // Links
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/gim, '<a href="$2" class="text-blue-400 hover:text-blue-300 underline transition-colors duration-200">$1</a>')
+    // Paragraphs (convert double newlines to paragraph tags)
+    .replace(/\n\n/gim, '</p><p class="text-gray-300 mb-4 leading-relaxed">')
+    // Wrap in initial paragraph tag
+    .replace(/^(.*)/, '<p class="text-gray-300 mb-4 leading-relaxed">$1</p>');
 }
 
 /**
@@ -269,20 +305,28 @@ export function processContent(content, slug) {
  * @returns {string} - Plain text content
  */
 export function extractPlainText(content) {
-  if (!content) return '';
+  if (!content || typeof content !== 'string') return '';
   
-  // If it's markdown, convert to HTML first then extract text
-  let htmlContent = content;
+  // For markdown, use simple text extraction without parsing
   if (isMarkdown(content)) {
-    try {
-      htmlContent = marked.parse(content);
-    } catch (error) {
-      console.error('[ContentProcessor] Error parsing markdown for text extraction:', error);
-    }
+    return content
+      // Remove markdown syntax
+      .replace(/^#{1,6}\s+/gm, '') // Headers
+      .replace(/\*\*(.*?)\*\*/g, '$1') // Bold
+      .replace(/\*(.*?)\*/g, '$1') // Italic
+      .replace(/!\[([^\]]*)\]\([^)]+\)/g, '$1') // Images
+      .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // Links
+      .replace(/`([^`]+)`/g, '$1') // Inline code
+      .replace(/```[\s\S]*?```/g, '') // Code blocks
+      .replace(/>\s+(.*)/g, '$1') // Blockquotes
+      .replace(/^\s*[\*\-\+]\s+/gm, '') // Lists
+      .replace(/^\s*\d+\.\s+/gm, '') // Numbered lists
+      .replace(/\s+/g, ' ')
+      .trim();
   }
   
-  // Remove HTML tags and decode entities
-  return htmlContent
+  // For HTML content, remove tags and decode entities
+  return content
     .replace(/<[^>]*>/g, ' ')
     .replace(/&nbsp;/g, ' ')
     .replace(/&amp;/g, '&')
