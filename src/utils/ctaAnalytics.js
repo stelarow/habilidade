@@ -199,7 +199,10 @@ class CTAAnalytics {
     };
 
     // Envia para Google Analytics
-    sendGAEvent('cta_conversion', {
+    gaService.trackConversion(eventData.conversionType, eventData.conversionValue);
+    
+    // Additional custom tracking
+    gaService.sendEvent('cta_conversion', {
       cta_type: eventData.ctaType,
       post_slug: eventData.postSlug,
       course_id: eventData.courseId,
