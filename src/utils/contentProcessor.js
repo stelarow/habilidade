@@ -263,9 +263,9 @@ export function processContent(content, slug) {
     try {
       processedContent = marked(processedContent);
     } catch (error) {
-      console.error('[ContentProcessor] Error parsing markdown:', error);
-      // Last resort: return original content with basic HTML structure
-      return `<div class="prose prose-lg prose-invert max-w-none"><div class="text-gray-300">${content.replace(/\n/g, '<br>')}</div></div>`;
+      console.warn('[ContentProcessor] Marked.js failed, using fallback processor:', error);
+      // Use the basic markdown to HTML converter as fallback
+      processedContent = basicMarkdownToHtml(processedContent);
     }
   }
   
