@@ -1,0 +1,119 @@
+/* Highlight.js Theme - Custom Dark Theme for Blog Articles */
+.hljs {
+  background: #1f2937 !important;
+  color: #e5e7eb !important;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #6b7280;
+  font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-subst {
+  color: #f59e0b;
+  font-weight: bold;
+}
+
+.hljs-number,
+.hljs-literal,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag .hljs-attr {
+  color: #10b981;
+}
+
+.hljs-string,
+.hljs-doctag {
+  color: #3b82f6;
+}
+
+.hljs-title,
+.hljs-section,
+.hljs-selector-id {
+  color: #ef4444;
+  font-weight: bold;
+}
+
+.hljs-class .hljs-title {
+  color: #8b5cf6;
+}
+
+.hljs-type,
+.hljs-class {
+  color: #8b5cf6;
+  font-weight: bold;
+}
+
+.hljs-tag,
+.hljs-name,
+.hljs-attribute {
+  color: #f59e0b;
+  font-weight: normal;
+}
+
+.hljs-regexp,
+.hljs-link {
+  color: #06b6d4;
+}
+
+.hljs-symbol,
+.hljs-bullet {
+  color: #10b981;
+}
+
+.hljs-built_in,
+.hljs-builtin-name {
+  color: #f59e0b;
+}
+
+.hljs-meta {
+  color: #6b7280;
+}
+
+.hljs-deletion {
+  background: #fca5a5;
+}
+
+.hljs-addition {
+  background: #86efac;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+/* Scroll bar styling for code blocks */
+.hljs::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.hljs::-webkit-scrollbar-track {
+  background: #374151;
+  border-radius: 4px;
+}
+
+.hljs::-webkit-scrollbar-thumb {
+  background: #6b7280;
+  border-radius: 4px;
+}
+
+.hljs::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+/* Firefox scrollbar */
+.hljs {
+  scrollbar-width: thin;
+  scrollbar-color: #6b7280 #374151;
+}

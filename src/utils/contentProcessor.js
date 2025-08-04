@@ -1,0 +1,302 @@
+import { marked } from 'marked';
+import hljs from 'highlight.js/lib/core';
+
+// Import only the languages we need to keep bundle size small
+import javascript from 'highlight.js/lib/languages/javascript';
+import python from 'highlight.js/lib/languages/python';
+import sql from 'highlight.js/lib/languages/sql';
+import css from 'highlight.js/lib/languages/css';
+import html from 'highlight.js/lib/languages/xml';
+
+// Register languages
+hljs.registerLanguage('javascript', javascript);
+hljs.registerLanguage('python', python);
+hljs.registerLanguage('sql', sql);
+hljs.registerLanguage('css', css);
+hljs.registerLanguage('html', html);
+
+// Configure marked with highlight.js
+marked.setOptions({
+  highlight: function(code, lang) {
+    if (lang && hljs.getLanguage(lang)) {
+      try {
+        return hljs.highlight(code, { language: lang }).value;
+      } catch (err) {
+        console.warn('Highlight.js error:', err);
+      }
+    }
+    return hljs.highlightAuto(code).value;
+  },
+  langPrefix: 'hljs language-',
+  breaks: true,
+  gfm: true
+});
+
+// Custom renderer to add Tailwind classes
+const renderer = new marked.Renderer();
+
+// Override heading rendering to add Tailwind classes
+renderer.heading = function(text, level) {
+  const classes = {
+    1: 'text-4xl md:text-5xl font-bold text-white mb-6 mt-8',
+    2: 'text-3xl md:text-4xl font-bold text-white mb-4 mt-8',
+    3: 'text-2xl md:text-3xl font-semibold text-white mb-4 mt-6',
+    4: 'text-xl md:text-2xl font-semibold text-white mb-3 mt-6',
+    5: 'text-lg md:text-xl font-semibold text-white mb-3 mt-4',
+    6: 'text-base md:text-lg font-semibold text-white mb-2 mt-4'
+  };
+  
+  const className = classes[level] || classes[6];
+  const id = text.toLowerCase().replace(/[^\w]+/g, '-');
+  
+  return `<h${level} id="${id}" class="${className}">${text}</h${level}>`;
+};
+
+// Override paragraph rendering
+renderer.paragraph = function(text) {
+  return `<p class="text-gray-300 mb-4 leading-relaxed">${text}</p>`;
+};
+
+// Override list rendering
+renderer.list = function(body, ordered) {
+  const tag = ordered ? 'ol' : 'ul';
+  const className = ordered 
+    ? 'list-decimal list-inside text-gray-300 mb-4 space-y-2 ml-4' 
+    : 'list-disc list-inside text-gray-300 mb-4 space-y-2 ml-4';
+  
+  return `<${tag} class="${className}">${body}</${tag}>`;
+};
+
+// Override list item rendering
+renderer.listitem = function(text) {
+  return `<li class="mb-1">${text}</li>`;
+};
+
+// Override blockquote rendering
+renderer.blockquote = function(quote) {
+  return `<blockquote class="border-l-4 border-blue-500 pl-4 py-2 bg-zinc-800/50 rounded-r-lg mb-4 italic text-gray-300">${quote}</blockquote>`;
+};
+
+// Override code block rendering
+renderer.code = function(code, infostring, escaped) {
+  const lang = (infostring || '').match(/\S*/)[0];
+  
+  return `<div class="bg-zinc-900 rounded-lg p-4 mb-4 overflow-x-auto">
+    <pre class="text-sm"><code class="hljs language-${lang || 'plaintext'}">${code}</code></pre>
+  </div>`;
+};
+
+// Override inline code rendering
+renderer.codespan = function(text) {
+  return `<code class="bg-zinc-800 text-blue-300 px-2 py-1 rounded text-sm">${text}</code>`;
+};
+
+// Override image rendering with Tailwind classes and error handling
+renderer.image = function(href, title, text) {
+  const titleAttr = title ? ` title="${title}"` : '';
+  const altAttr = text ? ` alt="${text}"` : '';
+  
+  return `<div class="mb-6">
+    <img src="${href}" class="w-full rounded-lg shadow-lg"${altAttr}${titleAttr} 
+         onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+    <div class="hidden bg-zinc-800 rounded-lg p-4 text-center">
+      <div class="text-gray-400 text-sm">Imagem não encontrada: ${text || 'Sem descrição'}</div>
+    </div>
+    ${text ? `<p class="text-gray-500 text-sm text-center mt-2 italic">${text}</p>` : ''}
+  </div>`;
+};
+
+// Override strong (bold) rendering
+renderer.strong = function(text) {
+  return `<strong class="font-bold text-white">${text}</strong>`;
+};
+
+// Override emphasis (italic) rendering
+renderer.em = function(text) {
+  return `<em class="italic text-gray-200">${text}</em>`;
+};
+
+// Override link rendering
+renderer.link = function(href, title, text) {
+  const titleAttr = title ? ` title="${title}"` : '';
+  const target = href.startsWith('http') ? ' target="_blank" rel="noopener noreferrer"' : '';
+  
+  return `<a href="${href}" class="text-blue-400 hover:text-blue-300 underline transition-colors duration-200"${titleAttr}${target}>${text}</a>`;
+};
+
+// Override horizontal rule rendering
+renderer.hr = function() {
+  return '<hr class="border-zinc-700 my-8" />';
+};
+
+// Override table rendering
+renderer.table = function(header, body) {
+  return `<div class="overflow-x-auto mb-6">
+    <table class="min-w-full bg-zinc-800 rounded-lg overflow-hidden">
+      <thead class="bg-zinc-700">${header}</thead>
+      <tbody>${body}</tbody>
+    </table>
+  </div>`;
+};
+
+renderer.tablerow = function(content) {
+  return `<tr class="border-b border-zinc-700">${content}</tr>`;
+};
+
+renderer.tablecell = function(content, flags) {
+  const type = flags.header ? 'th' : 'td';
+  const className = flags.header 
+    ? 'px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider'
+    : 'px-6 py-4 whitespace-nowrap text-sm text-gray-300';
+  
+  return `<${type} class="${className}">${content}</${type}>`;
+};
+
+// Set the custom renderer
+marked.setOptions({ renderer });
+
+/**
+ * Detects if content is markdown or HTML
+ * @param {string} content - The content to analyze
+ * @returns {boolean} - True if content appears to be markdown
+ */
+export function isMarkdown(content) {
+  if (!content || typeof content !== 'string') return false;
+  
+  // Check for common HTML patterns first
+  const htmlPatterns = [
+    /<div[^>]*class=["'][^"']*["'][^>]*>/i,
+    /<p[^>]*class=["'][^"']*["'][^>]*>/i,
+    /<h[1-6][^>]*class=["'][^"']*["'][^>]*>/i,
+    /<img[^>]*class=["'][^"']*["'][^>]*>/i,
+    /<span[^>]*class=["'][^"']*["'][^>]*>/i
+  ];
+  
+  // If content has HTML with classes, it's probably already formatted HTML
+  if (htmlPatterns.some(pattern => pattern.test(content))) {
+    return false;
+  }
+  
+  // Check for markdown patterns
+  const markdownPatterns = [
+    /^#{1,6}\s+/m,           // Headers with #
+    /^\s*[\*\-\+]\s+/m,      // Unordered lists
+    /^\s*\d+\.\s+/m,         // Ordered lists
+    /\*\*[^*]+\*\*/,         // Bold text **text**
+    /\*[^*]+\*/,             // Italic text *text*
+    /\[[^\]]+\]\([^)]+\)/,   // Links [text](url)
+    /!\[[^\]]*\]\([^)]+\)/,  // Images ![alt](url)
+    /^>\s+/m,                // Blockquotes
+    /```[\s\S]*?```/,        // Code blocks
+    /`[^`]+`/                // Inline code
+  ];
+  
+  // Count markdown patterns
+  const markdownScore = markdownPatterns.reduce((score, pattern) => {
+    return score + (pattern.test(content) ? 1 : 0);
+  }, 0);
+  
+  // If we find multiple markdown patterns, it's likely markdown
+  return markdownScore >= 2;
+}
+
+/**
+ * Fixes image paths in content for a specific blog post slug
+ * @param {string} content - The content containing image references
+ * @param {string} slug - The blog post slug
+ * @returns {string} - Content with fixed image paths
+ */
+export function fixImagePaths(content, slug) {
+  if (!content || !slug) return content;
+  
+  let fixedContent = content;
+  
+  // Fix markdown image syntax: ![alt](/images/blog/filename.jpg)
+  const markdownImgRegex = /!\[([^\]]*)\]\(([^)]+)\)/g;
+  fixedContent = fixedContent.replace(markdownImgRegex, (match, alt, src) => {
+    if (src.startsWith('/images/blog/') && !src.includes(`/images/blog/${slug}/`)) {
+      const filename = src.split('/').pop();
+      const newSrc = `/images/blog/${slug}/${filename}`;
+      return `![${alt}](${newSrc})`;
+    }
+    return match;
+  });
+  
+  // Fix HTML image tags: <img src="/images/blog/filename.jpg" />
+  const htmlImgRegex = /<img([^>]+)src=["']([^"']+)["']([^>]*)>/g;
+  fixedContent = fixedContent.replace(htmlImgRegex, (match, before, src, after) => {
+    if (src.startsWith('/images/blog/') && !src.includes(`/images/blog/${slug}/`)) {
+      const filename = src.split('/').pop();
+      const newSrc = `/images/blog/${slug}/${filename}`;
+      return `<img${before}src="${newSrc}"${after}>`;
+    }
+    return match;
+  });
+  
+  return fixedContent;
+}
+
+/**
+ * Processes blog content - converts markdown to HTML if needed and fixes paths
+ * @param {string} content - Raw content from the database
+ * @param {string} slug - Blog post slug for image path fixing
+ * @returns {string} - Processed HTML content ready for rendering
+ */
+export function processContent(content, slug) {
+  if (!content) return '';
+  
+  // Fix image paths first
+  let processedContent = fixImagePaths(content, slug);
+  
+  // Convert markdown to HTML if needed
+  if (isMarkdown(processedContent)) {
+    console.log('[ContentProcessor] Converting markdown to HTML for slug:', slug);
+    try {
+      processedContent = marked.parse(processedContent);
+    } catch (error) {
+      console.error('[ContentProcessor] Error parsing markdown:', error);
+      // Fallback to original content if parsing fails
+      return content;
+    }
+  }
+  
+  return processedContent;
+}
+
+/**
+ * Extracts plain text from HTML/Markdown for reading time calculation
+ * @param {string} content - HTML or Markdown content
+ * @returns {string} - Plain text content
+ */
+export function extractPlainText(content) {
+  if (!content) return '';
+  
+  // If it's markdown, convert to HTML first then extract text
+  let htmlContent = content;
+  if (isMarkdown(content)) {
+    try {
+      htmlContent = marked.parse(content);
+    } catch (error) {
+      console.error('[ContentProcessor] Error parsing markdown for text extraction:', error);
+    }
+  }
+  
+  // Remove HTML tags and decode entities
+  return htmlContent
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+export default {
+  isMarkdown,
+  fixImagePaths,
+  processContent,
+  extractPlainText
+};
