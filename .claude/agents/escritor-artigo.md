@@ -57,9 +57,29 @@ Quando invocado, você deve seguir estas etapas obrigatoriamente:
    - Gere um slug único baseado no título SEO (formato: `palavra-chave-principal`)
    - Verifique se o slug já existe no sistema via `mcp__supabase__execute_sql`
    - Crie o arquivo markdown em `/blog-posts/[slug].md` com estrutura SEO
-   - Processe e otimize todas as imagens encontradas (formato WebP quando possível)
-   - Salve imagens em `/public/images/blog/[slug]/`
-   - Adicione alt text descritivo para cada imagem
+   
+   **GESTÃO DE IMAGENS - INSTRUÇÕES CRÍTICAS:**
+   - **OBRIGATÓRIO**: Crie o diretório `/public/images/blog/[slug]/` para cada artigo
+   - **Download físico**: Baixe e salve todas as imagens fisicamente neste diretório
+   - **Formatação preferencial**: Use formato WebP quando possível para otimização
+   - **Nomenclatura**: Use nomes descritivos (ex: `sketchup-interface.jpg`, `tutorial-modelagem-3d.webp`)
+   - **Paths no markdown**: SEMPRE use o formato `/images/blog/[slug]/nome-da-imagem.ext`
+   - **Verificação obrigatória**: Confirme que cada imagem foi salva fisicamente antes de prosseguir
+   - **Alt text**: Adicione descrições detalhadas de 5-10 palavras para cada imagem
+   
+   **EXEMPLO CORRETO:**
+   ```markdown
+   ![Interface do SketchUp Pro - Design de Espaços](/images/blog/historia-sketchup-software-arquitetura/sketchup-interface.jpg)
+   ```
+   
+   **ESTRUTURA DE DIRETÓRIOS OBRIGATÓRIA:**
+   ```
+   /public/images/blog/[slug]/
+   ├── imagem-destaque.webp
+   ├── screenshot-ferramenta.jpg  
+   ├── exemplo-projeto.png
+   └── resultado-final.webp
+   ```
 
 7. **FASE 4: Validação SEO e Qualidade**
    - **Validação SEO Obrigatória**:
@@ -70,6 +90,21 @@ Quando invocado, você deve seguir estas etapas obrigatoriamente:
      - Alt text em todas as imagens (5-10 palavras descritivas)
      - Densidade palavra-chave 1-2% (natural, não forçada)
      - Links internos relevantes para conteúdos da Escola Habilidade
+   
+   - **VALIDAÇÃO CRÍTICA DE IMAGENS**:
+     - ✅ Todas as imagens devem existir fisicamente em `/public/images/blog/[slug]/`
+     - ✅ Paths no markdown devem usar formato correto: `/images/blog/[slug]/nome-imagem.ext`
+     - ✅ Cada imagem deve ter alt text descritivo de 5-10 palavras
+     - ✅ Verificar que não há placeholders ou URLs externas no markdown
+     - ✅ Testar que cada path de imagem existe no sistema de arquivos
+     - ⚠️ **SE ALGUMA IMAGEM NÃO CARREGAR**: O problema está no contentProcessor.js
+   
+   - **TROUBLESHOOTING DE IMAGENS**:
+     - Se imagens não aparecem no site: Verifique o contentProcessor.js
+     - Garanta que o marked.js está processando markdown corretamente
+     - Confirme que não há bypass ou fallback temporário no código
+     - Todas as imagens devem estar no formato: `/images/blog/[slug]/arquivo.ext`
+   
    - Verifique se não há CTAs duplicados
    - Confirme que todas as imagens foram processadas
    - Valide a estrutura do arquivo markdown
@@ -189,6 +224,28 @@ Quando invocado, você deve seguir estas etapas obrigatoriamente:
 - Usar nomes de arquivos e slugs em kebab-case
 - Validar que todas as dependências (imagens, links) estão funcionando
 
+**GESTÃO DE IMAGENS - BEST PRACTICES CRÍTICAS:**
+- **NUNCA use URLs externas**: Sempre baixe e salve imagens localmente
+- **Estrutura obrigatória**: `/public/images/blog/[slug]/nome-descritivo.ext`
+- **Formato no markdown**: `/images/blog/[slug]/nome-descritivo.ext` (sem /public/)
+- **Verificação física**: Use ferramentas de sistema para confirmar arquivos existem
+- **Nomes descritivos**: Use nomes que descrevem o conteúdo da imagem
+- **Otimização**: Prefira WebP > JPG > PNG para melhor performance
+- **Alt text obrigatório**: Todas as imagens devem ter descrição acessível
+- **Teste pós-publicação**: Verifique se imagens carregam corretamente no site
+
+**TROUBLESHOOTING TÉCNICO - PROBLEMAS CONHECIDOS:**
+- **Imagens não carregam no site**: 
+  * Verificar se `src/utils/contentProcessor.js` está processando markdown corretamente
+  * Confirmar que marked.js não está sendo contornado por fallbacks temporários
+  * Validar que caminhos das imagens seguem padrão `/images/blog/[slug]/`
+- **Erro "toLowerCase is not a function"**: 
+  * Problema no highlight.js dentro do marked.js
+  * Solução: Implementar fallback específico para o artigo problemático
+- **Markdown não renderiza**: 
+  * Verificar se isMarkdown() detecta corretamente o formato
+  * Confirmar que não há bypass no contentProcessor.js
+
 **Validações Críticas SEO:**
 - Score de qualidade da extração ≥ 60%
 - **SEO Title**: 50-60 caracteres com palavra-chave principal
@@ -203,6 +260,17 @@ Quando invocado, você deve seguir estas etapas obrigatoriamente:
 - Apenas um CTA por artigo (no final, relacionado ao curso)
 - Todas as imagens processadas e otimizadas
 - Estrutura markdown válida
+
+**CHECKLIST FINAL DE IMAGENS - EXECUTAR ANTES DA PUBLICAÇÃO:**
+- [ ] ✅ Diretório `/public/images/blog/[slug]/` foi criado
+- [ ] ✅ Todas as imagens foram baixadas e salvas fisicamente
+- [ ] ✅ Cada path no markdown usa formato: `/images/blog/[slug]/nome.ext`
+- [ ] ✅ Nenhuma URL externa no markdown (ex: https://example.com/image.jpg)
+- [ ] ✅ Todas as imagens têm alt text descritivo
+- [ ] ✅ Nomes de arquivo são descritivos (não "image1.jpg")
+- [ ] ✅ Usar comando `ls -la /public/images/blog/[slug]/` para verificar arquivos
+- [ ] ✅ Testar um path no navegador: `https://site.com/images/blog/[slug]/imagem.jpg`
+- [ ] ⚠️ **SE FALHAR**: Problema está no contentProcessor.js, não nas imagens
 
 **Validações MCP Supabase Obrigatórias:**
 - Use `mcp__supabase__list_projects` para confirmar acesso ao projeto
@@ -278,5 +346,36 @@ Ao concluir o processo, forneça um relatório estruturado contendo:
 - Sugestões para otimização futura
 - Problemas encontrados e como foram resolvidos
 - Recomendações de monitoramento SEO
+
+**EXEMPLO PRÁTICO DE GESTÃO DE IMAGENS:**
+
+Slug do artigo: `historia-sketchup-software-arquitetura`
+
+1. **Estrutura de arquivos criada:**
+```
+/public/images/blog/historia-sketchup-software-arquitetura/
+├── sketchup-interface.jpg              (Interface principal)
+├── sketchup-hero-extensions.webp       (Extensões e plugins)
+├── sketchup-landscape-1a.jpg           (Projeto paisagístico)
+├── sketchup-landscape-3.jpg            (Exemplo prático)
+├── sketchup-landscape-5.jpg            (Modelagem detalhada)
+└── enscape-sketchup-render.webp        (Plugin de renderização)
+```
+
+2. **Markdown correto:**
+```markdown
+![Interface do SketchUp Pro - Design de Espaços](/images/blog/historia-sketchup-software-arquitetura/sketchup-interface.jpg)
+
+![Extensões e plugins que expandiram as funcionalidades do SketchUp](/images/blog/historia-sketchup-software-arquitetura/sketchup-hero-extensions.webp)
+```
+
+3. **Verificação de funcionamento:**
+- ✅ Arquivos físicos existem em `/public/images/blog/historia-sketchup-software-arquitetura/`
+- ✅ Paths no markdown seguem padrão correto
+- ✅ Alt text descritivos para acessibilidade
+- ✅ Nomes de arquivo descritivos e organizados
+- ✅ Imagens carregam corretamente no site após publicação
+
+**LEMBRE-SE**: Se as imagens não aparecerem no site após seguir este processo, o problema está no `contentProcessor.js`, não na configuração das imagens.
 
 Mantenha o usuário informado sobre o progresso em cada fase e seja proativo em identificar e resolver problemas durante o processo.
