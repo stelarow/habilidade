@@ -1,0 +1,42 @@
+<svg width="800" height="450" viewBox="0 0 800 450" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="450" fill="url(#gradient)"/>
+  
+  <!-- Sky -->
+  <rect x="0" y="0" width="800" height="250" fill="url(#sky)"/>
+  
+  <!-- Mountains -->
+  <path d="M0 250 L200 150 L350 220 L500 120 L650 180 L800 140 L800 450 L0 450 Z" fill="#374151" opacity="0.8"/>
+  <path d="M0 300 L150 200 L300 280 L450 180 L600 240 L800 200 L800 450 L0 450 Z" fill="#4B5563" opacity="0.9"/>
+  
+  <!-- House silhouette -->
+  <rect x="250" y="320" width="300" height="100" rx="4" fill="#1F2937"/>
+  <polygon points="230,320 400,250 570,320" fill="#111827"/>
+  
+  <!-- Windows with light -->
+  <rect x="280" y="350" width="60" height="40" fill="#FCD34D" opacity="0.9"/>
+  <rect x="360" y="350" width="60" height="40" fill="#FCD34D" opacity="0.7"/>
+  <rect x="440" y="350" width="60" height="40" fill="#FCD34D" opacity="0.9"/>
+  
+  <!-- Reflection on water -->
+  <rect x="0" y="420" width="800" height="30" fill="url(#water)" opacity="0.6"/>
+  
+  <!-- Text -->
+  <text x="400" y="80" font-family="Arial, sans-serif" font-size="28" font-weight="bold" text-anchor="middle" fill="#F3F4F6">Vistas Magníficas</text>
+  <text x="400" y="110" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="#D1D5DB">Arquitetura & Design</text>
+  
+  <!-- Gradients -->
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0F172A;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1E293B;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0EA5E9;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#0284C7;stop-opacity:0.1" />
+    </linearGradient>
+    <linearGradient id="water" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#06B6D4;stop-opacity:0.4" />
+      <stop offset="100%" style="stop-color:#0891B2;stop-opacity:0.2" />
+    </linearGradient>
+  </defs>
+</svg>

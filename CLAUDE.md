@@ -61,3 +61,6 @@ Dual-architecture educational platform for Escola Habilidade:
 ## Learning Platform Login
 - Username: alessandrobatisp@gmail.com
 - Password: $Stelarow123
+
+## Playwright Guidelines
+- Quando usar o playwright para acessar algum site, sempre aguarde de 5 a 10 segundos depois de acessar para aguardar o tempo de carregamento.
