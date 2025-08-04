@@ -138,17 +138,7 @@ renderer.tablecell = function(content, flags) {
 // Configure marked with custom renderer and options
 marked.setOptions({
   renderer: renderer,
-  highlight: function(code, lang) {
-    // Temporarily disable highlighting to fix TypeError
-    try {
-      if (lang && typeof lang === 'string' && hljs.getLanguage(lang)) {
-        return hljs.highlight(code, { language: lang }).value;
-      }
-    } catch (error) {
-      console.warn('[ContentProcessor] Highlight error:', error);
-    }
-    return code;
-  },
+  highlight: null,
   langPrefix: 'hljs language-',
   breaks: true,
   gfm: true,
