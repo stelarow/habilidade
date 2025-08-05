@@ -105,10 +105,7 @@ function App() {
     <ErrorBoundary>
       <HelmetProvider>
         <QueryProvider>
-          <Router future={{
-            v7_startTransition: true,
-            v7_relativeSplatPath: true
-          }}>
+          <Router>
           <div className="App bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 min-h-screen text-zinc-50">
           {/* Accessibility Controls */}
           <AccessibilityControls />
