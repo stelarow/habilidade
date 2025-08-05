@@ -272,12 +272,21 @@ export function processContent(content, slug) {
   // Convert markdown to HTML if needed
   if (isMarkdown(processedContent)) {
     console.log('[ContentProcessor] Converting markdown to HTML for slug:', slug);
+    console.log('[ContentProcessor] Content type:', typeof processedContent);
+    console.log('[ContentProcessor] Content length:', processedContent.length);
+    console.log('[ContentProcessor] First 200 chars:', processedContent.substring(0, 200));
     
     try {
+      // Debug: Log marked configuration
+      console.log('[ContentProcessor] Marked version:', marked.VERSION || 'unknown');
+      console.log('[ContentProcessor] Marked options:', marked.defaults);
+      
       processedContent = marked(processedContent);
     } catch (error) {
-      console.warn('[ContentProcessor] marked.js failed, using fallback:', error);
-      processedContent = basicMarkdownToHtml(processedContent);
+      console.error('[ContentProcessor] marked.js failed with error:', error);
+      console.error('[ContentProcessor] Error stack:', error.stack);
+      console.error('[ContentProcessor] Content that caused error:', processedContent);
+      throw error; // Re-throw to see the full error
     }
   }
   
