@@ -182,13 +182,28 @@ npm run build:production 2>&1 | tee build.log
 npx serve dist
 ```
 
-## Próximos Passos Recomendados
+## Próximos Passos Recomendados - ATUALIZADO
 
-1. **URGENTE**: Aplicar exports (loader + Component) em BlogPostSSG.jsx
-2. **IMPORTANTE**: Testar se isso resolve renderização do blog
-3. **VERIFICAR**: Se navegação ainda está quebrada, investigar conflito App.jsx vs main.jsx
-4. **VALIDAR**: Build local antes de fazer push
-5. **MONITORAR**: Deploy no Netlify após correções
+### ✅ Aplicado mas PROBLEMA PERSISTE
+
+1. **FEITO**: Todos os exports (loader + Component) aplicados em todas as páginas
+2. **RESULTADO**: Home funciona, mas blog ainda não renderiza conteúdo
+3. **DIAGNÓSTICO**: HTML estático tem meta tags corretas mas conteúdo não aparece
+4. **SUSPEITA**: Problema de hidratação ou conflito entre App.jsx e main.jsx
+
+### 🔴 PROBLEMA PRINCIPAL IDENTIFICADO
+
+**Conflito de Entry Points**:
+- `index.html` carrega `/src/main.jsx` (SSG)
+- Mas ainda existe `App.jsx` com BrowserRouter
+- Pode estar causando conflito de roteamento/hidratação
+
+### SOLUÇÃO RECOMENDADA
+
+1. **REMOVER App.jsx** completamente
+2. **MIGRAR** todo código necessário de App.jsx para Layout.jsx
+3. **GARANTIR** que apenas ViteReactSSG controla o roteamento
+4. **TESTAR** build e deploy novamente
 
 ## Notas Adicionais
 
