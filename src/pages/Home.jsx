@@ -29,4 +29,11 @@ function Home() {
   );
 }
 
-export default Home; 
+// Loader function for SSG (não requer dados externos)
+export function loader() {
+  return null;
+}
+
+// Export both default and Component for vite-react-ssg compatibility
+export default Home;
+export { Home as Component }; 
