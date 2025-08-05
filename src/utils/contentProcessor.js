@@ -16,7 +16,9 @@ hljs.registerLanguage('css', css);
 hljs.registerLanguage('html', html);
 
 // Custom renderer to add Tailwind classes
-const renderer = new marked.Renderer();
+const renderer = {
+  // Override methods will be added below
+};
 
 // Override heading rendering to add Tailwind classes
 renderer.heading = function(text, level) {
@@ -135,25 +137,27 @@ renderer.tablecell = function(content, flags) {
   return `<${type} class="${className}">${content}</${type}>`;
 };
 
-// Configure marked with custom renderer and options - simplified for debugging
-marked.setOptions({
+// Configure marked with custom renderer and options
+marked.use({
   renderer: renderer,
   highlight: function(code, lang) {
     // Safely handle language parameter
     if (!lang || typeof lang !== 'string') {
       return code;
     }
-    // For now, just return the code without highlighting to avoid errors
+    try {
+      if (hljs.getLanguage(lang)) {
+        return hljs.highlight(code, { language: lang }).value;
+      }
+    } catch (error) {
+      console.warn('Highlight.js error:', error);
+    }
     return code;
   },
-  langPrefix: '',
   breaks: true,
   gfm: true,
-  silent: true, // Suppress errors to prevent crashes
   pedantic: false,
-  sanitize: false,
-  smartLists: false, // Disable smart lists to avoid potential issues
-  smartypants: false
+  silent: true
 });
 
 /**
