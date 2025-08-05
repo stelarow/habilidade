@@ -43,4 +43,11 @@ function NotFound() {
   );
 }
 
-export default NotFound; 
+// Loader function for SSG
+export function loader() {
+  return null;
+}
+
+// Export both default and Component for vite-react-ssg compatibility
+export default NotFound;
+export { NotFound as Component };

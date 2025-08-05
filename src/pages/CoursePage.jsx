@@ -503,4 +503,11 @@ function CoursePage() {
   );
 }
 
-export default CoursePage; 
+// Loader function for SSG
+export function loader() {
+  return null;
+}
+
+// Export both default and Component for vite-react-ssg compatibility
+export default CoursePage;
+export { CoursePage as Component };

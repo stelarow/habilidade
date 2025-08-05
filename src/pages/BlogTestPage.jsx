@@ -183,4 +183,11 @@ const BlogTestPage = () => {
   );
 };
 
+// Loader function for SSG
+export function loader() {
+  return null;
+}
+
+// Export both default and Component for vite-react-ssg compatibility
 export default BlogTestPage;
+export { BlogTestPage as Component };
