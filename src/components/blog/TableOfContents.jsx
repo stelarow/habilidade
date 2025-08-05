@@ -53,6 +53,9 @@ const extractHeaders = (content) => {
  * @returns {string} URL slug
  */
 const generateSlug = (text, index) => {
+  if (!text || typeof text !== 'string') {
+    return `header-${index}`;
+  }
   return text
     .toLowerCase()
     .normalize('NFD')

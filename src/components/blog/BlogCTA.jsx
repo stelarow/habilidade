@@ -119,7 +119,7 @@ const BlogCTA = ({
     
     // Fallback: matching por conteúdo com algoritmo corrigido
     if (post?.content || post?.title || post?.categories) {
-      const content = `${post.title} ${post.content} ${post.categories?.map(c => c.name).join(' ')}`.toLowerCase();
+      const content = `${post.title || ''} ${post.content || ''} ${post.categories?.map(c => c.name).join(' ') || ''}`.toLowerCase();
       
       // ALGORITMO CORRIGIDO: Palavras-chave mais específicas e ordenadas por prioridade
       const courseKeywords = {
