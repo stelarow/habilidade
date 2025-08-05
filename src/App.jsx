@@ -46,22 +46,24 @@ function RoutesWithCleanup() {
   useScrollToHash();
   
   return (
-    <Routes key={location.pathname}>
-      <Route path="/" element={<Home />} />
-      <Route path="/cursos/:courseSlug" element={<CoursePage />} />
-      <Route path="/blog" element={<BlogIndex />} />
-      <Route path="/blog-test" element={<BlogTestPage />} />
-      <Route path="/blog-test/:slug" element={<BlogTestPage />} />
-      <Route path="/blog/:slug" element={<BlogPost />} />
-      <Route path="/blog/categoria/:categorySlug" element={<BlogCategory />} />
-      <Route path="/habilidade" element={<Navigate to="/" replace />} />
-      <Route path="/habilidade/" element={<Navigate to="/" replace />} />
-      <Route 
-        path="/habilidade/cursos/:courseSlug" 
-        element={<CourseRedirect />} 
-      />
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+    <Suspense key={location.pathname} fallback={<Loading />}>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/cursos/:courseSlug" element={<CoursePage />} />
+        <Route path="/blog" element={<BlogIndex />} />
+        <Route path="/blog-test" element={<BlogTestPage />} />
+        <Route path="/blog-test/:slug" element={<BlogTestPage />} />
+        <Route path="/blog/:slug" element={<BlogPost />} />
+        <Route path="/blog/categoria/:categorySlug" element={<BlogCategory />} />
+        <Route path="/habilidade" element={<Navigate to="/" replace />} />
+        <Route path="/habilidade/" element={<Navigate to="/" replace />} />
+        <Route 
+          path="/habilidade/cursos/:courseSlug" 
+          element={<CourseRedirect />} 
+        />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </Suspense>
   );
 }
 
@@ -118,9 +120,7 @@ function App() {
           
           {/* Main Content com lazy loading otimizado */}
           <main id="main-content" className="relative z-10">
-            <Suspense fallback={<Loading />}>
-              <RoutesWithCleanup />
-            </Suspense>
+            <RoutesWithCleanup />
           </main>
           
           {/* Footer */}
