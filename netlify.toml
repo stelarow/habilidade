@@ -26,8 +26,8 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
 
-# SPA rewrite rule - must be last
+# SSG fallback - only for non-existing pages  
 [[redirects]]
   from = "/*"
   to = "/index.html"
-  status = 200
+  status = 404
