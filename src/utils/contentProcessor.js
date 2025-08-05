@@ -268,12 +268,11 @@ export function processContent(content, slug) {
   if (isMarkdown(processedContent)) {
     console.log('[ContentProcessor] Converting markdown to HTML for slug:', slug);
     
-      try {
-        processedContent = marked(processedContent);
-      } catch (error) {
-        console.warn('[ContentProcessor] marked.js failed, using fallback:', error);
-        processedContent = basicMarkdownToHtml(processedContent);
-      }
+    try {
+      processedContent = marked(processedContent);
+    } catch (error) {
+      console.warn('[ContentProcessor] marked.js failed, using fallback:', error);
+      processedContent = basicMarkdownToHtml(processedContent);
     }
   }
   
