@@ -17,6 +17,12 @@
   status = 301
   force = true
 
+# Page redirects
+[[redirects]]
+  from = "/cursos"
+  to = "/#cursos"
+  status = 301
+
 # SPA redirect - exclude static assets
 [[redirects]]
   from = "/*"

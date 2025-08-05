@@ -112,7 +112,7 @@ const getChangeFrequency = (post) => {
  * Generate sitemap entry for a single URL
  */
 const generateSitemapEntry = ({ url, priority, changefreq, lastmod }) => {
-  const baseUrl = 'https://www.escolahabilidade.com.br';
+  const baseUrl = 'https://www.escolahabilidade.com';
   
   return `  <url>
     <loc>${baseUrl}${url}</loc>
