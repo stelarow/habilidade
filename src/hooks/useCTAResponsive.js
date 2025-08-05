@@ -1,6 +1,6 @@
 /**
- * useCTAResponsive Hook - Hook para otimizações responsivas de CTAs
- * Gerencia comportamento específico para diferentes dispositivos
+ * useCTAResponsive Hook - Hook para otimizaï¿½ï¿½es responsivas de CTAs
+ * Gerencia comportamento especï¿½fico para diferentes dispositivos
  */
 
 import { useState, useEffect, useCallback } from 'react';
@@ -16,7 +16,7 @@ export const useCTAResponsive = (options = {}) => {
       desktop: 1440
     },
     enableSticky = true,
-    stickyThreshold = 0.8, // 80% da página scrollada
+    stickyThreshold = 0.8, // 80% da pï¿½gina scrollada
     touchOptimization = true
   } = options;
 
@@ -31,6 +31,7 @@ export const useCTAResponsive = (options = {}) => {
 
   // Detecta tipo de dispositivo
   const detectDeviceType = useCallback(() => {
+    if (typeof window === 'undefined') return 'desktop';
     const width = window.innerWidth;
     
     if (width < breakpoints.mobile) {
@@ -44,6 +45,7 @@ export const useCTAResponsive = (options = {}) => {
 
   // Detecta capacidade de touch
   const detectTouch = useCallback(() => {
+    if (typeof window === 'undefined' || typeof navigator === 'undefined') return false;
     return (
       'ontouchstart' in window ||
       navigator.maxTouchPoints > 0 ||
@@ -53,6 +55,7 @@ export const useCTAResponsive = (options = {}) => {
 
   // Calcula progresso de scroll
   const calculateScrollProgress = useCallback(() => {
+    if (typeof document === 'undefined') return 0;
     const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
     const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
     return height > 0 ? (winScroll / height) : 0;
@@ -60,6 +63,7 @@ export const useCTAResponsive = (options = {}) => {
 
   // Handler de resize
   const handleResize = useCallback(() => {
+    if (typeof window === 'undefined') return;
     setViewport({
       width: window.innerWidth,
       height: window.innerHeight
@@ -77,21 +81,21 @@ export const useCTAResponsive = (options = {}) => {
     }
   }, [calculateScrollProgress, enableSticky, deviceType, stickyThreshold]);
 
-  // Configuração inicial e listeners
+  // Configuraï¿½ï¿½o inicial e listeners
   useEffect(() => {
     setDeviceType(detectDeviceType());
     setIsTouch(detectTouch());
     
-    window.addEventListener('resize', handleResize);
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    if (typeof window !== "undefined") window.addEventListener('resize', handleResize);
+    if (typeof window !== "undefined") window.addEventListener('scroll', handleScroll, { passive: true });
     
     return () => {
-      window.removeEventListener('resize', handleResize);
-      window.removeEventListener('scroll', handleScroll);
+      if (typeof window !== "undefined") window.removeEventListener('resize', handleResize);
+      if (typeof window !== "undefined") window.removeEventListener('scroll', handleScroll);
     };
   }, [handleResize, handleScroll, detectDeviceType, detectTouch]);
 
-  // Configurações específicas por dispositivo
+  // Configuraï¿½ï¿½es especï¿½ficas por dispositivo
   const getDeviceConfig = useCallback(() => {
     const baseConfig = {
       buttonSize: 'medium',
@@ -182,7 +186,7 @@ export const useCTAResponsive = (options = {}) => {
     scrollProgress,
     showSticky,
     
-    // Configurações
+    // Configuraï¿½ï¿½es
     config: getDeviceConfig(),
     styles: getResponsiveStyles(),
     classes: getResponsiveClasses(),
@@ -193,18 +197,18 @@ export const useCTAResponsive = (options = {}) => {
     isDesktop: deviceType === 'desktop',
     shouldStack: getDeviceConfig().stackContent,
     
-    // Métricas de performance
+    // Mï¿½tricas de performance
     metrics: {
       viewportRatio: viewport.width / viewport.height,
       isLandscape: viewport.width > viewport.height,
       isPortrait: viewport.height > viewport.width,
-      pixelDensity: window.devicePixelRatio || 1
+      pixelDensity: typeof window !== 'undefined' ? (window.devicePixelRatio || 1) : 1
     }
   };
 };
 
 /**
- * Hook para otimizações de performance de CTAs
+ * Hook para otimizaï¿½ï¿½es de performance de CTAs
  */
 export const useCTAPerformance = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -253,11 +257,11 @@ export const useCTAImages = (images = {}) => {
   const getOptimalImage = useCallback((imageSet) => {
     if (!imageSet) return null;
 
-    // Se é uma string simples, retorna ela
+    // Se ï¿½ uma string simples, retorna ela
     if (typeof imageSet === 'string') return imageSet;
 
     // Seleciona baseado no dispositivo e densidade de pixels
-    const pixelRatio = window.devicePixelRatio || 1;
+    const pixelRatio = typeof window !== 'undefined' ? (window.devicePixelRatio || 1) : 1;
     const isHighDPI = pixelRatio >= 2;
 
     if (deviceType === 'mobile') {
@@ -270,7 +274,7 @@ export const useCTAImages = (images = {}) => {
     }
   }, [deviceType]);
 
-  // Pré-carrega imagem
+  // Prï¿½-carrega imagem
   const preloadImage = useCallback((src) => {
     if (!src || loadedImages.has(src)) return Promise.resolve();
 
@@ -313,7 +317,7 @@ export const useCTAVariant = (testConfig = {}) => {
   } = testConfig;
 
   const [currentVariant, setCurrentVariant] = useState(() => {
-    // Se há uma variante forçada, use ela
+    // Se hï¿½ uma variante forï¿½ada, use ela
     if (forceVariant && variants.includes(forceVariant)) {
       return forceVariant;
     }
@@ -328,7 +332,7 @@ export const useCTAVariant = (testConfig = {}) => {
       console.warn('Error reading CTA variant from localStorage:', error);
     }
 
-    // Seleciona aleatoriamente baseado na distribuição
+    // Seleciona aleatoriamente baseado na distribuiï¿½ï¿½o
     const random = Math.random();
     let cumulative = 0;
     
