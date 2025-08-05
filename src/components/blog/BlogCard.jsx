@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Clock, Calendar, User, Tag } from 'phosphor-react';
 import { usePrefetchPost } from '../../hooks/useBlogAPI';
 import { useBlogResponsive } from '../../hooks/useBlogResponsive';
@@ -59,6 +60,9 @@ const BlogCard = ({ post, variant = 'standard', index = 0 }) => {
   const cardRef = useRef(null);
   const prefetchTimeoutRef = useRef(null);
   const imageRef = useRef(null);
+  
+  // React Router navigation
+  const navigate = useNavigate();
 
   // Hooks
   const prefetchPost = usePrefetchPost();
@@ -200,14 +204,13 @@ const BlogCard = ({ post, variant = 'standard', index = 0 }) => {
   );
 
   const handleCardClick = (e) => {
-    // Only prevent default if it's the anchor tag
-    if (e.target.tagName === 'A' || e.currentTarget.tagName === 'A') {
-      e.preventDefault();
-    }
+    // Prevent default to avoid any potential issues
+    e.preventDefault();
     
-    // Navigate to the blog post
-    const targetUrl = `/blog/${post.slug}`;
-    window.location.href = targetUrl;
+    // Navigate to the blog post using React Router
+    if (post.slug) {
+      navigate(`/blog/${post.slug}`);
+    }
   };
 
   return (

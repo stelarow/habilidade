@@ -30,6 +30,7 @@ import domOptimizer from './utils/domOptimizer';
 import usePerformanceLevel from './hooks/usePerformanceLevel';
 import useGoogleAnalytics from './hooks/useGoogleAnalytics';
 import useScrollToHash from './hooks/useScrollToHash';
+import useUrlCleanup from './hooks/useUrlCleanup';
 
 // Component to handle routes with cleanup
 function RoutesWithCleanup() {
@@ -38,28 +39,14 @@ function RoutesWithCleanup() {
   // Track page views with Google Analytics
   useGoogleAnalytics();
   
+  // Clean up URLs with ~and~ encoding
+  useUrlCleanup();
+  
   // Auto-scroll to hash anchors
   useScrollToHash();
   
-  // Force component cleanup on route change
-  useEffect(() => {
-    // Cleanup any lingering state when route changes
-    return () => {
-      // Force React to cleanup
-      document.querySelectorAll('[id="main-content"]').forEach((el, index) => {
-        if (index > 0) el.remove(); // Remove duplicate main content
-      });
-    };
-  }, [location.pathname]);
-  
-  // Use a unique key based on pathname for blog routes
-  // This ensures components are properly unmounted when navigating
-  const routeKey = location.pathname.startsWith('/blog') 
-    ? `blog-${location.pathname}` 
-    : location.key;
-  
   return (
-    <Routes key={routeKey}>
+    <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/cursos/:courseSlug" element={<CoursePage />} />
       <Route path="/blog" element={<BlogIndex />} />
