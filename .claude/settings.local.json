@@ -20,7 +20,20 @@
       "Bash(ls:*)",
       "Bash(grep:*)",
       "mcp__playwright__browser_wait_for",
-      "mcp__playwright__browser_take_screenshot"
+      "mcp__playwright__browser_take_screenshot",
+      "mcp__Ref__ref_search_documentation",
+      "mcp__Ref__ref_read_url",
+      "Bash(rm:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run build:production:*)",
+      "mcp__serena__read_memory",
+      "mcp__serena__get_symbols_overview",
+      "Bash(git add:*)",
+      "mcp__structured-memory__create_memory",
+      "mcp__structured-memory__update_section",
+      "mcp__structured-memory__get_memory_summary",
+      "mcp__serena__search_for_pattern",
+      "mcp__serena__replace_regex"
     ],
     "deny": []
   }

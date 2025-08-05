@@ -90,7 +90,7 @@ const formatSitemapDate = (dateString) => {
  */
 const getContentPriority = (post) => {
   const now = new Date();
-  const postDate = new Date(post.published_at || post.created_at);
+  const postDate = new Date(post.publishedAt || post.createdAt);
   const daysDiff = Math.floor((now - postDate) / (1000 * 60 * 60 * 24));
   
   // Higher priority for newer posts
@@ -133,9 +133,9 @@ const fetchBlogPosts = async () => {
     // Fetch all posts (large limit to get everything)
     const response = await api.getAllPosts(1, 1000);
     
-    if (response?.data?.posts) {
-      return response.data.posts.filter(post => 
-        post.status === 'published' && post.slug
+    if (response?.posts) {
+      return response.posts.filter(post => 
+        post.publishedAt && post.slug
       );
     }
     
@@ -156,8 +156,8 @@ const fetchCategories = async () => {
     
     const response = await api.getCategories();
     
-    if (response?.data?.categories) {
-      return response.data.categories.filter(category => category.slug);
+    if (response?.categories) {
+      return response.categories.filter(category => category.slug);
     }
     
     return [];
@@ -193,7 +193,7 @@ export const generateSitemap = async () => {
         url: `/blog/${post.slug}`,
         priority: getContentPriority(post),
         changefreq: getChangeFrequency(post),
-        lastmod: formatSitemapDate(post.published_at || post.created_at)
+        lastmod: formatSitemapDate(post.publishedAt || post.createdAt)
       })),
       
       // Category pages

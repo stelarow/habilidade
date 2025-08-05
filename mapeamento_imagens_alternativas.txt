@@ -1,0 +1,48 @@
+=== MAPEAMENTO DE IMAGENS ALTERNATIVAS ===
+
+IMAGENS CORROMPIDAS → SUBSTITUIÇÕES FUNCIONAIS:
+
+❌ estilo-moderno-casa-horizonte.jpg (0 bytes)
+✅ USAR: estilo-moderno-sala.jpg (funciona)
+
+❌ estilo-escandinavo-acolhedor.jpg (0 bytes)  
+✅ USAR: estilo-escandinavo-sala.jpg (funciona)
+
+❌ estilo-rustico-churrasqueira.jpg (0 bytes)
+✅ MANTER: estilo-rustico-churrasqueira.jpg (tentar re-upload específico)
+
+❌ estilo-provencal-cozinha.jpg (0 bytes)
+✅ MANTER: estilo-provencal-cozinha.jpg (única opção provençal)
+
+❌ estilo-shabby-chic-praia.jpg (0 bytes)
+✅ USAR: estilo-shabby-chic-jantar.jpg (funciona)
+
+❌ estilo-boho-chic-terralma.jpg (0 bytes)
+✅ USAR: estilo-boho-chic-ambiente.jpg (funciona)
+
+❌ estilo-retro-apartamento.jpg (0 bytes)
+✅ USAR: estilo-retro-cozinha.jpg (funciona)
+
+❌ estilo-vintage-loja-luxo.jpg (0 bytes)
+✅ USAR: estilo-vintage-sala.jpg (funciona)
+
+❌ estilo-tropical-casa-rendada.jpg (0 bytes)
+✅ USAR: estilo-tropical-sala.jpg (funciona)
+
+❌ estilo-nautico-casa-mar.jpg (0 bytes)
+✅ USAR: estilo-nautico-sala.jpg (funciona)
+
+❌ estilo-oriental-camboinhas.jpg (0 bytes)
+✅ USAR: estilo-oriental-quarto.jpg (funciona)
+
+❌ estilo-organico-casacor.jpg (0 bytes)
+✅ USAR: estilo-organico-sala.jpg (funciona)
+
+❌ estilo-romantico-apartamento.jpg (0 bytes)
+✅ USAR: estilo-romantico-quarto.jpg (funciona)
+
+❌ estilo-pop-art-loft.jpg (0 bytes)
+✅ USAR: estilo-pop-art-quarto.jpg (funciona)
+
+❌ estilo-ecletico-bilheteria.jpg (0 bytes)
+✅ USAR: estilo-ecletico-ambiente.jpg (funciona)

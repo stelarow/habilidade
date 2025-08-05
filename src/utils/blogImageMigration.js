@@ -96,6 +96,12 @@ class BlogImageMigration {
    * Apply client-side image optimization to existing images
    */
   async optimizeExistingImages() {
+    // Guard against SSR environment
+    if (typeof document === 'undefined') {
+      console.warn('BlogImageMigration: document not available in SSR context');
+      return [];
+    }
+    
     const smartImages = document.querySelectorAll('[data-smart-optimization="true"]');
     const results = [];
 
@@ -162,7 +168,7 @@ class BlogImageMigration {
             };
             
             // Add development indicator
-            if (process.env.NODE_ENV === 'development') {
+            if (process.env.NODE_ENV === 'development' && typeof document !== 'undefined') {
               const indicator = document.createElement('div');
               indicator.className = 'absolute top-2 left-2 bg-blue-500 text-white text-xs px-2 py-1 rounded opacity-75';
               indicator.textContent = `Otimizada ${naturalWidth}x${naturalHeight}`;
@@ -196,6 +202,12 @@ class BlogImageMigration {
    */
   createOptimizedVersion(imgElement) {
     try {
+      // Guard against SSR environment
+      if (typeof document === 'undefined') {
+        console.warn('BlogImageMigration: document not available in SSR context');
+        return null;
+      }
+      
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
       
@@ -231,6 +243,12 @@ class BlogImageMigration {
    * Initialize automatic optimization for the entire page
    */
   initializePageOptimization() {
+    // Guard against SSR environment
+    if (typeof document === 'undefined') {
+      console.warn('BlogImageMigration: document not available in SSR context');
+      return;
+    }
+    
     // Wait for DOM to be ready
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', () => {
