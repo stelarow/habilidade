@@ -46,24 +46,22 @@ function RoutesWithCleanup() {
   useScrollToHash();
   
   return (
-    <Suspense key={location.pathname} fallback={<Loading />}>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/cursos/:courseSlug" element={<CoursePage />} />
-        <Route path="/blog" element={<BlogIndex />} />
-        <Route path="/blog-test" element={<BlogTestPage />} />
-        <Route path="/blog-test/:slug" element={<BlogTestPage />} />
-        <Route path="/blog/:slug" element={<BlogPost />} />
-        <Route path="/blog/categoria/:categorySlug" element={<BlogCategory />} />
-        <Route path="/habilidade" element={<Navigate to="/" replace />} />
-        <Route path="/habilidade/" element={<Navigate to="/" replace />} />
-        <Route 
-          path="/habilidade/cursos/:courseSlug" 
-          element={<CourseRedirect />} 
-        />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </Suspense>
+    <Routes>
+      <Route path="/" element={<Suspense fallback={<Loading />}><Home /></Suspense>} />
+      <Route path="/cursos/:courseSlug" element={<Suspense fallback={<Loading />}><CoursePage key={location.pathname} /></Suspense>} />
+      <Route path="/blog" element={<Suspense fallback={<Loading />}><BlogIndex /></Suspense>} />
+      <Route path="/blog-test" element={<Suspense fallback={<Loading />}><BlogTestPage /></Suspense>} />
+      <Route path="/blog-test/:slug" element={<Suspense fallback={<Loading />}><BlogTestPage key={location.pathname} /></Suspense>} />
+      <Route path="/blog/:slug" element={<BlogPost key={location.pathname} />} />
+      <Route path="/blog/categoria/:categorySlug" element={<Suspense fallback={<Loading />}><BlogCategory key={location.pathname} /></Suspense>} />
+      <Route path="/habilidade" element={<Navigate to="/" replace />} />
+      <Route path="/habilidade/" element={<Navigate to="/" replace />} />
+      <Route 
+        path="/habilidade/cursos/:courseSlug" 
+        element={<CourseRedirect />} 
+      />
+      <Route path="*" element={<Suspense fallback={<Loading />}><NotFound /></Suspense>} />
+    </Routes>
   );
 }
 

@@ -25,6 +25,9 @@ const createQueryClient = () => {
         refetchOnWindowFocus: false, // Disable refetch on window focus for better UX
         refetchOnReconnect: true, // Refetch when reconnecting to internet
         
+        // Force refetch on mount to handle navigation between similar routes
+        refetchOnMount: 'always'
+        
         // Background refetch settings
         refetchInterval: false, // No automatic background refetching
         refetchIntervalInBackground: false,

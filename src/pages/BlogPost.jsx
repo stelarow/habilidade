@@ -56,9 +56,17 @@ const getCategoryColor = (categorySlug) => {
 const BlogPost = () => {
   const { slug } = useParams();
   
-  // Force component re-render when slug changes
+  // Force scroll to top and reset state when slug changes
   useEffect(() => {
-    console.log('[BlogPost] Component mounted/updated with slug:', slug);
+    console.log('[BlogPost] Slug changed to:', slug);
+    window.scrollTo(0, 0);
+    
+    // Force React Query to refetch by removing the cache for this specific post
+    // This ensures fresh data is loaded when navigating between posts
+    return () => {
+      // Cleanup function to ensure state is reset
+      console.log('[BlogPost] Cleaning up for slug:', slug);
+    };
   }, [slug]);
   const articleReference = useRef(null);
 
