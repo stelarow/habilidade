@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import { ViteReactSSG } from 'vite-react-ssg'
 import { generateSitemap } from "./src/utils/sitemapGenerator.js"
 
 // Custom plugin for sitemap generation
@@ -26,40 +27,11 @@ const sitemapPlugin = () => {
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
+    ViteReactSSG(),
     react(),
     sitemapPlugin()
   ],
-  
-  // SSG Configuration
-  ssgOptions: {
-    script: 'async',
-    format: 'esm',
-    entry: 'src/main.jsx',
-    mode: process.env.NODE_ENV || 'production',
-    mock: true, // Mock browser APIs for SSG
-    dirStyle: 'nested', // /blog/post-slug/index.html
-    includeAllRoutes: false,
-    rootContainerId: 'root',
-    concurrency: 2, // Reduce concurrency to avoid memory issues
-    onBeforePageRender: (route, indexHTML, appCtx) => {
-      // Setup mocks for browser APIs
-      if (typeof global !== 'undefined') {
-        global.IntersectionObserver = class IntersectionObserver {
-          constructor() {}
-          observe() {}
-          unobserve() {}
-          disconnect() {}
-        };
-        global.ResizeObserver = class ResizeObserver {
-          constructor() {}
-          observe() {}
-          unobserve() {}
-          disconnect() {}
-        };
-      }
-      return indexHTML;
-    }
-  },
+
   base: '/',
   
   build: {

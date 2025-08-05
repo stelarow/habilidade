@@ -1,4 +1,5 @@
 import React, { Suspense } from 'react';
+import React from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 import Layout from './Layout.jsx';
 import Loading from './components/Loading';
