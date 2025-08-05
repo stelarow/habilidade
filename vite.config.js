@@ -6,7 +6,7 @@ import { generateSitemap } from "./src/utils/sitemapGenerator.js"
 const sitemapPlugin = () => {
   return {
     name: 'sitemap-plugin',
-    generateBundle: async () => {
+    generateBundle: async function() {
       try {
         const sitemap = await generateSitemap();
         this.emitFile({
@@ -22,57 +22,80 @@ const sitemapPlugin = () => {
   };
 };
 
+
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
     react(),
     sitemapPlugin()
   ],
+  
+  // SSG Configuration
+  ssgOptions: {
+    script: 'async',
+    format: 'esm',
+    entry: 'src/main.jsx',
+    mode: process.env.NODE_ENV || 'production',
+    mock: true, // Mock browser APIs for SSG
+    dirStyle: 'nested', // /blog/post-slug/index.html
+    includeAllRoutes: false,
+    rootContainerId: 'root',
+    concurrency: 2, // Reduce concurrency to avoid memory issues
+    onBeforePageRender: (route, indexHTML, appCtx) => {
+      // Setup mocks for browser APIs
+      if (typeof global !== 'undefined') {
+        global.IntersectionObserver = class IntersectionObserver {
+          constructor() {}
+          observe() {}
+          unobserve() {}
+          disconnect() {}
+        };
+        global.ResizeObserver = class ResizeObserver {
+          constructor() {}
+          observe() {}
+          unobserve() {}
+          disconnect() {}
+        };
+      }
+      return indexHTML;
+    }
+  },
   base: '/',
   
   build: {
     // Code splitting otimizado para 2025 com foco em blog
     rollupOptions: {
       output: {
-        manualChunks: {
+        manualChunks(id) {
           // Vendor chunk para bibliotecas principais
-          vendor: ['react', 'react-dom'],
+          if (id.includes('node_modules/react/') || id.includes('node_modules/react-dom/')) {
+            return 'vendor';
+          }
           // Router chunk separado
-          router: ['react-router-dom'],
+          if (id.includes('node_modules/react-router-dom/')) {
+            return 'router';
+          }
           // Utils e hooks
-          utils: [
-            './src/hooks/useInView.js',
-            './src/hooks/useViewportSize.js',
-            './src/hooks/usePerformanceLevel.js',
-            './src/utils/memoryManager.js',
-            './src/utils/performanceUtils.js'
-          ],
+          if (id.includes('/src/hooks/') || id.includes('/src/utils/')) {
+            return 'utils';
+          }
           // Blog-specific chunk for better caching
-          blog: [
-            './src/services/blogAPI.js',
-            './src/utils/blogCache.js',
-            './src/hooks/useBlogCache.js',
-            './src/services/cacheService.js',
-            './src/utils/imageOptimizer.js',
-            './src/services/imageService.js'
-          ],
+          if (id.includes('/src/services/blogAPI.js') || 
+              id.includes('/src/utils/blogCache.js') ||
+              id.includes('/src/hooks/useBlogCache.js') ||
+              id.includes('/src/services/cacheService.js') ||
+              id.includes('/src/utils/imageOptimizer.js') ||
+              id.includes('/src/services/imageService.js')) {
+            return 'blog';
+          }
           // Blog components chunk
-          'blog-components': [
-            './src/components/blog/OptimizedImage.jsx',
-            './src/components/blog/BlogCard.jsx',
-            './src/components/blog/CategoryFilter.jsx'
-          ],
+          if (id.includes('/src/components/blog/')) {
+            return 'blog-components';
+          }
           // Backgrounds em chunk separado (lazy load)
-          backgrounds: [
-            './src/components/backgrounds/IABackground.jsx',
-            './src/components/backgrounds/DesignGraficoBackground.jsx',
-            './src/components/backgrounds/InformaticaBackground.jsx',
-            './src/components/backgrounds/ProgramacaoBackground.jsx',
-            './src/components/backgrounds/MarketingDigitalBackground.jsx',
-            './src/components/backgrounds/BIBackground.jsx',
-            './src/components/backgrounds/EdicaoVideoBackground.jsx',
-            './src/components/backgrounds/Projetista3DBackground.jsx'
-          ]
+          if (id.includes('/src/components/backgrounds/')) {
+            return 'backgrounds';
+          }
         },
         // Nomes consistentes para cache
         chunkFileNames: 'assets/[name]-[hash].js',

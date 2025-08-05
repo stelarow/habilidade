@@ -1,6 +1,7 @@
 /**
  * Utilitário para otimização de DOM e gerenciamento de elementos
  * Baseado nas melhores práticas de 2025 para Core Web Vitals
+ * Compatible with SSG/SSR environments
  */
 
 class DOMOptimizer {
@@ -9,6 +10,7 @@ class DOMOptimizer {
     this.mutationObserver = null;
     this.visibleElements = new Set();
     this.cleanupTasks = new Set();
+    this.isServer = typeof window === 'undefined';
     this.config = {
       // Limites para elementos DOM
       maxVisibleElements: 200,
@@ -26,10 +28,15 @@ class DOMOptimizer {
       maxIdleTime: 30000
     };
     
-    this.init();
+    // Only initialize if we're in browser environment
+    if (!this.isServer) {
+      this.init();
+    }
   }
 
   init() {
+    if (this.isServer) return;
+    
     this.setupIntersectionObserver();
     this.setupMutationObserver();
     this.setupPeriodicCleanup();
@@ -40,6 +47,12 @@ class DOMOptimizer {
    * Configura observador de visibilidade para elementos
    */
   setupIntersectionObserver() {
+    // Check if IntersectionObserver is available (browser environment)
+    if (typeof IntersectionObserver === 'undefined') {
+      console.warn('[DOMOptimizer] IntersectionObserver not available, skipping setup');
+      return;
+    }
+
     this.intersectionObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -58,6 +71,11 @@ class DOMOptimizer {
    * Configura observador de mutações DOM
    */
   setupMutationObserver() {
+    if (this.isServer || typeof MutationObserver === 'undefined') {
+      console.warn('[DOMOptimizer] MutationObserver not available, skipping setup');
+      return;
+    }
+
     this.mutationObserver = new MutationObserver(
       this.debounce((mutations) => {
         mutations.forEach(mutation => {
@@ -71,17 +89,21 @@ class DOMOptimizer {
       }, this.config.debounceDelay)
     );
 
-    this.mutationObserver.observe(document.body, {
-      childList: true,
-      subtree: true,
-      attributes: false
-    });
+    if (typeof document !== 'undefined' && document.body) {
+      this.mutationObserver.observe(document.body, {
+        childList: true,
+        subtree: true,
+        attributes: false
+      });
+    }
   }
 
   /**
    * Otimiza elemento individual
    */
   optimizeElement(element) {
+    if (this.isServer || !element) return;
+
     // Aplicar lazy loading para imagens
     if (element.tagName === 'IMG' && !element.hasAttribute('loading')) {
       element.setAttribute('loading', 'lazy');
@@ -98,7 +120,7 @@ class DOMOptimizer {
     }
 
     // Observar visibilidade se necessário
-    if (this.shouldObserveElement(element)) {
+    if (this.shouldObserveElement(element) && this.intersectionObserver) {
       this.intersectionObserver.observe(element);
     }
   }
@@ -212,6 +234,8 @@ class DOMOptimizer {
    * Remove elementos ocultos desnecessários
    */
   cullHiddenElements() {
+    if (this.isServer || typeof document === 'undefined') return;
+
     const allElements = document.querySelectorAll('[data-dom-optimized]');
     const hiddenElements = Array.from(allElements)
       .filter(el => !this.visibleElements.has(el))
@@ -230,6 +254,8 @@ class DOMOptimizer {
    * Otimização inicial do DOM
    */
   optimizeInitialDOM() {
+    if (this.isServer || typeof document === 'undefined') return;
+
     // Otimizar elementos existentes
     document.querySelectorAll('*').forEach(element => {
       this.optimizeElement(element);
@@ -247,6 +273,8 @@ class DOMOptimizer {
    * Remove comentários HTML para reduzir tamanho DOM
    */
   removeComments() {
+    if (this.isServer || typeof document === 'undefined' || typeof NodeFilter === 'undefined') return;
+
     const walker = document.createTreeWalker(
       document.body,
       NodeFilter.SHOW_COMMENT
@@ -269,31 +297,41 @@ class DOMOptimizer {
    * Aplica otimizações globais
    */
   applyGlobalOptimizations() {
+    if (this.isServer || typeof document === 'undefined') return;
+
     // Otimizar scrolling
-    document.documentElement.style.scrollBehavior = 'smooth';
+    if (document.documentElement) {
+      document.documentElement.style.scrollBehavior = 'smooth';
+    }
     
     // Preparar para animações
-    document.body.style.willChange = 'auto';
+    if (document.body) {
+      document.body.style.willChange = 'auto';
+    }
     
     // Aplicar font-display: swap para fontes
-    const fontFaces = document.styleSheets;
-    Array.from(fontFaces).forEach(sheet => {
-      try {
-        Array.from(sheet.cssRules || []).forEach(rule => {
-          if (rule.type === CSSRule.FONT_FACE_RULE) {
-            rule.style.fontDisplay = 'swap';
-          }
-        });
-      } catch (e) {
-        // Ignorar erros de CORS
-      }
-    });
+    if (document.styleSheets) {
+      const fontFaces = document.styleSheets;
+      Array.from(fontFaces).forEach(sheet => {
+        try {
+          Array.from(sheet.cssRules || []).forEach(rule => {
+            if (typeof CSSRule !== 'undefined' && rule.type === CSSRule.FONT_FACE_RULE) {
+              rule.style.fontDisplay = 'swap';
+            }
+          });
+        } catch (e) {
+          // Ignorar erros de CORS
+        }
+      });
+    }
   }
 
   /**
    * Limpeza periódica
    */
   setupPeriodicCleanup() {
+    if (this.isServer || typeof setInterval === 'undefined') return;
+
     setInterval(() => {
       this.performCleanup();
     }, this.config.cleanupInterval);
@@ -303,6 +341,8 @@ class DOMOptimizer {
    * Executa limpeza de elementos
    */
   performCleanup() {
+    if (this.isServer || typeof document === 'undefined' || typeof window === 'undefined') return;
+
     // Restaurar elementos ocultos se necessário
     document.querySelectorAll('[data-hidden-by-optimizer="true"]').forEach(element => {
       const rect = element.getBoundingClientRect();
@@ -340,13 +380,17 @@ class DOMOptimizer {
    * Destruir otimizador
    */
   destroy() {
+    if (this.isServer) return;
+
     if (this.intersectionObserver) {
       this.intersectionObserver.disconnect();
     }
     if (this.mutationObserver) {
       this.mutationObserver.disconnect();
     }
-    this.cleanupTasks.forEach(task => task());
+    if (this.cleanupTasks) {
+      this.cleanupTasks.forEach(task => task());
+    }
   }
 }
 
