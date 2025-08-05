@@ -6,15 +6,25 @@
 class GlobalMemoryManager {
   constructor() {
     this.isActive = true;
-    this.setupVisibilityAPI();
-    this.setupGlobalCleanup();
     
-    // Interceptar todos os requestAnimationFrame globalmente
-    this.patchRequestAnimationFrame();
+    // Only setup browser APIs if we're in a browser environment
+    if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+      this.setupVisibilityAPI();
+      this.setupGlobalCleanup();
+      
+      // Interceptar todos os requestAnimationFrame globalmente
+      this.patchRequestAnimationFrame();
+    }
   }
 
   // API de Visibilidade global
   setupVisibilityAPI() {
+    // Guard against server-side rendering
+    if (typeof document === 'undefined') {
+      console.warn('[GlobalMemoryManager] Skipping visibility API setup - running in SSR environment');
+      return;
+    }
+
     let isTabActive = true;
 
     const handleVisibilityChange = () => {
@@ -135,16 +145,26 @@ class GlobalMemoryManager {
 // Inicializar automaticamente quando o módulo é carregado
 let globalMemoryManager;
 
-// Aguardar DOM estar pronto
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => {
+// Only initialize in browser environment
+if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+  // Aguardar DOM estar pronto
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      globalMemoryManager = new GlobalMemoryManager();
+    });
+  } else {
     globalMemoryManager = new GlobalMemoryManager();
-  });
-} else {
-  globalMemoryManager = new GlobalMemoryManager();
-}
+  }
 
-// Expor globalmente para debug
-window.globalMemoryManager = globalMemoryManager;
+  // Expor globalmente para debug
+  window.globalMemoryManager = globalMemoryManager;
+} else {
+  // Create a minimal instance for SSR environments
+  globalMemoryManager = {
+    isActive: true,
+    activeAnimations: new Set(),
+    getStats: () => ({ isActive: true, activeAnimations: 0, memory: { used: 'N/A', total: 'N/A', limit: 'N/A' }, isTabVisible: true })
+  };
+}
 
 export default globalMemoryManager; 

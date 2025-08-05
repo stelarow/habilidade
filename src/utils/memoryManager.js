@@ -12,12 +12,21 @@ class MemoryManager {
     this.isTabActive = true;
     this.memoryThreshold = 100 * 1024 * 1024; // 100MB
     
-    this.setupVisibilityAPI();
-    this.setupMemoryMonitoring();
+    // Only setup browser APIs if we're in a browser environment
+    if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+      this.setupVisibilityAPI();
+      this.setupMemoryMonitoring();
+    }
   }
 
   // API de Visibilidade - pausa animações quando aba não está ativa
   setupVisibilityAPI() {
+    // Guard against server-side rendering
+    if (typeof document === 'undefined') {
+      console.warn('[MemoryManager] Skipping visibility API setup - running in SSR environment');
+      return;
+    }
+
     const handleVisibilityChange = () => {
       this.isTabActive = !document.hidden;
       
@@ -36,7 +45,8 @@ class MemoryManager {
 
   // Monitoramento de memória (quando suportado)
   setupMemoryMonitoring() {
-    if (!('memory' in performance)) return;
+    // Guard against server-side rendering
+    if (typeof performance === 'undefined' || !('memory' in performance)) return;
 
     const checkMemory = () => {
       const memory = performance.memory;
