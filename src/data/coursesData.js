@@ -2262,10 +2262,10 @@ const businessIntelligence = {
 const projetista = {
   basicInfo: {
     id: 'projetista-007',
-    title: 'Projetista',
+    title: 'Curso SketchUp Projetista 3D',
     slug: 'projetista-3d',
-    shortDescription: 'Domine SketchUp e Enscape para criar projetos arquitetônicos profissionais com renderização em tempo real.',
-    longDescription: 'Torne-se um Projetista 3D completo. Aprenda SketchUp para modelagem arquitetônica e Enscape para renderização com inteligência artificial. Curso totalmente presencial e baseado em projetos reais.',
+    shortDescription: 'Curso SketchUp e Enscape presencial em São José SC. Aprenda modelagem 3D e renderização com IA para projetos arquitetônicos profissionais.',
+    longDescription: 'Curso Projetista 3D presencial com SketchUp, Enscape e Inteligência Artificial. Única escola em Santa Catarina com esta combinação. 56 horas práticas, turmas pequenas e certificado reconhecido.',
     category: 'Arquitetura & Design',
     level: 'Intermediário',
     duration: '56 horas',
@@ -2295,6 +2295,44 @@ const projetista = {
       available: true,
       description: 'Acesso remoto às aulas com suporte online'
     }
+  },
+
+  // ✅ Por que presencial? - Diferencial competitivo
+  whyPresencial: {
+    title: 'Por que Escolher o Curso Presencial?',
+    subtitle: 'Único curso SketchUp + Enscape + IA presencial em Santa Catarina',
+    benefits: [
+      {
+        icon: 'users',
+        title: 'Turmas Pequenas',
+        description: 'Máximo 8 alunos por turma garantem atenção individualizada do professor.'
+      },
+      {
+        icon: 'handshake',
+        title: 'Suporte Imediato',
+        description: 'Professor ao seu lado para tirar dúvidas na hora e corrigir erros em tempo real.'
+      },
+      {
+        icon: 'network',
+        title: 'Networking Local',
+        description: 'Conheça outros profissionais de SC e forme sua rede de contatos na área.'
+      },
+      {
+        icon: 'computer',
+        title: 'Equipamentos Profissionais',
+        description: 'Use computadores com placas de vídeo dedicadas para Enscape sem limitações.'
+      },
+      {
+        icon: 'certificate',
+        title: 'Certificado Presencial',
+        description: 'Certificado nacional com diferencial de curso presencial reconhecido pelo mercado.'
+      },
+      {
+        icon: 'location',
+        title: 'Localização Estratégica',
+        description: 'São José - SC, no coração da Grande Florianópolis, fácil acesso da região.'
+      }
+    ]
   },
 
   curriculum: [
@@ -2510,23 +2548,43 @@ const projetista = {
   faq: [
     {
       id: 1,
-      question: 'Preciso ter conhecimento prévio em arquitetura?',
-      answer: 'Não é obrigatório, mas é recomendável ter noções básicas de desenho técnico. O curso ensina desde os fundamentos.'
+      question: 'Quanto tempo leva para aprender SketchUp do zero?',
+      answer: 'No nosso curso presencial de 56 horas, você aprende SketchUp desde o básico até projetos avançados em 2 meses. Incluímos também Enscape para renderização em tempo real e técnicas com inteligência artificial.'
     },
     {
       id: 2,
-      question: 'Qual a diferença entre as modalidades Presencial e Online?',
-      answer: 'Presencial: aulas na escola com professores certificados. Online: acesso remoto com suporte. Mesmo conteúdo e apostilas em ambas.'
+      question: 'Qual diferença entre curso SketchUp presencial e online?',
+      answer: 'O curso presencial em São José SC oferece prática hands-on, suporte imediato do professor e networking com outros alunos. Turmas pequenas garantem atenção individualizada que cursos online não conseguem oferecer.'
     },
     {
       id: 3,
-      question: 'As apostilas estão incluídas no preço?',
-      answer: 'Sim! Material didático impresso completo dos 2 módulos incluso sem custo adicional. Sua referência permanente!'
+      question: 'Como funciona renderização com Enscape e inteligência artificial?',
+      answer: 'O Enscape renderiza projetos SketchUp em tempo real (segundos vs horas). Com IA, otimizamos automaticamente iluminação, materiais e ambientação. Você aprende essas técnicas avançadas no nosso curso.'
     },
     {
       id: 4,
-      question: 'O que é o Enscape e como funciona a IA?',
-      answer: 'Enscape é uma ferramenta de renderização em tempo real que usa IA para otimizar automaticamente iluminação, materiais e ambientação.'
+      question: 'Preciso saber AutoCAD para fazer curso de projetista 3D?',
+      answer: 'Não é obrigatório. O SketchUp é mais intuitivo que AutoCAD para modelagem 3D. Começamos do zero e em 56 horas você estará criando projetos arquitetônicos completos.'
+    },
+    {
+      id: 5,
+      question: 'Quanto ganha um projetista 3D em Santa Catarina?',
+      answer: 'Projetistas 3D em SC ganham entre R$ 2.500-6.000. Com SketchUp + Enscape, profissionais freelancers cobram R$ 150-300 por projeto renderizado. Nosso curso prepara você para esse mercado.'
+    },
+    {
+      id: 6,
+      question: 'Existe curso SketchUp certificado em Florianópolis?',
+      answer: 'Sim! Nossa escola em São José (Grande Florianópolis) oferece certificado nacional reconhecido. Somos a única escola em SC com curso presencial de SketchUp + Enscape + IA.'
+    },
+    {
+      id: 7,
+      question: 'Posso trabalhar como projetista freelancer após o curso?',
+      answer: 'Absolutamente! Ensinamos desde modelagem até precificação de projetos. Muitos alunos começam freelances ainda durante o curso. O mercado de projetos 3D está aquecido em SC.'
+    },
+    {
+      id: 8,
+      question: 'O que está incluído no curso projetista 3D presencial?',
+      answer: '56 horas de aulas práticas, material didático completo, certificado nacional, suporte pós-curso e acesso aos softwares SketchUp Pro e Enscape durante as aulas.'
     }
   ],
 
@@ -2541,9 +2599,9 @@ const projetista = {
   },
 
   seoMeta: {
-    title: 'Curso Projetista Completo - Escola Habilidade | SketchUp, Enscape, Renderização IA - Material Incluso',
-    description: 'Torne-se Projetista 3D profissional. SketchUp para modelagem + Enscape para renderização com IA. 56 horas, apostilas inclusas, modalidades presencial e online.',
-    keywords: ['projetista', 'sketchup', 'enscape', 'renderização ia', 'arquitetura', 'modelagem 3d', 'apostilas inclusas'],
+    title: 'Curso SketchUp e Enscape São José SC | Projetista 3D com IA | Escola Habilidade',
+    description: 'Curso Projetista 3D com SketchUp e Enscape + IA em São José SC. 56h presenciais, certificado reconhecido. Turmas pequenas, avaliação 4.9★',
+    keywords: ['curso sketchup', 'curso enscape', 'projetista 3d são josé', 'curso sketchup santa catarina', 'renderização tempo real', 'sketchup presencial', 'enscape inteligência artificial', 'curso projetista florianópolis'],
     ogImage: '/og-images/projetista-3d.jpg',
     ogType: 'website',
   },
