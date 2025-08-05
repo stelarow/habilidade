@@ -6,7 +6,7 @@ This file provides guidance to Claude Code when working with this educational pl
 
 Dual-architecture educational platform for Escola Habilidade:
 
-- **Main Website** (`/`) - React 19 + Vite marketing site
+- **Main Website** (`/`) - React 19 + Vite marketing site (hosted on Netlify)
 - **Learning Platform** (`/plataforma-ensino/`) - Next.js 14 + TypeScript + Supabase LMS
 
 ## Development Guidelines
@@ -68,5 +68,6 @@ Dual-architecture educational platform for Escola Habilidade:
 ## Memórias de Context/Troubleshooting  
 - **Problema de Imagens Blog**: Se imagens de artigos de blog não carregam, consulte a memória `troubleshooting-imagens-blog-historia-sketchup` para diagnóstico completo e soluções conhecidas
 - **SEO Otimizações**: Para contexto completo sobre SEO implementado, consulte `seo-optimization-escolahabilidade` - inclui problemas resolvidos, configurações técnicas e próximos passos
+- **Problema de Rotas SPA**: Para issues de navegação e URLs com ~and~, consulte `troubleshooting-routing-spa-netlify` - site hospedado no Netlify, não GitHub Pages
 - **Comando para consultar**: Use `mcp__structured-memory__get_full_memory` com o memory_id relevante
 - **Playwright MCP Image Upload Error**: Tenha cuidado com upload de imagens no Playwright MCP para evitar erro de dimensão máxima de 8000 pixels - API retorna erro 400 se a imagem for muito grande
