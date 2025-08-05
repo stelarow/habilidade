@@ -26,7 +26,7 @@ const createQueryClient = () => {
         refetchOnReconnect: true, // Refetch when reconnecting to internet
         
         // Force refetch on mount to handle navigation between similar routes
-        refetchOnMount: 'always'
+        refetchOnMount: 'always',
         
         // Background refetch settings
         refetchInterval: false, // No automatic background refetching
