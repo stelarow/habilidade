@@ -15,11 +15,43 @@ hljs.registerLanguage('sql', sql);
 hljs.registerLanguage('css', css);
 hljs.registerLanguage('html', html);
 
+// Helper function to safely extract text from tokens or fallback to string conversion
+function extractText(textOrTokens, parser) {
+  if (!textOrTokens) return '';
+  
+  // If it's a string, return it directly
+  if (typeof textOrTokens === 'string') {
+    return textOrTokens;
+  }
+  
+  // If it's an array of tokens, parse them
+  if (Array.isArray(textOrTokens)) {
+    return parser ? parser.parseInline(textOrTokens) : '';
+  }
+  
+  // If it has a tokens property, parse those
+  if (textOrTokens.tokens && Array.isArray(textOrTokens.tokens)) {
+    return parser ? parser.parseInline(textOrTokens.tokens) : '';
+  }
+  
+  // If it has a text property, use that
+  if (textOrTokens.text) {
+    return textOrTokens.text;
+  }
+  
+  // Fallback to string conversion, but avoid [object Object]
+  const str = String(textOrTokens);
+  return str === '[object Object]' ? '' : str;
+}
+
 // Configure marked with custom renderer for v16 - consolidated configuration
 marked.use({
   renderer: {
     // Override heading rendering to add Tailwind classes
-    heading(text, level) {
+    heading(token) {
+      const text = extractText(token, this.parser);
+      const depth = token.depth || 1;
+      
       const classes = {
         1: 'text-4xl md:text-5xl font-bold text-white mb-6 mt-8',
         2: 'text-3xl md:text-4xl font-bold text-white mb-4 mt-8',
@@ -29,97 +61,103 @@ marked.use({
         6: 'text-base md:text-lg font-semibold text-white mb-2 mt-4'
       };
       
-      const className = classes[level] || classes[6];
-      const safeText = String(text || '');
-      const id = safeText.toLowerCase().replace(/[^\w]+/g, '-');
+      const className = classes[depth] || classes[6];
+      const id = text.toLowerCase().replace(/[^\w]+/g, '-');
       
-      return `<h${level} id="${id}" class="${className}">${safeText}</h${level}>`;
+      return `<h${depth} id="${id}" class="${className}">${text}</h${depth}>`;
     },
 
     // Override paragraph rendering
-    paragraph(text) {
-      const safeText = String(text || '');
-      return `<p class="text-gray-300 mb-4 leading-relaxed">${safeText}</p>`;
+    paragraph(token) {
+      const text = extractText(token, this.parser);
+      return `<p class="text-gray-300 mb-4 leading-relaxed">${text}</p>`;
     },
 
     // Override list rendering
-    list(body, ordered) {
-      const safeBody = String(body || '');
+    list(token) {
+      const ordered = token.ordered || false;
       const tag = ordered ? 'ol' : 'ul';
       const className = ordered 
         ? 'list-decimal list-inside text-gray-300 mb-4 space-y-2 ml-4' 
         : 'list-disc list-inside text-gray-300 mb-4 space-y-2 ml-4';
       
-      return `<${tag} class="${className}">${safeBody}</${tag}>`;
+      let body = '';
+      if (token.items && Array.isArray(token.items)) {
+        token.items.forEach(item => {
+          body += this.listitem(item);
+        });
+      }
+      
+      return `<${tag} class="${className}">${body}</${tag}>`;
     },
 
     // Override list item rendering
-    listitem(text) {
-      const safeText = String(text || '');
-      return `<li class="mb-1">${safeText}</li>`;
+    listitem(token) {
+      const text = extractText(token, this.parser);
+      return `<li class="mb-1">${text}</li>`;
     },
 
     // Override blockquote rendering
-    blockquote(quote) {
-      const safeQuote = String(quote || '');
-      return `<blockquote class="border-l-4 border-blue-500 pl-4 py-2 bg-zinc-800/50 rounded-r-lg mb-4 italic text-gray-300">${safeQuote}</blockquote>`;
+    blockquote(token) {
+      const quote = extractText(token, this.parser);
+      return `<blockquote class="border-l-4 border-blue-500 pl-4 py-2 bg-zinc-800/50 rounded-r-lg mb-4 italic text-gray-300">${quote}</blockquote>`;
     },
 
     // Override code block rendering
-    code(code, infostring, escaped) {
-      const safeCode = String(code || '');
-      const lang = String(infostring || '').match(/\S*/)[0];
+    code(token) {
+      const code = token.text || '';
+      const lang = token.lang || '';
       
       return `<div class="bg-zinc-900 rounded-lg p-4 mb-4 overflow-x-auto">
-        <pre class="text-sm"><code class="hljs language-${lang || 'plaintext'}">${safeCode}</code></pre>
+        <pre class="text-sm"><code class="hljs language-${lang || 'plaintext'}">${code}</code></pre>
       </div>`;
     },
 
     // Override inline code rendering
-    codespan(text) {
-      const safeText = String(text || '');
-      return `<code class="bg-zinc-800 text-blue-300 px-2 py-1 rounded text-sm">${safeText}</code>`;
+    codespan(token) {
+      const text = token.text || '';
+      return `<code class="bg-zinc-800 text-blue-300 px-2 py-1 rounded text-sm">${text}</code>`;
     },
 
     // Override image rendering with Tailwind classes and error handling
-    image(href, title, text) {
-      const safeHref = String(href || '');
-      const safeTitle = String(title || '');
-      const safeText = String(text || '');
-      const titleAttr = safeTitle ? ` title="${safeTitle}"` : '';
-      const altAttr = safeText ? ` alt="${safeText}"` : '';
+    image(token) {
+      const href = token.href || '';
+      const title = token.title || '';
+      const text = token.text || '';
+      const titleAttr = title ? ` title="${title}"` : '';
+      const altAttr = text ? ` alt="${text}"` : '';
       
       return `<div class="mb-6">
-        <img src="${safeHref}" class="w-full rounded-lg shadow-lg"${altAttr}${titleAttr} 
+        <img src="${href}" class="w-full rounded-lg shadow-lg"${altAttr}${titleAttr} 
              onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
         <div class="hidden bg-zinc-800 rounded-lg p-4 text-center">
-          <div class="text-gray-400 text-sm">Imagem não encontrada: ${safeText || 'Sem descrição'}</div>
+          <div class="text-gray-400 text-sm">Imagem não encontrada: ${text || 'Sem descrição'}</div>
         </div>
-        ${safeText ? `<p class="text-gray-500 text-sm text-center mt-2 italic">${safeText}</p>` : ''}
+        ${text ? `<p class="text-gray-500 text-sm text-center mt-2 italic">${text}</p>` : ''}
       </div>`;
     },
 
     // Override strong (bold) rendering
-    strong(text) {
-      const safeText = String(text || '');
-      return `<strong class="font-bold text-white">${safeText}</strong>`;
+    strong(token) {
+      const text = extractText(token, this.parser);
+      return `<strong class="font-bold text-white">${text}</strong>`;
     },
 
     // Override emphasis (italic) rendering
-    em(text) {
-      const safeText = String(text || '');
-      return `<em class="italic text-gray-200">${safeText}</em>`;
+    em(token) {
+      const text = extractText(token, this.parser);
+      return `<em class="italic text-gray-200">${text}</em>`;
     },
 
     // Override link rendering
-    link(href, title, text) {
-      const safeHref = String(href || '');
-      const safeTitle = String(title || '');
-      const safeText = String(text || '');
-      const titleAttr = safeTitle ? ` title="${safeTitle}"` : '';
-      const target = safeHref.startsWith('http') ? ' target="_blank" rel="noopener noreferrer"' : '';
+    link(token) {
+      const href = token.href || '';
+      const title = token.title || '';
+      const text = extractText(token, this.parser);
+      const titleAttr = title ? ` title="${title}"` : '';
+      const target = href.startsWith('http') ? ' target="_blank" rel="noopener noreferrer"' : '';
       
-      return `<a href="${safeHref}" class="text-blue-400 hover:text-blue-300 underline transition-colors duration-200"${titleAttr}${target}>${safeText}</a>`;
+      return `<a href="${href}" class="text-blue-400 hover:text-blue-300 underline transition-colors duration-200"${titleAttr}${target}>${text}</a>`;
     },
 
     // Override horizontal rule rendering
@@ -128,30 +166,49 @@ marked.use({
     },
 
     // Override table rendering
-    table(header, body) {
-      const safeHeader = String(header || '');
-      const safeBody = String(body || '');
+    table(token) {
+      let headerHtml = '';
+      let bodyHtml = '';
+      
+      if (token.header && Array.isArray(token.header)) {
+        headerHtml = this.tablerow({ cells: token.header, header: true });
+      }
+      
+      if (token.rows && Array.isArray(token.rows)) {
+        token.rows.forEach(row => {
+          bodyHtml += this.tablerow({ cells: row });
+        });
+      }
+      
       return `<div class="overflow-x-auto mb-6">
         <table class="min-w-full bg-zinc-800 rounded-lg overflow-hidden">
-          <thead class="bg-zinc-700">${safeHeader}</thead>
-          <tbody>${safeBody}</tbody>
+          <thead class="bg-zinc-700">${headerHtml}</thead>
+          <tbody>${bodyHtml}</tbody>
         </table>
       </div>`;
     },
 
-    tablerow(content) {
-      const safeContent = String(content || '');
-      return `<tr class="border-b border-zinc-700">${safeContent}</tr>`;
+    tablerow(token) {
+      let content = '';
+      if (token.cells && Array.isArray(token.cells)) {
+        token.cells.forEach(cell => {
+          content += this.tablecell({ 
+            ...cell, 
+            header: token.header || false 
+          });
+        });
+      }
+      return `<tr class="border-b border-zinc-700">${content}</tr>`;
     },
 
-    tablecell(content, flags) {
-      const safeContent = String(content || '');
-      const type = flags.header ? 'th' : 'td';
-      const className = flags.header 
+    tablecell(token) {
+      const content = extractText(token, this.parser);
+      const type = token.header ? 'th' : 'td';
+      const className = token.header 
         ? 'px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider'
         : 'px-6 py-4 whitespace-nowrap text-sm text-gray-300';
       
-      return `<${type} class="${className}">${safeContent}</${type}>`;
+      return `<${type} class="${className}">${content}</${type}>`;
     }
   },
   
