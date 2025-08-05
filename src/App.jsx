@@ -29,6 +29,7 @@ const NotFound = React.lazy(() => import('./pages/NotFound'));
 import domOptimizer from './utils/domOptimizer';
 import usePerformanceLevel from './hooks/usePerformanceLevel';
 import useGoogleAnalytics from './hooks/useGoogleAnalytics';
+import useScrollToHash from './hooks/useScrollToHash';
 
 // Component to handle routes with cleanup
 function RoutesWithCleanup() {
@@ -36,6 +37,9 @@ function RoutesWithCleanup() {
   
   // Track page views with Google Analytics
   useGoogleAnalytics();
+  
+  // Auto-scroll to hash anchors
+  useScrollToHash();
   
   // Force component cleanup on route change
   useEffect(() => {
