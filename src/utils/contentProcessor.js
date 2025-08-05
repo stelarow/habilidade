@@ -15,7 +15,7 @@ hljs.registerLanguage('sql', sql);
 hljs.registerLanguage('css', css);
 hljs.registerLanguage('html', html);
 
-// Configure marked with custom renderer for v16
+// Configure marked with custom renderer for v16 - consolidated configuration
 marked.use({
   renderer: {
     // Override heading rendering to add Tailwind classes
@@ -30,81 +30,96 @@ marked.use({
       };
       
       const className = classes[level] || classes[6];
-      const id = text.toLowerCase().replace(/[^\w]+/g, '-');
+      const safeText = String(text || '');
+      const id = safeText.toLowerCase().replace(/[^\w]+/g, '-');
       
-      return `<h${level} id="${id}" class="${className}">${text}</h${level}>`;
+      return `<h${level} id="${id}" class="${className}">${safeText}</h${level}>`;
     },
 
     // Override paragraph rendering
     paragraph(text) {
-      return `<p class="text-gray-300 mb-4 leading-relaxed">${text}</p>`;
+      const safeText = String(text || '');
+      return `<p class="text-gray-300 mb-4 leading-relaxed">${safeText}</p>`;
     },
 
     // Override list rendering
     list(body, ordered) {
+      const safeBody = String(body || '');
       const tag = ordered ? 'ol' : 'ul';
       const className = ordered 
         ? 'list-decimal list-inside text-gray-300 mb-4 space-y-2 ml-4' 
         : 'list-disc list-inside text-gray-300 mb-4 space-y-2 ml-4';
       
-      return `<${tag} class="${className}">${body}</${tag}>`;
+      return `<${tag} class="${className}">${safeBody}</${tag}>`;
     },
 
     // Override list item rendering
     listitem(text) {
-      return `<li class="mb-1">${text}</li>`;
+      const safeText = String(text || '');
+      return `<li class="mb-1">${safeText}</li>`;
     },
 
     // Override blockquote rendering
     blockquote(quote) {
-      return `<blockquote class="border-l-4 border-blue-500 pl-4 py-2 bg-zinc-800/50 rounded-r-lg mb-4 italic text-gray-300">${quote}</blockquote>`;
+      const safeQuote = String(quote || '');
+      return `<blockquote class="border-l-4 border-blue-500 pl-4 py-2 bg-zinc-800/50 rounded-r-lg mb-4 italic text-gray-300">${safeQuote}</blockquote>`;
     },
 
     // Override code block rendering
     code(code, infostring, escaped) {
-      const lang = (infostring || '').match(/\S*/)[0];
+      const safeCode = String(code || '');
+      const lang = String(infostring || '').match(/\S*/)[0];
       
       return `<div class="bg-zinc-900 rounded-lg p-4 mb-4 overflow-x-auto">
-        <pre class="text-sm"><code class="hljs language-${lang || 'plaintext'}">${code}</code></pre>
+        <pre class="text-sm"><code class="hljs language-${lang || 'plaintext'}">${safeCode}</code></pre>
       </div>`;
     },
 
     // Override inline code rendering
     codespan(text) {
-      return `<code class="bg-zinc-800 text-blue-300 px-2 py-1 rounded text-sm">${text}</code>`;
+      const safeText = String(text || '');
+      return `<code class="bg-zinc-800 text-blue-300 px-2 py-1 rounded text-sm">${safeText}</code>`;
     },
 
     // Override image rendering with Tailwind classes and error handling
     image(href, title, text) {
-      const titleAttr = title ? ` title="${title}"` : '';
-      const altAttr = text ? ` alt="${text}"` : '';
+      const safeHref = String(href || '');
+      const safeTitle = String(title || '');
+      const safeText = String(text || '');
+      const titleAttr = safeTitle ? ` title="${safeTitle}"` : '';
+      const altAttr = safeText ? ` alt="${safeText}"` : '';
       
       return `<div class="mb-6">
-        <img src="${href}" class="w-full rounded-lg shadow-lg"${altAttr}${titleAttr} 
+        <img src="${safeHref}" class="w-full rounded-lg shadow-lg"${altAttr}${titleAttr} 
              onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
         <div class="hidden bg-zinc-800 rounded-lg p-4 text-center">
-          <div class="text-gray-400 text-sm">Imagem não encontrada: ${text || 'Sem descrição'}</div>
+          <div class="text-gray-400 text-sm">Imagem não encontrada: ${safeText || 'Sem descrição'}</div>
         </div>
-        ${text ? `<p class="text-gray-500 text-sm text-center mt-2 italic">${text}</p>` : ''}
+        ${safeText ? `<p class="text-gray-500 text-sm text-center mt-2 italic">${safeText}</p>` : ''}
       </div>`;
     },
 
     // Override strong (bold) rendering
     strong(text) {
-      return `<strong class="font-bold text-white">${text}</strong>`;
+      const safeText = String(text || '');
+      return `<strong class="font-bold text-white">${safeText}</strong>`;
     },
 
     // Override emphasis (italic) rendering
     em(text) {
-      return `<em class="italic text-gray-200">${text}</em>`;
+      const safeText = String(text || '');
+      return `<em class="italic text-gray-200">${safeText}</em>`;
     },
 
     // Override link rendering
     link(href, title, text) {
-      const titleAttr = title ? ` title="${title}"` : '';
-      const target = href.startsWith('http') ? ' target="_blank" rel="noopener noreferrer"' : '';
+      const safeHref = String(href || '');
+      const safeTitle = String(title || '');
+      const safeText = String(text || '');
+      const titleAttr = safeTitle ? ` title="${safeTitle}"` : '';
+      const target = safeHref.startsWith('http') ? ' target="_blank" rel="noopener noreferrer"' : '';
       
-      return `<a href="${href}" class="text-blue-400 hover:text-blue-300 underline transition-colors duration-200"${titleAttr}${target}>${text}</a>`;
+      return `<a href="${safeHref}" class="text-blue-400 hover:text-blue-300 underline transition-colors duration-200"${titleAttr}${target}>${safeText}</a>`;
     },
 
     // Override horizontal rule rendering
@@ -114,37 +129,33 @@ marked.use({
 
     // Override table rendering
     table(header, body) {
+      const safeHeader = String(header || '');
+      const safeBody = String(body || '');
       return `<div class="overflow-x-auto mb-6">
         <table class="min-w-full bg-zinc-800 rounded-lg overflow-hidden">
-          <thead class="bg-zinc-700">${header}</thead>
-          <tbody>${body}</tbody>
+          <thead class="bg-zinc-700">${safeHeader}</thead>
+          <tbody>${safeBody}</tbody>
         </table>
       </div>`;
     },
 
     tablerow(content) {
-      return `<tr class="border-b border-zinc-700">${content}</tr>`;
+      const safeContent = String(content || '');
+      return `<tr class="border-b border-zinc-700">${safeContent}</tr>`;
     },
 
     tablecell(content, flags) {
+      const safeContent = String(content || '');
       const type = flags.header ? 'th' : 'td';
       const className = flags.header 
         ? 'px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider'
         : 'px-6 py-4 whitespace-nowrap text-sm text-gray-300';
       
-      return `<${type} class="${className}">${content}</${type}>`;
+      return `<${type} class="${className}">${safeContent}</${type}>`;
     }
   },
   
-  // Other marked options
-  breaks: true,
-  gfm: true,
-  pedantic: false,
-  silent: true
-});
-
-// Set highlight function separately if needed
-marked.setOptions({
+  // Highlight function integrated within marked.use()
   highlight: function(code, lang) {
     // Safely handle language parameter
     if (!lang || typeof lang !== 'string') {
@@ -158,7 +169,13 @@ marked.setOptions({
       console.warn('Highlight.js error:', error);
     }
     return code;
-  }
+  },
+  
+  // Other marked options
+  breaks: true,
+  gfm: true,
+  pedantic: false,
+  silent: true
 });
 
 /**
