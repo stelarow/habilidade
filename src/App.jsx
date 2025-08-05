@@ -46,7 +46,7 @@ function RoutesWithCleanup() {
   useScrollToHash();
   
   return (
-    <Routes>
+    <Routes key={location.pathname}>
       <Route path="/" element={<Home />} />
       <Route path="/cursos/:courseSlug" element={<CoursePage />} />
       <Route path="/blog" element={<BlogIndex />} />
