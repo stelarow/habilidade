@@ -209,7 +209,7 @@ Na [Escola Habilidade](https://escolahabilidade.com.br/cursos), acreditamos que 
 
 ---
 
-**Pronto para dominar o SketchUp e revolucionar seus projetos?** Conheça nosso [curso completo de SketchUp](https://escolahabilidade.com.br/cursos/sketchup-completo), onde você aprenderá desde os fundamentos até técnicas avançadas de modelagem e apresentação profissional. Transforme suas ideias em visualizações impactantes e destaque-se no mercado da arquitetura e design.
+**Pronto para dominar o SketchUp e revolucionar seus projetos?** Conheça nosso [curso completo de SketchUp](https://www.escolahabilidade.com/cursos/projetista-3d), onde você aprenderá desde os fundamentos até técnicas avançadas de modelagem e apresentação profissional. Transforme suas ideias em visualizações impactantes e destaque-se no mercado da arquitetura e design.
 
 <script type="application/ld+json">
 {
