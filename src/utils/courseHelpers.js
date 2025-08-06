@@ -134,7 +134,7 @@ export function generateCourseMetadata(courseData) {
           'addressLocality': 'Brasil'
         }
       },
-      'courseMode': ['OnlineEventAttendanceMode', 'OfflineEventAttendanceMode'],
+      'courseMode': ['https://schema.org/OnlineEventAttendanceMode', 'https://schema.org/OfflineEventAttendanceMode'],
       'educationalLevel': safeCourse.basicInfo.level,
       'inLanguage': 'pt-BR',
       'learningResourceType': 'Course',
@@ -142,7 +142,8 @@ export function generateCourseMetadata(courseData) {
       'timeRequired': safeCourse.basicInfo.duration,
       'hasCourseInstance': {
         '@type': 'CourseInstance',
-        'courseMode': ['OnlineEventAttendanceMode', 'OfflineEventAttendanceMode'],
+        'courseMode': ['https://schema.org/OnlineEventAttendanceMode', 'https://schema.org/OfflineEventAttendanceMode'],
+        'courseWorkload': 'PT40H',
         'courseSchedule': {
           '@type': 'Schedule',
           'duration': safeCourse.basicInfo.duration,
