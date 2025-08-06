@@ -10,21 +10,21 @@ const CourseProblemStatement = ({ course }) => {
   const problems = [
     {
       icon: TrendUp,
-      title: "Mercado Exige Versatilidade",
-      description: "Empresas buscam profissionais que dominem múltiplas ferramentas, não apenas uma.",
-      stat: "73% das vagas"
+      title: "Renders que Demoram Dias",
+      description: "Profissionais perdem projetos por não conseguir entregar visualizações rápidas e profissionais para clientes exigentes.",
+      stat: "8+ horas"
     },
     {
       icon: Users,
-      title: "Competição Acirrada",
-      description: "Profissionais limitados a uma ferramenta têm menos oportunidades no mercado.",
-      stat: "35% a menos"
+      title: "Projetos Rejeitados por Clientes", 
+      description: "Apresentações amadoras com SketchUp básico fazem você perder para concorrentes com renders fotorrealísticos.",
+      stat: "40% rejeição"
     },
     {
       icon: Lightbulb,
-      title: "Projetos Mais Complexos",
-      description: "Clientes modernos exigem soluções completas: do conceito à apresentação final.",
-      stat: "90% dos projetos"
+      title: "Retrabalho por Incompatibilidade",
+      description: "Arquivos que não conversam entre si geram horas de retrabalho e atraso na entrega de projetos técnicos.",
+      stat: "15h perdidas"
     }
   ];
 
@@ -35,11 +35,11 @@ const CourseProblemStatement = ({ course }) => {
         {/* Header */}
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl font-bold text-white mb-6">
-            Por que apenas SketchUp não é mais suficiente?
+            Problemas que Todo Projetista 3D Enfrenta
           </h2>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            O mercado de projeto 3D evoluiu. Hoje, ser um profissional completo 
-            significa dominar todo o workflow: do conceito técnico à apresentação visual impactante.
+            Você está perdendo projetos e clientes porque ainda não domina o workflow completo 
+            do profissional 3D moderno: do desenho técnico até renderizações fotorrealísticas instantâneas.
           </p>
         </div>
 
@@ -83,7 +83,7 @@ const CourseProblemStatement = ({ course }) => {
             }}
           >
             <span className="text-lg text-white font-medium">
-              A solução? Um curso completo que te prepara para o mercado real
+              A solução? Domine SketchUp + AutoCAD + Revit + Enscape com IA em um curso só
             </span>
             <ArrowRight 
               size={20} 

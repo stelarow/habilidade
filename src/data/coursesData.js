@@ -2262,7 +2262,7 @@ const businessIntelligence = {
 const projetista = {
   basicInfo: {
     id: 'projetista-007',
-    title: 'Curso Projetista 3D Completo',
+    title: 'Projetista 3D Completo',
     slug: 'projetista-3d',
     shortDescription: 'Formação completa em Projetista 3D com SketchUp, AutoCAD, Revit e Enscape presencial em São José SC. Do esboço ao render com IA.',
     longDescription: 'Curso Projetista 3D presencial completo: SketchUp + AutoCAD + Revit + Enscape com IA. Única escola em SC com formação integrada em todas as ferramentas do projetista moderno. 94 horas práticas.',
