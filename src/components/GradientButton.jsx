@@ -3,8 +3,19 @@ function GradientButton({ href, children, className = '', ...props }) {
   const classes = `${base} ${className}`;
 
   if (href) {
+    // Handle smooth scrolling for anchor links
+    const handleClick = (e) => {
+      if (href.startsWith('#')) {
+        e.preventDefault();
+        const element = document.getElementById(href.substring(1));
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    };
+
     return (
-      <a href={href} className={classes} {...props}>
+      <a href={href} className={classes} onClick={handleClick} {...props}>
         {children}
       </a>
     );
