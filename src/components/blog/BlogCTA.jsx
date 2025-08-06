@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom'; // Not needed for SSG
 import { ArrowRight, Clock, Users, Star, BookOpen } from 'phosphor-react';
 import LazyImage from '../LazyImage';
 import COURSES_DATA from '../../data/coursesData';
@@ -232,8 +232,8 @@ const BlogCTA = ({
           )}
 
           {/* Card principal - baseado no design da homepage */}
-          <Link
-            to={`/cursos/${courseStyle.slug}`}
+          <a
+            href={`/cursos/${courseStyle.slug}`}
             onClick={() => handleCtaClick('specific_course', relatedCourse.basicInfo.id)}
             className={`card-enter in-view relative clip-card w-full h-auto p-[3px] bg-gradient-to-r ${courseStyle.borderGradient} transition-transform duration-200 hover:-translate-y-1.5 hover:scale-[1.02] ${courseStyle.hoverShadow} focus-visible:ring-2 ring-fuchsia-500 focus:outline-none block`}
           >
@@ -289,7 +289,7 @@ const BlogCTA = ({
                 </div>
               </div>
             </div>
-          </Link>
+          </a>
         </div>
       </div>
     );
@@ -337,14 +337,14 @@ const BlogCTA = ({
 
           {/* CTA Button */}
           <div className="pt-2">
-            <Link
-              to="/cursos"
+            <a
+              href="/cursos"
               onClick={() => handleCtaClick('generic')}
               className="inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium px-8 py-3 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-blue-500/25 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
             >
               <span>Explorar Cursos</span>
               <ArrowRight size={20} className="transition-transform group-hover:translate-x-1" />
-            </Link>
+            </a>
           </div>
         </div>
       </div>

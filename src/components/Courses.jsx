@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom'; // Not needed for SSG
 import Starfield from './Starfield';
 import Section from './Section';
 import {
@@ -101,10 +101,10 @@ const COURSES = [
 function CourseCard({ title, slug, icon: Icon, desc, textColor, borderGradient, hoverShadow }) {
   const [ref, visible] = useInView();
   return (
-    <Link
+    <a
       ref={ref}
-      to={`/cursos/${slug}`}
-      className={`card-enter ${visible ? 'in-view' : ''} relative clip-card w-full h-[120px] p-[3px] bg-gradient-to-r ${borderGradient} transition-transform duration-200 hover:-translate-y-1.5 hover:scale-[1.02] ${hoverShadow} focus-visible:ring-2 ring-fuchsia-500 focus:outline-none`}
+      href={`/cursos/${slug}`}
+      className={`card-enter ${visible ? 'in-view' : ''} relative clip-card w-full h-[120px] p-[3px] bg-gradient-to-r ${borderGradient} transition-transform duration-200 hover:-translate-y-1.5 hover:scale-[1.02] ${hoverShadow} focus-visible:ring-2 ring-fuchsia-500 focus:outline-none block`}
     >
       <div
         className="clip-card w-full h-full flex items-center gap-6 px-8 bg-[radial-gradient(ellipse_at_60%_40%,#181a2a_0%,#0a0a0a_100%)] hover:bg-[radial-gradient(ellipse_at_60%_40%,#1a1c2e_0%,#0a0a0a_100%)] transition"
@@ -115,7 +115,7 @@ function CourseCard({ title, slug, icon: Icon, desc, textColor, borderGradient, 
           <p className="text-sm text-zinc-300 leading-snug text-left line-clamp-2">{desc}</p>
         </div>
       </div>
-    </Link>
+    </a>
   );
 }
 
