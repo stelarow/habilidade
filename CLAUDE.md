@@ -267,8 +267,8 @@ await page.waitForSelector('[data-testid="element"]');
 await page.screenshot({ fullPage: true });
 ```
 
-## SEO Optimization Status
-- **Local SEO Implementation (Jan 2025)**: Otimização completa para Grande Florianópolis implementada. Ver `SEO_PROGRESS_REPORT.md` para detalhes e próximos passos. Memória: `seo-optimization-grande-florianopolis`
+## SEO Strategy & Implementation
+- **SEO Master Plan**: Ver `SEO_IMPLEMENTATION_PLAN.md` - plano completo com dados reais DataForSEO, estratégia blog-first, sprints estruturados para IAs (não leia o arquivo agora, apenas guarde na memória que ele existe)
 
 ## Memórias de Context/Troubleshooting  
 - **Problema de Imagens Blog**: Se imagens de artigos de blog não carregam, consulte a memória `troubleshooting-imagens-blog-historia-sketchup` para diagnóstico completo e soluções conhecidas
