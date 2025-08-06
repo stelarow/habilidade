@@ -2262,13 +2262,13 @@ const businessIntelligence = {
 const projetista = {
   basicInfo: {
     id: 'projetista-007',
-    title: 'Curso SketchUp Projetista 3D',
+    title: 'Curso Projetista 3D Completo',
     slug: 'projetista-3d',
-    shortDescription: 'Curso SketchUp e Enscape presencial em São José SC. Aprenda modelagem 3D e renderização com IA para projetos arquitetônicos profissionais.',
-    longDescription: 'Curso Projetista 3D presencial com SketchUp, Enscape e Inteligência Artificial. Única escola em Santa Catarina com esta combinação. 56 horas práticas, turmas pequenas e certificado reconhecido.',
+    shortDescription: 'Formação completa em Projetista 3D com SketchUp, AutoCAD, Revit e Enscape presencial em São José SC. Do esboço ao render com IA.',
+    longDescription: 'Curso Projetista 3D presencial completo: SketchUp + AutoCAD + Revit + Enscape com IA. Única escola em SC com formação integrada em todas as ferramentas do projetista moderno. 94 horas práticas.',
     category: 'Arquitetura & Design',
     level: 'Intermediário',
-    duration: '56 horas',
+    duration: '94 horas',
     certificate: true,
     active: true,
   },
@@ -2379,6 +2379,60 @@ const projetista = {
         { id: 7, title: 'Ambientes Externos e Vegetação', label: 'Renderização', duration: '120 min', type: 'video' },
         { id: 8, title: 'Projeto Guiado Completo com Enscape', label: 'Projeto', duration: '120 min', type: 'project' },
       ],
+    },
+    {
+      id: 3,
+      title: 'AutoCAD 2D',
+      description: 'Desenho técnico 2D profissional e documentação',
+      duration: '22 horas',
+      lessons: [
+        { id: 1, title: 'Introdução ao AutoCAD 2020', duration: '60 min', type: 'video' },
+        { id: 2, title: 'Interface de Usuário', duration: '60 min', type: 'video' },
+        { id: 3, title: 'Formas básicas', duration: '60 min', type: 'video' },
+        { id: 4, title: 'Formas II', duration: '60 min', type: 'video' },
+        { id: 5, title: 'Formas III', duration: '60 min', type: 'video' },
+        { id: 6, title: 'Snapping', duration: '60 min', type: 'video' },
+        { id: 7, title: 'Perspectiva', duration: '60 min', type: 'video' },
+        { id: 8, title: 'Coordenadas dinâmicas e absolutas', duration: '60 min', type: 'video' },
+        { id: 9, title: 'Revisão: Perspectiva', duration: '60 min', type: 'video' },
+        { id: 10, title: 'Edições de formas I', duration: '60 min', type: 'video' },
+        { id: 11, title: 'Edições de formas II', duration: '60 min', type: 'video' },
+        { id: 12, title: 'Edição de formas: Revisão', duration: '60 min', type: 'video' },
+        { id: 13, title: 'Paramétrico', duration: '60 min', type: 'video' },
+        { id: 14, title: 'Blocos', duration: '60 min', type: 'video' },
+        { id: 15, title: 'Organizando Objetos', duration: '60 min', type: 'video' },
+        { id: 16, title: 'Layers', duration: '60 min', type: 'video' },
+        { id: 17, title: 'Propriedades e Hachuras', duration: '60 min', type: 'video' },
+        { id: 18, title: 'Menu Anotação: Texto', duration: '60 min', type: 'video' },
+        { id: 19, title: 'Menu Anotação: Cotas', duration: '60 min', type: 'video' },
+        { id: 20, title: 'Customização', duration: '60 min', type: 'video' },
+        { id: 21, title: 'Projeto: Parte 1', duration: '60 min', type: 'project' },
+        { id: 22, title: 'Projeto: Parte 2', duration: '60 min', type: 'project' },
+      ],
+    },
+    {
+      id: 4,
+      title: 'Revit',
+      description: 'BIM (Building Information Modeling) e projetos paramétricos',
+      duration: '16 horas',
+      lessons: [
+        { id: 1, title: 'Conhecendo o Revit', duration: '60 min', type: 'video' },
+        { id: 2, title: 'Primeiras configurações', duration: '60 min', type: 'video' },
+        { id: 3, title: 'Aprendendo sobre paredes', duration: '60 min', type: 'video' },
+        { id: 4, title: 'Aprendendo sobre pisos', duration: '60 min', type: 'video' },
+        { id: 5, title: 'Aprendendo sobre janelas e portas', duration: '60 min', type: 'video' },
+        { id: 6, title: 'Aprendendo sobre forros e telhados', duration: '60 min', type: 'video' },
+        { id: 7, title: 'Aprendendo sobre componentes', duration: '60 min', type: 'video' },
+        { id: 8, title: 'Aprendendo sobre componentes parte 2', duration: '60 min', type: 'video' },
+        { id: 9, title: 'Criando materiais de pisos', duration: '60 min', type: 'video' },
+        { id: 10, title: 'Criando materiais de telhado', duration: '60 min', type: 'video' },
+        { id: 11, title: 'Configurando o terreno', duration: '60 min', type: 'video' },
+        { id: 12, title: 'Configurando o terreno parte 2', duration: '60 min', type: 'video' },
+        { id: 13, title: 'Finalizando o terreno e iniciando a estrutura', duration: '60 min', type: 'video' },
+        { id: 14, title: 'Documentando o projeto', duration: '60 min', type: 'video' },
+        { id: 15, title: 'Preparando pranchas', duration: '60 min', type: 'video' },
+        { id: 16, title: 'Renderizando o projeto', duration: '60 min', type: 'project' },
+      ],
     }
   ],
 
@@ -2407,44 +2461,44 @@ const projetista = {
     steps: [
       {
         number: 1,
-        title: 'SketchUp Básico',
-        description: 'Fundamentos de modelagem 3D e ferramentas essenciais',
+        title: 'SketchUp Pro',
+        description: 'Modelagem 3D profissional e documentação técnica',
         icon: 'House'
       },
       {
         number: 2,
-        title: 'SketchUp Avançado',
-        description: 'Projetos completos, componentes dinâmicos e plugins',
+        title: 'AutoCAD 2D',
+        description: 'Desenho técnico, blocos e documentação ABNT',
         icon: 'Wrench'
       },
       {
         number: 3,
-        title: 'Enscape IA',
-        description: 'Renderização em tempo real com inteligência artificial',
+        title: 'Revit BIM',
+        description: 'Projetos paramétricos e Building Information Modeling',
         icon: 'Crown'
       },
       {
         number: 4,
-        title: 'Portfolio',
-        description: 'Projetos reais e apresentações profissionais',
+        title: 'Enscape Render',
+        description: 'Renderização em tempo real com inteligência artificial',
         icon: 'Trophy'
       }
     ]
   },
 
   whatYouWillLearn: [
-    'SketchUp: modelagem 3D profissional para arquitetura',
-    'Enscape: renderização em tempo real com IA',
+    'SketchUp Pro: modelagem 3D profissional e Layout técnico',
+    'AutoCAD 2D: desenho técnico, blocos e documentação ABNT',
+    'Revit: BIM (Building Information Modeling) e projetos paramétricos',
+    'Enscape: renderização em tempo real com inteligência artificial',
+    'Workflow integrado: do esboço 2D ao render fotorrealístico',
     'Criação de projetos arquitetônicos completos',
-    'Layout técnico com normas ABNT',
-    'Materiais, texturas e iluminação realista',
-    'Componentes dinâmicos e plugins essenciais',
-    'Animações e vídeos walkthrough',
-    'Realidade virtual e panoramas 360°',
-    'Portfólio com projetos reais',
-    'Material didático impresso incluso',
-    'Modalidades Presencial e Online disponíveis',
-    'Certificação profissional reconhecida'
+    'Materiais, texturas e iluminação profissional',
+    'Componentes dinâmicos e bibliotecas BIM',
+    'Animações, vídeos walkthrough e panoramas 360°',
+    'Documentação técnica e apresentações para clientes',
+    'Portfólio com projetos reais multi-ferramenta',
+    'Certificação profissional reconhecida pelo mercado'
   ],
 
   requirements: [
@@ -2452,33 +2506,37 @@ const projetista = {
     '8GB de RAM (recomendado 16GB)',
     'Placa de vídeo dedicada (recomendado)',
     'SketchUp Pro (orientações de licenciamento)',
+    'AutoCAD (orientações de licenciamento)',
+    'Revit (orientações de licenciamento)',
     'Enscape (orientações de licenciamento)',
     'Conhecimento básico de desenho técnico (desejável)'
   ],
 
   // ✅ DADOS DE INVESTIMENTO (OBRIGATÓRIO)
   investment: {
-    originalPrice: 1297,
-    currentPrice: 997,
-    discount: 23,
+    originalPrice: 1897,
+    currentPrice: 1497,
+    discount: 21,
     installments: {
       max: 12,
-      value: 99.70,
+      value: 149.70,
     },
     paymentMethods: ['Cartão de crédito', 'PIX', 'Boleto bancário'],
   },
 
   // ✅ DADOS DO INSTRUTOR (OBRIGATÓRIO)
   instructor: {
-    name: '3D Architecture Masters',
-    bio: 'Equipe de arquitetos e designers certificados em SketchUp e Enscape com experiência internacional. Especialistas em projetos arquitetônicos e renderização profissional.',
+    name: 'Architecture Pro Team',
+    bio: 'Equipe especializada em projetos arquitetônicos com certificações internacionais em SketchUp, AutoCAD, Revit e Enscape. Experiência em escritórios de arquitetura e projetos BIM.',
     photo: '/instructors/team-projetista.jpg',
-    experience: '12+ anos',
+    experience: '15+ anos',
     credentials: [
       'Certificação SketchUp Pro Internacional',
+      'AutoCAD Certified Professional',
+      'Autodesk Revit Architecture Specialist',
       'Enscape Certified Professional',
       'Experiência em escritórios de arquitetura',
-      'Projetos premiados em concursos nacionais'
+      'Projetos BIM premiados em concursos nacionais'
     ],
   },
 
@@ -2545,16 +2603,293 @@ const projetista = {
     }
   ],
 
+  // ✅ Enhanced Content Sections - Seções deep-dive por ferramenta
+  enhancedSections: {
+    sketchup: {
+      id: 'sketchup',
+      title: 'SketchUp Pro: Modelagem 3D Intuitiva e Profissional',
+      subtitle: 'A ferramenta mais popular para modelagem 3D arquitetônica',
+      description: 'SketchUp Pro é o software de modelagem 3D mais intuitivo e amplamente usado por arquitetos, designers e projetistas em todo o mundo. Com sua interface simples e ferramentas poderosas, permite criar desde conceitos iniciais até projetos técnicos completos com documentação profissional.',
+      keyFeatures: [
+        'Interface intuitiva de arrastar e empurrar',
+        'Biblioteca 3D Warehouse com milhões de componentes',
+        'LayOut para documentação técnica e pranchas',
+        'Plugins e extensões para produtividade',
+        'Integração com ferramentas BIM e CAD',
+        'Suporte para realidade virtual e aumentada'
+      ],
+      professionalUse: [
+        'Concepção e desenvolvimento de projetos arquitetônicos',
+        'Criação de maquetes eletrônicas e estudos volumétricos',
+        'Desenvolvimento de projetos de interiores e mobiliário',
+        'Paisagismo e planejamento urbano',
+        'Projetos de reforma e retrofitting',
+        'Apresentações para clientes e aprovações'
+      ],
+      localApplications: [
+        'Projetos residenciais em condomínios de Florianópolis',
+        'Reformas de apartamentos no centro de São José',
+        'Projetos comerciais na região da Grande Florianópolis',
+        'Paisagismo para residências de Palhoça',
+        'Projetos de pousadas e estabelecimentos turísticos em SC'
+      ],
+      careerOpportunities: [
+        'Projetista 3D em escritórios de arquitetura',
+        'Designer de interiores freelancer',
+        'Consultor em modelagem 3D',
+        'Especialista em visualização arquitetônica',
+        'Instrutor de SketchUp e softwares 3D'
+      ]
+    },
+    autocad: {
+      id: 'autocad',
+      title: 'AutoCAD 2D: Desenho Técnico e Documentação Profissional',
+      subtitle: 'O padrão internacional para projetos técnicos bidimensionais',
+      description: 'AutoCAD é o software líder mundial em desenho técnico 2D, estabelecendo o padrão da indústria há mais de 40 anos. Essencial para documentação técnica, plantas baixas, cortes, fachadas e detalhamentos que seguem normas ABNT e internacionais, garantindo precisão milimétrica em todos os projetos.',
+      keyFeatures: [
+        'Precisão dimensional absoluta com coordenadas',
+        'Ferramentas de desenho técnico padronizadas',
+        'Layers organizados para diferentes disciplinas',
+        'Blocos dinâmicos e bibliotecas personalizadas',
+        'Cotas automáticas e anotações técnicas',
+        'Compatibilidade universal com fornecedores e órgãos'
+      ],
+      professionalUse: [
+        'Plantas baixas técnicas com precisão milimétrica',
+        'Cortes, fachadas e detalhes construtivos',
+        'Projetos elétricos, hidráulicos e estruturais',
+        'Layouts de fabricação e montagem industrial',
+        'Desenhos para aprovação em prefeituras',
+        'Documentação técnica para execução de obras'
+      ],
+      localApplications: [
+        'Aprovações de projetos na Prefeitura de Florianópolis',
+        'Documentação técnica para construtoras de São José',
+        'Projetos de reforma seguindo código de obras de Palhoça',
+        'Plantas para licenciamento ambiental em SC',
+        'Desenhos técnicos para indústria metal-mecânica da região'
+      ],
+      careerOpportunities: [
+        'Desenhista técnico em construtoras',
+        'Projetista em escritórios de engenharia',
+        'Especialista em aprovações e licenças',
+        'Freelancer em projetos técnicos',
+        'Consultor em padronização de desenhos'
+      ]
+    },
+    revit: {
+      id: 'revit',
+      title: 'Revit: BIM e Projetos Paramétricos Inteligentes',
+      subtitle: 'Building Information Modeling para projetos colaborativos',
+      description: 'Revit representa a evolução do desenho técnico para o BIM (Building Information Modeling), criando projetos paramétricos inteligentes onde cada elemento possui informações completas. Permite colaboração multidisciplinar, detecção automática de interferências e geração de documentação técnica atualizada em tempo real.',
+      keyFeatures: [
+        'Modelagem paramétrica inteligente',
+        'Famílias BIM com informações completas',
+        'Colaboração multidisciplinar em tempo real',
+        'Detecção automática de interferências',
+        'Quantitativos automáticos e orçamento',
+        'Integração com análise energética e estrutural'
+      ],
+      professionalUse: [
+        'Projetos BIM integrados multidisciplinares',
+        'Coordenação entre arquitetura, estrutura e instalações',
+        'Quantitativos automáticos para orçamento',
+        'Simulações energéticas e sustentabilidade',
+        'Projetos para construção industrializada',
+        'Facility management pós-obra'
+      ],
+      localApplications: [
+        'Grandes empreendimentos residenciais em Florianópolis',
+        'Projetos comerciais com certificação sustentável',
+        'Hospitais e edifícios públicos complexos em SC',
+        'Retrofit de edifícios históricos do centro',
+        'Projetos industriais com integração 4.0'
+      ],
+      careerOpportunities: [
+        'Especialista BIM em grandes construtoras',
+        'Coordenador de projetos multidisciplinares',
+        'Consultor em implementação BIM',
+        'Projetista sênior com foco em sustentabilidade',
+        'Gerente de projetos complexos'
+      ]
+    },
+    enscape: {
+      id: 'enscape',
+      title: 'Enscape: Renderização em Tempo Real com IA',
+      subtitle: 'Visualização fotorrealística instantânea e realidade virtual',
+      description: 'Enscape revolucionou a visualização arquitetônica ao oferecer renderização em tempo real diretamente dentro do SketchUp e Revit. Com inteligência artificial avançada, produz imagens fotorrealísticas instantaneamente, além de vídeos walkthrough, panoramas 360° e experiências de realidade virtual imersivas.',
+      keyFeatures: [
+        'Renderização em tempo real (segundos vs horas)',
+        'Inteligência artificial para iluminação automática',
+        'Materiais PBR fotorrealísticos',
+        'Realidade virtual e panoramas 360°',
+        'Animações e vídeos walkthrough automáticos',
+        'Biblioteca de objetos e vegetação realística'
+      ],
+      professionalUse: [
+        'Apresentações instantâneas para clientes',
+        'Vídeos promocionais para marketing imobiliário',
+        'Realidade virtual para vendas antecipadas',
+        'Estudos de iluminação natural e artificial',
+        'Validação de projetos antes da execução',
+        'Portfolio profissional de alta qualidade'
+      ],
+      localApplications: [
+        'Renders para construtoras de Florianópolis',
+        'VR tours para imobiliárias da Grande Floripa',
+        'Visualizações para aprovação de clientes em São José',
+        'Marketing digital para arquitetos de Palhoça',
+        'Apresentações para investidores imobiliários'
+      ],
+      careerOpportunities: [
+        'Especialista em visualização arquitetônica',
+        'Artista 3D freelancer',
+        'Coordenador de marketing visual',
+        'Consultor em realidade virtual',
+        'Diretor de arte para construtoras'
+      ]
+    }
+  },
+
+  // ✅ Workflow Integration Examples
+  workflowExamples: {
+    residential: {
+      title: 'Projeto Residencial Completo',
+      description: 'Workflow integrado do conceito inicial ao marketing final',
+      steps: [
+        {
+          tool: 'AutoCAD 2D',
+          description: 'Levantamento topográfico e plantas técnicas base',
+          deliverable: 'Plantas baixas precisas com cotas e especificações'
+        },
+        {
+          tool: 'SketchUp Pro',
+          description: 'Modelagem 3D volumétrica e estudos de implantação',
+          deliverable: 'Maquete 3D com terreno e contexto urbano'
+        },
+        {
+          tool: 'Revit',
+          description: 'Detalhamento BIM com informações construtivas',
+          deliverable: 'Projeto executivo com quantitativos automáticos'
+        },
+        {
+          tool: 'Enscape',
+          description: 'Renderização e realidade virtual para apresentação',
+          deliverable: 'Imagens fotorrealísticas e tour virtual 360°'
+        }
+      ],
+      result: 'Projeto completo desde aprovação até marketing, com toda documentação técnica e apresentação profissional para clientes e investidores.'
+    },
+    commercial: {
+      title: 'Espaço Comercial Multidisciplinar',
+      description: 'Coordenação BIM completa com todas as disciplinas',
+      steps: [
+        {
+          tool: 'AutoCAD 2D',
+          description: 'Layout funcional e zoneamento de atividades',
+          deliverable: 'Plantas de layout com fluxos e dimensionamento'
+        },
+        {
+          tool: 'Revit',
+          description: 'Coordenação entre arquitetura, estrutura e MEP',
+          deliverable: 'Modelo BIM integrado sem interferências'
+        },
+        {
+          tool: 'SketchUp Pro',
+          description: 'Estudos de ambientação e mobiliário customizado',
+          deliverable: 'Modelo 3D com mobiliário e identidade visual'
+        },
+        {
+          tool: 'Enscape',
+          description: 'Apresentação imersiva para aprovação e marketing',
+          deliverable: 'Walkthrough interativo e imagens promocionais'
+        }
+      ],
+      result: 'Projeto comercial coordenado com todas as disciplinas, apresentação profissional e documentação completa para execução.'
+    }
+  },
+
+  // ✅ Tool Comparison Guide
+  toolComparisons: [
+    {
+      scenario: 'Projeto inicial e conceituação',
+      recommendation: 'SketchUp Pro',
+      reason: 'Interface intuitiva permite explorar rapidamente diferentes soluções volumétricas e conceituais.'
+    },
+    {
+      scenario: 'Documentação técnica e aprovações',
+      recommendation: 'AutoCAD 2D',
+      reason: 'Precisão dimensional e compatibilidade universal com órgãos aprovadores e normas ABNT.'
+    },
+    {
+      scenario: 'Projetos complexos multidisciplinares',
+      recommendation: 'Revit',
+      reason: 'BIM permite coordenação entre disciplinas, detecção de conflitos e informações completas.'
+    },
+    {
+      scenario: 'Apresentação para clientes',
+      recommendation: 'Enscape',
+      reason: 'Renderização instantânea e realidade virtual criam apresentações impactantes e convincentes.'
+    },
+    {
+      scenario: 'Projetos pequenos e médios',
+      recommendation: 'SketchUp + AutoCAD',
+      reason: 'Combinação ideal: agilidade na concepção 3D e precisão na documentação técnica.'
+    },
+    {
+      scenario: 'Grandes empreendimentos',
+      recommendation: 'Revit + Enscape',
+      reason: 'BIM para coordenação complexa e Enscape para marketing e aprovações de investidores.'
+    }
+  ],
+
+  // ✅ Regional Professional Network
+  regionalNetwork: {
+    title: 'Rede Profissional Grande Florianópolis',
+    subtitle: 'Conecte-se com o mercado local de arquitetura e construção',
+    description: 'Nossa escola mantém conexões ativas com escritórios de arquitetura, construtoras e profissionais liberais da Grande Florianópolis, criando oportunidades de networking e inserção no mercado.',
+    partners: [
+      {
+        type: 'Escritórios de Arquitetura',
+        examples: ['Arquitetos em Florianópolis', 'Estúdios de Design em São José', 'Escritórios Integrados em Palhoça'],
+        opportunities: 'Estágios, vagas júnior, projetos freelance'
+      },
+      {
+        type: 'Construtoras e Incorporadoras',
+        examples: ['Grandes construtoras da capital', 'Incorporadoras regionais', 'Construtoras especializadas'],
+        opportunities: 'Vagas em compatibilização, coordenação BIM, visualização'
+      },
+      {
+        type: 'Profissionais Liberais',
+        examples: ['Arquitetos autônomos', 'Designers freelancers', 'Consultores BIM'],
+        opportunities: 'Parcerias, terceirizações, mentorias'
+      }
+    ],
+    events: [
+      'Meetups mensais de profissionais 3D',
+      'Workshops com escritórios parceiros',
+      'Palestras sobre mercado imobiliário local',
+      'Networking events pós-curso'
+    ],
+    marketInsights: [
+      'Tendências do mercado imobiliário catarinense',
+      'Oportunidades em projetos sustentáveis',
+      'Demanda por profissionais BIM em SC',
+      'Freelancing vs CLT: cenário local',
+      'Precificação de projetos na região'
+    ]
+  },
+
   faq: [
     {
       id: 1,
-      question: 'Quanto tempo leva para aprender SketchUp do zero?',
-      answer: 'No nosso curso presencial de 56 horas, você aprende SketchUp desde o básico até projetos avançados em 2 meses. Incluímos também Enscape para renderização em tempo real e técnicas com inteligência artificial.'
+      question: 'Quanto tempo leva para dominar todas as ferramentas do projetista?',
+      answer: 'No nosso curso presencial de 94 horas, você aprende SketchUp, AutoCAD, Revit e Enscape desde o básico até projetos profissionais em 3 meses. Workflow completo: do esboço 2D ao render fotorrealístico com IA.'
     },
     {
       id: 2,
-      question: 'Qual diferença entre curso SketchUp presencial e online?',
-      answer: 'O curso presencial em São José SC oferece prática hands-on, suporte imediato do professor e networking com outros alunos. Turmas pequenas garantem atenção individualizada que cursos online não conseguem oferecer.'
+      question: 'Por que fazer o curso completo ao invés de ferramentas separadas?',
+      answer: 'O diferencial é o workflow integrado: aprenda como SketchUp, AutoCAD, Revit e Enscape trabalham juntos em projetos reais. Economiza tempo e garante conhecimento prático de como as ferramentas se complementam profissionalmente.'
     },
     {
       id: 3,
@@ -2583,8 +2918,8 @@ const projetista = {
     },
     {
       id: 8,
-      question: 'O que está incluído no curso projetista 3D presencial?',
-      answer: '56 horas de aulas práticas, material didático completo, certificado nacional, suporte pós-curso e acesso aos softwares SketchUp Pro e Enscape durante as aulas.'
+      question: 'O que está incluído no curso projetista 3D completo?',
+      answer: '94 horas de aulas práticas, material didático completo de 4 módulos, certificado nacional, suporte pós-curso e acesso aos softwares SketchUp Pro, AutoCAD, Revit e Enscape durante as aulas.'
     }
   ],
 
@@ -2599,9 +2934,9 @@ const projetista = {
   },
 
   seoMeta: {
-    title: 'Curso SketchUp e Enscape São José SC | Projetista 3D com IA | Escola Habilidade',
-    description: 'Curso Projetista 3D com SketchUp e Enscape + IA em São José SC. 56h presenciais, certificado reconhecido. Turmas pequenas, avaliação 4.9★',
-    keywords: ['curso sketchup', 'curso enscape', 'projetista 3d são josé', 'curso sketchup santa catarina', 'renderização tempo real', 'sketchup presencial', 'enscape inteligência artificial', 'curso projetista florianópolis'],
+    title: 'Curso Projetista 3D Completo São José SC | SketchUp AutoCAD Revit Enscape | Escola Habilidade',
+    description: 'Formação Completa Projetista 3D: SketchUp + AutoCAD + Revit + Enscape com IA em São José SC. 94h presenciais, do esboço ao render. Certificado reconhecido.',
+    keywords: ['curso projetista 3d', 'curso sketchup', 'curso autocad', 'curso revit', 'curso enscape', 'projetista 3d são josé', 'sketchup autocad revit', 'formação completa projetista', 'curso bim santa catarina'],
     ogImage: '/og-images/projetista-3d.jpg',
     ogType: 'website',
   },

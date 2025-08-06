@@ -140,14 +140,24 @@ export function generateCourseMetadata(courseData) {
       'learningResourceType': 'Course',
       'teaches': teaches,
       'timeRequired': safeCourse.basicInfo.duration,
+      'hasPart': safeCourse.curriculum?.map(module => ({
+        '@type': 'CourseInstance',
+        'name': `Módulo ${module.title}`,
+        'description': module.description,
+        'courseWorkload': `PT${module.duration.replace(' horas', 'H')}`,
+        'numberOfCredits': module.lessons?.length || 0,
+        'educationalLevel': safeCourse.basicInfo.level,
+        'learningResourceType': 'Module'
+      })) || [],
       'hasCourseInstance': {
         '@type': 'CourseInstance',
         'courseMode': ['https://schema.org/OnlineEventAttendanceMode', 'https://schema.org/OfflineEventAttendanceMode'],
-        'courseWorkload': 'PT40H',
+        'courseWorkload': `PT${safeCourse.basicInfo.duration.replace(' horas', 'H')}`,
         'courseSchedule': {
           '@type': 'Schedule',
           'duration': safeCourse.basicInfo.duration,
-          'repeatFrequency': 'ongoing',
+          'repeatFrequency': 'P1W',
+          'repeatCount': 4,
           'scheduleTimezone': 'America/Sao_Paulo'
         },
         'instructor': {

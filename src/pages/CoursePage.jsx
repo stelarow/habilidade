@@ -25,17 +25,22 @@ import CourseTestimonials from '../components/course/CourseTestimonials';
 import CourseWhyStudy from '../components/course/CourseWhyStudy';
 import CourseJourney from '../components/course/CourseJourney';
 import CourseEnrollCTA from '../components/course/CourseEnrollCTA';
+import CourseToolNavigation from '../components/course/CourseToolNavigation';
+import CourseToolSection from '../components/course/CourseToolSection';
+import CourseWorkflowSection from '../components/course/CourseWorkflowSection';
 import Loading from '../components/Loading';
 import GradientButton from '../components/GradientButton';
 import { getCourseBySlug, validateAndSanitizeCourse, generateCourseMetadata } from '../utils/courseHelpers';
 import { EMAIL_CONFIG, isEmailConfigured } from '../utils/emailConfig';
 import COURSES_DATA from '../data/coursesData';
+import '../styles/course-tools.css';
 
 function CoursePage() {
   const { courseSlug } = useParams();
   const [loading, setLoading] = useState(true);
   const [course, setCourse] = useState(null);
   const [error, setError] = useState(null);
+  const [activeSection, setActiveSection] = useState('sketchup');
   
   // Estados do formulário
   const form = useRef();
@@ -264,6 +269,37 @@ function CoursePage() {
 
         {/* 5. CTA Matricule-se - NOVA SEÇÃO */}
         <CourseEnrollCTA course={course} onEnrollClick={handleEnrollClick} />
+
+        {/* 6. Enhanced Tool Sections - NOVAS SEÇÕES DA FASE 2 */}
+        {course.enhancedSections && (
+          <>
+            {/* Tool Navigation */}
+            <CourseToolNavigation 
+              course={course}
+              activeSection={activeSection}
+              onSectionChange={setActiveSection}
+            />
+
+            {/* Individual Tool Sections */}
+            {Object.entries(course.enhancedSections).map(([tool, toolData]) => (
+              <CourseToolSection 
+                key={tool}
+                tool={tool}
+                toolData={toolData}
+                themeColors={course.themeColors}
+              />
+            ))}
+
+            {/* Workflow Integration Section */}
+            {(course.workflowExamples || course.toolComparisons) && (
+              <CourseWorkflowSection 
+                workflowExamples={course.workflowExamples}
+                toolComparisons={course.toolComparisons}
+                themeColors={course.themeColors}
+              />
+            )}
+          </>
+        )}
 
         {/* Main Content */}
         <div className="max-w-7xl mx-auto px-4 pb-16">
