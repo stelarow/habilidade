@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+// Using native anchor tags for SSG instead of React Router Link
 import { 
   X, CaretRight, GraduationCap, WhatsappLogo, 
   BookOpen, Star, Phone, House, MagnifyingGlass, Play, Question 
@@ -143,9 +144,9 @@ function MobileMegaMenu({ isOpen, onClose }) {
                 </h3>
                 <div className="space-y-3">
                   {featuredCourses.map(course => (
-                    <Link
+                    <a
                       key={course.basicInfo.id}
-                      to={`/cursos/${course.basicInfo.slug}`}
+                      href={`/cursos/${course.basicInfo.slug}`}
                       onClick={onClose}
                       className="group block p-3 bg-gray-800/30 hover:bg-gray-800/50 rounded-lg border border-gray-700/50 transition"
                     >
@@ -167,7 +168,7 @@ function MobileMegaMenu({ isOpen, onClose }) {
                           </p>
                         </div>
                       </div>
-                    </Link>
+                    </a>
                   ))}
                 </div>
               </div>
@@ -189,9 +190,9 @@ function MobileMegaMenu({ isOpen, onClose }) {
 
               <div className="space-y-3">
                 {filteredCourses.map(course => (
-                  <Link
+                  <a
                     key={course.basicInfo.id}
-                    to={`/cursos/${course.basicInfo.slug}`}
+                    href={`/cursos/${course.basicInfo.slug}`}
                     onClick={onClose}
                     className="group block p-3 bg-gray-800/30 hover:bg-gray-800/50 rounded-lg border border-gray-700/50 transition"
                   >

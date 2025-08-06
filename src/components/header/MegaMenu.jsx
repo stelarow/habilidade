@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+// Removed React Router Link - using native anchor tags for SSG
 import { MagnifyingGlass, CaretDown } from 'phosphor-react';
 import COURSES_DATA from '../../data/coursesData';
 import { searchCourses } from '../../utils/courseHelpers';
@@ -73,9 +73,9 @@ function MegaMenu({ isOpen, onClose }) {
         {/* Grid de Cursos */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredCourses.slice(0, 6).map(course => (
-            <Link
+            <a
               key={course.basicInfo.id}
-              to={`/cursos/${course.basicInfo.slug}`}
+              href={`/cursos/${course.basicInfo.slug}`}
               onClick={onClose}
               className="group p-4 bg-gray-800/30 hover:bg-gray-800/50 rounded-lg border border-gray-700/50 hover:border-gray-600 transition"
             >
@@ -103,21 +103,21 @@ function MegaMenu({ isOpen, onClose }) {
                   </div>
                 </div>
               </div>
-            </Link>
+            </a>
           ))}
         </div>
 
         {/* Ver Todos os Cursos */}
         {filteredCourses.length > 6 && (
           <div className="mt-6 text-center">
-            <Link
-              to="/#cursos"
+            <a
+              href="/#cursos"
               onClick={onClose}
               className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-fuchsia-500 to-cyan-400 text-white font-semibold rounded-lg hover:from-fuchsia-600 hover:to-cyan-500 transition"
             >
               Ver Todos os Cursos
               <CaretDown size={16} className="rotate-[-90deg]" />
-            </Link>
+            </a>
           </div>
         )}
 
