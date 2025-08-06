@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom'; // Not needed for SSG
 import { Clock, Calendar, User, Tag } from 'phosphor-react';
 import { usePrefetchPost } from '../../hooks/useBlogAPI';
 import { useBlogResponsive } from '../../hooks/useBlogResponsive';
@@ -61,8 +61,7 @@ const BlogCard = ({ post, variant = 'standard', index = 0 }) => {
   const prefetchTimeoutRef = useRef(null);
   const imageRef = useRef(null);
   
-  // React Router navigation
-  const navigate = useNavigate();
+  // Navigation handled via native browser for SSG
 
   // Hooks
   const prefetchPost = usePrefetchPost();
@@ -204,12 +203,15 @@ const BlogCard = ({ post, variant = 'standard', index = 0 }) => {
   );
 
   const handleCardClick = (e) => {
-    // Prevent default to avoid any potential issues
-    e.preventDefault();
+    // For SSG, we'll use native navigation
+    // Only prevent default if the target is not a link
+    if (e.target.tagName === 'A') {
+      return; // Let the link handle navigation naturally
+    }
     
-    // Navigate to the blog post using React Router
+    // For non-link clicks, navigate using window.location
     if (post.slug) {
-      navigate(`/blog/${post.slug}`);
+      window.location.href = `/blog/${post.slug}`;
     }
   };
 

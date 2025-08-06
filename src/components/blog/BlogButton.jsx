@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom'; // Not needed for SSG
 
 const BlogButton = ({ 
   children,
@@ -57,17 +57,11 @@ const BlogButton = ({
   );
 
   // Return appropriate element based on props
-  if (to) {
+  // For SSG, use native <a> tags for all navigation
+  if (to || href) {
+    const url = to || href;
     return (
-      <Link to={to} className={classes} {...props}>
-        {content}
-      </Link>
-    );
-  }
-
-  if (href) {
-    return (
-      <a href={href} className={classes} {...props}>
+      <a href={url} className={classes} {...props}>
         {content}
       </a>
     );

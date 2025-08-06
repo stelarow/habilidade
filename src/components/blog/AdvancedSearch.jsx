@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom'; // Not needed for SSG
 import { 
   MagnifyingGlass, 
   Funnel, 
@@ -49,7 +50,7 @@ const AdvancedSearch = ({
   
   const searchInputRef = useRef(null);
   const location = useLocation();
-  const navigate = useNavigate();
+  // Navigation handled via native browser for SSG
   
   // Fetch categories for filter options
   const { data: categoriesData, isLoading: categoriesLoading } = useCategories();
@@ -142,9 +143,10 @@ const AdvancedSearch = ({
     
     const newUrl = `${location.pathname}?${searchParams.toString()}`;
     if (newUrl !== `${location.pathname}${location.search}`) {
-      navigate(newUrl, { replace: true });
+      // For SSG, use native browser navigation with replace
+      window.history.replaceState(null, '', newUrl);
     }
-  }, [filters, location.pathname, navigate]);
+  }, [filters, location.pathname]);
 
   // Handle search input
   const handleSearchInput = (event) => {
@@ -219,7 +221,8 @@ const AdvancedSearch = ({
       searchInputRef.current.value = '';
     }
     
-    navigate(location.pathname, { replace: true });
+    // For SSG, reset URL to pathname only
+    window.history.replaceState(null, '', location.pathname);
   };
 
   // Get active filters count
