@@ -57,7 +57,7 @@ const Footer = () => {
               <div className="mt-4">
                 <div className="relative w-full h-32 bg-zinc-800 rounded-lg overflow-hidden border border-zinc-700">
                   <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d883.9877646984913!2d-48.61731442404516!3d-27.592385898767973!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x952749dedf9e128d%3A0x8a1d8d5661e37042!2sR.%20Caetano%20Jos%C3%A9%20Ferreira%2C%20426%20-%20Kobrasol%2C%20S%C3%A3o%20Jos%C3%A9%20-%20SC%2C%2088102-280!5e0!3m2!1spt-BR!2sbr!4v1736171879000!5m2!1spt-BR!2sbr"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3536.0113289745933!2d-48.6175692!3d-27.5923906!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9527492f4454ef8d%3A0xd345f5e77312fdec!2sEscola%20Habilidade!5e0!3m2!1spt-BR!2sbr!4v1736172000000!5m2!1spt-BR!2sbr"
                     width="100%"
                     height="100%"
                     style={{ border: 0 }}
@@ -71,7 +71,7 @@ const Footer = () => {
                   {/* Overlay clicável */}
                   <div 
                     className="absolute inset-0 bg-transparent cursor-pointer"
-                    onClick={() => window.open('https://maps.google.com/?q=R.+Caetano+José+Ferreira,+426+-+Kobrasol,+São+José+-+SC,+88102-280', '_blank')}
+                    onClick={() => window.open('https://www.google.com/maps/place/Escola+Habilidade/@-27.5923906,-48.6175692,17z/data=!3m1!4b1!4m6!3m5!1s0x9527492f4454ef8d:0xd345f5e77312fdec!8m2!3d-27.5923906!4d-48.6149943!16s%2Fg%2F11w49mrz34', '_blank')}
                     title="Abrir no Google Maps"
                   ></div>
                 </div>
