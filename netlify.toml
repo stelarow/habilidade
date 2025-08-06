@@ -26,6 +26,22 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
 
+# SEO Local pages redirects
+[[redirects]]
+  from = "/cursos-florianopolis"
+  to = "/cursos-florianopolis.html"
+  status = 200
+
+[[redirects]]
+  from = "/cursos-sao-jose"
+  to = "/cursos-sao-jose.html"
+  status = 200
+
+[[redirects]]
+  from = "/cursos-palhoca"
+  to = "/cursos-palhoca.html"
+  status = 200
+
 # SSG fallback - only for non-existing pages  
 [[redirects]]
   from = "/*"
