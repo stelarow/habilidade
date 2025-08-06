@@ -217,7 +217,93 @@ npx serve dist
 - `104ab2d` - Migração inicial SPA → SSG
 - `27ab3ed` - Fix rendering issues após SSG
 - `7e791f8` - Fix Home page com loader/Component exports (FUNCIONOU!)
+- `890e680` - Identificação do conflito App.jsx vs main.jsx como causa raiz
+- `6a033ab` - Remoção do App.jsx para resolver conflito de roteamento SSG
+
+## Atualização 2025-08-06
+
+### Ações Realizadas
+
+1. **✅ REMOVIDO App.jsx** 
+   - Arquivo estava criando conflito com roteamento SSG
+   - BrowserRouter do App.jsx conflitava com ViteReactSSG do main.jsx
+   - Todo código necessário já estava em Layout.jsx
+
+2. **⚠️ PROBLEMA COM PHOSPHOR-REACT**
+   - Build falha com erro de imports do phosphor-react
+   - Biblioteca tem estrutura de arquivos quebrada em node_modules
+   - Faltam arquivos como `lib/index.esm.js` e vários ícones
+   - Tentativas de correção:
+     - Criado arquivo `lib/index.esm.js` manualmente
+     - Configurado `vite.config.js` com SSR noExternal
+     - Problema persiste com múltiplos arquivos faltantes
+
+3. **🔴 STATUS DO BUILD**
+   - Build local falha por causa do phosphor-react
+   - Deploy no Netlify provavelmente também falhará
+   - Site em produção pode estar servindo versão antiga em cache
+
+### Problema Principal Atual
+
+**Dependência Quebrada**: phosphor-react v1.4.1 tem problemas de estrutura
+- Múltiplos arquivos `.esm.js` referenciados mas não existem
+- Estrutura em `node_modules/phosphor-react/dist/` está incompleta
+
+### Soluções Possíveis
+
+1. **Migrar para @phosphor-icons/react** (RECOMENDADO)
+   - Versão mais nova e mantida da biblioteca
+   - Estrutura de imports diferente mas mais confiável
+
+2. **Downgrade ou upgrade phosphor-react**
+   - Tentar versão diferente que tenha estrutura correta
+   
+3. **Reinstalar phosphor-react limpo**
+   - Remover node_modules e package-lock.json
+   - Reinstalar dependências do zero
+
+## Atualização 2025-08-06 - Parte 2
+
+### Build Netlify PASSOU ✅
+
+O build no Netlify passou com sucesso! O problema do phosphor-react no build local não afetou o Netlify.
+
+### Novo Problema Identificado
+
+**Páginas do Blog não carregam conteúdo dinâmico no SSG**
+
+1. **Páginas que funcionam** ✅:
+   - Home (`/`)
+   - Posts individuais do blog (`/blog/[slug]`)
+   - Páginas de curso (`/cursos/[slug]`)
+
+2. **Páginas com problema** ❌:
+   - Lista de blogs (`/blog`) - Mostra apenas "Carregando artigos..."
+   - Categorias do blog (`/blog/categoria/[slug]`) - Provavelmente mesmo problema
+
+### Causa Raiz
+
+O BlogIndex usa React Query (`useInfinitePosts`) para buscar posts dinamicamente via API. Durante o SSG:
+- A página é renderizada no servidor
+- As chamadas de API não acontecem no servidor
+- A página é salva no estado inicial de "loading"
+- No cliente, o JavaScript não executa porque é conteúdo estático
+
+### Soluções Possíveis
+
+1. **Adicionar dados estáticos ao loader** (RECOMENDADO)
+   - Fazer fetch dos posts no loader do SSG
+   - Passar dados iniciais para o componente
+   - Hidratar o React Query com esses dados
+
+2. **Renderizar conteúdo estático no servidor**
+   - Detectar ambiente SSG e renderizar lista fixa de posts
+   - Menos dinâmico mas garante conteúdo visível
+
+3. **Manter página como dinâmica (Client-Side)**
+   - Marcar BlogIndex como página client-only
+   - Perder benefícios SEO do SSG para essa página
 
 ---
 
-**Status Atual**: Página inicial funciona, blog e navegação precisam de correção usando a mesma estratégia que funcionou para Home.
+**Status Atual**: SSG funcionando parcialmente. Páginas estáticas OK, páginas dinâmicas (blog list) precisam ser adaptadas para SSG.

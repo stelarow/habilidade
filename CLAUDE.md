@@ -54,6 +54,7 @@ Dual-architecture educational platform for Escola Habilidade:
 - Always run lint and typecheck before committing
 - Use environment variables for configuration
 - Follow security best practices for authentication
+- **SSG Migration Status**: See `continuar_fix_ssg.md` for ongoing SSG implementation issues and solutions
 
 ## Credentials
 - Use sudo password: `123` when needed for system commands

@@ -13,7 +13,7 @@ import ResponsiveBlogGrid, { BlogGridContainer, BlogGridSection } from '../compo
 import { BlogTitle, BlogSubtitle } from '../components/blog/BlogTypography';
 import useInView from '../hooks/useInView';
 
-const BlogIndex = () => {
+const BlogIndex = ({ initialPosts = [], initialCategories = [], totalPosts = 0, hasMore = false }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [showFilters, setShowFilters] = useState(false);
   
@@ -50,6 +50,10 @@ const BlogIndex = () => {
   );
 
   const { data: categoriesData } = useCategories();
+  
+  // Use SSG data if available, otherwise use dynamic data
+  const displayPosts = posts.length > 0 ? posts : initialPosts;
+  const displayCategories = categoriesData?.categories || initialCategories;
 
   // Infinite scroll implementation
   const [loadMoreRef, inView] = useInView({
@@ -64,7 +68,7 @@ const BlogIndex = () => {
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   // Categories for filter dropdown
-  const categories = categoriesData?.categories || [];
+  const categories = displayCategories;
 
   // Update URL params when filters change (optimized)
   useEffect(() => {
@@ -97,8 +101,8 @@ const BlogIndex = () => {
     setSearchParams({}, { replace: true });
   }, [clearFiltersInternal, setSearchParams]);
 
-  // Loading state
-  if (isLoading) {
+  // Loading state - only show if no initial data from SSG
+  if (isLoading && initialPosts.length === 0) {
     return (
       <BlogLayout
         title="Blog - Escola Habilidade"
@@ -122,7 +126,7 @@ const BlogIndex = () => {
   }
 
   // No posts state
-  if (posts.length === 0 && !isLoading) {
+  if (displayPosts.length === 0 && !isLoading) {
     return (
       <BlogLayout
         title="Blog - Escola Habilidade"
@@ -272,7 +276,7 @@ const BlogIndex = () => {
               animation="fade"
               className="mb-12"
             >
-              {posts.map((post, index) => (
+              {displayPosts.map((post, index) => (
                 <BlogCard key={`${post.id}-${index}`} post={post} index={index} />
               ))}
             </ResponsiveBlogGrid>
@@ -298,7 +302,7 @@ const BlogIndex = () => {
         )}
 
         {/* No more posts */}
-        {!hasNextPage && posts.length > 0 && (
+        {!hasNextPage && displayPosts.length > 0 && (
           <div className="text-center py-8">
             <p className="text-zinc-400">Você chegou ao final dos artigos</p>
           </div>
@@ -318,8 +322,108 @@ const BlogIndex = () => {
 };
 
 // Loader function for SSG
-export function loader() {
-  return null;
+export async function loader() {
+  // Only fetch data during SSG build
+  if (typeof window === 'undefined') {
+    try {
+      // Import Supabase client and API
+      const { createClient } = await import('@supabase/supabase-js');
+      
+      // Configuração do Supabase
+      const SUPABASE_URL = 'https://vfpdyllwquaturpcifpl.supabase.co';
+      const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZmcGR5bGx3cXVhdHVycGNpZnBsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE5MDkwMDEsImV4cCI6MjA2NzQ4NTAwMX0.m7zLlemqt6oYt55OFZK_xyEBWoxC23uiFL2EmCiaLqw';
+      
+      const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      
+      // Fetch posts for initial page
+      const { data: postsData, error: postsError } = await supabase
+        .from('blog_posts')
+        .select(`
+          *,
+          blog_categories(id, name, slug, description, color),
+          blog_post_tags!left(
+            blog_tags!inner(id, name, slug)
+          ),
+          blog_authors(id, name, email)
+        `)
+        .order('published_at', { ascending: false })
+        .range(0, 11); // First 12 posts
+      
+      // Fetch categories
+      const { data: categoriesData, error: categoriesError } = await supabase
+        .from('blog_categories')
+        .select(`
+          *,
+          blog_posts(count)
+        `)
+        .order('name');
+      
+      if (postsError || categoriesError) {
+        console.error('Error fetching data for SSG:', postsError || categoriesError);
+        return { 
+          initialPosts: [], 
+          initialCategories: [] 
+        };
+      }
+      
+      // Transform posts data
+      const posts = (postsData || []).map(post => ({
+        id: post.id,
+        title: post.title,
+        slug: post.slug,
+        excerpt: post.excerpt,
+        content: post.content,
+        featuredImage: post.featured_image,
+        publishedAt: post.published_at,
+        readTime: post.read_time || 5,
+        category: post.blog_categories ? {
+          id: post.blog_categories.id,
+          name: post.blog_categories.name,
+          slug: post.blog_categories.slug,
+          color: post.blog_categories.color || '#4F46E5'
+        } : null,
+        tags: (post.blog_post_tags || []).map(tagRel => tagRel.blog_tags).filter(Boolean),
+        author: post.blog_authors ? {
+          id: post.blog_authors.id,
+          name: post.blog_authors.name,
+          email: post.blog_authors.email
+        } : null
+      }));
+      
+      // Transform categories data
+      const categories = (categoriesData || []).map(category => ({
+        id: category.id,
+        name: category.name,
+        slug: category.slug,
+        description: category.description,
+        color: category.color || '#4F46E5',
+        postCount: category.blog_posts?.length || 0
+      }));
+      
+      return {
+        initialPosts: posts,
+        initialCategories: categories,
+        totalPosts: posts.length,
+        hasMore: posts.length >= 12
+      };
+    } catch (error) {
+      console.error('Error in SSG loader:', error);
+      return { 
+        initialPosts: [], 
+        initialCategories: [],
+        totalPosts: 0,
+        hasMore: false
+      };
+    }
+  }
+  
+  // Return empty data for client-side rendering
+  return { 
+    initialPosts: [], 
+    initialCategories: [],
+    totalPosts: 0,
+    hasMore: false
+  };
 }
 
 // Export both default and Component for vite-react-ssg compatibility
