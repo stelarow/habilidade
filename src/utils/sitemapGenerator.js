@@ -28,44 +28,48 @@ const STATIC_PAGES = [
     lastmod: new Date().toISOString().split('T')[0]
   },
   {
-    url: '/cursos',
-    priority: 0.9,
-    changefreq: 'weekly',
+    url: '/blog',
+    priority: 0.8,
+    changefreq: 'daily',
     lastmod: new Date().toISOString().split('T')[0]
-  },
+  }
+];
+
+// SEO Local pages
+const SEO_LOCAL_PAGES = [
   {
-    url: '/sobre',
+    url: '/cursos-florianopolis',
     priority: 0.8,
     changefreq: 'monthly',
     lastmod: new Date().toISOString().split('T')[0]
   },
   {
-    url: '/contato',
-    priority: 0.7,
+    url: '/cursos-sao-jose',
+    priority: 0.8,
     changefreq: 'monthly',
     lastmod: new Date().toISOString().split('T')[0]
   },
   {
-    url: '/blog',
-    priority: 0.9,
-    changefreq: 'daily',
+    url: '/cursos-palhoca',
+    priority: 0.8,
+    changefreq: 'monthly',
     lastmod: new Date().toISOString().split('T')[0]
   }
 ];
 
 // Course pages - these should match your course structure
 const COURSE_PAGES = [
-  'inteligencia-artificial',
-  'design-grafico', 
-  'informatica-basica',
-  'programacao-web',
+  'informatica',
+  'projetista-3d',
+  'design-grafico',
+  'programacao',
   'marketing-digital',
-  'business-intelligence',
   'edicao-video',
-  'projetista-3d'
+  'business-intelligence',
+  'inteligencia-artificial'
 ].map(slug => ({
-  url: `/curso/${slug}`,
-  priority: 0.8,
+  url: `/cursos/${slug}`,
+  priority: 0.9,
   changefreq: 'monthly',
   lastmod: new Date().toISOString().split('T')[0]
 }));
@@ -188,6 +192,9 @@ export const generateSitemap = async () => {
       // Course pages
       ...COURSE_PAGES,
       
+      // SEO Local pages
+      ...SEO_LOCAL_PAGES,
+      
       // Blog post pages
       ...blogPosts.map(post => ({
         url: `/blog/${post.slug}`,
@@ -222,6 +229,7 @@ ${sitemapFooter}`;
     console.log(`Sitemap generated with ${allUrls.length} URLs:`, {
       static: STATIC_PAGES.length,
       courses: COURSE_PAGES.length,
+      seoLocal: SEO_LOCAL_PAGES.length,
       posts: blogPosts.length,
       categories: categories.length
     });
@@ -232,7 +240,7 @@ ${sitemapFooter}`;
     console.error('Error generating sitemap:', error);
     
     // Fallback sitemap with just static pages
-    const fallbackUrls = [...STATIC_PAGES, ...COURSE_PAGES];
+    const fallbackUrls = [...STATIC_PAGES, ...COURSE_PAGES, ...SEO_LOCAL_PAGES];
     const sitemapHeader = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`;
     const sitemapFooter = `</urlset>`;
