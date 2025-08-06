@@ -68,6 +68,7 @@ function Header() {
                   key={href} 
                   href={href}
                   onClick={(e) => {
+                    handleNavClick();
                     // Handle smooth scrolling for anchor links
                     if (href.startsWith('#')) {
                       e.preventDefault();
@@ -76,8 +77,7 @@ function Header() {
                         element.scrollIntoView({ behavior: 'smooth' });
                       }
                     }
-                  }} 
-                  onClick={handleNavClick}
+                  }}
                   className="text-white hover:text-fuchsia-300 transition-colors focus:outline-none focus:ring-2 focus:ring-fuchsia-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-sm px-2 py-1"
                 >
                   {label}

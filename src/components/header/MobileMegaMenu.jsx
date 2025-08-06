@@ -219,7 +219,7 @@ function MobileMegaMenu({ isOpen, onClose }) {
                         </div>
                       </div>
                     </div>
-                  </Link>
+                  </a>
                 ))}
               </div>
 
