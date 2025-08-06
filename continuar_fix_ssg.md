@@ -262,6 +262,25 @@ npx serve dist
    - Remover node_modules e package-lock.json
    - Reinstalar dependências do zero
 
+## Atualização 2025-08-06 - Parte 2 (23:15)
+
+### ✅ PROBLEMA DE NAVEGAÇÃO RESOLVIDO
+
+**Problema Identificado**: Páginas não atualizavam ao clicar em links - URL mudava mas conteúdo permanecia o mesmo
+
+**Causa Raiz**: Conflito entre navegação client-side (React Router) e páginas estáticas do SSG
+- BlogCard usava `navigate()` do React Router
+- _redirects tinha SPA fallback (`/* /index.html 200`)
+- Mistura de `<Link>` (React Router) e `<a>` tags
+
+**Correções Aplicadas** (commit `1c939eb`):
+1. **Removido SPA fallback** do _redirects - cada página SSG tem seu próprio HTML
+2. **BlogCard atualizado** - usa `window.location.href` ao invés de `navigate()`
+3. **BlogButton convertido** - todos os links usam `<a>` tags nativas
+4. **AdvancedSearch corrigido** - usa `window.history.replaceState()` para filtros
+
+**Resultado**: Navegação funciona corretamente no SSG - páginas carregam ao clicar
+
 ## Atualização 2025-08-06 - Parte 2
 
 ### Build Netlify PASSOU ✅
