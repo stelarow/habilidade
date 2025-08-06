@@ -32,9 +32,18 @@ export default defineConfig({
 
   base: '/',
   
+  resolve: {
+    dedupe: ['react', 'react-dom']
+  },
+  
+  ssr: {
+    noExternal: ['phosphor-react']
+  },
+  
   build: {
     // Code splitting otimizado para 2025 com foco em blog
     rollupOptions: {
+      external: [],
       output: {
         manualChunks(id) {
           // Vendor chunk para bibliotecas principais
