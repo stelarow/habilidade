@@ -1,10 +1,12 @@
 # CURSO HUB IMPLEMENTATION - AI Agent Reference
 
-**Status**: ✅ IMPLEMENTADO | **Build**: ✅ 1min 15s | **Strategy**: Topic Hub Enhanced
+**Status**: ✅ IMPLEMENTADO + UX OTIMIZADO | **Build**: ✅ 1min | **Strategy**: Topic Hub Enhanced + Story Telling
 
 ## 🎯 **PROBLEMA → SOLUÇÃO**
-**Problema**: SEO prometia cursos específicos mas realidade era curso integrado "Projetista 3D"  
-**Solução**: Topic Hub Enhanced - página única expansiva, SEO-safe, sem doorway penalties
+**Problema Original**: SEO prometia cursos específicos mas realidade era curso integrado "Projetista 3D"  
+**Solução Phase 1**: Topic Hub Enhanced - página única expansiva, SEO-safe, sem doorway penalties
+**Problema UX**: Story telling fragmentado e interface inconsistente nas novas seções
+**Solução Phase 2**: Reorganização narrativa + harmonização visual da interface
 
 ## 📊 **IMPLEMENTAÇÃO COMPLETA**
 
@@ -17,13 +19,19 @@ curriculum: [SketchUp+Enscape] → [SketchUp+Enscape+AutoCAD+Revit] // PRESERVAD
 investment: 997→1497, 1297→1897
 ```
 
-### **NEW COMPONENTS**
+### **COMPONENTS - PHASE 1 + 2**
 ```js
-CourseToolNavigation.jsx    // Sticky nav, anchor links
+// PHASE 1 - Hub Básico
+CourseToolNavigation.jsx    // Sticky nav, anchor links (MELHORADO Phase 2)
 CourseToolSection.jsx       // Progressive disclosure, 4 categories/tool
 CourseWorkflowSection.jsx   // Workflow integration examples
 course-tools.css            // Component styles
-CoursePage.jsx              // Integration ~L29-31, L273-295
+
+// PHASE 2 - Story Telling + UX
+CourseProblemStatement.jsx  // Problem → Solution narrative
+CourseToolsOverview.jsx     // Visual workflow das 4 ferramentas
+course-improvements.css     // Animações e estilos harmonizados
+CoursePage.jsx              // Integration reorganizada
 ```
 
 ## 🔧 **CRITICAL TECH DETAILS**
@@ -68,21 +76,33 @@ toolComparisons: [...], regionalNetwork: {...}
 // ANCHOR LINKS não funcionam
 <section id="sketchup"> ✅ | <section id="sketch-up"> ❌
 .course-tool-section { scroll-margin-top: 6rem; } // obrigatório
+
+// PHASE 2 - Story telling component não aparece
+{course.enhancedSections && <CourseProblemStatement />} // condicional obrigatória
+{course.enhancedSections && <CourseToolsOverview />}    // condicional obrigatória
+
+// CSS animations não funcionam
+import '../styles/course-improvements.css'; // import obrigatório CoursePage.jsx
 ```
 
-## 📁 **ARQUIVOS MODIFICADOS**
+## 📁 **ARQUIVOS MODIFICADOS - PHASE 1 + 2**
 
 ```js
 // CORE MODIFICADOS
 src/data/coursesData.js      // Enhanced data L2262-2900
-src/pages/CoursePage.jsx     // Integration L29-31, L273-295
+src/pages/CoursePage.jsx     // Integration reorganizada (commit: 46aad6d)
 src/utils/courseHelpers.js   // Structured data hasPart L120-150
 
-// NOVOS CRIADOS
+// PHASE 1 - CRIADOS
 CourseToolNavigation.jsx     // Sticky nav + anchor links
 CourseToolSection.jsx        // Progressive disclosure
 CourseWorkflowSection.jsx    // Workflow integration
 course-tools.css             // Component styles
+
+// PHASE 2 - STORY TELLING (commit: 46aad6d)
+CourseProblemStatement.jsx   // Problem statement narrative
+CourseToolsOverview.jsx      // Workflow visual overview
+course-improvements.css      // Animações e responsividade
 ```
 
 ## 🎯 **SEO ENHANCEMENT**
@@ -106,11 +126,44 @@ npm run build:production  # 1min 15s, timeout 600000ms, bundle 56.57kB
 
 **Validação pós-deploy**: Anchor nav, structured data, mobile responsive
 
-## 📊 **MÉTRICAS SUCESSO**
-✅ **Build**: 1min 15s otimizado  
-✅ **Bundle**: 56.57kB CoursePage  
+## 🎨 **STORY TELLING & UX - PHASE 2 (commit: 46aad6d)**
+
+### **NOVO FLUXO NARRATIVO**
+```
+ANTES: Hero → WhyStudy → Journey → CTA → Tools (fragmentado)
+DEPOIS: Hero → Problem → Overview → WhyStudy → Journey → Tools → CTA (linear)
+```
+
+### **COMPONENTES STORY TELLING**
+```js
+// 1. Problem Statement - conecta problema inicial
+CourseProblemStatement.jsx: {
+  problems: ["Mercado Exige Versatilidade", "Competição Acirrada", "Projetos Complexos"],
+  statistics: ["73% das vagas", "35% a menos", "90% dos projetos"]
+}
+
+// 2. Tools Overview - workflow visual integrado
+CourseToolsOverview.jsx: {
+  workflow: "Conceito → Documentação → BIM → Apresentação",
+  cards: ["SketchUp Pro", "AutoCAD 2D", "Revit BIM", "Enscape IA"]
+}
+
+// 3. Navigation - mais sutil e integrada
+CourseToolNavigation.jsx: sticky melhorada com seção intro
+```
+
+### **MELHORIAS INTERFACE**
+- **Pacing**: Progressive disclosure otimizado
+- **Sequence**: Lógica narrativa problema → solução → detalhes
+- **Tone**: Visual harmonizado com design original
+- **Responsividade**: Mobile-first mantido + animações suaves
+
+## 📊 **MÉTRICAS SUCESSO - PHASE 1 + 2**
+✅ **Build**: 1min otimizado (Phase 2: mantido)
+✅ **Bundle**: 63.76kB CoursePage (Phase 2: +7kB story telling)  
 ✅ **SEO**: Multi-tool queries, local SEO, structured data hasPart  
-✅ **UX**: Progressive disclosure 4 categorias/tool, anchor nav 4 tools
+✅ **UX Phase 1**: Progressive disclosure 4 categorias/tool, anchor nav 4 tools
+✅ **UX Phase 2**: Story telling linear, interface harmonizada, pacing otimizado
 
 ## ⚠️ **REGRAS CRÍTICAS - AI AGENTS**
 
@@ -122,7 +175,9 @@ npm run build:production  # 1min 15s, timeout 600000ms, bundle 56.57kB
 
 ### **✅ SEGURO MODIFICAR**
 - Enhanced section content, tool comparisons, local cases, career lists
-- Styling course-tools.css
+- Styling course-tools.css e course-improvements.css
+- Problem statement statistics e workflows
+- Tools overview descriptions e features
 
 ### **🔧 EXTENSION PATTERNS**
 ```js
@@ -139,4 +194,10 @@ npm run build:production  # 1min 15s, timeout 600000ms, bundle 56.57kB
 
 ---
 
-**Status**: ✅ **COMPLETO** | **Ref**: curso_hub.md strategy | **AI Context**: Complete implementation reference
+**Status**: ✅ **COMPLETO Phase 1 + 2** | **Commits**: [7c1ff6c, 46aad6d] | **AI Context**: Hub básico + Story telling otimizado
+
+### **📋 PRÓXIMAS MELHORIAS POSSÍVEIS**
+- A/B testing das estatísticas Problem Statement
+- Micro-interações nos cards Tools Overview
+- Progressive loading das seções tool sections
+- Analytics das conversões por seção
