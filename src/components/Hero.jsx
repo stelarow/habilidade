@@ -29,7 +29,17 @@ function Hero() {
           Aprenda hoje as habilidades que vão liderar o mercado de amanhã.
         </p>
         <div className="mt-8 flex flex-col sm:flex-row gap-4">
-          <GradientButton href="#cursos" className="px-6 py-3 text-sm">
+          <GradientButton 
+            href="#cursos" 
+            className="px-6 py-3 text-sm"
+            onClick={(e) => {
+              e.preventDefault();
+              const element = document.getElementById('cursos');
+              if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+              }
+            }}
+          >
             Ver Cursos
           </GradientButton>
         </div>
