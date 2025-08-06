@@ -111,8 +111,15 @@ function MegaMenu({ isOpen, onClose }) {
         {filteredCourses.length > 6 && (
           <div className="mt-6 text-center">
             <a
-              href="/#cursos"
-              onClick={onClose}
+              href="#cursos"
+              onClick={(e) => {
+                e.preventDefault();
+                onClose();
+                const element = document.getElementById('cursos');
+                if (element) {
+                  element.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
               className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-fuchsia-500 to-cyan-400 text-white font-semibold rounded-lg hover:from-fuchsia-600 hover:to-cyan-500 transition"
             >
               Ver Todos os Cursos
