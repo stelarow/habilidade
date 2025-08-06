@@ -1,0 +1,27 @@
+Lista de URLs dos 16 artigos do blog para forçar indexação no GSC:
+
+1. https://www.escolahabilidade.com/blog/guia-completo-21-estilos-decoracao-transformar-casa
+2. https://www.escolahabilidade.com/blog/por-que-enscape-essencial-visualizacao-arquitetonica
+3. https://www.escolahabilidade.com/blog/o-que-e-sketchup-guia-completo-modelagem-3d-2025
+4. https://www.escolahabilidade.com/blog/historia-sketchup-software-arquitetura
+5. https://www.escolahabilidade.com/blog/design-espacos-varejo-sketchup-pro
+6. https://www.escolahabilidade.com/blog/sketchup-arquitetura-paisagistica
+7. https://www.escolahabilidade.com/blog/tipos-puxadores-moveis
+8. https://www.escolahabilidade.com/blog/sketchup-workflows-avancados-arquitetura-paisagistica
+9. https://www.escolahabilidade.com/blog/como-usar-sketchup-para-design-conceitual-arquitetonico
+10. https://www.escolahabilidade.com/blog/dominando-shape-bender-curvando-geometrias-sketchup
+11. https://www.escolahabilidade.com/blog/como-construir-seu-primeiro-agente-ia-n8n
+12. https://www.escolahabilidade.com/blog/cinco-maneiras-maximizar-vistas-magnificas-casas-personalizadas
+13. https://www.escolahabilidade.com/blog/10-dicas-especialistas-renderizacoes-enscape-destaque
+14. https://www.escolahabilidade.com/blog/como-apresentar-projetos-design-interior-sketchup
+15. https://www.escolahabilidade.com/blog/acelerando-workflow-grey-boxing-sketchup
+16. https://www.escolahabilidade.com/blog/10-extensoes-sketchup-arquitetos
+
+INSTRUÇÕES:
+1. Acessar Google Search Console
+2. Ir em "Inspeção de URL"
+3. Colar cada URL acima
+4. Clicar em "Solicitar indexação"
+5. Aguardar confirmação
+
+STATUS: Aguardando execução manual no GSC

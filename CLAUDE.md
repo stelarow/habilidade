@@ -66,6 +66,9 @@ Dual-architecture educational platform for Escola Habilidade:
 ## Playwright Guidelines
 - Quando usar o playwright para acessar algum site, sempre aguarde de 5 a 10 segundos depois de acessar para aguardar o tempo de carregamento.
 
+## SEO Optimization Status
+- **Local SEO Implementation (Jan 2025)**: Otimização completa para Grande Florianópolis implementada. Ver `SEO_PROGRESS_REPORT.md` para detalhes e próximos passos. Memória: `seo-optimization-grande-florianopolis`
+
 ## Memórias de Context/Troubleshooting  
 - **Problema de Imagens Blog**: Se imagens de artigos de blog não carregam, consulte a memória `troubleshooting-imagens-blog-historia-sketchup` para diagnóstico completo e soluções conhecidas
 - **SEO Otimizações**: Para contexto completo sobre SEO implementado, consulte `seo-optimization-escolahabilidade` - inclui problemas resolvidos, configurações técnicas e próximos passos

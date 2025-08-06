@@ -419,9 +419,9 @@ const informatica = {
   },
 
   seoMeta: {
-    title: 'Curso de Informática Completo - Escola Habilidade | Windows 11, Office, IA - Material Incluso',
-    description: 'Curso mais completo de Informática: Windows 11, Office, Excel, ambientes digitais, Canva e IA. 184+ horas, apostilas inclusas, modalidades presencial e online.',
-    keywords: ['informática completa', 'windows 11', 'office', 'excel', 'inteligência artificial', 'canva', 'apostilas inclusas'],
+    title: 'Curso de Informática Básica Florianópolis - Windows 11, Office e Excel - Escola Habilidade São José',
+    description: 'Curso completo de informática básica em Florianópolis e São José SC. Windows 11, Excel, Word, PowerPoint, Canva e IA aplicada. 184h, material incluso, aulas presenciais e online.',
+    keywords: ['curso informática básica florianópolis', 'windows 11 são josé sc', 'excel completo grande florianópolis', 'office santa catarina', 'informática iniciante SC'],
     ogImage: '/og-images/informatica.jpg',
     ogType: 'website',
   },
@@ -1163,9 +1163,9 @@ const programacao = {
   },
 
   seoMeta: {
-    title: 'Curso de Programação Completo - Escola Habilidade | Python, Java, PHP, Android, Cursor IA - Material Incluso',
-    description: 'Torne-se Programador Full-Stack. 6 módulos: Lógica, Python, Java, PHP, Android e Cursor IA. 118 horas, apostilas inclusas, modalidades presencial e online.',
-    keywords: ['programação', 'python', 'java', 'php', 'android', 'cursor ai', 'full-stack', 'apostilas inclusas'],
+    title: 'Curso de Programação Florianópolis - Python, Java, PHP e Android - Escola Habilidade São José',
+    description: 'Curso completo de programação em Florianópolis e São José SC. Aprenda Python, Java, PHP e desenvolvimento Android do zero ao primeiro emprego. 118 horas, material incluso, modalidades presencial e online.',
+    keywords: ['curso programação florianópolis', 'python são josé sc', 'java grande florianópolis', 'php desenvolvimento web', 'android programação', 'escola técnica programação SC'],
     ogImage: '/og-images/programacao.jpg',
     ogType: 'website',
   },
@@ -2918,9 +2918,9 @@ const edicaoVideo = {
   },
 
   seoMeta: {
-    title: 'Curso Edição de Vídeo Completo - Escola Habilidade | Premiere Pro CC, After Effects CC - Material Incluso',
-    description: 'Torne-se Editor de Vídeo profissional. Adobe Premiere Pro CC e After Effects CC. 48 horas, apostilas inclusas, modalidades presencial e online.',
-    keywords: ['edição de vídeo', 'premiere pro cc', 'after effects cc', 'motion graphics', 'youtube', 'editor', 'apostilas inclusas'],
+    title: 'Curso de Edição de Vídeo Florianópolis - Adobe Premiere Pro e After Effects - Escola Habilidade',
+    description: 'Curso profissional de edição de vídeo em Florianópolis e São José SC. Aprenda Premiere Pro CC e After Effects CC com certificado reconhecido. Material didático incluso, aulas presenciais e online.',
+    keywords: ['curso edição de vídeo florianópolis', 'premiere pro são josé', 'after effects grande florianópolis', 'curso adobe premiere', 'edição profissional vídeo SC', 'escola técnica audiovisual'],
     ogImage: '/og-images/edicao-video.jpg',
     ogType: 'website',
   },

@@ -82,6 +82,19 @@ export const routes = [
           }
         ]
       },
+      // Páginas de localização (SEO local)
+      {
+        path: 'cursos-florianopolis',
+        lazy: () => import('./pages/CursosFlorianopolis')
+      },
+      {
+        path: 'cursos-sao-jose',
+        lazy: () => import('./pages/CursosSaoJose')
+      },
+      {
+        path: 'cursos-palhoca',
+        lazy: () => import('./pages/CursosPalhoca')
+      },
       // Redirects para compatibilidade
       {
         path: 'habilidade',
