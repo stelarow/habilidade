@@ -12,7 +12,7 @@ function Home() {
   return (
     <>
       <SEOHead 
-        title="Escola Habilidade Florianópolis, São José, Palhoça - Cursos de Informática, SketchUp, AutoCAD, Revit, Marketing Digital"
+        title="Escola Habilidade - Cursos em Florianópolis e São José"
         description="Escola de cursos profissionalizantes em Florianópolis, São José e Palhoça. Cursos de Informática, SketchUp, AutoCAD, Revit, Enscape, Marketing Digital, Programação e IA. Certificado reconhecido. Aulas presenciais e online."
         keywords="cursos profissionalizantes florianópolis, escola técnica são josé sc, cursos informática palhoça, curso sketchup florianópolis, curso autocad são josé, curso revit palhoça, curso enscape santa catarina, marketing digital florianópolis, programação são josé, inteligência artificial palhoça, cursos técnicos grande florianópolis, escola habilidade"
         path="/"
