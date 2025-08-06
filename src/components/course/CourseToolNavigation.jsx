@@ -48,12 +48,12 @@ const CourseToolNavigation = ({ course, activeSection, onSectionChange }) => {
   return (
     <div className="relative">
       {/* Seção de Introdução às Ferramentas */}
-      <section className="py-16 bg-gradient-to-br from-gray-50 to-gray-100">
+      <section className="py-16">
         <div className="max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6">
+          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">
             Explore Cada Ferramenta em Detalhes
           </h2>
-          <p className="text-lg text-gray-600 mb-8">
+          <p className="text-lg text-gray-300 mb-8">
             Clique em uma ferramenta para conhecer todo o conteúdo que você vai aprender
           </p>
         </div>
@@ -61,7 +61,7 @@ const CourseToolNavigation = ({ course, activeSection, onSectionChange }) => {
 
       {/* Navigation melhorada - mais sutil e integrada */}
       <nav className={`course-tool-navigation-improved ${isSticky ? 'sticky top-0 z-40' : ''} transition-all duration-300`}>
-        <div className="bg-white/95 backdrop-blur-sm border-b border-gray-200 shadow-sm">
+        <div className="bg-gray-900/95 backdrop-blur-sm border-b border-gray-700/50 shadow-sm">
           <div className="max-w-4xl mx-auto px-4 py-4">
             <div className="flex items-center justify-center">
               <div className="flex items-center gap-2 flex-wrap">
@@ -77,19 +77,19 @@ const CourseToolNavigation = ({ course, activeSection, onSectionChange }) => {
                         flex items-center gap-2 px-4 py-3 rounded-xl text-sm font-medium
                         transition-all duration-300 min-w-[120px] justify-center
                         ${isActive 
-                          ? 'bg-white shadow-lg border-2 scale-105' 
-                          : 'bg-gray-50 text-gray-600 hover:bg-white hover:shadow-md border-2 border-transparent'
+                          ? 'bg-gray-800/80 shadow-lg border-2 scale-105 text-white' 
+                          : 'bg-gray-800/30 text-gray-300 hover:bg-gray-800/60 hover:shadow-md border-2 border-transparent hover:text-white'
                         }
                       `}
                       style={isActive ? {
                         borderColor: tool.color,
-                        background: `linear-gradient(135deg, ${tool.color}08, white)`
+                        background: `linear-gradient(135deg, ${tool.color}20, rgba(31, 41, 55, 0.8))`
                       } : {}}
                     >
                       <Icon 
                         size={18} 
                         weight="duotone"
-                        style={{ color: isActive ? tool.color : '#6B7280' }}
+                        style={{ color: isActive ? tool.color : '#9CA3AF' }}
                       />
                       <span className="font-semibold">
                         {tool.name.split(' ')[0]}
