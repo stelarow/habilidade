@@ -10,6 +10,9 @@ const BlogIndex = React.lazy(() => import('./pages/BlogIndex'));
 const BlogTestPage = React.lazy(() => import('./pages/BlogTestPage'));
 const BlogCategory = React.lazy(() => import('./pages/BlogCategory'));
 const NotFound = React.lazy(() => import('./pages/NotFound'));
+const CursosFlorianopolis = React.lazy(() => import('./pages/CursosFlorianopolis'));
+const CursosSaoJose = React.lazy(() => import('./pages/CursosSaoJose'));
+const CursosPalhoca = React.lazy(() => import('./pages/CursosPalhoca'));
 
 // Componente para redirecionamento de cursos
 const CourseRedirect = () => {
@@ -85,15 +88,15 @@ export const routes = [
       // Páginas de localização (SEO local)
       {
         path: 'cursos-florianopolis',
-        lazy: () => import('./pages/CursosFlorianopolis')
+        element: <Suspense fallback={<Loading />}><CursosFlorianopolis /></Suspense>
       },
       {
         path: 'cursos-sao-jose',
-        lazy: () => import('./pages/CursosSaoJose')
+        element: <Suspense fallback={<Loading />}><CursosSaoJose /></Suspense>
       },
       {
         path: 'cursos-palhoca',
-        lazy: () => import('./pages/CursosPalhoca')
+        element: <Suspense fallback={<Loading />}><CursosPalhoca /></Suspense>
       },
       // Redirects para compatibilidade
       {
