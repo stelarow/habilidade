@@ -57,21 +57,21 @@ const Footer = () => {
               <div className="mt-4">
                 <div className="relative w-full h-32 bg-zinc-800 rounded-lg overflow-hidden border border-zinc-700">
                   <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3536.2!2d-48.6372!3d-27.5954!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x952738c8f0b0b0b0%3A0x1234567890abcdef!2sR.%20Caetano%20Jos%C3%A9%20Ferreira%2C%20426%20-%20Kobrasol%2C%20S%C3%A3o%20Jos%C3%A9%20-%20SC%2C%2088102-280!5e0!3m2!1spt-BR!2sbr!4v1234567890"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3536.011328974657!2d-48.639395823534316!3d-27.593077676260874!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9527388cf29e991d%3A0xfaaef7f0b9df8e38!2sEscola%20Habilidade!5e0!3m2!1spt-BR!2sbr!4v1733452800000!5m2!1spt-BR!2sbr"
                     width="100%"
                     height="100%"
                     style={{ border: 0 }}
                     allowFullScreen=""
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
-                    title="Localização da Escola Habilidade"
+                    title="Escola Habilidade - Google Meu Negócio"
                     className="rounded-lg"
                   ></iframe>
                   
                   {/* Overlay clicável */}
                   <div 
                     className="absolute inset-0 bg-transparent cursor-pointer"
-                    onClick={() => window.open('https://maps.google.com/?q=R.+Caetano+José+Ferreira,+426+-+Kobrasol,+São+José+-+SC,+88102-280', '_blank')}
+                    onClick={() => window.open('https://www.google.com/maps/place/Escola+Habilidade/@-27.5930777,-48.6393958,17z/data=!3m1!4b1!4m6!3m5!1s0x9527388cf29e991d:0xfaaef7f0b9df8e38!8m2!3d-27.5930777!4d-48.6368209!16s%2Fg%2F1hc2v8x6v?entry=ttu', '_blank')}
                     title="Abrir no Google Maps"
                   ></div>
                 </div>
