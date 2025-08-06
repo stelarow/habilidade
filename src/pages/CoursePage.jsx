@@ -28,10 +28,13 @@ import CourseEnrollCTA from '../components/course/CourseEnrollCTA';
 import CourseToolNavigation from '../components/course/CourseToolNavigation';
 import CourseToolSection from '../components/course/CourseToolSection';
 import CourseWorkflowSection from '../components/course/CourseWorkflowSection';
+import CourseProblemStatement from '../components/course/CourseProblemStatement';
+import CourseToolsOverview from '../components/course/CourseToolsOverview';
 import Loading from '../components/Loading';
 import GradientButton from '../components/GradientButton';
 import { getCourseBySlug, validateAndSanitizeCourse, generateCourseMetadata } from '../utils/courseHelpers';
 import { EMAIL_CONFIG, isEmailConfigured } from '../utils/emailConfig';
+import '../styles/course-improvements.css';
 import COURSES_DATA from '../data/coursesData';
 import '../styles/course-tools.css';
 
@@ -261,19 +264,26 @@ function CoursePage() {
           <CourseHero course={course} onEnrollClick={handleEnrollClick} />
         </div>
 
-        {/* 3. Por que estudar - NOVA SEÇÃO */}
+        {/* 3. Problem Statement - NOVA SEÇÃO PARA STORY TELLING */}
+        {course.enhancedSections && (
+          <CourseProblemStatement course={course} />
+        )}
+
+        {/* 4. Tools Overview - VISÃO GERAL INTEGRADA */}
+        {course.enhancedSections && (
+          <CourseToolsOverview course={course} />
+        )}
+
+        {/* 5. Por que estudar - SEÇÃO ORIGINAL */}
         <CourseWhyStudy course={course} />
 
-        {/* 4. Passo a passo - NOVA SEÇÃO */}
+        {/* 6. Passo a passo - SEÇÃO ORIGINAL */}
         <CourseJourney course={course} />
 
-        {/* 5. CTA Matricule-se - NOVA SEÇÃO */}
-        <CourseEnrollCTA course={course} onEnrollClick={handleEnrollClick} />
-
-        {/* 6. Enhanced Tool Sections - NOVAS SEÇÕES DA FASE 2 */}
+        {/* 7. Enhanced Tool Sections - DETALHES DE CADA FERRAMENTA */}
         {course.enhancedSections && (
           <>
-            {/* Tool Navigation */}
+            {/* Tool Navigation Melhorada */}
             <CourseToolNavigation 
               course={course}
               activeSection={activeSection}
@@ -300,6 +310,9 @@ function CoursePage() {
             )}
           </>
         )}
+
+        {/* 8. CTA Matricule-se - POSIÇÃO ESTRATÉGICA APÓS CONTEÚDO */}
+        <CourseEnrollCTA course={course} onEnrollClick={handleEnrollClick} />
 
         {/* Main Content */}
         <div className="max-w-7xl mx-auto px-4 pb-16">

@@ -1,0 +1,175 @@
+/* ===========================================
+   MELHORIAS DE STORY TELLING E INTERFACE
+   =========================================== */
+
+/* Smooth scroll para navegação entre seções */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Estilos para navegação melhorada das ferramentas */
+.course-tool-navigation-improved {
+  transition: all 0.3s ease;
+}
+
+.course-tool-navigation-improved.sticky {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Melhorias de acessibilidade e foco */
+.course-tool-navigation-improved button:focus {
+  outline: 2px solid #3B82F6;
+  outline-offset: 2px;
+}
+
+/* Scroll margin para seções de ferramentas */
+.course-tool-section {
+  scroll-margin-top: 8rem;
+}
+
+/* Animações suaves para cards */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.course-card-animation {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+/* Hover effects melhorados */
+.course-card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.course-card-hover:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Gradientes melhorados */
+.gradient-bg-problem {
+  background: linear-gradient(135deg, #1E293B 0%, #334155 50%, #1E293B 100%);
+}
+
+.gradient-bg-tools {
+  background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 50%, #E2E8F0 100%);
+}
+
+/* Estados de loading suaves */
+.skeleton-loading {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Responsividade melhorada para mobile */
+@media (max-width: 768px) {
+  .course-tool-navigation-improved {
+    padding: 0.5rem;
+  }
+  
+  .course-tool-navigation-improved button {
+    min-width: auto;
+    padding: 0.5rem 0.75rem;
+  }
+  
+  .course-tool-section {
+    scroll-margin-top: 6rem;
+  }
+}
+
+/* Melhorias de contrast para acessibilidade */
+@media (prefers-contrast: high) {
+  .course-tool-navigation-improved button {
+    border-width: 2px;
+    border-style: solid;
+  }
+  
+  .course-tool-navigation-improved button:not(.active) {
+    border-color: #374151;
+  }
+}
+
+/* Dark mode considerations */
+@media (prefers-color-scheme: dark) {
+  .course-tool-navigation-improved {
+    background: rgba(17, 24, 39, 0.95);
+    border-color: rgba(75, 85, 99, 0.3);
+  }
+}
+
+/* Transições suaves para mudança de seção ativa */
+.tool-section-transition {
+  transition: all 0.4s ease;
+  transform-origin: top center;
+}
+
+.tool-section-enter {
+  opacity: 0;
+  transform: translateY(20px) scale(0.98);
+}
+
+.tool-section-enter-active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Melhorias de tipografia */
+.course-typography-enhanced {
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Estados de interação melhorados */
+.interactive-element {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
+}
+
+.interactive-element:active {
+  transform: scale(0.98);
+}
+
+/* Indicadores visuais de progresso */
+.progress-indicator {
+  background: linear-gradient(90deg, transparent 0%, currentColor 50%, transparent 100%);
+  background-size: 200% 2px;
+  animation: progress-shine 2s infinite;
+}
+
+@keyframes progress-shine {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}

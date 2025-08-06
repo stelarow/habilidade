@@ -46,49 +46,63 @@ const CourseToolNavigation = ({ course, activeSection, onSectionChange }) => {
   };
 
   return (
-    <nav className={`course-tool-navigation ${isSticky ? 'sticky' : ''}`}>
-      <div className="max-w-4xl mx-auto px-4">
-        <div className="bg-gray-800/80 backdrop-blur-sm border border-gray-600/30 rounded-2xl p-4">
-          <div className="flex items-center justify-between flex-wrap gap-2">
-            <h3 className="text-white font-semibold text-sm hidden sm:block">
-              Ferramentas do Curso:
-            </h3>
-            <div className="flex items-center gap-2 flex-wrap">
-              {tools.map((tool) => {
-                const Icon = toolIcons[tool.id];
-                const isActive = activeSection === tool.id;
-                
-                return (
-                  <button
-                    key={tool.id}
-                    onClick={() => handleToolClick(tool.id)}
-                    className={`
-                      flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium
-                      transition-all duration-300 hover:scale-105
-                      ${isActive 
-                        ? 'bg-white text-gray-900 shadow-lg' 
-                        : 'bg-gray-700/50 text-gray-300 hover:bg-gray-600/50 hover:text-white'
-                      }
-                    `}
-                    style={isActive ? {
-                      background: `linear-gradient(135deg, ${tool.color}20, ${tool.color}10)`
-                    } : {}}
-                  >
-                    <Icon 
-                      size={16} 
-                      weight="duotone"
-                      style={{ color: isActive ? tool.color : 'currentColor' }}
-                    />
-                    <span className="hidden sm:inline">{tool.name}</span>
-                    <span className="sm:hidden">{tool.name.split(' ')[0]}</span>
-                  </button>
-                );
-              })}
+    <div className="relative">
+      {/* Seção de Introdução às Ferramentas */}
+      <section className="py-16 bg-gradient-to-br from-gray-50 to-gray-100">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6">
+            Explore Cada Ferramenta em Detalhes
+          </h2>
+          <p className="text-lg text-gray-600 mb-8">
+            Clique em uma ferramenta para conhecer todo o conteúdo que você vai aprender
+          </p>
+        </div>
+      </section>
+
+      {/* Navigation melhorada - mais sutil e integrada */}
+      <nav className={`course-tool-navigation-improved ${isSticky ? 'sticky top-0 z-40' : ''} transition-all duration-300`}>
+        <div className="bg-white/95 backdrop-blur-sm border-b border-gray-200 shadow-sm">
+          <div className="max-w-4xl mx-auto px-4 py-4">
+            <div className="flex items-center justify-center">
+              <div className="flex items-center gap-2 flex-wrap">
+                {tools.map((tool, index) => {
+                  const Icon = toolIcons[tool.id];
+                  const isActive = activeSection === tool.id;
+                  
+                  return (
+                    <button
+                      key={tool.id}
+                      onClick={() => handleToolClick(tool.id)}
+                      className={`
+                        flex items-center gap-2 px-4 py-3 rounded-xl text-sm font-medium
+                        transition-all duration-300 min-w-[120px] justify-center
+                        ${isActive 
+                          ? 'bg-white shadow-lg border-2 scale-105' 
+                          : 'bg-gray-50 text-gray-600 hover:bg-white hover:shadow-md border-2 border-transparent'
+                        }
+                      `}
+                      style={isActive ? {
+                        borderColor: tool.color,
+                        background: `linear-gradient(135deg, ${tool.color}08, white)`
+                      } : {}}
+                    >
+                      <Icon 
+                        size={18} 
+                        weight="duotone"
+                        style={{ color: isActive ? tool.color : '#6B7280' }}
+                      />
+                      <span className="font-semibold">
+                        {tool.name.split(' ')[0]}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+    </div>
   );
 };
 
