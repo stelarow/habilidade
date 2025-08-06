@@ -71,8 +71,8 @@ function BlogPost() {
   const readingTime = calculateReadingTime(post.content);
   const categoryColor = getCategoryColor(post.category?.slug);
 
-  // Process content with table of contents
-  const { processedContent, tableOfContents } = processContent(post.content);
+  // Process content
+  const processedContent = processContent(post.content, slug);
 
   // SEO data for meta tags
   const seoTitle = `${post.title} | Escola Habilidade`;
@@ -227,7 +227,7 @@ function BlogPost() {
                 {/* Article Content */}
                 <div 
                   ref={articleReference}
-                  className="prose prose-lg prose-invert prose-zinc max-w-none
+                  className="article-content prose prose-lg prose-invert prose-zinc max-w-none
                     prose-headings:text-zinc-50 prose-headings:font-bold
                     prose-h2:text-2xl prose-h2:mt-8 prose-h2:mb-4 prose-h2:border-l-4 prose-h2:border-blue-500 prose-h2:pl-4
                     prose-h3:text-xl prose-h3:mt-6 prose-h3:mb-3
@@ -285,14 +285,18 @@ function BlogPost() {
             {/* Sidebar */}
             <aside className="lg:col-span-1 order-1 lg:order-2">
               {/* Table of Contents */}
-              {tableOfContents && tableOfContents.length > 0 && (
-                <div className="sticky top-8">
-                  <TableOfContents
-                    items={tableOfContents}
-                    articleRef={articleReference}
-                  />
-                </div>
-              )}
+              <div className="sticky top-8">
+                <TableOfContents
+                  containerSelector=".article-content"
+                  title="Navegação do Artigo"
+                  collapsible={false}
+                  initiallyCollapsed={false}
+                  minHeaders={2}
+                  maxLevel={4}
+                  showProgress={true}
+                  className="bg-zinc-900/95 backdrop-blur-sm"
+                />
+              </div>
             </aside>
           </div>
         </div>
