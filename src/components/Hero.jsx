@@ -13,12 +13,12 @@ function Hero() {
       {/* Conteúdo */}
       <div className="flex flex-col items-center justify-center max-w-4xl mx-auto px-4">
         <h1 className="text-white font-bold text-3xl sm:text-5xl leading-relaxed tracking-tight mb-10">
-          {/* Texto principal SEO-otimizado */}
-          <span className="block text-4xl sm:text-6xl font-extrabold gradient-text animate-gradient mb-4">
-            Cursos Profissionalizantes em
+          {/* Brand identity + SEO optimization */}
+          <span className="block text-5xl sm:text-7xl font-extrabold gradient-text animate-gradient mb-2">
+            Escola Habilidade
           </span>
-          <span className="block text-3xl sm:text-5xl gradient-text mb-4">
-            Florianópolis e Região
+          <span className="block text-lg sm:text-xl text-purple-400 font-medium mb-6 tracking-wide">
+            Cursos Profissionalizantes em Florianópolis e Região
           </span>
 
           {/* Texto dinâmico com máquina de escrever */}

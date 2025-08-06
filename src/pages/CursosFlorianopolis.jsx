@@ -68,13 +68,15 @@ const CursosFlorianopolis = () => {
         <section className="relative py-20 px-4">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-12">
-              <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-                Cursos Profissionalizantes em <span className="text-purple-400">Florianópolis</span>
+              <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
+                <span className="block text-5xl md:text-6xl gradient-text mb-2">Escola Habilidade</span>
+                <span className="text-2xl md:text-3xl text-purple-400 font-medium">
+                  Cursos Profissionalizantes em Florianópolis
+                </span>
               </h1>
               <p className="text-xl text-zinc-300 max-w-3xl mx-auto">
-                A Escola Habilidade oferece os melhores cursos técnicos e profissionalizantes 
-                para moradores de Florianópolis e região. Transforme sua carreira com nossos 
-                cursos certificados.
+                Os melhores cursos técnicos e profissionalizantes para moradores de 
+                Florianópolis e região. Transforme sua carreira com nossos cursos certificados.
               </p>
             </div>
 
