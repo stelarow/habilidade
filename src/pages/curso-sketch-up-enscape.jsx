@@ -1095,3 +1095,6 @@ const CursoSketchUpEnscape = () => {
 };
 
 export default CursoSketchUpEnscape;
+
+// Export for React Router lazy loading
+export const Component = CursoSketchUpEnscape;
