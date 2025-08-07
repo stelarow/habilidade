@@ -9,6 +9,11 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Gradiente radial para curso SketchUp + Enscape */
+.bg-gradient-radial {
+  background: radial-gradient(circle, #110011, #000000);
+}
+
 /* Scroll offset para compensar header fixo */
 section[id], 
 #cursos,

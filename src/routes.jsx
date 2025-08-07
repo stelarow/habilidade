@@ -52,6 +52,10 @@ export const routes = [
         lazy: () => import('./pages/Home')
       },
       {
+        path: 'cursos/sketchup-enscape',
+        lazy: () => import('./pages/curso-sketch-up-enscape')
+      },
+      {
         path: 'cursos/:courseSlug',
         lazy: () => import('./pages/CoursePage')
       },
