@@ -1058,10 +1058,10 @@ const CursoSketchUpEnscape = () => {
     <div className="font-montserrat">
       <Helmet>
         <title>Curso SketchUp + Enscape - Do Esboço ao Render | Escola Habilidade</title>
-        <meta name="description" content="Domine SketchUp + Enscape para criar projetos arquitetônicos profissionais com renderizações fotorrealísticas. 56h de curso, 28 aulas práticas, 6 projetos completos. Aulas presenciais em São José/SC." />
+        <meta name="description" content="Domine SketchUp + Enscape para criar projetos arquitetônicos profissionais com renderizações fotorealísticas. 56h de curso, 28 aulas práticas, 6 projetos completos. Aulas presenciais em São José/SC." />
         <meta name="keywords" content="curso sketchup, curso enscape, renderização 3d, arquitetura, design, são josé sc, escola habilidade" />
         <meta property="og:title" content="Curso SketchUp + Enscape - Do Esboço ao Render" />
-        <meta property="og:description" content="Aprenda a criar projetos arquitetônicos profissionais com renderizações fotorrealísticas que impressionam clientes." />
+        <meta property="og:description" content="Aprenda a criar projetos arquitetônicos profissionais com renderizações fotorealísticas que impressionam clientes." />
         <meta property="og:image" content="/assets/cursos/sketchup-enscape/architectural-render-bg.jpeg" />
         <link rel="canonical" href="https://escolahabilidade.com/cursos/sketchup-enscape" />
       </Helmet>
@@ -1081,33 +1081,15 @@ const CursoSketchUpEnscape = () => {
           scroll-behavior: smooth;
         }
       `}</style>
-      
+
       <CourseHeader />
       <CourseHero />
       <AboutCourse />
       <Curriculum />
       <CourseProjects />
-      <CompaniesSection />
       <CourseTestimonials />
+      <CompaniesSection />
       <FinalCTA />
-      
-      {/* Floating WhatsApp */}
-      <motion.a
-        href="https://wa.me/5548984587067"
-        className="fixed bottom-6 right-6 z-50 w-16 h-16 bg-[#d400ff] rounded-full flex items-center justify-center shadow-lg"
-        whileHover={{ 
-          scale: 1.1,
-          boxShadow: "0 0 20px #d400ff88"
-        }}
-        animate={{ 
-          y: [0, -5, 0],
-        }}
-        transition={{ 
-          y: { duration: 2, repeat: Infinity }
-        }}
-      >
-        <MessageCircle className="text-white" size={24} />
-      </motion.a>
     </div>
   );
 };
