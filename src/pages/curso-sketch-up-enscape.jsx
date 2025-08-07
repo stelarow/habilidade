@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect, useCallback, useMemo, memo } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 import { 
   ArrowLeft,
   Clock,
@@ -21,18 +21,45 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from '@dr.pogodin/react-helmet';
 
-// Componente Header da página do curso
-const CourseHeader = () => {
+// Import optimized constants and components
+import {
+  COURSE_STATS,
+  PRICING,
+  HERO_IMAGES,
+  COURSE_FEATURES,
+  SKETCHUP_LESSONS,
+  ENSCAPE_LESSONS,
+  COURSE_PROJECTS,
+  COMPANIES_DATA,
+  TESTIMONIALS_DATA,
+  ANIMATION_VARIANTS,
+  CONTACT_INFO,
+  BENEFITS,
+  QUICK_BENEFITS,
+  COMPANY_STATS,
+  COURSE_MODULES,
+  SEO_DATA
+} from '../constants/curso-sketchup-enscape.js';
+import OptimizedImage from '../components/blog/OptimizedImage.jsx';
+
+// Componente Header da página do curso - Memoized for performance
+const CourseHeader = memo(() => {
   const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
+
+  const handleScroll = useCallback(() => {
+    setIsScrolled(window.scrollY > 50);
+  }, []);
+
+  const handleBackClick = useCallback(() => {
+    navigate('/');
+  }, [navigate]);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [handleScroll]);
 
   return (
     <motion.header 
@@ -74,10 +101,24 @@ const CourseHeader = () => {
       </div>
     </motion.header>
   );
-};
+});
 
-// Componente Hero do Curso
-const CourseHero = () => {
+CourseHeader.displayName = 'CourseHeader';
+
+// Componente Hero do Curso - Memoized for performance
+const CourseHero = memo(() => {
+  const prefersReducedMotion = useReducedMotion();
+  
+  // Pre-defined animation variants for better performance
+  const heroAnimations = useMemo(() => ({
+    textContent: prefersReducedMotion ? {} : ANIMATION_VARIANTS.fadeInLeft,
+    imageShowcase: prefersReducedMotion ? {} : ANIMATION_VARIANTS.fadeInRight,
+    stats: prefersReducedMotion ? {} : {
+      initial: { opacity: 0, y: 30 },
+      animate: { opacity: 1, y: 0 },
+      transition: { delay: 0.5 }
+    }
+  }), [prefersReducedMotion]);
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 bg-gradient-radial from-[#110011] to-black"></div>
@@ -227,10 +268,13 @@ const CourseHero = () => {
       </div>
     </section>
   );
-};
+});
 
-// Componente sobre o curso
-const AboutCourse = () => {
+CourseHero.displayName = 'CourseHero';
+
+// Componente sobre o curso - Memoized for performance
+const AboutCourse = memo(() => {
+  const prefersReducedMotion = useReducedMotion();
   return (
     <section className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
@@ -320,11 +364,18 @@ const AboutCourse = () => {
       </div>
     </section>
   );
-};
+});
 
-// Componente do Módulo de Aulas
-const ModuleSection = ({ title, lessons, icon: IconComponent }) => {
+AboutCourse.displayName = 'AboutCourse';
+
+// Componente do Módulo de Aulas - Memoized for performance
+const ModuleSection = memo(({ title, lessons, icon: IconComponent }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
+
+  const toggleExpanded = useCallback(() => {
+    setIsExpanded(prev => !prev);
+  }, []);
 
   return (
     <motion.div
@@ -336,7 +387,7 @@ const ModuleSection = ({ title, lessons, icon: IconComponent }) => {
     >
       <div 
         className="p-6 cursor-pointer hover:bg-gray-50 transition-colors"
-        onClick={() => setIsExpanded(!isExpanded)}
+        onClick={toggleExpanded}
       >
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
@@ -388,43 +439,12 @@ const ModuleSection = ({ title, lessons, icon: IconComponent }) => {
       </motion.div>
     </motion.div>
   );
-};
+});
 
-// Componente Grade Curricular
-const Curriculum = () => {
-  const sketchupLessons = [
-    { name: "Fundamentos do SketchUp", type: "Modelagem", duration: "120 min" },
-    { name: "Modificadores e Geometrias", type: "Modelagem", duration: "120 min" },
-    { name: "Projeto Guiado – Volume Simples", type: "Projeto", duration: "120 min" },
-    { name: "Grupos e Componentes", type: "Modelagem", duration: "120 min" },
-    { name: "Manipulação Avançada de Geometrias", type: "Modelagem", duration: "120 min" },
-    { name: "Eixos e Superfícies Inclinadas", type: "Modelagem", duration: "120 min" },
-    { name: "Projeto Guiado – Elementos Arquitetônicos", type: "Projeto", duration: "120 min" },
-    { name: "Materiais e Texturas", type: "Modelagem", duration: "120 min" },
-    { name: "Ferramenta Siga-me (Follow Me)", type: "Modelagem", duration: "120 min" },
-    { name: "Sandbox e Terrenos", type: "Modelagem", duration: "120 min" },
-    { name: "Vetorização e Logotipos 3D", type: "Modelagem", duration: "120 min" },
-    { name: "Ferramentas de Sólidos", type: "Modelagem", duration: "120 min" },
-    { name: "Importação de Arquivos CAD", type: "Modelagem", duration: "120 min" },
-    { name: "Introdução ao Layout do SketchUp", type: "Modelagem", duration: "120 min" },
-    { name: "Documentação Técnica com Layout", type: "Modelagem", duration: "120 min" },
-    { name: "Plugins Essenciais", type: "Modelagem", duration: "120 min" },
-    { name: "Componentes Dinâmicos I", type: "Modelagem", duration: "120 min" },
-    { name: "Projeto Guiado – Interiores Residenciais", type: "Projeto", duration: "120 min" },
-    { name: "Projeto Guiado – Fachada com Terreno", type: "Projeto", duration: "120 min" },
-    { name: "Layout Final do Projeto Completo", type: "Projeto", duration: "120 min" }
-  ];
+ModuleSection.displayName = 'ModuleSection';
 
-  const enscapeLessons = [
-    { name: "Introdução ao Enscape e Configuração Inicial", type: "Renderização", duration: "120 min" },
-    { name: "Iluminação Natural e Artificial", type: "Renderização", duration: "120 min" },
-    { name: "Materiais e Texturização no Enscape", type: "Renderização", duration: "120 min" },
-    { name: "Câmeras e Enquadramentos Profissionais", type: "Renderização", duration: "120 min" },
-    { name: "Configurações de Render e Qualidade", type: "Renderização", duration: "120 min" },
-    { name: "Animações e Vídeos com Enscape", type: "Renderização", duration: "120 min" },
-    { name: "Ambientes Externos e Vegetação", type: "Renderização", duration: "120 min" },
-    { name: "Projeto Guiado Completo com Enscape", type: "Projeto", duration: "120 min" }
-  ];
+// Componente Grade Curricular - Optimized for performance
+const Curriculum = memo(() => {
 
   return (
     <section className="py-20 bg-gradient-radial from-[#110011] to-black">
@@ -445,42 +465,24 @@ const Curriculum = () => {
         </motion.div>
 
         <div className="max-w-4xl mx-auto space-y-6">
-          <ModuleSection 
-            title="SketchUp - Modelagem 3D"
-            icon={Box}
-            lessons={sketchupLessons}
-          />
-          
-          <ModuleSection 
-            title="Enscape - Renderização Fotorrealística"
-            icon={Camera}
-            lessons={enscapeLessons}
-          />
+          {COURSE_MODULES.map((module, index) => (
+            <ModuleSection 
+              key={module.title}
+              title={module.title}
+              icon={module.icon}
+              lessons={module.lessons}
+            />
+          ))}
         </div>
       </div>
     </section>
   );
-};
+});
 
-// Componente Projetos do Curso
-const CourseProjects = () => {
-  const projects = [
-    {
-      title: "Casa Residencial Completa",
-      description: "Projeto de residência unifamiliar com fachada, interiores e terreno paisagístico",
-      image: "/assets/cursos/sketchup-enscape/project-1.jpeg"
-    },
-    {
-      title: "Interiores de Luxo", 
-      description: "Ambientes internos com materiais nobres, iluminação profissional e mobiliário",
-      image: "/assets/cursos/sketchup-enscape/project-2.jpeg"
-    },
-    {
-      title: "Documentação Técnica",
-      description: "Plantas, cortes, fachadas e detalhamentos técnicos usando Layout",
-      image: "/assets/cursos/sketchup-enscape/project-3.jpeg"
-    }
-  ];
+Curriculum.displayName = 'Curriculum';
+
+// Componente Projetos do Curso - Optimized for performance
+const CourseProjects = memo(() => {
 
   return (
     <section className="py-20 bg-gray-50">
@@ -501,9 +503,9 @@ const CourseProjects = () => {
         </motion.div>
 
         <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {projects.map((project, index) => (
+          {COURSE_PROJECTS.map((project, index) => (
             <motion.div
-              key={index}
+              key={project.title}
               className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300"
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -512,10 +514,11 @@ const CourseProjects = () => {
               whileHover={{ y: -5 }}
             >
               <div className="aspect-video overflow-hidden">
-                <img 
+                <OptimizedImage 
                   src={project.image}
                   alt={project.title}
                   className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
+                  loading="lazy"
                 />
               </div>
               <div className="p-6">
@@ -528,77 +531,61 @@ const CourseProjects = () => {
       </div>
     </section>
   );
-};
+});
 
-// Componente Empresas Atendidas
-const CompaniesSection = () => {
-  const companies = [
-    {
-      name: "Portinox",
-      logo: "/assets/cursos/sketchup-enscape/_AM4K71sI76P_48oTfwuh.webp",
-      description: "Equipamentos Gastronômicos"
-    },
-    {
-      name: "MR",
-      logo: "/assets/cursos/sketchup-enscape/2jNvD0A0IySCMxVqHKKLN.jpeg", 
-      description: "Móveis Planejados"
-    },
-    {
-      name: "Rinox",
-      logo: "/assets/cursos/sketchup-enscape/Dto_HF1D0esz2RgHkyluP.png",
-      description: "Soluções Industriais"
-    },
-    {
-      name: "Serralheria Mota",
-      logo: "/assets/cursos/sketchup-enscape/l5v_ub2GBPsN8c9qczmU6.jpeg",
-      description: "Serralheria e Metalurgia"
-    },
-    {
-      name: "Steinbach",
-      logo: "/assets/cursos/sketchup-enscape/x3eNjRKuni5TKlKHbFZug.webp",
-      description: "Marcenaria"
-    },
-    {
-      name: "Torres",
-      logo: "/assets/cursos/sketchup-enscape/AJ0M1WPOZVRqEu3y-N4j_.avif",
-      description: "projetos farmacêuticos"
-    },
-    {
-      name: "Legno",
-      logo: "/assets/cursos/sketchup-enscape/ukKT5CnXfAVP3AS9G4jXs.jpeg",
-      description: "Móveis sob Medida"
-    },
-    {
-      name: "Mobiliário",
-      logo: "/assets/cursos/sketchup-enscape/xYBvu3zwJyVFvvlKHPcz0.jpeg",
-      description: "Móveis e Interiores"
-    },
-    {
-      name: "Protérmica",
-      logo: "/assets/cursos/sketchup-enscape/dU-RkMhy9INgLG_2WQrOs.png",
-      description: "Climatização"
-    },
-    {
-      name: "Marcenaria JP",
-      logo: "/assets/cursos/sketchup-enscape/sXBkejmP3TgFhiLFB-2NM.jpeg",
-      description: "Móveis Planejados"
-    },
-    {
-      name: "Ousadia",
-      logo: "/assets/cursos/sketchup-enscape/p4GIB7Eemw3frRpbKG2zR.jpeg",
-      description: "Móveis sob Medida"
-    },
-    {
-      name: "Escadas Imperatriz",
-      logo: "/assets/cursos/sketchup-enscape/PLOSn09XPv1Fkg_lJVsAG.jpeg",
-      description: "Escadas e Estruturas"
-    },
-    {
-      name: "Pedra Granada",
-      logo: "/assets/cursos/sketchup-enscape/kI8JxlGaNQo0Ecg5B1uEP.jpeg",
-      description: "Marmoraria"
+CourseProjects.displayName = 'CourseProjects';
+
+// Company Card Component - Memoized for performance
+const CompanyCard = memo(({ company, index }) => {
+  const prefersReducedMotion = useReducedMotion();
+  
+  return (
+    <motion.div
+      className="group bg-gray-50 rounded-xl p-6 hover:bg-white hover:shadow-lg transition-all duration-300 flex flex-col items-center justify-center min-w-[200px] flex-shrink-0"
+      whileHover={prefersReducedMotion ? {} : { 
+        y: -5,
+        boxShadow: "0 10px 30px rgba(212, 0, 255, 0.15)",
+        scale: 1.05
+      }}
+    >
+      <div className="w-20 h-20 flex items-center justify-center mb-4 rounded-lg bg-white shadow-sm group-hover:shadow-md transition-shadow">
+        <OptimizedImage 
+          src={company.logo}
+          alt={company.name}
+          className="max-w-full max-h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300"
+          loading="lazy"
+        />
+      </div>
+      <div className="text-center">
+        <h3 className="font-semibold text-gray-900 text-sm mb-1">{company.name}</h3>
+        <p className="text-xs text-gray-600">{company.description}</p>
+      </div>
+    </motion.div>
+  );
+});
+
+CompanyCard.displayName = 'CompanyCard';
+
+// Componente Empresas Atendidas - Optimized for performance
+const CompaniesSection = memo(() => {
+  const prefersReducedMotion = useReducedMotion();
+  
+  // Pre-calculate animation values for better performance
+  const animationDistance = useMemo(() => -(208 * COMPANIES_DATA.length), []);
+  
+  // Animation configuration with reduced motion support
+  const carouselAnimation = useMemo(() => ({
+    x: prefersReducedMotion ? [0] : [0, animationDistance]
+  }), [prefersReducedMotion, animationDistance]);
+  
+  const carouselTransition = useMemo(() => ({
+    x: {
+      repeat: prefersReducedMotion ? 0 : Infinity,
+      repeatType: "loop",
+      duration: prefersReducedMotion ? 0 : 120,
+      ease: "linear"
     }
-  ];
+  }), [prefersReducedMotion]);
 
   return (
     <section className="py-20 bg-white">
@@ -618,95 +605,38 @@ const CompaniesSection = () => {
           </p>
         </motion.div>
 
-        {/* Carrossel infinito de logos */}
+        {/* Carrossel infinito de logos - Optimized */}
         <div className="relative overflow-hidden max-w-7xl mx-auto">
           <motion.div 
             className="flex space-x-8"
-            animate={{
-              x: [0, -(208 * companies.length)] // 200px largura + 32px gap (8 * 4px)
-            }}
-            transition={{
-              x: {
-                repeat: Infinity,
-                repeatType: "loop",
-                duration: 120, // 120 segundos para completar um loop (2x mais lento)
-                ease: "linear"
-              }
-            }}
+            animate={carouselAnimation}
+            transition={carouselTransition}
           >
             {/* Primeira sequência de logos */}
-            {companies.map((company, index) => (
-              <motion.div
+            {COMPANIES_DATA.map((company, index) => (
+              <CompanyCard
                 key={`first-${index}`}
-                className="group bg-gray-50 rounded-xl p-6 hover:bg-white hover:shadow-lg transition-all duration-300 flex flex-col items-center justify-center min-w-[200px] flex-shrink-0"
-                whileHover={{ 
-                  y: -5,
-                  boxShadow: "0 10px 30px rgba(212, 0, 255, 0.15)",
-                  scale: 1.05
-                }}
-              >
-                <div className="w-20 h-20 flex items-center justify-center mb-4 rounded-lg bg-white shadow-sm group-hover:shadow-md transition-shadow">
-                  <img 
-                    src={company.logo}
-                    alt={company.name}
-                    className="max-w-full max-h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300"
-                  />
-                </div>
-                <div className="text-center">
-                  <h3 className="font-semibold text-gray-900 text-sm mb-1">{company.name}</h3>
-                  <p className="text-xs text-gray-600">{company.description}</p>
-                </div>
-              </motion.div>
+                company={company}
+                index={index}
+              />
             ))}
             
             {/* Segunda sequência de logos (para continuidade perfeita) */}
-            {companies.map((company, index) => (
-              <motion.div
+            {COMPANIES_DATA.map((company, index) => (
+              <CompanyCard
                 key={`second-${index}`}
-                className="group bg-gray-50 rounded-xl p-6 hover:bg-white hover:shadow-lg transition-all duration-300 flex flex-col items-center justify-center min-w-[200px] flex-shrink-0"
-                whileHover={{ 
-                  y: -5,
-                  boxShadow: "0 10px 30px rgba(212, 0, 255, 0.15)",
-                  scale: 1.05
-                }}
-              >
-                <div className="w-20 h-20 flex items-center justify-center mb-4 rounded-lg bg-white shadow-sm group-hover:shadow-md transition-shadow">
-                  <img 
-                    src={company.logo}
-                    alt={company.name}
-                    className="max-w-full max-h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300"
-                  />
-                </div>
-                <div className="text-center">
-                  <h3 className="font-semibold text-gray-900 text-sm mb-1">{company.name}</h3>
-                  <p className="text-xs text-gray-600">{company.description}</p>
-                </div>
-              </motion.div>
+                company={company}
+                index={index}
+              />
             ))}
             
             {/* Terceira sequência para garantir continuidade */}
-            {companies.slice(0, 3).map((company, index) => (
-              <motion.div
+            {COMPANIES_DATA.slice(0, 3).map((company, index) => (
+              <CompanyCard
                 key={`third-${index}`}
-                className="group bg-gray-50 rounded-xl p-6 hover:bg-white hover:shadow-lg transition-all duration-300 flex flex-col items-center justify-center min-w-[200px] flex-shrink-0"
-                whileHover={{ 
-                  y: -5,
-                  boxShadow: "0 10px 30px rgba(212, 0, 255, 0.15)",
-                  scale: 1.05
-                }}
-              >
-                <div className="w-20 h-20 flex items-center justify-center mb-4 rounded-lg bg-white shadow-sm group-hover:shadow-md transition-shadow">
-                  <img 
-                    src={company.logo}
-                    alt={company.name}
-                    className="max-w-full max-h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300"
-                  />
-                </div>
-                <div className="text-center">
-                  <h3 className="font-semibold text-gray-900 text-sm mb-1">{company.name}</h3>
-                  <p className="text-xs text-gray-600">{company.description}</p>
-                </div>
-              </motion.div>
+                company={company}
+                index={index}
+              />
             ))}
           </motion.div>
           
@@ -715,7 +645,7 @@ const CompaniesSection = () => {
           <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
         </div>
 
-        {/* Estatísticas */}
+        {/* Estatísticas - Optimized */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -723,62 +653,53 @@ const CompaniesSection = () => {
           transition={{ duration: 0.8, delay: 0.3 }}
           className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto"
         >
-          <div className="text-center">
-            <div className="text-3xl font-bold text-[#d400ff] mb-2">50+</div>
-            <div className="text-gray-600">Empresas Atendidas</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl font-bold text-[#d400ff] mb-2">200+</div>
-            <div className="text-gray-600">Projetos Entregues</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl font-bold text-[#d400ff] mb-2">95%</div>
-            <div className="text-gray-600">Taxa de Aprovação</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl font-bold text-[#d400ff] mb-2">4.9★</div>
-            <div className="text-gray-600">Avaliação Média</div>
-          </div>
+          {COMPANY_STATS.map((stat, index) => (
+            <div key={stat.label} className="text-center">
+              <div className="text-3xl font-bold text-[#d400ff] mb-2">{stat.value}</div>
+              <div className="text-gray-600">{stat.label}</div>
+            </div>
+          ))}
         </motion.div>
       </div>
     </section>
   );
-};
+});
 
-// Componente Depoimentos específicos
-const CourseTestimonials = () => {
-  const testimonials = [
-    {
-      name: "Jonatas Torres",
-      initials: "JT",
-      text: "Estou tendo uma excelente experiência com a escola habilidade no curso de SketchUp. O conteúdo é muito bem estruturado, o professor domina o assunto e sabe explicar de forma clara, mesmo para quem está começando. A dinâmica das aulas, os exercícios práticos e o suporte oferecido fazem toda a diferença no aprendizado. Já estou colocando em prática o que aprendi. Recomendo fortemente a escola para quem deseja aprender SketchUp com qualidade, atenção individualizada e foco na aplicação prática. Vale muito a pena!"
-    },
-    {
-      name: "Karolain Roberta Régis",
-      initials: "KR",
-      text: "Estou fazendo o curso e estou adorando, professor atencioso, com atividades super dinâmicas, aprendi ja bastante coisas que ainda não sabia, estão super atualizados no mercado, eles tem deles mesmo até IA ajudando o pessoal nas medições e até em render rapidos, fora a apostila bem completa"
-    },
-    {
-      name: "Rute Barboza",
-      initials: "RB",
-      text: "Fiz todos os cursos de projeto com o professor Alessandro, me ajudou demais a colocar as coisas que antes eram apenas sonhos nos meus projetos. Hoje meus clientes conseguem ver o projeto de uma forma realista por conta do meu aprendizado em renderização. Agradeço demais ao trabalho da Escola Habilidade e do professor!!!"
-    },
-    {
-      name: "Ana Caroline Orofino",
-      initials: "AC",
-      text: "Estou adorando as aulas, professor muito atencioso, sempre trás questões do cotidiano para resolução das atividades!"
-    },
-    {
-      name: "Sabrina Rodrigues",
-      initials: "SR",
-      text: "Comecei o curso de sketchup e está sendo uma experiência incrível, o professor é muito atencioso. Estou com grandes expectativas."
-    },
-    {
-      name: "Milene Silva",
-      initials: "MS",
-      text: "A escola apresenta uma boa estrutura, o professor é bem atencioso e prestativo, sempre pronto para esclarecer dúvidas durante e fora do horário de aula. Estou adorando."
-    }
-  ];
+CompaniesSection.displayName = 'CompaniesSection';
+
+// Testimonial Card Component - Memoized for performance
+const TestimonialCard = memo(({ testimonial, index }) => {
+  const prefersReducedMotion = useReducedMotion();
+  
+  return (
+    <motion.div
+      className="bg-[#1b1b1f] border border-[#d400ff33] rounded-xl p-6 text-center"
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6, delay: index * 0.1 }}
+      whileHover={prefersReducedMotion ? {} : { 
+        boxShadow: "0 0 20px #d400ff55",
+        scale: 1.02
+      }}
+    >
+      <div className="w-16 h-16 bg-[#d400ff] rounded-full flex items-center justify-center mx-auto mb-4">
+        <span className="text-white text-xl font-bold">
+          {testimonial.initials}
+        </span>
+      </div>
+      <p className="text-gray-300 italic text-sm mb-4 leading-relaxed line-clamp-6">
+        "{testimonial.text}"
+      </p>
+      <div className="font-bold text-white text-lg">{testimonial.name}</div>
+    </motion.div>
+  );
+});
+
+TestimonialCard.displayName = 'TestimonialCard';
+
+// Componente Depoimentos específicos - Optimized for performance
+const CourseTestimonials = memo(() => {
 
   return (
     <section className="py-20 bg-gradient-radial from-[#110011] to-black">
@@ -796,141 +717,136 @@ const CourseTestimonials = () => {
         </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-          {testimonials.map((testimonial, index) => (
-            <motion.div
-              key={index}
-              className="bg-[#1b1b1f] border border-[#d400ff33] rounded-xl p-6 text-center"
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              whileHover={{ 
-                boxShadow: "0 0 20px #d400ff55",
-                scale: 1.02
-              }}
-            >
-              <div className="w-16 h-16 bg-[#d400ff] rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white text-xl font-bold">
-                  {testimonial.initials}
-                </span>
-              </div>
-              <p className="text-gray-300 italic text-sm mb-4 leading-relaxed line-clamp-6">
-                "{testimonial.text}"
-              </p>
-              <div className="font-bold text-white text-lg">{testimonial.name}</div>
-            </motion.div>
+          {TESTIMONIALS_DATA.map((testimonial, index) => (
+            <TestimonialCard
+              key={testimonial.name}
+              testimonial={testimonial}
+              index={index}
+            />
           ))}
         </div>
       </div>
     </section>
   );
-};
+});
+
+CourseTestimonials.displayName = 'CourseTestimonials';
 
 // Componente CTA Final
-// Sub-componentes do CTA Final
-const OfferBadge = () => (
-  <motion.div 
-    className="inline-flex items-center gap-3 bg-gradient-to-r from-[#d400ff]/20 to-purple-600/20 backdrop-blur-sm border border-[#d400ff]/30 text-white px-6 py-3 rounded-xl text-lg font-semibold mb-6"
-    animate={{ 
-      boxShadow: [
-        "0 0 20px rgba(212, 0, 255, 0.3)",
-        "0 0 30px rgba(212, 0, 255, 0.5)",
-        "0 0 20px rgba(212, 0, 255, 0.3)"
-      ]
-    }}
-    transition={{ duration: 2, repeat: Infinity }}
-  >
-    <motion.div
-      animate={{ rotate: [0, 10, -10, 0] }}
+// Sub-componentes do CTA Final - Optimized with memo
+const OfferBadge = memo(() => {
+  const prefersReducedMotion = useReducedMotion();
+  
+  return (
+    <motion.div 
+      className="inline-flex items-center gap-3 bg-gradient-to-r from-[#d400ff]/20 to-purple-600/20 backdrop-blur-sm border border-[#d400ff]/30 text-white px-6 py-3 rounded-xl text-lg font-semibold mb-6"
+      animate={prefersReducedMotion ? {} : { 
+        boxShadow: [
+          "0 0 20px rgba(212, 0, 255, 0.3)",
+          "0 0 30px rgba(212, 0, 255, 0.5)",
+          "0 0 20px rgba(212, 0, 255, 0.3)"
+        ]
+      }}
       transition={{ duration: 2, repeat: Infinity }}
     >
-      <AlertCircle size={20} className="text-[#d400ff]" />
+      <motion.div
+        animate={prefersReducedMotion ? {} : { rotate: [0, 10, -10, 0] }}
+        transition={{ duration: 2, repeat: Infinity }}
+      >
+        <AlertCircle size={20} className="text-[#d400ff]" />
+      </motion.div>
+      <span className="bg-gradient-to-r from-white to-[#d400ff] bg-clip-text text-transparent">
+        OFERTA LIMITADA
+      </span>
+      <span className="text-gray-300">•</span>
+      <span className="text-yellow-300 font-bold">15 vagas restantes</span>
     </motion.div>
-    <span className="bg-gradient-to-r from-white to-[#d400ff] bg-clip-text text-transparent">
-      OFERTA LIMITADA
-    </span>
-    <span className="text-gray-300">•</span>
-    <span className="text-yellow-300 font-bold">15 vagas restantes</span>
-  </motion.div>
-);
+  );
+});
 
-const PricingInfo = () => (
+OfferBadge.displayName = 'OfferBadge';
+
+const PricingInfo = memo(() => (
   <p className="text-xl text-gray-200 mb-4 max-w-3xl mx-auto">
-    <span className="line-through text-gray-400 text-lg">De R$ 4.999,00</span>
+    <span className="line-through text-gray-400 text-lg">De {PRICING.originalPrice}</span>
     <br />
-    <strong className="text-3xl text-white">Por apenas R$ 3.999,00 à vista</strong>
+    <strong className="text-3xl text-white">Por apenas {PRICING.cashPrice} à vista</strong>
     <br />
-    <span className="text-xl">ou <strong className="text-green-400">10x de R$ 399,90</strong> sem juros</span>
+    <span className="text-xl">ou <strong className="text-green-400">{PRICING.installments}x de {PRICING.installmentPrice}</strong> sem juros</span>
   </p>
-);
+));
 
-const QuickBenefits = () => (
+PricingInfo.displayName = 'PricingInfo';
+
+const QuickBenefits = memo(() => (
   <div className="flex flex-wrap justify-center gap-6 text-gray-300 mb-8">
-    <span className="flex items-center gap-2">
-      <CheckCircle size={16} className="text-green-400" />
-      Certificação profissional
-    </span>
-    <span className="flex items-center gap-2">
-      <CheckCircle size={16} className="text-green-400" />
-      6 projetos completos
-    </span>
-    <span className="flex items-center gap-2">
-      <CheckCircle size={16} className="text-green-400" />
-      Suporte vitalício
-    </span>
+    {QUICK_BENEFITS.map((benefit, index) => (
+      <span key={benefit} className="flex items-center gap-2">
+        <CheckCircle size={16} className="text-green-400" />
+        {benefit}
+      </span>
+    ))}
   </div>
-);
+));
 
-const BenefitsGrid = () => (
+QuickBenefits.displayName = 'QuickBenefits';
+
+const BenefitsGrid = memo(() => (
   <div className="grid md:grid-cols-4 gap-6 max-w-4xl mx-auto mb-12">
-    <div className="flex flex-col items-center">
-      <CheckCircle className="text-white mb-2" size={32} />
-      <span className="text-white font-semibold">28 Aulas Práticas</span>
-    </div>
-    <div className="flex flex-col items-center">
-      <CheckCircle className="text-white mb-2" size={32} />
-      <span className="text-white font-semibold">Certificação</span>
-    </div>
-    <div className="flex flex-col items-center">
-      <CheckCircle className="text-white mb-2" size={32} />
-      <span className="text-white font-semibold">6 Projetos</span>
-    </div>
-    <div className="flex flex-col items-center">
-      <CheckCircle className="text-white mb-2" size={32} />
-      <span className="text-white font-semibold">Suporte Vitalício</span>
-    </div>
+    {BENEFITS.map((benefit, index) => (
+      <div key={benefit} className="flex flex-col items-center">
+        <CheckCircle className="text-white mb-2" size={32} />
+        <span className="text-white font-semibold">{benefit}</span>
+      </div>
+    ))}
   </div>
-);
+));
 
-const CTAButtons = () => (
-  <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-    <motion.a
-      href="https://wa.me/5548984587067"
-      className="bg-gradient-to-r from-[#d400ff] to-[#b300dd] text-white px-12 py-6 rounded-full font-bold text-xl inline-flex items-center gap-3 hover:from-[#b300dd] hover:to-[#9000bb] transition-all duration-300 shadow-2xl"
-      whileHover={{ 
-        scale: 1.05, 
-        boxShadow: "0 0 40px #d400ff88",
-        y: -3
-      }}
-      whileTap={{ scale: 0.95 }}
-    >
-      <MessageCircle size={24} />
-      Garantir Vaga - 10x R$ 399,90
-    </motion.a>
-    
-    <motion.button
-      className="border-2 border-[#d400ff] text-[#d400ff] px-8 py-6 rounded-full font-bold text-lg hover:bg-[#d400ff] hover:text-white transition-all duration-300 backdrop-blur-sm bg-white/10"
-      whileHover={{ 
-        scale: 1.05,
-        boxShadow: "0 0 30px #d400ff44" 
-      }}
-    >
-      Tenho Dúvidas
-    </motion.button>
-  </div>
-);
+BenefitsGrid.displayName = 'BenefitsGrid';
 
-const OfferDetails = () => (
+const CTAButtons = memo(() => {
+  const prefersReducedMotion = useReducedMotion();
+  
+  const primaryButtonHover = useMemo(() => 
+    prefersReducedMotion ? {} : { 
+      scale: 1.05, 
+      boxShadow: "0 0 40px #d400ff88",
+      y: -3
+    }, [prefersReducedMotion]
+  );
+  
+  const secondaryButtonHover = useMemo(() => 
+    prefersReducedMotion ? {} : { 
+      scale: 1.05,
+      boxShadow: "0 0 30px #d400ff44" 
+    }, [prefersReducedMotion]
+  );
+  
+  return (
+    <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+      <motion.a
+        href={PRICING.whatsappLink}
+        className="bg-gradient-to-r from-[#d400ff] to-[#b300dd] text-white px-12 py-6 rounded-full font-bold text-xl inline-flex items-center gap-3 hover:from-[#b300dd] hover:to-[#9000bb] transition-all duration-300 shadow-2xl"
+        whileHover={primaryButtonHover}
+        whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
+      >
+        <MessageCircle size={24} />
+        Garantir Vaga - {PRICING.installments}x {PRICING.installmentPrice}
+      </motion.a>
+      
+      <motion.button
+        className="border-2 border-[#d400ff] text-[#d400ff] px-8 py-6 rounded-full font-bold text-lg hover:bg-[#d400ff] hover:text-white transition-all duration-300 backdrop-blur-sm bg-white/10"
+        whileHover={secondaryButtonHover}
+      >
+        Tenho Dúvidas
+      </motion.button>
+    </div>
+  );
+});
+
+CTAButtons.displayName = 'CTAButtons';
+
+const OfferDetails = memo(() => (
   <div className="mt-6 space-y-3">
     <p className="flex items-center gap-2 justify-center text-yellow-400 font-semibold">
       <Timer size={16} />
@@ -939,7 +855,7 @@ const OfferDetails = () => (
     <div className="flex flex-wrap justify-center gap-6 text-gray-300 text-sm">
       <span className="flex items-center gap-1">
         <CheckCircle size={16} className="text-green-400" />
-        Pagamento em até 10x sem juros
+        Pagamento em até {PRICING.installments}x sem juros
       </span>
       <span className="flex items-center gap-1">
         <CheckCircle size={16} className="text-green-400" />
@@ -951,92 +867,133 @@ const OfferDetails = () => (
       </span>
     </div>
   </div>
-);
+));
 
-const LocationCard = () => (
-  <div className="bg-white rounded-xl p-6 shadow-lg">
-    <div className="flex items-center gap-3 mb-4">
-      <MapPin className="text-[#d400ff]" size={24} />
-      <h3 className="text-xl font-bold text-gray-900" style={{ color: '#111827', fontWeight: '700', fontSize: '1.25rem' }}>Nossa Localização</h3>
-    </div>
-    <div className="space-y-2 text-gray-700" style={{ color: '#374151' }}>
-      <p className="font-semibold" style={{ fontWeight: '600', color: '#374151' }}>R. Caetano José Ferreira, 426</p>
-      <p style={{ color: '#374151' }}>Sala 5 - Kobrasol</p>
-      <p style={{ color: '#374151' }}>São José - SC, 88102-280</p>
-    </div>
-    <motion.a
-      href="https://maps.google.com/maps?q=R.+Caetano+José+Ferreira,+426,+Sala+5+-+Kobrasol,+São+José+-+SC,+88102-280"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="inline-flex items-center gap-2 mt-4 text-[#d400ff] hover:text-[#b300dd] font-semibold"
-      style={{ color: '#d400ff', fontWeight: '600' }}
-      whileHover={{ x: 2 }}
-    >
-      <ExternalLink size={16} />
-      <span style={{ color: '#d400ff', fontWeight: '600' }}>Abrir no Google Maps</span>
-    </motion.a>
-  </div>
-);
+OfferDetails.displayName = 'OfferDetails';
 
-const ContactCard = () => (
-  <div className="bg-white rounded-xl p-6 shadow-lg">
-    <div className="flex items-center gap-3 mb-4">
-      <Phone className="text-[#d400ff]" size={24} />
-      <h3 className="text-xl font-bold text-gray-900" style={{ color: '#111827', fontWeight: '700', fontSize: '1.25rem' }}>Contato Direto</h3>
-    </div>
-    <div className="space-y-4">
-      <div>
-        <p className="text-gray-600 text-sm" style={{ color: '#4b5563', fontSize: '0.875rem' }}>WhatsApp / Telefone</p>
-        <p className="text-xl font-bold text-gray-900" style={{ color: '#111827', fontSize: '1.25rem', fontWeight: '700' }}>(48) 98458-7067</p>
+const LocationCard = memo(() => {
+  const prefersReducedMotion = useReducedMotion();
+  
+  return (
+    <div className="bg-white rounded-xl p-6 shadow-lg">
+      <div className="flex items-center gap-3 mb-4">
+        <MapPin className="text-[#d400ff]" size={24} />
+        <h3 className="text-xl font-bold text-gray-900" style={{ color: '#111827', fontWeight: '700', fontSize: '1.25rem' }}>Nossa Localização</h3>
+      </div>
+      <div className="space-y-2 text-gray-700" style={{ color: '#374151' }}>
+        <p className="font-semibold" style={{ fontWeight: '600', color: '#374151' }}>{CONTACT_INFO.address.street}</p>
+        <p style={{ color: '#374151' }}>{CONTACT_INFO.address.complement}</p>
+        <p style={{ color: '#374151' }}>{CONTACT_INFO.address.city}</p>
       </div>
       <motion.a
-        href="https://wa.me/5548984587067?text=Olá! Gostaria de mais informações sobre o curso Do Esboço ao Render."
+        href={CONTACT_INFO.mapsUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 font-semibold"
-        style={{ backgroundColor: '#10b981', color: '#ffffff', fontWeight: '600' }}
-        whileHover={{ scale: 1.02 }}
+        className="inline-flex items-center gap-2 mt-4 text-[#d400ff] hover:text-[#b300dd] font-semibold"
+        style={{ color: '#d400ff', fontWeight: '600' }}
+        whileHover={prefersReducedMotion ? {} : { x: 2 }}
       >
-        <MessageCircle size={16} />
-        <span style={{ color: '#ffffff', fontWeight: '600' }}>Chamar no WhatsApp</span>
+        <ExternalLink size={16} />
+        <span style={{ color: '#d400ff', fontWeight: '600' }}>Abrir no Google Maps</span>
       </motion.a>
     </div>
-  </div>
-);
+  );
+});
 
-const FloatingElements = () => (
-  <div className="absolute inset-0">
-    {Array.from({length: 15}).map((_, index) => (
-      <motion.div
-        key={index}
-        className="absolute w-1 h-1 bg-[#d400ff] rounded-full"
-        style={{
-          left: `${(index * 23.7) % 100}%`, // Deterministic positioning
-          top: `${(index * 47.3) % 100}%`,
-        }}
-        animate={{
-          opacity: [0.2, 0.6, 0.2],
-          scale: [0.5, 1.2, 0.5],
-        }}
-        transition={{
-          duration: 5,
-          repeat: Infinity,
-          delay: (index * 0.3) % 5, // Deterministic delay
-        }}
-      />
-    ))}
-  </div>
-);
+LocationCard.displayName = 'LocationCard';
 
-const FinalCTA = () => {
+const ContactCard = memo(() => {
+  const prefersReducedMotion = useReducedMotion();
+  
+  const whatsappMessage = useMemo(() => 
+    `https://wa.me/${CONTACT_INFO.whatsapp}?text=Olá! Gostaria de mais informações sobre o curso Do Esboço ao Render.`,
+    []
+  );
+  
+  return (
+    <div className="bg-white rounded-xl p-6 shadow-lg">
+      <div className="flex items-center gap-3 mb-4">
+        <Phone className="text-[#d400ff]" size={24} />
+        <h3 className="text-xl font-bold text-gray-900" style={{ color: '#111827', fontWeight: '700', fontSize: '1.25rem' }}>Contato Direto</h3>
+      </div>
+      <div className="space-y-4">
+        <div>
+          <p className="text-gray-600 text-sm" style={{ color: '#4b5563', fontSize: '0.875rem' }}>WhatsApp / Telefone</p>
+          <p className="text-xl font-bold text-gray-900" style={{ color: '#111827', fontSize: '1.25rem', fontWeight: '700' }}>{CONTACT_INFO.phone}</p>
+        </div>
+        <motion.a
+          href={whatsappMessage}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 font-semibold"
+          style={{ backgroundColor: '#10b981', color: '#ffffff', fontWeight: '600' }}
+          whileHover={prefersReducedMotion ? {} : { scale: 1.02 }}
+        >
+          <MessageCircle size={16} />
+          <span style={{ color: '#ffffff', fontWeight: '600' }}>Chamar no WhatsApp</span>
+        </motion.a>
+      </div>
+    </div>
+  );
+});
+
+ContactCard.displayName = 'ContactCard';
+
+const FloatingElements = memo(() => {
+  const prefersReducedMotion = useReducedMotion();
+  
+  // Pre-calculated positions for better performance
+  const elements = useMemo(() => 
+    Array.from({length: 15}).map((_, index) => ({
+      key: index,
+      left: `${(index * 23.7) % 100}%`,
+      top: `${(index * 47.3) % 100}%`,
+      delay: (index * 0.3) % 5
+    })), []
+  );
+  
+  if (prefersReducedMotion) return null;
+  
+  return (
+    <div className="absolute inset-0">
+      {elements.map((element) => (
+        <motion.div
+          key={element.key}
+          className="absolute w-1 h-1 bg-[#d400ff] rounded-full"
+          style={{
+            left: element.left,
+            top: element.top,
+          }}
+          animate={{
+            opacity: [0.2, 0.6, 0.2],
+            scale: [0.5, 1.2, 0.5],
+          }}
+          transition={{
+            duration: 5,
+            repeat: Infinity,
+            delay: element.delay,
+          }}
+        />
+      ))}
+    </div>
+  );
+});
+
+FloatingElements.displayName = 'FloatingElements';
+
+const FinalCTA = memo(() => {
+  const prefersReducedMotion = useReducedMotion();
+  
   return (
     <section className="relative py-20 overflow-hidden">
       {/* Background com foto de projeto */}
       <div className="absolute inset-0">
-        <img 
+        <OptimizedImage 
           src="/assets/cursos/sketchup-enscape/cta-background.jpeg"
           alt="Projeto Arquitetônico"
           className="w-full h-full object-cover"
+          loading="lazy"
+          priority={false}
         />
         {/* Overlay escuro com gradiente */}
         <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-black/70 to-black/90"></div>
@@ -1084,20 +1041,22 @@ const FinalCTA = () => {
       </div>
     </section>
   );
-};
+});
 
-// Componente principal da página
-const CursoSketchUpEnscape = () => {
+FinalCTA.displayName = 'FinalCTA';
+
+// Componente principal da página - Optimized for performance
+const CursoSketchUpEnscape = memo(() => {
   return (
     <div className="font-montserrat">
       <Helmet>
-        <title>Curso SketchUp + Enscape - Do Esboço ao Render | Escola Habilidade</title>
-        <meta name="description" content="Domine SketchUp + Enscape para criar projetos arquitetônicos profissionais com renderizações fotorealísticas. 56h de curso, 28 aulas práticas, 6 projetos completos. Aulas presenciais em São José/SC." />
-        <meta name="keywords" content="curso sketchup, curso enscape, renderização 3d, arquitetura, design, são josé sc, escola habilidade" />
+        <title>{SEO_DATA.title}</title>
+        <meta name="description" content={SEO_DATA.description} />
+        <meta name="keywords" content={SEO_DATA.keywords} />
         <meta property="og:title" content="Curso SketchUp + Enscape - Do Esboço ao Render" />
         <meta property="og:description" content="Aprenda a criar projetos arquitetônicos profissionais com renderizações fotorealísticas que impressionam clientes." />
-        <meta property="og:image" content="/assets/cursos/sketchup-enscape/architectural-render-bg.jpeg" />
-        <link rel="canonical" href="https://escolahabilidade.com/cursos/sketchup-enscape" />
+        <meta property="og:image" content={SEO_DATA.ogImage} />
+        <link rel="canonical" href={SEO_DATA.canonical} />
       </Helmet>
       
       <style>
@@ -1160,7 +1119,9 @@ const CursoSketchUpEnscape = () => {
       <FinalCTA />
     </div>
   );
-};
+});
+
+CursoSketchUpEnscape.displayName = 'CursoSketchUpEnscape';
 
 export default CursoSketchUpEnscape;
 
