@@ -33,47 +33,48 @@ const OptimizedImage = ({
   const observerRef = useRef(null);
   const imageOptimizer = useRef(getImageOptimizer());
 
-  // Generate optimized image sources
-  const generateSources = useCallback(() => {
-    if (!src) return [];
+  // State for async-generated sources
+  const [sources, setSources] = useState([]);
+  const [fallbackSrc, setFallbackSrc] = useState('');
 
-    const sources = [];
-    
-    // Generate sources for each format
-    formats.forEach(format => {
-      const srcSet = breakpoints
-        .map(width => {
-          const optimizedSrc = imageOptimizer.current.generateUrl(src, {
-            width,
-            format,
-            quality
-          });
-          return `${optimizedSrc} ${width}w`;
-        })
-        .join(', ');
+  // Generate optimized image sources asynchronously
+  useEffect(() => {
+    if (!src) {
+      setSources([]);
+      setFallbackSrc('');
+      return;
+    }
 
-      sources.push({
-        type: `image/${format === 'jpg' ? 'jpeg' : format}`,
-        srcSet,
-        sizes
-      });
-    });
+    const generateSourcesAsync = async () => {
+      try {
+        const generatedSources = await imageOptimizer.current.generateSources(src, {
+          breakpoints,
+          formats,
+          quality,
+          sizes,
+          context: 'blog'
+        });
+        setSources(generatedSources);
 
-    return sources;
-  }, [src, formats, breakpoints, quality, sizes]);
+        // Generate fallback src
+        const fallbackWidth = width || breakpoints[Math.floor(breakpoints.length / 2)];
+        const fallback = await imageOptimizer.current.generateUrl(src, {
+          width: fallbackWidth,
+          format: 'jpg',
+          quality
+        });
+        setFallbackSrc(fallback);
+      } catch (error) {
+        console.warn('Failed to generate optimized sources, using original:', error);
+        setSources([]);
+        setFallbackSrc(src);
+      }
+    };
 
-  // Generate fallback src
-  const getFallbackSrc = useCallback(() => {
-    if (!src) return '';
-    
-    // Use original or generate optimized fallback
-    const fallbackWidth = width || breakpoints[Math.floor(breakpoints.length / 2)];
-    return imageOptimizer.current.generateUrl(src, {
-      width: fallbackWidth,
-      format: 'jpg',
-      quality
-    });
-  }, [src, width, breakpoints, quality]);
+    generateSourcesAsync();
+  }, [src, formats, breakpoints, quality, sizes, width]);
+
+
 
   // Intersection Observer setup for lazy loading
   useEffect(() => {
@@ -116,18 +117,17 @@ const OptimizedImage = ({
     onError?.(event);
 
     // Try fallback to JPEG if other formats fail
-    if (currentSrc && !currentSrc.includes('.jpg')) {
-      const fallbackSrc = getFallbackSrc();
+    if (currentSrc && !currentSrc.includes('.jpg') && fallbackSrc) {
       setCurrentSrc(fallbackSrc);
     }
-  }, [onError, currentSrc, getFallbackSrc]);
+  }, [onError, currentSrc, fallbackSrc]);
 
   // Update current src when in view
   useEffect(() => {
-    if (isInView && !currentSrc) {
-      setCurrentSrc(getFallbackSrc());
+    if (isInView && !currentSrc && fallbackSrc) {
+      setCurrentSrc(fallbackSrc);
     }
-  }, [isInView, currentSrc, getFallbackSrc]);
+  }, [isInView, currentSrc, fallbackSrc]);
 
   // Generate placeholder styles
   const getPlaceholderStyles = () => {
@@ -189,7 +189,7 @@ const OptimizedImage = ({
     ...getPlaceholderStyles()
   };
 
-  const sources = generateSources();
+
 
   return (
     <div 

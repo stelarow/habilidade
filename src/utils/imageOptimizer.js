@@ -213,7 +213,7 @@ class ImageOptimizer {
   /**
    * Generate responsive image srcSet
    */
-  generateSrcSet(src, options = {}) {
+  async generateSrcSet(src, options = {}) {
     const {
       breakpoints = this.config.breakpoints,
       format = 'auto',
@@ -221,23 +221,24 @@ class ImageOptimizer {
       context = 'default'
     } = options;
 
-    return breakpoints
-      .map(width => {
-        const url = this.generateUrl(src, {
-          width,
-          format,
-          quality,
-          context
-        });
-        return `${url} ${width}w`;
-      })
-      .join(', ');
+    const promises = breakpoints.map(async width => {
+      const url = await this.generateUrl(src, {
+        width,
+        format,
+        quality,
+        context
+      });
+      return `${url} ${width}w`;
+    });
+
+    const results = await Promise.all(promises);
+    return results.join(', ');
   }
 
   /**
    * Generate multiple format sources for <picture> element
    */
-  generateSources(src, options = {}) {
+  async generateSources(src, options = {}) {
     const {
       breakpoints = this.config.breakpoints,
       formats = this.config.formatPriority,
@@ -246,11 +247,11 @@ class ImageOptimizer {
       sizes = '100vw'
     } = options;
 
-    return formats
+    const promises = formats
       .filter(format => this.isFormatSupported(format))
-      .map(format => ({
+      .map(async format => ({
         type: `image/${format === 'jpg' ? 'jpeg' : format}`,
-        srcSet: this.generateSrcSet(src, {
+        srcSet: await this.generateSrcSet(src, {
           breakpoints,
           format,
           quality,
@@ -258,6 +259,8 @@ class ImageOptimizer {
         }),
         sizes
       }));
+
+    return Promise.all(promises);
   }
 
   /**
