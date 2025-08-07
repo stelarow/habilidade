@@ -41,6 +41,8 @@ import {
   SEO_DATA
 } from '../constants/curso-sketchup-enscape.js';
 import OptimizedImage from '../components/blog/OptimizedImage.jsx';
+import LazyImage from '../components/shared/LazyImage.jsx';
+import { imageCache, preloadCompanyLogos } from '../utils/imageCache.js';
 
 // Componente Header da página do curso - Memoized for performance
 const CourseHeader = memo(() => {
@@ -539,21 +541,26 @@ CourseProjects.displayName = 'CourseProjects';
 const CompanyCard = memo(({ company, index }) => {
   const prefersReducedMotion = useReducedMotion();
   
+  // Pre-calculate hover animation for better performance
+  const hoverAnimation = useMemo(() => 
+    prefersReducedMotion ? {} : { 
+      y: -3, // Reduced from -5 for smoother animation
+      boxShadow: "0 8px 25px rgba(212, 0, 255, 0.12)", // Reduced intensity
+      scale: 1.02, // Reduced from 1.05 for subtle effect
+      transition: { duration: 0.2 } // Faster transition
+    }, [prefersReducedMotion]
+  );
+  
   return (
     <motion.div
       className="group bg-gray-50 rounded-xl p-6 hover:bg-white hover:shadow-lg transition-all duration-300 flex flex-col items-center justify-center min-w-[200px] flex-shrink-0"
-      whileHover={prefersReducedMotion ? {} : { 
-        y: -5,
-        boxShadow: "0 10px 30px rgba(212, 0, 255, 0.15)",
-        scale: 1.05
-      }}
+      whileHover={hoverAnimation}
     >
       <div className="w-20 h-20 flex items-center justify-center mb-4 rounded-lg bg-white shadow-sm group-hover:shadow-md transition-shadow">
-        <OptimizedImage 
+        <LazyImage 
           src={company.logo}
           alt={company.name}
           className="max-w-full max-h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300"
-          loading="lazy"
         />
       </div>
       <div className="text-center">
@@ -570,10 +577,15 @@ CompanyCard.displayName = 'CompanyCard';
 const CompaniesSection = memo(() => {
   const prefersReducedMotion = useReducedMotion();
   
+  // Preload company logos on component mount for better performance
+  useEffect(() => {
+    preloadCompanyLogos(COMPANIES_DATA.slice(0, 12)).catch(console.error);
+  }, []);
+  
   // Pre-calculate animation values for better performance
   const animationDistance = useMemo(() => -(208 * COMPANIES_DATA.length), []);
   
-  // Animation configuration with reduced motion support
+  // Animation configuration with reduced motion support - Optimized
   const carouselAnimation = useMemo(() => ({
     x: prefersReducedMotion ? [0] : [0, animationDistance]
   }), [prefersReducedMotion, animationDistance]);
@@ -582,7 +594,7 @@ const CompaniesSection = memo(() => {
     x: {
       repeat: prefersReducedMotion ? 0 : Infinity,
       repeatType: "loop",
-      duration: prefersReducedMotion ? 0 : 120,
+      duration: prefersReducedMotion ? 0 : 80, // Reduced from 120 to 80 for better performance
       ease: "linear"
     }
   }), [prefersReducedMotion]);
@@ -612,28 +624,10 @@ const CompaniesSection = memo(() => {
             animate={carouselAnimation}
             transition={carouselTransition}
           >
-            {/* Primeira sequência de logos */}
-            {COMPANIES_DATA.map((company, index) => (
+            {/* Optimized single rendering with virtual duplication for smooth carousel */}
+            {COMPANIES_DATA.concat(COMPANIES_DATA.slice(0, 3)).map((company, index) => (
               <CompanyCard
-                key={`first-${index}`}
-                company={company}
-                index={index}
-              />
-            ))}
-            
-            {/* Segunda sequência de logos (para continuidade perfeita) */}
-            {COMPANIES_DATA.map((company, index) => (
-              <CompanyCard
-                key={`second-${index}`}
-                company={company}
-                index={index}
-              />
-            ))}
-            
-            {/* Terceira sequência para garantir continuidade */}
-            {COMPANIES_DATA.slice(0, 3).map((company, index) => (
-              <CompanyCard
-                key={`third-${index}`}
+                key={`company-${company.name}-${index}`}
                 company={company}
                 index={index}
               />
