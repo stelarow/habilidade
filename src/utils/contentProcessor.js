@@ -337,7 +337,7 @@ export function processContent(content, slug) {
       }).catch(console.error);
     }
   } catch (error) {
-    console.warn('[ContentProcessor] Image migration failed, continuing with original content:', error);
+    // Image migration failed, continuing with original content
   }
   
   // Fix image paths first
@@ -345,21 +345,15 @@ export function processContent(content, slug) {
   
   // Convert markdown to HTML if needed
   if (isMarkdown(processedContent)) {
-    console.log('[ContentProcessor] Converting markdown to HTML for slug:', slug);
-    console.log('[ContentProcessor] Content type:', typeof processedContent);
-    console.log('[ContentProcessor] Content length:', processedContent.length);
-    console.log('[ContentProcessor] First 200 chars:', processedContent.substring(0, 200));
+    // Converting markdown to HTML for slug (debug logging disabled for SSG)
     
     try {
-      // Debug: Log marked configuration
-      console.log('[ContentProcessor] Marked version:', marked.VERSION || 'unknown');
-      console.log('[ContentProcessor] Marked options:', marked.defaults);
+      // Debug: marked configuration (logging disabled for SSG)
       
       processedContent = marked(processedContent);
     } catch (error) {
-      console.error('[ContentProcessor] marked.js failed with error:', error);
-      console.error('[ContentProcessor] Error stack:', error.stack);
-      console.error('[ContentProcessor] Content that caused error:', processedContent);
+      // Error handling without console output during SSG
+      // marked.js error occurred
       throw error; // Re-throw to see the full error
     }
   }
@@ -371,7 +365,7 @@ export function processContent(content, slug) {
       import('../utils/blogImageMigration.js').then(({ default: blogImageMigration }) => {
         blogImageMigration.optimizeExistingImages().then(results => {
           if (results.length > 0) {
-            console.log(`✅ Otimizadas ${results.filter(r => r.optimized).length} de ${results.length} imagens`);
+            // Images optimized successfully
           }
         });
       }).catch(console.error);
