@@ -827,6 +827,207 @@ const CourseTestimonials = () => {
 };
 
 // Componente CTA Final
+// Sub-componentes do CTA Final
+const OfferBadge = () => (
+  <motion.div 
+    className="inline-flex items-center gap-3 bg-gradient-to-r from-[#d400ff]/20 to-purple-600/20 backdrop-blur-sm border border-[#d400ff]/30 text-white px-6 py-3 rounded-xl text-lg font-semibold mb-6"
+    animate={{ 
+      boxShadow: [
+        "0 0 20px rgba(212, 0, 255, 0.3)",
+        "0 0 30px rgba(212, 0, 255, 0.5)",
+        "0 0 20px rgba(212, 0, 255, 0.3)"
+      ]
+    }}
+    transition={{ duration: 2, repeat: Infinity }}
+  >
+    <motion.div
+      animate={{ rotate: [0, 10, -10, 0] }}
+      transition={{ duration: 2, repeat: Infinity }}
+    >
+      <AlertCircle size={20} className="text-[#d400ff]" />
+    </motion.div>
+    <span className="bg-gradient-to-r from-white to-[#d400ff] bg-clip-text text-transparent">
+      OFERTA LIMITADA
+    </span>
+    <span className="text-gray-300">•</span>
+    <span className="text-yellow-300 font-bold">15 vagas restantes</span>
+  </motion.div>
+);
+
+const PricingInfo = () => (
+  <p className="text-xl text-gray-200 mb-4 max-w-3xl mx-auto">
+    <span className="line-through text-gray-400 text-lg">De R$ 4.999,00</span>
+    <br />
+    <strong className="text-3xl text-white">Por apenas R$ 3.999,00 à vista</strong>
+    <br />
+    <span className="text-xl">ou <strong className="text-green-400">10x de R$ 399,90</strong> sem juros</span>
+  </p>
+);
+
+const QuickBenefits = () => (
+  <div className="flex flex-wrap justify-center gap-6 text-gray-300 mb-8">
+    <span className="flex items-center gap-2">
+      <CheckCircle size={16} className="text-green-400" />
+      Certificação profissional
+    </span>
+    <span className="flex items-center gap-2">
+      <CheckCircle size={16} className="text-green-400" />
+      6 projetos completos
+    </span>
+    <span className="flex items-center gap-2">
+      <CheckCircle size={16} className="text-green-400" />
+      Suporte vitalício
+    </span>
+  </div>
+);
+
+const BenefitsGrid = () => (
+  <div className="grid md:grid-cols-4 gap-6 max-w-4xl mx-auto mb-12">
+    <div className="flex flex-col items-center">
+      <CheckCircle className="text-white mb-2" size={32} />
+      <span className="text-white font-semibold">28 Aulas Práticas</span>
+    </div>
+    <div className="flex flex-col items-center">
+      <CheckCircle className="text-white mb-2" size={32} />
+      <span className="text-white font-semibold">Certificação</span>
+    </div>
+    <div className="flex flex-col items-center">
+      <CheckCircle className="text-white mb-2" size={32} />
+      <span className="text-white font-semibold">6 Projetos</span>
+    </div>
+    <div className="flex flex-col items-center">
+      <CheckCircle className="text-white mb-2" size={32} />
+      <span className="text-white font-semibold">Suporte Vitalício</span>
+    </div>
+  </div>
+);
+
+const CTAButtons = () => (
+  <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+    <motion.a
+      href="https://wa.me/5548984587067"
+      className="bg-gradient-to-r from-[#d400ff] to-[#b300dd] text-white px-12 py-6 rounded-full font-bold text-xl inline-flex items-center gap-3 hover:from-[#b300dd] hover:to-[#9000bb] transition-all duration-300 shadow-2xl"
+      whileHover={{ 
+        scale: 1.05, 
+        boxShadow: "0 0 40px #d400ff88",
+        y: -3
+      }}
+      whileTap={{ scale: 0.95 }}
+    >
+      <MessageCircle size={24} />
+      Garantir Vaga - 10x R$ 399,90
+    </motion.a>
+    
+    <motion.button
+      className="border-2 border-[#d400ff] text-[#d400ff] px-8 py-6 rounded-full font-bold text-lg hover:bg-[#d400ff] hover:text-white transition-all duration-300 backdrop-blur-sm bg-white/10"
+      whileHover={{ 
+        scale: 1.05,
+        boxShadow: "0 0 30px #d400ff44" 
+      }}
+    >
+      Tenho Dúvidas
+    </motion.button>
+  </div>
+);
+
+const OfferDetails = () => (
+  <div className="mt-6 space-y-3">
+    <p className="flex items-center gap-2 justify-center text-yellow-400 font-semibold">
+      <Timer size={16} />
+      Oferta válida até 15/08/2025 ou enquanto durarem as vagas
+    </p>
+    <div className="flex flex-wrap justify-center gap-6 text-gray-300 text-sm">
+      <span className="flex items-center gap-1">
+        <CheckCircle size={16} className="text-green-400" />
+        Pagamento em até 10x sem juros
+      </span>
+      <span className="flex items-center gap-1">
+        <CheckCircle size={16} className="text-green-400" />
+        7 dias de garantia total
+      </span>
+      <span className="flex items-center gap-1">
+        <CheckCircle size={16} className="text-green-400" />
+        Certificado incluso
+      </span>
+    </div>
+  </div>
+);
+
+const LocationCard = () => (
+  <div className="bg-white rounded-xl p-6 shadow-lg">
+    <div className="flex items-center gap-3 mb-4">
+      <MapPin className="text-[#d400ff]" size={24} />
+      <h3 className="text-xl font-bold text-gray-900" style={{ color: '#111827', fontWeight: '700', fontSize: '1.25rem' }}>Nossa Localização</h3>
+    </div>
+    <div className="space-y-2 text-gray-700" style={{ color: '#374151' }}>
+      <p className="font-semibold" style={{ fontWeight: '600', color: '#374151' }}>R. Caetano José Ferreira, 426</p>
+      <p style={{ color: '#374151' }}>Sala 5 - Kobrasol</p>
+      <p style={{ color: '#374151' }}>São José - SC, 88102-280</p>
+    </div>
+    <motion.a
+      href="https://maps.google.com/maps?q=R.+Caetano+José+Ferreira,+426,+Sala+5+-+Kobrasol,+São+José+-+SC,+88102-280"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-flex items-center gap-2 mt-4 text-[#d400ff] hover:text-[#b300dd] font-semibold"
+      style={{ color: '#d400ff', fontWeight: '600' }}
+      whileHover={{ x: 2 }}
+    >
+      <ExternalLink size={16} />
+      <span style={{ color: '#d400ff', fontWeight: '600' }}>Abrir no Google Maps</span>
+    </motion.a>
+  </div>
+);
+
+const ContactCard = () => (
+  <div className="bg-white rounded-xl p-6 shadow-lg">
+    <div className="flex items-center gap-3 mb-4">
+      <Phone className="text-[#d400ff]" size={24} />
+      <h3 className="text-xl font-bold text-gray-900" style={{ color: '#111827', fontWeight: '700', fontSize: '1.25rem' }}>Contato Direto</h3>
+    </div>
+    <div className="space-y-4">
+      <div>
+        <p className="text-gray-600 text-sm" style={{ color: '#4b5563', fontSize: '0.875rem' }}>WhatsApp / Telefone</p>
+        <p className="text-xl font-bold text-gray-900" style={{ color: '#111827', fontSize: '1.25rem', fontWeight: '700' }}>(48) 98458-7067</p>
+      </div>
+      <motion.a
+        href="https://wa.me/5548984587067?text=Olá! Gostaria de mais informações sobre o curso Do Esboço ao Render."
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 font-semibold"
+        style={{ backgroundColor: '#10b981', color: '#ffffff', fontWeight: '600' }}
+        whileHover={{ scale: 1.02 }}
+      >
+        <MessageCircle size={16} />
+        <span style={{ color: '#ffffff', fontWeight: '600' }}>Chamar no WhatsApp</span>
+      </motion.a>
+    </div>
+  </div>
+);
+
+const FloatingElements = () => (
+  <div className="absolute inset-0">
+    {Array.from({length: 15}).map((_, index) => (
+      <motion.div
+        key={index}
+        className="absolute w-1 h-1 bg-[#d400ff] rounded-full"
+        style={{
+          left: `${(index * 23.7) % 100}%`, // Deterministic positioning
+          top: `${(index * 47.3) % 100}%`,
+        }}
+        animate={{
+          opacity: [0.2, 0.6, 0.2],
+          scale: [0.5, 1.2, 0.5],
+        }}
+        transition={{
+          duration: 5,
+          repeat: Infinity,
+          delay: (index * 0.3) % 5, // Deterministic delay
+        }}
+      />
+    ))}
+  </div>
+);
+
 const FinalCTA = () => {
   return (
     <section className="relative py-20 overflow-hidden">
@@ -844,27 +1045,8 @@ const FinalCTA = () => {
       </div>
 
       {/* Elementos flutuantes sutis */}
-      <div className="absolute inset-0">
-        {Array.from({length: 15}).map((_, index) => (
-          <motion.div
-            key={index}
-            className="absolute w-1 h-1 bg-[#d400ff] rounded-full"
-            style={{
-              left: `${(index * 23.7) % 100}%`, // Deterministic positioning
-              top: `${(index * 47.3) % 100}%`,
-            }}
-            animate={{
-              opacity: [0.2, 0.6, 0.2],
-              scale: [0.5, 1.2, 0.5],
-            }}
-            transition={{
-              duration: 5,
-              repeat: Infinity,
-              delay: (index * 0.3) % 5, // Deterministic delay
-            }}
-          />
-        ))}
-      </div>
+      <FloatingElements />
+
       <div className="relative z-10 container mx-auto px-4 text-center">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -875,117 +1057,13 @@ const FinalCTA = () => {
           <h2 className="text-4xl md:text-6xl font-bold text-white mb-6">
             Comece sua carreira de projetista hoje!
           </h2>
-          <motion.div 
-            className="inline-flex items-center gap-3 bg-gradient-to-r from-[#d400ff]/20 to-purple-600/20 backdrop-blur-sm border border-[#d400ff]/30 text-white px-6 py-3 rounded-xl text-lg font-semibold mb-6"
-            animate={{ 
-              boxShadow: [
-                "0 0 20px rgba(212, 0, 255, 0.3)",
-                "0 0 30px rgba(212, 0, 255, 0.5)",
-                "0 0 20px rgba(212, 0, 255, 0.3)"
-              ]
-            }}
-            transition={{ duration: 2, repeat: Infinity }}
-          >
-            <motion.div
-              animate={{ rotate: [0, 10, -10, 0] }}
-              transition={{ duration: 2, repeat: Infinity }}
-            >
-              <AlertCircle size={20} className="text-[#d400ff]" />
-            </motion.div>
-            <span className="bg-gradient-to-r from-white to-[#d400ff] bg-clip-text text-transparent">
-              OFERTA LIMITADA
-            </span>
-            <span className="text-gray-300">•</span>
-            <span className="text-yellow-300 font-bold">15 vagas restantes</span>
-          </motion.div>
-          <p className="text-xl text-gray-200 mb-4 max-w-3xl mx-auto">
-            <span className="line-through text-gray-400 text-lg">De R$ 4.999,00</span>
-            <br />
-            <strong className="text-3xl text-white">Por apenas R$ 3.999,00 à vista</strong>
-            <br />
-            <span className="text-xl">ou <strong className="text-green-400">10x de R$ 399,90</strong> sem juros</span>
-          </p>
-          <div className="flex flex-wrap justify-center gap-6 text-gray-300 mb-8">
-            <span className="flex items-center gap-2">
-              <CheckCircle size={16} className="text-green-400" />
-              Certificação profissional
-            </span>
-            <span className="flex items-center gap-2">
-              <CheckCircle size={16} className="text-green-400" />
-              6 projetos completos
-            </span>
-            <span className="flex items-center gap-2">
-              <CheckCircle size={16} className="text-green-400" />
-              Suporte vitalício
-            </span>
-          </div>
           
-          {/* Benefícios rápidos */}
-          <div className="grid md:grid-cols-4 gap-6 max-w-4xl mx-auto mb-12">
-            <div className="flex flex-col items-center">
-              <CheckCircle className="text-white mb-2" size={32} />
-              <span className="text-white font-semibold">28 Aulas Práticas</span>
-            </div>
-            <div className="flex flex-col items-center">
-              <CheckCircle className="text-white mb-2" size={32} />
-              <span className="text-white font-semibold">Certificação</span>
-            </div>
-            <div className="flex flex-col items-center">
-              <CheckCircle className="text-white mb-2" size={32} />
-              <span className="text-white font-semibold">6 Projetos</span>
-            </div>
-            <div className="flex flex-col items-center">
-              <CheckCircle className="text-white mb-2" size={32} />
-              <span className="text-white font-semibold">Suporte Vitalício</span>
-            </div>
-          </div>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <motion.a
-              href="https://wa.me/5548984587067"
-              className="bg-gradient-to-r from-[#d400ff] to-[#b300dd] text-white px-12 py-6 rounded-full font-bold text-xl inline-flex items-center gap-3 hover:from-[#b300dd] hover:to-[#9000bb] transition-all duration-300 shadow-2xl"
-              whileHover={{ 
-                scale: 1.05, 
-                boxShadow: "0 0 40px #d400ff88",
-                y: -3
-              }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <MessageCircle size={24} />
-              Garantir Vaga - 10x R$ 399,90
-            </motion.a>
-            
-            <motion.button
-              className="border-2 border-[#d400ff] text-[#d400ff] px-8 py-6 rounded-full font-bold text-lg hover:bg-[#d400ff] hover:text-white transition-all duration-300 backdrop-blur-sm bg-white/10"
-              whileHover={{ 
-                scale: 1.05,
-                boxShadow: "0 0 30px #d400ff44" 
-              }}
-            >
-              Tenho Dúvidas
-            </motion.button>
-          </div>
-
-          <div className="mt-6 space-y-3">
-            <p className="flex items-center gap-2 justify-center text-yellow-400 font-semibold">
-              <Timer size={16} />
-              Oferta válida até 15/08/2025 ou enquanto durarem as vagas
-            </p>
-            <div className="flex flex-wrap justify-center gap-6 text-gray-300 text-sm">
-              <span className="flex items-center gap-1">
-                <CheckCircle size={16} className="text-green-400" />
-                Pagamento em até 10x sem juros
-              </span>
-              <span className="flex items-center gap-1">
-                <CheckCircle size={16} className="text-green-400" />
-                7 dias de garantia total
-              </span>
-              <span className="flex items-center gap-1">
-                <CheckCircle size={16} className="text-green-400" />
-                Certificado incluso
-              </span>
-            </div>
-          </div>
+          <OfferBadge />
+          <PricingInfo />
+          <QuickBenefits />
+          <BenefitsGrid />
+          <CTAButtons />
+          <OfferDetails />
         </motion.div>
       </div>
       
@@ -999,54 +1077,8 @@ const FinalCTA = () => {
           className="max-w-4xl mx-auto"
         >
           <div className="grid md:grid-cols-2 gap-8">
-            {/* Informações de Localização */}
-            <div className="bg-white rounded-xl p-6 shadow-lg">
-              <div className="flex items-center gap-3 mb-4">
-                <MapPin className="text-[#d400ff]" size={24} />
-                <h3 className="text-xl font-bold text-gray-900" style={{ color: '#111827', fontWeight: '700', fontSize: '1.25rem' }}>Nossa Localização</h3>
-              </div>
-              <div className="space-y-2 text-gray-700" style={{ color: '#374151' }}>
-                <p className="font-semibold" style={{ fontWeight: '600', color: '#374151' }}>R. Caetano José Ferreira, 426</p>
-                <p style={{ color: '#374151' }}>Sala 5 - Kobrasol</p>
-                <p style={{ color: '#374151' }}>São José - SC, 88102-280</p>
-              </div>
-              <motion.a
-                href="https://maps.google.com/maps?q=R.+Caetano+José+Ferreira,+426,+Sala+5+-+Kobrasol,+São+José+-+SC,+88102-280"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 mt-4 text-[#d400ff] hover:text-[#b300dd] font-semibold"
-                style={{ color: '#d400ff', fontWeight: '600' }}
-                whileHover={{ x: 2 }}
-              >
-                <ExternalLink size={16} />
-                <span style={{ color: '#d400ff', fontWeight: '600' }}>Abrir no Google Maps</span>
-              </motion.a>
-            </div>
-
-            {/* Informações de Contato */}
-            <div className="bg-white rounded-xl p-6 shadow-lg">
-              <div className="flex items-center gap-3 mb-4">
-                <Phone className="text-[#d400ff]" size={24} />
-                <h3 className="text-xl font-bold text-gray-900" style={{ color: '#111827', fontWeight: '700', fontSize: '1.25rem' }}>Contato Direto</h3>
-              </div>
-              <div className="space-y-4">
-                <div>
-                  <p className="text-gray-600 text-sm" style={{ color: '#4b5563', fontSize: '0.875rem' }}>WhatsApp / Telefone</p>
-                  <p className="text-xl font-bold text-gray-900" style={{ color: '#111827', fontSize: '1.25rem', fontWeight: '700' }}>(48) 98458-7067</p>
-                </div>
-                <motion.a
-                  href="https://wa.me/5548984587067?text=Olá! Gostaria de mais informações sobre o curso Do Esboço ao Render."
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 font-semibold"
-                  style={{ backgroundColor: '#10b981', color: '#ffffff', fontWeight: '600' }}
-                  whileHover={{ scale: 1.02 }}
-                >
-                  <MessageCircle size={16} />
-                  <span style={{ color: '#ffffff', fontWeight: '600' }}>Chamar no WhatsApp</span>
-                </motion.a>
-              </div>
-            </div>
+            <LocationCard />
+            <ContactCard />
           </div>
         </motion.div>
       </div>
