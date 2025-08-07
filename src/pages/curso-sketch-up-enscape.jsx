@@ -323,7 +323,7 @@ const AboutCourse = () => {
 };
 
 // Componente do Módulo de Aulas
-const ModuleSection = ({ title, lessons }) => {
+const ModuleSection = ({ title, lessons, icon: IconComponent }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
@@ -341,7 +341,7 @@ const ModuleSection = ({ title, lessons }) => {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <div className={`w-12 h-12 bg-[#d400ff] rounded-lg flex items-center justify-center`}>
-              <Icon className="text-white" size={24} />
+              <IconComponent className="text-white" size={24} />
             </div>
             <div>
               <h3 className="text-xl font-bold text-gray-900">{title}</h3>
@@ -449,14 +449,12 @@ const Curriculum = () => {
             title="SketchUp - Modelagem 3D"
             icon={Box}
             lessons={sketchupLessons}
-            color="[#d400ff]"
           />
           
           <ModuleSection 
             title="Enscape - Renderização Fotorrealística"
             icon={Camera}
             lessons={enscapeLessons}
-            color="[#d400ff]"
           />
         </div>
       </div>
