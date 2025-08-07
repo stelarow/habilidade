@@ -53,7 +53,7 @@ export const routes = [
       },
       {
         path: 'cursos/sketchup-enscape',
-        lazy: () => import('./pages/curso-sketch-up-enscape')
+        lazy: () => import('./pages/curso-sketch-up-enscape.jsx')
       },
       {
         path: 'cursos/:courseSlug',

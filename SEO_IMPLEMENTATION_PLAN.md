@@ -1,16 +1,21 @@
-# 🚀 PLANO DE IMPLEMENTAÇÃO SEO - ESCOLA HABILIDADE
+# 🚀 PLANO SEO OPTIMIZADO PARA IAs - ESCOLA HABILIDADE
 
-**Data**: Agosto 2025  
-**Objetivo**: Aumentar tráfego orgânico de 2 para 500+ cliques/mês em 90 dias  
-**Foco Geográfico**: Grande Florianópolis (Florianópolis, São José, Palhoça)
+**Versão**: 2.0 | **Data**: Janeiro 2025  
+**Baseline DataForSEO**: Ranqueando posição 70+ para "curso projetista" (1300 buscas/mês)  
+**Meta**: 500+ cliques orgânicos em 90 dias via estratégia de blog content  
 
----
+## 📊 DADOS REAIS (DataForSEO MCP)
+- **"curso projetista"**: 1300 vol/mês | Pos. 71 | ETV: 2.73  
+- **"curso de projetista"**: 720 vol/mês | Pos. 68 | ETV: 1.512  
+- **"curso manutenção"**: 170 vol/mês | Pos. 87 | ETV: 0.357  
 
-## ✅ FASE 1: CORREÇÕES TÉCNICAS URGENTES - CONCLUÍDA
+## ✅ FASE 1: TECHNICAL SEO - IMPLEMENTADA
 
-**Status**: ✅ **IMPLEMENTADA** - Janeiro 2025  
-**GSC Baseline**: 2 clicks, 34 impressões (CTR 5.88%, Posição 65.4)  
-**Expectativa**: 100+ clicks em 30 dias através de technical foundation + local SEO
+**Status**: ✅ COMPLETA (Janeiro 2025)  
+- JSON-LD schemas (LocalBusiness + FAQ)  
+- 3 páginas SEO local criadas  
+- Sitemap automático configurado  
+- Performance otimizada (async/defer)
 
 ### 🎯 IMPLEMENTAÇÕES REALIZADAS
 
@@ -53,90 +58,89 @@ Sitemap: https://www.escolahabilidade.com/sitemap.xml
 
 ---
 
-## 📝 FASE 2: CRIAÇÃO DE CONTEÚDO SEO (Semanas 2-4) - PENDENTE
+## 🎯 FASE 2: ESTRATÉGIA DE BLOG - NOVO APPROACH
 
-### 2.1 Páginas de Cursos Localizadas
+**Mudança Estratégica**: Artigos de blog em vez de páginas estáticas  
+**Motivo**: Blog já configurado com SSG, sitemap automático e sistema SEO robusto  
+**Infraestrutura**: 16+ artigos publicados, sistema de categorias implementado  
 
-#### A. Página: /cursos/projetista-3d-florianopolis
-**Title**: Curso de Projetista 3D em Florianópolis | Escola Habilidade  
-**H1**: Curso de Projetista 3D em Florianópolis  
-**Meta Description**: Aprenda SketchUp, AutoCAD e renderização 3D em Florianópolis. Curso presencial com certificado. Turmas abertas no Centro e Continente.  
-**Conteúdo mínimo**: 800 palavras focadas em:
-- "curso projetista florianópolis"
-- "curso sketchup florianópolis"
-- "curso autocad florianópolis"
-- "curso 3d florianópolis"
+### 📝 ARTIGOS HIGH-IMPACT PARA CRIAR
 
-#### B. Página: /cursos/informatica-sao-jose
-**Title**: Curso de Informática em São José SC | Kobrasol  
-**H1**: Curso de Informática Completo em São José  
-**Meta Description**: Curso de informática do básico ao avançado em São José, Kobrasol. Excel, Word, Internet. Certificado incluso.  
-**Keywords alvo**:
-- "curso informática são josé sc"
-- "curso excel kobrasol"
-- "informática básica são josé"
+#### A. `/blog/curso-projetista-3d-florianopolis`
+```yaml
+title: "Curso de Projetista 3D em Florianópolis: Guia Completo 2025"
+target_keywords: ["curso projetista florianópolis", "sketchup florianópolis"]  
+volume_potencial: 1300+ buscas/mês
+content_length: 1500+ palavras
+cta_unico: Card curso projetista (final da página)
+schema: Article + LocalBusiness
+```
 
-#### C. Página: /cursos/marketing-digital-palhoca
-**Title**: Curso de Marketing Digital em Palhoça | Escola Habilidade  
-**H1**: Marketing Digital e Redes Sociais em Palhoça  
-**Meta Description**: Aprenda marketing digital, Google Ads e redes sociais em Palhoça. Aulas práticas e certificado reconhecido.  
-**Keywords alvo**:
-- "curso marketing digital palhoça"
-- "curso redes sociais palhoça"
-- "marketing digital grande florianópolis"
+#### B. `/blog/curso-informatica-sao-jose-kobrasol`
+```yaml
+title: "Curso de Informática em São José: Do Básico ao Avançado"
+target_keywords: ["curso informática são josé", "informática kobrasol"]
+content_length: 1200+ palavras
+focus_local: Transporte público, proximidade, horários flexíveis
+```
 
-### 2.2 Páginas de Comparação (Competir com LBK)
+#### C. `/blog/curso-marketing-digital-palhoca`
+```yaml
+title: "Marketing Digital em Palhoça: Curso Prático com Certificado"
+target_keywords: ["marketing digital palhoça", "redes sociais palhoça"]
+content_length: 1200+ palavras
+focus_diferencial: Prática com empresas locais
+```
 
-#### A. /blog/melhor-escola-cursos-florianopolis
-**Title**: Melhor Escola de Cursos em Florianópolis: Guia 2025  
-**Conteúdo**: Comparação objetiva entre escolas locais  
-**Estrutura**:
-1. Introdução (150 palavras)
-2. Escola Habilidade - Diferenciais
-3. Outras opções em Florianópolis
-4. Tabela comparativa de preços e cursos
-5. Depoimentos de alunos
-6. Conclusão com CTA
+### 📊 CLUSTER DE ARTIGOS ESTRATÉGICOS
 
-#### B. /blog/curso-projetista-ou-arquitetura
-**Title**: Curso de Projetista ou Arquitetura: Qual Escolher?  
-**Keywords**:
-- "diferença projetista arquiteto"
-- "curso projetista vale a pena"
-- "projetista 3d salário"
+#### 🎯 Tier 1: Artigos Comerciais (Conversão Alta)
+```yaml
+/blog/melhor-curso-projetista-florianopolis:
+  - volume: 1300/mês | dificuldade: média
+  - intent: commercial
+  - cta: Card Curso Projetista 3D
 
-### 2.3 Glossário Técnico (Estratégia LBK)
+/blog/curso-sketchup-presencial-florianopolis:
+  - volume: 400/mês | long-tail high-convert
+  - competição: baixa vs online
 
-Criar 50 páginas de glossário, uma para cada termo:
+/blog/quanto-custa-curso-projetista-florianopolis:
+  - volume: 200/mês | high purchase intent
+  - schema: FAQ + Pricing
+```
 
-#### Estrutura de cada página:
-- URL: /glossario/[termo]
-- Title: O que é [Termo] - Guia Completo | Escola Habilidade
-- H1: O que é [Termo]?
-- Conteúdo: 500+ palavras
-- Schema: DefinedTerm
+#### 🔍 Tier 2: Artigos Informativos (Tráfego Volume)
+```yaml
+/blog/diferenca-projetista-arquiteto:
+  - volume: 800/mês | informational
+  - pipeline: projetista → arquitetura → curso
 
-#### Lista de termos prioritários:
-1. **SketchUp** - o que é sketchup
-2. **AutoCAD** - o que é autocad
-3. **Revit** - o que é revit
-4. **BIM** - o que é bim arquitetura
-5. **Renderização 3D** - o que é renderização
-6. **V-Ray** - o que é vray
-7. **Enscape** - o que é enscape
-8. **Lumion** - o que é lumion
-9. **Projeto Executivo** - o que é projeto executivo
-10. **Planta Baixa** - o que é planta baixa
-11. **Corte Arquitetônico** - o que é corte arquitetônico
-12. **Maquete Eletrônica** - o que é maquete eletrônica
-13. **Design Thinking** - o que é design thinking
-14. **UX Design** - o que é ux design
-15. **UI Design** - o que é ui design
-16. **Prototipagem** - o que é prototipagem
-17. **Marketing Digital** - o que é marketing digital
-18. **SEO** - o que é seo
-19. **Google Ads** - o que é google ads
-20. **Python** - o que é python programação
+/blog/salario-projetista-3d-santa-catarina:
+  - volume: 600/mês | career-focused
+  - local angle: mercado SC
+
+/blog/software-mais-usado-projetistas-brasil:
+  - volume: 300/mês | tools comparison
+  - naturally mentions: SketchUp, AutoCAD, Revit
+```
+
+#### 💡 Tier 3: Glossário Técnico (Long-tail SEO)
+**Estratégia**: 20 artigos `/blog/o-que-e-[termo]`  
+**Template Otimizado**:
+```yaml
+structure:
+  h1: "O que é [Termo]: Guia Completo 2025"
+  content: 800+ palavras
+  schema: DefinedTerm + Article
+  internal_links: 3-5 para cursos relacionados
+  cta: Subtle mention + card final
+
+priority_terms:
+  - sketchup, autocad, revit (high volume)
+  - rendering, bim, planta-baixa (medium)
+  - v-ray, lumion, enscape (specific tools)
+```
 
 ---
 
@@ -285,35 +289,57 @@ Buscar menções em:
 
 ---
 
-## 📅 CRONOGRAMA DE EXECUÇÃO
+## ⚡ CRONOGRAMA OPTIMIZADO (AI-Friendly)
 
-### ✅ Semana 1 - CONCLUÍDA (Janeiro 2025)
-- [x] Implementar todos os schemas JSON-LD
-- [x] Corrigir meta tags duplicadas  
-- [x] Otimizar title tags
-- [x] Criar 3 páginas locais SEO
-- [x] Simplificar robots.txt
-- [x] Otimizar performance (async/defer)
+### ✅ SPRINT 1 - IMPLEMENTADO (Janeiro 2025)
+```yaml
+technical_seo: ✅ COMPLETO
+  - schemas: LocalBusiness + FAQ + Article
+  - local_pages: 3 páginas (Floripa, SJ, Palhoça)
+  - performance: async/defer configurado
+  - sitemap: automático via SSG
+```
 
-### Semana 2
-- [ ] Criar 3 páginas localizadas (Floripa, SJ, Palhoça)
-- [ ] Otimizar página do curso projetista
-- [ ] Adicionar conteúdo na homepage
+### 🎯 SPRINT 2 - BLOG CONTENT (Semanas 1-2)
+**Prioridade**: Tier 1 (Artigos Comerciais)
+```yaml
+week_1:
+  - [ ] /blog/curso-projetista-3d-florianopolis (1500 palavras)
+  - [ ] /blog/curso-informatica-sao-jose-kobrasol (1200 palavras)
+  - [ ] Sistema de internal linking automático
 
-### Semana 3
-- [ ] Criar 10 páginas de glossário
-- [ ] Publicar 2 artigos de blog
-- [ ] Cadastrar em 5 diretórios
+week_2:
+  - [ ] /blog/melhor-curso-projetista-florianopolis (1800 palavras)
+  - [ ] /blog/quanto-custa-curso-projetista-florianopolis (1000 palavras)
+  - [ ] Schema FAQ implementado
+```
 
-### Semana 4
-- [ ] Criar mais 10 páginas de glossário
-- [ ] Implementar melhorias de performance
-- [ ] Iniciar link building
+### 📈 SPRINT 3 - SCALE CONTENT (Semanas 3-4)
+**Prioridade**: Tier 2 + Tier 3 (Volume + Long-tail)
+```yaml
+week_3:
+  - [ ] 5 artigos glossário (o-que-e-sketchup, autocad, etc)
+  - [ ] /blog/diferenca-projetista-arquiteto
+  - [ ] Implementar structured data para todos artigos
 
-### Mês 2
-- [ ] Completar 50 páginas de glossário
-- [ ] 10 guest posts publicados
-- [ ] Análise e ajustes baseados em dados
+week_4:
+  - [ ] 5 artigos glossário adicionais
+  - [ ] /blog/salario-projetista-3d-santa-catarina
+  - [ ] Otimizar internal linking entre artigos
+```
+
+### 🚀 SPRINT 4 - OPTIMIZATION (Mês 2)
+```yaml
+monitoring:
+  - GSC: tracking keyword positions
+  - DataForSEO MCP: competitor analysis
+  - Core Web Vitals: performance check
+
+scaling:
+  - 10 artigos glossário adicionais
+  - Guest posting: 3 artigos em blogs locais SC
+  - Local directory submissions: 10 listagens
+```
 
 ---
 
@@ -337,26 +363,61 @@ Buscar menções em:
 
 ---
 
-## 🛠️ FERRAMENTAS NECESSÁRIAS
+## 🤖 FERRAMENTAS MCP INTEGRADAS
 
-1. **Google Search Console** - Já configurado
-2. **Google Analytics 4** - Implementar
-3. **Google Tag Manager** - Para tracking
-4. **Schema Markup Generator** - Para criar schemas
-5. **Screaming Frog** - Para auditoria técnica
+**Utilizadas neste plano**:
+```yaml
+dataforseo_mcp: ✅ Análise de keywords e posições reais
+firecrawl_mcp: ✅ Scraping competitor research  
+supabase_mcp: ✅ Database blog posts management
+gsc_mcp: ✅ Search Console monitoring
+playwright_mcp: ✅ Testing user experience flows
+```
+
+**Próximas integrações**:
+- Structured Memory MCP: Salvar progresso e insights
+- Sequential Thinking MCP: Content strategy decisions
+
+## 📋 IMPLEMENTATION CHECKLIST (AI Agents)
+
+### ✅ Como Executar Cada Sprint:
+
+**Sprint 2 - Blog Content**:
+```bash
+# 1. Verificar estrutura blog existente
+npm run test:blog
+
+# 2. Usar agente criador-de-aula para artigos
+# 3. Implementar schema Article em cada post
+# 4. Testar internal linking automático
+# 5. Validar CTA único (regra BLOG_AGENT_RULES.md)
+```
+
+**Sprint 3 - Scale Content**:
+```bash
+# 1. Template glossário optimizado
+# 2. Batch creation: 5 artigos por semana
+# 3. Schema DefinedTerm implementado
+# 4. Internal linking matrix atualizada
+```
+
+**Sprint 4 - Monitoring**:
+```bash
+# 1. DataForSEO MCP: weekly keyword tracking
+# 2. GSC MCP: performance monitoring  
+# 3. Core Web Vitals: automated testing
+```
 
 ---
 
-## 📌 OBSERVAÇÕES IMPORTANTES
+## 🎯 RESULTADO PREDICTIVE (DataForSEO Based)
 
-1. **NÃO EDITAR** sitemap.xml manualmente (gerado automaticamente)
-2. **Sempre testar** schemas no Google Rich Results Test
-3. **Monitorar** Core Web Vitals semanalmente
-4. **Documentar** todas as mudanças realizadas
-5. **Backup** antes de grandes alterações
+**30 dias**: 150+ cliques (base atual 2.73 ETV → 10x via content)  
+**60 dias**: 350+ cliques (tier 2 articles indexando)  
+**90 dias**: 500+ cliques (long-tail glossário + guest posts)  
 
 ---
 
-**Documento criado para implementação por qualquer desenvolvedor ou agente de IA**  
-**Última atualização**: Agosto 2025  
-**Responsável**: SEO Team - Escola Habilidade
+**Versão**: 2.0 | **Optimizado para**: Claude Code, IAs, MCP Agents  
+**Baseline**: DataForSEO real data | **Strategy**: Blog-first approach  
+**Última atualização**: Janeiro 2025

@@ -14,7 +14,7 @@ export default function TestBlogDebug() {
         setData(json);
       } catch (error) {
         console.error('Error fetching test data:', error);
-        setData({ error: error.message });
+        setData({ error: error instanceof Error ? error.message : 'Unknown error' });
       } finally {
         setLoading(false);
       }
