@@ -1003,22 +1003,23 @@ const FinalCTA = () => {
             <div className="bg-white rounded-xl p-6 shadow-lg">
               <div className="flex items-center gap-3 mb-4">
                 <MapPin className="text-[#d400ff]" size={24} />
-                <h3 className="text-xl font-bold text-gray-900">Nossa Localização</h3>
+                <h3 className="text-xl font-bold text-gray-900" style={{ color: '#111827', fontWeight: '700', fontSize: '1.25rem' }}>Nossa Localização</h3>
               </div>
-              <div className="space-y-2 text-gray-700">
-                <p className="font-semibold">R. Caetano José Ferreira, 426</p>
-                <p>Sala 5 - Kobrasol</p>
-                <p>São José - SC, 88102-280</p>
+              <div className="space-y-2 text-gray-700" style={{ color: '#374151' }}>
+                <p className="font-semibold" style={{ fontWeight: '600', color: '#374151' }}>R. Caetano José Ferreira, 426</p>
+                <p style={{ color: '#374151' }}>Sala 5 - Kobrasol</p>
+                <p style={{ color: '#374151' }}>São José - SC, 88102-280</p>
               </div>
               <motion.a
                 href="https://maps.google.com/maps?q=R.+Caetano+José+Ferreira,+426,+Sala+5+-+Kobrasol,+São+José+-+SC,+88102-280"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 mt-4 text-[#d400ff] hover:text-[#b300dd] font-semibold"
+                style={{ color: '#d400ff', fontWeight: '600' }}
                 whileHover={{ x: 2 }}
               >
                 <ExternalLink size={16} />
-                Abrir no Google Maps
+                <span style={{ color: '#d400ff', fontWeight: '600' }}>Abrir no Google Maps</span>
               </motion.a>
             </div>
 
@@ -1026,22 +1027,23 @@ const FinalCTA = () => {
             <div className="bg-white rounded-xl p-6 shadow-lg">
               <div className="flex items-center gap-3 mb-4">
                 <Phone className="text-[#d400ff]" size={24} />
-                <h3 className="text-xl font-bold text-gray-900">Contato Direto</h3>
+                <h3 className="text-xl font-bold text-gray-900" style={{ color: '#111827', fontWeight: '700', fontSize: '1.25rem' }}>Contato Direto</h3>
               </div>
               <div className="space-y-4">
                 <div>
-                  <p className="text-gray-600 text-sm">WhatsApp / Telefone</p>
-                  <p className="text-xl font-bold text-gray-900">(48) 98458-7067</p>
+                  <p className="text-gray-600 text-sm" style={{ color: '#4b5563', fontSize: '0.875rem' }}>WhatsApp / Telefone</p>
+                  <p className="text-xl font-bold text-gray-900" style={{ color: '#111827', fontSize: '1.25rem', fontWeight: '700' }}>(48) 98458-7067</p>
                 </div>
                 <motion.a
                   href="https://wa.me/5548984587067?text=Olá! Gostaria de mais informações sobre o curso Do Esboço ao Render."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 font-semibold"
+                  style={{ backgroundColor: '#10b981', color: '#ffffff', fontWeight: '600' }}
                   whileHover={{ scale: 1.02 }}
                 >
                   <MessageCircle size={16} />
-                  Chamar no WhatsApp
+                  <span style={{ color: '#ffffff', fontWeight: '600' }}>Chamar no WhatsApp</span>
                 </motion.a>
               </div>
             </div>
@@ -1066,21 +1068,55 @@ const CursoSketchUpEnscape = () => {
         <link rel="canonical" href="https://escolahabilidade.com/cursos/sketchup-enscape" />
       </Helmet>
       
-      <style jsx global>{`
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
-        
-        .font-montserrat {
-          font-family: 'Montserrat', sans-serif;
-        }
-        
-        .bg-gradient-radial {
-          background: radial-gradient(circle, #110011, #000000);
-        }
-        
-        html {
-          scroll-behavior: smooth;
-        }
-      `}</style>
+      <style>
+        {`
+          .font-montserrat {
+            font-family: 'Montserrat', sans-serif !important;
+          }
+          
+          .bg-gradient-radial {
+            background: radial-gradient(circle, #110011, #000000);
+          }
+          
+          html {
+            scroll-behavior: smooth;
+          }
+          
+          /* Force text visibility */
+          .text-gray-700,
+          .text-gray-600,
+          .text-gray-900,
+          .text-white,
+          .font-semibold,
+          .font-bold {
+            color: inherit !important;
+            font-weight: inherit !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+          }
+          
+          /* Specific fixes for CTA section */
+          .bg-white .text-gray-700 {
+            color: #374151 !important;
+          }
+          
+          .bg-white .text-gray-600 {
+            color: #4b5563 !important;
+          }
+          
+          .bg-white .text-gray-900 {
+            color: #111827 !important;
+          }
+          
+          .bg-white .font-semibold {
+            font-weight: 600 !important;
+          }
+          
+          .bg-white .font-bold {
+            font-weight: 700 !important;
+          }
+        `}
+      </style>
 
       <CourseHeader />
       <CourseHero />
