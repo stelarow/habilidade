@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Download, PlayCircle, BookOpen, X } from 'phosphor-react';
+import { ArrowRight, Download, PlayCircle, BookOpen, X } from '@phosphor-icons/react';
 import { useCTAResponsive } from '../../hooks/useCTAResponsive';
 
 /**

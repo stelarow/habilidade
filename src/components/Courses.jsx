@@ -11,7 +11,7 @@ import {
   Robot,
   ChartBar,
   Briefcase,
-} from 'phosphor-react';
+} from '@phosphor-icons/react';
 import useInView from '../hooks/useInView';
 
 const COURSES = [

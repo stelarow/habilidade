@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Star, Quotes, Target } from 'phosphor-react';
+import { Star, Quotes, Target } from '@phosphor-icons/react';
 import { useLayoutEffect, useRef, useState, useDeferredValue } from 'react';
 
 function CourseTestimonials({ course }) {

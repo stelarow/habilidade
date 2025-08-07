@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Clock, Users, Trophy, Calendar, DollarSign, CheckCircle } from 'phosphor-react';
+import { Clock, Users, Trophy, Calendar, DollarSign, CheckCircle } from '@phosphor-icons/react';
 
 function CourseOverview({ course }) {
   const formatPrice = (price) => {

@@ -14,7 +14,7 @@ import {
   Lightning,
   Target,
   Briefcase
-} from 'phosphor-react';
+} from '@phosphor-icons/react';
 import emailjs from '@emailjs/browser';
 import ErrorBoundary from '../components/ErrorBoundary';
 import CourseBackground from '../components/CourseBackground';

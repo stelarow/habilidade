@@ -4,7 +4,7 @@ import {
   PencilLine, 
   Buildings, 
   Eye 
-} from 'phosphor-react';
+} from '@phosphor-icons/react';
 
 const CourseToolNavigation = ({ course, activeSection, onSectionChange }) => {
   const [isSticky, setIsSticky] = useState(false);

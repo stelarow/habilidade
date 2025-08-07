@@ -13,7 +13,7 @@ import {
   Check,
   SlidersHorizontal,
   Eraser
-} from 'phosphor-react';
+} from '@phosphor-icons/react';
 import { useCategories } from '../../hooks/useBlogAPI';
 import { trackSearch } from '../../services/analyticsService';
 

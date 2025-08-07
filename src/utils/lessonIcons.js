@@ -10,7 +10,7 @@ import {
   Robot, Sparkle,          // Inteligência Artificial
   ChartBar, ChartLine,     // Business Intelligence
   Cube, Buildings          // Projetista
-} from 'phosphor-react';
+} from '@phosphor-icons/react';
 
 export const AREA_ICONS = {
   'informatica': {

@@ -10,7 +10,7 @@ import {
   X,
   Hash,
   Article
-} from 'phosphor-react';
+} from '@phosphor-icons/react';
 import { useCategories } from '../../hooks/useBlogAPI';
 
 /**

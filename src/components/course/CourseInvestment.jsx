@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { CreditCard, Money, PiggyBank, Shield, Clock, CheckCircle, DeviceMobile } from 'phosphor-react';
+import { CreditCard, Money, PiggyBank, Shield, Clock, CheckCircle, DeviceMobile } from '@phosphor-icons/react';
 import { useDeferredValue, useLayoutEffect, useState } from 'react';
 
 function CourseInvestment({ course, onEnrollClick }) {

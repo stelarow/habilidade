@@ -1,5 +1,5 @@
 ﻿import { useState } from 'react';
-import { CaretDown, Question } from 'phosphor-react';
+import { CaretDown, Question } from '@phosphor-icons/react';
 import Section from './Section';
 import useInView from '../hooks/useInView';
 import GradientButton from './GradientButton';

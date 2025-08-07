@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { CaretRight, House, GraduationCap } from 'phosphor-react';
+import { CaretRight, House, GraduationCap } from '@phosphor-icons/react';
 
 function CourseBreadcrumb({ course }) {
   const breadcrumbs = [

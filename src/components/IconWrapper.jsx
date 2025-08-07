@@ -19,7 +19,7 @@ import {
   Check,
   ChatCircle,
   Buildings
-} from 'phosphor-react';
+} from '@phosphor-icons/react';
 
 // Mapeamento de ícones disponíveis
 const ICON_MAP = {

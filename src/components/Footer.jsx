@@ -1,4 +1,4 @@
-import { MapPin, Phone, Heart, Clock, InstagramLogo, WhatsappLogo } from "phosphor-react";
+import { MapPin, Phone, Heart, Clock, InstagramLogo, WhatsappLogo } from "@phosphor-icons/react";
 import Section from "./Section";
 import LogoH from "./LogoH";
 

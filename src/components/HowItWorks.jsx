@@ -5,7 +5,7 @@ import {
   Play,
   Trophy,
   Rocket,
-} from 'phosphor-react';
+} from '@phosphor-icons/react';
 import useInView from '../hooks/useInView';
 
 const STEPS = [

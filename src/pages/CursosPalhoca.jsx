@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import SEOHead from '../components/shared/SEOHead';
-import { FaMapMarkerAlt, FaPhone, FaWhatsapp, FaClock, FaCar, FaBus } from 'react-icons/fa';
+import { MapPin, Phone, WhatsappLogo, Clock, Car, Bus } from '@phosphor-icons/react';
 
 const CursosPalhoca = () => {
   const cursos = [
@@ -93,7 +93,7 @@ const CursosPalhoca = () => {
             {/* Como Chegar de Palhoça */}
             <div className="bg-gradient-to-br from-purple-900/30 to-pink-900/30 backdrop-blur-sm rounded-2xl p-8 mb-12 border border-purple-500/30">
               <h2 className="text-2xl font-bold text-white mb-6 flex items-center">
-                <FaMapMarkerAlt className="mr-3 text-purple-400" />
+                <MapPin className="mr-3 text-purple-400" size={24} />
                 Fácil Acesso para Moradores de Palhoça
               </h2>
               <div className="grid md:grid-cols-2 gap-6">
@@ -112,11 +112,11 @@ const CursosPalhoca = () => {
                   <h3 className="text-lg font-semibold text-purple-300 mb-3">🚗 Como Chegar:</h3>
                   <div className="space-y-2 text-zinc-300 text-sm">
                     <div className="flex items-start">
-                      <FaCar className="mr-2 mt-1 text-purple-400" />
+                      <Car className="mr-2 mt-1 text-purple-400" size={16} />
                       <span><strong>De carro:</strong> 15-20 min via BR-101</span>
                     </div>
                     <div className="flex items-start">
-                      <FaBus className="mr-2 mt-1 text-purple-400" />
+                      <Bus className="mr-2 mt-1 text-purple-400" size={16} />
                       <span><strong>Ônibus:</strong> Linhas que conectam Palhoça-São José</span>
                     </div>
                     <div className="flex items-start">
@@ -315,14 +315,14 @@ const CursosPalhoca = () => {
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center px-8 py-4 bg-green-500 hover:bg-green-600 text-white font-bold rounded-full transition-all hover:scale-105 shadow-lg"
                 >
-                  <FaWhatsapp className="mr-2 text-xl" />
+                  <WhatsappLogo className="mr-2 text-xl" size={20} />
                   WhatsApp - Resposta Imediata
                 </a>
                 <a
                   href="tel:+5548988559491"
                   className="inline-flex items-center justify-center px-8 py-4 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-full transition-all hover:scale-105 shadow-lg"
                 >
-                  <FaPhone className="mr-2" />
+                  <Phone className="mr-2" size={20} />
                   Ligar: (48) 98855-9491
                 </a>
               </div>

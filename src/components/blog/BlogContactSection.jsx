@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { WhatsappLogo, Phone, Envelope, Clock, CheckCircle, Star } from 'phosphor-react';
+import { WhatsappLogo, Phone, Envelope, Clock, CheckCircle, Star } from '@phosphor-icons/react';
 import { generateWhatsAppMessage, generateContextualMessage } from '../../utils/whatsappMessaging';
 import { useContactAnalytics } from '../../hooks/useContactAnalytics';
 import { getBusinessHoursStatus } from '../../utils/businessHours';

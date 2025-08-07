@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, Newspaper, Star } from 'phosphor-react';
+import { ArrowRight, Newspaper, Star } from '@phosphor-icons/react';
 import { usePosts } from '../hooks/useBlogAPI';
 import BlogCard from './blog/BlogCard';
 import Loading from './Loading';

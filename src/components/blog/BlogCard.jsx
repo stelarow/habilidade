@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 // import { useNavigate } from 'react-router-dom'; // Not needed for SSG
-import { Clock, Calendar, User, Tag } from 'phosphor-react';
+import { Clock, Calendar, User, Tag } from '@phosphor-icons/react';
 import { usePrefetchPost } from '../../hooks/useBlogAPI';
 import { useBlogResponsive } from '../../hooks/useBlogResponsive';
 import BlogBadge from './BlogBadge';

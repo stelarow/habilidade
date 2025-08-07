@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { 
   X, CaretRight, GraduationCap, WhatsappLogo, 
   BookOpen, Star, Phone, House, MagnifyingGlass, Play, Question 
-} from 'phosphor-react';
+} from '@phosphor-icons/react';
 import { usePageContext } from '../../hooks/usePageContext';
 import { ADAPTIVE_NAVIGATION } from '../../constants/adaptiveNavigation';
 import COURSES_DATA from '../../data/coursesData';

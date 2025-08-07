@@ -1,4 +1,4 @@
-﻿import { Star, Quotes, MapPin, Calendar, User, Trophy } from 'phosphor-react';
+﻿import { Star, Quotes, MapPin, Calendar, User, Trophy } from '@phosphor-icons/react';
 import Section from './Section';
 import Starfield from './Starfield';
 import GradientButton from './GradientButton';

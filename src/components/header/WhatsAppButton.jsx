@@ -1,4 +1,4 @@
-import { WhatsappLogo } from 'phosphor-react';
+import { WhatsappLogo } from '@phosphor-icons/react';
 
 function WhatsAppButton({ className = '', size = 'medium', ...props }) {
   const sizeClasses = {

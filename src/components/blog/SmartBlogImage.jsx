@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { AlertCircle } from 'phosphor-react';
+import { AlertCircle } from '@phosphor-icons/react';
 
 /**
  * Smart Blog Image Component

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useParams, useLoaderData } from 'react-router-dom';
 import { Head } from 'vite-react-ssg';
-import { Clock, Calendar, User } from 'phosphor-react';
+import { Clock, Calendar, User } from '@phosphor-icons/react';
 import '../styles/blog-article.css';
 import '../styles/highlight.css';
 import ShareButtons from '../components/blog/ShareButtons';

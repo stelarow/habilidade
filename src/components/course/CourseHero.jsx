@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Star, CheckCircle } from 'phosphor-react';
+import { Star, CheckCircle } from '@phosphor-icons/react';
 import { useDeferredValue, useLayoutEffect, useState } from 'react';
 
 function CourseHero({ course, onEnrollClick }) {

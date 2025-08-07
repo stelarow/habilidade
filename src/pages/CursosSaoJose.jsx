@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import SEOHead from '../components/shared/SEOHead';
-import { FaMapMarkerAlt, FaPhone, FaWhatsapp, FaClock, FaGraduationCap } from 'react-icons/fa';
+import { MapPin, Phone, WhatsappLogo, Clock, GraduationCap } from '@phosphor-icons/react';
 
 const CursosSaoJose = () => {
   const cursos = [
@@ -86,7 +86,7 @@ const CursosSaoJose = () => {
             {/* Nossa Sede em São José */}
             <div className="bg-gradient-to-br from-purple-900/30 to-pink-900/30 backdrop-blur-sm rounded-2xl p-8 mb-12 border border-purple-500/30">
               <h2 className="text-2xl font-bold text-white mb-6 flex items-center">
-                <FaGraduationCap className="mr-3 text-purple-400" />
+                <GraduationCap className="mr-3 text-purple-400" size={24} />
                 Nossa Sede em São José - Kobrasol
               </h2>
               <div className="grid md:grid-cols-2 gap-6">
@@ -105,9 +105,9 @@ const CursosSaoJose = () => {
                 <div>
                   <h3 className="text-lg font-semibold text-purple-300 mb-3">📞 Entre em Contato:</h3>
                   <p className="text-zinc-300">
-                    <FaPhone className="inline mr-2" /> <strong>(48) 98855-9491</strong><br />
-                    <FaWhatsapp className="inline mr-2 text-green-400" /> <strong>(48) 98855-9491</strong><br />
-                    <FaClock className="inline mr-2" /> <strong>Horários:</strong><br />
+                    <Phone className="inline mr-2" size={16} /> <strong>(48) 98855-9491</strong><br />
+                    <WhatsappLogo className="inline mr-2 text-green-400" size={16} /> <strong>(48) 98855-9491</strong><br />
+                    <Clock className="inline mr-2" size={16} /> <strong>Horários:</strong><br />
                     Seg-Ter e Qui: 8h às 20h<br />
                     Quarta: 8h às 22h<br />
                     Sexta: 8h às 17h30<br />
@@ -266,7 +266,7 @@ const CursosSaoJose = () => {
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center px-8 py-4 bg-green-500 hover:bg-green-600 text-white font-bold rounded-full transition-all hover:scale-105 shadow-lg"
                 >
-                  <FaWhatsapp className="mr-2 text-xl" />
+                  <WhatsappLogo className="mr-2 text-xl" size={20} />
                   Falar no WhatsApp Agora
                 </a>
                 <Link

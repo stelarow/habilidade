@@ -9,7 +9,7 @@ import {
   Clock,
   CheckCircle,
   Warning
-} from 'phosphor-react';
+} from '@phosphor-icons/react';
 import { generateWhatsAppMessage, generateContextualMessage } from '../../utils/whatsappMessaging';
 import { useContactAnalytics } from '../../hooks/useContactAnalytics';
 import { getBusinessHoursStatus } from '../../utils/businessHours';

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, Link, useSearchParams } from 'react-router-dom';
-import { ArrowLeft, Tag, MagnifyingGlass } from 'phosphor-react';
+import { ArrowLeft, Tag, MagnifyingGlass } from '@phosphor-icons/react';
 import { useInfinitePostsByCategory, useCategories } from '../hooks/useBlogAPI';
 import BlogCard from '../components/blog/BlogCard';
 import BlogLoading from '../components/blog/BlogLoading';
@@ -83,11 +83,53 @@ const BlogCategory = () => {
 
   // Get category info
   const categories = categoriesData?.categories || [];
-  const currentCategory = categories.find(cat => cat.slug === categorySlug) || {
-    slug: categorySlug,
-    name: categorySlug.charAt(0).toUpperCase() + categorySlug.slice(1),
-    description: `Artigos sobre ${categorySlug}`
+  const categoryDescriptions = {
+    'tecnologia': {
+      name: 'Tecnologia',
+      description: 'Descubra as últimas tendências em tecnologia que estão transformando o mercado de trabalho. Artigos sobre inteligência artificial, programação, ferramentas digitais e inovações que impactam sua carreira profissional.',
+      longDescription: 'A tecnologia evolui rapidamente e estar atualizado é fundamental para o sucesso profissional. Nossos artigos abordam desde conceitos básicos até tecnologias avançadas, sempre com foco prático para aplicação no mercado de trabalho.',
+      benefits: ['Mantenha-se atualizado com as tendências', 'Desenvolva habilidades técnicas valiosas', 'Entenda o impacto da tecnologia nos negócios']
+    },
+    'design': {
+      name: 'Design',
+      description: 'Explore o universo do design gráfico, 3D e visual. Aprenda técnicas, ferramentas e metodologias para criar projetos impactantes e desenvolver sua criatividade profissional.',
+      longDescription: 'O design é uma área que combina criatividade com estratégia. Nossos conteúdos cobrem desde fundamentos do design até técnicas avançadas de modelagem 3D, sempre focando na aplicação prática e no desenvolvimento profissional.',
+      benefits: ['Desenvolva seu olhar criativo', 'Domine ferramentas profissionais', 'Crie portfólio de alta qualidade']
+    },
+    'programacao': {
+      name: 'Programação',
+      description: 'Mergulhe no mundo da programação com artigos práticos sobre linguagens, frameworks e metodologias de desenvolvimento. Do iniciante ao avançado, conteúdo para toda sua jornada.',
+      longDescription: 'A programação é uma das habilidades mais valorizadas do mercado atual. Oferecemos conteúdo estruturado para diferentes níveis, com exemplos práticos e projetos reais que preparam você para desafios profissionais.',
+      benefits: ['Aprenda programação do zero', 'Explore diferentes linguagens', 'Construa projetos reais']
+    },
+    'marketing': {
+      name: 'Marketing Digital',
+      description: 'Domine estratégias de marketing digital que geram resultados reais. Aprenda sobre redes sociais, SEO, publicidade online e análise de dados para impulsionar negócios.',
+      longDescription: 'O marketing digital é essencial para qualquer negócio moderno. Nossos artigos abordam estratégias comprovadas, ferramentas práticas e técnicas de análise para maximizar o retorno dos investimentos em marketing.',
+      benefits: ['Crie campanhas eficazes', 'Analise métricas importantes', 'Desenvolva presença digital forte']
+    },
+    'carreira': {
+      name: 'Carreira',
+      description: 'Acelere seu crescimento profissional com dicas de carreira, networking, liderança e desenvolvimento pessoal. Estratégias para destacar-se no mercado de trabalho competitivo.',
+      longDescription: 'O desenvolvimento de carreira requer planejamento estratégico e habilidades interpessoais. Compartilhamos insights valiosos sobre networking, liderança, negociação e crescimento profissional sustentável.',
+      benefits: ['Planeje sua carreira estrategicamente', 'Desenvolva soft skills valiosas', 'Expanda sua rede profissional']
+    },
+    'educacao': {
+      name: 'Educação',
+      description: 'Transforme sua forma de aprender com metodologias inovadoras, técnicas de estudo e insights sobre o futuro da educação profissional e tecnológica.',
+      longDescription: 'A educação contínua é fundamental para o sucesso profissional. Exploramos metodologias de aprendizagem, técnicas de retenção e estratégias para maximizar seu desenvolvimento pessoal e profissional.',
+      benefits: ['Otimize seu processo de aprendizagem', 'Descubra métodos eficazes de estudo', 'Desenvolva mentalidade de crescimento']
+    }
   };
+  
+  const currentCategory = categories.find(cat => cat.slug === categorySlug) || 
+    categoryDescriptions[categorySlug] || {
+      slug: categorySlug,
+      name: categorySlug.charAt(0).toUpperCase() + categorySlug.slice(1),
+      description: `Artigos sobre ${categorySlug} para desenvolvimento profissional e técnico.`,
+      longDescription: `Explore nossos artigos especializados em ${categorySlug} com conteúdo prático e aplicável no mercado de trabalho.`,
+      benefits: ['Conteúdo especializado', 'Aplicação prática', 'Desenvolvimento profissional']
+    };
 
   // Filter posts by search if provided
   const filteredPosts = useMemo(() => {
@@ -177,9 +219,43 @@ const BlogCategory = () => {
           </h1>
           
           {currentCategory.description && (
-            <p className="text-xl text-zinc-300 max-w-3xl mx-auto">
+            <p className="text-xl text-zinc-300 max-w-3xl mx-auto mb-6">
               {currentCategory.description}
             </p>
+          )}
+
+          {/* Enhanced Content Section */}
+          {currentCategory.longDescription && (
+            <div className="max-w-4xl mx-auto mt-8 mb-8">
+              <div className="bg-zinc-800/30 backdrop-blur-sm border border-zinc-700/50 rounded-2xl p-8">
+                <div className="grid md:grid-cols-2 gap-8">
+                  <div>
+                    <h2 className="text-2xl font-bold text-zinc-100 mb-4">
+                      Por que estudar {currentCategory.name}?
+                    </h2>
+                    <p className="text-zinc-300 leading-relaxed">
+                      {currentCategory.longDescription}
+                    </p>
+                  </div>
+                  
+                  {currentCategory.benefits && (
+                    <div>
+                      <h3 className="text-xl font-semibold text-zinc-100 mb-4">
+                        Benefícios dos nossos conteúdos:
+                      </h3>
+                      <ul className="space-y-3">
+                        {currentCategory.benefits.map((benefit, index) => (
+                          <li key={index} className="flex items-start gap-3 text-zinc-300">
+                            <div className="w-2 h-2 bg-gradient-to-r from-blue-400 to-purple-600 rounded-full mt-2 flex-shrink-0"></div>
+                            <span>{benefit}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
           )}
         </div>
 

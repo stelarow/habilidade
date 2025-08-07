@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 // import { Link } from 'react-router-dom'; // Not needed for SSG
-import { ArrowRight, Clock, Users, Star, BookOpen } from 'phosphor-react';
+import { ArrowRight, Clock, Users, Star, BookOpen } from '@phosphor-icons/react';
 import LazyImage from '../LazyImage';
 import COURSES_DATA from '../../data/coursesData';
 import { useCTAResponsive } from '../../hooks/useCTAResponsive';

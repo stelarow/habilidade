@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { CaretRight, House } from 'phosphor-react';
+import { CaretRight, House } from '@phosphor-icons/react';
 
 const Breadcrumbs = ({ items }) => {
   if (!items || items.length === 0) return null;

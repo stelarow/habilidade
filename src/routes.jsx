@@ -6,6 +6,7 @@ import Loading from './components/Loading';
 // Importações com lazy loading para code splitting
 const Home = React.lazy(() => import('./pages/Home'));
 const CoursePage = React.lazy(() => import('./pages/CoursePage'));
+const Contact = React.lazy(() => import('./pages/Contact'));
 const BlogIndex = React.lazy(() => import('./pages/BlogIndex'));
 const BlogTestPage = React.lazy(() => import('./pages/BlogTestPage'));
 const BlogCategory = React.lazy(() => import('./pages/BlogCategory'));
@@ -53,6 +54,10 @@ export const routes = [
       {
         path: 'cursos/:courseSlug',
         lazy: () => import('./pages/CoursePage')
+      },
+      {
+        path: 'contato',
+        element: <Suspense fallback={<Loading />}><Contact /></Suspense>
       },
       {
         path: 'blog',

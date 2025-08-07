@@ -1,6 +1,6 @@
 import { useState } from 'react';
 // Removed React Router Link - using native anchor tags for SSG
-import { MagnifyingGlass, CaretDown } from 'phosphor-react';
+import { MagnifyingGlass, CaretDown } from '@phosphor-icons/react';
 import COURSES_DATA from '../../data/coursesData';
 import { searchCourses } from '../../utils/courseHelpers';
 

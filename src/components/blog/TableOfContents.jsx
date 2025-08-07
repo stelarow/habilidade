@@ -4,7 +4,7 @@
  */
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { List, CaretDown, CaretRight, Hash } from 'phosphor-react';
+import { List, CaretDown, CaretRight, Hash } from '@phosphor-icons/react';
 import { combineClasses } from '../../utils/blogTheme';
 
 /**

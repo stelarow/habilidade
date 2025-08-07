@@ -4,7 +4,7 @@ import {
   Users,
   Lightbulb,
   ArrowRight
-} from 'phosphor-react';
+} from '@phosphor-icons/react';
 
 const CourseProblemStatement = ({ course }) => {
   const problems = [

@@ -1,5 +1,5 @@
 import React from 'react';
-import { MagnifyingGlass, FileText, Funnel, House } from 'phosphor-react';
+import { MagnifyingGlass, FileText, Funnel, House } from '@phosphor-icons/react';
 import { Link } from 'react-router-dom';
 
 const BlogEmpty = ({ hasFilters, onClearFilters }) => {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { WhatsappLogo, X } from 'phosphor-react';
+import { WhatsappLogo, X } from '@phosphor-icons/react';
 import { generateWhatsAppMessage } from '../../utils/whatsappMessaging';
 import { useContactAnalytics } from '../../hooks/useContactAnalytics';
 

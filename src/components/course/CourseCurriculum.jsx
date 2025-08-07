@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { CaretDown, CaretUp, Article, PuzzlePiece, RocketLaunch, Users } from 'phosphor-react';
+import { CaretDown, CaretUp, Article, PuzzlePiece, RocketLaunch, Users } from '@phosphor-icons/react';
 import { useViewportSize } from '../../hooks/useViewportSize';
 import { getLessonIconByArea } from '../../utils/lessonIcons';
 import { getLessonLabel } from '../../utils/lessonLabels';

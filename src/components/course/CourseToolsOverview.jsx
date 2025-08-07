@@ -6,7 +6,7 @@ import {
   Eye,
   ArrowRight,
   CheckCircle
-} from 'phosphor-react';
+} from '@phosphor-icons/react';
 
 const CourseToolsOverview = ({ course }) => {
   const tools = [

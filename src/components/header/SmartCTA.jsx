@@ -1,4 +1,4 @@
-import { Phone, Play, User } from 'phosphor-react';
+import { Phone, Play, User } from '@phosphor-icons/react';
 import { useSmartCTA } from '../../hooks/useSmartCTA';
 import GradientButton from '../GradientButton';
 import WhatsAppButton from './WhatsAppButton';

@@ -3,7 +3,7 @@ import {
   ArrowRight,
   CheckCircle,
   Play
-} from 'phosphor-react';
+} from '@phosphor-icons/react';
 
 const CourseWorkflowSection = ({ workflowExamples, toolComparisons, themeColors }) => {
   const toolColors = {

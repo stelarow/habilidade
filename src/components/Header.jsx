@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CaretDown } from 'phosphor-react';
+import { CaretDown } from '@phosphor-icons/react';
 import { useParams } from 'react-router-dom';
 import useToggle from '../hooks/useToggle';
 import { usePageContext } from '../hooks/usePageContext';

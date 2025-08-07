@@ -1,5 +1,5 @@
 import React from 'react';
-import { WarningCircle, ArrowCounterClockwise, House } from 'phosphor-react';
+import { WarningCircle, ArrowCounterClockwise, House } from '@phosphor-icons/react';
 import { Link } from 'react-router-dom';
 
 const BlogError = ({ error, onRetry }) => {

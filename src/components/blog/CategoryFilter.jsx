@@ -1,5 +1,5 @@
 import React from 'react';
-import { Filter, X } from 'phosphor-react';
+import { Filter, X } from '@phosphor-icons/react';
 
 const CategoryFilter = ({ 
   categories = [], 

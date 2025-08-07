@@ -10,7 +10,7 @@ import {
   Phone,
   User,
   Envelope
-} from 'phosphor-react';
+} from '@phosphor-icons/react';
 import { generateWhatsAppMessage } from '../../utils/whatsappMessaging';
 import { useContactAnalytics } from '../../hooks/useContactAnalytics';
 import { getBusinessHoursStatus } from '../../utils/businessHours';

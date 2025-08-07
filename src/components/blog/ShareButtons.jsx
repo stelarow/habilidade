@@ -7,7 +7,7 @@ import {
   LinkSimple, 
   Check, 
   Share 
-} from 'phosphor-react';
+} from '@phosphor-icons/react';
 
 const ShareButtons = ({ url, title, compact = false, variant = 'default' }) => {
   const [copied, setCopied] = useState(false);

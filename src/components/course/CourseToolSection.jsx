@@ -6,7 +6,7 @@ import {
   Briefcase,
   MapPin,
   TrendUp
-} from 'phosphor-react';
+} from '@phosphor-icons/react';
 
 const CourseToolSection = ({ tool, toolData, themeColors }) => {
   const [expandedSection, setExpandedSection] = useState(null);

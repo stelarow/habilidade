@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { MagnifyingGlass, Funnel, CaretDown } from 'phosphor-react';
+import { MagnifyingGlass, Funnel, CaretDown } from '@phosphor-icons/react';
 import { useCategories } from '../hooks/useBlogAPI';
 import useOptimizedBlogSearch from '../hooks/useOptimizedBlogSearch';
 import BlogCard from '../components/blog/BlogCard';

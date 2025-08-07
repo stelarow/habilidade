@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { GraduationCap, Star, Trophy, Clock, CheckCircle } from 'phosphor-react';
+import { GraduationCap, Star, Trophy, Clock, CheckCircle } from '@phosphor-icons/react';
 
 function CourseInstructor({ course }) {
   const { instructor } = course;
