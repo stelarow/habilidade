@@ -822,7 +822,14 @@ const OfferBadge = memo(() => {
       >
         <AlertCircle size={20} className="text-[#d400ff]" />
       </motion.div>
-      <span className="bg-gradient-to-r from-white to-[#d400ff] bg-clip-text text-transparent">
+      <span 
+        className="bg-gradient-to-r from-white to-[#d400ff] bg-clip-text text-transparent"
+        style={{
+          WebkitTextFillColor: 'transparent',
+          WebkitBackgroundClip: 'text',
+          fallbacks: [{ color: '#d400ff' }]
+        }}
+      >
         OFERTA LIMITADA
       </span>
       <span className="text-gray-300">•</span>
@@ -1171,6 +1178,29 @@ const CursoSketchUpEnscape = memo(() => {
             font-weight: inherit !important;
             opacity: 1 !important;
             visibility: visible !important;
+          }
+          
+          /* Enhanced fallback for gradient text elements */
+          .bg-clip-text {
+            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+          }
+          
+          /* Ensure gradient text fallback */
+          @supports not (background-clip: text) {
+            .bg-clip-text.text-transparent {
+              color: #d400ff !important;
+              -webkit-text-fill-color: #d400ff !important;
+            }
+          }
+          
+          /* iOS Safari specific fix */
+          @media screen and (-webkit-min-device-pixel-ratio: 2) {
+            .bg-clip-text.text-transparent {
+              -webkit-text-fill-color: transparent;
+              text-shadow: none;
+            }
           }
           
           /* Specific fixes for CTA section */

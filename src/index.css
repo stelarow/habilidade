@@ -283,6 +283,16 @@ button, a, [role="button"] {
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+    /* Fallback para navegadores que não suportam background-clip: text */
+    -webkit-text-fill-color: transparent;
+  }
+  
+  /* Fallback adicional para casos extremos */
+  @supports not (background-clip: text) {
+    .gradient-text {
+      color: #d400ff !important;
+      background-image: none !important;
+    }
   }
   
   /* Gradientes temáticos para a Logo "H" */
