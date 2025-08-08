@@ -66,7 +66,7 @@ var CourseHeader = () => {
     )), /* @__PURE__ */ React.createElement(
       motion.a,
       {
-        href: "https://wa.me/5548984587067",
+        href: "https://wa.me/5548988559491",
         className: "bg-[#d400ff] text-white px-6 py-2 rounded-full font-semibold hover:bg-[#b300dd] transition-all duration-300",
         whileHover: { scale: 1.05, boxShadow: "0 0 20px #d400ff55" }
       },
@@ -148,17 +148,17 @@ var CourseHero = () => {
       /* @__PURE__ */ React.createElement(
         motion.a,
         {
-          href: "https://wa.me/5548984587067",
+          href: "https://wa.me/5548988559491",
           className: "bg-[#d400ff] text-white px-8 py-4 rounded-full font-semibold text-lg inline-flex items-center gap-2 justify-center hover:bg-[#b300dd] transition-all duration-300",
           whileHover: { scale: 1.05, boxShadow: "0 0 30px #d400ff88" }
         },
         /* @__PURE__ */ React.createElement(MessageCircle, { size: 20 }),
-        "Garanta sua Vaga - 10x R$ 399,90"
+        "Garanta sua Vaga - 10x R$ 279,30"
       ),
       /* @__PURE__ */ React.createElement(
         motion.a,
         {
-          href: "https://wa.me/5548984587067",
+          href: "https://wa.me/5548988559491",
           className: "border-2 border-[#d400ff] text-[#d400ff] px-8 py-4 rounded-full font-semibold text-lg hover:bg-[#d400ff] hover:text-white transition-all duration-300 inline-flex items-center gap-2 justify-center",
           whileHover: { scale: 1.05 }
         },
@@ -728,13 +728,13 @@ var FinalCTA = () => {
       /* @__PURE__ */ React.createElement("span", { className: "text-gray-300" }, "\u2022"),
       /* @__PURE__ */ React.createElement("span", { className: "text-yellow-300 font-bold" }, "15 vagas restantes")
     ),
-    /* @__PURE__ */ React.createElement("p", { className: "text-xl text-gray-200 mb-4 max-w-3xl mx-auto" }, /* @__PURE__ */ React.createElement("span", { className: "line-through text-gray-400 text-lg" }, "De R$ 4.999,00"), /* @__PURE__ */ React.createElement("br", null), /* @__PURE__ */ React.createElement("strong", { className: "text-3xl text-white" }, "Por apenas R$ 3.999,00 \xE0 vista"), /* @__PURE__ */ React.createElement("br", null), /* @__PURE__ */ React.createElement("span", { className: "text-xl" }, "ou ", /* @__PURE__ */ React.createElement("strong", { className: "text-green-400" }, "10x de R$ 399,90"), " sem juros")),
+    /* @__PURE__ */ React.createElement("p", { className: "text-xl text-gray-200 mb-4 max-w-3xl mx-auto" }, /* @__PURE__ */ React.createElement("span", { className: "line-through text-gray-400 text-lg" }, "De R$ 4.655,00"), /* @__PURE__ */ React.createElement("br", null), /* @__PURE__ */ React.createElement("strong", { className: "text-3xl text-white" }, "Por apenas R$ 2.793,00 \xE0 vista"), /* @__PURE__ */ React.createElement("br", null), /* @__PURE__ */ React.createElement("span", { className: "text-xl" }, "ou ", /* @__PURE__ */ React.createElement("strong", { className: "text-green-400" }, "10x de R$ 279,30"), " sem juros")),
     /* @__PURE__ */ React.createElement("div", { className: "flex flex-wrap justify-center gap-6 text-gray-300 mb-8" }, /* @__PURE__ */ React.createElement("span", { className: "flex items-center gap-2" }, /* @__PURE__ */ React.createElement(CheckCircle, { size: 16, className: "text-green-400" }), "Certifica\xE7\xE3o profissional"), /* @__PURE__ */ React.createElement("span", { className: "flex items-center gap-2" }, /* @__PURE__ */ React.createElement(CheckCircle, { size: 16, className: "text-green-400" }), "6 projetos completos"), /* @__PURE__ */ React.createElement("span", { className: "flex items-center gap-2" }, /* @__PURE__ */ React.createElement(CheckCircle, { size: 16, className: "text-green-400" }), "Suporte vital\xEDcio")),
     /* @__PURE__ */ React.createElement("div", { className: "grid md:grid-cols-4 gap-6 max-w-4xl mx-auto mb-12" }, /* @__PURE__ */ React.createElement("div", { className: "flex flex-col items-center" }, /* @__PURE__ */ React.createElement(CheckCircle, { className: "text-white mb-2", size: 32 }), /* @__PURE__ */ React.createElement("span", { className: "text-white font-semibold" }, "28 Aulas Pr\xE1ticas")), /* @__PURE__ */ React.createElement("div", { className: "flex flex-col items-center" }, /* @__PURE__ */ React.createElement(CheckCircle, { className: "text-white mb-2", size: 32 }), /* @__PURE__ */ React.createElement("span", { className: "text-white font-semibold" }, "Certifica\xE7\xE3o")), /* @__PURE__ */ React.createElement("div", { className: "flex flex-col items-center" }, /* @__PURE__ */ React.createElement(CheckCircle, { className: "text-white mb-2", size: 32 }), /* @__PURE__ */ React.createElement("span", { className: "text-white font-semibold" }, "6 Projetos")), /* @__PURE__ */ React.createElement("div", { className: "flex flex-col items-center" }, /* @__PURE__ */ React.createElement(CheckCircle, { className: "text-white mb-2", size: 32 }), /* @__PURE__ */ React.createElement("span", { className: "text-white font-semibold" }, "Suporte Vital\xEDcio"))),
     /* @__PURE__ */ React.createElement("div", { className: "flex flex-col sm:flex-row gap-4 justify-center items-center" }, /* @__PURE__ */ React.createElement(
       motion.a,
       {
-        href: "https://wa.me/5548984587067",
+        href: "https://wa.me/5548988559491",
         className: "bg-gradient-to-r from-[#d400ff] to-[#b300dd] text-white px-12 py-6 rounded-full font-bold text-xl inline-flex items-center gap-3 hover:from-[#b300dd] hover:to-[#9000bb] transition-all duration-300 shadow-2xl",
         whileHover: {
           scale: 1.05,
@@ -744,7 +744,7 @@ var FinalCTA = () => {
         whileTap: { scale: 0.95 }
       },
       /* @__PURE__ */ React.createElement(MessageCircle, { size: 24 }),
-      "Garantir Vaga - 10x R$ 399,90"
+      "Garantir Vaga - 10x R$ 279,30"
     ), /* @__PURE__ */ React.createElement(
       motion.button,
       {
@@ -777,10 +777,10 @@ var FinalCTA = () => {
       },
       /* @__PURE__ */ React.createElement(ExternalLink, { size: 16 }),
       "Abrir no Google Maps"
-    )), /* @__PURE__ */ React.createElement("div", { className: "bg-white rounded-xl p-6 shadow-lg" }, /* @__PURE__ */ React.createElement("div", { className: "flex items-center gap-3 mb-4" }, /* @__PURE__ */ React.createElement(Phone, { className: "text-[#d400ff]", size: 24 }), /* @__PURE__ */ React.createElement("h3", { className: "text-xl font-bold text-gray-900" }, "Contato Direto")), /* @__PURE__ */ React.createElement("div", { className: "space-y-4" }, /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("p", { className: "text-gray-600 text-sm" }, "WhatsApp / Telefone"), /* @__PURE__ */ React.createElement("p", { className: "text-xl font-bold text-gray-900" }, "(48) 98458-7067")), /* @__PURE__ */ React.createElement(
+    )), /* @__PURE__ */ React.createElement("div", { className: "bg-white rounded-xl p-6 shadow-lg" }, /* @__PURE__ */ React.createElement("div", { className: "flex items-center gap-3 mb-4" }, /* @__PURE__ */ React.createElement(Phone, { className: "text-[#d400ff]", size: 24 }), /* @__PURE__ */ React.createElement("h3", { className: "text-xl font-bold text-gray-900" }, "Contato Direto")), /* @__PURE__ */ React.createElement("div", { className: "space-y-4" }, /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("p", { className: "text-gray-600 text-sm" }, "WhatsApp / Telefone"), /* @__PURE__ */ React.createElement("p", { className: "text-xl font-bold text-gray-900" }, "(48) 98855-9491")), /* @__PURE__ */ React.createElement(
       motion.a,
       {
-        href: "https://wa.me/5548984587067?text=Ol\xE1! Gostaria de mais informa\xE7\xF5es sobre o curso Do Esbo\xE7o ao Render.",
+        href: "https://wa.me/5548988559491?text=Ol\xE1! Gostaria de mais informa\xE7\xF5es sobre o curso Do Esbo\xE7o ao Render.",
         target: "_blank",
         rel: "noopener noreferrer",
         className: "inline-flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 font-semibold",
@@ -809,7 +809,7 @@ var CoursePageApp = () => {
       `), /* @__PURE__ */ React.createElement(CourseHeader, null), /* @__PURE__ */ React.createElement(CourseHero, null), /* @__PURE__ */ React.createElement(AboutCourse, null), /* @__PURE__ */ React.createElement(Curriculum, null), /* @__PURE__ */ React.createElement(CourseProjects, null), /* @__PURE__ */ React.createElement(CompaniesSection, null), /* @__PURE__ */ React.createElement(CourseTestimonials, null), /* @__PURE__ */ React.createElement(FinalCTA, null), /* @__PURE__ */ React.createElement(
     motion.a,
     {
-      href: "https://wa.me/5548984587067",
+      href: "https://wa.me/5548988559491",
       className: "fixed bottom-6 right-6 z-50 w-16 h-16 bg-[#d400ff] rounded-full flex items-center justify-center shadow-lg",
       whileHover: {
         scale: 1.1,

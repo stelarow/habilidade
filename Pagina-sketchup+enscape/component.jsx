@@ -69,7 +69,7 @@ const CourseHeader = () => {
             />
           </div>
           <motion.a
-            href="https://wa.me/5548984587067"
+            href="https://wa.me/5548988559491"
             className="bg-[#d400ff] text-white px-6 py-2 rounded-full font-semibold hover:bg-[#b300dd] transition-all duration-300"
             whileHover={{ scale: 1.05, boxShadow: "0 0 20px #d400ff55" }}
           >
@@ -165,16 +165,16 @@ const CourseHero = () => {
               transition={{ delay: 0.6 }}
             >
               <motion.a
-                href="https://wa.me/5548984587067"
+                href="https://wa.me/5548988559491"
                 className="bg-[#d400ff] text-white px-8 py-4 rounded-full font-semibold text-lg inline-flex items-center gap-2 justify-center hover:bg-[#b300dd] transition-all duration-300"
                 whileHover={{ scale: 1.05, boxShadow: "0 0 30px #d400ff88" }}
               >
                 <MessageCircle size={20} />
-                Garanta sua Vaga - 10x R$ 399,90
+                Garanta sua Vaga - 10x R$ 279,30
               </motion.a>
               
               <motion.a
-                href="https://wa.me/5548984587067"
+                href="https://wa.me/5548988559491"
                 className="border-2 border-[#d400ff] text-[#d400ff] px-8 py-4 rounded-full font-semibold text-lg hover:bg-[#d400ff] hover:text-white transition-all duration-300 inline-flex items-center gap-2 justify-center"
                 whileHover={{ scale: 1.05 }}
               >
@@ -906,11 +906,11 @@ const FinalCTA = () => {
             <span className="text-yellow-300 font-bold">15 vagas restantes</span>
           </motion.div>
           <p className="text-xl text-gray-200 mb-4 max-w-3xl mx-auto">
-            <span className="line-through text-gray-400 text-lg">De R$ 4.999,00</span>
+            <span className="line-through text-gray-400 text-lg">De R$ 4.655,00</span>
             <br />
-            <strong className="text-3xl text-white">Por apenas R$ 3.999,00 à vista</strong>
+            <strong className="text-3xl text-white">Por apenas R$ 2.793,00 à vista</strong>
             <br />
-            <span className="text-xl">ou <strong className="text-green-400">10x de R$ 399,90</strong> sem juros</span>
+            <span className="text-xl">ou <strong className="text-green-400">10x de R$ 279,30</strong> sem juros</span>
           </p>
           <div className="flex flex-wrap justify-center gap-6 text-gray-300 mb-8">
             <span className="flex items-center gap-2">
@@ -949,7 +949,7 @@ const FinalCTA = () => {
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <motion.a
-              href="https://wa.me/5548984587067"
+              href="https://wa.me/5548988559491"
               className="bg-gradient-to-r from-[#d400ff] to-[#b300dd] text-white px-12 py-6 rounded-full font-bold text-xl inline-flex items-center gap-3 hover:from-[#b300dd] hover:to-[#9000bb] transition-all duration-300 shadow-2xl"
               whileHover={{ 
                 scale: 1.05, 
@@ -959,7 +959,7 @@ const FinalCTA = () => {
               whileTap={{ scale: 0.95 }}
             >
               <MessageCircle size={24} />
-              Garantir Vaga - 10x R$ 399,90
+              Garantir Vaga - 10x R$ 279,30
             </motion.a>
             
             <motion.button
@@ -1038,7 +1038,7 @@ const FinalCTA = () => {
               <div className="space-y-4">
                 <div>
                   <p className="text-gray-600 text-sm">WhatsApp / Telefone</p>
-                  <p className="text-xl font-bold text-gray-900">(48) 98458-7067</p>
+                  <p className="text-xl font-bold text-gray-900">(48) 98855-9491</p>
                 </div>
                 <motion.a
                   href="https://wa.me/5548984587067?text=Olá! Gostaria de mais informações sobre o curso Do Esboço ao Render."

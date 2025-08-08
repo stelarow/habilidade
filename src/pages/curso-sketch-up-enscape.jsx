@@ -57,6 +57,20 @@ const CourseHeader = memo(() => {
     navigate('/');
   }, [navigate]);
 
+  const scrollToSection = useCallback((sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      const offset = 80; // Header height
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+      
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
+  }, []);
+
   useEffect(() => {
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
@@ -91,8 +105,37 @@ const CourseHeader = memo(() => {
               }}
             />
           </div>
+          
+          {/* Navigation Menu */}
+          <nav className="hidden md:flex items-center gap-6">
+            <button
+              onClick={() => scrollToSection('curriculo')}
+              className="text-white hover:text-[#d400ff] transition-colors font-medium"
+            >
+              Currículo
+            </button>
+            <button
+              onClick={() => scrollToSection('depoimentos')}
+              className="text-white hover:text-[#d400ff] transition-colors font-medium"
+            >
+              Depoimentos
+            </button>
+            <button
+              onClick={() => scrollToSection('faq')}
+              className="text-white hover:text-[#d400ff] transition-colors font-medium"
+            >
+              FAQ
+            </button>
+            <button
+              onClick={() => scrollToSection('contato')}
+              className="text-white hover:text-[#d400ff] transition-colors font-medium"
+            >
+              Contato
+            </button>
+          </nav>
+
           <motion.a
-            href="https://wa.me/5548984587067"
+            href="https://wa.me/5548988559491"
             className="bg-[#d400ff] text-white px-6 py-2 rounded-full font-semibold hover:bg-[#b300dd] transition-all duration-300"
             whileHover={{ scale: 1.05, boxShadow: "0 0 20px #d400ff55" }}
           >
@@ -204,16 +247,16 @@ const CourseHero = memo(() => {
               transition={{ delay: 0.6 }}
             >
               <motion.a
-                href="https://wa.me/5548984587067"
+                href="https://wa.me/5548988559491"
                 className="bg-[#d400ff] text-white px-8 py-4 rounded-full font-semibold text-lg inline-flex items-center gap-2 justify-center hover:bg-[#b300dd] transition-all duration-300"
                 whileHover={{ scale: 1.05, boxShadow: "0 0 30px #d400ff88" }}
               >
                 <MessageCircle size={20} />
-                Garanta sua Vaga - 10x R$ 399,90
+                Garanta sua Vaga - 10x R$ 279,30
               </motion.a>
               
               <motion.a
-                href="https://wa.me/5548984587067"
+                href="https://wa.me/5548988559491"
                 className="border-2 border-[#d400ff] text-[#d400ff] px-8 py-4 rounded-full font-semibold text-lg hover:bg-[#d400ff] hover:text-white transition-all duration-300 inline-flex items-center gap-2 justify-center"
                 whileHover={{ scale: 1.05 }}
               >
@@ -456,7 +499,7 @@ ModuleSection.displayName = 'ModuleSection';
 const Curriculum = memo(() => {
 
   return (
-    <section className="py-20 bg-gradient-radial from-[#110011] to-black">
+    <section id="curriculo" className="py-20 bg-gradient-radial from-[#110011] to-black">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -767,7 +810,7 @@ const CourseTestimonials = memo(() => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-20 bg-gradient-radial from-[#110011] to-black">
+    <section id="depoimentos" ref={sectionRef} className="py-20 bg-gradient-radial from-[#110011] to-black">
       <div className="container mx-auto px-4">
         <motion.div
           initial={prefersReducedMotion ? {} : { opacity: 0, y: 30 }}
@@ -1048,6 +1091,100 @@ const FloatingElements = memo(() => {
 
 FloatingElements.displayName = 'FloatingElements';
 
+// Componente FAQ
+const FAQ = memo(() => {
+  const [openItem, setOpenItem] = useState(null);
+  
+  const faqItems = [
+    {
+      question: "Qual é a duração do curso?",
+      answer: "O curso tem duração total de 56 horas, divididas em 28 aulas práticas de 2 horas cada. As aulas são ministradas presencialmente em nossa sede em São José/SC."
+    },
+    {
+      question: "Preciso ter conhecimento prévio?",
+      answer: "Não é necessário conhecimento prévio. O curso é estruturado do básico ao avançado, ideal tanto para iniciantes quanto para profissionais que desejam aprimorar suas habilidades."
+    },
+    {
+      question: "O certificado é reconhecido?",
+      answer: "Sim! Ao concluir o curso você recebe um certificado de conclusão válido em todo território nacional, que comprova suas 56 horas de capacitação profissional."
+    },
+    {
+      question: "Como funciona o suporte vitalício?",
+      answer: "Após a conclusão do curso, você continua tendo acesso ao nosso suporte técnico para tirar dúvidas sobre os softwares, mesmo depois de formado. É um diferencial exclusivo da Escola Habilidade."
+    },
+    {
+      question: "Posso parcelar o pagamento?",
+      answer: "Sim! Oferecemos parcelamento em até 10x de R$ 279,30 sem juros no cartão de crédito. Também aceitamos pagamento à vista com desconto especial."
+    },
+    {
+      question: "As aulas são ao vivo ou gravadas?",
+      answer: "Todas as aulas são 100% presenciais e ao vivo, com acompanhamento individual do professor. Isso garante melhor aprendizado e networking com outros profissionais da área."
+    }
+  ];
+
+  return (
+    <section id="faq" className="py-20 bg-gray-50">
+      <div className="container mx-auto px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            Perguntas <span className="text-[#d400ff]">Frequentes</span>
+          </h2>
+          <p className="text-xl text-gray-700 max-w-3xl mx-auto">
+            Tire suas dúvidas sobre o curso
+          </p>
+        </motion.div>
+
+        <div className="max-w-3xl mx-auto space-y-4">
+          {faqItems.map((item, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="bg-white rounded-lg shadow-md overflow-hidden"
+            >
+              <button
+                onClick={() => setOpenItem(openItem === index ? null : index)}
+                className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
+              >
+                <span className="font-semibold text-gray-900">{item.question}</span>
+                <ChevronDown 
+                  className={`text-[#d400ff] transition-transform ${
+                    openItem === index ? 'rotate-180' : ''
+                  }`}
+                  size={20}
+                />
+              </button>
+              <motion.div
+                initial={false}
+                animate={{
+                  height: openItem === index ? "auto" : 0,
+                  opacity: openItem === index ? 1 : 0
+                }}
+                transition={{ duration: 0.3 }}
+                className="overflow-hidden"
+              >
+                <div className="px-6 pb-4 text-gray-700">
+                  {item.answer}
+                </div>
+              </motion.div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+});
+
+FAQ.displayName = 'FAQ';
+
 const FinalCTA = memo(() => {
   const prefersReducedMotion = useReducedMotion();
   const [isVisible, setIsVisible] = useState(false);
@@ -1071,7 +1208,7 @@ const FinalCTA = memo(() => {
   }, []);
   
   return (
-    <section ref={sectionRef} className="relative py-20 overflow-hidden">
+    <section id="contato" ref={sectionRef} className="relative py-20 overflow-hidden">
       {/* Background com foto de projeto - Optimized */}
       <div className="absolute inset-0">
         <img 
@@ -1202,6 +1339,7 @@ const CursoSketchUpEnscape = memo(() => {
       <CourseProjects />
       <CourseTestimonials />
       <CompaniesSection />
+      <FAQ />
       <FinalCTA />
     </div>
   );
