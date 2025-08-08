@@ -107,6 +107,7 @@ const BlogIndex = ({ initialPosts = [], initialCategories = [], totalPosts = 0, 
       <BlogLayout
         title="Blog - Escola Habilidade"
         description="Artigos sobre tecnologia, educação e carreira. Aprenda com nossos especialistas."
+        path="/blog"
       >
         <BlogLoading />
       </BlogLayout>
@@ -144,6 +145,7 @@ const BlogIndex = ({ initialPosts = [], initialCategories = [], totalPosts = 0, 
     <BlogLayout
       title="Blog - Escola Habilidade"
       description="Artigos sobre tecnologia, educação e carreira. Aprenda com nossos especialistas e mantenha-se atualizado com as últimas tendências."
+      path="/blog"
     >
       <BlogGridContainer>
         <BlogGridSection

@@ -8,13 +8,15 @@ const BlogLayout = ({
   description = "Artigos sobre tecnologia, educação e desenvolvimento de carreira",
   breadcrumbs = [],
   showBlogHeader = true,
-  className = ""
+  className = "",
+  path = "/blog"  // Add path parameter
 }) => {
   return (
     <>
       <SEOHead 
         title={title}
         description={description}
+        path={path}
         type="website"
       />
       
