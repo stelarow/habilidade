@@ -1028,7 +1028,7 @@ const FinalCTA = () => {
       </div>
       
       {/* Seção de Localização */}
-      <div className="container mx-auto px-4 mt-16">
+      <div className="relative z-20 container mx-auto px-4 mt-16">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -1038,7 +1038,7 @@ const FinalCTA = () => {
         >
           <div className="grid md:grid-cols-2 gap-8">
             {/* Informações de Localização */}
-            <div className="bg-white rounded-xl p-6 shadow-lg">
+            <div className="relative z-30 bg-white rounded-xl p-6 shadow-lg">
               <div className="flex items-center gap-3 mb-4">
                 <MapPin className="text-purple-600" size={24} />
                 <h3 className="text-xl font-bold text-gray-900">Nossa Localização</h3>
@@ -1061,7 +1061,7 @@ const FinalCTA = () => {
             </div>
 
             {/* Informações de Contato */}
-            <div className="bg-white rounded-xl p-6 shadow-lg">
+            <div className="relative z-30 bg-white rounded-xl p-6 shadow-lg">
               <div className="flex items-center gap-3 mb-4">
                 <Phone className="text-purple-600" size={24} />
                 <h3 className="text-xl font-bold text-gray-900">Contato Direto</h3>
