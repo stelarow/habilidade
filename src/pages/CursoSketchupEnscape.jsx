@@ -33,7 +33,7 @@ const CourseHeader = () => {
 
   return (
     <motion.header 
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+      className={`fixed top-0 w-full z-[60] transition-all duration-300 ${
         isScrolled ? 'bg-black/90 backdrop-blur-md' : 'bg-transparent'
       }`}
       initial={{ y: -100 }}
@@ -62,12 +62,14 @@ const CourseHeader = () => {
           <nav className="hidden lg:flex items-center gap-6 text-white">
             <button
               className="hover:text-purple-400 transition-colors font-medium cursor-pointer"
-              onClick={() => {
-                console.log('Clicou no Curriculo');
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('Clicou no Curriculo - Course Header');
                 const element = document.getElementById('curriculum');
                 console.log('Element found:', element);
                 if (element) {
-                  const headerOffset = 80;
+                  const headerOffset = 100; // Increased offset for the taller course header
                   const elementPosition = element.offsetTop;
                   const offsetPosition = elementPosition - headerOffset;
                   console.log('Scrolling to:', offsetPosition);
@@ -84,12 +86,14 @@ const CourseHeader = () => {
             </button>
             <button
               className="hover:text-purple-400 transition-colors font-medium cursor-pointer"
-              onClick={() => {
-                console.log('Clicou no Depoimentos');
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('Clicou no Depoimentos - Course Header');
                 const element = document.getElementById('testimonials');
                 console.log('Element found:', element);
                 if (element) {
-                  const headerOffset = 80;
+                  const headerOffset = 100; // Increased offset for the taller course header
                   const elementPosition = element.offsetTop;
                   const offsetPosition = elementPosition - headerOffset;
                   console.log('Scrolling to:', offsetPosition);
@@ -106,12 +110,14 @@ const CourseHeader = () => {
             </button>
             <button
               className="hover:text-purple-400 transition-colors font-medium cursor-pointer"
-              onClick={() => {
-                console.log('Clicou no Contatos');
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('Clicou no Contatos - Course Header');
                 const element = document.getElementById('contact');
                 console.log('Element found:', element);
                 if (element) {
-                  const headerOffset = 80;
+                  const headerOffset = 100; // Increased offset for the taller course header
                   const elementPosition = element.offsetTop;
                   const offsetPosition = elementPosition - headerOffset;
                   console.log('Scrolling to:', offsetPosition);

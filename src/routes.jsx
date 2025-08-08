@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 import Layout from './Layout.jsx';
+import CourseLayout from './CourseLayout.jsx';
 import Loading from './components/Loading';
 
 // Importações com lazy loading para code splitting
@@ -104,10 +105,6 @@ export const routes = [
         path: 'cursos-palhoca',
         element: <Suspense fallback={<Loading />}><CursosPalhoca /></Suspense>
       },
-      {
-        path: 'cursos/sketchup-enscape',
-        element: <Suspense fallback={<Loading />}><CursoSketchupEnscape /></Suspense>
-      },
       // Redirects para compatibilidade
       {
         path: 'habilidade',
@@ -124,6 +121,17 @@ export const routes = [
       {
         path: '*',
         lazy: () => import('./pages/NotFound')
+      }
+    ]
+  },
+  // Rotas de curso com layout específico (sem header global)
+  {
+    path: '/cursos/sketchup-enscape',
+    element: <CourseLayout />,
+    children: [
+      {
+        index: true,
+        element: <Suspense fallback={<Loading />}><CursoSketchupEnscape /></Suspense>
       }
     ]
   }
