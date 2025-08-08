@@ -125,7 +125,7 @@ const CourseHero = memo(() => {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 bg-gradient-radial from-[#110011] to-black"></div>
       
-      {/* Background com renderização 3D - Optimized */}
+      {/* Background com renderização 3D */}
       <div className="absolute inset-0">
         <img 
           src="/assets/cursos/sketchup-enscape/architectural-render-bg.jpeg"
@@ -241,14 +241,14 @@ const CourseHero = memo(() => {
                 <img 
                   src="/assets/cursos/sketchup-enscape/render-1.jpeg"
                   alt="Renderização Interior"
-                  className="rounded-xl shadow-xl w-full h-48 object-cover border border-[#d400ff]/20"
+                  className="rounded-xl shadow-2xl w-full h-48 object-cover border-2 border-[#d400ff]/30"
                   loading="lazy"
                   decoding="async"
                 />
                 <img 
                   src="/assets/cursos/sketchup-enscape/render-2.jpeg"
                   alt="Renderização Exterior"
-                  className="rounded-xl shadow-xl w-full h-32 object-cover"
+                  className="rounded-xl shadow-2xl w-full h-32 object-cover"
                   loading="lazy"
                   decoding="async"
                 />
@@ -262,14 +262,14 @@ const CourseHero = memo(() => {
                 <img 
                   src="/assets/cursos/sketchup-enscape/render-3.jpeg"
                   alt="Renderização Cozinha"
-                  className="rounded-xl shadow-xl w-full h-32 object-cover"
+                  className="rounded-xl shadow-2xl w-full h-32 object-cover"
                   loading="lazy"
                   decoding="async"
                 />
                 <img 
                   src="/assets/cursos/sketchup-enscape/render-4.jpeg"
                   alt="Renderização Quarto"
-                  className="rounded-xl shadow-xl w-full h-48 object-cover border border-[#d400ff]/20"
+                  className="rounded-xl shadow-2xl w-full h-48 object-cover border-2 border-[#d400ff]/30"
                   loading="lazy"
                   decoding="async"
                 />
@@ -401,7 +401,7 @@ const ModuleSection = memo(({ title, lessons, icon: IconComponent }) => {
       >
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <div className={`w-12 h-12 bg-[#d400ff] rounded-lg flex items-center justify-center`}>
+            <div className="w-12 h-12 bg-[#d400ff] rounded-lg flex items-center justify-center">
               <IconComponent className="text-white" size={24} />
             </div>
             <div>
@@ -652,40 +652,105 @@ const CompaniesSection = memo(() => {
           </p>
         </motion.div>
 
-        {/* Simplified company showcase - Static grid for better performance */}
+        {/* Carrossel infinito de logos - Como na referência */}
         {isVisible && (
-          <div className="max-w-7xl mx-auto">
-            {prefersReducedMotion ? (
-              // Static grid for reduced motion
-              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
-                {getCompaniesData().map((company, index) => (
-                  <CompanyCard
-                    key={`company-${company.name}-${index}`}
-                    company={company}
-                    index={index}
-                  />
-                ))}
-              </div>
-            ) : (
-              // Simplified carousel
-              <div className="relative overflow-hidden">
-                <motion.div 
-                  className="flex space-x-8"
-                  animate={carouselAnimation}
+          <div className="relative overflow-hidden max-w-7xl mx-auto">
+            <motion.div 
+              className="flex space-x-8"
+              animate={{
+                x: [0, -(208 * getCompaniesData().length)] // 200px largura + 8px gap
+              }}
+              transition={{
+                x: {
+                  repeat: Infinity,
+                  repeatType: "loop",
+                  duration: 120, // 120 segundos para completar um loop
+                  ease: "linear"
+                }
+              }}
+            >
+              {/* Primeira sequência de logos */}
+              {getCompaniesData().map((company, index) => (
+                <motion.div
+                  key={`first-${index}`}
+                  className="group bg-gray-50 rounded-xl p-6 hover:bg-white hover:shadow-lg transition-all duration-300 flex flex-col items-center justify-center min-w-[200px] flex-shrink-0"
+                  whileHover={{ 
+                    y: -5,
+                    boxShadow: "0 10px 30px rgba(212, 0, 255, 0.15)",
+                    scale: 1.05
+                  }}
                 >
-                  {getCompaniesData().concat(getCompaniesData().slice(0, 2)).map((company, index) => (
-                    <CompanyCard
-                      key={`company-${company.name}-${index}`}
-                      company={company}
-                      index={index}
+                  <div className="w-20 h-20 flex items-center justify-center mb-4 rounded-lg bg-white shadow-sm group-hover:shadow-md transition-shadow">
+                    <img 
+                      src={company.logo}
+                      alt={company.name}
+                      className="max-w-full max-h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300"
+                      style={{ maxWidth: '80px', maxHeight: '80px' }}
                     />
-                  ))}
+                  </div>
+                  <div className="text-center">
+                    <h3 className="font-semibold text-gray-900 text-sm mb-1">{company.name}</h3>
+                    <p className="text-xs text-gray-600">{company.description}</p>
+                  </div>
                 </motion.div>
-                {/* Simplified gradients */}
-                <div className="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
-                <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
-              </div>
-            )}
+              ))}
+              
+              {/* Segunda sequência de logos (para continuidade perfeita) */}
+              {getCompaniesData().map((company, index) => (
+                <motion.div
+                  key={`second-${index}`}
+                  className="group bg-gray-50 rounded-xl p-6 hover:bg-white hover:shadow-lg transition-all duration-300 flex flex-col items-center justify-center min-w-[200px] flex-shrink-0"
+                  whileHover={{ 
+                    y: -5,
+                    boxShadow: "0 10px 30px rgba(212, 0, 255, 0.15)",
+                    scale: 1.05
+                  }}
+                >
+                  <div className="w-20 h-20 flex items-center justify-center mb-4 rounded-lg bg-white shadow-sm group-hover:shadow-md transition-shadow">
+                    <img 
+                      src={company.logo}
+                      alt={company.name}
+                      className="max-w-full max-h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300"
+                      style={{ maxWidth: '80px', maxHeight: '80px' }}
+                    />
+                  </div>
+                  <div className="text-center">
+                    <h3 className="font-semibold text-gray-900 text-sm mb-1">{company.name}</h3>
+                    <p className="text-xs text-gray-600">{company.description}</p>
+                  </div>
+                </motion.div>
+              ))}
+              
+              {/* Terceira sequência para garantir continuidade */}
+              {getCompaniesData().slice(0, 3).map((company, index) => (
+                <motion.div
+                  key={`third-${index}`}
+                  className="group bg-gray-50 rounded-xl p-6 hover:bg-white hover:shadow-lg transition-all duration-300 flex flex-col items-center justify-center min-w-[200px] flex-shrink-0"
+                  whileHover={{ 
+                    y: -5,
+                    boxShadow: "0 10px 30px rgba(212, 0, 255, 0.15)",
+                    scale: 1.05
+                  }}
+                >
+                  <div className="w-20 h-20 flex items-center justify-center mb-4 rounded-lg bg-white shadow-sm group-hover:shadow-md transition-shadow">
+                    <img 
+                      src={company.logo}
+                      alt={company.name}
+                      className="max-w-full max-h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300"
+                      style={{ maxWidth: '80px', maxHeight: '80px' }}
+                    />
+                  </div>
+                  <div className="text-center">
+                    <h3 className="font-semibold text-gray-900 text-sm mb-1">{company.name}</h3>
+                    <p className="text-xs text-gray-600">{company.description}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+            
+            {/* Gradientes nas bordas para efeito de fade */}
+            <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
+            <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
           </div>
         )}
 
@@ -712,68 +777,50 @@ const CompaniesSection = memo(() => {
 
 CompaniesSection.displayName = 'CompaniesSection';
 
-// Testimonial Card Component - Memoized for performance
-const TestimonialCard = memo(({ testimonial, index }) => {
-  const prefersReducedMotion = useReducedMotion();
-  
-  return (
-    <motion.div
-      className="bg-[#1b1b1f] border border-[#d400ff33] rounded-xl p-6 text-center"
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
-      whileHover={prefersReducedMotion ? {} : { 
-        boxShadow: "0 0 20px #d400ff55",
-        scale: 1.02
-      }}
-    >
-      <div className="w-16 h-16 bg-[#d400ff] rounded-full flex items-center justify-center mx-auto mb-4">
-        <span className="text-white text-xl font-bold">
-          {testimonial.initials}
-        </span>
-      </div>
-      <p className="text-gray-300 italic text-sm mb-4 leading-relaxed line-clamp-6">
-        "{testimonial.text}"
-      </p>
-      <div className="font-bold text-white text-lg">{testimonial.name}</div>
-    </motion.div>
-  );
-});
 
-TestimonialCard.displayName = 'TestimonialCard';
-
-// Componente Depoimentos específicos - Optimized for performance
-const CourseTestimonials = memo(() => {
-  const prefersReducedMotion = useReducedMotion();
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { rootMargin: '50px', threshold: 0.1 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+// Componente Depoimentos específicos
+const CourseTestimonials = () => {
+  const testimonials = [
+    {
+      name: "Jonatas Torres",
+      initials: "JT",
+      text: "Estou tendo uma excelente experiência com a escola habilidade no curso de SketchUp. O conteúdo é muito bem estruturado, o professor domina o assunto e sabe explicar de forma clara, mesmo para quem está começando. A dinâmica das aulas, os exercícios práticos e o suporte oferecido fazem toda a diferença no aprendizado. Já estou colocando em prática o que aprendi. Recomendo fortemente a escola para quem deseja aprender SketchUp com qualidade, atenção individualizada e foco na aplicação prática. Vale muito a pena!"
+    },
+    {
+      name: "Karolain Roberta Régis",
+      initials: "KR",
+      text: "Estou fazendo o curso e estou adorando, professor atencioso, com atividades super dinâmicas, aprendi ja bastante coisas que ainda não sabia, estão super atualizados no mercado, eles tem deles mesmo até IA ajudando o pessoal nas medições e até em render rapidos, fora a apostila bem completa"
+    },
+    {
+      name: "Rute Barboza",
+      initials: "RB",
+      text: "Fiz todos os cursos de projeto com o professor Alessandro, me ajudou demais a colocar as coisas que antes eram apenas sonhos nos meus projetos. Hoje meus clientes conseguem ver o projeto de uma forma realista por conta do meu aprendizado em renderização. Agradeço demais ao trabalho da Escola Habilidade e do professor!!!"
+    },
+    {
+      name: "Ana Caroline Orofino",
+      initials: "AC",
+      text: "Estou adorando as aulas, professor muito atencioso, sempre trás questões do cotidiano para resolução das atividades!"
+    },
+    {
+      name: "Sabrina Rodrigues",
+      initials: "SR",
+      text: "Comecei o curso de sketchup e está sendo uma experiência incrível, o professor é muito atencioso. Estou com grandes expectativas."
+    },
+    {
+      name: "Milene Silva",
+      initials: "MS",
+      text: "A escola apresenta uma boa estrutura, o professor é bem atencioso e prestativo, sempre pronto para esclarecer dúvidas durante e fora do horário de aula. Estou adorando."
     }
-
-    return () => observer.disconnect();
-  }, []);
+  ];
 
   return (
-    <section ref={sectionRef} className="py-20 bg-gradient-radial from-[#110011] to-black">
+    <section className="py-20 bg-gradient-radial from-[#110011] to-black">
       <div className="container mx-auto px-4">
         <motion.div
-          initial={prefersReducedMotion ? {} : { opacity: 0, y: 30 }}
-          animate={isVisible ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: prefersReducedMotion ? 0 : 0.6 }}
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
@@ -781,23 +828,36 @@ const CourseTestimonials = memo(() => {
           </h2>
         </motion.div>
 
-        {isVisible && (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            {getTestimonialsData().map((testimonial, index) => (
-              <TestimonialCard
-                key={testimonial.name}
-                testimonial={testimonial}
-                index={index}
-              />
-            ))}
-          </div>
-        )}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+          {testimonials.map((testimonial, index) => (
+            <motion.div
+              key={index}
+              className="bg-[#1b1b1f] border border-[#d400ff33] rounded-xl p-6 text-center"
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              whileHover={{ 
+                boxShadow: "0 0 20px #d400ff55",
+                scale: 1.02
+              }}
+            >
+              <div className="w-16 h-16 bg-[#d400ff] rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-white text-xl font-bold">
+                  {testimonial.initials}
+                </span>
+              </div>
+              <p className="text-gray-300 italic text-sm mb-4 leading-relaxed line-clamp-6">
+                "{testimonial.text}"
+              </p>
+              <div className="font-bold text-white text-lg">{testimonial.name}</div>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   );
-});
-
-CourseTestimonials.displayName = 'CourseTestimonials';
+};
 
 // Componente CTA Final
 // Sub-componentes do CTA Final - Optimized with memo
@@ -809,27 +869,20 @@ const OfferBadge = memo(() => {
       className="inline-flex items-center gap-3 bg-gradient-to-r from-[#d400ff]/20 to-purple-600/20 backdrop-blur-sm border border-[#d400ff]/30 text-white px-6 py-3 rounded-xl text-lg font-semibold mb-6"
       animate={prefersReducedMotion ? {} : { 
         boxShadow: [
-          "0 0 15px rgba(212, 0, 255, 0.2)",
-          "0 0 25px rgba(212, 0, 255, 0.4)",
-          "0 0 15px rgba(212, 0, 255, 0.2)"
+          "0 0 20px rgba(212, 0, 255, 0.3)",
+          "0 0 30px rgba(212, 0, 255, 0.5)",
+          "0 0 20px rgba(212, 0, 255, 0.3)"
         ]
       }}
-      transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+      transition={{ duration: 2, repeat: Infinity }}
     >
       <motion.div
-        animate={prefersReducedMotion ? {} : { rotate: [0, 5, -5, 0] }}
-        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+        animate={prefersReducedMotion ? {} : { rotate: [0, 10, -10, 0] }}
+        transition={{ duration: 2, repeat: Infinity }}
       >
         <AlertCircle size={20} className="text-[#d400ff]" />
       </motion.div>
-      <span 
-        className="bg-gradient-to-r from-white to-[#d400ff] bg-clip-text text-transparent"
-        style={{
-          WebkitTextFillColor: 'transparent',
-          WebkitBackgroundClip: 'text',
-          fallbacks: [{ color: '#d400ff' }]
-        }}
-      >
+      <span className="bg-gradient-to-r from-white to-[#d400ff] bg-clip-text text-transparent">
         OFERTA LIMITADA
       </span>
       <span className="text-gray-300">•</span>
@@ -842,11 +895,11 @@ OfferBadge.displayName = 'OfferBadge';
 
 const PricingInfo = memo(() => (
   <p className="text-xl text-gray-200 mb-4 max-w-3xl mx-auto">
-    <span className="line-through text-gray-400 text-lg">De {PRICING.originalPrice}</span>
+    <span className="line-through text-gray-400 text-lg">De R$ 4.999,00</span>
     <br />
-    <strong className="text-3xl text-white">Por apenas {PRICING.cashPrice} à vista</strong>
+    <strong className="text-3xl text-white">Por apenas R$ 3.999,00 à vista</strong>
     <br />
-    <span className="text-xl">ou <strong className="text-green-400">{PRICING.installments}x de {PRICING.installmentPrice}</strong> sem juros</span>
+    <span className="text-xl">ou <strong className="text-green-400">10x de R$ 399,90</strong> sem juros</span>
   </p>
 ));
 
@@ -899,13 +952,13 @@ const CTAButtons = memo(() => {
   return (
     <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
       <motion.a
-        href={PRICING.whatsappLink}
+        href="https://wa.me/5548984587067"
         className="bg-gradient-to-r from-[#d400ff] to-[#b300dd] text-white px-12 py-6 rounded-full font-bold text-xl inline-flex items-center gap-3 hover:from-[#b300dd] hover:to-[#9000bb] transition-all duration-300 shadow-2xl"
         whileHover={primaryButtonHover}
         whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
       >
         <MessageCircle size={24} />
-        Garantir Vaga - {PRICING.installments}x {PRICING.installmentPrice}
+        Garantir Vaga - 10x R$ 399,90
       </motion.a>
       
       <motion.button
@@ -929,7 +982,7 @@ const OfferDetails = memo(() => (
     <div className="flex flex-wrap justify-center gap-6 text-gray-300 text-sm">
       <span className="flex items-center gap-1">
         <CheckCircle size={16} className="text-green-400" />
-        Pagamento em até {PRICING.installments}x sem juros
+        Pagamento em até 10x sem juros
       </span>
       <span className="flex items-center gap-1">
         <CheckCircle size={16} className="text-green-400" />
@@ -955,12 +1008,12 @@ const LocationCard = memo(() => {
         <h3 className="text-xl font-bold text-gray-900" style={{ color: '#111827', fontWeight: '700', fontSize: '1.25rem' }}>Nossa Localização</h3>
       </div>
       <div className="space-y-2 text-gray-700" style={{ color: '#374151' }}>
-        <p className="font-semibold" style={{ fontWeight: '600', color: '#374151' }}>{CONTACT_INFO.address.street}</p>
-        <p style={{ color: '#374151' }}>{CONTACT_INFO.address.complement}</p>
-        <p style={{ color: '#374151' }}>{CONTACT_INFO.address.city}</p>
+        <p className="font-semibold" style={{ fontWeight: '600', color: '#374151' }}>R. Caetano José Ferreira, 426</p>
+        <p style={{ color: '#374151' }}>Sala 5 - Kobrasol</p>
+        <p style={{ color: '#374151' }}>São José - SC, 88102-280</p>
       </div>
       <motion.a
-        href={CONTACT_INFO.mapsUrl}
+        href="https://maps.google.com/maps?q=R.+Caetano+José+Ferreira,+426,+Sala+5+-+Kobrasol,+São+José+-+SC,+88102-280"
         target="_blank"
         rel="noopener noreferrer"
         className="inline-flex items-center gap-2 mt-4 text-[#d400ff] hover:text-[#b300dd] font-semibold"
@@ -980,7 +1033,7 @@ const ContactCard = memo(() => {
   const prefersReducedMotion = useReducedMotion();
   
   const whatsappMessage = useMemo(() => 
-    `https://wa.me/${CONTACT_INFO.whatsapp}?text=Olá! Gostaria de mais informações sobre o curso Do Esboço ao Render.`,
+    `https://wa.me/5548984587067?text=Olá! Gostaria de mais informações sobre o curso Do Esboço ao Render.`,
     []
   );
   
@@ -993,7 +1046,7 @@ const ContactCard = memo(() => {
       <div className="space-y-4">
         <div>
           <p className="text-gray-600 text-sm" style={{ color: '#4b5563', fontSize: '0.875rem' }}>WhatsApp / Telefone</p>
-          <p className="text-xl font-bold text-gray-900" style={{ color: '#111827', fontSize: '1.25rem', fontWeight: '700' }}>{CONTACT_INFO.phone}</p>
+          <p className="text-xl font-bold text-gray-900" style={{ color: '#111827', fontSize: '1.25rem', fontWeight: '700' }}>(48) 98458-7067</p>
         </div>
         <motion.a
           href={whatsappMessage}
@@ -1016,37 +1069,26 @@ ContactCard.displayName = 'ContactCard';
 const FloatingElements = memo(() => {
   const prefersReducedMotion = useReducedMotion();
   
-  // Reduce elements for better performance
-  const elements = useMemo(() => 
-    Array.from({length: 6}).map((_, index) => ({
-      key: index,
-      left: `${(index * 30 + 10) % 90}%`,
-      top: `${(index * 25 + 15) % 70}%`,
-      delay: index * 0.8
-    })), []
-  );
-  
   if (prefersReducedMotion) return null;
   
   return (
     <div className="absolute inset-0 pointer-events-none">
-      {elements.map((element) => (
+      {[...Array(15)].map((_, i) => (
         <motion.div
-          key={element.key}
-          className="absolute w-1 h-1 bg-[#d400ff]/40 rounded-full"
+          key={i}
+          className="absolute w-1 h-1 bg-[#d400ff] rounded-full"
           style={{
-            left: element.left,
-            top: element.top,
+            left: `${Math.random() * 100}%`,
+            top: `${Math.random() * 100}%`,
           }}
           animate={{
-            opacity: [0.1, 0.3, 0.1],
-            scale: [0.5, 1, 0.5],
+            opacity: [0.2, 0.6, 0.2],
+            scale: [0.5, 1.2, 0.5],
           }}
           transition={{
-            duration: 8, // Slower animation for less CPU usage
+            duration: 5,
             repeat: Infinity,
-            delay: element.delay,
-            ease: "easeInOut"
+            delay: Math.random() * 5,
           }}
         />
       ))}
@@ -1245,9 +1287,27 @@ const CursoSketchUpEnscape = memo(() => {
       <AboutCourse />
       <Curriculum />
       <CourseProjects />
-      <CourseTestimonials />
       <CompaniesSection />
+      <CourseTestimonials />
       <FinalCTA />
+      
+      {/* Floating WhatsApp Button */}
+      <motion.a
+        href="https://wa.me/5548984587067"
+        className="fixed bottom-6 right-6 z-50 w-16 h-16 bg-[#d400ff] rounded-full flex items-center justify-center shadow-lg"
+        whileHover={{ 
+          scale: 1.1,
+          boxShadow: "0 0 20px #d400ff88"
+        }}
+        animate={{ 
+          y: [0, -5, 0],
+        }}
+        transition={{ 
+          y: { duration: 2, repeat: Infinity }
+        }}
+      >
+        <MessageCircle className="text-white" size={24} />
+      </motion.a>
     </div>
   );
 });
