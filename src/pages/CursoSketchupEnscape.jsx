@@ -57,8 +57,45 @@ const CourseHeader = () => {
               className="h-10 w-auto"
             />
           </div>
+          
+          {/* Navigation Menu */}
+          <nav className="hidden lg:flex items-center gap-6 text-white">
+            <motion.a
+              href="#curriculum"
+              className="hover:text-purple-400 transition-colors font-medium"
+              whileHover={{ y: -1 }}
+              onClick={(e) => {
+                e.preventDefault();
+                document.getElementById('curriculum')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+            >
+              Currículo
+            </motion.a>
+            <motion.a
+              href="#testimonials"
+              className="hover:text-purple-400 transition-colors font-medium"
+              whileHover={{ y: -1 }}
+              onClick={(e) => {
+                e.preventDefault();
+                document.getElementById('testimonials')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+            >
+              Depoimentos
+            </motion.a>
+            <motion.a
+              href="#contact"
+              className="hover:text-purple-400 transition-colors font-medium"
+              whileHover={{ y: -1 }}
+              onClick={(e) => {
+                e.preventDefault();
+                document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+            >
+              Contatos
+            </motion.a>
+          </nav>
           <motion.a
-            href="https://wa.me/5548984587067"
+            href="https://wa.me/5548988559491"
             className="bg-purple-600 text-white px-6 py-2 rounded-full font-semibold hover:bg-purple-700 transition-all duration-300"
             whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(147, 51, 234, 0.3)" }}
           >
@@ -154,16 +191,16 @@ const CourseHero = () => {
               transition={{ delay: 0.6 }}
             >
               <motion.a
-                href="https://wa.me/5548984587067"
+                href="https://wa.me/5548988559491"
                 className="bg-purple-600 text-white px-8 py-4 rounded-full font-semibold text-lg inline-flex items-center gap-2 justify-center hover:bg-purple-700 transition-all duration-300"
                 whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(147, 51, 234, 0.5)" }}
               >
                 <MessageCircle size={20} />
-                Garanta sua Vaga - 10x R$ 399,90
+                Garanta sua Vaga - 10x R$ 279,30
               </motion.a>
               
               <motion.a
-                href="https://wa.me/5548984587067"
+                href="https://wa.me/5548988559491"
                 className="border-2 border-purple-400 text-purple-400 px-8 py-4 rounded-full font-semibold text-lg hover:bg-purple-400 hover:text-white transition-all duration-300 inline-flex items-center gap-2 justify-center"
                 whileHover={{ scale: 1.05 }}
               >
@@ -421,7 +458,7 @@ const Curriculum = () => {
   ];
 
   return (
-    <section className="py-20 bg-gradient-to-br from-purple-900 to-black">
+    <section id="curriculum" className="py-20 bg-gradient-to-br from-purple-900 to-black">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -777,7 +814,7 @@ const CourseTestimonials = () => {
   ];
 
   return (
-    <section className="py-20 bg-gradient-to-br from-purple-900 to-black">
+    <section id="testimonials" className="py-20 bg-gradient-to-br from-purple-900 to-black">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -825,7 +862,7 @@ const CourseTestimonials = () => {
 // Componente CTA Final
 const FinalCTA = () => {
   return (
-    <section className="relative py-20 overflow-hidden">
+    <section id="contact" className="relative py-20 overflow-hidden">
       {/* Background com foto de projeto */}
       <div className="absolute inset-0">
         <img 
@@ -896,11 +933,11 @@ const FinalCTA = () => {
             <span className="text-yellow-300 font-bold">15 vagas restantes</span>
           </motion.div>
           <p className="text-xl text-gray-200 mb-4 max-w-3xl mx-auto">
-            <span className="line-through text-gray-400 text-lg">De R$ 4.999,00</span>
+            <span className="line-through text-gray-400 text-lg">De R$ 4.655,00</span>
             <br />
-            <strong className="text-3xl text-white">Por apenas R$ 3.999,00 à vista</strong>
+            <strong className="text-3xl text-white">Por apenas R$ 2.793,00 à vista</strong>
             <br />
-            <span className="text-xl">ou <strong className="text-green-400">10x de R$ 399,90</strong> sem juros</span>
+            <span className="text-xl">ou <strong className="text-green-400">10x de R$ 279,30</strong> sem juros</span>
           </p>
           <div className="flex flex-wrap justify-center gap-6 text-gray-300 mb-8">
             <span className="flex items-center gap-2">
@@ -939,7 +976,7 @@ const FinalCTA = () => {
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <motion.a
-              href="https://wa.me/5548984587067"
+              href="https://wa.me/5548988559491"
               className="bg-gradient-to-r from-purple-600 to-purple-800 text-white px-12 py-6 rounded-full font-bold text-xl inline-flex items-center gap-3 hover:from-purple-700 hover:to-purple-900 transition-all duration-300 shadow-2xl"
               whileHover={{ 
                 scale: 1.05, 
@@ -949,11 +986,11 @@ const FinalCTA = () => {
               whileTap={{ scale: 0.95 }}
             >
               <MessageCircle size={24} />
-              Garantir Vaga - 10x R$ 399,90
+              Garantir Vaga - 10x R$ 279,30
             </motion.a>
             
             <motion.a
-              href="https://wa.me/5548984587067"
+              href="https://wa.me/5548988559491"
               className="border-2 border-purple-400 text-purple-400 px-8 py-6 rounded-full font-bold text-lg hover:bg-purple-400 hover:text-white transition-all duration-300 backdrop-blur-sm bg-white/10"
               whileHover={{ 
                 scale: 1.05,
@@ -1029,10 +1066,10 @@ const FinalCTA = () => {
               <div className="space-y-4">
                 <div>
                   <p className="text-gray-600 text-sm">WhatsApp / Telefone</p>
-                  <p className="text-xl font-bold text-gray-900">(48) 98458-7067</p>
+                  <p className="text-xl font-bold text-gray-900">(48) 98855-9491</p>
                 </div>
                 <motion.a
-                  href="https://wa.me/5548984587067?text=Olá! Gostaria de mais informações sobre o curso Do Esboço ao Render."
+                  href="https://wa.me/5548988559491?text=Olá! Gostaria de mais informações sobre o curso Do Esboço ao Render."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 font-semibold"
@@ -1066,7 +1103,7 @@ const CursoSketchupEnscape = () => {
       
       {/* Floating WhatsApp */}
       <motion.a
-        href="https://wa.me/5548984587067"
+        href="https://wa.me/5548988559491"
         className="fixed bottom-6 right-6 z-50 w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center shadow-lg"
         whileHover={{ 
           scale: 1.1,
