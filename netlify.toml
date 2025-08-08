@@ -17,6 +17,12 @@
   status = 301
   force = true
 
+[[redirects]]
+  from = "https://www.escolahabilidade.com.br/*"
+  to = "https://www.escolahabilidade.com/:splat"
+  status = 301
+  force = true
+
 # Headers for better performance
 [[headers]]
   for = "/*"

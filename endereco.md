@@ -14,12 +14,12 @@ Consolidar todo o tráfego e autoridade SEO no domínio principal `www.escolahab
 ## 🔍 Fase 1: Auditoria e Diagnóstico (1-2 dias)
 
 ### 1.1 Verificação de Redirects Atuais
-- [ ] Testar redirects existentes no `netlify.toml`:
-  - `escolahabilidade.com` → `www.escolahabilidade.com` 
-  - `escolahabilidade.com.br` → `www.escolahabilidade.com`
-- [ ] Verificar se `www.escolahabilidade.com.br` também redireciona corretamente
-- [ ] Testar redirects em diferentes páginas (não apenas homepage)
-- [ ] Verificar códigos de status (devem ser 301, não 302)
+- [x] Testar redirects existentes no `netlify.toml`:
+  - `escolahabilidade.com` → `www.escolahabilidade.com` ✅ (301)
+  - `escolahabilidade.com.br` → `www.escolahabilidade.com` ✅ (301)
+- [x] Verificar se `www.escolahabilidade.com.br` também redireciona corretamente ❌ **PROBLEMA: retorna 200**
+- [x] Testar redirects em diferentes páginas (não apenas homepage) ✅
+- [x] Verificar códigos de status (devem ser 301, não 302) ✅
 
 ### 1.2 Auditoria DNS
 - [ ] Verificar configuração DNS para ambos domínios (.com e .com.br)
@@ -27,16 +27,16 @@ Consolidar todo o tráfego e autoridade SEO no domínio principal `www.escolahab
 - [ ] Verificar TTL dos registros DNS
 
 ### 1.3 Teste de URLs Canônicas
-- [ ] Verificar se todas as páginas têm canonical URLs corretas
-- [ ] Testar em páginas principais: home, blog, cursos, páginas locais
-- [ ] Verificar se canonical aponta sempre para versão www.escolahabilidade.com
+- [x] Verificar se todas as páginas têm canonical URLs corretas ⚠️ **Blog tem canonical apontando para home**
+- [x] Testar em páginas principais: home, blog, cursos, páginas locais
+- [x] Verificar se canonical aponta sempre para versão www.escolahabilidade.com ✅
 
 ---
 
 ## ⚙️ Fase 2: Implementação e Otimização (2-3 dias)
 
 ### 2.1 Fortalecimento dos Redirects
-- [ ] Adicionar redirect explícito para `www.escolahabilidade.com.br` se necessário:
+- [x] Adicionar redirect explícito para `www.escolahabilidade.com.br` se necessário: ✅ **ADICIONADO**
 ```toml
 [[redirects]]
   from = "https://www.escolahabilidade.com.br/*"
@@ -63,7 +63,7 @@ Consolidar todo o tráfego e autoridade SEO no domínio principal `www.escolahab
 ## 🚀 Fase 3: Monitoramento e Validação (1-2 dias)
 
 ### 3.1 Testes Automatizados
-- [ ] Criar testes E2E para verificar redirects:
+- [x] Criar testes E2E para verificar redirects: ✅ **CRIADO** `src/tests/seo-redirects.test.js`
 ```javascript
 // Exemplo de teste
 test('Domain redirects work correctly', async () => {
