@@ -6,7 +6,7 @@ import { MapPin, Phone, WhatsappLogo, Clock, Car, Bus } from '@phosphor-icons/re
 const CursosPalhoca = () => {
   const cursos = [
     { nome: 'Informática Completa', slug: 'informatica', destaque: true },
-    { nome: 'SketchUp + Enscape', slug: 'sketchup-enscape', destaque: true },
+
     { nome: 'AutoCAD 2D e 3D', slug: 'autocad-2d-3d', destaque: true },
     { nome: 'Revit Architecture', slug: 'revit', destaque: true },
     { nome: 'Marketing Digital', slug: 'marketing-digital', destaque: true },
