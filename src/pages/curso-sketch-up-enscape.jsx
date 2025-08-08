@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo, memo } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, memo, useRef } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { 
   ArrowLeft,
@@ -29,7 +29,8 @@ import {
   BENEFITS,
   QUICK_BENEFITS,
   COURSE_MODULES,
-  SEO_DATA
+  SEO_DATA,
+  ANIMATION_VARIANTS
 } from '../constants/curso-sketchup-enscape.js';
 
 // Lazy-loaded data imports
@@ -318,10 +319,10 @@ const AboutCourse = memo(() => {
             transition={{ duration: prefersReducedMotion ? 0 : 0.6 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 text-animation-safe">
               Transforme suas <span className="text-[#d400ff]">ideias</span> em projetos profissionais
             </h2>
-            <p className="text-xl text-gray-700 leading-relaxed mb-6">
+            <p className="text-xl text-gray-700 leading-relaxed mb-6 text-animation-safe">
               Aprenda a criar desde esboços simples até renderizações fotorrealísticas 
               que impressionam clientes e garantem aprovação de projetos.
             </p>
@@ -503,7 +504,7 @@ const CourseProjects = memo(() => {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 text-animation-safe">
             Projetos que você vai <span className="text-[#d400ff]">criar</span>
           </h2>
           <p className="text-xl text-gray-700 max-w-3xl mx-auto">
