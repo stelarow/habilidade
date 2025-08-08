@@ -21,28 +21,27 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from '@dr.pogodin/react-helmet';
 
-// Import optimized constants and components
+// Import critical constants only
 import {
   COURSE_STATS,
   PRICING,
-  HERO_IMAGES,
-  COURSE_FEATURES,
-  SKETCHUP_LESSONS,
-  ENSCAPE_LESSONS,
-  COURSE_PROJECTS,
-  COMPANIES_DATA,
-  TESTIMONIALS_DATA,
-  ANIMATION_VARIANTS,
   CONTACT_INFO,
   BENEFITS,
   QUICK_BENEFITS,
-  COMPANY_STATS,
   COURSE_MODULES,
   SEO_DATA
 } from '../constants/curso-sketchup-enscape.js';
-import OptimizedImage from '../components/blog/OptimizedImage.jsx';
-import LazyImage from '../components/shared/LazyImage.jsx';
-import { imageCache, preloadCompanyLogos } from '../utils/imageCache.js';
+
+// Lazy-loaded data imports
+import {
+  getCompaniesData,
+  getCourseProjects,
+  getTestimonialsData,
+  getCompanyStats
+} from '../constants/curso-sketchup-enscape-lazy.js';
+// Removed OptimizedImage import - using native img for better performance
+// Removed LazyImage import - using optimized native img tags
+import { preloadCompanyLogos } from '../utils/imageCache.js';
 
 // Componente Header da página do curso - Memoized for performance
 const CourseHeader = memo(() => {
@@ -125,12 +124,14 @@ const CourseHero = memo(() => {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 bg-gradient-radial from-[#110011] to-black"></div>
       
-      {/* Background com renderização 3D */}
+      {/* Background com renderização 3D - Optimized */}
       <div className="absolute inset-0">
         <img 
           src="/assets/cursos/sketchup-enscape/architectural-render-bg.jpeg"
           alt="Renderização Arquitetônica"
           className="w-full h-full object-cover opacity-30"
+          loading="eager"
+          decoding="async"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-black/80"></div>
       </div>
@@ -222,46 +223,54 @@ const CourseHero = memo(() => {
             </motion.div>
           </motion.div>
 
-          {/* Showcase de renderizações */}
+          {/* Showcase de renderizações - Optimized */}
           <motion.div 
             className="relative"
-            initial={{ opacity: 0, x: 50 }}
+            initial={prefersReducedMotion ? {} : { opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.4 }}
+            transition={{ delay: prefersReducedMotion ? 0 : 0.3, duration: prefersReducedMotion ? 0 : 0.6 }}
           >
             <div className="grid grid-cols-2 gap-4">
               <motion.div 
                 className="space-y-4"
-                initial={{ y: 50 }}
+                initial={prefersReducedMotion ? {} : { y: 30 }}
                 animate={{ y: 0 }}
-                transition={{ delay: 0.6 }}
+                transition={{ delay: prefersReducedMotion ? 0 : 0.4, duration: prefersReducedMotion ? 0 : 0.5 }}
               >
                 <img 
                   src="/assets/cursos/sketchup-enscape/render-1.jpeg"
                   alt="Renderização Interior"
-                  className="rounded-xl shadow-2xl w-full h-48 object-cover border-2 border-[#d400ff]/30"
+                  className="rounded-xl shadow-xl w-full h-48 object-cover border border-[#d400ff]/20"
+                  loading="lazy"
+                  decoding="async"
                 />
                 <img 
                   src="/assets/cursos/sketchup-enscape/render-2.jpeg"
                   alt="Renderização Exterior"
-                  className="rounded-xl shadow-2xl w-full h-32 object-cover"
+                  className="rounded-xl shadow-xl w-full h-32 object-cover"
+                  loading="lazy"
+                  decoding="async"
                 />
               </motion.div>
               <motion.div 
                 className="space-y-4 mt-8"
-                initial={{ y: 50 }}
+                initial={prefersReducedMotion ? {} : { y: 30 }}
                 animate={{ y: 0 }}
-                transition={{ delay: 0.8 }}
+                transition={{ delay: prefersReducedMotion ? 0 : 0.6, duration: prefersReducedMotion ? 0 : 0.5 }}
               >
                 <img 
                   src="/assets/cursos/sketchup-enscape/render-3.jpeg"
                   alt="Renderização Cozinha"
-                  className="rounded-xl shadow-2xl w-full h-32 object-cover"
+                  className="rounded-xl shadow-xl w-full h-32 object-cover"
+                  loading="lazy"
+                  decoding="async"
                 />
                 <img 
                   src="/assets/cursos/sketchup-enscape/render-4.jpeg"
                   alt="Renderização Quarto"
-                  className="rounded-xl shadow-2xl w-full h-48 object-cover border-2 border-[#d400ff]/30"
+                  className="rounded-xl shadow-xl w-full h-48 object-cover border border-[#d400ff]/20"
+                  loading="lazy"
+                  decoding="async"
                 />
               </motion.div>
             </div>
@@ -277,15 +286,36 @@ CourseHero.displayName = 'CourseHero';
 // Componente sobre o curso - Memoized for performance
 const AboutCourse = memo(() => {
   const prefersReducedMotion = useReducedMotion();
+  const [isInView, setIsInView] = useState(false);
+  const sectionRef = useRef(null);
+
+  // Optimized intersection observer
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '50px', threshold: 0.1 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section className="py-20 bg-gray-50">
+    <section ref={sectionRef} className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+            initial={prefersReducedMotion ? {} : { opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: prefersReducedMotion ? 0 : 0.6 }}
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
@@ -314,53 +344,30 @@ const AboutCourse = memo(() => {
           </motion.div>
 
           <div className="grid md:grid-cols-3 gap-8 mb-16">
-            <motion.div
-              className="text-center p-6"
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <div className="w-16 h-16 bg-[#d400ff] rounded-full flex items-center justify-center mx-auto mb-4">
-                <Box className="text-white" size={32} />
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Modelagem 3D</h3>
-              <p className="text-gray-600">
-                Domine todas as ferramentas do SketchUp para criar modelos 3D precisos e detalhados.
-              </p>
-            </motion.div>
-
-            <motion.div
-              className="text-center p-6"
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-            >
-              <div className="w-16 h-16 bg-[#d400ff] rounded-full flex items-center justify-center mx-auto mb-4">
-                <Lightbulb className="text-white" size={32} />
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Renderização</h3>
-              <p className="text-gray-600">
-                Crie imagens fotorrealísticas com Enscape, incluindo iluminação e materiais profissionais.
-              </p>
-            </motion.div>
-
-            <motion.div
-              className="text-center p-6"
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              <div className="w-16 h-16 bg-[#d400ff] rounded-full flex items-center justify-center mx-auto mb-4">
-                <Target className="text-white" size={32} />
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Projetos Reais</h3>
-              <p className="text-gray-600">
-                Desenvolva projetos completos: residências, interiores e documentação técnica.
-              </p>
-            </motion.div>
+            {[
+              { icon: Box, title: "Modelagem 3D", description: "Domine todas as ferramentas do SketchUp para criar modelos 3D precisos e detalhados." },
+              { icon: Lightbulb, title: "Renderização", description: "Crie imagens fotorrealísticas com Enscape, incluindo iluminação e materiais profissionais." },
+              { icon: Target, title: "Projetos Reais", description: "Desenvolva projetos completos: residências, interiores e documentação técnica." }
+            ].map((feature, index) => {
+              const Icon = feature.icon;
+              return (
+                <motion.div
+                  key={feature.title}
+                  className="text-center p-6"
+                  initial={prefersReducedMotion ? {} : { opacity: 0, y: 30 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: prefersReducedMotion ? 0 : 0.4, delay: prefersReducedMotion ? 0 : index * 0.1 }}
+                >
+                  <div className="w-16 h-16 bg-[#d400ff] rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Icon className="text-white" size={32} />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">{feature.title}</h3>
+                  <p className="text-gray-600">
+                    {feature.description}
+                  </p>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </div>
@@ -505,7 +512,7 @@ const CourseProjects = memo(() => {
         </motion.div>
 
         <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {COURSE_PROJECTS.map((project, index) => (
+          {getCourseProjects().map((project, index) => (
             <motion.div
               key={project.title}
               className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300"
@@ -516,11 +523,12 @@ const CourseProjects = memo(() => {
               whileHover={{ y: -5 }}
             >
               <div className="aspect-video overflow-hidden">
-                <OptimizedImage 
+                <img 
                   src={project.image}
                   alt={project.title}
-                  className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-200"
                   loading="lazy"
+                  decoding="async"
                 />
               </div>
               <div className="p-6">
@@ -537,35 +545,47 @@ const CourseProjects = memo(() => {
 
 CourseProjects.displayName = 'CourseProjects';
 
-// Company Card Component - Memoized for performance
+// Company Card Component - Optimized for performance
 const CompanyCard = memo(({ company, index }) => {
   const prefersReducedMotion = useReducedMotion();
+  const [imageLoaded, setImageLoaded] = useState(false);
   
-  // Pre-calculate hover animation for better performance
+  const handleImageLoad = useCallback(() => {
+    setImageLoaded(true);
+  }, []);
+  
+  // Simplified hover animation
   const hoverAnimation = useMemo(() => 
     prefersReducedMotion ? {} : { 
-      y: -3, // Reduced from -5 for smoother animation
-      boxShadow: "0 8px 25px rgba(212, 0, 255, 0.12)", // Reduced intensity
-      scale: 1.02, // Reduced from 1.05 for subtle effect
-      transition: { duration: 0.2 } // Faster transition
+      y: -2,
+      scale: 1.01,
+      transition: { duration: 0.15 }
     }, [prefersReducedMotion]
   );
   
   return (
     <motion.div
-      className="group bg-gray-50 rounded-xl p-6 hover:bg-white hover:shadow-lg transition-all duration-300 flex flex-col items-center justify-center min-w-[200px] flex-shrink-0"
+      className="group bg-gray-50 rounded-xl p-4 hover:bg-white hover:shadow-md transition-all duration-200 flex flex-col items-center justify-center min-w-[180px] flex-shrink-0"
       whileHover={hoverAnimation}
     >
-      <div className="w-20 h-20 flex items-center justify-center mb-4 rounded-lg bg-white shadow-sm group-hover:shadow-md transition-shadow">
-        <LazyImage 
+      <div className="w-16 h-16 flex items-center justify-center mb-3 rounded-lg bg-white shadow-sm">
+        <img 
           src={company.logo}
           alt={company.name}
-          className="max-w-full max-h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300"
+          className={`max-w-full max-h-full object-contain transition-opacity duration-200 ${
+            imageLoaded ? 'opacity-100' : 'opacity-0'
+          } ${prefersReducedMotion ? '' : 'filter grayscale group-hover:grayscale-0 transition-all duration-200'}`}
+          loading="lazy"
+          onLoad={handleImageLoad}
+          style={{ maxWidth: '60px', maxHeight: '60px' }}
         />
+        {!imageLoaded && (
+          <div className="w-12 h-12 bg-gray-200 rounded animate-pulse"></div>
+        )}
       </div>
       <div className="text-center">
         <h3 className="font-semibold text-gray-900 text-sm mb-1">{company.name}</h3>
-        <p className="text-xs text-gray-600">{company.description}</p>
+        <p className="text-xs text-gray-600 line-clamp-2">{company.description}</p>
       </div>
     </motion.div>
   );
@@ -576,37 +596,51 @@ CompanyCard.displayName = 'CompanyCard';
 // Componente Empresas Atendidas - Optimized for performance
 const CompaniesSection = memo(() => {
   const prefersReducedMotion = useReducedMotion();
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef(null);
   
-  // Preload company logos on component mount for better performance
+  // Optimized intersection observer
   useEffect(() => {
-    preloadCompanyLogos(COMPANIES_DATA.slice(0, 12)).catch(console.error);
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          // Preload only essential logos when section becomes visible
+          preloadCompanyLogos(getCompaniesData().slice(0, 4)).catch(console.error);
+        }
+      },
+      { rootMargin: '100px', threshold: 0.1 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
   }, []);
   
-  // Pre-calculate animation values for better performance
-  const animationDistance = useMemo(() => -(208 * COMPANIES_DATA.length), []);
-  
-  // Animation configuration with reduced motion support - Optimized
-  const carouselAnimation = useMemo(() => ({
-    x: prefersReducedMotion ? [0] : [0, animationDistance]
-  }), [prefersReducedMotion, animationDistance]);
-  
-  const carouselTransition = useMemo(() => ({
-    x: {
-      repeat: prefersReducedMotion ? 0 : Infinity,
-      repeatType: "loop",
-      duration: prefersReducedMotion ? 0 : 80, // Reduced from 120 to 80 for better performance
-      ease: "linear"
-    }
-  }), [prefersReducedMotion]);
+  // Simplified animation configuration
+  const carouselAnimation = useMemo(() => {
+    if (prefersReducedMotion || !isVisible) return { x: 0 };
+    const companiesCount = getCompaniesData().length;
+    return {
+      x: [0, -(180 * Math.min(companiesCount, 6))], // Further reduced animation scope
+      transition: {
+        duration: 40, // Much faster for better performance
+        repeat: Infinity,
+        repeatType: "loop",
+        ease: "linear"
+      }
+    };
+  }, [prefersReducedMotion, isVisible]);
 
   return (
-    <section className="py-20 bg-white">
+    <section ref={sectionRef} className="py-20 bg-white">
       <div className="container mx-auto px-4">
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+          initial={prefersReducedMotion ? {} : { opacity: 0, y: 30 }}
+          animate={isVisible ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: prefersReducedMotion ? 0 : 0.6 }}
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
@@ -617,43 +651,59 @@ const CompaniesSection = memo(() => {
           </p>
         </motion.div>
 
-        {/* Carrossel infinito de logos - Optimized */}
-        <div className="relative overflow-hidden max-w-7xl mx-auto">
-          <motion.div 
-            className="flex space-x-8"
-            animate={carouselAnimation}
-            transition={carouselTransition}
-          >
-            {/* Optimized single rendering with virtual duplication for smooth carousel */}
-            {COMPANIES_DATA.concat(COMPANIES_DATA.slice(0, 3)).map((company, index) => (
-              <CompanyCard
-                key={`company-${company.name}-${index}`}
-                company={company}
-                index={index}
-              />
-            ))}
-          </motion.div>
-          
-          {/* Gradientes nas bordas para efeito de fade */}
-          <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
-          <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
-        </div>
+        {/* Simplified company showcase - Static grid for better performance */}
+        {isVisible && (
+          <div className="max-w-7xl mx-auto">
+            {prefersReducedMotion ? (
+              // Static grid for reduced motion
+              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+                {getCompaniesData().map((company, index) => (
+                  <CompanyCard
+                    key={`company-${company.name}-${index}`}
+                    company={company}
+                    index={index}
+                  />
+                ))}
+              </div>
+            ) : (
+              // Simplified carousel
+              <div className="relative overflow-hidden">
+                <motion.div 
+                  className="flex space-x-8"
+                  animate={carouselAnimation}
+                >
+                  {getCompaniesData().concat(getCompaniesData().slice(0, 2)).map((company, index) => (
+                    <CompanyCard
+                      key={`company-${company.name}-${index}`}
+                      company={company}
+                      index={index}
+                    />
+                  ))}
+                </motion.div>
+                {/* Simplified gradients */}
+                <div className="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
+                <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Estatísticas - Optimized */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto"
-        >
-          {COMPANY_STATS.map((stat, index) => (
-            <div key={stat.label} className="text-center">
-              <div className="text-3xl font-bold text-[#d400ff] mb-2">{stat.value}</div>
-              <div className="text-gray-600">{stat.label}</div>
-            </div>
-          ))}
-        </motion.div>
+        {isVisible && (
+          <motion.div
+            initial={prefersReducedMotion ? {} : { opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: prefersReducedMotion ? 0 : 0.6, delay: prefersReducedMotion ? 0 : 0.3 }}
+            className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto"
+          >
+            {getCompanyStats().map((stat, index) => (
+              <div key={stat.label} className="text-center">
+                <div className="text-3xl font-bold text-[#d400ff] mb-2">{stat.value}</div>
+                <div className="text-gray-600">{stat.label}</div>
+              </div>
+            ))}
+          </motion.div>
+        )}
       </div>
     </section>
   );
@@ -694,15 +744,35 @@ TestimonialCard.displayName = 'TestimonialCard';
 
 // Componente Depoimentos específicos - Optimized for performance
 const CourseTestimonials = memo(() => {
+  const prefersReducedMotion = useReducedMotion();
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '50px', threshold: 0.1 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <section className="py-20 bg-gradient-radial from-[#110011] to-black">
+    <section ref={sectionRef} className="py-20 bg-gradient-radial from-[#110011] to-black">
       <div className="container mx-auto px-4">
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+          initial={prefersReducedMotion ? {} : { opacity: 0, y: 30 }}
+          animate={isVisible ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: prefersReducedMotion ? 0 : 0.6 }}
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
@@ -710,15 +780,17 @@ const CourseTestimonials = memo(() => {
           </h2>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-          {TESTIMONIALS_DATA.map((testimonial, index) => (
-            <TestimonialCard
-              key={testimonial.name}
-              testimonial={testimonial}
-              index={index}
-            />
-          ))}
-        </div>
+        {isVisible && (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            {getTestimonialsData().map((testimonial, index) => (
+              <TestimonialCard
+                key={testimonial.name}
+                testimonial={testimonial}
+                index={index}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
@@ -736,16 +808,16 @@ const OfferBadge = memo(() => {
       className="inline-flex items-center gap-3 bg-gradient-to-r from-[#d400ff]/20 to-purple-600/20 backdrop-blur-sm border border-[#d400ff]/30 text-white px-6 py-3 rounded-xl text-lg font-semibold mb-6"
       animate={prefersReducedMotion ? {} : { 
         boxShadow: [
-          "0 0 20px rgba(212, 0, 255, 0.3)",
-          "0 0 30px rgba(212, 0, 255, 0.5)",
-          "0 0 20px rgba(212, 0, 255, 0.3)"
+          "0 0 15px rgba(212, 0, 255, 0.2)",
+          "0 0 25px rgba(212, 0, 255, 0.4)",
+          "0 0 15px rgba(212, 0, 255, 0.2)"
         ]
       }}
-      transition={{ duration: 2, repeat: Infinity }}
+      transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
     >
       <motion.div
-        animate={prefersReducedMotion ? {} : { rotate: [0, 10, -10, 0] }}
-        transition={{ duration: 2, repeat: Infinity }}
+        animate={prefersReducedMotion ? {} : { rotate: [0, 5, -5, 0] }}
+        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
       >
         <AlertCircle size={20} className="text-[#d400ff]" />
       </motion.div>
@@ -936,36 +1008,37 @@ ContactCard.displayName = 'ContactCard';
 const FloatingElements = memo(() => {
   const prefersReducedMotion = useReducedMotion();
   
-  // Pre-calculated positions for better performance
+  // Reduce elements for better performance
   const elements = useMemo(() => 
-    Array.from({length: 15}).map((_, index) => ({
+    Array.from({length: 6}).map((_, index) => ({
       key: index,
-      left: `${(index * 23.7) % 100}%`,
-      top: `${(index * 47.3) % 100}%`,
-      delay: (index * 0.3) % 5
+      left: `${(index * 30 + 10) % 90}%`,
+      top: `${(index * 25 + 15) % 70}%`,
+      delay: index * 0.8
     })), []
   );
   
   if (prefersReducedMotion) return null;
   
   return (
-    <div className="absolute inset-0">
+    <div className="absolute inset-0 pointer-events-none">
       {elements.map((element) => (
         <motion.div
           key={element.key}
-          className="absolute w-1 h-1 bg-[#d400ff] rounded-full"
+          className="absolute w-1 h-1 bg-[#d400ff]/40 rounded-full"
           style={{
             left: element.left,
             top: element.top,
           }}
           animate={{
-            opacity: [0.2, 0.6, 0.2],
-            scale: [0.5, 1.2, 0.5],
+            opacity: [0.1, 0.3, 0.1],
+            scale: [0.5, 1, 0.5],
           }}
           transition={{
-            duration: 5,
+            duration: 8, // Slower animation for less CPU usage
             repeat: Infinity,
             delay: element.delay,
+            ease: "easeInOut"
           }}
         />
       ))}
@@ -977,17 +1050,36 @@ FloatingElements.displayName = 'FloatingElements';
 
 const FinalCTA = memo(() => {
   const prefersReducedMotion = useReducedMotion();
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { rootMargin: '100px', threshold: 0.1 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
   
   return (
-    <section className="relative py-20 overflow-hidden">
-      {/* Background com foto de projeto */}
+    <section ref={sectionRef} className="relative py-20 overflow-hidden">
+      {/* Background com foto de projeto - Optimized */}
       <div className="absolute inset-0">
-        <OptimizedImage 
+        <img 
           src="/assets/cursos/sketchup-enscape/cta-background.jpeg"
           alt="Projeto Arquitetônico"
           className="w-full h-full object-cover"
           loading="lazy"
-          priority={false}
+          decoding="async"
         />
         {/* Overlay escuro com gradiente */}
         <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-black/70 to-black/90"></div>
@@ -995,15 +1087,14 @@ const FinalCTA = memo(() => {
         <div className="absolute inset-0 bg-gradient-to-r from-[#d400ff]/20 via-transparent to-[#d400ff]/20"></div>
       </div>
 
-      {/* Elementos flutuantes sutis */}
-      <FloatingElements />
+      {/* Elementos flutuantes sutis - Only render when visible */}
+      {isVisible && <FloatingElements />}
 
       <div className="relative z-10 container mx-auto px-4 text-center">
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+          initial={prefersReducedMotion ? {} : { opacity: 0, y: 30 }}
+          animate={isVisible ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: prefersReducedMotion ? 0 : 0.6 }}
         >
           <h2 className="text-4xl md:text-6xl font-bold text-white mb-6">
             Comece sua carreira de projetista hoje!
@@ -1019,20 +1110,21 @@ const FinalCTA = memo(() => {
       </div>
       
       {/* Seção de Localização */}
-      <div className="container mx-auto px-4 mt-16">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="max-w-4xl mx-auto"
-        >
-          <div className="grid md:grid-cols-2 gap-8">
-            <LocationCard />
-            <ContactCard />
-          </div>
-        </motion.div>
-      </div>
+      {isVisible && (
+        <div className="container mx-auto px-4 mt-16">
+          <motion.div
+            initial={prefersReducedMotion ? {} : { opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: prefersReducedMotion ? 0 : 0.6, delay: prefersReducedMotion ? 0 : 0.3 }}
+            className="max-w-4xl mx-auto"
+          >
+            <div className="grid md:grid-cols-2 gap-8">
+              <LocationCard />
+              <ContactCard />
+            </div>
+          </motion.div>
+        </div>
+      )}
     </section>
   );
 });
