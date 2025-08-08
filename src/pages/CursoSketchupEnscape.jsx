@@ -60,66 +60,72 @@ const CourseHeader = () => {
           
           {/* Navigation Menu */}
           <nav className="hidden lg:flex items-center gap-6 text-white">
-            <motion.a
-              href="#curriculum"
-              className="hover:text-purple-400 transition-colors font-medium"
-              whileHover={{ y: -1 }}
-              onClick={(e) => {
-                e.preventDefault();
+            <button
+              className="hover:text-purple-400 transition-colors font-medium cursor-pointer"
+              onClick={() => {
+                console.log('Clicou no Curriculo');
                 const element = document.getElementById('curriculum');
+                console.log('Element found:', element);
                 if (element) {
                   const headerOffset = 80;
                   const elementPosition = element.offsetTop;
                   const offsetPosition = elementPosition - headerOffset;
+                  console.log('Scrolling to:', offsetPosition);
                   window.scrollTo({
                     top: offsetPosition,
                     behavior: 'smooth'
                   });
+                } else {
+                  console.log('Element #curriculum not found');
                 }
               }}
             >
               Currículo
-            </motion.a>
-            <motion.a
-              href="#testimonials"
-              className="hover:text-purple-400 transition-colors font-medium"
-              whileHover={{ y: -1 }}
-              onClick={(e) => {
-                e.preventDefault();
+            </button>
+            <button
+              className="hover:text-purple-400 transition-colors font-medium cursor-pointer"
+              onClick={() => {
+                console.log('Clicou no Depoimentos');
                 const element = document.getElementById('testimonials');
+                console.log('Element found:', element);
                 if (element) {
                   const headerOffset = 80;
                   const elementPosition = element.offsetTop;
                   const offsetPosition = elementPosition - headerOffset;
+                  console.log('Scrolling to:', offsetPosition);
                   window.scrollTo({
                     top: offsetPosition,
                     behavior: 'smooth'
                   });
+                } else {
+                  console.log('Element #testimonials not found');
                 }
               }}
             >
               Depoimentos
-            </motion.a>
-            <motion.a
-              href="#contact"
-              className="hover:text-purple-400 transition-colors font-medium"
-              whileHover={{ y: -1 }}
-              onClick={(e) => {
-                e.preventDefault();
+            </button>
+            <button
+              className="hover:text-purple-400 transition-colors font-medium cursor-pointer"
+              onClick={() => {
+                console.log('Clicou no Contatos');
                 const element = document.getElementById('contact');
+                console.log('Element found:', element);
                 if (element) {
                   const headerOffset = 80;
                   const elementPosition = element.offsetTop;
                   const offsetPosition = elementPosition - headerOffset;
+                  console.log('Scrolling to:', offsetPosition);
                   window.scrollTo({
                     top: offsetPosition,
                     behavior: 'smooth'
                   });
+                } else {
+                  console.log('Element #contact not found');
                 }
               }}
             >
               Contatos
-            </motion.a>
+            </button>
           </nav>
           <motion.a
             href="https://wa.me/5548988559491"
