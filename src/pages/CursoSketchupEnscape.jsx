@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { 
-  ArrowLeft,
   Clock,
   CheckCircle,
   MessageCircle,
@@ -18,9 +17,12 @@ import {
   Timer,
   AlertCircle
 } from 'lucide-react';
+import { CaretRight, House } from '@phosphor-icons/react';
+import InteractiveLogo from '../components/header/InteractiveLogo';
+import { Link } from 'react-router-dom';
 
-// Componente Header da página do curso
-const CourseHeader = () => {
+// Componente Header padronizado da escola
+const StandardCourseHeader = () => {
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -31,118 +33,103 @@ const CourseHeader = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      const headerOffset = 100;
+      const elementPosition = element.offsetTop;
+      const offsetPosition = elementPosition - headerOffset;
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
+  };
+
   return (
-    <motion.header 
-      className={`fixed top-0 w-full z-[60] transition-all duration-300 ${
-        isScrolled ? 'bg-black/90 backdrop-blur-md' : 'bg-transparent'
-      }`}
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.6 }}
-    >
-      <div className="container mx-auto px-4 py-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <motion.a
-              href="/"
-              className="flex items-center gap-2 text-white hover:text-purple-400 transition-colors"
-              whileHover={{ x: -2 }}
-            >
-              <ArrowLeft size={20} />
-              <span>Voltar</span>
-            </motion.a>
-            <img 
-              src="https://escolahabilidade.com/wp-content/uploads/2024/06/Design-sem-nome-7.png" 
-              alt="Escola Habilidade" 
-              className="h-10 w-auto"
-            />
-          </div>
-          
-          {/* Navigation Menu */}
-          <nav className="hidden lg:flex items-center gap-6 text-white">
-            <button
-              className="hover:text-purple-400 transition-colors font-medium cursor-pointer"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                console.log('Clicou no Curriculo - Course Header');
-                const element = document.getElementById('curriculum');
-                console.log('Element found:', element);
-                if (element) {
-                  const headerOffset = 100; // Increased offset for the taller course header
-                  const elementPosition = element.offsetTop;
-                  const offsetPosition = elementPosition - headerOffset;
-                  console.log('Scrolling to:', offsetPosition);
-                  window.scrollTo({
-                    top: offsetPosition,
-                    behavior: 'smooth'
-                  });
-                } else {
-                  console.log('Element #curriculum not found');
-                }
-              }}
-            >
-              Currículo
-            </button>
-            <button
-              className="hover:text-purple-400 transition-colors font-medium cursor-pointer"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                console.log('Clicou no Depoimentos - Course Header');
-                const element = document.getElementById('testimonials');
-                console.log('Element found:', element);
-                if (element) {
-                  const headerOffset = 100; // Increased offset for the taller course header
-                  const elementPosition = element.offsetTop;
-                  const offsetPosition = elementPosition - headerOffset;
-                  console.log('Scrolling to:', offsetPosition);
-                  window.scrollTo({
-                    top: offsetPosition,
-                    behavior: 'smooth'
-                  });
-                } else {
-                  console.log('Element #testimonials not found');
-                }
-              }}
-            >
-              Depoimentos
-            </button>
-            <button
-              className="hover:text-purple-400 transition-colors font-medium cursor-pointer"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                console.log('Clicou no Contatos - Course Header');
-                const element = document.getElementById('contact');
-                console.log('Element found:', element);
-                if (element) {
-                  const headerOffset = 100; // Increased offset for the taller course header
-                  const elementPosition = element.offsetTop;
-                  const offsetPosition = elementPosition - headerOffset;
-                  console.log('Scrolling to:', offsetPosition);
-                  window.scrollTo({
-                    top: offsetPosition,
-                    behavior: 'smooth'
-                  });
-                } else {
-                  console.log('Element #contact not found');
-                }
-              }}
-            >
-              Contatos
-            </button>
+    <>
+      {/* Breadcrumb Navigation */}
+      <div className="bg-gradient-to-r from-gray-900/50 to-gray-800/50 backdrop-blur-sm border-b border-white/10">
+        <div className="max-w-6xl mx-auto px-4 py-3">
+          <nav aria-label="Breadcrumb" className="flex items-center space-x-2 text-sm">
+            <Link to="/" className="text-gray-400 hover:text-white transition-colors flex items-center gap-1">
+              <House size={16} weight="duotone" />
+              Início
+            </Link>
+            <CaretRight size={14} className="text-gray-600 mx-1" />
+            <Link to="/#cursos" className="text-gray-400 hover:text-white transition-colors">
+              Cursos
+            </Link>
+            <CaretRight size={14} className="text-gray-600 mx-1" />
+            <span className="font-medium text-purple-400" aria-current="page">
+              SketchUp + Enscape
+            </span>
           </nav>
-          <motion.a
-            href="https://wa.me/5548988559491"
-            className="bg-purple-600 text-white px-6 py-2 rounded-full font-semibold hover:bg-purple-700 transition-all duration-300"
-            whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(147, 51, 234, 0.3)" }}
-          >
-            Matricule-se Agora
-          </motion.a>
+          
+          {/* Quick Course Info */}
+          <div className="mt-2 flex flex-wrap items-center gap-4 text-xs text-gray-400">
+            <div className="flex items-center gap-1">
+              <span className="w-2 h-2 rounded-full bg-purple-600"></span>
+              Design e Arquitetura
+            </div>
+            <div>•</div>
+            <div>Intermediário</div>
+            <div>•</div>
+            <div>56 horas</div>
+            <div>•</div>
+            <div className="flex items-center gap-1">
+              <GraduationCap size={14} weight="duotone" className="text-purple-400" />
+              Certificado
+            </div>
+          </div>
         </div>
       </div>
-    </motion.header>
+
+      {/* Main Header */}
+      <motion.header 
+        className={`fixed top-0 w-full z-50 transition-all duration-300 bg-zinc-900/70 backdrop-blur-md border-b border-gray-800/50`}
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        <div className="mx-auto max-w-7xl px-4">
+          <div className="flex items-center justify-between h-16">
+            <InteractiveLogo />
+            
+            {/* Navigation Menu */}
+            <div className="flex items-center gap-3">
+              <nav className="hidden md:flex items-center gap-6">
+                <button
+                  className="text-white hover:text-fuchsia-300 transition-colors focus:outline-none focus:ring-2 focus:ring-fuchsia-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-sm px-2 py-1"
+                  onClick={() => scrollToSection('curriculum')}
+                >
+                  Currículo
+                </button>
+                <button
+                  className="text-white hover:text-fuchsia-300 transition-colors focus:outline-none focus:ring-2 focus:ring-fuchsia-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-sm px-2 py-1"
+                  onClick={() => scrollToSection('testimonials')}
+                >
+                  Depoimentos
+                </button>
+                <button
+                  className="text-white hover:text-fuchsia-300 transition-colors focus:outline-none focus:ring-2 focus:ring-fuchsia-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-sm px-2 py-1"
+                  onClick={() => scrollToSection('contact')}
+                >
+                  Contato
+                </button>
+              </nav>
+              <motion.a
+                href="https://wa.me/5548988559491"
+                className="btn-neon bg-zinc-900/70 text-white font-semibold rounded-md hover:bg-zinc-900 transition px-6 py-2"
+                whileHover={{ scale: 1.05 }}
+              >
+                Matricule-se Agora
+              </motion.a>
+            </div>
+          </div>
+        </div>
+      </motion.header>
+    </>
   );
 };
 
@@ -162,7 +149,7 @@ const CourseHero = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-black/80"></div>
       </div>
 
-      <div className="relative z-10 container mx-auto px-4">
+      <div className="relative z-10 container mx-auto px-4 pt-32">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Conteúdo textual */}
           <motion.div
@@ -231,19 +218,19 @@ const CourseHero = () => {
             >
               <motion.a
                 href="https://wa.me/5548988559491"
-                className="bg-purple-600 text-white px-8 py-4 rounded-full font-semibold text-lg inline-flex items-center gap-2 justify-center hover:bg-purple-700 transition-all duration-300"
-                whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(147, 51, 234, 0.5)" }}
+                className="btn-neon bg-zinc-900/70 text-white font-semibold rounded-md hover:bg-zinc-900 transition px-6 py-3 text-base inline-flex items-center gap-2 justify-center"
+                whileHover={{ scale: 1.05 }}
               >
-                <MessageCircle size={20} />
+                <MessageCircle size={18} />
                 Garanta sua Vaga - 10x R$ 279,30
               </motion.a>
               
               <motion.a
                 href="https://wa.me/5548988559491"
-                className="border-2 border-purple-400 text-purple-400 px-8 py-4 rounded-full font-semibold text-lg hover:bg-purple-400 hover:text-white transition-all duration-300 inline-flex items-center gap-2 justify-center"
+                className="btn-neon bg-zinc-900/70 text-white font-semibold rounded-md hover:bg-zinc-900 transition px-6 py-3 text-base inline-flex items-center gap-2 justify-center border-2 border-white/20"
                 whileHover={{ scale: 1.05 }}
               >
-                <MessageCircle size={20} />
+                <MessageCircle size={18} />
                 Fale com um Orientador
               </motion.a>
             </motion.div>
@@ -1131,7 +1118,7 @@ const CursoSketchupEnscape = () => {
   return (
     <div className="font-sans min-h-screen">
       
-      <CourseHeader />
+      <StandardCourseHeader />
       <CourseHero />
       <AboutCourse />
       <Curriculum />
