@@ -1167,17 +1167,31 @@ const CursoSketchUpEnscape = memo(() => {
             scroll-behavior: smooth;
           }
           
-          /* Force text visibility */
+          /* Force text visibility and prevent invisible motion elements */
+          * {
+            opacity: 1 !important;
+            visibility: visible !important;
+          }
+          
+          /* Specific text visibility fixes */
           .text-gray-700,
           .text-gray-600,
           .text-gray-900,
           .text-white,
           .font-semibold,
-          .font-bold {
+          .font-bold,
+          h1, h2, h3, h4, h5, h6, p, span, div {
             color: inherit !important;
             font-weight: inherit !important;
             opacity: 1 !important;
             visibility: visible !important;
+          }
+          
+          /* Ensure motion elements are always visible */
+          [data-framer-name],
+          .framer-motion-element,
+          div[style*="opacity: 0"] {
+            opacity: 1 !important;
           }
           
           /* Enhanced fallback for gradient text elements */
