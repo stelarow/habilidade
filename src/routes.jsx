@@ -14,6 +14,7 @@ const NotFound = React.lazy(() => import('./pages/NotFound'));
 const CursosFlorianopolis = React.lazy(() => import('./pages/CursosFlorianopolis'));
 const CursosSaoJose = React.lazy(() => import('./pages/CursosSaoJose'));
 const CursosPalhoca = React.lazy(() => import('./pages/CursosPalhoca'));
+const CursoSketchupEnscape = React.lazy(() => import('./pages/CursoSketchupEnscape'));
 
 // Componente para redirecionamento de cursos
 const CourseRedirect = () => {
@@ -102,6 +103,10 @@ export const routes = [
       {
         path: 'cursos-palhoca',
         element: <Suspense fallback={<Loading />}><CursosPalhoca /></Suspense>
+      },
+      {
+        path: 'cursos/sketchup-enscape',
+        element: <Suspense fallback={<Loading />}><CursoSketchupEnscape /></Suspense>
       },
       // Redirects para compatibilidade
       {
