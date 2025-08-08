@@ -66,7 +66,16 @@ const CourseHeader = () => {
               whileHover={{ y: -1 }}
               onClick={(e) => {
                 e.preventDefault();
-                document.getElementById('curriculum')?.scrollIntoView({ behavior: 'smooth' });
+                const element = document.getElementById('curriculum');
+                if (element) {
+                  const headerOffset = 80;
+                  const elementPosition = element.offsetTop;
+                  const offsetPosition = elementPosition - headerOffset;
+                  window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                  });
+                }
               }}
             >
               Currículo
@@ -77,7 +86,16 @@ const CourseHeader = () => {
               whileHover={{ y: -1 }}
               onClick={(e) => {
                 e.preventDefault();
-                document.getElementById('testimonials')?.scrollIntoView({ behavior: 'smooth' });
+                const element = document.getElementById('testimonials');
+                if (element) {
+                  const headerOffset = 80;
+                  const elementPosition = element.offsetTop;
+                  const offsetPosition = elementPosition - headerOffset;
+                  window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                  });
+                }
               }}
             >
               Depoimentos
@@ -88,7 +106,16 @@ const CourseHeader = () => {
               whileHover={{ y: -1 }}
               onClick={(e) => {
                 e.preventDefault();
-                document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                const element = document.getElementById('contact');
+                if (element) {
+                  const headerOffset = 80;
+                  const elementPosition = element.offsetTop;
+                  const offsetPosition = elementPosition - headerOffset;
+                  window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                  });
+                }
               }}
             >
               Contatos
