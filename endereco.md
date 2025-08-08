@@ -27,8 +27,8 @@ Consolidar todo o tráfego e autoridade SEO no domínio principal `www.escolahab
 - [ ] Verificar TTL dos registros DNS
 
 ### 1.3 Teste de URLs Canônicas
-- [x] Verificar se todas as páginas têm canonical URLs corretas ⚠️ **Blog tem canonical apontando para home**
-- [x] Testar em páginas principais: home, blog, cursos, páginas locais
+- [x] Verificar se todas as páginas têm canonical URLs corretas ✅ **CORRIGIDO** - Todas as páginas agora têm canonical correto
+- [x] Testar em páginas principais: home, blog, cursos, páginas locais ✅ **TESTADO** - Script de teste criado
 - [x] Verificar se canonical aponta sempre para versão www.escolahabilidade.com ✅
 
 ---
@@ -46,10 +46,10 @@ Consolidar todo o tráfego e autoridade SEO no domínio principal `www.escolahab
 ```
 
 ### 2.2 Otimização das URLs Canônicas
-- [ ] Verificar `generateCanonicalUrl()` em `src/utils/seoUtils.js`
-- [ ] Garantir que `BASE_URL` sempre aponte para www.escolahabilidade.com
-- [ ] Testar componente `SEOHead` para canonical correto
-- [ ] Verificar canonical em páginas dinâmicas (blog posts)
+- [x] Verificar `generateCanonicalUrl()` em `src/utils/seoUtils.js` ✅ **VERIFICADO** - BASE_URL correto
+- [x] Garantir que `BASE_URL` sempre aponte para www.escolahabilidade.com ✅ **CONFIRMADO**
+- [x] Testar componente `SEOHead` para canonical correto ✅ **CORRIGIDO** - BlogLayout agora aceita path
+- [x] Verificar canonical em páginas dinâmicas (blog posts) ✅ **CORRIGIDO** - BlogIndex atualizado
 
 ### 2.3 Configuração Google Search Console
 - [ ] Adicionar ambos domínios no GSC:

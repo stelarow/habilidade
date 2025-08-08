@@ -55,12 +55,14 @@ button, a, [role="button"] {
   user-select: none;
 }
 
-/* Performance para animações */
+/* Performance para animações - OPTIMIZED */
 .animate-bounce, .animate-blink, .animate-gradient, 
 .tech-badge, .tech-icon, .star {
-  will-change: opacity, transform;
+  /* Remove will-change by default - only add when animating */
   transform: translateZ(0);
   backface-visibility: hidden;
+  /* Use CSS containment for performance */
+  contain: layout style paint;
 }
 
 /* Sistema de cores padronizado */
@@ -100,16 +102,24 @@ button, a, [role="button"] {
   --shadow-glow: 0 0 25px rgba(212, 0, 255, 0.4);
 }
 
-/* Reduzir animações em dispositivos com preferência */
+/* Reduzir animações em dispositivos com preferência - ENHANCED */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    /* Remove will-change for reduced motion */
+    will-change: auto !important;
   }
   
   html {
     scroll-behavior: auto;
+  }
+  
+  /* Disable heavy animations completely */
+  .tech-badge, .tech-icon, .star, .energy-pulse,
+  .ripple-wave, .energy-pulse-ring {
+    animation: none !important;
   }
 }
 
@@ -303,25 +313,43 @@ button, a, [role="button"] {
     background-clip: text;
     color: transparent;
   }
-  /* entrance animation for course cards */
+  /* entrance animation for course cards - PERFORMANCE OPTIMIZED */
   .card-enter {
+    /* Ensure text is visible by default - CRITICAL FIX for invisible text */
+    opacity: 1;
+    transform: none;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .card-enter.animating {
     opacity: 0;
     transform: translateY(24px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
+    will-change: opacity, transform;
   }
   .card-enter.in-view {
     opacity: 1;
     transform: translateY(0);
   }
-  /* entrance animation for step cards - dynamic */
+  .card-enter.animation-complete {
+    will-change: auto;
+  }
+  /* entrance animation for step cards - PERFORMANCE OPTIMIZED */
   .step-card {
+    /* Ensure text is visible by default - CRITICAL FIX for invisible text */
+    opacity: 1;
+    transform: none;
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .step-card.animating {
     opacity: 0;
-    transform: translateY(60px) scale(0.8) rotateX(15deg);
-    transition: opacity 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transform: translateY(30px) scale(0.95);
+    will-change: opacity, transform;
   }
   .step-card.in-view {
     opacity: 1;
-    transform: translateY(0) scale(1) rotateX(0deg);
+    transform: translateY(0) scale(1);
+  }
+  .step-card.animation-complete {
+    will-change: auto;
   }
   /* tech badge effects */
   .tech-badge {
@@ -828,27 +856,60 @@ button, a, [role="button"] {
     0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
-/* Elementos com animações específicas otimizadas */
+/* Elementos com animações específicas otimizadas - PERFORMANCE FOCUSED */
 .btn-neon, .glass-hover, .pulse-border,
 .tech-card, .corner-glow, .glow-hover {
-  will-change: opacity;
+  /* Only add will-change during hover/active states */
   contain: layout style paint;
+}
+
+.btn-neon:hover, .glass-hover:hover, .pulse-border:hover,
+.tech-card:hover, .corner-glow:hover, .glow-hover:hover {
+  will-change: opacity;
 }
 
 /* Starfield otimizado */
 .star {
-  will-change: opacity;
   contain: strict;
+  /* Reduce animation frequency for performance */
+  animation-duration: 4s; /* Increased from 3s */
 }
 
-/* Animações que usam transform */
+/* Animações que usam transform - CRITICAL FIX for invisible text */
 .card-enter, .step-card, 
 .course-card-enter, .animate-on-scroll {
-  will-change: opacity, transform;
+  /* Remove will-change by default, add only during animation */
   contain: layout style paint;
+  /* Ensure text is visible by default */
+  opacity: 1;
+  transform: none;
+}
+
+/* Animation states */
+.card-enter.animating, .step-card.animating, 
+.course-card-enter.animating, .animate-on-scroll.animating {
+  will-change: opacity, transform;
 }
 
 /* Remove will-change após animação */
 .animation-complete {
   will-change: auto;
+}
+
+/* Critical fix for invisible text issue */
+.text-animation-safe {
+  opacity: 1 !important;
+  transform: none !important;
+  will-change: auto;
+}
+
+/* Throttle heavy animations */
+.tech-badge {
+  animation-duration: 4s; /* Increased from 3s */
+}
+.tech-icon {
+  animation-duration: 3s; /* Increased from 2.5s */
+}
+.energy-pulse-ring {
+  animation-duration: 6s; /* Increased from 4s */
 }
