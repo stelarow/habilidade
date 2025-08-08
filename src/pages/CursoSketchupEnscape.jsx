@@ -79,13 +79,9 @@ const CourseHero = () => {
       {/* Background com renderização 3D */}
       <div className="absolute inset-0">
         <img 
-          src="/images/architectural-render-bg.jpg"
+          src="/images/course/sketchup-enscape/architectural-render-bg.jpeg"
           alt="Renderização Arquitetônica"
           className="w-full h-full object-cover opacity-30"
-          onError={(e) => {
-            e.target.src = '/images/placeholder-architecture.jpg';
-            e.target.onerror = null;
-          }}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-black/80"></div>
       </div>
@@ -192,22 +188,14 @@ const CourseHero = () => {
                 transition={{ delay: 0.6 }}
               >
                 <img 
-                  src="/images/render-interior-living.jpg"
+                  src="/images/course/sketchup-enscape/render-1.jpeg"
                   alt="Renderização Interior"
                   className="rounded-xl shadow-2xl w-full h-48 object-cover border-2 border-purple-400/30"
-                  onError={(e) => {
-                    e.target.src = '/images/placeholder-interior.jpg';
-                    e.target.onerror = null;
-                  }}
                 />
                 <img 
-                  src="/images/render-exterior-house.jpg"
+                  src="/images/course/sketchup-enscape/render-2.jpeg"
                   alt="Renderização Exterior"
                   className="rounded-xl shadow-2xl w-full h-32 object-cover"
-                  onError={(e) => {
-                    e.target.src = '/images/placeholder-exterior.jpg';
-                    e.target.onerror = null;
-                  }}
                 />
               </motion.div>
               <motion.div 
@@ -217,22 +205,14 @@ const CourseHero = () => {
                 transition={{ delay: 0.8 }}
               >
                 <img 
-                  src="/images/render-kitchen.jpg"
+                  src="/images/course/sketchup-enscape/render-3.jpeg"
                   alt="Renderização Cozinha"
                   className="rounded-xl shadow-2xl w-full h-32 object-cover"
-                  onError={(e) => {
-                    e.target.src = '/images/placeholder-kitchen.jpg';
-                    e.target.onerror = null;
-                  }}
                 />
                 <img 
-                  src="/images/render-bedroom.jpg"
+                  src="/images/course/sketchup-enscape/render-4.jpeg"
                   alt="Renderização Quarto"
                   className="rounded-xl shadow-2xl w-full h-48 object-cover border-2 border-purple-400/30"
-                  onError={(e) => {
-                    e.target.src = '/images/placeholder-bedroom.jpg';
-                    e.target.onerror = null;
-                  }}
                 />
               </motion.div>
             </div>
@@ -484,17 +464,17 @@ const CourseProjects = () => {
     {
       title: "Casa Residencial Completa",
       description: "Projeto de residência unifamiliar com fachada, interiores e terreno paisagístico",
-      image: "/images/project-house.jpg"
+      image: "/images/course/sketchup-enscape/project-1.jpeg"
     },
     {
       title: "Interiores de Luxo", 
       description: "Ambientes internos com materiais nobres, iluminação profissional e mobiliário",
-      image: "/images/project-interior.jpg"
+      image: "/images/course/sketchup-enscape/project-2.jpeg"
     },
     {
       title: "Documentação Técnica",
       description: "Plantas, cortes, fachadas e detalhamentos técnicos usando Layout",
-      image: "/images/project-technical.jpg"
+      image: "/images/course/sketchup-enscape/project-3.jpeg"
     }
   ];
 
@@ -532,10 +512,6 @@ const CourseProjects = () => {
                   src={project.image}
                   alt={project.title}
                   className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
-                  onError={(e) => {
-                    e.target.src = '/images/placeholder-project.jpg';
-                    e.target.onerror = null;
-                  }}
                 />
               </div>
               <div className="p-6">
@@ -555,67 +531,67 @@ const CompaniesSection = () => {
   const companies = [
     {
       name: "Portinox",
-      logo: "/_AM4K71sI76P_48oTfwuh.svg",
+      logo: "/images/course/sketchup-enscape/_AM4K71sI76P_48oTfwuh.webp",
       description: "Equipamentos Gastronômicos"
     },
     {
       name: "MR",
-      logo: "/2jNvD0A0IySCMxVqHKKLN.svg", 
+      logo: "/images/course/sketchup-enscape/2jNvD0A0IySCMxVqHKKLN.jpeg", 
       description: "Móveis Planejados"
     },
     {
       name: "Rinox",
-      logo: "/Dto_HF1D0esz2RgHkyluP.svg",
+      logo: "/images/course/sketchup-enscape/Dto_HF1D0esz2RgHkyluP.png",
       description: "Soluções Industriais"
     },
     {
       name: "Serralheria Mota",
-      logo: "/l5v_ub2GBPsN8c9qczmU6.svg",
+      logo: "/images/course/sketchup-enscape/l5v_ub2GBPsN8c9qczmU6.jpeg",
       description: "Serralheria e Metalurgia"
     },
     {
       name: "Steinbach",
-      logo: "/x3eNjRKuni5TKlKHbFZug.svg",
+      logo: "/images/course/sketchup-enscape/x3eNjRKuni5TKlKHbFZug.webp",
       description: "Marcenaria"
     },
     {
       name: "Torres",
-      logo: "/AJ0M1WPOZVRqEu3y-N4j_.svg",
+      logo: "/images/course/sketchup-enscape/AJ0M1WPOZVRqEu3y-N4j_.avif",
       description: "projetos farmacêuticos"
     },
     {
       name: "Legno",
-      logo: "/ukKT5CnXfAVP3AS9G4jXs.svg",
+      logo: "/images/course/sketchup-enscape/ukKT5CnXfAVP3AS9G4jXs.jpeg",
       description: "Móveis sob Medida"
     },
     {
       name: "Mobiliário",
-      logo: "/xYBvu3zwJyVFvvlKHPcz0.svg",
+      logo: "/images/course/sketchup-enscape/xYBvu3zwJyVFvvlKHPcz0.jpeg",
       description: "Móveis e Interiores"
     },
     {
       name: "Protérmica",
-      logo: "/dU-RkMhy9INgLG_2WQrOs.svg",
+      logo: "/images/course/sketchup-enscape/dU-RkMhy9INgLG_2WQrOs.png",
       description: "Climatização"
     },
     {
       name: "Marcenaria JP",
-      logo: "/sXBkejmP3TgFhiLFB-2NM.svg",
+      logo: "/images/course/sketchup-enscape/sXBkejmP3TgFhiLFB-2NM.jpeg",
       description: "Móveis Planejados"
     },
     {
       name: "Ousadia",
-      logo: "/p4GIB7Eemw3frRpbKG2zR.svg",
+      logo: "/images/course/sketchup-enscape/p4GIB7Eemw3frRpbKG2zR.jpeg",
       description: "Móveis sob Medida"
     },
     {
       name: "Escadas Imperatriz",
-      logo: "/PLOSn09XPv1Fkg_lJVsAG.svg",
+      logo: "/images/course/sketchup-enscape/PLOSn09XPv1Fkg_lJVsAG.jpeg",
       description: "Escadas e Estruturas"
     },
     {
       name: "Pedra Granada",
-      logo: "/kI8JxlGaNQo0Ecg5B1uEP.svg",
+      logo: "/images/course/sketchup-enscape/kI8JxlGaNQo0Ecg5B1uEP.jpeg",
       description: "Marmoraria"
     }
   ];
@@ -670,10 +646,6 @@ const CompaniesSection = () => {
                     src={company.logo}
                     alt={company.name}
                     className="max-w-full max-h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300"
-                    onError={(e) => {
-                      e.target.src = '/images/placeholder-logo.svg';
-                      e.target.onerror = null;
-                    }}
                   />
                 </div>
                 <div className="text-center">
@@ -699,10 +671,6 @@ const CompaniesSection = () => {
                     src={company.logo}
                     alt={company.name}
                     className="max-w-full max-h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300"
-                    onError={(e) => {
-                      e.target.src = '/images/placeholder-logo.svg';
-                      e.target.onerror = null;
-                    }}
                   />
                 </div>
                 <div className="text-center">
@@ -728,10 +696,6 @@ const CompaniesSection = () => {
                     src={company.logo}
                     alt={company.name}
                     className="max-w-full max-h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300"
-                    onError={(e) => {
-                      e.target.src = '/images/placeholder-logo.svg';
-                      e.target.onerror = null;
-                    }}
                   />
                 </div>
                 <div className="text-center">
@@ -865,13 +829,9 @@ const FinalCTA = () => {
       {/* Background com foto de projeto */}
       <div className="absolute inset-0">
         <img 
-          src="/images/cta-background.jpg"
+          src="/images/course/sketchup-enscape/cta-background.jpeg"
           alt="Projeto Arquitetônico"
           className="w-full h-full object-cover"
-          onError={(e) => {
-            e.target.src = '/images/placeholder-cta.jpg';
-            e.target.onerror = null;
-          }}
         />
         {/* Overlay escuro com gradiente */}
         <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-black/70 to-black/90"></div>
