@@ -1,3 +1,4 @@
+// SketchUp + Enscape Course Page - Updated prices and navigation
 import React, { useState, useEffect, useCallback, useMemo, memo, useRef } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { 
