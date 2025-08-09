@@ -94,8 +94,21 @@ marked.use({
     // Override list item rendering
     listitem(token) {
       const text = extractText(token, this.parser);
-      // Clean up unwanted newlines that break text flow within list items
-      const cleanText = text.replace(/(\w)\n+(\:|\w)/g, '$1 $2').trim();
+      // Enhanced cleaning for various line break and whitespace issues
+      const cleanText = text
+        // Handle standard newlines between word and colon/word
+        .replace(/(\w)\n+(\:|\w)/g, '$1 $2')
+        // Handle various Unicode line break characters
+        .replace(/(\w)[\u2028\u2029\r\n]+(\:|\w)/g, '$1 $2')
+        // Handle multiple whitespace chars between word and colon
+        .replace(/(\w)\s*\n\s*(\:)/g, '$1$2')
+        // Handle invisible characters that might cause breaks
+        .replace(/(\w)[\u200B\u200C\u200D\uFEFF]+(\:|\w)/g, '$1 $2')
+        // Clean any remaining problematic whitespace around colons
+        .replace(/(\w)\s+(\:)/g, '$1$2')
+        // Normalize any multiple spaces to single space
+        .replace(/\s+/g, ' ')
+        .trim();
       return `<li class="mb-1">${cleanText}</li>`;
     },
 
