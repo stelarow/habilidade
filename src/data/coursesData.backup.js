@@ -615,7 +615,7 @@ const projetista3d = {
     id: 'projetista-3d-004',
     title: 'Projetista 3D',
     slug: 'projetista-3d',
-    shortDescription: 'Domine AutoCAD, SketchUp, V-Ray e Enscape IA para criar projetos arquitetônicos profissionais.',
+    shortDescription: 'Domine AutoCAD, SketchUp, V-Ray e Enscape para criar projetos arquitetônicos profissionais.',
     longDescription: 'Torne-se um Projetista 3D completo. Aprenda AutoCAD técnico, SketchUp para modelagem 3D, renderização realista com V-Ray e o revolucionário Enscape com inteligência artificial.',
     category: 'Arquitetura',
     level: 'Intermediário',
@@ -815,7 +815,7 @@ const projetista3d = {
     },
   },
   seoMeta: {
-    title: 'Curso Projetista 3D Completo - Escola Habilidade | AutoCAD, SketchUp, V-Ray, Enscape IA',
+    title: 'Curso Projetista 3D Completo - Escola Habilidade | AutoCAD, SketchUp, V-Ray, Enscape',
     description: 'Torne-se Projetista 3D profissional. AutoCAD técnico, SketchUp, V-Ray e Enscape com IA. 88 horas, VR incluso.',
     keywords: ['projetista 3d', 'autocad', 'sketchup', 'vray', 'enscape', 'arquitetura', 'realidade virtual'],
     ogImage: '/og-images/projetista-3d.jpg',

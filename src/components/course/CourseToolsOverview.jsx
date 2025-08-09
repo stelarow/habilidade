@@ -39,11 +39,11 @@ const CourseToolsOverview = ({ course }) => {
     },
     { 
       id: 'enscape', 
-      name: 'Enscape IA', 
+      name: 'Enscape', 
       icon: Eye,
       color: '#FF6B35',
       role: 'Renderização Realista',
-      description: 'Visualizações fotorrealísticas com inteligência artificial',
+      description: 'Visualizações fotorrealísticas com renderizações ultra realistas',
       keyFeature: '8 renderizações'
     }
   ];

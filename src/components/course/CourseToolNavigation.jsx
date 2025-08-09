@@ -20,7 +20,7 @@ const CourseToolNavigation = ({ course, activeSection, onSectionChange }) => {
     { id: 'sketchup', name: 'SketchUp Pro', color: '#005CAF' },
     { id: 'autocad', name: 'AutoCAD 2D', color: '#E51937' },
     { id: 'revit', name: 'Revit BIM', color: '#0078BE' },
-    { id: 'enscape', name: 'Enscape IA', color: '#FF6B35' }
+    { id: 'enscape', name: 'Enscape', color: '#FF6B35' }
   ];
 
   useEffect(() => {
