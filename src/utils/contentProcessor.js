@@ -94,7 +94,9 @@ marked.use({
     // Override list item rendering
     listitem(token) {
       const text = extractText(token, this.parser);
-      return `<li class="mb-1">${text}</li>`;
+      // Clean up unwanted newlines that break text flow within list items
+      const cleanText = text.replace(/(\w)\n+(\:|\w)/g, '$1 $2').trim();
+      return `<li class="mb-1">${cleanText}</li>`;
     },
 
     // Override blockquote rendering

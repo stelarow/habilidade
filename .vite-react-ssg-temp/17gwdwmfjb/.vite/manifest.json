@@ -1,0 +1,230 @@
+{
+  "_ContactForm-CWskzZY2.js": {
+    "file": "assets/ContactForm-CWskzZY2.js",
+    "name": "ContactForm",
+    "imports": [
+      "src/main.jsx",
+      "_utils-D0CRhHwP.js"
+    ]
+  },
+  "_backgrounds-Cnn5dnKm.js": {
+    "file": "assets/backgrounds-Cnn5dnKm.js",
+    "name": "backgrounds",
+    "isDynamicEntry": true,
+    "imports": [
+      "_utils-D0CRhHwP.js"
+    ]
+  },
+  "_blog-components-BV6c3eIl.js": {
+    "file": "assets/blog-components-BV6c3eIl.js",
+    "name": "blog-components",
+    "imports": [
+      "_utils-D0CRhHwP.js"
+    ]
+  },
+  "_utils-D0CRhHwP.js": {
+    "file": "assets/utils-D0CRhHwP.js",
+    "name": "utils",
+    "imports": [
+      "src/services/blogAPI.js"
+    ],
+    "dynamicImports": [
+      "_backgrounds-Cnn5dnKm.js",
+      "_backgrounds-Cnn5dnKm.js",
+      "_backgrounds-Cnn5dnKm.js",
+      "_backgrounds-Cnn5dnKm.js",
+      "_backgrounds-Cnn5dnKm.js",
+      "_backgrounds-Cnn5dnKm.js",
+      "_backgrounds-Cnn5dnKm.js",
+      "_backgrounds-Cnn5dnKm.js"
+    ]
+  },
+  "src/main.jsx": {
+    "file": "main.mjs",
+    "name": "main",
+    "src": "src/main.jsx",
+    "isEntry": true,
+    "imports": [
+      "_utils-D0CRhHwP.js",
+      "_blog-components-BV6c3eIl.js",
+      "src/services/blogAPI.js"
+    ],
+    "dynamicImports": [
+      "src/pages/Home.jsx",
+      "src/pages/CoursePage.jsx",
+      "src/pages/Contact.jsx",
+      "src/pages/BlogIndex.jsx",
+      "src/pages/BlogTestPage.jsx",
+      "src/pages/BlogCategory.jsx",
+      "src/pages/NotFound.jsx",
+      "src/pages/CursosFlorianopolis.jsx",
+      "src/pages/CursosSaoJose.jsx",
+      "src/pages/CursosPalhoca.jsx",
+      "src/pages/CursoSketchupEnscape.jsx",
+      "src/pages/Home.jsx",
+      "src/pages/CoursePage.jsx",
+      "src/pages/BlogIndex.jsx",
+      "src/pages/BlogCategory.jsx",
+      "src/pages/BlogPostSSG.jsx",
+      "src/pages/BlogTestPage.jsx",
+      "src/pages/BlogTestPage.jsx",
+      "src/pages/NotFound.jsx"
+    ]
+  },
+  "src/pages/BlogCategory.jsx": {
+    "file": "assets/BlogCategory-CM8B7Om_.js",
+    "name": "BlogCategory",
+    "src": "src/pages/BlogCategory.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "_utils-D0CRhHwP.js",
+      "_blog-components-BV6c3eIl.js",
+      "src/services/blogAPI.js"
+    ]
+  },
+  "src/pages/BlogIndex.jsx": {
+    "file": "assets/BlogIndex-BD5ow4Rc.js",
+    "name": "BlogIndex",
+    "src": "src/pages/BlogIndex.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "_utils-D0CRhHwP.js",
+      "_blog-components-BV6c3eIl.js",
+      "src/services/blogAPI.js"
+    ]
+  },
+  "src/pages/BlogPostSSG.jsx": {
+    "file": "assets/BlogPostSSG-CS_7yM8d.js",
+    "name": "BlogPostSSG",
+    "src": "src/pages/BlogPostSSG.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "_blog-components-BV6c3eIl.js",
+      "_utils-D0CRhHwP.js",
+      "src/services/blogAPI.js"
+    ],
+    "dynamicImports": [
+      "src/services/blogAPI.js"
+    ]
+  },
+  "src/pages/BlogTestPage.jsx": {
+    "file": "assets/BlogTestPage-B3MlFaXT.js",
+    "name": "BlogTestPage",
+    "src": "src/pages/BlogTestPage.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "_utils-D0CRhHwP.js",
+      "src/services/blogAPI.js"
+    ]
+  },
+  "src/pages/Contact.jsx": {
+    "file": "assets/Contact-DfZje2AL.js",
+    "name": "Contact",
+    "src": "src/pages/Contact.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "_ContactForm-CWskzZY2.js",
+      "_blog-components-BV6c3eIl.js",
+      "src/main.jsx",
+      "_utils-D0CRhHwP.js",
+      "src/services/blogAPI.js"
+    ]
+  },
+  "src/pages/CoursePage.jsx": {
+    "file": "assets/CoursePage-8uqPJ_hw.js",
+    "name": "CoursePage",
+    "src": "src/pages/CoursePage.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "src/main.jsx",
+      "_utils-D0CRhHwP.js",
+      "_blog-components-BV6c3eIl.js",
+      "src/services/blogAPI.js"
+    ],
+    "dynamicImports": [
+      "_backgrounds-Cnn5dnKm.js",
+      "_backgrounds-Cnn5dnKm.js",
+      "_backgrounds-Cnn5dnKm.js",
+      "_backgrounds-Cnn5dnKm.js",
+      "_backgrounds-Cnn5dnKm.js",
+      "_backgrounds-Cnn5dnKm.js",
+      "_backgrounds-Cnn5dnKm.js",
+      "_backgrounds-Cnn5dnKm.js",
+      "_backgrounds-Cnn5dnKm.js"
+    ]
+  },
+  "src/pages/CursoSketchupEnscape.jsx": {
+    "file": "assets/CursoSketchupEnscape-D5cHqJAI.js",
+    "name": "CursoSketchupEnscape",
+    "src": "src/pages/CursoSketchupEnscape.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "src/main.jsx",
+      "_utils-D0CRhHwP.js",
+      "src/services/blogAPI.js",
+      "_blog-components-BV6c3eIl.js"
+    ]
+  },
+  "src/pages/CursosFlorianopolis.jsx": {
+    "file": "assets/CursosFlorianopolis-YFhHbVNF.js",
+    "name": "CursosFlorianopolis",
+    "src": "src/pages/CursosFlorianopolis.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "_blog-components-BV6c3eIl.js",
+      "_utils-D0CRhHwP.js",
+      "src/services/blogAPI.js"
+    ]
+  },
+  "src/pages/CursosPalhoca.jsx": {
+    "file": "assets/CursosPalhoca-CKqZN-da.js",
+    "name": "CursosPalhoca",
+    "src": "src/pages/CursosPalhoca.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "_blog-components-BV6c3eIl.js",
+      "_utils-D0CRhHwP.js",
+      "src/services/blogAPI.js"
+    ]
+  },
+  "src/pages/CursosSaoJose.jsx": {
+    "file": "assets/CursosSaoJose-pE3u_PDe.js",
+    "name": "CursosSaoJose",
+    "src": "src/pages/CursosSaoJose.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "_blog-components-BV6c3eIl.js",
+      "_utils-D0CRhHwP.js",
+      "src/services/blogAPI.js"
+    ]
+  },
+  "src/pages/Home.jsx": {
+    "file": "assets/Home-B3E9V15M.js",
+    "name": "Home",
+    "src": "src/pages/Home.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "_utils-D0CRhHwP.js",
+      "src/main.jsx",
+      "_blog-components-BV6c3eIl.js",
+      "_ContactForm-CWskzZY2.js",
+      "src/services/blogAPI.js"
+    ]
+  },
+  "src/pages/NotFound.jsx": {
+    "file": "assets/NotFound-wSBhes32.js",
+    "name": "NotFound",
+    "src": "src/pages/NotFound.jsx",
+    "isDynamicEntry": true
+  },
+  "src/services/blogAPI.js": {
+    "file": "assets/blog-xsr1A1aF.js",
+    "name": "blog",
+    "src": "src/services/blogAPI.js",
+    "isDynamicEntry": true
+  },
+  "style.css": {
+    "file": "assets/style-DXr_9BjD.css",
+    "src": "style.css"
+  }
+}

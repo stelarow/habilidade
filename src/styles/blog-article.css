@@ -42,6 +42,9 @@
 
 .article-content ul li {
   @apply flex items-start;
+  line-height: 1.6;
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
 .article-content ul li::before {
@@ -49,9 +52,22 @@
   @apply w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0;
 }
 
+.article-content ul li strong {
+  white-space: nowrap;
+  display: inline;
+}
+
 .article-content ol li {
   @apply flex items-start;
   counter-increment: list-counter;
+  line-height: 1.6;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+.article-content ol li strong {
+  white-space: nowrap;
+  display: inline;
 }
 
 .article-content ol li::before {
