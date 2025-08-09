@@ -83,7 +83,7 @@ const CourseProblemStatement = ({ course }) => {
             }}
           >
             <span className="text-lg text-white font-medium">
-              A solução? Domine SketchUp + AutoCAD + Revit + Enscape com IA em um curso só
+              A solução? Domine SketchUp + AutoCAD + Revit + Enscape em um curso só
             </span>
             <ArrowRight 
               size={20} 
@@ -107,7 +107,7 @@ const CourseProblemStatement = ({ course }) => {
               <div className="w-12 h-12 bg-blue-500/20 border border-blue-500/30 rounded-xl flex items-center justify-center mx-auto mb-3">
                 <Users size={24} className="text-blue-400" weight="duotone" />
               </div>
-              <h4 className="text-white font-semibold mb-2">Professor ao Seu Lado</h4>
+              <h4 className="text-white font-semibold mb-2">🎯 Professor ao Seu Lado</h4>
               <p className="text-gray-400 text-sm">Dúvida? Resolvida na hora. Sem esperar resposta em fórum ou email.</p>
             </div>
             
@@ -115,7 +115,7 @@ const CourseProblemStatement = ({ course }) => {
               <div className="w-12 h-12 bg-green-500/20 border border-green-500/30 rounded-xl flex items-center justify-center mx-auto mb-3">
                 <TrendUp size={24} className="text-green-400" weight="duotone" />
               </div>
-              <h4 className="text-white font-semibold mb-2">Equipamentos Inclusos</h4>
+              <h4 className="text-white font-semibold mb-2">💻 Equipamentos Inclusos</h4>
               <p className="text-gray-400 text-sm">Não precisa ter PC potente nem comprar licenças. Usamos nossos equipamentos profissionais.</p>
             </div>
             
@@ -123,7 +123,7 @@ const CourseProblemStatement = ({ course }) => {
               <div className="w-12 h-12 bg-purple-500/20 border border-purple-500/30 rounded-xl flex items-center justify-center mx-auto mb-3">
                 <Lightbulb size={24} className="text-purple-400" weight="duotone" />
               </div>
-              <h4 className="text-white font-semibold mb-2">Foco Total</h4>
+              <h4 className="text-white font-semibold mb-2">⚡ Foco Total</h4>
               <p className="text-gray-400 text-sm">Em casa tem Netflix, WhatsApp, cama... Aqui você está 100% focado em aprender.</p>
             </div>
           </div>
@@ -134,7 +134,7 @@ const CourseProblemStatement = ({ course }) => {
           <div className="bg-gradient-to-r from-orange-500/20 to-red-500/20 border border-orange-500/30 rounded-2xl p-6 mb-6">
             <h4 className="text-xl font-bold text-white mb-2">TURMA PRESENCIAL LIMITADA</h4>
             <div className="grid grid-cols-2 gap-4 text-sm">
-              <div className="text-green-400">✓ Máximo 12 alunos (atenção personalizada)</div>
+              <div className="text-green-400">✓ Máximo 3 alunos (atenção personalizada)</div>
               <div className="text-green-400">✓ Computadores profissionais inclusos</div>
               <div className="text-green-400">✓ Software licenciado disponível</div>
               <div className="text-green-400">✓ Coffee break e networking</div>
@@ -146,7 +146,7 @@ const CourseProblemStatement = ({ course }) => {
           <p className="text-gray-300 text-sm italic max-w-4xl mx-auto">
             Curso online de 3D? Você já tentou e sabe que não funciona. A diferença entre aprender de verdade 
             e desistir no meio está no acompanhamento presencial, na correção imediata, no professor que está 
-            ali do seu lado. É por isso que 94% dos nossos alunos presenciais concluem e saem trabalhando.
+            ali do seu lado. É por isso que 94% dos nossos alunos presenciais concluem e saem projetando.
           </p>
         </div>
 

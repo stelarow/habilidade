@@ -2264,8 +2264,8 @@ const projetista = {
     id: 'projetista-007',
     title: 'Projetista 3D Completo',
     slug: 'projetista-3d',
-    shortDescription: 'Formação completa em Projetista 3D com SketchUp, AutoCAD, Revit e Enscape presencial em São José SC. Do esboço ao render com IA.',
-    longDescription: 'Curso Projetista 3D presencial completo: SketchUp + AutoCAD + Revit + Enscape com IA. Única escola em SC com formação integrada em todas as ferramentas do projetista moderno. 94 horas práticas.',
+    shortDescription: 'Formação completa em Projetista 3D com SketchUp, AutoCAD, Revit e Enscape presencial em São José SC. Do esboço ao render profissional.',
+    longDescription: 'Curso Projetista 3D presencial completo: SketchUp + AutoCAD + Revit + Enscape. Única escola em SC com formação integrada em todas as ferramentas do projetista moderno. 94 horas práticas.',
     category: 'Arquitetura & Design',
     level: 'Intermediário',
     duration: '94 horas',
@@ -2300,12 +2300,12 @@ const projetista = {
   // ✅ Por que presencial? - Diferencial competitivo
   whyPresencial: {
     title: 'Por que Escolher o Curso Presencial?',
-    subtitle: 'Único curso SketchUp + Enscape + IA presencial em Santa Catarina',
+    subtitle: 'Único curso SketchUp + Enscape presencial em Santa Catarina',
     benefits: [
       {
         icon: 'users',
         title: 'Turmas Pequenas',
-        description: 'Máximo 8 alunos por turma garantem atenção individualizada do professor.'
+        description: 'Máximo 3 alunos por turma garantem atenção personalizada do professor.'
       },
       {
         icon: 'handshake',
@@ -2383,7 +2383,7 @@ const projetista = {
     {
       id: 3,
       title: 'AutoCAD 2D',
-      description: 'Desenho técnico 2D profissional e documentação',
+      description: 'Desenho técnico profissional com aulas presenciais e projetos práticos',
       duration: '22 horas',
       lessons: [
         { id: 1, title: 'Introdução ao AutoCAD 2020', duration: '60 min', type: 'video' },
@@ -2413,7 +2413,7 @@ const projetista = {
     {
       id: 4,
       title: 'Revit',
-      description: 'BIM (Building Information Modeling) e projetos paramétricos',
+      description: 'BIM (Building Information Modeling) com aulas presenciais, projetos reais',
       duration: '16 horas',
       lessons: [
         { id: 1, title: 'Conhecendo o Revit', duration: '60 min', type: 'video' },
@@ -2645,7 +2645,7 @@ const projetista = {
       id: 'autocad',
       title: 'AutoCAD 2D: Desenho Técnico e Documentação Profissional',
       subtitle: 'O padrão internacional para projetos técnicos bidimensionais',
-      description: 'AutoCAD é o software líder mundial em desenho técnico 2D, estabelecendo o padrão da indústria há mais de 40 anos. Essencial para documentação técnica, plantas baixas, cortes, fachadas e detalhamentos que seguem normas ABNT e internacionais, garantindo precisão milimétrica em todos os projetos.',
+      description: 'AutoCAD é o software líder mundial em desenho técnico 2D, com aulas presenciais e exercícios práticos. Essencial para documentação técnica, plantas baixas, cortes, fachadas e detalhamentos que seguem normas ABNT e internacionais, garantindo precisão milimétrica em todos os projetos.',
       keyFeatures: [
         'Precisão dimensional absoluta com coordenadas',
         'Ferramentas de desenho técnico padronizadas',
@@ -2681,7 +2681,7 @@ const projetista = {
       id: 'revit',
       title: 'Revit: BIM e Projetos Paramétricos Inteligentes',
       subtitle: 'Building Information Modeling para projetos colaborativos',
-      description: 'Revit representa a evolução do desenho técnico para o BIM (Building Information Modeling), criando projetos paramétricos inteligentes onde cada elemento possui informações completas. Permite colaboração multidisciplinar, detecção automática de interferências e geração de documentação técnica atualizada em tempo real.',
+      description: 'Revit representa a evolução do desenho técnico para o BIM (Building Information Modeling), com aulas presenciais e projetos reais. Criamos projetos paramétricos inteligentes onde cada elemento possui informações completas. Permite colaboração multidisciplinar, detecção automática de interferências e geração de documentação técnica atualizada em tempo real.',
       keyFeatures: [
         'Modelagem paramétrica inteligente',
         'Famílias BIM com informações completas',
@@ -2715,15 +2715,15 @@ const projetista = {
     },
     enscape: {
       id: 'enscape',
-      title: 'Enscape: Renderização em Tempo Real com IA',
+      title: 'Enscape: Renderização em Tempo Real e Realidade Virtual',
       subtitle: 'Visualização fotorrealística instantânea e realidade virtual',
-      description: 'Enscape revolucionou a visualização arquitetônica ao oferecer renderização em tempo real diretamente dentro do SketchUp e Revit. Com inteligência artificial avançada, produz imagens fotorrealísticas instantaneamente, além de vídeos walkthrough, panoramas 360° e experiências de realidade virtual imersivas.',
+      description: 'Enscape revolucionou a visualização arquitetônica ao oferecer renderização em tempo real diretamente dentro do SketchUp e Revit. Aprenda renderizações ultra realistas, vídeos renderizados, imagens 360° e uso de óculos 360° para apresentações imersivas e experiencias de realidade virtual.',
       keyFeatures: [
-        'Renderização em tempo real (segundos vs horas)',
-        'Inteligência artificial para iluminação automática',
+        'Renderizações ultra realistas em tempo real',
+        'Vídeos renderizados para apresentações dinâmicas',
+        'Imagens 360° para exploração interativa',
+        'Uso de óculos VR para experiências imersivas',
         'Materiais PBR fotorrealísticos',
-        'Realidade virtual e panoramas 360°',
-        'Animações e vídeos walkthrough automáticos',
         'Biblioteca de objetos e vegetação realística'
       ],
       professionalUse: [
@@ -2884,7 +2884,7 @@ const projetista = {
     {
       id: 1,
       question: 'Quanto tempo leva para dominar todas as ferramentas do projetista?',
-      answer: 'No nosso curso presencial de 94 horas, você aprende SketchUp, AutoCAD, Revit e Enscape desde o básico até projetos profissionais em 3 meses. Workflow completo: do esboço 2D ao render fotorrealístico com IA.'
+      answer: 'No nosso curso presencial de 94 horas, você aprende SketchUp, AutoCAD, Revit e Enscape desde o básico até projetos profissionais em 3 meses. Workflow completo: do esboço 2D ao render fotorrealístico profissional.'
     },
     {
       id: 2,
@@ -2894,7 +2894,7 @@ const projetista = {
     {
       id: 3,
       question: 'Como funciona renderização com Enscape e inteligência artificial?',
-      answer: 'O Enscape renderiza projetos SketchUp em tempo real (segundos vs horas). Com IA, otimizamos automaticamente iluminação, materiais e ambientação. Você aprende essas técnicas avançadas no nosso curso.'
+      answer: 'O Enscape renderiza projetos SketchUp em tempo real (segundos vs horas). Aprenda renderizações ultra realistas, vídeos renderizados, imagens 360° e uso de óculos VR para apresentações imersivas.'
     },
     {
       id: 4,
@@ -2909,7 +2909,7 @@ const projetista = {
     {
       id: 6,
       question: 'Existe curso SketchUp certificado em Florianópolis?',
-      answer: 'Sim! Nossa escola em São José (Grande Florianópolis) oferece certificado nacional reconhecido. Somos a única escola em SC com curso presencial de SketchUp + Enscape + IA.'
+      answer: 'Sim! Nossa escola em São José (Grande Florianópolis) oferece certificado nacional reconhecido. Somos a única escola em SC com curso presencial de SketchUp + Enscape.'
     },
     {
       id: 7,
@@ -2935,7 +2935,7 @@ const projetista = {
 
   seoMeta: {
     title: 'Curso Projetista 3D Completo São José SC | SketchUp AutoCAD Revit Enscape | Escola Habilidade',
-    description: 'Formação Completa Projetista 3D: SketchUp + AutoCAD + Revit + Enscape com IA em São José SC. 94h presenciais, do esboço ao render. Certificado reconhecido.',
+    description: 'Formação Completa Projetista 3D: SketchUp + AutoCAD + Revit + Enscape em São José SC. 94h presenciais, do esboço ao render. Certificado reconhecido.',
     keywords: ['curso projetista 3d', 'curso sketchup', 'curso autocad', 'curso revit', 'curso enscape', 'projetista 3d são josé', 'sketchup autocad revit', 'formação completa projetista', 'curso bim santa catarina'],
     ogImage: '/og-images/projetista-3d.jpg',
     ogType: 'website',
