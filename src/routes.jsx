@@ -40,7 +40,8 @@ const blogSlugs = [
   '10-dicas-especialistas-renderizacoes-enscape-destaque',
   'como-apresentar-projetos-design-interior-sketchup',
   'acelerando-workflow-grey-boxing-sketchup',
-  '10-extensoes-sketchup-arquitetos'
+  '10-extensoes-sketchup-arquitetos',
+  'editor-materiais-sketchup-realismo-enscape'
 ];
 
 // Configuração das rotas para vite-react-ssg

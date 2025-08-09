@@ -162,6 +162,8 @@ function extractRelevantImages(article) {
    - Analisar tema do artigo
    - Mapear para cursos disponíveis
    - Selecionar curso mais relevante para CTA
+   - cursos de design de moveis, estilos de design de interiores, sketchup, enscape são do curso de projetista
+   - O CTA de "design" é para cursos que envolvam design grafico (photoshop, coreldrawn, ilustrator, indesign, canva)
 
 ### 2.3 Geração de Imagens Locais
 
