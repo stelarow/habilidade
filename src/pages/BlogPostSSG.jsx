@@ -77,7 +77,7 @@ function BlogPost() {
   // SEO data for meta tags
   const seoTitle = `${post.title} | Escola Habilidade`;
   const seoDescription = post.excerpt || `Aprenda ${post.title} com a Escola Habilidade`;
-  const seoImage = post.featured_image || 'https://www.escolahabilidade.com/assets/logos/original/logo-original.png';
+  const seoImage = (post.featuredImage?.url || post.imageUrl) || 'https://www.escolahabilidade.com/assets/logos/original/logo-original.png';
   const seoUrl = `https://www.escolahabilidade.com/blog/${slug}`;
   const seoAuthor = post.author?.name || 'Escola Habilidade';
 
@@ -211,10 +211,10 @@ function BlogPost() {
                   </div>
 
                   {/* Featured Image */}
-                  {post.featured_image && (
+                  {(post.featuredImage?.url || post.imageUrl) && (
                     <div className="mt-8 rounded-xl overflow-hidden">
                       <LazyImage
-                        src={post.featured_image}
+                        src={post.featuredImage?.url || post.imageUrl}
                         alt={post.title}
                         className="w-full h-64 md:h-80 object-cover"
                         loading="eager"
@@ -329,7 +329,7 @@ export async function loader({ params }) {
       seoData: {
         title: postData.post.title,
         description: postData.post.excerpt,
-        image: postData.post.featured_image,
+        image: postData.post.featuredImage?.url || postData.post.imageUrl,
         url: `https://www.escolahabilidade.com/blog/${slug}`
       }
     };
