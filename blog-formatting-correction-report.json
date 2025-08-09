@@ -1,0 +1,30 @@
+{
+  "timestamp": "2025-08-09T21:27:04.984Z",
+  "originalDiagnosis": {
+    "totalArticles": 17,
+    "articlesWithIssues": 17,
+    "totalIssuesFound": 651
+  },
+  "correctionResults": {
+    "totalProcessed": 17,
+    "successful": 17,
+    "updated": 17,
+    "skipped": 0,
+    "failed": 0,
+    "errors": [],
+    "startTime": "2025-08-09T21:26:52.808Z",
+    "endTime": "2025-08-09T21:27:04.824Z"
+  },
+  "validationResults": {
+    "totalArticles": 18,
+    "articlesWithIssues": 18,
+    "articlesFixed": 0,
+    "totalIssuesRemaining": 789,
+    "successRate": "0.0"
+  },
+  "summary": {
+    "issuesFixed": -138,
+    "successRate": "0.0%",
+    "processingTime": 12016
+  }
+}

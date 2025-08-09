@@ -1,0 +1,801 @@
+{
+  "totalArticles": 17,
+  "articlesWithIssues": 17,
+  "articlesWithoutIssues": 0,
+  "totalIssuesFound": 651,
+  "severityBreakdown": {
+    "CRITICAL": 0,
+    "HIGH": 44,
+    "MEDIUM": 320,
+    "LOW": 287
+  },
+  "issueTypeBreakdown": {
+    "COMPRESSED_LISTS": {
+      "articlesAffected": 2,
+      "totalOccurrences": 2,
+      "severity": "HIGH",
+      "description": "Numbered lists without spacing between items"
+    },
+    "TEXT_WALLS": {
+      "articlesAffected": 13,
+      "totalOccurrences": 42,
+      "severity": "HIGH",
+      "description": "Long text blocks without paragraph breaks (150+ chars)"
+    },
+    "PUNCTUATION_SPACING": {
+      "articlesAffected": 17,
+      "totalOccurrences": 258,
+      "severity": "MEDIUM",
+      "description": "Missing space after punctuation"
+    },
+    "COLON_FORMATTING": {
+      "articlesAffected": 13,
+      "totalOccurrences": 50,
+      "severity": "LOW",
+      "description": "Inconsistent colon formatting"
+    },
+    "BULLET_LIST_ISSUES": {
+      "articlesAffected": 5,
+      "totalOccurrences": 62,
+      "severity": "MEDIUM",
+      "description": "Bullet lists without proper spacing"
+    },
+    "MARKDOWN_SPACING": {
+      "articlesAffected": 6,
+      "totalOccurrences": 237,
+      "severity": "LOW",
+      "description": "Missing spacing around markdown formatting"
+    }
+  },
+  "articleDetails": [
+    {
+      "id": "b06d2192-55a8-4b0e-a811-b0a33dc1fc32",
+      "title": "Editor de Materiais do SketchUp: Como Criar Materiais Fotorrealísticos com Enscape",
+      "slug": "editor-materiais-sketchup-realismo-enscape",
+      "category": "Arquitetura",
+      "contentLength": 15193,
+      "wordCount": 1804,
+      "issues": [
+        {
+          "type": "COMPRESSED_LISTS",
+          "description": "Numbered lists without spacing between items",
+          "severity": "HIGH",
+          "matches": 1,
+          "examples": [
+            "1. **Pratique com diferentes tipos de materiais** - experimente com metais, vidros e cerâmicas\n2. **..."
+          ]
+        },
+        {
+          "type": "TEXT_WALLS",
+          "description": "Long text blocks without paragraph breaks (150+ chars)",
+          "severity": "HIGH",
+          "matches": 1,
+          "examples": [
+            ". Nesse sentido, qualquer coisa que possamos definir na ferramenta de autoria principal, SketchUp ne..."
+          ]
+        },
+        {
+          "type": "PUNCTUATION_SPACING",
+          "description": "Missing space after punctuation",
+          "severity": "MEDIUM",
+          "matches": 76,
+          "examples": [
+            ".s",
+            ".c"
+          ]
+        },
+        {
+          "type": "COLON_FORMATTING",
+          "description": "Inconsistent colon formatting",
+          "severity": "LOW",
+          "matches": 3,
+          "examples": [
+            "p: C",
+            "r: E"
+          ]
+        },
+        {
+          "type": "BULLET_LIST_ISSUES",
+          "description": "Bullet lists without proper spacing",
+          "severity": "MEDIUM",
+          "matches": 2,
+          "examples": [
+            "\n- Dominar o editor de materiais do Enscape para SketchUp\n- Criar texturas fotorrealísticas de madei...",
+            "\n- Dominar o SketchUp do básico ao avançado\n- Criar renderizações fotorrealísticas com Enscape\n- Apl..."
+          ]
+        },
+        {
+          "type": "MARKDOWN_SPACING",
+          "description": "Missing spacing around markdown formatting",
+          "severity": "LOW",
+          "matches": 25,
+          "examples": [
+            "e*\n\n![Editor de Materiais do SketchUp: Como Criar Materiais Fotorrealísticos com Enscape](https://vf...",
+            "p*\n\nA partir da versão 3.0 do Enscape, muitas das ferramentas estão localizadas dentro da janela de ..."
+          ]
+        }
+      ],
+      "totalIssues": 108,
+      "needsAttention": true
+    },
+    {
+      "id": "1fca167b-a42e-4cb7-ba40-773f5966124e",
+      "title": "Guia Completo: 21 Estilos de Decoração para Transformar Sua Casa",
+      "slug": "guia-completo-21-estilos-decoracao-transformar-casa",
+      "category": "Arquitetura",
+      "contentLength": 17155,
+      "wordCount": 1954,
+      "issues": [
+        {
+          "type": "COMPRESSED_LISTS",
+          "description": "Numbered lists without spacing between items",
+          "severity": "HIGH",
+          "matches": 1,
+          "examples": [
+            "1. **Orçamento disponível** - alguns estilos exigem materiais mais caros\n2. **Manutenção necessária*..."
+          ]
+        },
+        {
+          "type": "TEXT_WALLS",
+          "description": "Long text blocks without paragraph breaks (150+ chars)",
+          "severity": "HIGH",
+          "matches": 1,
+          "examples": [
+            ". Seja optando por um estilo puro ou combinando elementos de diferentes tendências, o importante é c..."
+          ]
+        },
+        {
+          "type": "PUNCTUATION_SPACING",
+          "description": "Missing space after punctuation",
+          "severity": "MEDIUM",
+          "matches": 66,
+          "examples": [
+            ".s",
+            ".c"
+          ]
+        },
+        {
+          "type": "COLON_FORMATTING",
+          "description": "Inconsistent colon formatting",
+          "severity": "LOW",
+          "matches": 22,
+          "examples": [
+            "r: E",
+            "o: E"
+          ]
+        },
+        {
+          "type": "BULLET_LIST_ISSUES",
+          "description": "Bullet lists without proper spacing",
+          "severity": "MEDIUM",
+          "matches": 21,
+          "examples": [
+            "\n- **Linhas retas e simétricas** em contraste com curvas excessivas\n- **Cores neutras** como branco,...",
+            "\n- **Formas geométricas** com linhas retas e ângulos definidos\n- **Materiais industriais** como vidr..."
+          ]
+        },
+        {
+          "type": "MARKDOWN_SPACING",
+          "description": "Missing spacing around markdown formatting",
+          "severity": "LOW",
+          "matches": 132,
+          "examples": [
+            "e*\n\n![Guia completo dos principais estilos de decoração para inspirar seus projetos](https://vfpdyll...",
+            "o** é fundamental para criar ambientes únicos e personalizados. Seja você um decorador iniciante ou ..."
+          ]
+        }
+      ],
+      "totalIssues": 243,
+      "needsAttention": true
+    },
+    {
+      "id": "f503a587-b810-4017-8458-eb78eba096fd",
+      "title": "Por que o Enscape é Essencial para Visualização Arquitetônica: 5 Razões Definitivas",
+      "slug": "por-que-enscape-essencial-visualizacao-arquitetonica",
+      "category": "Arquitetura",
+      "contentLength": 8497,
+      "wordCount": 1156,
+      "issues": [
+        {
+          "type": "TEXT_WALLS",
+          "description": "Long text blocks without paragraph breaks (150+ chars)",
+          "severity": "HIGH",
+          "matches": 9,
+          "examples": [
+            ". Explore Ideias Rapidamente com Esforço Mínimo\n\nA iteração de design normalmente demora mais tempo ...",
+            ".\n\nCom a tecnologia de visualização em tempo real que se conecta diretamente ao seu software de mode..."
+          ]
+        },
+        {
+          "type": "PUNCTUATION_SPACING",
+          "description": "Missing space after punctuation",
+          "severity": "MEDIUM",
+          "matches": 15,
+          "examples": [
+            ".s",
+            ".c"
+          ]
+        },
+        {
+          "type": "COLON_FORMATTING",
+          "description": "Inconsistent colon formatting",
+          "severity": "LOW",
+          "matches": 4,
+          "examples": [
+            "e: V",
+            "e: S"
+          ]
+        },
+        {
+          "type": "MARKDOWN_SPACING",
+          "description": "Missing spacing around markdown formatting",
+          "severity": "LOW",
+          "matches": 4,
+          "examples": [
+            "n*\n\n## 1. Explore Ideias Rapidamente com Esforço Mínimo\n\nA iteração de design normalmente demora mai...",
+            "D*\n\nAs mudanças são então renderizadas em tempo real, fornecendo visualizações precisas e feedback i..."
+          ]
+        }
+      ],
+      "totalIssues": 32,
+      "needsAttention": true
+    },
+    {
+      "id": "462c0e21-3451-43c7-bfef-0d489d6330e5",
+      "title": "O que é SketchUp? Guia Completo de Modelagem 3D [2025]",
+      "slug": "o-que-e-sketchup-guia-completo-modelagem-3d-2025",
+      "category": "Design",
+      "contentLength": 9927,
+      "wordCount": 1413,
+      "issues": [
+        {
+          "type": "TEXT_WALLS",
+          "description": "Long text blocks without paragraph breaks (150+ chars)",
+          "severity": "HIGH",
+          "matches": 1,
+          "examples": [
+            ". Familiarizar-se com a Interface\n- **Barra de ferramentas:** Ferramentas de desenho e modificação\n-..."
+          ]
+        },
+        {
+          "type": "PUNCTUATION_SPACING",
+          "description": "Missing space after punctuation",
+          "severity": "MEDIUM",
+          "matches": 9,
+          "examples": [
+            ".s",
+            ".c"
+          ]
+        },
+        {
+          "type": "COLON_FORMATTING",
+          "description": "Inconsistent colon formatting",
+          "severity": "LOW",
+          "matches": 4,
+          "examples": [
+            "p: D",
+            "p: Q"
+          ]
+        },
+        {
+          "type": "BULLET_LIST_ISSUES",
+          "description": "Bullet lists without proper spacing",
+          "severity": "MEDIUM",
+          "matches": 23,
+          "examples": [
+            "\n- **Arquitetura** e design de interiores\n- **Engenharia** e prototipagem\n- **Entretenimento** e jog...",
+            "\n- **Interface intuitiva** e amigável\n- **Ferramentas de desenho** simples e poderosas\n- **Bibliotec..."
+          ]
+        },
+        {
+          "type": "MARKDOWN_SPACING",
+          "description": "Missing spacing around markdown formatting",
+          "severity": "LOW",
+          "matches": 49,
+          "examples": [
+            "D** que permite criar qualquer coisa que você possa imaginar. Se você quer projetar uma casa, um car...",
+            "D** é o processo de criar uma representação digital de um objeto ou cena usando formas geométricas, ..."
+          ]
+        }
+      ],
+      "totalIssues": 86,
+      "needsAttention": true
+    },
+    {
+      "id": "8607bd9c-1e22-4981-9b28-6161a048cdc7",
+      "title": "História do SketchUp: Como o Software Revolucionou a Arquitetura",
+      "slug": "historia-sketchup-software-arquitetura",
+      "category": "Arquitetura",
+      "contentLength": 10725,
+      "wordCount": 1417,
+      "issues": [
+        {
+          "type": "TEXT_WALLS",
+          "description": "Long text blocks without paragraph breaks (150+ chars)",
+          "severity": "HIGH",
+          "matches": 6,
+          "examples": [
+            ". O SketchUp oferecia ferramentas poderosas para:\n- Modelagem 3D intuitiva\n- Aplicação de materiais ...",
+            ".\n\nDurante o período Google, o SketchUp ganhou:\n- **Integração com Google Earth**: Permitindo que mo..."
+          ]
+        },
+        {
+          "type": "PUNCTUATION_SPACING",
+          "description": "Missing space after punctuation",
+          "severity": "MEDIUM",
+          "matches": 12,
+          "examples": [
+            ".w",
+            ".c"
+          ]
+        },
+        {
+          "type": "COLON_FORMATTING",
+          "description": "Inconsistent colon formatting",
+          "severity": "LOW",
+          "matches": 3,
+          "examples": [
+            "p: C",
+            "p: D"
+          ]
+        },
+        {
+          "type": "BULLET_LIST_ISSUES",
+          "description": "Bullet lists without proper spacing",
+          "severity": "MEDIUM",
+          "matches": 15,
+          "examples": [
+            "\n- Modelagem 3D intuitiva\n- Aplicação de materiais e texturas\n- Criação de componentes reutilizáveis...",
+            "\n- **Integração com Google Earth**: Permitindo que modelos 3D fossem visualizados em contexto geográ..."
+          ]
+        },
+        {
+          "type": "MARKDOWN_SPACING",
+          "description": "Missing spacing around markdown formatting",
+          "severity": "LOW",
+          "matches": 25,
+          "examples": [
+            "s**. Sua simplicidade e poder de comunicação visual transformaram a maneira como profissionais apres...",
+            "o**. Enquanto outros softwares de modelagem 3D exigiam semanas ou meses de treinamento, o SketchUp p..."
+          ]
+        }
+      ],
+      "totalIssues": 61,
+      "needsAttention": true
+    },
+    {
+      "id": "fb19db39-58ca-4270-93f6-2565bc20c8e7",
+      "title": "Design de Espaços de Varejo com SketchUp Pro: Otimize Layouts e Experiência de Marca",
+      "slug": "design-espacos-varejo-sketchup-pro",
+      "category": "Design",
+      "contentLength": 8952,
+      "wordCount": 1331,
+      "issues": [
+        {
+          "type": "TEXT_WALLS",
+          "description": "Long text blocks without paragraph breaks (150+ chars)",
+          "severity": "HIGH",
+          "matches": 5,
+          "examples": [
+            ". Para designers de interiores e redes de varejo, o desafio é criar espaços que sejam bonitos e func...",
+            ". O SketchUp Pro oferece vários recursos que facilitam o gerenciamento e replicação de designs em mú..."
+          ]
+        },
+        {
+          "type": "PUNCTUATION_SPACING",
+          "description": "Missing space after punctuation",
+          "severity": "MEDIUM",
+          "matches": 4,
+          "examples": [
+            ".j",
+            ".j"
+          ]
+        },
+        {
+          "type": "COLON_FORMATTING",
+          "description": "Inconsistent colon formatting",
+          "severity": "LOW",
+          "matches": 1,
+          "examples": [
+            "o: O"
+          ]
+        },
+        {
+          "type": "BULLET_LIST_ISSUES",
+          "description": "Bullet lists without proper spacing",
+          "severity": "MEDIUM",
+          "matches": 1,
+          "examples": [
+            "\n- Criar layouts de loja otimizados para fluxo de clientes\n- Desenvolver modelos 3D fotorealísticos ..."
+          ]
+        },
+        {
+          "type": "MARKDOWN_SPACING",
+          "description": "Missing spacing around markdown formatting",
+          "severity": "LOW",
+          "matches": 2,
+          "examples": [
+            "o** oferece a solução perfeita para atender essas demandas no mercado brasileiro.\n\n## A Importância ...",
+            "e**, oferecemos cursos completos de SketchUp Pro focados no design de espaços comerciais e de varejo..."
+          ]
+        }
+      ],
+      "totalIssues": 13,
+      "needsAttention": true
+    },
+    {
+      "id": "ef4130ab-1abd-4bb0-ac67-ded4af572ba3",
+      "title": "Usando SketchUp em Fluxos de Trabalho de Arquitetura Paisagística",
+      "slug": "sketchup-arquitetura-paisagistica",
+      "category": "Arquitetura",
+      "contentLength": 10070,
+      "wordCount": 1132,
+      "issues": [
+        {
+          "type": "TEXT_WALLS",
+          "description": "Long text blocks without paragraph breaks (150+ chars)",
+          "severity": "HIGH",
+          "matches": 4,
+          "examples": [
+            ". Estratégias de Planejamento (Pré-Design)</h2>\n<p class=\"mb-4\">Arquitetos paisagistas fornecem cons...",
+            ". Funções e Características (Design Esquemático)</h2>\n<p class=\"mb-4\">Durante a fase de Design Esque..."
+          ]
+        },
+        {
+          "type": "PUNCTUATION_SPACING",
+          "description": "Missing space after punctuation",
+          "severity": "MEDIUM",
+          "matches": 8,
+          "examples": [
+            ".j",
+            ".j"
+          ]
+        },
+        {
+          "type": "COLON_FORMATTING",
+          "description": "Inconsistent colon formatting",
+          "severity": "LOW",
+          "matches": 1,
+          "examples": [
+            "o: U"
+          ]
+        }
+      ],
+      "totalIssues": 13,
+      "needsAttention": true
+    },
+    {
+      "id": "fe61a9fe-0acd-4ba1-9b99-694d856b1412",
+      "title": "Dominando o Shape Bender: Curvando Geometrias no SketchUp",
+      "slug": "dominando-shape-bender-curvando-geometrias-sketchup",
+      "category": "Arquitetura",
+      "contentLength": 6684,
+      "wordCount": 693,
+      "issues": [
+        {
+          "type": "PUNCTUATION_SPACING",
+          "description": "Missing space after punctuation",
+          "severity": "MEDIUM",
+          "matches": 5,
+          "examples": [
+            ".j",
+            ".j"
+          ]
+        },
+        {
+          "type": "COLON_FORMATTING",
+          "description": "Inconsistent colon formatting",
+          "severity": "LOW",
+          "matches": 1,
+          "examples": [
+            "r: C"
+          ]
+        }
+      ],
+      "totalIssues": 6,
+      "needsAttention": true
+    },
+    {
+      "id": "25e77f45-69d1-4313-858f-052e9a6082b5",
+      "title": "5 Maneiras de Maximizar Vistas Magníficas para Casas Personalizadas",
+      "slug": "cinco-maneiras-maximizar-vistas-magnificas-casas-personalizadas",
+      "category": "Arquitetura",
+      "contentLength": 17488,
+      "wordCount": 1557,
+      "issues": [
+        {
+          "type": "TEXT_WALLS",
+          "description": "Long text blocks without paragraph breaks (150+ chars)",
+          "severity": "HIGH",
+          "matches": 9,
+          "examples": [
+            ". Fotógrafo: Trent Bell</p>\n          </div>\n        </div>\n\n        <div class=\"article-section\">\n ...",
+            ". Escolha estruturas que suportem janelas grandes</a></li>\n              <li><a href=\"#section3\" cla..."
+          ]
+        },
+        {
+          "type": "PUNCTUATION_SPACING",
+          "description": "Missing space after punctuation",
+          "severity": "MEDIUM",
+          "matches": 11,
+          "examples": [
+            ".j",
+            ".j"
+          ]
+        },
+        {
+          "type": "COLON_FORMATTING",
+          "description": "Inconsistent colon formatting",
+          "severity": "LOW",
+          "matches": 3,
+          "examples": [
+            "o: T",
+            "o: J"
+          ]
+        }
+      ],
+      "totalIssues": 23,
+      "needsAttention": true
+    },
+    {
+      "id": "a4f3c7fc-2d54-4cdf-9a82-8b8addb82c9d",
+      "title": "10 Extensões SketchUp Essenciais que Todo Arquiteto Deve Conhecer",
+      "slug": "10-extensoes-sketchup-arquitetos",
+      "category": "Arquitetura",
+      "contentLength": 11094,
+      "wordCount": 1007,
+      "issues": [
+        {
+          "type": "PUNCTUATION_SPACING",
+          "description": "Missing space after punctuation",
+          "severity": "MEDIUM",
+          "matches": 13,
+          "examples": [
+            ".w",
+            ".w"
+          ]
+        }
+      ],
+      "totalIssues": 13,
+      "needsAttention": true
+    },
+    {
+      "id": "34452409-c324-4d5b-8825-6f49f020894e",
+      "title": "10 Dicas de Especialistas para Fazer Suas Renderizações Enscape Se Destacarem",
+      "slug": "10-dicas-especialistas-renderizacoes-enscape-destaque",
+      "category": "Arquitetura",
+      "contentLength": 5146,
+      "wordCount": 459,
+      "issues": [
+        {
+          "type": "TEXT_WALLS",
+          "description": "Long text blocks without paragraph breaks (150+ chars)",
+          "severity": "HIGH",
+          "matches": 1,
+          "examples": [
+            ". Configure Materiais Realistas</h2>\n\n<p class=\"mb-4 leading-relaxed text-gray-700\">Materiais convin..."
+          ]
+        },
+        {
+          "type": "PUNCTUATION_SPACING",
+          "description": "Missing space after punctuation",
+          "severity": "MEDIUM",
+          "matches": 3,
+          "examples": [
+            ".j",
+            ".j"
+          ]
+        }
+      ],
+      "totalIssues": 4,
+      "needsAttention": true
+    },
+    {
+      "id": "1ed36559-896b-4729-b6ff-aead67f3d83f",
+      "title": "Conheça 8 Tipos de Puxadores para Móveis e suas Características",
+      "slug": "tipos-puxadores-moveis",
+      "category": "Design",
+      "contentLength": 11438,
+      "wordCount": 1044,
+      "issues": [
+        {
+          "type": "TEXT_WALLS",
+          "description": "Long text blocks without paragraph breaks (150+ chars)",
+          "severity": "HIGH",
+          "matches": 1,
+          "examples": [
+            ". Estilo do Ambiente</h4>\n<ul class=\"list-disc list-inside space-y-2 mb-4 ml-4\">\n<li class=\"mb-1\">Cl..."
+          ]
+        },
+        {
+          "type": "PUNCTUATION_SPACING",
+          "description": "Missing space after punctuation",
+          "severity": "MEDIUM",
+          "matches": 11,
+          "examples": [
+            ".j",
+            ".j"
+          ]
+        }
+      ],
+      "totalIssues": 12,
+      "needsAttention": true
+    },
+    {
+      "id": "6f797a89-8dde-4f37-a447-286042f0dd69",
+      "title": "Como Construir seu Primeiro Agente de IA (+Template de Workflow Gratuito)",
+      "slug": "como-construir-seu-primeiro-agente-ia-n8n",
+      "category": "Programação",
+      "contentLength": 7589,
+      "wordCount": 779,
+      "issues": [
+        {
+          "type": "PUNCTUATION_SPACING",
+          "description": "Missing space after punctuation",
+          "severity": "MEDIUM",
+          "matches": 6,
+          "examples": [
+            ".j",
+            ".p"
+          ]
+        },
+        {
+          "type": "COLON_FORMATTING",
+          "description": "Inconsistent colon formatting",
+          "severity": "LOW",
+          "matches": 1,
+          "examples": [
+            "o: A"
+          ]
+        }
+      ],
+      "totalIssues": 7,
+      "needsAttention": true
+    },
+    {
+      "id": "90c0a089-9e24-429b-b124-e50ee8bdfac4",
+      "title": "Acelere seu Workflow de Modelagem 3D com Grey Boxing no SketchUp",
+      "slug": "acelerando-workflow-grey-boxing-sketchup",
+      "category": "Arquitetura",
+      "contentLength": 14858,
+      "wordCount": 1376,
+      "issues": [
+        {
+          "type": "PUNCTUATION_SPACING",
+          "description": "Missing space after punctuation",
+          "severity": "MEDIUM",
+          "matches": 5,
+          "examples": [
+            ".j",
+            ".j"
+          ]
+        },
+        {
+          "type": "COLON_FORMATTING",
+          "description": "Inconsistent colon formatting",
+          "severity": "LOW",
+          "matches": 1,
+          "examples": [
+            "o: J"
+          ]
+        }
+      ],
+      "totalIssues": 6,
+      "needsAttention": true
+    },
+    {
+      "id": "64d8e756-cb5c-424d-bea0-75fde8e15370",
+      "title": "Workflows Avançados com SketchUp para Arquitetura Paisagística: Técnicas Profissionais e Melhores Práticas",
+      "slug": "sketchup-workflows-avancados-arquitetura-paisagistica",
+      "category": "Arquitetura",
+      "contentLength": 22777,
+      "wordCount": 1806,
+      "issues": [
+        {
+          "type": "TEXT_WALLS",
+          "description": "Long text blocks without paragraph breaks (150+ chars)",
+          "severity": "HIGH",
+          "matches": 2,
+          "examples": [
+            ". Requer uma abordagem sistemática que integra análise, design, documentação e implementação:</p>\n  ...",
+            ". Terraplanagem Estratégica</h5>\n              <ul class=\"space-y-2 text-sm text-zinc-300\">\n        ..."
+          ]
+        },
+        {
+          "type": "PUNCTUATION_SPACING",
+          "description": "Missing space after punctuation",
+          "severity": "MEDIUM",
+          "matches": 8,
+          "examples": [
+            ".j",
+            ".j"
+          ]
+        },
+        {
+          "type": "COLON_FORMATTING",
+          "description": "Inconsistent colon formatting",
+          "severity": "LOW",
+          "matches": 4,
+          "examples": [
+            "a: O",
+            "a: A"
+          ]
+        }
+      ],
+      "totalIssues": 14,
+      "needsAttention": true
+    },
+    {
+      "id": "7f044b97-25ec-4884-820e-137ad93fdd82",
+      "title": "Como Apresentar Projetos de Design Interior com SketchUp",
+      "slug": "como-apresentar-projetos-design-interior-sketchup",
+      "category": "Arquitetura",
+      "contentLength": 11439,
+      "wordCount": 996,
+      "issues": [
+        {
+          "type": "TEXT_WALLS",
+          "description": "Long text blocks without paragraph breaks (150+ chars)",
+          "severity": "HIGH",
+          "matches": 1,
+          "examples": [
+            ". Vista Geral do Ambiente</h4>\n<ul class=\"list-disc list-inside space-y-2 mb-4 ml-4\">\n<li class=\"mb-..."
+          ]
+        },
+        {
+          "type": "PUNCTUATION_SPACING",
+          "description": "Missing space after punctuation",
+          "severity": "MEDIUM",
+          "matches": 5,
+          "examples": [
+            ".j",
+            ".j"
+          ]
+        }
+      ],
+      "totalIssues": 6,
+      "needsAttention": true
+    },
+    {
+      "id": "b35efffe-0962-4953-97d8-98ec4c0ae40d",
+      "title": "Como Usar SketchUp para Design Conceitual Arquitetônico: Guia Completo",
+      "slug": "como-usar-sketchup-para-design-conceitual-arquitetonico",
+      "category": "Arquitetura",
+      "contentLength": 5691,
+      "wordCount": 597,
+      "issues": [
+        {
+          "type": "TEXT_WALLS",
+          "description": "Long text blocks without paragraph breaks (150+ chars)",
+          "severity": "HIGH",
+          "matches": 1,
+          "examples": [
+            ". Importe um mapa, topografia ou planta do edifício usando:</p>\n<ul class=\"list-disc list-inside spa..."
+          ]
+        },
+        {
+          "type": "PUNCTUATION_SPACING",
+          "description": "Missing space after punctuation",
+          "severity": "MEDIUM",
+          "matches": 1,
+          "examples": [
+            ".j"
+          ]
+        },
+        {
+          "type": "COLON_FORMATTING",
+          "description": "Inconsistent colon formatting",
+          "severity": "LOW",
+          "matches": 2,
+          "examples": [
+            "o: G",
+            "o: T"
+          ]
+        }
+      ],
+      "totalIssues": 4,
+      "needsAttention": true
+    }
+  ],
+  "timestamp": "2025-08-09T21:25:24.525Z"
+}

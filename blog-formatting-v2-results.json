@@ -1,0 +1,237 @@
+{
+  "processingResults": {
+    "totalProcessed": 18,
+    "successful": 18,
+    "updated": 6,
+    "skipped": 12,
+    "failed": 0,
+    "startTime": "2025-08-09T21:28:18.594Z",
+    "endTime": "2025-08-09T21:28:24.999Z"
+  },
+  "finalDiagnosis": {
+    "totalArticles": 18,
+    "articlesWithIssues": 18,
+    "articlesClean": 0,
+    "totalIssues": 482,
+    "successRate": "0.0",
+    "detailedResults": [
+      {
+        "title": "Guia Completo: 21 Estilos de Decoração para Transformar Sua Casa",
+        "slug": "guia-completo-21-estilos-decoracao-transformar-casa",
+        "issues": 110,
+        "breakdown": {
+          "PUNCTUATION_SPACING": 66,
+          "COLON_FORMATTING": 0,
+          "EXCESSIVE_BREAKS": 0,
+          "COMPRESSED_LISTS": 2,
+          "BULLET_LIST_SPACING": 42
+        }
+      },
+      {
+        "title": "Guia Completo: Como Começar com Enscape para SketchUp - Tudo que Você Precisa Saber",
+        "slug": "guia-completo-enscape-sketchup-iniciantes",
+        "issues": 99,
+        "breakdown": {
+          "PUNCTUATION_SPACING": 43,
+          "COLON_FORMATTING": 0,
+          "EXCESSIVE_BREAKS": 0,
+          "COMPRESSED_LISTS": 14,
+          "BULLET_LIST_SPACING": 42
+        }
+      },
+      {
+        "title": "Editor de Materiais do SketchUp: Como Criar Materiais Fotorrealísticos com Enscape",
+        "slug": "editor-materiais-sketchup-realismo-enscape",
+        "issues": 82,
+        "breakdown": {
+          "PUNCTUATION_SPACING": 76,
+          "COLON_FORMATTING": 0,
+          "EXCESSIVE_BREAKS": 0,
+          "COMPRESSED_LISTS": 2,
+          "BULLET_LIST_SPACING": 4
+        }
+      },
+      {
+        "title": "O que é SketchUp? Guia Completo de Modelagem 3D [2025]",
+        "slug": "o-que-e-sketchup-guia-completo-modelagem-3d-2025",
+        "issues": 54,
+        "breakdown": {
+          "PUNCTUATION_SPACING": 9,
+          "COLON_FORMATTING": 0,
+          "EXCESSIVE_BREAKS": 0,
+          "COMPRESSED_LISTS": 0,
+          "BULLET_LIST_SPACING": 45
+        }
+      },
+      {
+        "title": "História do SketchUp: Como o Software Revolucionou a Arquitetura",
+        "slug": "historia-sketchup-software-arquitetura",
+        "issues": 40,
+        "breakdown": {
+          "PUNCTUATION_SPACING": 12,
+          "COLON_FORMATTING": 0,
+          "EXCESSIVE_BREAKS": 0,
+          "COMPRESSED_LISTS": 0,
+          "BULLET_LIST_SPACING": 28
+        }
+      },
+      {
+        "title": "Por que o Enscape é Essencial para Visualização Arquitetônica: 5 Razões Definitivas",
+        "slug": "por-que-enscape-essencial-visualizacao-arquitetonica",
+        "issues": 15,
+        "breakdown": {
+          "PUNCTUATION_SPACING": 15,
+          "COLON_FORMATTING": 0,
+          "EXCESSIVE_BREAKS": 0,
+          "COMPRESSED_LISTS": 0,
+          "BULLET_LIST_SPACING": 0
+        }
+      },
+      {
+        "title": "10 Extensões SketchUp Essenciais que Todo Arquiteto Deve Conhecer",
+        "slug": "10-extensoes-sketchup-arquitetos",
+        "issues": 13,
+        "breakdown": {
+          "PUNCTUATION_SPACING": 13,
+          "COLON_FORMATTING": 0,
+          "EXCESSIVE_BREAKS": 0,
+          "COMPRESSED_LISTS": 0,
+          "BULLET_LIST_SPACING": 0
+        }
+      },
+      {
+        "title": "5 Maneiras de Maximizar Vistas Magníficas para Casas Personalizadas",
+        "slug": "cinco-maneiras-maximizar-vistas-magnificas-casas-personalizadas",
+        "issues": 11,
+        "breakdown": {
+          "PUNCTUATION_SPACING": 11,
+          "COLON_FORMATTING": 0,
+          "EXCESSIVE_BREAKS": 0,
+          "COMPRESSED_LISTS": 0,
+          "BULLET_LIST_SPACING": 0
+        }
+      },
+      {
+        "title": "Conheça 8 Tipos de Puxadores para Móveis e suas Características",
+        "slug": "tipos-puxadores-moveis",
+        "issues": 11,
+        "breakdown": {
+          "PUNCTUATION_SPACING": 11,
+          "COLON_FORMATTING": 0,
+          "EXCESSIVE_BREAKS": 0,
+          "COMPRESSED_LISTS": 0,
+          "BULLET_LIST_SPACING": 0
+        }
+      },
+      {
+        "title": "Usando SketchUp em Fluxos de Trabalho de Arquitetura Paisagística",
+        "slug": "sketchup-arquitetura-paisagistica",
+        "issues": 8,
+        "breakdown": {
+          "PUNCTUATION_SPACING": 8,
+          "COLON_FORMATTING": 0,
+          "EXCESSIVE_BREAKS": 0,
+          "COMPRESSED_LISTS": 0,
+          "BULLET_LIST_SPACING": 0
+        }
+      },
+      {
+        "title": "Workflows Avançados com SketchUp para Arquitetura Paisagística: Técnicas Profissionais e Melhores Práticas",
+        "slug": "sketchup-workflows-avancados-arquitetura-paisagistica",
+        "issues": 8,
+        "breakdown": {
+          "PUNCTUATION_SPACING": 8,
+          "COLON_FORMATTING": 0,
+          "EXCESSIVE_BREAKS": 0,
+          "COMPRESSED_LISTS": 0,
+          "BULLET_LIST_SPACING": 0
+        }
+      },
+      {
+        "title": "Design de Espaços de Varejo com SketchUp Pro: Otimize Layouts e Experiência de Marca",
+        "slug": "design-espacos-varejo-sketchup-pro",
+        "issues": 6,
+        "breakdown": {
+          "PUNCTUATION_SPACING": 4,
+          "COLON_FORMATTING": 0,
+          "EXCESSIVE_BREAKS": 0,
+          "COMPRESSED_LISTS": 0,
+          "BULLET_LIST_SPACING": 2
+        }
+      },
+      {
+        "title": "Como Construir seu Primeiro Agente de IA (+Template de Workflow Gratuito)",
+        "slug": "como-construir-seu-primeiro-agente-ia-n8n",
+        "issues": 6,
+        "breakdown": {
+          "PUNCTUATION_SPACING": 6,
+          "COLON_FORMATTING": 0,
+          "EXCESSIVE_BREAKS": 0,
+          "COMPRESSED_LISTS": 0,
+          "BULLET_LIST_SPACING": 0
+        }
+      },
+      {
+        "title": "Dominando o Shape Bender: Curvando Geometrias no SketchUp",
+        "slug": "dominando-shape-bender-curvando-geometrias-sketchup",
+        "issues": 5,
+        "breakdown": {
+          "PUNCTUATION_SPACING": 5,
+          "COLON_FORMATTING": 0,
+          "EXCESSIVE_BREAKS": 0,
+          "COMPRESSED_LISTS": 0,
+          "BULLET_LIST_SPACING": 0
+        }
+      },
+      {
+        "title": "Acelere seu Workflow de Modelagem 3D com Grey Boxing no SketchUp",
+        "slug": "acelerando-workflow-grey-boxing-sketchup",
+        "issues": 5,
+        "breakdown": {
+          "PUNCTUATION_SPACING": 5,
+          "COLON_FORMATTING": 0,
+          "EXCESSIVE_BREAKS": 0,
+          "COMPRESSED_LISTS": 0,
+          "BULLET_LIST_SPACING": 0
+        }
+      },
+      {
+        "title": "Como Apresentar Projetos de Design Interior com SketchUp",
+        "slug": "como-apresentar-projetos-design-interior-sketchup",
+        "issues": 5,
+        "breakdown": {
+          "PUNCTUATION_SPACING": 5,
+          "COLON_FORMATTING": 0,
+          "EXCESSIVE_BREAKS": 0,
+          "COMPRESSED_LISTS": 0,
+          "BULLET_LIST_SPACING": 0
+        }
+      },
+      {
+        "title": "10 Dicas de Especialistas para Fazer Suas Renderizações Enscape Se Destacarem",
+        "slug": "10-dicas-especialistas-renderizacoes-enscape-destaque",
+        "issues": 3,
+        "breakdown": {
+          "PUNCTUATION_SPACING": 3,
+          "COLON_FORMATTING": 0,
+          "EXCESSIVE_BREAKS": 0,
+          "COMPRESSED_LISTS": 0,
+          "BULLET_LIST_SPACING": 0
+        }
+      },
+      {
+        "title": "Como Usar SketchUp para Design Conceitual Arquitetônico: Guia Completo",
+        "slug": "como-usar-sketchup-para-design-conceitual-arquitetonico",
+        "issues": 1,
+        "breakdown": {
+          "PUNCTUATION_SPACING": 1,
+          "COLON_FORMATTING": 0,
+          "EXCESSIVE_BREAKS": 0,
+          "COMPRESSED_LISTS": 0,
+          "BULLET_LIST_SPACING": 0
+        }
+      }
+    ]
+  },
+  "timestamp": "2025-08-09T21:28:25.145Z"
+}
