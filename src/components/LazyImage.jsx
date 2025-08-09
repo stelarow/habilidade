@@ -69,6 +69,12 @@ const LazyImage = ({
             isLoaded ? 'opacity-100' : 'opacity-0'
           }`}
           loading="lazy"
+          decoding="async"
+          style={{
+            imageRendering: 'high-quality',
+            transform: 'translateZ(0)',
+            backfaceVisibility: 'hidden'
+          }}
         />
       )}
       

@@ -160,61 +160,12 @@ class ImageOptimizer {
    * Build service-specific URL (placeholder for future CDN integration)
    */
   /**
-   * Build service-specific URL with intelligent resizing
+   * Build service-specific URL - simplified to avoid canvas issues
    */
   buildServiceUrl(src, params) {
-    // Check if we can get image dimensions
-    return new Promise((resolve) => {
-      const img = new Image();
-      img.crossOrigin = 'anonymous';
-      
-      img.onload = () => {
-        const originalWidth = img.naturalWidth;
-        const originalHeight = img.naturalHeight;
-        const targetWidth = params.width;
-        
-        // Smart resizing logic to prevent pixelation
-        if (originalWidth < targetWidth) {
-          // Only upscale if the image is significantly smaller and under 800px
-          if (originalWidth < 800 && targetWidth > originalWidth * 1.5) {
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-            
-            // Conservative upscale limit - max 1.5x to maintain quality
-            const maxUpscale = 1.5;
-            const effectiveWidth = Math.min(targetWidth, originalWidth * maxUpscale);
-            const effectiveHeight = (originalHeight * effectiveWidth) / originalWidth;
-            
-            canvas.width = effectiveWidth;
-            canvas.height = effectiveHeight;
-            
-            // Use high quality image smoothing
-            ctx.imageSmoothingEnabled = true;
-            ctx.imageSmoothingQuality = 'high';
-            
-            // Apply bicubic-like interpolation for better quality
-            ctx.globalCompositeOperation = 'source-over';
-            ctx.drawImage(img, 0, 0, effectiveWidth, effectiveHeight);
-            
-            // Return enhanced image with high quality
-            resolve(canvas.toDataURL('image/jpeg', Math.min(params.quality / 100, 0.95)));
-          } else {
-            // Image is adequate size or would be over-upscaled, return original
-            resolve(src);
-          }
-        } else {
-          // Image is larger than target, return original (browser will downscale properly)
-          resolve(src);
-        }
-      };
-      
-      img.onerror = () => {
-        // Fallback to original if we can't process
-        resolve(src);
-      };
-      
-      img.src = src;
-    });
+    // For now, return original URL to avoid canvas rendering issues
+    // This prevents the green blur problem while maintaining functionality
+    return Promise.resolve(src);
   }
 
   /**
