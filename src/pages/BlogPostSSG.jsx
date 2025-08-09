@@ -8,7 +8,7 @@ import ShareButtons from '../components/blog/ShareButtons';
 import Breadcrumbs from '../components/blog/Breadcrumbs';
 import BlogLoading from '../components/blog/BlogLoading';
 import BlogError from '../components/blog/BlogError';
-import LazyImage from '../components/LazyImage';
+import OptimizedImage from '../components/blog/OptimizedImage';
 import TableOfContents from '../components/blog/TableOfContents';
 import WhatsAppFloat from '../components/shared/WhatsAppFloat';
 import BlogCTA from '../components/blog/BlogCTA';
@@ -213,12 +213,19 @@ function BlogPost() {
                   {/* Featured Image */}
                   {(post.featuredImage?.url || post.imageUrl) && (
                     <div className="mt-8 rounded-xl overflow-hidden">
-                      <LazyImage
+                      <OptimizedImage
                         src={post.featuredImage?.url || post.imageUrl}
                         alt={post.title}
-                        className="w-full h-64 md:h-80 object-cover"
-                        loading="eager"
-                        decoding="sync"
+                        className="w-full aspect-video"
+                        width={1200}
+                        height={675}
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 100vw, 1200px"
+                        quality={90}
+                        formats={['avif', 'webp', 'jpg']}
+                        priority={true}
+                        placeholder="blur"
+                        objectFit="cover"
+                        context="hero"
                       />
                     </div>
                   )}

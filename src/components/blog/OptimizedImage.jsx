@@ -175,7 +175,14 @@ const OptimizedImage = ({
     height: '100%',
     objectFit,
     opacity: isLoaded ? 1 : 0,
-    transition: 'opacity 0.3s ease-in-out'
+    transition: 'opacity 0.3s ease-in-out',
+    // Enhanced quality rendering
+    imageRendering: 'high-quality',
+    // Hardware acceleration
+    transform: 'translateZ(0)',
+    backfaceVisibility: 'hidden',
+    // Prevent image quality degradation on scaling
+    willChange: isLoaded ? 'auto' : 'transform'
   };
 
   // Placeholder overlay styles

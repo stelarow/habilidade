@@ -24,7 +24,8 @@ class ImageOptimizer {
       contextSettings: {
         thumbnail: { maxWidth: 300, quality: 75 },
         card: { maxWidth: 600, quality: 80 },
-        hero: { maxWidth: 1920, quality: 85 },
+        hero: { maxWidth: 1920, quality: 95 }, // Higher quality for hero images
+        blog: { maxWidth: 1200, quality: 90 }, // High quality for blog content
         gallery: { maxWidth: 1200, quality: 80 },
         avatar: { maxWidth: 200, quality: 80 }
       },
@@ -172,31 +173,37 @@ class ImageOptimizer {
         const originalHeight = img.naturalHeight;
         const targetWidth = params.width;
         
-        // If image is smaller than target and would be stretched, apply smart resizing
-        if (originalWidth < targetWidth && originalWidth < 600) {
-          // Use canvas to upscale with better quality
-          const canvas = document.createElement('canvas');
-          const ctx = canvas.getContext('2d');
-          
-          // Calculate better dimensions (max 2x upscale to maintain quality)
-          const maxUpscale = 2;
-          const effectiveWidth = Math.min(targetWidth, originalWidth * maxUpscale);
-          const effectiveHeight = (originalHeight * effectiveWidth) / originalWidth;
-          
-          canvas.width = effectiveWidth;
-          canvas.height = effectiveHeight;
-          
-          // Use image smoothing for better quality
-          ctx.imageSmoothingEnabled = true;
-          ctx.imageSmoothingQuality = 'high';
-          
-          // Draw and upscale
-          ctx.drawImage(img, 0, 0, effectiveWidth, effectiveHeight);
-          
-          // Return the enhanced image as data URL
-          resolve(canvas.toDataURL('image/jpeg', params.quality / 100));
+        // Smart resizing logic to prevent pixelation
+        if (originalWidth < targetWidth) {
+          // Only upscale if the image is significantly smaller and under 800px
+          if (originalWidth < 800 && targetWidth > originalWidth * 1.5) {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Conservative upscale limit - max 1.5x to maintain quality
+            const maxUpscale = 1.5;
+            const effectiveWidth = Math.min(targetWidth, originalWidth * maxUpscale);
+            const effectiveHeight = (originalHeight * effectiveWidth) / originalWidth;
+            
+            canvas.width = effectiveWidth;
+            canvas.height = effectiveHeight;
+            
+            // Use high quality image smoothing
+            ctx.imageSmoothingEnabled = true;
+            ctx.imageSmoothingQuality = 'high';
+            
+            // Apply bicubic-like interpolation for better quality
+            ctx.globalCompositeOperation = 'source-over';
+            ctx.drawImage(img, 0, 0, effectiveWidth, effectiveHeight);
+            
+            // Return enhanced image with high quality
+            resolve(canvas.toDataURL('image/jpeg', Math.min(params.quality / 100, 0.95)));
+          } else {
+            // Image is adequate size or would be over-upscaled, return original
+            resolve(src);
+          }
         } else {
-          // Image is adequate size, return original
+          // Image is larger than target, return original (browser will downscale properly)
           resolve(src);
         }
       };

@@ -89,6 +89,24 @@
 
 .article-content img {
   @apply rounded-lg shadow-lg my-6 max-w-full h-auto;
+  /* Ensure high quality rendering */
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  /* Prevent blurry scaling on mobile */
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Enhanced image quality for hero images */
+.article-content .hero-image img,
+.optimized-image-container img {
+  /* Force high quality rendering */
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  image-rendering: high-quality;
+  /* Hardware acceleration for better performance */
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 .article-content table {
