@@ -42,6 +42,7 @@ const blogSlugs = [
   'acelerando-workflow-grey-boxing-sketchup',
   '10-extensoes-sketchup-arquitetos',
   'editor-materiais-sketchup-realismo-enscape',
+  'guia-completo-enscape-sketchup-iniciantes',
 
 ];
 
