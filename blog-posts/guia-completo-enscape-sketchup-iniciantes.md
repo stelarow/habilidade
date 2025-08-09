@@ -5,7 +5,7 @@
 **Categoria:** Design 3D e Renderização  
 **Tags:** enscape, sketchup, renderização, realidade-virtual, visualização-arquitetônica  
 **CTA Course:** sketchup-enscape  
-**Featured Image URL:** /images/blog/guia-completo-enscape-sketchup-iniciantes/hero-image.jpg
+**Featured Image URL:** https://vfpdyllwquaturpcifpl.supabase.co/storage/v1/object/public/imagens-blog/guia-completo-enscape-sketchup-iniciantes-hero.jpg
 
 ## Resumo
 
@@ -28,7 +28,7 @@ Aprenda tudo sobre Enscape para SketchUp neste guia definitivo. Desde instalaç�
 
 Se você está começando com **renderização em tempo real** no SketchUp, ou pensando em experimentar o [Enscape](https://www.chaos.com/enscape), este guia é perfeito para você! Vamos te ensinar desde a instalação até a criação de renderizações impressionantes e experiências de realidade virtual.
 
-![Interface do Enscape no SketchUp](/images/blog/guia-completo-enscape-sketchup-iniciantes/interface-enscape-sketchup.jpg)
+![Interface do Enscape no SketchUp](https://vfpdyllwquaturpcifpl.supabase.co/storage/v1/object/public/imagens-blog/guia-completo-enscape-sketchup-iniciantes-interface.jpg)
 
 O Enscape é um dos plugins de renderização mais poderosos disponíveis para SketchUp, permitindo visualizações fotorealísticas em tempo real, criação de vídeos e tours virtuais de forma muito simples.
 
@@ -73,7 +73,7 @@ Após a instalação, o SketchUp detectará automaticamente o Enscape. Você pod
 2. Selecione **"Enscape"** ou vá em **View > Toolbars > Enscape**
 3. A barra de ferramentas do Enscape ficará visível
 
-![Barra de ferramentas do Enscape no SketchUp](/images/blog/guia-completo-enscape-sketchup-iniciantes/toolbar-enscape-sketchup.png)
+![Barra de ferramentas do Enscape no SketchUp](https://vfpdyllwquaturpcifpl.supabase.co/storage/v1/object/public/imagens-blog/guia-completo-enscape-sketchup-iniciantes-toolbar.png)
 
 ## Iniciando sua Primeira Renderização
 
@@ -85,7 +85,7 @@ Após a instalação, o SketchUp detectará automaticamente o Enscape. Você pod
 - Clique no botão **"Start Enscape"** (ícone "E") na barra de ferramentas
 - O Enscape abrirá em uma nova janela com seu modelo renderizado automaticamente
 
-![Comparação lado a lado: SketchUp e Enscape](/images/blog/guia-completo-enscape-sketchup-iniciantes/comparacao-enscape-sketchup.jpg)
+![Comparação lado a lado: SketchUp e Enscape](https://vfpdyllwquaturpcifpl.supabase.co/storage/v1/object/public/imagens-blog/guia-completo-enscape-sketchup-iniciantes-comparacao.jpg)
 
 ### 3. Configurações Importantes
 - **Live Updates**: Ativa atualizações automáticas enquanto você edita no SketchUp
