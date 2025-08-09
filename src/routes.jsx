@@ -45,6 +45,17 @@ const blogSlugs = [
 
 // Configuração das rotas para vite-react-ssg
 export const routes = [
+  // Rotas de curso com layout específico (sem header global) - DEVEM VIR ANTES das rotas gerais
+  {
+    path: '/cursos/sketchup-enscape',
+    element: <CourseLayout />,
+    children: [
+      {
+        index: true,
+        element: <Suspense fallback={<Loading />}><CursoSketchupEnscape /></Suspense>
+      }
+    ]
+  },
   {
     path: '/',
     element: <Layout />,
@@ -121,17 +132,6 @@ export const routes = [
       {
         path: '*',
         lazy: () => import('./pages/NotFound')
-      }
-    ]
-  },
-  // Rotas de curso com layout específico (sem header global)
-  {
-    path: '/cursos/sketchup-enscape',
-    element: <CourseLayout />,
-    children: [
-      {
-        index: true,
-        element: <Suspense fallback={<Loading />}><CursoSketchupEnscape /></Suspense>
       }
     ]
   }
