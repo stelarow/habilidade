@@ -26,13 +26,13 @@ const calculateReadingTime = (content) => {
 
 // Format date
 const formatDate = (dateString) => {
+  if (!dateString) return 'Data não disponível';
   const date = new Date(dateString);
+  if (isNaN(date.getTime())) return 'Data inválida';
   return date.toLocaleDateString('pt-BR', {
     day: 'numeric',
     month: 'long',
-    year: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit'
+    year: 'numeric'
   });
 };
 
@@ -209,20 +209,20 @@ function BlogPost() {
                       <span>{readingTime} min de leitura</span>
                     </div>
                   </div>
-
-                  {/* Featured Image */}
-                  {(post.featuredImage?.url || post.imageUrl) && (
-                    <div className="mt-8 rounded-xl overflow-hidden">
-                      <LazyImage
-                        src={post.featuredImage?.url || post.imageUrl}
-                        alt={post.title}
-                        className="w-full aspect-video object-cover"
-                        loading="eager"
-                        decoding="sync"
-                      />
-                    </div>
-                  )}
                 </header>
+
+                {/* Featured Image */}
+                {(post.featuredImage?.url || post.imageUrl) && (
+                  <div className="mb-8 rounded-xl overflow-hidden">
+                    <LazyImage
+                      src={post.featuredImage?.url || post.imageUrl}
+                      alt={post.title}
+                      className="w-full aspect-video object-cover"
+                      loading="eager"
+                      decoding="sync"
+                    />
+                  </div>
+                )}
 
                 {/* Article Content */}
                 <div 
