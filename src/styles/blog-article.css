@@ -53,7 +53,6 @@
 }
 
 .article-content ul li strong {
-  white-space: nowrap;
   display: inline;
 }
 
@@ -66,7 +65,6 @@
 }
 
 .article-content ol li strong {
-  white-space: nowrap;
   display: inline;
 }
 
