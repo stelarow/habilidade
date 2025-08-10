@@ -344,13 +344,96 @@ Após inserir o post e obter seu novo `id`, você também precisará criar uma e
 }
 ```
 
-## Passo 4: Troubleshooting e Validação
+## Passo 4: Atualizar o Sistema de Rotas
+
+### 4.0. Registrar o Novo Artigo no Sistema de Rotas (CRÍTICO)
+
+**⚠️ ATENÇÃO: Este passo é OBRIGATÓRIO para que o artigo funcione no site!**
+
+Após inserir o artigo no banco de dados Supabase, você **DEVE** adicionar o slug do novo artigo ao arquivo de rotas do sistema. Caso contrário, o artigo retornará erro 404 e "Algo deu errado ao carregar os artigos".
+
+#### 4.0.1. Localizar o Arquivo de Rotas
+
+O arquivo está localizado em: `/src/routes.jsx`
+
+#### 4.0.2. Adicionar o Slug à Lista
+
+Encontre o array `blogSlugs` (aproximadamente linha 27) e adicione o slug do novo artigo:
+
+```javascript
+const blogSlugs = [
+  'guia-completo-21-estilos-decoracao-transformar-casa',
+  'por-que-enscape-essencial-visualizacao-arquitetonica',
+  'o-que-e-sketchup-guia-completo-modelagem-3d-2025',
+  // ... outros slugs existentes ...
+  'editor-materiais-sketchup-realismo-enscape',
+  'guia-completo-enscape-sketchup-iniciantes',
+  'SEU-NOVO-SLUG-AQUI'  // ← Adicione seu novo slug aqui
+];
+```
+
+#### 4.0.3. Exemplo Prático
+
+Se o slug do seu artigo é `por-que-enscape-essencial-visualizacao-arquitetonica`, adicione-o assim:
+
+```javascript
+const blogSlugs = [
+  // ... slugs existentes ...
+  'guia-completo-enscape-sketchup-iniciantes',
+  'por-que-enscape-essencial-visualizacao-arquitetonica'  // ← Novo slug adicionado
+];
+```
+
+#### 4.0.4. Por que Isso é Necessário?
+
+O sistema usa **Static Site Generation (SSG)** para os artigos do blog. Isso significa que:
+
+1. **Performance**: Os artigos são pré-gerados para carregar mais rápido
+2. **SEO**: Motores de busca conseguem indexar melhor o conteúdo
+3. **Roteamento**: React Router precisa saber quais slugs são válidos
+
+**Sem adicionar o slug ao array `blogSlugs`:**
+- ❌ Artigo retorna 404 "Not Found"  
+- ❌ Aparece mensagem "Algo deu errado ao carregar os artigos"
+- ❌ React Error #418 (hydration mismatch)
+
+**Com o slug adicionado corretamente:**
+- ✅ Artigo carrega normalmente
+- ✅ SEO funciona perfeitamente
+- ✅ Sem erros de hidratação
+
+#### 4.0.5. Checklist Crítico
+
+Antes de considerar o artigo publicado, **SEMPRE** verifique:
+
+- [ ] **Artigo inserido** no banco Supabase
+- [ ] **Imagens funcionando** no Storage
+- [ ] **Slug adicionado** ao array `blogSlugs` em `/src/routes.jsx`
+- [ ] **Build testado** localmente (`npm run dev`)
+- [ ] **Deploy realizado** com as mudanças no routes.jsx
+
+## Passo 5: Troubleshooting e Validação
 
 ### 4.1. Problemas Comuns e Soluções
 
 #### 🚨 **ERRO: "Algo deu errado ao carregar os artigos"**
 
-**Causa:** Caracteres especiais problemáticos no conteúdo do artigo.
+**Causas Possíveis:**
+
+**1. CAUSA MAIS COMUM: Slug não adicionado ao sistema de rotas**
+- Artigo existe no banco mas não está no array `blogSlugs` do `/src/routes.jsx`
+- Resultado: 404 error e React Error #418
+
+**Solução:**
+```javascript
+// Adicione o slug do artigo ao array blogSlugs em /src/routes.jsx
+const blogSlugs = [
+  // ... outros slugs ...
+  'seu-novo-slug-aqui'
+];
+```
+
+**2. Caracteres especiais problemáticos no conteúdo do artigo**
 
 **Sintomas:**
 - Outros artigos carregam normalmente
@@ -398,12 +481,15 @@ WHERE slug = 'SEU-SLUG-AQUI';
 
 Antes de considerar o artigo pronto, verifique:
 
+- [ ] **Artigo no banco**: Inserido corretamente no Supabase
+- [ ] **Slug no routes.jsx**: Adicionado ao array `blogSlugs` ⚠️ **CRÍTICO**
 - [ ] **Imagens**: Todas acessíveis via Supabase Storage
 - [ ] **Conteúdo**: Sem caracteres especiais problemáticos  
 - [ ] **Aspas**: Apenas aspas retas (`'` `"`)
 - [ ] **Emojis**: Substituídos por texto descritivo
 - [ ] **URLs**: Todas as imagens usam URLs completas do Supabase
 - [ ] **Estrutura**: Todos os campos obrigatórios preenchidos
+- [ ] **Build local**: `npm run dev` executa sem erros
 - [ ] **Teste**: Artigo carrega sem erros no frontend
 
 ### 4.3. Comandos de Emergência
@@ -429,6 +515,20 @@ WHERE slug = 'artigo-corrigido';
 3.  **Prepare as imagens:** Faça upload automatizado para o Supabase Storage.
 4.  **Valide os dados:** Verifique se não há caracteres problemáticos.
 5.  **Execute a inserção:** Adicione os novos registros às tabelas do Supabase.
-6.  **Teste o artigo:** Verifique se carrega corretamente no frontend.
+6.  **⚠️ CRÍTICO - Atualize as rotas:** Adicione o slug ao array `blogSlugs` em `/src/routes.jsx`
+7.  **Teste o artigo:** Verifique se carrega corretamente no frontend.
 
 Seguindo estes passos, o novo artigo será publicado corretamente no blog **sem erros de carregamento**.
+
+## ⚠️ Aviso Importante para Agentes IA
+
+**SE VOCÊ ESQUECEU DE ADICIONAR O SLUG AO ROUTES.JSX:**
+
+O artigo existirá no banco de dados mas retornará erro 404 quando alguém tentar acessá-lo. Você DEVE:
+
+1. Abrir `/src/routes.jsx`
+2. Encontrar o array `blogSlugs`
+3. Adicionar o slug do novo artigo
+4. Fazer commit das mudanças
+
+**Este é o erro mais comum ao publicar novos artigos!**

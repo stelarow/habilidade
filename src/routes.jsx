@@ -43,7 +43,7 @@ const blogSlugs = [
   '10-extensoes-sketchup-arquitetos',
   'editor-materiais-sketchup-realismo-enscape',
   'guia-completo-enscape-sketchup-iniciantes',
-
+  'guia-completo-enscape-sketchup'
 ];
 
 // Configuração das rotas para vite-react-ssg
