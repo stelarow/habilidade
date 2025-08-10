@@ -347,16 +347,19 @@ function removeDuplicateContent(content, postTitle) {
   processedContent = processedContent.replace(titleRegex, '');
   
   // Remove the first image from the content (hero image duplicate)
-  // Also remove the following italic paragraph that describes the image
+  // This includes the image block AND any following text that looks like an image caption
   const imageBlockRegex = /<div class="mb-6">[\s\S]*?<\/div>/i;
   const firstMatch = processedContent.match(imageBlockRegex);
   if (firstMatch && firstMatch[0].includes('<img')) {
     // Remove the image block
     processedContent = processedContent.replace(firstMatch[0], '');
     
-    // Also remove the next paragraph if it starts with italic text (image description)
-    const italicDescriptionRegex = /^\s*<p class="text-gray-300 mb-4 leading-relaxed"><em class="italic text-gray-200">[^<]*<\/em><\/p>/;
-    processedContent = processedContent.replace(italicDescriptionRegex, '');
+    // Remove any following paragraphs that look like image captions or descriptions
+    // This handles both the alt text paragraph and italic description paragraph
+    processedContent = processedContent
+      .replace(/^\s*<p class="text-gray-500 text-sm text-center mt-2 italic">[^<]*<\/p>\s*/i, '') // Alt text caption
+      .replace(/^\s*<p class="text-gray-300 mb-4 leading-relaxed">[^<]*<\/p>\s*/i, '') // Plain text paragraph  
+      .replace(/^\s*<p class="text-gray-300 mb-4 leading-relaxed"><em class="italic text-gray-200">[^<]*<\/em><\/p>\s*/i, ''); // Italic description
   }
   
   // Clean up any empty article-content div wrappers that might be left
