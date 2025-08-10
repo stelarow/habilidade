@@ -51,5 +51,5 @@
 # SSG fallback - only for non-existing pages  
 [[redirects]]
   from = "/*"
-  to = "/index.html"
+  to = "/404.html"
   status = 404

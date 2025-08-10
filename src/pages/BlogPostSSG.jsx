@@ -71,8 +71,8 @@ function BlogPost() {
   const readingTime = calculateReadingTime(post.content);
   const categoryColor = getCategoryColor(post.category?.slug);
 
-  // Process content
-  const processedContent = processContent(post.content, slug);
+  // Process content with title to remove duplicates
+  const processedContent = processContent(post.content, slug, post.title);
 
   // SEO data for meta tags
   const seoTitle = `${post.title} | Escola Habilidade`;

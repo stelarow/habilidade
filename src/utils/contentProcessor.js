@@ -332,12 +332,41 @@ export function fixImagePaths(content, slug) {
 }
 
 /**
+ * Removes duplicate title and first image from HTML content
+ * @param {string} content - HTML content that may contain duplicates
+ * @param {string} postTitle - The post title to match and remove
+ * @returns {string} - Content with duplicates removed
+ */
+function removeDuplicateContent(content, postTitle) {
+  if (!content || !postTitle) return content;
+  
+  let processedContent = content;
+  
+  // Remove the first H1 tag that matches the post title (case-insensitive)
+  const titleRegex = new RegExp(`<h1[^>]*>[^<]*${postTitle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}[^<]*</h1>`, 'i');
+  processedContent = processedContent.replace(titleRegex, '');
+  
+  // Remove the first image from the content (hero image duplicate)
+  const firstImgRegex = /<img[^>]*class="[^"]*w-full[^"]*"[^>]*>/i;
+  processedContent = processedContent.replace(firstImgRegex, '');
+  
+  // Clean up any empty article-content div wrappers that might be left
+  processedContent = processedContent.replace(/<div[^>]*class="[^"]*article-content[^"]*"[^>]*>\s*<\/div>/gi, '');
+  
+  // Clean up any double line breaks or empty paragraphs at the start
+  processedContent = processedContent.replace(/^(\s*<p[^>]*>\s*<\/p>\s*)*/, '');
+  
+  return processedContent.trim();
+}
+
+/**
  * Processes blog content - converts markdown to HTML if needed and fixes paths
  * @param {string} content - Raw content from the database
  * @param {string} slug - Blog post slug for image path fixing
+ * @param {string} postTitle - Post title for duplicate removal
  * @returns {string} - Processed HTML content ready for rendering
  */
-export function processContent(content, slug) {
+export function processContent(content, slug, postTitle) {
   if (!content || typeof content !== 'string') return '';
   
   // Import image migration system
@@ -371,6 +400,11 @@ export function processContent(content, slug) {
       // marked.js error occurred
       throw error; // Re-throw to see the full error
     }
+  }
+  
+  // Remove duplicate title and first image if they exist in the content
+  if (postTitle) {
+    processedContent = removeDuplicateContent(processedContent, postTitle);
   }
   
   // Apply client-side image optimization after content is processed

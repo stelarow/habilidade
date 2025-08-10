@@ -260,7 +260,7 @@ const BlogPost = () => {
                   prose-ul:text-zinc-300 prose-ol:text-zinc-300
                   prose-li:marker:text-zinc-500
                   prose-img:rounded-lg prose-img:shadow-lg"
-                dangerouslySetInnerHTML={{ __html: processContent(post.content, slug) }}
+                dangerouslySetInnerHTML={{ __html: processContent(post.content, slug, post.title) }}
               />
 
               {/* Tags */}
