@@ -90,18 +90,73 @@ O blog utiliza o **Supabase Storage** para servir as imagens:
 - **Formatos aceitos:** JPG, PNG, GIF, WebP
 - **Tamanho máximo:** 50MB por arquivo
 
-### 2.2. Baixar e Preparar as Imagens
+### 2.2. **CRÍTICO: Extrair TODAS as Imagens do Artigo Original**
 
-1.  **Baixe** todas as imagens do artigo original
-2.  **Otimize** as imagens para a web (use TinyPNG, Squoosh ou similar)
-3.  **Renomeie** os arquivos com nomes descritivos em `kebab-case`
-4.  **Organize** por temas quando necessário
+**⚠️ ATENÇÃO:** Esta é a parte mais crítica para garantir que o artigo tenha todas as imagens funcionando corretamente.
+
+#### 2.2.1. Identificar Todas as Imagens
+
+**SEMPRE** use o Firecrawl MCP para fazer scraping completo do artigo original:
+
+```javascript
+// 1. Scrape completo com markdown + links para identificar imagens
+mcp__firecrawl__firecrawl_scrape({
+  url: "URL_DO_ARTIGO_ORIGINAL",
+  formats: ["markdown", "links"],
+  onlyMainContent: true
+})
+```
+
+**Procure por todas essas possíveis imagens:**
+- 🖼️ **Hero image** (imagem principal do artigo)
+- 📷 **Imagens de interface** (screenshots de software)
+- 🎯 **Imagens explicativas** (diagramas, exemplos)
+- 👤 **Foto do autor** (se disponível)
+- 📊 **Gráficos e infográficos**
+- 🔧 **Capturas de tela de ferramentas**
+- 📱 **Imagens de exemplo/resultado**
+
+#### 2.2.2. Extrair URLs de Imagens do Conteúdo Scrapado
+
+Procure por padrões como:
+- `![alt text](URL_DA_IMAGEM)`
+- `https://blog.site.com/hubfs/...`
+- `https://images.site.com/...`
+- URLs com extensões `.jpg`, `.png`, `.webp`, `.gif`
+
+**Exemplo de URLs encontradas no artigo Enscape:**
+```
+https://blog.enscape3d.com/hubfs/Interior%20rendering%20modern%20living%20room.jpg
+https://blog.enscape3d.com/hubfs/2022/Blog/Getting%20started%20in%20Enscape%20copy.jpg
+https://blog.enscape3d.com/hubfs/2024/Blog/The%20Enscape%20toolbar%20in%20SketchUp.png
+https://blog.enscape3d.com/hubfs/2022/Blog/Side%20by%20side%20view%20of%20Enscape%20and%20SketchUp.jpg
+```
+
+#### 2.2.3. Preparar Imagens para Upload
+
+1.  **Baixe** todas as imagens identificadas
+2.  **Renomeie** com nomes descritivos em `kebab-case` relacionados ao artigo
+3.  **Otimize** para web se necessário
+4.  **Organize** por função (hero, interface, examples, etc.)
+
+**Exemplo de nomenclatura correta:**
+```bash
+# Artigo: "Guia Enscape SketchUp"
+guia-enscape-sketchup-hero.jpg           # Imagem principal
+enscape-getting-started.jpg              # Interface inicial
+enscape-toolbar-sketchup.png            # Toolbar
+enscape-side-by-side.jpg                 # Comparativo
+enscape-help-menu.jpg                    # Menu ajuda
+enscape-view-management.jpg              # Gerenciamento
+```
 
 ### 2.3. Upload para o Supabase Storage
 
-**Método Automatizado (Recomendado) - Via Script:**
+### 2.3. **SCRIPT AUTOMATIZADO para Download e Upload de Imagens**
 
-Crie um script para automatizar o download e upload das imagens:
+**⚠️ MÉTODO RECOMENDADO:** Use este script melhorado para automatizar todo o processo:
+
+#### 2.3.1. Script Completo Atualizado
 
 ```bash
 #!/bin/bash
@@ -115,7 +170,7 @@ TEMP_DIR="/tmp/blog-images"
 # Criar diretório temporário
 mkdir -p "$TEMP_DIR"
 
-# Função para fazer upload de imagem
+# Função MELHORADA para fazer upload de imagem
 upload_image() {
     local file_path="$1"
     local file_name="$2"
@@ -127,13 +182,23 @@ upload_image() {
     
     echo "Fazendo upload de: $file_name"
     
+    # Detectar tipo de arquivo automaticamente
+    file_ext="${file_name##*.}"
+    case "$file_ext" in
+        jpg|jpeg) content_type="image/jpeg" ;;
+        png) content_type="image/png" ;;
+        webp) content_type="image/webp" ;;
+        gif) content_type="image/gif" ;;
+        *) content_type="image/jpeg" ;;
+    esac
+    
     response=$(curl -s -X POST \
         "$PROJECT_URL/storage/v1/object/$BUCKET/$file_name" \
         -H "Authorization: Bearer $ANON_KEY" \
-        -H "Content-Type: image/jpeg" \
+        -H "Content-Type: $content_type" \
         --data-binary "@$file_path")
     
-    if echo "$response" | grep -q "error"; then
+    if echo "$response" | grep -q '"error"'; then
         if echo "$response" | grep -q "409"; then
             echo "Arquivo já existe: $file_name"
             return 0
@@ -147,11 +212,101 @@ upload_image() {
     fi
 }
 
-# Baixar imagens do artigo original
-curl -L "URL_DA_IMAGEM_ORIGINAL" -o "$TEMP_DIR/nome-da-imagem.jpg"
+# Baixar e fazer upload de TODAS as imagens encontradas
+# SUBSTITUA as URLs pelas imagens reais encontradas no seu artigo
 
-# Fazer upload
-upload_image "$TEMP_DIR/nome-da-imagem.jpg" "nome-da-imagem.jpg"
+echo "=== Baixando imagem principal (hero) ==="
+curl -L "URL_DA_HERO_IMAGE" -o "$TEMP_DIR/seu-artigo-hero.jpg"
+upload_image "$TEMP_DIR/seu-artigo-hero.jpg" "seu-artigo-hero.jpg"
+
+echo "=== Baixando demais imagens ==="
+# Adicione todas as imagens encontradas no scraping
+curl -L "URL_IMAGEM_2" -o "$TEMP_DIR/nome-descritivo-2.jpg"
+upload_image "$TEMP_DIR/nome-descritivo-2.jpg" "nome-descritivo-2.jpg"
+
+# Continue para todas as imagens...
+
+echo "============================"
+echo "Download e upload de imagens completos!"
+echo "============================"
+```
+
+#### 2.3.2. Exemplo Prático Real - Artigo Enscape
+
+**Script usado para o artigo "Guia Enscape SketchUp":**
+
+```bash
+#!/bin/bash
+# Script real usado com sucesso
+
+PROJECT_URL="https://vfpdyllwquaturpcifpl.supabase.co"
+ANON_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZmcGR5bGx3cXVhdHVycGNpZnBsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE5MDkwMDEsImV4cCI6MjA2NzQ4NTAwMX0.m7zLlemqt6oYt55OFZK_xyEBWoxC23uiFL2EmCiaLqw"
+BUCKET="imagens-blog"
+TEMP_DIR="/tmp/enscape-images-fix"
+
+# Hero image (CRÍTICA - sempre verifique se é a correta)
+curl -L "https://blog.enscape3d.com/hubfs/Interior%20rendering%20modern%20living%20room.jpg" \
+     -o "$TEMP_DIR/enscape-sketchup-hero.jpg"
+upload_image "$TEMP_DIR/enscape-sketchup-hero.jpg" "enscape-sketchup-hero.jpg"
+
+# Todas as demais imagens do artigo
+curl -L "https://blog.enscape3d.com/hubfs/2022/Blog/Getting%20started%20in%20Enscape%20copy.jpg" \
+     -o "$TEMP_DIR/enscape-getting-started.jpg"
+upload_image "$TEMP_DIR/enscape-getting-started.jpg" "enscape-getting-started.jpg"
+
+curl -L "https://blog.enscape3d.com/hubfs/2024/Blog/The%20Enscape%20toolbar%20in%20SketchUp.png" \
+     -o "$TEMP_DIR/enscape-toolbar-sketchup.png"
+upload_image "$TEMP_DIR/enscape-toolbar-sketchup.png" "enscape-toolbar-sketchup.png"
+
+curl -L "https://blog.enscape3d.com/hubfs/2022/Blog/Side%20by%20side%20view%20of%20Enscape%20and%20SketchUp.jpg" \
+     -o "$TEMP_DIR/enscape-side-by-side.jpg"
+upload_image "$TEMP_DIR/enscape-side-by-side.jpg" "enscape-side-by-side.jpg"
+
+curl -L "https://blog.enscape3d.com/hubfs/2022/Blog/Help%20menu%20in%20Enscape.jpg" \
+     -o "$TEMP_DIR/enscape-help-menu.jpg"
+upload_image "$TEMP_DIR/enscape-help-menu.jpg" "enscape-help-menu.jpg"
+
+curl -L "https://blog.enscape3d.com/hubfs/2022/Blog/View%20management%20and%20creating%20views%20in%20Enscape.jpg" \
+     -o "$TEMP_DIR/enscape-view-management.jpg"
+upload_image "$TEMP_DIR/enscape-view-management.jpg" "enscape-view-management.jpg"
+
+# Foto da autora (se disponível)
+curl -L "https://blog.enscape3d.com/hubfs/2024/Blog/Gemma%20Headshot.jpg" \
+     -o "$TEMP_DIR/gemma-da-silva.jpg"
+upload_image "$TEMP_DIR/gemma-da-silva.jpg" "gemma-da-silva.jpg"
+```
+
+### 2.4. **CRÍTICO: Atualizar o Conteúdo do Artigo com as Imagens**
+
+**⚠️ NÃO ESQUEÇA:** Depois de fazer upload de todas as imagens, você DEVE atualizar o conteúdo do artigo no banco de dados para referenciar as imagens corretas.
+
+#### 2.4.1. Formato Correto das URLs de Imagem
+
+**SEMPRE** use URLs completas do Supabase Storage no conteúdo Markdown:
+
+```markdown
+![Descrição da imagem](https://vfpdyllwquaturpcifpl.supabase.co/storage/v1/object/public/imagens-blog/nome-da-imagem.jpg)
+```
+
+**Exemplo real do artigo Enscape:**
+```markdown
+![Renderização interior moderna com Enscape e SketchUp](https://vfpdyllwquaturpcifpl.supabase.co/storage/v1/object/public/imagens-blog/enscape-sketchup-hero.jpg)
+
+![Primeiros passos no Enscape](https://vfpdyllwquaturpcifpl.supabase.co/storage/v1/object/public/imagens-blog/enscape-getting-started.jpg)
+
+![Barra de ferramentas do Enscape no SketchUp](https://vfpdyllwquaturpcifpl.supabase.co/storage/v1/object/public/imagens-blog/enscape-toolbar-sketchup.png)
+```
+
+#### 2.4.2. Atualizar Hero Image no Banco
+
+**IMPORTANTE:** O campo `image_url` na tabela `blog_posts` deve conter APENAS o nome do arquivo (não a URL completa):
+
+```sql
+UPDATE blog_posts SET 
+image_url = 'nome-da-hero-image.jpg',  -- SÓ O NOME DO ARQUIVO
+content = 'CONTEUDO_ATUALIZADO_COM_TODAS_AS_IMAGENS'
+WHERE slug = 'seu-artigo-slug';
+```
 ```
 
 **Método Manual (Painel Supabase):**
@@ -508,6 +663,71 @@ SET published_at = NOW()
 WHERE slug = 'artigo-corrigido';
 ```
 
+## Passo 5: Diretrizes de Formatação CSS para Agentes
+
+### 5.1. ⚠️ **CRÍTICO: Evitar Problemas de Alinhamento de Texto**
+
+**PROBLEMA COMUM:** Texto aparecendo desalinhado (empurrado para a direita) em listas com elementos em negrito.
+
+**CAUSA RAIZ:** O CSS do blog foi otimizado para evitar quebras de linha inadequadas. Agentes devem seguir as diretrizes abaixo.
+
+#### 5.1.1. Formatação Correta de Listas com Texto em Negrito
+
+**✅ FORMATO CORRETO:**
+```markdown
+- **Alterando a resolução**: Vá para a aba Configurações Visuais (se não tem certeza de qual resolução usar, use a padrão, Full HD). Se precisar imprimir em uma escala maior, escolha Ultra HD ou valores mais altos.
+- **Salvando em um local padrão**: Na aba Output, você pode configurar uma pasta padrão caso não queira ser solicitado a escolher um local toda vez.
+```
+
+**❌ FORMATO PROBLEMÁTICO:**
+```markdown
+- **Alterando a resolução
+**: Vá para a aba Configurações Visuais...
+- **Salvando em um local padrão
+**: Na aba Output, você pode configurar...
+```
+
+#### 5.1.2. Regras para Elementos em Negrito em Listas
+
+1. **NUNCA quebre linha** entre o texto em negrito e os dois pontos (`:`)
+2. **SEMPRE mantenha** o texto em negrito e os dois pontos na mesma linha
+3. **USE espaço simples** entre os dois pontos e o texto explicativo
+4. **EVITE quebras de linha desnecessárias** dentro do texto em negrito
+
+#### 5.1.3. Exemplos de Formatação Correta
+
+**Para listas descritivas:**
+```markdown
+- **Nome da função**: Descrição detalhada da funcionalidade aqui.
+- **Configuração importante**: Explicação sobre como configurar corretamente.
+- **Dica valiosa**: Texto explicativo que pode ser longo e se estender por várias linhas sem problemas.
+```
+
+**Para listas numeradas:**
+```markdown
+1. **Primeiro passo**: Descrição completa do primeiro passo.
+2. **Segundo passo**: Descrição completa do segundo passo.
+3. **Terceiro passo**: Descrição completa do terceiro passo.
+```
+
+#### 5.1.4. Verificação de Qualidade
+
+**ANTES DE FINALIZAR**, sempre verifique:
+- [ ] Nenhum elemento `**texto**:` tem quebra de linha
+- [ ] Todos os dois pontos estão colados ao texto em negrito
+- [ ] Listas estão formatadas consistentemente
+- [ ] Não há espaços extras ou caracteres invisíveis
+
+### 5.2. CSS Atual Otimizado
+
+O sistema atualmente utiliza CSS otimizado que:
+- Remove `white-space: nowrap` de elementos strong em listas
+- Permite quebra natural de texto longo
+- Mantém alinhamento consistente à esquerda
+- Funciona responsivamente em mobile
+
+**NÃO modifique** o CSS unless instruído especificamente.
+
 ## Resumo do Processo
 
 1.  **Prepare o texto:** Defina título, slug, resumo, conteúdo e metadados de SEO.
@@ -516,7 +736,8 @@ WHERE slug = 'artigo-corrigido';
 4.  **Valide os dados:** Verifique se não há caracteres problemáticos.
 5.  **Execute a inserção:** Adicione os novos registros às tabelas do Supabase.
 6.  **⚠️ CRÍTICO - Atualize as rotas:** Adicione o slug ao array `blogSlugs` em `/src/routes.jsx`
-7.  **Teste o artigo:** Verifique se carrega corretamente no frontend.
+7.  **⚠️ NOVO - Verifique formatação:** Confirme que listas com negrito seguem as diretrizes CSS.
+8.  **Teste o artigo:** Verifique se carrega corretamente no frontend sem problemas de alinhamento.
 
 Seguindo estes passos, o novo artigo será publicado corretamente no blog **sem erros de carregamento**.
 
