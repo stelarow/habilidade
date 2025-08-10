@@ -1,5 +1,8 @@
 export default {
   testEnvironment: 'jsdom',
+  testEnvironmentOptions: {
+    url: 'https://www.escolahabilidade.com',
+  },
   setupFilesAfterEnv: ['<rootDir>/src/setupTests.js'],
   moduleNameMapping: {
     '^@/(.*)$': '<rootDir>/src/$1',
