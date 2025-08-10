@@ -667,10 +667,9 @@ describe('ShareButtons Component', () => {
     const user = userEvent.setup();
     const mockWriteText = jest.fn(() => Promise.resolve());
     
-    Object.assign(navigator, {
-      clipboard: {
-        writeText: mockWriteText
-      }
+    Object.defineProperty(navigator, 'clipboard', {
+      value: { writeText: mockWriteText },
+      configurable: true,
     });
 
     render(<ShareButtons {...defaultProps} />);

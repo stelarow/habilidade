@@ -45,6 +45,8 @@
     "react-router-dom": "^6.30.1"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.28.0",
+    "@babel/preset-react": "^7.27.1",
     "@eslint/js": "^9.29.0",
     "@tanstack/react-query-devtools": "^5.83.0",
     "@testing-library/jest-dom": "^6.6.0",
@@ -69,6 +71,7 @@
     "tailwindcss": "^3.4.15",
     "terser": "^5.43.1",
     "vite": "^7.0.0",
-    "vite-react-ssg": "^0.8.8"
+    "vite-react-ssg": "^0.8.8",
+    "whatwg-fetch": "^3.6.20"
   }
 }
