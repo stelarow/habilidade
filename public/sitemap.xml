@@ -12,6 +12,14 @@
     <priority>1.0</priority>
   </url>
   
+  <!-- Página de Contato -->
+  <url>
+    <loc>https://www.escolahabilidade.com/contato</loc>
+    <lastmod>2025-08-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
   <!-- Páginas de Cursos Principais (Alta Prioridade) -->
   <url>
     <loc>https://www.escolahabilidade.com/cursos/informatica</loc>

@@ -28,6 +28,12 @@ const STATIC_PAGES = [
     lastmod: new Date().toISOString().split('T')[0]
   },
   {
+    url: '/contato',
+    priority: 0.8,
+    changefreq: 'monthly',
+    lastmod: new Date().toISOString().split('T')[0]
+  },
+  {
     url: '/blog',
     priority: 0.8,
     changefreq: 'daily',
