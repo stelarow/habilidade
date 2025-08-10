@@ -347,11 +347,16 @@ function removeDuplicateContent(content, postTitle) {
   processedContent = processedContent.replace(titleRegex, '');
   
   // Remove the first image from the content (hero image duplicate)
-  // Simple approach: remove the first complete image block with any caption
+  // Also remove the following italic paragraph that describes the image
   const imageBlockRegex = /<div class="mb-6">[\s\S]*?<\/div>/i;
   const firstMatch = processedContent.match(imageBlockRegex);
   if (firstMatch && firstMatch[0].includes('<img')) {
+    // Remove the image block
     processedContent = processedContent.replace(firstMatch[0], '');
+    
+    // Also remove the next paragraph if it starts with italic text (image description)
+    const italicDescriptionRegex = /^\s*<p class="text-gray-300 mb-4 leading-relaxed"><em class="italic text-gray-200">[^<]*<\/em><\/p>/;
+    processedContent = processedContent.replace(italicDescriptionRegex, '');
   }
   
   // Clean up any empty article-content div wrappers that might be left
