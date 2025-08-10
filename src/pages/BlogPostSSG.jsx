@@ -216,7 +216,7 @@ function BlogPost() {
                   <div className="mb-8 rounded-xl overflow-hidden">
                     <LazyImage
                       src={post.featuredImage?.url || post.imageUrl}
-                      alt={post.title}
+                      alt={`Imagem ilustrativa do artigo: ${post.title}`}
                       className="w-full aspect-video object-cover"
                       loading="eager"
                       decoding="sync"
