@@ -53,7 +53,8 @@
       "Bash(refreshenv)",
       "mcp__gsc-server__list_properties",
       "mcp__gsc-server__get_search_analytics",
-      "mcp__analytics-mcp__run_report"
+      "mcp__analytics-mcp__run_report",
+      "Bash(git push:*)"
     ],
     "deny": []
   }

@@ -28,13 +28,13 @@ const calculateReadingTime = (content) => {
 
 // Format date
 const formatDate = (dateString) => {
+  if (!dateString) return 'Data não disponível';
   const date = new Date(dateString);
+  if (isNaN(date.getTime())) return 'Data inválida';
   return date.toLocaleDateString('pt-BR', {
     day: 'numeric',
     month: 'long',
-    year: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit'
+    year: 'numeric'
   });
 };
 
@@ -180,122 +180,137 @@ const BlogPost = () => {
         schemaData={generateArticleStructuredData()}
       />
       
-      {/* Article Header */}
-      <header className="relative overflow-hidden">
-        {post.featuredImage && (
-          <div className="absolute inset-0">
-            <LazyImage
-              src={post.featuredImage.url}
-              alt={post.featuredImage.alt || `Imagem do artigo: ${post.title}`}
-              className="w-full h-full object-cover opacity-20"
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent to-zinc-950" />
-          </div>
-        )}
-        
-        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-16">
-          <Breadcrumbs 
-            category={post.category}
-            postTitle={post.title}
-          />
-          
-          <div className="mt-8">
-            {post.category && (
-              <span className={`inline-block px-3 py-1 rounded-full text-sm font-medium border ${categoryColor} mb-4`}>
-                {post.category.name}
-              </span>
-            )}
-            
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
-              {post.title}
-            </h1>
-            
-            {post.excerpt && (
-              <p className="text-xl text-zinc-300 mb-8 max-w-3xl">
-                {post.excerpt}
-              </p>
-            )}
-            
-            <div className="flex flex-wrap items-center gap-6 text-zinc-400">
-              <div className="flex items-center gap-2">
-                <Calendar size={16} />
-                <time dateTime={post.publishedAt}>
-                  {formatDate(post.publishedAt)}
-                </time>
-              </div>
-              
-              <div className="flex items-center gap-2">
-                <Clock size={16} />
-                <span>{readingTime} min de leitura</span>
-              </div>
-              
-              {post.author && (
-                <div className="flex items-center gap-2">
-                  <User size={16} />
-                  <span>{post.author.name || post.author}</span>
+      <div className="container mx-auto px-4 py-8 max-w-6xl">
+        {/* Breadcrumbs */}
+        <Breadcrumbs 
+          category={post.category}
+          postTitle={post.title}
+        />
+
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 mt-8">
+          {/* Main Content */}
+          <article className="lg:col-span-3 order-2 lg:order-1">
+            <div className="bg-zinc-900/50 backdrop-blur-sm rounded-2xl border border-zinc-800 p-8 shadow-2xl">
+              {/* Header */}
+              <header className="mb-8">
+                {/* Category Badge */}
+                {post.category && (
+                  <div className="mb-4">
+                    <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border ${categoryColor}`}>
+                      {post.category.name}
+                    </span>
+                  </div>
+                )}
+
+                {/* Title */}
+                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-zinc-50 mb-6 leading-tight">
+                  {post.title}
+                </h1>
+
+                {/* Meta Information */}
+                <div className="flex flex-wrap items-center gap-6 text-sm text-zinc-400 border-b border-zinc-800 pb-6">
+                  {/* Author */}
+                  <div className="flex items-center gap-2">
+                    <User size={16} />
+                    <span>{post.author?.name || 'Escola Habilidade'}</span>
+                  </div>
+
+                  {/* Published Date */}
+                  <div className="flex items-center gap-2">
+                    <Calendar size={16} />
+                    <time dateTime={post.publishedAt}>
+                      {formatDate(post.publishedAt)}
+                    </time>
+                  </div>
+
+                  {/* Reading Time */}
+                  <div className="flex items-center gap-2">
+                    <Clock size={16} />
+                    <span>{readingTime} min de leitura</span>
+                  </div>
+                </div>
+              </header>
+
+              {/* Featured Image */}
+              {(post.featuredImage?.url || post.imageUrl) && (
+                <div className="mb-8 rounded-xl overflow-hidden">
+                  <LazyImage
+                    src={post.featuredImage?.url || post.imageUrl}
+                    alt={post.featuredImage?.alt || `Imagem do artigo: ${post.title}`}
+                    className="w-full aspect-video object-cover"
+                    loading="eager"
+                    decoding="sync"
+                  />
                 </div>
               )}
-            </div>
-          </div>
-        </div>
-      </header>
 
-      {/* Article Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        {/* Table of Contents - Mobile */}
-        <div className="xl:hidden mb-6">
-          <TableOfContents 
-            containerSelector=".article-content"
-            title="Navegação do Artigo"
-            collapsible={true}
-            initiallyCollapsed={true}
-            minHeaders={2}
-            maxLevel={4}
-            showProgress={false}
-            className="bg-zinc-800/50"
-          />
-        </div>
-        
-        {/* Flex Container for Content and TOC */}
-        <div className="flex gap-8 max-w-none">
-          {/* Main Content */}
-          <div className="flex-1 min-w-0 max-w-4xl">
-            <div className="prose prose-lg prose-invert max-w-none">
+              {/* Article Content */}
               <div 
                 ref={articleReference}
+                className="article-content prose prose-lg prose-invert prose-zinc max-w-none
+                  prose-headings:text-zinc-50 prose-headings:font-bold
+                  prose-h2:text-2xl prose-h2:mt-8 prose-h2:mb-4 prose-h2:border-l-4 prose-h2:border-blue-500 prose-h2:pl-4
+                  prose-h3:text-xl prose-h3:mt-6 prose-h3:mb-3
+                  prose-p:text-zinc-300 prose-p:leading-relaxed prose-p:mb-4
+                  prose-a:text-blue-400 prose-a:no-underline hover:prose-a:text-blue-300 hover:prose-a:underline
+                  prose-strong:text-zinc-200 prose-strong:font-semibold
+                  prose-code:text-pink-300 prose-code:bg-zinc-800 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:text-sm
+                  prose-pre:bg-zinc-900 prose-pre:border prose-pre:border-zinc-700 prose-pre:rounded-lg
+                  prose-blockquote:border-l-4 prose-blockquote:border-zinc-600 prose-blockquote:bg-zinc-800/50 prose-blockquote:p-4 prose-blockquote:rounded-r-lg
+                  prose-ul:text-zinc-300 prose-ol:text-zinc-300
+                  prose-li:marker:text-zinc-500
+                  prose-img:rounded-lg prose-img:shadow-lg"
                 dangerouslySetInnerHTML={{ __html: processContent(post.content, slug) }}
-                className="article-content"
               />
+
+              {/* Tags */}
+              {post.tags && post.tags.length > 0 && (
+                <div className="mt-8 pt-6 border-t border-zinc-800">
+                  <div className="flex flex-wrap gap-2">
+                    {post.tags.map((tag, index) => (
+                      <span
+                        key={index}
+                        className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium
+                          bg-zinc-800 text-zinc-300 border border-zinc-700
+                          hover:bg-zinc-700 transition-colors duration-200"
+                      >
+                        #{tag.name || tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Share Buttons */}
+              <div className="mt-8 pt-6 border-t border-zinc-800">
+                <ShareButtons
+                  url={globalThis.location.href}
+                  title={post.title}
+                  description={post.excerpt}
+                  variant="minimal"
+                />
+              </div>
             </div>
-            
-            {/* Blog CTA Component */}
-            <div className="mt-12">
-              <BlogCTA 
+
+            {/* Blog CTA */}
+            <div className="mt-8">
+              <BlogCTA
                 post={post}
                 variant="specific"
                 showUrgency={true}
                 urgencyText="Vagas limitadas"
               />
             </div>
-            
-            {/* Share Buttons - Using minimal variant for elegance */}
-            <div className="mt-12 pt-8 border-t border-zinc-800">
-              <ShareButtons 
-                url={globalThis.location.href}
-                title={post.title}
-                description={post.excerpt}
-                variant="minimal"
-              />
-            </div>
-          </div>
-          
-          {/* Sidebar TOC - Desktop */}
-          <div className="hidden xl:block w-64 flex-shrink-0">
-            <div className="sticky top-24" style={{ maxHeight: 'calc(100vh - 8rem)' }}>
-              <TableOfContents 
+          </article>
+
+          {/* Sidebar */}
+          <aside className="lg:col-span-1 order-1 lg:order-2">
+            {/* Table of Contents */}
+            <div className="sticky top-8">
+              <TableOfContents
                 containerSelector=".article-content"
                 title="Navegação do Artigo"
-                collapsible={true}
+                collapsible={false}
                 initiallyCollapsed={false}
                 minHeaders={2}
                 maxLevel={4}
@@ -303,7 +318,7 @@ const BlogPost = () => {
                 className="bg-zinc-900/95 backdrop-blur-sm"
               />
             </div>
-          </div>
+          </aside>
         </div>
       </div>
       
