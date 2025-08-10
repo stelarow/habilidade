@@ -69,6 +69,8 @@ mcp__firecrawl__firecrawl_scrape({
 
 ### PASSO 2: Processamento do Conteúdo
 
+#### 2.1 Estrutura Básica
+
 ```javascript
 // Estrutura esperada após processamento
 {
@@ -84,27 +86,139 @@ mcp__firecrawl__firecrawl_scrape({
 }
 ```
 
+#### 2.2 REGRAS DE FORMATAÇÃO DE TEXTO ⚠️
+
+**PROBLEMA IDENTIFICADO**: Texto muito denso e mal espaçado causa má experiência de leitura.
+
+**REGRAS OBRIGATÓRIAS:**
+
+```markdown
+# Título Principal (H1)
+[LINHA EM BRANCO OBRIGATÓRIA]
+Parágrafo introdutório curto (máximo 3 linhas). Deve ser engajante e explicar o que o leitor vai aprender.
+[LINHA EM BRANCO OBRIGATÓRIA]
+Segundo parágrafo se necessário. Máximo 4 linhas por parágrafo.
+[LINHA EM BRANCO OBRIGATÓRIA]
+
+## Seção Principal (H2)
+[LINHA EM BRANCO OBRIGATÓRIA]
+Texto explicativo da seção. Máximo 4 linhas por parágrafo.
+[LINHA EM BRANCO OBRIGATÓRIA]
+
+### Subseção (H3)
+[LINHA EM BRANCO OBRIGATÓRIA]
+Conteúdo da subseção. Dividir em parágrafos curtos.
+[LINHA EM BRANCO OBRIGATÓRIA]
+
+**Texto em negrito** para destacar pontos importantes.
+[LINHA EM BRANCO OBRIGATÓRIA]
+
+- Lista com itens
+- Cada item deve ser conciso
+- Máximo 1-2 linhas por item
+[LINHA EM BRANCO OBRIGATÓRIA]
+
+1. Lista numerada quando há sequência
+2. Processos paso-a-paso
+3. Instrucões sequenciais
+[LINHA EM BRANCO OBRIGATÓRIA]
+
+> **Dica importante:** Use blockquotes para destacar dicas valiosas.
+[LINHA EM BRANCO OBRIGATÓRIA]
+```
+
+**REGRAS ESPECÍFICAS:**
+
+- **Parágrafos**: Máximo 4 linhas (approximately 150-200 caracteres)
+- **Títulos**: SEMPRE seguidos por linha em branco
+- **Listas**: SEMPRE precedidas e seguidas por linha em branco  
+- **Imagens**: SEMPRE precedidas e seguidas por linha em branco
+- **Código**: SEMPRE precedido e seguido por linha em branco
+- **Blockquotes**: SEMPRE precedidos e seguidos por linha em branco
+
+**ESPAÇAMENTO ENTRE SEÇÕES:**
+```markdown
+## Fim da Seção Anterior
+[LINHA EM BRANCO]
+Último parágrafo da seção.
+[LINHA EM BRANCO]
+[LINHA EM BRANCO] ← SEGUNDA linha em branco entre seções
+## Nova Seção Principal
+[LINHA EM BRANCO]
+Primeiro parágrafo da nova seção.
+```
+
 ### PASSO 3: Upload de Imagens - PROCESSO CORRETO ⚠️
 
-> **PROBLEMA COMUM**: Imagens aparecem como "Imagem não encontrada" no frontend quando os caminhos não estão corretos.
+> **PROBLEMA CRÍTICO IDENTIFICADO**: NUNCA inventar nomes de imagens ou usar URLs de imagens que não existem!
 
-#### 3.1 Padrão de Nomenclatura OBRIGATÓRIO
+#### 3.1 IDENTIFICAÇÃO DAS IMAGENS REAIS ⚠️
+
+**PROCESSO OBRIGATÓRIO:**
+
+1. **Analisar o conteúdo extraído** - identificar TODAS as imagens presentes no HTML/Markdown
+2. **Listar as URLs originais** - extrair os src das imagens do site original  
+3. **Fazer download das imagens reais** - baixar cada imagem do site fonte
+4. **NUNCA inventar nomes** - usar apenas imagens que realmente existem
+
+```javascript
+// ❌ ERRADO - NUNCA FAÇA ISSO:
+// Inventar URLs como: "guia-completo-enscape-hero.jpg" sem ter a imagem
+
+// ✅ CORRETO - PROCESSO REAL:
+// 1. Identificar imagens no HTML original:
+// <img src="https://blog.enscape3d.com/hubfs/Interior%20rendering%20modern%20living%20room.jpg">
+// 2. Baixar a imagem real do site
+// 3. Fazer upload no Supabase Storage
+// 4. Usar a URL real do Supabase
+```
+
+#### 3.2 Download e Verificação das Imagens
+
+```javascript
+// 1. Extrair URLs reais das imagens do conteúdo original
+const imageUrls = extractImagesFromContent(originalContent);
+
+// 2. Baixar cada imagem
+for (const originalUrl of imageUrls) {
+  try {
+    const response = await fetch(originalUrl);
+    if (!response.ok) {
+      console.warn(`⚠️ Imagem não acessível: ${originalUrl}`);
+      continue; // Pular esta imagem
+    }
+    const imageBuffer = await response.arrayBuffer();
+    
+    // 3. Fazer upload real no Supabase
+    const fileName = `${slug}-image-${index}.jpg`;
+    const uploadResult = await uploadToSupabase(fileName, imageBuffer);
+    
+    // 4. Substituir URL no conteúdo
+    content = content.replace(originalUrl, uploadResult.publicUrl);
+  } catch (error) {
+    console.error(`Erro no download da imagem: ${error.message}`);
+  }
+}
+```
+
+#### 3.3 Padrão de Nomenclatura OBRIGATÓRIO
 
 ```javascript
 // IMPORTANTE: Nome do arquivo NO STORAGE deve seguir este padrão:
-// [slug-do-artigo]-[descricao].jpg
+// [slug-do-artigo]-[descricao-ou-numero].jpg
 
-// Exemplos CORRETOS:
-"guia-completo-enscape-sketchup-iniciantes-hero.jpg"
-"guia-completo-enscape-sketchup-iniciantes-interface.jpg"
-"guia-completo-enscape-sketchup-iniciantes-toolbar.png"
+// Exemplos CORRETOS (apenas após download real):
+"guia-completo-enscape-sketchup-iniciantes-hero.jpg"        // Imagem principal
+"guia-completo-enscape-sketchup-iniciantes-interface.jpg"   // Interface do software
+"guia-completo-enscape-sketchup-iniciantes-toolbar.png"     // Barra de ferramentas
+"guia-completo-enscape-sketchup-iniciantes-image-1.jpg"     // Numeração sequencial
 
 // NÃO usar subpastas no storage:
 // ❌ ERRADO: "guia-completo-enscape/hero.jpg"
 // ✅ CERTO: "guia-completo-enscape-hero.jpg"
 ```
 
-#### 3.2 Upload para Supabase Storage
+#### 3.4 Upload para Supabase Storage
 
 ```javascript
 // 1. Fazer upload direto para o bucket 'imagens-blog'
@@ -120,6 +234,12 @@ const { data, error } = await supabase.storage
 
 // 2. URL pública resultante (SEM subpastas)
 const publicUrl = `https://vfpdyllwquaturpcifpl.supabase.co/storage/v1/object/public/imagens-blog/${fileName}`;
+
+// 3. SEMPRE testar a URL antes de usar
+const testResponse = await fetch(publicUrl);
+if (!testResponse.ok) {
+  throw new Error(`❌ FALHA: Imagem não está acessível em ${publicUrl}`);
+}
 ```
 
 #### 3.3 URLs no Conteúdo do Artigo
@@ -277,30 +397,52 @@ const cleanFileName = fileName
   .replace(/-+/g, '-');
 ```
 
-## 📝 CHECKLIST FINAL
+## 📝 CHECKLIST FINAL DE VALIDAÇÃO
 
-Antes de publicar um artigo, verifique:
+**VALIDAÇÃO CRÍTICA - NUNCA PULE ESTAS ETAPAS:**
 
+### ✅ IMAGENS - VERIFICAÇÃO OBRIGATÓRIA
+- [ ] **Imagens reais identificadas** no conteúdo original
+- [ ] **Download realizado** de todas as imagens do site fonte
+- [ ] **Upload confirmado** no Supabase Storage (bucket: imagens-blog)
+- [ ] **URLs testadas** - todas as imagens acessíveis via navegador
+- [ ] **ZERO URLs inventadas** - apenas imagens que realmente existem
+- [ ] **image_url** e **og_image** preenchidos com URLs reais do Supabase
+- [ ] **Conteúdo sem paths locais** (/images/blog/) - apenas URLs do Supabase
+
+### ✅ FORMATAÇÃO - VERIFICAÇÃO OBRIGATÓRIA
+- [ ] **Parágrafos curtos** - máximo 4 linhas cada
+- [ ] **Espaçamento correto** - linha em branco após títulos
+- [ ] **Seções separadas** - duas linhas em branco entre seções principais
+- [ ] **Listas formatadas** - precedidas e seguidas por linha em branco
+- [ ] **Blockquotes usados** para dicas importantes
+- [ ] **Texto legível** - não denso demais
+
+### ✅ CONTEÚDO - VERIFICAÇÃO GERAL
 - [ ] **Slug único** e amigável para URL
 - [ ] **Título** claro e otimizado para SEO
 - [ ] **Excerpt** com 150-160 caracteres
-- [ ] **Imagens uploadadas** no Supabase Storage
-- [ ] **URLs das imagens** usando caminho completo do Supabase
-- [ ] **image_url** e **og_image** preenchidos no banco
-- [ ] **Conteúdo** sem paths locais (/images/blog/)
-- [ ] **Categoria** associada (se aplicável)
 - [ ] **Reading time** calculado corretamente
+- [ ] **Categoria** associada (se aplicável)
 - [ ] **Arquivo MD** criado como backup
+
+### ✅ TESTE FINAL - ANTES DE PUBLICAR
+- [ ] **Abrir cada URL de imagem** no navegador - confirmar que carrega
+- [ ] **Verificar espaçamento** no arquivo MD - deve estar bem formatado
+- [ ] **Conteúdo completo** - artigo faz sentido e tem informação útil
+- [ ] **Links funcionais** - todos os links externos funcionam
 
 ## 🚨 RESUMO: REGRAS DE OURO
 
-1. **SEMPRE** use URLs completas do Supabase para imagens
-2. **NUNCA** use caminhos locais como `/images/blog/`
-3. **SEMPRE** teste se as URLs das imagens estão acessíveis
-4. **SEMPRE** preencha `image_url` e `og_image` com a mesma URL
-5. **NUNCA** use subpastas no Supabase Storage - use prefixo no nome do arquivo
+1. **NUNCA INVENTAR URLS DE IMAGENS** - apenas usar imagens que realmente existem
+2. **SEMPRE BAIXAR IMAGENS REAIS** do site original antes de fazer upload
+3. **SEMPRE TESTAR URLS** - todas as imagens devem estar acessíveis
+4. **NUNCA usar caminhos locais** como `/images/blog/` - apenas URLs do Supabase
+5. **FORMATAÇÃO OBRIGATÓRIA** - parágrafos curtos com espaçamento adequado
+6. **LINHAS EM BRANCO** após títulos, listas, imagens e blockquotes
+7. **VALIDAÇÃO COMPLETA** antes de publicar - seguir checklist rigorosamente
 
 ---
 
-**Última atualização:** 09/08/2025
-**Versão:** 2.0 - Correção do processo de imagens
+**Última atualização:** 10/08/2025
+**Versão:** 3.0 - Correção crítica de imagens e formatação de texto
