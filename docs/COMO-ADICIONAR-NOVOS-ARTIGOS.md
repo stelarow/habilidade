@@ -29,6 +29,38 @@ Reúna as seguintes informações:
 -   **Conteúdo Principal:** O corpo do artigo, formatado em Markdown.
     -   *Exemplo:* (O conteúdo completo do artigo sobre Enscape em formato Markdown)
 
+### ⚠️ **IMPORTANTE - Formatação de Conteúdo**
+
+Para evitar erros de carregamento no frontend, **SEMPRE** siga estas regras ao escrever o conteúdo:
+
+#### ❌ **Caracteres Problemáticos a EVITAR:**
+- **Aspas tipográficas curvas**: `'` `'` `"` `"` 
+- **Emojis**: `😉` `💡` `🚀` `✅` etc.
+- **Travessões especiais**: `—` (em dash)
+- **Aspas duplas especiais**: `«` `»`
+
+#### ✅ **Caracteres SEGUROS para usar:**
+- **Aspas normais**: `'` `"` (aspas retas)
+- **Texto descritivo**: `[DICA]` `[IMPORTANTE]` `[NOTA]`
+- **Hífens normais**: `-`
+- **Aspas simples**: `'` (aspas retas simples)
+
+#### 🔧 **Exemplo de Correção:**
+```markdown
+❌ ERRADO:
+> 💡 Dica: Use 'aspas especiais' para destacar—isso pode causar erro.
+
+✅ CORRETO:
+> [DICA]: Use 'aspas normais' para destacar - isso funciona perfeitamente.
+```
+
+#### 📝 **Validação de Conteúdo:**
+Antes de inserir no banco, **sempre verifique** se o conteúdo:
+1. ✅ Usa apenas aspas retas (`'` `"`)
+2. ✅ Não contém emojis
+3. ✅ Usa hífens normais (`-`) ao invés de travessões (`—`)
+4. ✅ Substitui emojis por texto: `💡 → [DICA]`, `✅ → [OK]`, `❌ → [ERRO]`
+
 ### 1.2. Metadados para SEO
 
 Prepare também os metadados para otimização de busca:
@@ -216,6 +248,40 @@ chmod +x upload-enscape-images.sh
 ./upload-enscape-images.sh
 ```
 
+### 2.8. Script de Limpeza de Conteúdo (OBRIGATÓRIO)
+
+**SEMPRE execute este script antes de inserir o conteúdo no banco:**
+
+```bash
+#!/bin/bash
+# Salve como: clean-content.sh
+
+clean_content() {
+    local content="$1"
+    
+    # Substituir aspas tipográficas por aspas normais
+    content=$(echo "$content" | sed "s/'/'/g")
+    content=$(echo "$content" | sed "s/'/'/g") 
+    content=$(echo "$content" | sed "s/"/\"/g")
+    content=$(echo "$content" | sed "s/"/\"/g")
+    
+    # Substituir emojis comuns por texto
+    content=$(echo "$content" | sed "s/😉/:)/g")
+    content=$(echo "$content" | sed "s/💡/[DICA]/g")
+    content=$(echo "$content" | sed "s/✅/[OK]/g")
+    content=$(echo "$content" | sed "s/❌/[ERRO]/g")
+    content=$(echo "$content" | sed "s/🚀/[IMPORTANTE]/g")
+    content=$(echo "$content" | sed "s/⚠️/[ATENCAO]/g")
+    
+    # Substituir travessões por hífens
+    content=$(echo "$content" | sed "s/—/-/g")
+    
+    echo "$content"
+}
+
+# Uso: clean_content "seu conteúdo aqui"
+```
+
 ## Passo 3: Inserir os Dados no Banco de Dados
 
 Este é o passo final. Depois de preparar o conteúdo e as imagens, você precisa inserir os dados no banco de dados Supabase.
@@ -278,11 +344,91 @@ Após inserir o post e obter seu novo `id`, você também precisará criar uma e
 }
 ```
 
+## Passo 4: Troubleshooting e Validação
+
+### 4.1. Problemas Comuns e Soluções
+
+#### 🚨 **ERRO: "Algo deu errado ao carregar os artigos"**
+
+**Causa:** Caracteres especiais problemáticos no conteúdo do artigo.
+
+**Sintomas:**
+- Outros artigos carregam normalmente
+- Apenas o novo artigo apresenta erro
+- Console do browser mostra erro de parsing JSON
+
+**Solução:**
+```sql
+-- 1. Identificar o artigo problemático
+SELECT title, LENGTH(content) as content_size 
+FROM blog_posts 
+WHERE published_at IS NOT NULL 
+ORDER BY created_at DESC LIMIT 5;
+
+-- 2. Limpar caracteres problemáticos
+UPDATE blog_posts 
+SET content = REPLACE(REPLACE(REPLACE(REPLACE(
+    content, 
+    ''', ''''), -- aspas tipográficas
+    ''', ''''), -- aspas tipográficas  
+    '😉', ':)'), -- emojis
+    '💡', '[DICA]') -- emojis
+WHERE slug = 'SEU-SLUG-AQUI';
+```
+
+#### 🔍 **Validação Pré-Inserção**
+
+Antes de inserir qualquer artigo, **SEMPRE** execute esta verificação:
+
+```sql
+-- Verificar se há caracteres problemáticos
+SELECT 
+  title,
+  CASE 
+    WHEN content LIKE '%'%' OR content LIKE '%'%' THEN 'ASPAS_TIPOGRAFICAS'
+    WHEN content LIKE '%😉%' OR content LIKE '%💡%' THEN 'EMOJIS'
+    WHEN content LIKE '%—%' THEN 'TRAVESSAO'
+    ELSE 'OK'
+  END as validation_status
+FROM blog_posts 
+WHERE slug = 'SEU-SLUG-AQUI';
+```
+
+### 4.2. Checklist de Validação Final
+
+Antes de considerar o artigo pronto, verifique:
+
+- [ ] **Imagens**: Todas acessíveis via Supabase Storage
+- [ ] **Conteúdo**: Sem caracteres especiais problemáticos  
+- [ ] **Aspas**: Apenas aspas retas (`'` `"`)
+- [ ] **Emojis**: Substituídos por texto descritivo
+- [ ] **URLs**: Todas as imagens usam URLs completas do Supabase
+- [ ] **Estrutura**: Todos os campos obrigatórios preenchidos
+- [ ] **Teste**: Artigo carrega sem erros no frontend
+
+### 4.3. Comandos de Emergência
+
+**Se um artigo apresentar problemas após publicação:**
+
+```sql
+-- Ocultar temporariamente (remove published_at)
+UPDATE blog_posts 
+SET published_at = NULL 
+WHERE slug = 'artigo-com-problema';
+
+-- Restaurar após correção
+UPDATE blog_posts 
+SET published_at = NOW() 
+WHERE slug = 'artigo-corrigido';
+```
+
 ## Resumo do Processo
 
 1.  **Prepare o texto:** Defina título, slug, resumo, conteúdo e metadados de SEO.
-2.  **Prepare as imagens:** Crie a pasta e salve as imagens otimizadas.
-3.  **Prepare os dados:** Monte o objeto JSON com todas as informações.
-4.  **Execute a inserção:** Adicione os novos registros às tabelas `blog_posts` e `blog_course_ctas` no Supabase.
+2.  **Limpe o conteúdo:** Execute script de limpeza para remover caracteres problemáticos.
+3.  **Prepare as imagens:** Faça upload automatizado para o Supabase Storage.
+4.  **Valide os dados:** Verifique se não há caracteres problemáticos.
+5.  **Execute a inserção:** Adicione os novos registros às tabelas do Supabase.
+6.  **Teste o artigo:** Verifique se carrega corretamente no frontend.
 
-Seguindo estes passos, o novo artigo será publicado corretamente no blog.
+Seguindo estes passos, o novo artigo será publicado corretamente no blog **sem erros de carregamento**.
