@@ -119,7 +119,7 @@ export const LazyBlogComponents = {
   ),
 
   BlogPost: createLazyComponent(
-    () => import('../pages/BlogPost.jsx'),
+    () => import('../pages/BlogPostSSG.jsx'),
     'page'
   ),
 
@@ -208,7 +208,7 @@ export const setupHoverPreload = () => {
     } else if (href.includes('/blog/categoria')) {
       import('../pages/BlogCategory.jsx');
     } else if (href.includes('/blog/')) {
-      import('../pages/BlogPost.jsx');
+      import('../pages/BlogPostSSG.jsx');
     }
   };
 
