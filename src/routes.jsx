@@ -71,7 +71,19 @@ export const routes = [
       },
       {
         path: 'cursos/:courseSlug',
-        lazy: () => import('./pages/CoursePage')
+        lazy: () => import('./pages/CoursePage'),
+        // Define estaticamente quais páginas de curso devem ser geradas no SSG
+        getStaticPaths: () => [
+          'informatica',
+          'design-grafico',
+          'programacao',
+          'marketing-digital',
+          'inteligencia-artificial',
+          'business-intelligence',
+          'projetista-3d',
+          'edicao-video',
+          'administracao'
+        ]
       },
       {
         path: 'contato',
