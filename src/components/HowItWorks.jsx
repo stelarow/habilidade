@@ -105,7 +105,17 @@ function HowItWorks() {
           <p className="text-zinc-300 text-lg max-w-2xl mx-auto mb-8 leading-relaxed">
             Cursos práticos e objetivos para desenvolver suas habilidades. Aprenda fazendo e veja resultados reais na sua vida profissional.
           </p>
-          <GradientButton href="#cursos" className="px-8 py-3">
+          <GradientButton 
+            href="#cursos" 
+            className="px-8 py-3"
+            onClick={(e) => {
+              e.preventDefault();
+              const element = document.getElementById('cursos');
+              if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+              }
+            }}
+          >
             VEJA COMO FUNCIONA
           </GradientButton>
         </div>

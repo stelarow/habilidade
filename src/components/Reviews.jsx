@@ -267,7 +267,17 @@ const Reviews = () => {
                 Junte-se aos nossos alunos que já aprimoraram suas habilidades e conhecimentos
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <GradientButton href="#cursos" className="px-8 py-3">
+                <GradientButton 
+                  href="#cursos" 
+                  className="px-8 py-3"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    const element = document.getElementById('cursos');
+                    if (element) {
+                      element.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}
+                >
                   Ver Cursos Disponíveis
                 </GradientButton>
                 <GradientButton 

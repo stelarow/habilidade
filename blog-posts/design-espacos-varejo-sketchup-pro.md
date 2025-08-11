@@ -89,7 +89,7 @@ Na **Escola Habilidade**, oferecemos cursos completos de SketchUp Pro focados no
 - Gerenciar projetos de múltiplas localizações
 - Apresentar projetos de forma profissional para clientes
 
-Transforme sua carreira no design de varejo com nossos cursos especializados em SketchUp Pro. [**Conheça nosso curso de SketchUp Pro**](https://escola-habilidade.com/curso-sketchup-pro) e domine as ferramentas essenciais para criar espaços de varejo que vendem!
+Transforme sua carreira no design de varejo com nossos cursos especializados em SketchUp Pro. [**Conheça nosso curso de SketchUp + Enscape**](https://www.escolahabilidade.com/cursos/sketchup-enscape) e domine as ferramentas essenciais para criar espaços de varejo que vendem!
 
 ---
 

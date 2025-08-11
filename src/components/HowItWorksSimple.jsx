@@ -50,8 +50,16 @@ function SimpleCard({ step, index }) {
 
   // Se for o card "Escolha seu Curso", torna clicável
   const isChooseCard = number === '01';
-  const CardWrapper = isChooseCard ? 'a' : 'div';
-  const cardProps = isChooseCard ? { href: '#cursos' } : {};
+  const CardWrapper = isChooseCard ? 'button' : 'div';
+  const cardProps = isChooseCard ? {
+    onClick: (e) => {
+      e.preventDefault();
+      const element = document.getElementById('cursos');
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  } : {};
 
   return (
     <CardWrapper 

@@ -119,6 +119,6 @@ Quer dominar todas essas novas funcionalidades do SketchUp 2025? A **Escola Habi
 - Integração com LayOut para documentação técnica
 - Workflow completo do projeto à apresentação
 
-**🚀 [Inscreva-se no Curso de SketchUp da Escola Habilidade](https://escolahabilidade.com/sketchup)**
+**🚀 [Inscreva-se no Curso de SketchUp da Escola Habilidade](https://www.escolahabilidade.com/cursos/sketchup-enscape)**
 
 Transforme sua carreira em arquitetura e design com as ferramentas mais modernas do mercado. Junte-se a milhares de profissionais que já dominam o SketchUp e se destacam no mercado de trabalho.

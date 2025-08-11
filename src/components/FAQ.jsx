@@ -6,32 +6,32 @@ import GradientButton from './GradientButton';
 
 const FAQ_DATA = [
   {
-    question: "Quais são os pré-requisitos para os cursos?",
-    answer: "A maioria dos nossos cursos não exige conhecimento prévio. Oferecemos desde níveis básicos até avançados. Para cursos específicos como programação avançada, indicamos ter conhecimento básico de lógica."
+    question: "A Escola Habilidade fica bem localizada em São José?",
+    answer: "Sim! Estamos estrategicamente localizados no centro de São José, próximo ao Terminal Central, Shopping Pátio São José e fácil acesso pela BR-101. Nossa localização privilegiada permite chegada fácil por transporte público (várias linhas de ônibus) e oferece estacionamento gratuito para estudantes. Atendemos toda a Grande Florianópolis, especialmente São José, Palhoça e Biguaçu."
   },
   {
-    question: "Os cursos oferecem certificado?",
-    answer: "Sim! Todos os nossos cursos oferecem certificação nacional reconhecida. O certificado é emitido após a conclusão do curso e aprovação nas avaliações."
+    question: "Vocês têm parcerias com empresas de São José e região?",
+    answer: "Sim! Temos parcerias ativas com mais de 50 empresas da Grande Florianópolis, incluindo escritórios de arquitetura, agências de marketing, desenvolvedoras e empresas de tecnologia. Nossos alunos desenvolvem projetos reais durante o curso e muitos são contratados diretamente por empresas parceiras. Mantemos um programa de indicação profissional exclusivo."
   },
   {
-    question: "Qual é a duração dos cursos?",
-    answer: "A duração varia conforme o curso. Temos cursos de 40h (1 mês) até 120h (3 meses). Consulte a carga horária específica de cada curso em nossa grade."
+    question: "Qual a diferença entre curso técnico e curso profissionalizante na Escola Habilidade?",
+    answer: "Nossos cursos profissionalizantes são 100% focados na prática profissional. Diferente de cursos técnicos convencionais, investimos 80% do tempo em projetos reais e apenas 20% em teoria. Isso significa que você sai preparado para o mercado de trabalho desde o primeiro dia, com portfolio robusto e experiência prática que os empregadores valorizam."
   },
   {
-    question: "Como funcionam as aulas?",
-    answer: "Nossas aulas são presenciais com metodologia prática. Cada aluno tem acesso a um computador equipado com todos os softwares necessários. Turmas pequenas garantem atenção individualizada."
+    question: "Quais cursos a Escola Habilidade oferece?",
+    answer: "Oferecemos 6 cursos principais: Projetista (SketchUp/AutoCAD), Edição de Vídeo, Design Gráfico, Programação, Marketing Digital e BI/Inteligência Artificial. Todos são cursos práticos com projetos reais, certificação reconhecida pelo mercado e suporte para colocação profissional. Cada curso é personalizado conforme demanda do mercado regional."
   },
   {
-    question: "Vocês oferecem suporte após o curso?",
-    answer: "Sim! Oferecemos suporte pós-curso por 6 meses via WhatsApp para dúvidas técnicas. Também temos um grupo exclusivo de ex-alunos para networking e oportunidades."
+    question: "Como é a metodologia de ensino da Escola Habilidade?",
+    answer: "Nossa metodologia única \"Prática Primeiro\" combina projetos reais com mentoria individualizada. Turmas pequenas (máximo 12 alunos), professores especialistas do mercado e 80% do tempo dedicado à prática. Você desenvolve portfolio profissional durante o curso e recebe orientação personalizada para sua área de interesse."
   },
   {
-    question: "Há desconto para pagamento à vista?",
-    answer: "Sim! Oferecemos 10% de desconto para pagamento à vista. Também temos parcelamento em até 12x sem juros no cartão de crédito."
+    question: "Por que a Escola Habilidade tem avaliação 5.0 estrelas?",
+    answer: "Nossa nota máxima reflete o compromisso com resultados reais: metodologia prática, acompanhamento individualizado e foco na preparação para o mercado de trabalho. Diferente de instituições grandes, priorizamos qualidade sobre quantidade, com turmas reduzidas e atenção personalizada a cada aluno."
   },
   {
-    question: "Posso fazer mais de um curso?",
-    answer: "Claro! Incentivamos nossos alunos a expandirem suas habilidades. Oferecemos 15% de desconto para o segundo curso e 20% a partir do terceiro curso."
+    question: "A Escola Habilidade ajuda na colocação profissional?",
+    answer: "Sim! Oferecemos apoio através de nossa rede de empresas parceiras que conhecem a qualidade dos nossos alunos, programa de preparação para freelancers com projetos reais e orientação para desenvolvimento de carreira. Nosso foco é preparar você com as habilidades e portfolio que o mercado busca."
   },
   {
     question: "Como faço para me matricular?",
