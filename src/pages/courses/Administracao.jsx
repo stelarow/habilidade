@@ -1,7 +1,7 @@
 import CoursePage from '../CoursePage';
 
 export default function Administracao() {
-  return <CoursePage />;
+  return <CoursePage slug="administracao" />;
 }
 
 export const Component = Administracao;

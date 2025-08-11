@@ -1,7 +1,7 @@
 import CoursePage from '../CoursePage';
 
 export default function EdicaoVideo() {
-  return <CoursePage />;
+  return <CoursePage slug="edicao-video" />;
 }
 
 export const Component = EdicaoVideo;

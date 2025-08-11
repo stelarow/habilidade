@@ -38,8 +38,9 @@ import '../styles/course-improvements.css';
 import COURSES_DATA from '../data/coursesData';
 import '../styles/course-tools.css';
 
-function CoursePage() {
+function CoursePage({ slug }) {
   const { courseSlug } = useParams();
+  const finalSlug = slug || courseSlug;
   const [loading, setLoading] = useState(true);
   const [course, setCourse] = useState(null);
   const [error, setError] = useState(null);
@@ -78,7 +79,7 @@ function CoursePage() {
         await new Promise(resolve => setTimeout(resolve, 300));
         
         // Busca curso pelos dados
-        const foundCourse = getCourseBySlug(courseSlug, COURSES_DATA);
+        const foundCourse = getCourseBySlug(finalSlug, COURSES_DATA);
         
         if (!foundCourse) {
           setError('Curso não encontrado');
@@ -103,10 +104,10 @@ function CoursePage() {
       }
     };
 
-    if (courseSlug) {
+    if (finalSlug) {
       loadCourse();
     }
-  }, [courseSlug]);
+  }, [finalSlug]);
 
   // Handler para botão de matrícula
   const handleEnrollClick = () => {

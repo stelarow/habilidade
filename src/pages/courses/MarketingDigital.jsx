@@ -1,7 +1,7 @@
 import CoursePage from '../CoursePage';
 
 export default function MarketingDigital() {
-  return <CoursePage />;
+  return <CoursePage slug="marketing-digital" />;
 }
 
 export const Component = MarketingDigital;

@@ -1,7 +1,7 @@
 import CoursePage from '../CoursePage';
 
 export default function BusinessIntelligence() {
-  return <CoursePage />;
+  return <CoursePage slug="business-intelligence" />;
 }
 
 export const Component = BusinessIntelligence;
