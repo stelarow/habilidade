@@ -38,6 +38,12 @@ const STATIC_PAGES = [
     priority: 0.8,
     changefreq: 'daily',
     lastmod: new Date().toISOString().split('T')[0]
+  },
+  {
+    url: '/teste-vocacional',
+    priority: 0.9,
+    changefreq: 'weekly',
+    lastmod: new Date().toISOString().split('T')[0]
   }
 ];
 
