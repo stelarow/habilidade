@@ -557,6 +557,22 @@ export function loader() {
   return null;
 }
 
+// CRITICAL: Export getStaticPaths for vite-react-ssg to generate all course pages
+export function getStaticPaths() {
+  // Return all course slugs that should be statically generated
+  return [
+    'informatica',
+    'design-grafico',
+    'programacao',
+    'marketing-digital',
+    'inteligencia-artificial',
+    'business-intelligence',
+    'projetista-3d',
+    'edicao-video',
+    'administracao'
+  ];
+}
+
 // Export both default and Component for vite-react-ssg compatibility
 export default CoursePage;
 export { CoursePage as Component };

@@ -69,47 +69,10 @@ export const routes = [
         index: true,
         lazy: () => import('./pages/Home')
       },
-      // Rotas estáticas de cursos para garantir geração SSG
-      {
-        path: 'cursos/informatica',
-        lazy: () => import('./pages/CoursePage')
-      },
-      {
-        path: 'cursos/design-grafico',
-        lazy: () => import('./pages/CoursePage')
-      },
-      {
-        path: 'cursos/programacao',
-        lazy: () => import('./pages/CoursePage')
-      },
-      {
-        path: 'cursos/marketing-digital',
-        lazy: () => import('./pages/CoursePage')
-      },
-      {
-        path: 'cursos/inteligencia-artificial',
-        lazy: () => import('./pages/CoursePage')
-      },
-      {
-        path: 'cursos/business-intelligence',
-        lazy: () => import('./pages/CoursePage')
-      },
-      {
-        path: 'cursos/projetista-3d',
-        lazy: () => import('./pages/CoursePage')
-      },
-      {
-        path: 'cursos/edicao-video',
-        lazy: () => import('./pages/CoursePage')
-      },
-      {
-        path: 'cursos/administracao',
-        lazy: () => import('./pages/CoursePage')
-      },
-      // Rota dinâmica como fallback para desenvolvimento
       {
         path: 'cursos/:courseSlug',
         lazy: () => import('./pages/CoursePage')
+        // getStaticPaths está definido no componente CoursePage
       },
       {
         path: 'contato',
