@@ -974,7 +974,21 @@ Faça seu teste gratuito: https://escolahabilidade.com/teste-vocacional
                   </div>
                   
                   <motion.a
-                    href={`https://wa.me/5548988559491?text=Olá! Fiz o teste vocacional e gostaria de saber mais sobre o curso ${course.name}.`}
+                    href={`https://wa.me/5548988559491?text=${encodeURIComponent(
+                      `Olá! Fiz o teste vocacional científico e obtive ${dominantArea.score}% de afinidade com ${
+                        dominantArea.area === 'gestao' ? 'Gestão' : 
+                        dominantArea.area === 'educacao' ? 'Educação' : 
+                        dominantArea.area === 'comunicacao' ? 'Comunicação' :
+                        dominantArea.area === 'logica' ? 'Lógica' : 
+                        dominantArea.area.charAt(0).toUpperCase() + dominantArea.area.slice(1)
+                      }.\n\n` +
+                      `O curso ${course.name} foi recomendado para meu perfil.\n` +
+                      `Gostaria de saber mais sobre:\n` +
+                      `• Valores e formas de pagamento\n` +
+                      `• Horários disponíveis\n` +
+                      `• Início das próximas turmas\n` +
+                      `• Local das aulas (Florianópolis, São José ou Palhoça)`
+                    )}`}
                     className="w-full bg-white text-[#d400ff] py-3 rounded-lg font-bold hover:bg-gray-100 transition-colors inline-flex items-center justify-center gap-2"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
@@ -1021,7 +1035,27 @@ Faça seu teste gratuito: https://escolahabilidade.com/teste-vocacional
       <div className="text-center space-y-4">
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <motion.a
-            href="https://wa.me/5548988559491?text=Olá! Acabei de fazer o teste vocacional científico e gostaria de saber mais sobre os cursos recomendados."
+            href={`https://wa.me/5548988559491?text=${encodeURIComponent(
+              `Olá! Acabei de fazer o teste vocacional científico e meus resultados foram:\n\n` +
+              `🎯 Perfil Dominante: ${dominantArea.area === 'gestao' ? 'Gestão' : 
+                dominantArea.area === 'educacao' ? 'Educação' : 
+                dominantArea.area === 'comunicacao' ? 'Comunicação' :
+                dominantArea.area === 'logica' ? 'Lógica' : 
+                dominantArea.area.charAt(0).toUpperCase() + dominantArea.area.slice(1)} (${dominantArea.score}%)\n\n` +
+              `📊 Top 3 Áreas:\n` +
+              results.sort((a, b) => b.score - a.score).slice(0, 3).map((r, i) => 
+                `${i + 1}. ${r.area === 'gestao' ? 'Gestão' : 
+                  r.area === 'educacao' ? 'Educação' : 
+                  r.area === 'comunicacao' ? 'Comunicação' :
+                  r.area === 'logica' ? 'Lógica' : 
+                  r.area.charAt(0).toUpperCase() + r.area.slice(1)}: ${r.score}%`
+              ).join('\n') + `\n\n` +
+              `📚 Cursos Recomendados:\n` +
+              recommendedCourses.map(course => 
+                `• ${course.name} - ${course.subtitle}`
+              ).join('\n') + `\n\n` +
+              `Gostaria de saber mais detalhes sobre os cursos e valores!`
+            )}`}
             className="bg-[#d400ff] text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-purple-600 transition-all duration-300 inline-flex items-center justify-center gap-2"
             whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(212, 0, 255, 0.4)" }}
           >
