@@ -46,7 +46,8 @@ const blogSlugs = [
   'guia-completo-enscape-sketchup-iniciantes',
   'guia-completo-enscape-sketchup',
   'sketchup-2025-visualizacao-3d-materiais-fotorrealistas',
-  '5-razoes-organizacoes-investir-treinamento-excel'
+  '5-razoes-organizacoes-investir-treinamento-excel',
+  'transforme-dados-em-decisoes-estrategicas-dashboards-empresariais'
 ];
 
 // Configuração das rotas para vite-react-ssg
