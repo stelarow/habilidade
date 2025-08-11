@@ -32,6 +32,30 @@ export default defineConfig({
 
   base: '/',
   
+  // Configuração do SSG para gerar páginas de cursos
+  ssg: {
+    format: 'cjs',
+    entry: './src/main.jsx',
+    // Define páginas estáticas que devem ser geradas
+    includedRoutes(paths) {
+      // Adiciona todas as páginas de cursos dinamicamente
+      const coursePages = [
+        '/cursos/informatica',
+        '/cursos/design-grafico',
+        '/cursos/programacao',
+        '/cursos/marketing-digital',
+        '/cursos/inteligencia-artificial',
+        '/cursos/business-intelligence',
+        '/cursos/projetista-3d',
+        '/cursos/edicao-video',
+        '/cursos/administracao'
+      ];
+      
+      // Retorna todas as rotas incluindo as de cursos
+      return [...paths, ...coursePages];
+    }
+  },
+  
   resolve: {
     dedupe: ['react', 'react-dom']
   },
