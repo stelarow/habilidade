@@ -45,7 +45,8 @@ const blogSlugs = [
   'editor-materiais-sketchup-realismo-enscape',
   'guia-completo-enscape-sketchup-iniciantes',
   'guia-completo-enscape-sketchup',
-  'sketchup-2025-visualizacao-3d-materiais-fotorrealistas'
+  'sketchup-2025-visualizacao-3d-materiais-fotorrealistas',
+  '5-razoes-organizacoes-investir-treinamento-excel'
 ];
 
 // Configuração das rotas para vite-react-ssg
