@@ -398,6 +398,24 @@ const Header = () => {
                 Cursos
               </a>
               <a 
+                href="https://escolahabilidade.com/#como-funciona"
+                className="text-white hover:text-fuchsia-300 transition-colors focus:outline-none focus:ring-2 focus:ring-fuchsia-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-sm px-2 py-1"
+              >
+                Como Funciona
+              </a>
+              <a 
+                href="https://escolahabilidade.com/#avaliacoes"
+                className="text-white hover:text-fuchsia-300 transition-colors focus:outline-none focus:ring-2 focus:ring-fuchsia-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-sm px-2 py-1"
+              >
+                Avaliações
+              </a>
+              <a 
+                href="https://escolahabilidade.com/#faq"
+                className="text-white hover:text-fuchsia-300 transition-colors focus:outline-none focus:ring-2 focus:ring-fuchsia-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-sm px-2 py-1"
+              >
+                FAQ
+              </a>
+              <a 
                 href="https://escolahabilidade.com/#sobre"
                 className="text-white hover:text-fuchsia-300 transition-colors focus:outline-none focus:ring-2 focus:ring-fuchsia-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-sm px-2 py-1"
               >
@@ -475,6 +493,27 @@ const Header = () => {
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Cursos
+              </a>
+              <a 
+                href="https://escolahabilidade.com/#como-funciona"
+                className="block text-white hover:text-fuchsia-300 transition-colors py-2"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Como Funciona
+              </a>
+              <a 
+                href="https://escolahabilidade.com/#avaliacoes"
+                className="block text-white hover:text-fuchsia-300 transition-colors py-2"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Avaliações
+              </a>
+              <a 
+                href="https://escolahabilidade.com/#faq"
+                className="block text-white hover:text-fuchsia-300 transition-colors py-2"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                FAQ
               </a>
               <a 
                 href="https://escolahabilidade.com/#sobre"
@@ -777,6 +816,7 @@ const ResultsDashboard = ({ results, onRestart }) => {
   const [showCourses, setShowCourses] = useState(false);
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
   const resultsRef = useRef(null);
+  const pdfContentRef = useRef(null);
 
   // Preparar dados para o gráfico radar
   const radarData = [
@@ -815,15 +855,15 @@ const ResultsDashboard = ({ results, onRestart }) => {
 
   // Função para gerar PDF do resultado
   const generatePDF = async () => {
-    if (!resultsRef.current) return;
+    if (!pdfContentRef.current) return;
     
     setIsGeneratingPDF(true);
     
     try {
-      // Capturar a área dos resultados
-      const canvas = await html2canvas(resultsRef.current, {
-        height: resultsRef.current.scrollHeight,
-        width: resultsRef.current.scrollWidth,
+      // Capturar apenas o conteúdo dos resultados (sem os botões de ação)
+      const canvas = await html2canvas(pdfContentRef.current, {
+        height: pdfContentRef.current.scrollHeight,
+        width: pdfContentRef.current.scrollWidth,
         scale: 2,
         useCORS: true,
         allowTaint: true,
@@ -839,31 +879,15 @@ const ResultsDashboard = ({ results, onRestart }) => {
       const imgWidth = pageWidth;
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
       
-      // Adicionar título
-      pdf.setFontSize(20);
-      pdf.setTextColor(212, 0, 255);
-      pdf.text('Resultado do Teste Vocacional', pageWidth / 2, 20, { align: 'center' });
-      
-      pdf.setFontSize(12);
-      pdf.setTextColor(100, 100, 100);
-      pdf.text('Escola Habilidade - Metodologia MIT, Harvard e Stanford', pageWidth / 2, 30, { align: 'center' });
-      
-      // Adicionar imagem dos resultados
-      if (imgHeight > pageHeight - 40) {
+      // Adicionar imagem dos resultados (já inclui header e footer do componente)
+      if (imgHeight > pageHeight - 20) {
         // Se a imagem for maior que uma página, redimensionar
-        const scaledHeight = pageHeight - 40;
+        const scaledHeight = pageHeight - 20;
         const scaledWidth = (canvas.width * scaledHeight) / canvas.height;
-        pdf.addImage(imgData, 'PNG', (pageWidth - scaledWidth) / 2, 35, scaledWidth, scaledHeight);
+        pdf.addImage(imgData, 'PNG', (pageWidth - scaledWidth) / 2, 10, scaledWidth, scaledHeight);
       } else {
-        pdf.addImage(imgData, 'PNG', 0, 35, imgWidth, imgHeight);
+        pdf.addImage(imgData, 'PNG', 0, 10, imgWidth, imgHeight);
       }
-      
-      // Adicionar informações de contato no rodapé
-      pdf.setFontSize(10);
-      pdf.setTextColor(100, 100, 100);
-      pdf.text('Escola Habilidade - (48) 98855-9491', pageWidth / 2, pageHeight - 20, { align: 'center' });
-      pdf.text('Florianópolis • São José • Palhoça - SC', pageWidth / 2, pageHeight - 15, { align: 'center' });
-      pdf.text('www.escolahabilidade.com', pageWidth / 2, pageHeight - 10, { align: 'center' });
       
       // Salvar o PDF
       const hoje = new Date().toLocaleDateString('pt-BR').replace(/\//g, '-');
@@ -947,6 +971,8 @@ Faça seu teste gratuito: https://escolahabilidade.com/teste-vocacional
       transition={{ duration: 0.8 }}
       className="max-w-6xl mx-auto"
     >
+      {/* Container específico para PDF (exclui botões de ação) */}
+      <div ref={pdfContentRef}>
       {/* Header dos Resultados */}
       <div className="text-center mb-12">
         <motion.div
@@ -1123,6 +1149,33 @@ Faça seu teste gratuito: https://escolahabilidade.com/teste-vocacional
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Footer para PDF - Informações de contato */}
+      <div className="bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl p-6 mt-8 text-center">
+        <div className="flex items-center justify-center gap-2 mb-3">
+          <img 
+            src="https://escolahabilidade.com/wp-content/uploads/2024/06/Design-sem-nome-7.png" 
+            alt="Escola Habilidade" 
+            className="h-8 w-auto opacity-80"
+          />
+          <span className="text-[#d400ff] font-bold text-lg">Escola Habilidade</span>
+        </div>
+        <p className="text-gray-600 text-sm mb-2">
+          Transformando carreiras através da tecnologia • Grande Florianópolis
+        </p>
+        <div className="flex flex-wrap justify-center gap-4 text-xs text-gray-500">
+          <span className="flex items-center gap-1">
+            <Phone size={12} />
+            (48) 98855-9491
+          </span>
+          <span className="flex items-center gap-1">
+            <MapPin size={12} />
+            Florianópolis • São José • Palhoça
+          </span>
+          <span>www.escolahabilidade.com</span>
+        </div>
+      </div>
+      </div>
 
       {/* Ações */}
       <div className="text-center space-y-4">
