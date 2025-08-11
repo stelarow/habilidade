@@ -2,6 +2,8 @@ import useTypewriter from '../hooks/useTypewriter';
 import Starfield from './Starfield';
 import GradientButton from './GradientButton';
 import Section from './Section';
+import { Lightbulb } from 'lucide-react';
+import { analytics } from '../utils/analytics';
 
 function Hero() {
   const words = ['Inteligência Artificial', 'Design 3D', 'Programação', 'Marketing'];
@@ -31,7 +33,13 @@ function Hero() {
         <p className="text-zinc-300 text-sm md:text-base lg:text-lg text-center max-w-2xl mx-auto leading-relaxed px-4">
           Aprenda hoje as habilidades que vão liderar o mercado de amanhã.
         </p>
-        <div className="mt-8 flex flex-col sm:flex-row gap-4">
+        
+        {/* Mensagem contextual para o teste vocacional */}
+        <p className="text-purple-400 text-xs md:text-sm text-center mt-6 mb-2 animate-pulse">
+          Não sabe qual curso escolher? Descubra em 5 minutos!
+        </p>
+        
+        <div className="mt-4 flex flex-col sm:flex-row gap-4 justify-center">
           <GradientButton 
             href="#cursos" 
             className="px-6 py-3 text-sm"
@@ -45,19 +53,36 @@ function Hero() {
           >
             Ver Cursos
           </GradientButton>
+          
+          <GradientButton 
+            href="/teste-vocacional"
+            className="px-6 py-3 text-sm border-2 border-purple-500/50 bg-transparent hover:bg-purple-500/10 transition-all group"
+            onClick={() => {
+              analytics.trackHeroTestClick();
+            }}
+          >
+            <Lightbulb className="w-4 h-4 mr-2 inline-block group-hover:text-yellow-400 transition-colors" />
+            Teste Vocacional Grátis
+          </GradientButton>
         </div>
       </div>
 
       {/* Seta para próxima seção */}
-      <a
-        href="#cursos"
+      <button
+        onClick={(e) => {
+          e.preventDefault();
+          const element = document.getElementById('cursos');
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+          }
+        }}
         aria-label="Ir para seção de cursos"
-        className="absolute bottom-4 left-1/2 -translate-x-1/2 text-fuchsia-500 hover:text-cyan-400 transition animate-bounce"
+        className="absolute bottom-4 left-1/2 -translate-x-1/2 text-fuchsia-500 hover:text-cyan-400 transition animate-bounce cursor-pointer"
       >
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" className="w-8 h-8">
           <path d="M12 16.5a1 1 0 0 1-.707-.293l-6-6a1 1 0 1 1 1.414-1.414L12 14.086l5.293-5.293a1 1 0 0 1 1.414 1.414l-6 6A1 1 0 0 1 12 16.5z" />
         </svg>
-      </a>
+      </button>
     </Section>
   );
 }

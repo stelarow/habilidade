@@ -4,6 +4,7 @@ import { Helmet } from '@dr.pogodin/react-helmet';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import LogoH from '../components/LogoH';
+import { analytics } from '../utils/analytics';
 import { 
   Brain,
   Code,
@@ -469,6 +470,16 @@ const VocationalTest = ({ onComplete }) => {
   const [isCompleted, setIsCompleted] = useState(false);
 
   const handleAnswer = (answerIndex, scores) => {
+    const question = questions[currentQuestion];
+    const answer = question.answers[answerIndex];
+    
+    // Track resposta
+    analytics.trackQuestionAnswered(
+      currentQuestion + 1,
+      question.question,
+      answer.text
+    );
+    
     const newAnswers = {
       ...answers,
       [currentQuestion]: { answerIndex, scores }
@@ -478,10 +489,23 @@ const VocationalTest = ({ onComplete }) => {
     if (currentQuestion < questions.length - 1) {
       setTimeout(() => {
         setCurrentQuestion(currentQuestion + 1);
+        // Track progresso
+        analytics.trackTestProgress(currentQuestion + 2, questions.length);
       }, 300);
     } else {
       setIsCompleted(true);
       const results = calculateResults(newAnswers);
+      
+      // Track conclusão
+      const timeSpent = analytics.measureTestDuration.end();
+      const primaryArea = results[0]?.area || 'não identificado';
+      const secondaryArea = results[1]?.area || 'não identificado';
+      
+      analytics.trackTestCompleted(
+        { primaryArea, secondaryArea },
+        timeSpent
+      );
+      
       setTimeout(() => {
         onComplete(results);
       }, 500);
@@ -665,6 +689,9 @@ const ResultsDashboard = ({ results, onRestart }) => {
     
     setIsGeneratingPDF(true);
     
+    // Track download do PDF
+    analytics.trackPDFDownloaded(dominantArea.area);
+    
     try {
       // Capturar apenas o conteúdo dos resultados (sem os botões de ação)
       const canvas = await html2canvas(pdfContentRef.current, {
@@ -733,6 +760,8 @@ Faça seu teste gratuito: https://escolahabilidade.com/teste-vocacional
           text: shareText,
           url: 'https://escolahabilidade.com/teste-vocacional'
         });
+        // Track compartilhamento bem sucedido
+        analytics.trackResultShared('native_share');
       } catch (error) {
         if (error.name !== 'AbortError') {
           fallbackShare(shareText);
@@ -748,6 +777,8 @@ Faça seu teste gratuito: https://escolahabilidade.com/teste-vocacional
     if (navigator.clipboard) {
       navigator.clipboard.writeText(text).then(() => {
         alert('Texto copiado! Cole em suas redes sociais para compartilhar 📋');
+        // Track compartilhamento via clipboard
+        analytics.trackResultShared('clipboard');
       }).catch(() => {
         openWhatsAppShare(text);
       });
@@ -760,6 +791,8 @@ Faça seu teste gratuito: https://escolahabilidade.com/teste-vocacional
   const openWhatsAppShare = (text) => {
     const encodedText = encodeURIComponent(text);
     window.open(`https://wa.me/?text=${encodedText}`, '_blank');
+    // Track compartilhamento via WhatsApp
+    analytics.trackResultShared('whatsapp');
   };
 
   useEffect(() => {
@@ -1045,9 +1078,17 @@ Faça seu teste gratuito: https://escolahabilidade.com/teste-vocacional
 const TesteVocacional = () => {
   const [currentStep, setCurrentStep] = useState('intro'); // 'intro', 'test', 'results'
   const [results, setResults] = useState(null);
+  
+  // Track page view on mount
+  useEffect(() => {
+    analytics.trackTestPageView();
+  }, []);
 
   const handleStartTest = () => {
     setCurrentStep('test');
+    // Track início do teste
+    analytics.trackTestStart();
+    analytics.measureTestDuration.start();
   };
 
   const handleTestComplete = (testResults) => {
@@ -1058,6 +1099,8 @@ const TesteVocacional = () => {
   const handleRestart = () => {
     setCurrentStep('intro');
     setResults(null);
+    // Track reiniciar teste
+    analytics.trackTestRestart();
   };
 
 
