@@ -6,7 +6,7 @@ const Footer = () => {
   return (
     <Section className="bg-zinc-950 text-white py-16 min-h-0">
       <div className="max-w-6xl mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-8">
           {/* Escola Info */}
           <div className="space-y-4">
             <div className="mb-4">
@@ -37,6 +37,22 @@ const Footer = () => {
               <li><a href="/blog" className="text-zinc-300 hover:text-white transition-colors">Blog</a></li>
               <li><a href="#como-funciona" onClick={(e) => { e.preventDefault(); document.getElementById('como-funciona')?.scrollIntoView({ behavior: 'smooth' }); }} className="text-zinc-300 hover:text-white transition-colors">Como Funciona</a></li>
               <li><a href="#contato" onClick={(e) => { e.preventDefault(); document.getElementById('contato')?.scrollIntoView({ behavior: 'smooth' }); }} className="text-zinc-300 hover:text-white transition-colors">Contato</a></li>
+            </ul>
+          </div>
+
+          {/* Nossos Cursos */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold text-fuchsia-400">Nossos Cursos</h3>
+            <ul className="space-y-2 text-sm">
+              <li><a href="/cursos/informatica" className="text-zinc-300 hover:text-white transition-colors">Informática</a></li>
+              <li><a href="/cursos/design-grafico" className="text-zinc-300 hover:text-white transition-colors">Design Gráfico</a></li>
+              <li><a href="/cursos/programacao" className="text-zinc-300 hover:text-white transition-colors">Programação</a></li>
+              <li><a href="/cursos/marketing-digital" className="text-zinc-300 hover:text-white transition-colors">Marketing Digital</a></li>
+              <li><a href="/cursos/inteligencia-artificial" className="text-zinc-300 hover:text-white transition-colors">Inteligência Artificial</a></li>
+              <li><a href="/cursos/business-intelligence" className="text-zinc-300 hover:text-white transition-colors">Business Intelligence</a></li>
+              <li><a href="/cursos/projetista-3d" className="text-zinc-300 hover:text-white transition-colors">Projetista 3D</a></li>
+              <li><a href="/cursos/edicao-video" className="text-zinc-300 hover:text-white transition-colors">Edição de Vídeo</a></li>
+              <li><a href="/cursos/administracao" className="text-zinc-300 hover:text-white transition-colors">Administração</a></li>
             </ul>
           </div>
 

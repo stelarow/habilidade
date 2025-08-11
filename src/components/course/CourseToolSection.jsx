@@ -151,7 +151,7 @@ const CourseToolSection = ({ tool, toolData, themeColors }) => {
                 background: `linear-gradient(135deg, ${themeColors.gradient.from}, ${themeColors.gradient.to})`
               }}
             >
-              Solicitar Informações
+              Garantir Minha Vaga
             </button>
           </div>
         </div>

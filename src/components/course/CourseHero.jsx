@@ -125,7 +125,7 @@ function CourseHero({ course, onEnrollClick }) {
                 boxShadow: `0 10px 30px ${course.themeColors.primary}40`
               }}
             >
-              <span className="relative z-10">Solicitar Informações</span>
+              <span className="relative z-10">Garantir Minha Vaga</span>
               <div 
                 className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                 style={{
@@ -138,6 +138,17 @@ function CourseHero({ course, onEnrollClick }) {
             <div className="flex items-center justify-center gap-2 text-center text-xs sm:text-sm text-gray-400 px-2">
               <CheckCircle size={14} weight="duotone" className="text-green-400 flex-shrink-0" />
               <span>Entre em contato para valores e condições</span>
+            </div>
+
+            {/* Destaque Turma Limitada */}
+            <div className="flex items-center justify-center gap-2 mt-3 px-4 py-2 rounded-full bg-red-600/20 border border-red-500/30 max-w-xs mx-auto">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" className="text-red-400">
+                <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"/>
+                <path d="M11 11h2v6h-2zm0-4h2v2h-2z"/>
+              </svg>
+              <span className="text-red-300 text-xs sm:text-sm font-medium">
+                TURMA LIMITADA: 3 alunos
+              </span>
             </div>
           </div>
         </div>

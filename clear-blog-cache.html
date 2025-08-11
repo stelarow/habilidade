@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Limpar Cache do Blog</title>
+</head>
+<body>
+    <h1>Limpar Cache do Blog</h1>
+    <p>Slug do artigo: editor-materiais-sketchup-realismo-enscape</p>
+    
+    <button onclick="clearCache()">Limpar Cache do Artigo</button>
+    <button onclick="clearAllCache()">Limpar Todo o Cache do Blog</button>
+    
+    <div id="result"></div>
+    
+    <script>
+        function clearCache() {
+            const slug = 'editor-materiais-sketchup-realismo-enscape';
+            const keys = [
+                `blog_post_${slug}`,
+                `blog_posts_`,
+                `blog_categories_`,
+                `blog_search_`
+            ];
+            
+            let removed = 0;
+            
+            // Clear localStorage
+            for (let i = localStorage.length - 1; i >= 0; i--) {
+                const key = localStorage.key(i);
+                if (keys.some(k => key && key.includes(k))) {
+                    localStorage.removeItem(key);
+                    removed++;
+                    console.log('Removed from localStorage:', key);
+                }
+            }
+            
+            // Clear sessionStorage
+            for (let i = sessionStorage.length - 1; i >= 0; i--) {
+                const key = sessionStorage.key(i);
+                if (keys.some(k => key && key.includes(k))) {
+                    sessionStorage.removeItem(key);
+                    removed++;
+                    console.log('Removed from sessionStorage:', key);
+                }
+            }
+            
+            document.getElementById('result').innerHTML = `<p style="color: green;">✅ Cache limpo! ${removed} itens removidos.</p>`;
+        }
+        
+        function clearAllCache() {
+            let removed = 0;
+            
+            // Clear all blog-related items from localStorage
+            for (let i = localStorage.length - 1; i >= 0; i--) {
+                const key = localStorage.key(i);
+                if (key && (key.includes('blog_') || key.includes('cache'))) {
+                    localStorage.removeItem(key);
+                    removed++;
+                    console.log('Removed from localStorage:', key);
+                }
+            }
+            
+            // Clear all blog-related items from sessionStorage
+            for (let i = sessionStorage.length - 1; i >= 0; i--) {
+                const key = sessionStorage.key(i);
+                if (key && (key.includes('blog_') || key.includes('cache'))) {
+                    sessionStorage.removeItem(key);
+                    removed++;
+                    console.log('Removed from sessionStorage:', key);
+                }
+            }
+            
+            document.getElementById('result').innerHTML = `<p style="color: green;">✅ Todo cache do blog limpo! ${removed} itens removidos.</p>`;
+        }
+        
+        // Auto-run on load
+        window.onload = function() {
+            clearCache();
+        }
+    </script>
+</body>
+</html>

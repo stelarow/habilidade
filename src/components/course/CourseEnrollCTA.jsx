@@ -90,7 +90,7 @@ function CourseEnrollCTA({ course, onEnrollClick }) {
               }}
               disabled={!deferredInteractive}
             >
-              <span>Solicitar Informações</span>
+              <span>Garantir Minha Vaga</span>
               {getIconForContext('ArrowRight', 'cta', '#ffffff', { 
                 className: 'group-hover:translate-x-1 transition-transform duration-300',
                 size: 18
