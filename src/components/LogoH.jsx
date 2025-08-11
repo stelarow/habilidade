@@ -20,6 +20,7 @@ function LogoH({
   animated = true,
   theme = 'default',
   showFullText = true,
+  textColor = 'text-white',
   className = '',
   ...props 
 }) {
@@ -34,7 +35,7 @@ function LogoH({
   `.trim();
 
   const textClasses = `
-    text-white font-semibold
+    ${textColor} font-semibold
     ${size === 'small' ? 'text-sm' : size === 'medium' ? 'text-base sm:text-lg' : 'text-lg sm:text-xl'}
   `.trim();
 

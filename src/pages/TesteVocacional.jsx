@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Helmet } from '@dr.pogodin/react-helmet';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import LogoH from '../components/LogoH';
@@ -349,195 +350,11 @@ const courses = [
   }
 ];
 
-// Componente Header baseado no header original do site
-const Header = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  return (
-    <>
-      {/* Skip Links */}
-      <a 
-        href="#main-content" 
-        className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-fuchsia-600 text-white px-4 py-2 rounded-md z-[60] transition-all"
-      >
-        Pular para o conteúdo principal
-      </a>
-      
-      <header className="fixed top-0 w-full bg-zinc-900/70 backdrop-blur-md z-50 border-b border-gray-800/50" role="banner">
-        <div className="mx-auto max-w-7xl px-4">
-          <div className="flex items-center justify-between h-16">
-            
-            {/* Logo */}
-            <div className="flex items-center gap-3">
-              <LogoH 
-                size="small"
-                animated={true}
-                showFullText={false}
-                className="h-10"
-              />
-              <div className="hidden lg:block">
-                <span className="block text-xs text-gray-400">
-                  Tecnologia que transforma carreiras
-                </span>
-              </div>
-            </div>
-
-            {/* Navegação Desktop */}
-            <nav className="hidden md:flex items-center gap-6">
-              <a 
-                href="/cursos/"
-                className="text-white hover:text-fuchsia-300 transition-colors focus:outline-none focus:ring-2 focus:ring-fuchsia-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-sm px-2 py-1"
-              >
-                Cursos
-              </a>
-              <a 
-                href="/#como-funciona"
-                className="text-white hover:text-fuchsia-300 transition-colors focus:outline-none focus:ring-2 focus:ring-fuchsia-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-sm px-2 py-1"
-              >
-                Como Funciona
-              </a>
-              <a 
-                href="/#avaliacoes"
-                className="text-white hover:text-fuchsia-300 transition-colors focus:outline-none focus:ring-2 focus:ring-fuchsia-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-sm px-2 py-1"
-              >
-                Avaliações
-              </a>
-              <a 
-                href="/#faq"
-                className="text-white hover:text-fuchsia-300 transition-colors focus:outline-none focus:ring-2 focus:ring-fuchsia-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-sm px-2 py-1"
-              >
-                FAQ
-              </a>
-              <a 
-                href="/#contato"
-                className="text-white hover:text-fuchsia-300 transition-colors focus:outline-none focus:ring-2 focus:ring-fuchsia-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-sm px-2 py-1"
-              >
-                Contato
-              </a>
-            </nav>
-
-            <div className="flex items-center gap-3">
-              {/* CTA Primário */}
-              <motion.a
-                href="https://wa.me/5548988559491?text=Olá! Gostaria de saber mais sobre os cursos da Escola Habilidade."
-                className="hidden md:inline-flex bg-gradient-to-r from-fuchsia-600 via-purple-600 to-blue-600 hover:from-fuchsia-700 hover:via-purple-700 hover:to-blue-700 text-white px-6 py-3 rounded-full font-medium transition-all duration-300 items-center gap-2"
-                whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(168, 85, 247, 0.4)" }}
-              >
-                <Phone size={16} />
-                Fale Conosco
-              </motion.a>
-
-              {/* Área do Aluno - Mobile Only */}
-              <a
-                href="https://ead.escolahabilidade.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="md:hidden w-10 h-10 rounded-full bg-gradient-to-r from-fuchsia-600 via-purple-600 to-blue-600 hover:from-fuchsia-700 hover:via-purple-700 hover:to-blue-700 flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-fuchsia-500/25 focus:outline-none focus:ring-2 focus:ring-fuchsia-400 focus:ring-offset-2 focus:ring-offset-gray-900"
-                title="Área do Aluno - Plataforma de Ensino"
-                aria-label="Acessar área do aluno"
-              >
-                <User size={16} weight="bold" className="text-white" />
-              </a>
-
-              {/* WhatsApp Premium */}
-              <motion.a
-                href="https://wa.me/5548988559491?text=Olá! Gostaria de saber mais sobre os cursos da Escola Habilidade."
-                className="w-10 h-10 bg-green-500 hover:bg-green-600 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-green-500/25 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2 focus:ring-offset-gray-900"
-                title="Falar no WhatsApp"
-                aria-label="Entrar em contato via WhatsApp"
-                whileHover={{ scale: 1.1 }}
-              >
-                <MessageCircle size={20} className="text-white" />
-              </motion.a>
-              
-              {/* Botão Mobile */}
-              <button
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                aria-label={mobileMenuOpen ? "Fechar menu" : "Abrir menu"}
-                aria-expanded={mobileMenuOpen}
-                className="md:hidden flex flex-col justify-center gap-[3px] p-2 transition focus:outline-none focus:ring-2 focus:ring-fuchsia-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-sm"
-              >
-                <span className={`w-6 h-0.5 bg-white transition-transform duration-300 ${mobileMenuOpen ? 'rotate-45 translate-y-2' : ''}`} />
-                <span className={`w-6 h-0.5 bg-white transition-opacity duration-300 ${mobileMenuOpen ? 'opacity-0' : ''}`} />
-                <span className={`w-6 h-0.5 bg-white transition-transform duration-300 ${mobileMenuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Menu Mobile */}
-        {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="md:hidden bg-zinc-900/95 border-t border-gray-800/50"
-          >
-            <nav className="px-4 py-4 space-y-3">
-              <a 
-                href="/cursos/"
-                className="block text-white hover:text-fuchsia-300 transition-colors py-2"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Cursos
-              </a>
-              <a 
-                href="/#como-funciona"
-                className="block text-white hover:text-fuchsia-300 transition-colors py-2"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Como Funciona
-              </a>
-              <a 
-                href="/#avaliacoes"
-                className="block text-white hover:text-fuchsia-300 transition-colors py-2"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Avaliações
-              </a>
-              <a 
-                href="/#faq"
-                className="block text-white hover:text-fuchsia-300 transition-colors py-2"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                FAQ
-              </a>
-              <a 
-                href="/#contato"
-                className="block text-white hover:text-fuchsia-300 transition-colors py-2"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Contato
-              </a>
-            </nav>
-          </motion.div>
-        )}
-      </header>
-
-      {/* Overlay para fechar menu ao clicar fora */}
-      {mobileMenuOpen && (
-        <div 
-          className="fixed inset-0 bg-transparent z-30 md:hidden"
-          onClick={() => setMobileMenuOpen(false)}
-        />
-      )}
-    </>
-  );
-};
 
 // Componente Hero
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 pt-16">
       {/* Fundo com partículas */}
       <div className="absolute inset-0">
         {[...Array(30)].map((_, i) => (
@@ -1146,6 +963,7 @@ Faça seu teste gratuito: https://escolahabilidade.com/teste-vocacional
             size="small"
             animated={true}
             showFullText={true}
+            textColor="text-gray-700"
             className="opacity-80"
           />
         </div>
@@ -1242,39 +1060,34 @@ const TesteVocacional = () => {
     setResults(null);
   };
 
-  useEffect(() => {
-    // SEO and meta tags
-    document.title = "Teste Vocacional Científico - Metodologia MIT, Harvard, Stanford | Escola Habilidade";
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute('content', 'Descubra seu curso ideal com nosso teste vocacional científico baseado em metodologias de MIT, Harvard e Stanford. Florianópolis, São José, Palhoça.');
-    } else {
-      const meta = document.createElement('meta');
-      meta.name = 'description';
-      meta.content = 'Descubra seu curso ideal com nosso teste vocacional científico baseado em metodologias de MIT, Harvard e Stanford. Florianópolis, São José, Palhoça.';
-      document.getElementsByTagName('head')[0].appendChild(meta);
-    }
-  }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <style jsx global>{`
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
-        
-        body {
-          font-family: 'Montserrat', sans-serif;
-        }
-        
-        html {
-          scroll-behavior: smooth;
-        }
-      `}</style>
+    <>
+      <Helmet>
+        <title>Teste Vocacional Científico - Metodologia MIT, Harvard, Stanford | Escola Habilidade</title>
+        <meta 
+          name="description" 
+          content="Descubra seu curso ideal com nosso teste vocacional científico baseado em metodologias de MIT, Harvard e Stanford. Florianópolis, São José, Palhoça." 
+        />
+        <style>
+          {`
+            @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+            
+            body {
+              font-family: 'Montserrat', sans-serif;
+            }
+            
+            html {
+              scroll-behavior: smooth;
+            }
+          `}
+        </style>
+      </Helmet>
 
-      <Header />
+      <div className="min-h-screen bg-gray-50">
+        {currentStep === 'intro' && <Hero />}
 
-      {currentStep === 'intro' && <Hero />}
-
-      <main className="pt-20" id="main-content">
+        <main className={currentStep === 'intro' ? 'pt-0' : 'pt-20'}>
         {currentStep === 'intro' && (
           <section id="teste" className="py-20 bg-white">
             <div className="container mx-auto px-4">
@@ -1539,7 +1352,8 @@ const TesteVocacional = () => {
           ]
         })
       }} />
-    </div>
+      </div>
+    </>
   );
 };
 
