@@ -56,7 +56,7 @@ export function generateCourseMetadata(courseData) {
   const safeCourse = validateAndSanitizeCourse(courseData);
   
   // URL base do site
-  const baseUrl = 'https://stelarow.github.io/habilidade';
+  const baseUrl = 'https://www.escolahabilidade.com';
   const courseUrl = `${baseUrl}/cursos/${safeCourse.basicInfo.slug}`;
   
   // Valores padrão para dados ausentes
@@ -141,11 +141,10 @@ export function generateCourseMetadata(courseData) {
       'teaches': teaches,
       'timeRequired': safeCourse.basicInfo.duration,
       'hasPart': safeCourse.curriculum?.map(module => ({
-        '@type': 'CourseInstance',
+        '@type': 'LearningResource',
         'name': `Módulo ${module.title}`,
         'description': module.description,
         'courseWorkload': `PT${module.duration.replace(' horas', 'H')}`,
-        'numberOfCredits': module.lessons?.length || 0,
         'educationalLevel': safeCourse.basicInfo.level,
         'learningResourceType': 'Module'
       })) || [],
