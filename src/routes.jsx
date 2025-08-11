@@ -69,10 +69,42 @@ export const routes = [
         index: true,
         lazy: () => import('./pages/Home')
       },
+      // Rotas estáticas individuais para garantir SSG
       {
-        path: 'cursos/:courseSlug',
-        lazy: () => import('./pages/CoursePage')
-        // getStaticPaths está definido no componente CoursePage
+        path: 'cursos/informatica',
+        lazy: () => import('./pages/courses/Informatica')
+      },
+      {
+        path: 'cursos/design-grafico',
+        lazy: () => import('./pages/courses/DesignGrafico')
+      },
+      {
+        path: 'cursos/programacao',
+        lazy: () => import('./pages/courses/Programacao')
+      },
+      {
+        path: 'cursos/marketing-digital',
+        lazy: () => import('./pages/courses/MarketingDigital')
+      },
+      {
+        path: 'cursos/inteligencia-artificial',
+        lazy: () => import('./pages/courses/InteligenciaArtificial')
+      },
+      {
+        path: 'cursos/business-intelligence',
+        lazy: () => import('./pages/courses/BusinessIntelligence')
+      },
+      {
+        path: 'cursos/projetista-3d',
+        lazy: () => import('./pages/courses/Projetista3D')
+      },
+      {
+        path: 'cursos/edicao-video',
+        lazy: () => import('./pages/courses/EdicaoVideo')
+      },
+      {
+        path: 'cursos/administracao',
+        lazy: () => import('./pages/courses/Administracao')
       },
       {
         path: 'contato',
