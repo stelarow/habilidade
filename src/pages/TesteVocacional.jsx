@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import LogoH from '../components/LogoH';
 import { 
   Brain,
   Code,
@@ -377,10 +378,11 @@ const Header = () => {
             
             {/* Logo */}
             <div className="flex items-center gap-3">
-              <img 
-                src="https://escolahabilidade.com/wp-content/uploads/2024/06/Design-sem-nome-7.png" 
-                alt="Escola Habilidade" 
-                className="h-10 w-auto"
+              <LogoH 
+                size="small"
+                animated={true}
+                showFullText={false}
+                className="h-10"
               />
               <div className="hidden lg:block">
                 <span className="block text-xs text-gray-400">
@@ -392,37 +394,31 @@ const Header = () => {
             {/* Navegação Desktop */}
             <nav className="hidden md:flex items-center gap-6">
               <a 
-                href="https://escolahabilidade.com/cursos/"
+                href="/cursos/"
                 className="text-white hover:text-fuchsia-300 transition-colors focus:outline-none focus:ring-2 focus:ring-fuchsia-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-sm px-2 py-1"
               >
                 Cursos
               </a>
               <a 
-                href="https://escolahabilidade.com/#como-funciona"
+                href="/#como-funciona"
                 className="text-white hover:text-fuchsia-300 transition-colors focus:outline-none focus:ring-2 focus:ring-fuchsia-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-sm px-2 py-1"
               >
                 Como Funciona
               </a>
               <a 
-                href="https://escolahabilidade.com/#avaliacoes"
+                href="/#avaliacoes"
                 className="text-white hover:text-fuchsia-300 transition-colors focus:outline-none focus:ring-2 focus:ring-fuchsia-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-sm px-2 py-1"
               >
                 Avaliações
               </a>
               <a 
-                href="https://escolahabilidade.com/#faq"
+                href="/#faq"
                 className="text-white hover:text-fuchsia-300 transition-colors focus:outline-none focus:ring-2 focus:ring-fuchsia-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-sm px-2 py-1"
               >
                 FAQ
               </a>
               <a 
-                href="https://escolahabilidade.com/#sobre"
-                className="text-white hover:text-fuchsia-300 transition-colors focus:outline-none focus:ring-2 focus:ring-fuchsia-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-sm px-2 py-1"
-              >
-                Sobre
-              </a>
-              <a 
-                href="https://escolahabilidade.com/#contato"
+                href="/#contato"
                 className="text-white hover:text-fuchsia-300 transition-colors focus:outline-none focus:ring-2 focus:ring-fuchsia-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-sm px-2 py-1"
               >
                 Contato
@@ -488,42 +484,35 @@ const Header = () => {
           >
             <nav className="px-4 py-4 space-y-3">
               <a 
-                href="https://escolahabilidade.com/cursos/"
+                href="/cursos/"
                 className="block text-white hover:text-fuchsia-300 transition-colors py-2"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Cursos
               </a>
               <a 
-                href="https://escolahabilidade.com/#como-funciona"
+                href="/#como-funciona"
                 className="block text-white hover:text-fuchsia-300 transition-colors py-2"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Como Funciona
               </a>
               <a 
-                href="https://escolahabilidade.com/#avaliacoes"
+                href="/#avaliacoes"
                 className="block text-white hover:text-fuchsia-300 transition-colors py-2"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Avaliações
               </a>
               <a 
-                href="https://escolahabilidade.com/#faq"
+                href="/#faq"
                 className="block text-white hover:text-fuchsia-300 transition-colors py-2"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 FAQ
               </a>
               <a 
-                href="https://escolahabilidade.com/#sobre"
-                className="block text-white hover:text-fuchsia-300 transition-colors py-2"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Sobre
-              </a>
-              <a 
-                href="https://escolahabilidade.com/#contato"
+                href="/#contato"
                 className="block text-white hover:text-fuchsia-300 transition-colors py-2"
                 onClick={() => setMobileMenuOpen(false)}
               >
@@ -1153,12 +1142,12 @@ Faça seu teste gratuito: https://escolahabilidade.com/teste-vocacional
       {/* Footer para PDF - Informações de contato */}
       <div className="bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl p-6 mt-8 text-center">
         <div className="flex items-center justify-center gap-2 mb-3">
-          <img 
-            src="https://escolahabilidade.com/wp-content/uploads/2024/06/Design-sem-nome-7.png" 
-            alt="Escola Habilidade" 
-            className="h-8 w-auto opacity-80"
+          <LogoH 
+            size="small"
+            animated={true}
+            showFullText={true}
+            className="opacity-80"
           />
-          <span className="text-[#d400ff] font-bold text-lg">Escola Habilidade</span>
         </div>
         <p className="text-gray-600 text-sm mb-2">
           Transformando carreiras através da tecnologia • Grande Florianópolis
@@ -1370,10 +1359,11 @@ const TesteVocacional = () => {
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-3 gap-8">
             <div>
-              <img 
-                src="https://escolahabilidade.com/wp-content/uploads/2024/06/Design-sem-nome-7.png" 
-                alt="Escola Habilidade" 
-                className="h-12 w-auto mb-4 opacity-80"
+              <LogoH 
+                size="medium"
+                animated={true}
+                showFullText={true}
+                className="mb-4 opacity-80"
               />
               <p className="text-gray-400 mb-4">
                 Cursos de tecnologia na Grande Florianópolis. 
