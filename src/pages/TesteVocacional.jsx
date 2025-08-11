@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 import { 
   Brain,
   Code,
@@ -548,8 +550,7 @@ const Hero = () => {
           </h1>
           
           <p className="text-xl md:text-2xl text-gray-200 mb-8 max-w-4xl mx-auto">
-            <strong className="text-[#d400ff]">Metodologia baseada em MIT, Harvard e Stanford:</strong> Responda 8 perguntas científicas e descubra qual curso da Escola Habilidade 
-            combina perfeitamente com seu perfil em <span className="text-[#d400ff] font-semibold">Florianópolis, São José ou Palhoça</span>
+            Em apenas 8 perguntas científicas, descubra o curso da Escola Habilidade que mais combina com você. <strong className="text-[#d400ff]">Metodologia inspirada no MIT, Harvard e Stanford</strong> — disponível para toda a <span className="text-[#d400ff] font-semibold">Grande Florianópolis</span>.
           </p>
 
           <div className="flex flex-wrap justify-center gap-6 text-gray-300 mb-8">
@@ -774,6 +775,8 @@ const VocationalTest = ({ onComplete }) => {
 // Componente Results Dashboard
 const ResultsDashboard = ({ results, onRestart }) => {
   const [showCourses, setShowCourses] = useState(false);
+  const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
+  const resultsRef = useRef(null);
 
   // Preparar dados para o gráfico radar
   const radarData = [
@@ -810,6 +813,125 @@ const ResultsDashboard = ({ results, onRestart }) => {
     return messages[area] || "Você tem um perfil único e diversificado!";
   };
 
+  // Função para gerar PDF do resultado
+  const generatePDF = async () => {
+    if (!resultsRef.current) return;
+    
+    setIsGeneratingPDF(true);
+    
+    try {
+      // Capturar a área dos resultados
+      const canvas = await html2canvas(resultsRef.current, {
+        height: resultsRef.current.scrollHeight,
+        width: resultsRef.current.scrollWidth,
+        scale: 2,
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: '#f9fafb'
+      });
+      
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      
+      // Calcular dimensões para o PDF
+      const pageWidth = pdf.internal.pageSize.getWidth();
+      const pageHeight = pdf.internal.pageSize.getHeight();
+      const imgWidth = pageWidth;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      
+      // Adicionar título
+      pdf.setFontSize(20);
+      pdf.setTextColor(212, 0, 255);
+      pdf.text('Resultado do Teste Vocacional', pageWidth / 2, 20, { align: 'center' });
+      
+      pdf.setFontSize(12);
+      pdf.setTextColor(100, 100, 100);
+      pdf.text('Escola Habilidade - Metodologia MIT, Harvard e Stanford', pageWidth / 2, 30, { align: 'center' });
+      
+      // Adicionar imagem dos resultados
+      if (imgHeight > pageHeight - 40) {
+        // Se a imagem for maior que uma página, redimensionar
+        const scaledHeight = pageHeight - 40;
+        const scaledWidth = (canvas.width * scaledHeight) / canvas.height;
+        pdf.addImage(imgData, 'PNG', (pageWidth - scaledWidth) / 2, 35, scaledWidth, scaledHeight);
+      } else {
+        pdf.addImage(imgData, 'PNG', 0, 35, imgWidth, imgHeight);
+      }
+      
+      // Adicionar informações de contato no rodapé
+      pdf.setFontSize(10);
+      pdf.setTextColor(100, 100, 100);
+      pdf.text('Escola Habilidade - (48) 98855-9491', pageWidth / 2, pageHeight - 20, { align: 'center' });
+      pdf.text('Florianópolis • São José • Palhoça - SC', pageWidth / 2, pageHeight - 15, { align: 'center' });
+      pdf.text('www.escolahabilidade.com', pageWidth / 2, pageHeight - 10, { align: 'center' });
+      
+      // Salvar o PDF
+      const hoje = new Date().toLocaleDateString('pt-BR').replace(/\//g, '-');
+      pdf.save(`Teste-Vocacional-Escola-Habilidade-${hoje}.pdf`);
+      
+    } catch (error) {
+      console.error('Erro ao gerar PDF:', error);
+      alert('Erro ao gerar PDF. Tente novamente.');
+    } finally {
+      setIsGeneratingPDF(false);
+    }
+  };
+
+  // Função para compartilhar resultados
+  const shareResults = async () => {
+    const areaName = dominantArea.area === 'gestao' ? 'Gestão' : 
+                    dominantArea.area === 'educacao' ? 'Educação' : 
+                    dominantArea.area === 'comunicacao' ? 'Comunicação' :
+                    dominantArea.area === 'logica' ? 'Lógica' : dominantArea.area;
+    
+    const shareText = `🎯 Descobri meu perfil vocacional na Escola Habilidade!
+    
+📊 Meu perfil dominante: ${areaName} (${dominantArea.score}%)
+${getPersonalizedMessage(dominantArea.area)}
+
+✅ Resultado baseado em metodologia científica de MIT, Harvard e Stanford
+📍 Cursos presenciais em Florianópolis, São José e Palhoça
+
+Faça seu teste gratuito: https://escolahabilidade.com/teste-vocacional
+#TesteVocacional #EscolaHabilidade #Florianópolis`;
+
+    if (navigator.share) {
+      // API Web Share (móvel)
+      try {
+        await navigator.share({
+          title: 'Meu Resultado do Teste Vocacional - Escola Habilidade',
+          text: shareText,
+          url: 'https://escolahabilidade.com/teste-vocacional'
+        });
+      } catch (error) {
+        if (error.name !== 'AbortError') {
+          fallbackShare(shareText);
+        }
+      }
+    } else {
+      fallbackShare(shareText);
+    }
+  };
+
+  // Função alternativa de compartilhamento
+  const fallbackShare = (text) => {
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text).then(() => {
+        alert('Texto copiado! Cole em suas redes sociais para compartilhar 📋');
+      }).catch(() => {
+        openWhatsAppShare(text);
+      });
+    } else {
+      openWhatsAppShare(text);
+    }
+  };
+
+  // Abrir WhatsApp com texto pré-preenchido
+  const openWhatsAppShare = (text) => {
+    const encodedText = encodeURIComponent(text);
+    window.open(`https://wa.me/?text=${encodedText}`, '_blank');
+  };
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowCourses(true);
@@ -819,6 +941,7 @@ const ResultsDashboard = ({ results, onRestart }) => {
 
   return (
     <motion.div
+      ref={resultsRef}
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
@@ -1023,19 +1146,35 @@ const ResultsDashboard = ({ results, onRestart }) => {
           </motion.button>
         </div>
 
-        <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-600">
-          <span className="flex items-center gap-1">
+        <div className="flex flex-wrap justify-center gap-4 text-sm">
+          <motion.button
+            onClick={generatePDF}
+            disabled={isGeneratingPDF}
+            className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-full hover:bg-red-700 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+            whileHover={{ scale: isGeneratingPDF ? 1 : 1.05 }}
+            whileTap={{ scale: isGeneratingPDF ? 1 : 0.95 }}
+          >
             <Download size={14} />
-            Resultado em PDF
-          </span>
-          <span className="flex items-center gap-1">
+            {isGeneratingPDF ? 'Gerando PDF...' : 'Resultado em PDF'}
+          </motion.button>
+          
+          <motion.button
+            onClick={shareResults}
+            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-all duration-300"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
             <Share2 size={14} />
             Compartilhar
-          </span>
-          <span className="flex items-center gap-1">
+          </motion.button>
+          
+          <a
+            href="tel:+5548988559491"
+            className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-full hover:bg-green-700 transition-all duration-300"
+          >
             <Phone size={14} />
             (48) 98855-9491
-          </span>
+          </a>
         </div>
       </div>
     </motion.div>
@@ -1196,15 +1335,78 @@ const TesteVocacional = () => {
             <div>
               <h3 className="text-lg font-bold mb-4">Nossos Cursos</h3>
               <ul className="space-y-2 text-gray-400">
-                <li>Informática Completa</li>
-                <li>Design Gráfico</li>
-                <li>Programação Full-Stack</li>
-                <li>Marketing Digital</li>
-                <li>Inteligência Artificial</li>
-                <li>Business Intelligence</li>
-                <li>Projetista 3D Completo</li>
-                <li>Edição de Vídeo</li>
-                <li>Administração</li>
+                <li>
+                  <a 
+                    href="https://escolahabilidade.com/cursos/informatica/" 
+                    className="hover:text-white transition-colors duration-300 hover:underline"
+                  >
+                    Informática Completa
+                  </a>
+                </li>
+                <li>
+                  <a 
+                    href="https://escolahabilidade.com/cursos/design-grafico/" 
+                    className="hover:text-white transition-colors duration-300 hover:underline"
+                  >
+                    Design Gráfico
+                  </a>
+                </li>
+                <li>
+                  <a 
+                    href="https://escolahabilidade.com/cursos/programacao/" 
+                    className="hover:text-white transition-colors duration-300 hover:underline"
+                  >
+                    Programação Full-Stack
+                  </a>
+                </li>
+                <li>
+                  <a 
+                    href="https://escolahabilidade.com/cursos/marketing-digital/" 
+                    className="hover:text-white transition-colors duration-300 hover:underline"
+                  >
+                    Marketing Digital
+                  </a>
+                </li>
+                <li>
+                  <a 
+                    href="https://escolahabilidade.com/cursos/inteligencia-artificial/" 
+                    className="hover:text-white transition-colors duration-300 hover:underline"
+                  >
+                    Inteligência Artificial
+                  </a>
+                </li>
+                <li>
+                  <a 
+                    href="https://escolahabilidade.com/cursos/business-intelligence/" 
+                    className="hover:text-white transition-colors duration-300 hover:underline"
+                  >
+                    Business Intelligence
+                  </a>
+                </li>
+                <li>
+                  <a 
+                    href="https://escolahabilidade.com/cursos/projetista-3d/" 
+                    className="hover:text-white transition-colors duration-300 hover:underline"
+                  >
+                    Projetista 3D Completo
+                  </a>
+                </li>
+                <li>
+                  <a 
+                    href="https://escolahabilidade.com/cursos/edicao-video/" 
+                    className="hover:text-white transition-colors duration-300 hover:underline"
+                  >
+                    Edição de Vídeo
+                  </a>
+                </li>
+                <li>
+                  <a 
+                    href="https://escolahabilidade.com/cursos/administracao/" 
+                    className="hover:text-white transition-colors duration-300 hover:underline"
+                  >
+                    Administração
+                  </a>
+                </li>
               </ul>
             </div>
             
