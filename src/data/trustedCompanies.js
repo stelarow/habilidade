@@ -66,6 +66,16 @@ export const trustedCompaniesData = {
       name: "Pedra Granada",
       logo: "/images/course/sketchup-enscape/kI8JxlGaNQo0Ecg5B1uEP.jpeg",
       description: "Marmoraria"
+    },
+    {
+      name: "Brasil Mármore",
+      logo: "/images/course/sketchup-enscape/brasil_marmore.jpg",
+      description: "Marmoraria e Granitos"
+    },
+    {
+      name: "Santa Madeira Casas",
+      logo: "/images/course/sketchup-enscape/SANTA MADEIRA CASAS.webp",
+      description: "Casas de Madeira"
     }
   ],
 
