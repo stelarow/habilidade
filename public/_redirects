@@ -5,7 +5,5 @@ https://escolahabilidade.com.br/* https://www.escolahabilidade.com/:splat 301!
 # Page redirects  
 /cursos /#cursos 301
 
-# SPA fallback for course pages (temporary fix for SSG issue)
-/cursos/*  /index.html  200
-
-# Note: This is a workaround while vite-react-ssg doesn't generate course pages correctly
+# Note: SPA fallback removed for SSG compatibility
+# Each page now has its own static HTML file
