@@ -43,8 +43,8 @@ const Contact = () => {
                     <div>
                       <h3 className="text-white font-semibold mb-1">Endereço</h3>
                       <p className="text-gray-300">
-                        Rua Koesa, 113 - Kobrasol<br />
-                        São José, SC - CEP: 88102-310
+                        Rua Caetano José Ferreira, 426 - Sala 5 - Kobrasol<br />
+                        São José, SC - CEP: 88102-280
                       </p>
                     </div>
                   </div>

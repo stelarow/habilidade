@@ -127,7 +127,7 @@ function BlogPost() {
         <script type="application/ld+json" dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             '@context': 'https://schema.org',
-            '@type': 'Article',
+            '@type': 'BlogPosting',
             headline: post.title,
             description: seoDescription,
             url: seoUrl,
