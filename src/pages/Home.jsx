@@ -3,6 +3,7 @@ import Hero from '../components/Hero';
 import Courses from '../components/Courses';
 import HowItWorksSimple from '../components/HowItWorksSimple';
 import Reviews from '../components/Reviews';
+import TrustedCompanies from '../components/TrustedCompanies';
 import LatestBlogSection from '../components/LatestBlogSection';
 import ContactForm from '../components/ContactForm';
 import FAQ from '../components/FAQ';
@@ -22,6 +23,7 @@ function Home() {
       <Courses />
       <HowItWorksSimple />
       <Reviews />
+      <TrustedCompanies variant="home" />
       <LatestBlogSection />
       <ContactForm />
       <FAQ />
