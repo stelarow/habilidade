@@ -10,18 +10,9 @@ const TrustedCompanies = ({
   theme = 'light',
   className = ''
 }) => {
-  // Determinar quais empresas mostrar baseado no contexto
+  // Sempre mostrar todas as empresas, independente da categoria da página
   const getCompanies = () => {
-    if (courseSlug && courseToCompanyMapping[courseSlug]) {
-      return getCompaniesByCategory(courseToCompanyMapping[courseSlug]);
-    }
-    
-    if (variant === 'course') {
-      return getCompaniesByCategory(['design']); // fallback para design se for página de curso
-    }
-    
-    // Para home, mostrar um mix de todas as categorias
-    return getCompaniesByCategory();
+    return getCompaniesByCategory(); // Retorna todas as empresas sem filtro
   };
 
   const companies = getCompanies();

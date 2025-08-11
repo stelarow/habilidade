@@ -25,6 +25,7 @@ import CourseTestimonials from '../components/course/CourseTestimonials';
 import CourseWhyStudy from '../components/course/CourseWhyStudy';
 import CourseJourney from '../components/course/CourseJourney';
 import CourseEnrollCTA from '../components/course/CourseEnrollCTA';
+import TrustedCompanies from '../components/TrustedCompanies';
 import CourseToolNavigation from '../components/course/CourseToolNavigation';
 import CourseToolSection from '../components/course/CourseToolSection';
 import CourseWorkflowSection from '../components/course/CourseWorkflowSection';
@@ -314,6 +315,13 @@ function CoursePage({ slug }) {
 
         {/* 8. CTA Matricule-se - POSIÇÃO ESTRATÉGICA APÓS CONTEÚDO */}
         <CourseEnrollCTA course={course} onEnrollClick={handleEnrollClick} />
+
+        {/* 9. Empresas que Confiam - CREDIBILIDADE SOCIAL */}
+        <TrustedCompanies 
+          variant="course" 
+          courseSlug={course.basicInfo.slug}
+          theme="dark" 
+        />
 
         {/* Main Content */}
         <div className="max-w-7xl mx-auto px-4 pb-16">

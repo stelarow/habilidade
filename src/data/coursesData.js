@@ -2884,7 +2884,7 @@ const projetista = {
     {
       id: 1,
       question: 'Quanto tempo leva para dominar todas as ferramentas do projetista?',
-      answer: 'No nosso curso presencial de 94 horas, você aprende SketchUp, AutoCAD, Revit e Enscape desde o básico até projetos profissionais em 3 meses. Workflow completo: do esboço 2D ao render fotorrealístico profissional.'
+      answer: 'No nosso curso presencial de 94 horas, você aprende SketchUp, AutoCAD, Revit e Enscape desde o básico até projetos profissionais. Workflow completo: do esboço 2D ao render fotorrealístico profissional.'
     },
     {
       id: 2,
