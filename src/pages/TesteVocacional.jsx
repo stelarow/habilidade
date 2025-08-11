@@ -1123,6 +1123,17 @@ const TesteVocacional = () => {
     // Track início do teste
     analytics.trackTestStart();
     analytics.measureTestDuration.start();
+    
+    // Scroll automático para o início do teste
+    setTimeout(() => {
+      const testSection = document.getElementById('teste-section');
+      if (testSection) {
+        testSection.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'start'
+        });
+      }
+    }, 100); // Pequeno delay para garantir que o componente foi renderizado
   };
 
   const handleTestComplete = (testResults) => {
@@ -1228,7 +1239,7 @@ const TesteVocacional = () => {
         )}
 
         {currentStep === 'test' && (
-          <section className="py-20 bg-gray-50">
+          <section id="teste-section" className="py-20 bg-gray-50">
             <div className="container mx-auto px-4">
               <VocationalTest onComplete={handleTestComplete} />
             </div>
