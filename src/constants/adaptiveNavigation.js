@@ -20,5 +20,11 @@ export const ADAPTIVE_NAVIGATION = {
     { label: 'Tecnologia', href: '/blog/categoria/tecnologia', icon: 'Code', description: 'Artigos de tecnologia', external: true },
     { label: 'Carreira', href: '/blog/categoria/carreira', icon: 'Briefcase', description: 'Dicas de carreira', external: true },
     { label: 'Contato', href: '/#contato', icon: 'Phone', description: 'Fale conosco', external: true }
+  ],
+  testeVocacional: [
+    { label: 'Como Funciona', href: '/#como-funciona', icon: 'Play', description: 'Veja nossa metodologia', external: true },
+    { label: 'Avaliações', href: '/#avaliacoes', icon: 'Star', description: 'Depoimentos dos alunos', external: true },
+    { label: 'FAQ', href: '/#faq', icon: 'Question', description: 'Dúvidas frequentes', external: true },
+    { label: 'Contato', href: '/#contato', icon: 'Phone', description: 'Fale conosco', external: true }
   ]
 }; 

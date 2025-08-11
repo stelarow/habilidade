@@ -29,6 +29,8 @@ export const usePageContext = () => {
       newContext.currentCourse = courseSlug;
     } else if (currentPath.startsWith('/blog')) {
       newContext.pageType = 'blogPage';
+    } else if (currentPath === '/teste-vocacional') {
+      newContext.pageType = 'testeVocacional';
     } else {
       newContext.pageType = 'other';
     }
