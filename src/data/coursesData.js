@@ -804,7 +804,7 @@ const programacao = {
     longDescription: 'Curso completo de programação full-stack. Aprenda Lógica, Python, Java, PHP, desenvolvimento Android e o revolucionário Cursor com IA. 6 módulos completos do zero ao primeiro emprego como programador.',
     category: 'Tecnologia',
     level: 'Iniciante',
-    duration: '118 horas',
+    duration: '133 horas',
     certificate: true,
     active: true,
   },
@@ -959,10 +959,20 @@ const programacao = {
     {
       id: 6,
       title: 'Cursor (IDE com IA integrada)',
-      description: 'Conteúdo programático não encontrado no site Ouro Moderno',
-      duration: '0 horas',
-      note: 'Módulo em desenvolvimento - Conteúdo programático será disponibilizado em breve',
-      lessons: [],
+      description: 'Desenvolvimento assistido por Inteligência Artificial com Cursor IDE',
+      duration: '15 horas',
+      lessons: [
+        { id: 83, title: 'Introdução ao Cursor IDE', duration: '90 min', type: 'video' },
+        { id: 84, title: 'Configuração e Primeiros Passos', duration: '90 min', type: 'video' },
+        { id: 85, title: 'IA Assistant para Programação', duration: '90 min', type: 'video' },
+        { id: 86, title: 'Geração Automática de Código', duration: '90 min', type: 'video' },
+        { id: 87, title: 'Debugging com IA', duration: '90 min', type: 'video' },
+        { id: 88, title: 'Refatoração Inteligente', duration: '90 min', type: 'video' },
+        { id: 89, title: 'Documentação Automatizada', duration: '90 min', type: 'video' },
+        { id: 90, title: 'Testes Unitários com IA', duration: '90 min', type: 'video' },
+        { id: 91, title: 'Otimização de Performance com IA', duration: '90 min', type: 'video' },
+        { id: 92, title: 'Projeto Final: App Completo com Cursor', duration: '90 min', type: 'project' },
+      ],
     }
   ],
 
