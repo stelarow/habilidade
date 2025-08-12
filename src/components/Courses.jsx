@@ -11,6 +11,7 @@ import {
   Robot,
   ChartBar,
   Briefcase,
+  Brain,
 } from '@phosphor-icons/react';
 import useInView from '../hooks/useInView';
 
@@ -119,6 +120,37 @@ function CourseCard({ title, slug, icon: Icon, desc, textColor, borderGradient, 
   );
 }
 
+function VocationalTestCard() {
+  const [ref, visible] = useInView();
+  return (
+    <a
+      ref={ref}
+      href="/teste-vocacional"
+      className={`card-enter ${visible ? 'in-view' : ''} relative clip-card w-full h-[140px] p-[3px] bg-gradient-to-r from-purple-500/60 to-pink-500/60 transition-transform duration-200 hover:-translate-y-2 hover:scale-[1.03] hover:shadow-[0_0_30px_#a855f7aa] focus-visible:ring-2 ring-purple-500 focus:outline-none block`}
+    >
+      <div className="clip-card w-full h-full flex flex-col justify-center items-center gap-3 px-6 bg-[radial-gradient(ellipse_at_50%_50%,#1e1b2e_0%,#0a0a0a_100%)] hover:bg-[radial-gradient(ellipse_at_50%_50%,#2d1b38_0%,#0a0a0a_100%)] transition">
+        <div className="flex items-center gap-3">
+          <Brain size={28} weight="duotone" className="text-purple-400 flex-shrink-0" />
+          <div className="text-center">
+            <h3 className="font-bold text-lg text-purple-400 leading-tight">
+              Descubra Seu Curso
+            </h3>
+            <p className="text-xs text-purple-200 opacity-90">
+              Teste Científico Gratuito
+            </p>
+          </div>
+        </div>
+        
+        <div className="bg-purple-500/20 px-4 py-1 rounded-full">
+          <span className="text-xs text-purple-300 font-medium">
+            ✨ Apenas 5 minutos
+          </span>
+        </div>
+      </div>
+    </a>
+  );
+}
+
 function Courses() {
   return (
     <Section id="cursos" className="px-4 py-8 bg-zinc-950 text-white items-start justify-start min-h-0">
@@ -128,7 +160,13 @@ function Courses() {
         <h2 className="text-center text-3xl sm:text-5xl font-bold mb-12">Nossos Cursos</h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 justify-items-center max-w-6xl mx-auto">
-          {COURSES.map((c) => (
+          {COURSES.slice(0, 4).map((c) => (
+            <CourseCard key={c.title} {...c} />
+          ))}
+          
+          <VocationalTestCard />
+          
+          {COURSES.slice(4).map((c) => (
             <CourseCard key={c.title} {...c} />
           ))}
         </div>
