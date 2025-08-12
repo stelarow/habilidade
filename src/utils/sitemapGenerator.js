@@ -139,28 +139,72 @@ const generateSitemapEntry = ({ url, priority, changefreq, lastmod }) => {
   </url>`;
 };
 
+// Static blog slugs (matches routes.jsx blogSlugs array for SSG compatibility)
+const BLOG_SLUGS = [
+  'guia-completo-21-estilos-decoracao-transformar-casa',
+  'por-que-enscape-essencial-visualizacao-arquitetonica',
+  'o-que-e-sketchup-guia-completo-modelagem-3d-2025',
+  'historia-sketchup-software-arquitetura',
+  'design-espacos-varejo-sketchup-pro',
+  'sketchup-arquitetura-paisagistica',
+  'tipos-puxadores-moveis',
+  'sketchup-workflows-avancados-arquitetura-paisagistica',
+  'como-usar-sketchup-para-design-conceitual-arquitetonico',
+  'dominando-shape-bender-curvando-geometrias-sketchup',
+  'como-construir-seu-primeiro-agente-ia-n8n',
+  'cinco-maneiras-maximizar-vistas-magnificas-casas-personalizadas',
+  '10-dicas-especialistas-renderizacoes-enscape-destaque',
+  'como-apresentar-projetos-design-interior-sketchup',
+  'acelerando-workflow-grey-boxing-sketchup',
+  '10-extensoes-sketchup-arquitetos',
+  'editor-materiais-sketchup-realismo-enscape',
+  'guia-completo-enscape-sketchup-iniciantes',
+  'guia-completo-enscape-sketchup',
+  'sketchup-2025-visualizacao-3d-materiais-fotorrealistas',
+  '5-razoes-organizacoes-investir-treinamento-excel',
+  'transforme-dados-em-decisoes-estrategicas-dashboards-empresariais'
+];
+
 /**
  * Fetch all published blog posts for sitemap
+ * Falls back to static slugs during build time for SSG compatibility
  */
 const fetchBlogPosts = async () => {
   try {
     const api = await loadBlogAPI();
-    if (!api) return [];
+    if (!api) {
+      console.log('Using static blog slugs for SSG build');
+      return getBlogPostsFromStaticSlugs();
+    }
     
-    // Fetch all posts (large limit to get everything)
+    // Try to fetch from API first
     const response = await api.getAllPosts(1, 1000);
     
-    if (response?.posts) {
+    if (response?.posts && response.posts.length > 0) {
       return response.posts.filter(post => 
         post.publishedAt && post.slug
       );
     }
     
-    return [];
+    // Fallback to static slugs
+    console.log('API returned no posts, using static blog slugs');
+    return getBlogPostsFromStaticSlugs();
+    
   } catch (error) {
-    console.warn('Failed to fetch blog posts for sitemap:', error);
-    return [];
+    console.warn('Failed to fetch blog posts from API, using static slugs:', error);
+    return getBlogPostsFromStaticSlugs();
   }
+};
+
+/**
+ * Generate blog post objects from static slugs
+ */
+const getBlogPostsFromStaticSlugs = () => {
+  return BLOG_SLUGS.map(slug => ({
+    slug,
+    publishedAt: new Date().toISOString(),
+    createdAt: new Date().toISOString()
+  }));
 };
 
 /**
