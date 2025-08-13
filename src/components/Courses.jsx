@@ -126,25 +126,25 @@ function VocationalTestCard() {
     <a
       ref={ref}
       href="/teste-vocacional"
-      className={`card-enter ${visible ? 'in-view' : ''} relative clip-card w-full h-[120px] p-[3px] bg-gradient-to-r from-purple-500/60 to-pink-500/60 transition-transform duration-200 hover:-translate-y-2 hover:scale-[1.02] hover:shadow-[0_0_30px_#a855f7aa] focus-visible:ring-2 ring-purple-500 focus:outline-none block`}
+      className={`card-enter ${visible ? 'in-view' : ''} relative clip-card w-full h-auto min-h-[120px] p-[3px] bg-gradient-to-r from-purple-500/60 to-pink-500/60 transition-transform duration-200 hover:-translate-y-2 hover:scale-[1.02] hover:shadow-[0_0_30px_#a855f7aa] focus-visible:ring-2 ring-purple-500 focus:outline-none block`}
     >
-      <div className="clip-card w-full h-full flex items-center justify-center gap-8 px-8 bg-[radial-gradient(ellipse_at_50%_50%,#1e1b2e_0%,#0a0a0a_100%)] hover:bg-[radial-gradient(ellipse_at_50%_50%,#2d1b38_0%,#0a0a0a_100%)] transition">
-        <div className="flex items-center gap-4">
+      <div className="clip-card w-full h-full flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 px-4 md:px-8 py-6 md:py-0 bg-[radial-gradient(ellipse_at_50%_50%,#1e1b2e_0%,#0a0a0a_100%)] hover:bg-[radial-gradient(ellipse_at_50%_50%,#2d1b38_0%,#0a0a0a_100%)] transition">
+        <div className="flex flex-col md:flex-row items-center gap-3 md:gap-4 text-center md:text-left">
           <Brain size={32} weight="duotone" className="text-purple-400 flex-shrink-0" />
           <div>
-            <h3 className="font-bold text-xl text-purple-400 leading-tight mb-1">
+            <h3 className="font-bold text-lg md:text-xl text-purple-400 leading-tight mb-1">
               Descubra Seu Curso Ideal
             </h3>
-            <p className="text-sm text-purple-200 opacity-90">
+            <p className="text-xs md:text-sm text-purple-200 opacity-90">
               Teste Vocacional Científico - Metodologia MIT, Harvard e Stanford
             </p>
           </div>
         </div>
         
-        <div className="flex items-center gap-6">
+        <div className="flex flex-col md:flex-row items-center gap-3 md:gap-6">
           <div className="text-center">
-            <div className="bg-purple-500/20 px-4 py-2 rounded-full mb-1">
-              <span className="text-sm text-purple-300 font-semibold">
+            <div className="bg-purple-500/20 px-3 md:px-4 py-1.5 md:py-2 rounded-full mb-1">
+              <span className="text-xs md:text-sm text-purple-300 font-semibold">
                 ✨ Apenas 5 minutos
               </span>
             </div>
@@ -153,7 +153,7 @@ function VocationalTestCard() {
             </p>
           </div>
           
-          <div className="bg-purple-400 text-white px-6 py-3 rounded-full font-bold text-sm hover:bg-purple-300 transition-colors">
+          <div className="bg-purple-400 text-white px-4 md:px-6 py-2 md:py-3 rounded-full font-bold text-xs md:text-sm hover:bg-purple-300 transition-colors">
             Fazer Teste →
           </div>
         </div>
