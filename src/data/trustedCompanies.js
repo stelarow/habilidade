@@ -81,6 +81,11 @@ export const trustedCompaniesData = {
       name: "Nexus Center",
       logo: "/images/companies/nexus-center-logo.svg",
       description: "Contact Center"
+    },
+    {
+      name: "Casa da Mana",
+      logo: "/images/companies/casa-da-mana-logo.jpeg",
+      description: "Produtos Artesanais"
     }
   ],
 
