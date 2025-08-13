@@ -27,8 +27,8 @@ const TrustedCompanies = ({
       showStats: true
     },
     course: {
-      defaultTitle: "Empresas regionais que fizeram nossos cursos",
-      defaultSubtitle: "Empresas da região que confiaram na Escola Habilidade para capacitar seus profissionais",
+      defaultTitle: "Empresas que confiam na Escola Habilidade",
+      defaultSubtitle: "Profissionais de empresas regionais já se capacitaram conosco",
       layout: 'carousel', // carrossel horizontal para cursos
       animationDuration: 120,
       showStats: false
@@ -191,9 +191,7 @@ const TrustedCompanies = ({
           <h2 className={`text-4xl md:text-5xl font-bold mb-6 ${
             theme === 'dark' ? 'text-white' : 'text-gray-900'
           }`}>
-            {displayTitle} <span className={theme === 'dark' ? 'text-purple-400' : 'text-purple-600'}>
-              projetista
-            </span>
+            {displayTitle}
           </h2>
           <p className={`text-xl max-w-3xl mx-auto ${
             theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
