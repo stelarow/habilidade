@@ -8,7 +8,7 @@ export const trustedCompaniesData = {
       description: "Equipamentos Gastronômicos"
     },
     {
-      name: "RM", // Corrigido de "MR" para "RM"
+      name: "Ricardo Móveis",
       logo: "/images/course/sketchup-enscape/2jNvD0A0IySCMxVqHKKLN.jpeg", 
       description: "Móveis Planejados"
     },
@@ -112,7 +112,7 @@ export const trustedCompaniesData = {
   // Empresas que fizeram cursos de marketing digital
   marketing: [
     {
-      name: "RM",
+      name: "Ricardo Móveis",
       logo: "/images/course/sketchup-enscape/2jNvD0A0IySCMxVqHKKLN.jpeg",
       description: "Móveis Planejados"
     },
