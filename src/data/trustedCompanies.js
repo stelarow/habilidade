@@ -76,6 +76,11 @@ export const trustedCompaniesData = {
       name: "Santa Madeira Casas",
       logo: "/images/course/sketchup-enscape/SANTA MADEIRA CASAS.webp",
       description: "Casas de Madeira"
+    },
+    {
+      name: "Nexus Center",
+      logo: "/docs/LOGO.svg",
+      description: "Contact Center"
     }
   ],
 
