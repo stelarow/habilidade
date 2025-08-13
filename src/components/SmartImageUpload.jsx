@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useRef } from 'react';
-import { Upload, Image, CheckCircle, AlertCircle, X, Eye } from '@phosphor-icons/react';
+import { Upload, Image, CheckCircle, WarningCircle, X, Eye } from '@phosphor-icons/react';
 import imageUploadProcessor from '../utils/imageUploadProcessor';
 
 const SmartImageUpload = ({ 
@@ -205,7 +205,7 @@ const SmartImageUpload = ({
                   : 'bg-red-100 dark:bg-red-800 text-red-600 dark:text-red-400'
                 }
               `}>
-                {file.status === 'success' ? <CheckCircle size={20} /> : <AlertCircle size={20} />}
+                {file.status === 'success' ? <CheckCircle size={20} /> : <WarningCircle size={20} />}
               </div>
 
               {/* File Info */}

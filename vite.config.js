@@ -35,13 +35,7 @@ export default defineConfig({
   // Definições para remoção de código em produção
   define: {
     __DEV__: false,
-    'process.env.NODE_ENV': JSON.stringify('production'),
-    // Remove console logs em produção
-    ...(process.env.NODE_ENV === 'production' ? {
-      'console.log': (() => {}),
-      'console.debug': (() => {}), 
-      'console.info': (() => {})
-    } : {})
+    'process.env.NODE_ENV': JSON.stringify('production')
   },
   
   resolve: {
