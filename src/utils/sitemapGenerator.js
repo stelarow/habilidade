@@ -77,7 +77,7 @@ const COURSE_PAGES = [
   'programacao',
   'marketing-digital',
   'edicao-video',
-  'business-intelligence',
+  'excel-avancado-business-intelligence',
   'inteligencia-artificial',
   'sketchup-enscape'
 ].map(slug => ({

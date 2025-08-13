@@ -1907,9 +1907,9 @@ const businessIntelligence = {
   basicInfo: {
     id: 'business-intelligence-006',
     title: 'Business Intelligence',
-    slug: 'business-intelligence',
-    shortDescription: 'Domine Excel Fundamental, Excel Avançado, Dashboard e IA para Análise de dados inteligente.',
-    longDescription: 'Curso completo de Business Intelligence com IA. Domine Excel Fundamental, Excel Avançado, Dashboard profissional e IA para Análise. 4 módulos completos para transformar dados em insights estratégicos.',
+    slug: 'excel-avancado-business-intelligence',
+    shortDescription: 'Domine Excel Presencial, Excel Avançado, Power BI, Dashboard e IA para Business Intelligence completa.',
+    longDescription: 'Curso completo de Business Intelligence com Excel Presencial. Domine Excel Fundamental, Excel Avançado, Dashboard profissional, Power BI e IA para Análise. 4 módulos para transformar dados em insights estratégicos nos negócios.',
     category: 'Análise de Dados',
     level: 'Intermediário',
     duration: '54 horas',
@@ -1944,8 +1944,8 @@ const businessIntelligence = {
   curriculum: [
     {
       id: 1,
-      title: 'Excel (Fundamental) (base para análise de dados)',
-      description: 'Conteúdo já detalhado acima em Informática – módulo "Excel Fundamental", 18 aulas, 27h',
+      title: 'Excel Fundamental Presencial (base para Business Intelligence)',
+      description: 'Excel completo do zero: planilhas, fórmulas, gráficos e análise de dados. Preparação sólida para Excel Avançado e BI. 18 aulas práticas, 27h presenciais.',
       duration: '27 horas',
       note: 'Mesmo conteúdo do módulo Excel Fundamental do curso de Informática',
       lessons: [
@@ -1971,8 +1971,8 @@ const businessIntelligence = {
     },
     {
       id: 2,
-      title: 'Excel (Avançado) (análise e modelagem de dados)',
-      description: 'Conteúdo já detalhado acima em Informática – módulo "Excel Avançado", 13 aulas, 19,5h',
+      title: 'Excel Avançado Presencial (Business Intelligence Core)',
+      description: 'Excel avançado presencial: VBA, macros, fórmulas complexas e automação. Base essencial para Business Intelligence e Power BI. 13 aulas intensivas, 19,5h práticas.',
       duration: '19,5 horas',
       note: 'Mesmo conteúdo do módulo Excel Avançado do curso de Informática',
       lessons: [
@@ -1993,8 +1993,8 @@ const businessIntelligence = {
     },
     {
       id: 3,
-      title: 'Dashboard (Excel Dashboard)',
-      description: 'Criação de dashboards profissionais no Excel',
+      title: 'Dashboard Excel Profissional (Visualização BI)',
+      description: 'Dashboard Excel profissional presencial: visualizações executivas, gráficos dinâmicos e Business Intelligence visual. Projetos práticos empresariais.',
       duration: '7,5 horas',
       lessons: [
         { id: 32, title: 'O que é Dashboard?', duration: '90 min', type: 'video' },
@@ -2065,18 +2065,18 @@ const businessIntelligence = {
   },
 
   whatYouWillLearn: [
-    'Excel Fundamental: planilhas e análises básicas',
-    'Excel Avançado: fórmulas complexas e VBA',
-    'Dashboard: visualizações profissionais no Excel',
-    'IA para Análise: em desenvolvimento',
-    'Análise de dados empresariais',
-    'Tabelas dinâmicas e gráficos avançados',
-    'Macros e automação no Excel',
-    'Dashboards executivos profissionais',
-    'Material didático impresso incluso',
-    'Modalidades Presencial e Online disponíveis',
-    'Portfolio com projetos empresariais',
-    'Certificação profissional reconhecida'
+    'Excel Fundamental presencial: planilhas e análises completas',
+    'Excel Avançado presencial: fórmulas complexas, VBA e macros',
+    'Dashboard Excel profissional: visualizações executivas',
+    'Power BI integrado: business intelligence moderna',
+    'IA para Análise de dados: inteligência artificial aplicada',
+    'Tabelas dinâmicas e gráficos avançados no Excel',
+    'Automação e macros para otimização de processos',
+    'Business Intelligence para tomada de decisão',
+    'Treinamento presencial em Florianópolis e São José',
+    'Material didático impresso dos 4 módulos incluso',
+    'Portfolio com projetos empresariais reais',
+    'Certificação profissional em Excel e BI reconhecida'
   ],
 
   requirements: [
@@ -2227,8 +2227,8 @@ const businessIntelligence = {
   faq: [
     {
       id: 1,
-      question: 'Preciso conhecimento prévio em Excel?',
-      answer: 'Não! Começamos do Excel Fundamental e evoluímos até Excel Avançado com fórmulas complexas e VBA.'
+      question: 'Preciso conhecimento prévio em Excel para o curso de Business Intelligence?',
+      answer: 'Não! Começamos do Excel Fundamental presencial e evoluímos até Excel Avançado com fórmulas complexas, VBA, Dashboard e Power BI.'
     },
     {
       id: 2,
@@ -2242,8 +2242,13 @@ const businessIntelligence = {
     },
     {
       id: 4,
+      question: 'Este curso é diferente de um curso de Excel comum?',
+      answer: 'Sim! Nós focamos em Excel para Business Intelligence: Excel Fundamental + Excel Avançado + Dashboard + Power BI + IA. É uma formação completa para análise de dados empresariais.'
+    },
+    {
+      id: 5,
       question: 'Quando o módulo de IA para Análise estará disponível?',
-      answer: 'O módulo de IA para Análise de Dados está sendo desenvolvido. O conteúdo será liberado assim que finalizado.'
+      answer: 'O módulo de IA para Análise de Dados está sendo desenvolvido com foco em aplicações práticas para Excel e BI. Conteúdo liberado em breve.'
     }
   ],
 
@@ -2258,9 +2263,9 @@ const businessIntelligence = {
   },
 
   seoMeta: {
-    title: 'Curso Business Intelligence Completo - Escola Habilidade | Excel Fundamental, Excel Avançado, Dashboard, IA - Material Incluso',
-    description: 'Torne-se especialista em Business Intelligence. 4 módulos: Excel Fundamental, Excel Avançado, Dashboard, IA para Análise. 54 horas, apostilas inclusas.',
-    keywords: ['business intelligence', 'excel avançado', 'dashboard', 'ia para análise', 'bi', 'apostilas inclusas'],
+    title: 'Curso Excel Avançado e Business Intelligence - Power BI, Dashboard, IA | Presencial Florianópolis - Material Incluso',
+    description: 'Domine Excel Avançado presencial + Business Intelligence. 4 módulos: Excel Fundamental, Excel Avançado, Dashboard, Power BI, IA. Florianópolis e São José. Material incluso.',
+    keywords: ['curso excel avançado', 'excel presencial', 'business intelligence', 'power bi', 'dashboard excel', 'curso excel florianopolis', 'excel e power bi', 'material incluso'],
     ogImage: '/og-images/business-intelligence.jpg',
     ogType: 'website',
   },

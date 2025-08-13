@@ -93,8 +93,13 @@ export const routes = [
         lazy: () => import('./pages/courses/InteligenciaArtificial')
       },
       {
-        path: 'cursos/business-intelligence',
+        path: 'cursos/excel-avancado-business-intelligence',
         lazy: () => import('./pages/courses/BusinessIntelligence')
+      },
+      // Redirect 301: business-intelligence → excel-avancado-business-intelligence
+      {
+        path: 'cursos/business-intelligence',
+        element: <Navigate to="/cursos/excel-avancado-business-intelligence" replace />
       },
       {
         path: 'cursos/projetista-3d',

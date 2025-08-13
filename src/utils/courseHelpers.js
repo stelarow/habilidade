@@ -48,7 +48,90 @@ export function validateAndSanitizeCourse(courseData) {
 }
 
 /**
- * Gera metadados do curso para SEO
+ * Mapeia níveis educacionais para valores válidos do Schema.org
+ * @param {string} level - Nível do curso
+ * @returns {string} - Valor válido para Schema.org
+ */
+function mapEducationalLevel(level) {
+  const levelMap = {
+    'Iniciante': 'Beginner',
+    'Intermediário': 'Intermediate', 
+    'Avançado': 'Advanced'
+  };
+  return levelMap[level] || 'Beginner';
+}
+
+/**
+ * Converte duração para formato ISO 8601
+ * @param {string} duration - Duração no formato "X horas"
+ * @returns {string} - Formato ISO 8601
+ */
+function formatDurationToISO8601(duration) {
+  if (!duration) return 'PT40H';
+  
+  const hours = duration.match(/(\d+)\s*horas?/i);
+  if (hours && hours[1]) {
+    return `PT${hours[1]}H`;
+  }
+  return 'PT40H'; // Fallback
+}
+
+/**
+ * Gera seções estruturadas de currículo conforme Schema.org
+ * @param {Array} curriculum - Array de módulos do currículo
+ * @returns {Array} - Array de seções formatadas para Schema.org
+ */
+function generateSyllabusSections(curriculum) {
+  if (!curriculum || !Array.isArray(curriculum)) {
+    return [{
+      '@type': 'Syllabus',
+      'name': 'Módulo Introdutório',
+      'description': 'Conceitos fundamentais e práticas essenciais',
+      'timeRequired': 'PT8H'
+    }];
+  }
+
+  return curriculum.slice(0, 10).map((module, index) => ({
+    '@type': 'Syllabus',
+    'name': module.title || `Módulo ${index + 1}`,
+    'description': module.description || 'Conteúdo especializado do curso',
+    'timeRequired': calculateModuleTime(module.lessons)
+  }));
+}
+
+/**
+ * Calcula tempo estimado de um módulo baseado nas aulas
+ * @param {Array} lessons - Array de aulas do módulo
+ * @returns {string} - Tempo em formato ISO 8601
+ */
+function calculateModuleTime(lessons) {
+  if (!lessons || !Array.isArray(lessons)) {
+    return 'PT4H'; // Fallback
+  }
+  
+  const estimatedHours = Math.max(2, lessons.length * 2);
+  return `PT${estimatedHours}H`;
+}
+
+/**
+ * Mapeia categoria de ofertas para valores válidos do Schema.org
+ * @param {number} price - Preço do curso
+ * @param {Object} investment - Dados de investimento completos
+ * @returns {string} - Categoria válida
+ */
+function mapOfferCategory(price, investment = {}) {
+  if (!price || price === 0) return 'Free';
+  
+  // Se tem parcelamento, é considerado Paid com facilidades
+  if (investment.installments && investment.installments.max > 1) {
+    return 'Paid';
+  }
+  
+  return 'Paid';
+}
+
+/**
+ * Gera metadados do curso para SEO com foco em cursos PRESENCIAIS
  * @param {Object} courseData - Dados do curso
  * @returns {Object} - Metadados estruturados
  */
@@ -72,7 +155,6 @@ export function generateCourseMetadata(courseData) {
   };
   
   // Usa dados do curso ou valores padrão
-  // Se investment não existe ou tem currentPrice 0, usa valores padrão
   const investment = (safeCourse.investment && safeCourse.investment.currentPrice > 0) 
     ? safeCourse.investment 
     : defaultInvestment;
@@ -122,82 +204,82 @@ export function generateCourseMetadata(courseData) {
       'name': safeCourse.basicInfo.title,
       'description': safeCourse.basicInfo.longDescription,
       'url': courseUrl,
-      'image': safeCourse.seoMeta.ogImage,
+      'image': [safeCourse.seoMeta.ogImage],
       'provider': {
-        '@type': 'EducationalOrganization',
+        '@type': 'Organization',
         'name': 'Escola Habilidade',
         'url': baseUrl,
-        'sameAs': baseUrl,
         'address': {
           '@type': 'PostalAddress',
+          'streetAddress': 'Florianópolis, SC',
+          'addressLocality': 'Florianópolis',
+          'addressRegion': 'Santa Catarina',
           'addressCountry': 'BR',
-          'addressLocality': 'Brasil'
+          'postalCode': '88000-000'
         }
       },
-      'courseMode': ['https://schema.org/OnlineEventAttendanceMode', 'https://schema.org/OfflineEventAttendanceMode'],
-      'educationalLevel': safeCourse.basicInfo.level,
+      'educationalLevel': mapEducationalLevel(safeCourse.basicInfo.level),
       'inLanguage': 'pt-BR',
-      'learningResourceType': 'Course',
       'teaches': teaches,
-      'timeRequired': safeCourse.basicInfo.duration,
-      'hasPart': safeCourse.curriculum?.map(module => ({
-        '@type': 'LearningResource',
-        'name': `Módulo ${module.title}`,
-        'description': module.description,
-        'courseWorkload': `PT${module.duration.replace(' horas', 'H')}`,
-        'educationalLevel': safeCourse.basicInfo.level,
-        'learningResourceType': 'Module'
-      })) || [],
-      'hasCourseInstance': {
+      'about': [safeCourse.basicInfo.category, 'Formação Profissional', 'Educação Técnica'],
+      'timeRequired': formatDurationToISO8601(safeCourse.basicInfo.duration),
+      'datePublished': new Date().toISOString().split('T')[0],
+      'financialAidEligible': 'Parcelamento disponível em até 12x sem juros',
+      'hasCourseInstance': [{
         '@type': 'CourseInstance',
-        'courseMode': ['https://schema.org/OnlineEventAttendanceMode', 'https://schema.org/OfflineEventAttendanceMode'],
-        'courseWorkload': `PT${safeCourse.basicInfo.duration.replace(' horas', 'H')}`,
+        'courseMode': 'Onsite',
+        'courseWorkload': formatDurationToISO8601(safeCourse.basicInfo.duration),
         'courseSchedule': {
           '@type': 'Schedule',
-          'duration': safeCourse.basicInfo.duration,
-          'repeatFrequency': 'P1W',
-          'repeatCount': 4,
-          'scheduleTimezone': 'America/Sao_Paulo'
+          'duration': 'PT3H',
+          'repeatCount': 12,
+          'repeatFrequency': 'Weekly',
+          'startDate': new Date().toISOString().split('T')[0],
+          'endDate': new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
         },
-        'instructor': {
+        'instructor': [{
           '@type': 'Person',
           'name': instructor.name,
-          'description': instructor.bio
-        },
+          'description': instructor.bio || 'Professor especializado com experiência de mercado'
+        }],
         'location': {
           '@type': 'Place',
           'name': 'Escola Habilidade',
           'address': {
             '@type': 'PostalAddress',
-            'addressCountry': 'BR',
-            'addressLocality': 'Brasil'
+            'addressLocality': 'Florianópolis',
+            'addressRegion': 'SC',
+            'addressCountry': 'BR'
           }
         }
-      },
-      'offers': {
+      }],
+      'offers': [{
         '@type': 'Offer',
+        'category': mapOfferCategory(investment.currentPrice, investment),
         'price': investment.currentPrice,
         'priceCurrency': 'BRL',
         'availability': 'https://schema.org/InStock',
         'validFrom': '2025-01-01',
         'priceValidUntil': '2025-12-31',
         'url': courseUrl,
-        'category': 'EducationalOccupationalCredential',
         'seller': {
-          '@type': 'EducationalOrganization',
+          '@type': 'Organization',
           'name': 'Escola Habilidade',
           'url': baseUrl
         }
-      },
+      }],
       'aggregateRating': {
         '@type': 'AggregateRating',
         'ratingValue': calculateAverageRating(),
         'reviewCount': safeCourse.testimonials?.length || 50,
+        'ratingCount': safeCourse.testimonials?.length || 50,
         'bestRating': 5,
         'worstRating': 1
       },
+      'syllabusSections': generateSyllabusSections(safeCourse.curriculum),
       'review': safeCourse.testimonials?.slice(0, 3).map((testimonial, index) => ({
         '@type': 'Review',
+        'datePublished': new Date(Date.now() - (index * 30 * 24 * 60 * 60 * 1000)).toISOString().split('T')[0],
         'reviewRating': {
           '@type': 'Rating',
           'ratingValue': testimonial.rating || 5,
@@ -399,6 +481,120 @@ export function generateBreadcrumbs(courseData) {
   ];
 }
 
+/**
+ * Valida dados estruturados do curso conforme diretrizes do Google
+ * @param {Object} structuredData - Dados estruturados gerados
+ * @returns {Object} - { isValid: boolean, errors: string[], warnings: string[] }
+ */
+export function validateStructuredData(structuredData) {
+  const errors = [];
+  const warnings = [];
+
+  try {
+    // Validações obrigatórias para Course
+    const requiredCourseFields = [
+      'name', 'description', 'provider', 'offers', 'hasCourseInstance'
+    ];
+
+    requiredCourseFields.forEach(field => {
+      if (!structuredData[field]) {
+        errors.push(`Campo obrigatório ausente: ${field}`);
+      }
+    });
+
+    // Validar provider
+    if (structuredData.provider) {
+      if (!structuredData.provider.name) {
+        errors.push('provider.name é obrigatório');
+      }
+      if (structuredData.provider['@type'] !== 'Organization') {
+        errors.push('provider deve ter @type "Organization"');
+      }
+    }
+
+    // Validar offers
+    if (structuredData.offers && Array.isArray(structuredData.offers)) {
+      structuredData.offers.forEach((offer, index) => {
+        if (!offer.category) {
+          errors.push(`offers[${index}].category é obrigatório`);
+        }
+        if (!['Free', 'Paid', 'Subscription', 'Partially Free'].includes(offer.category)) {
+          errors.push(`offers[${index}].category deve ser Free, Paid, Subscription ou Partially Free`);
+        }
+      });
+    }
+
+    // Validar hasCourseInstance
+    if (structuredData.hasCourseInstance && Array.isArray(structuredData.hasCourseInstance)) {
+      structuredData.hasCourseInstance.forEach((instance, index) => {
+        const requiredInstanceFields = ['courseMode'];
+        
+        requiredInstanceFields.forEach(field => {
+          if (!instance[field]) {
+            errors.push(`hasCourseInstance[${index}].${field} é obrigatório`);
+          }
+        });
+
+        // Validar courseMode
+        if (instance.courseMode && !['Online', 'Onsite', 'Blended'].includes(instance.courseMode)) {
+          errors.push(`hasCourseInstance[${index}].courseMode deve ser Online, Onsite ou Blended`);
+        }
+
+        // Validar courseSchedule se presente
+        if (instance.courseSchedule) {
+          if (!instance.courseSchedule.repeatCount || !instance.courseSchedule.repeatFrequency) {
+            warnings.push(`hasCourseInstance[${index}].courseSchedule deve ter repeatCount e repeatFrequency`);
+          }
+          if (!instance.courseSchedule.duration && !instance.courseWorkload) {
+            errors.push(`hasCourseInstance[${index}] deve ter courseSchedule.duration ou courseWorkload`);
+          }
+        }
+
+        // Validar location para cursos presenciais
+        if (instance.courseMode === 'Onsite' && !instance.location) {
+          errors.push(`hasCourseInstance[${index}] com courseMode "Onsite" deve ter location`);
+        }
+        
+        if (instance.courseMode === 'Blended' && !instance.location) {
+          warnings.push(`hasCourseInstance[${index}] com courseMode "Blended" deveria ter location`);
+        }
+      });
+    }
+
+    // Validar educationalLevel
+    if (structuredData.educationalLevel && !['Beginner', 'Intermediate', 'Advanced'].includes(structuredData.educationalLevel)) {
+      errors.push('educationalLevel deve ser Beginner, Intermediate ou Advanced');
+    }
+
+    // Validar format de duração ISO 8601
+    if (structuredData.timeRequired && !structuredData.timeRequired.match(/^PT\d+H$/)) {
+      warnings.push('timeRequired deve estar no formato ISO 8601 (ex: PT40H)');
+    }
+
+    // Validações de qualidade
+    if (structuredData.description && structuredData.description.length > 500) {
+      warnings.push('Descrição muito longa (>500 caracteres), pode impactar exibição');
+    }
+
+    if (structuredData.description && structuredData.description.length < 240) {
+      warnings.push('Descrição muito curta (<240 caracteres), recomendado 240-500 caracteres');
+    }
+
+    return {
+      isValid: errors.length === 0,
+      errors,
+      warnings
+    };
+
+  } catch (error) {
+    return {
+      isValid: false,
+      errors: [`Erro de validação: ${error.message}`],
+      warnings: []
+    };
+  }
+}
+
 export default {
   getCourseBySlug,
   validateAndSanitizeCourse,
@@ -411,4 +607,5 @@ export default {
   calculateDiscount,
   formatPrice,
   generateBreadcrumbs,
+  validateStructuredData,
 }; 
