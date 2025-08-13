@@ -75,4 +75,6 @@ function useInView(options = {}) {
   }, []);
 
   return [ref, isVisible, entry];
-} 
+}
+
+export default useInView; 

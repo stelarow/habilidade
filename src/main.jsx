@@ -126,21 +126,12 @@ export const createRoot = ViteReactSSG(
           document.addEventListener('DOMContentLoaded', initializeLazyImages);
         } else {
           initializeLazyImages();
-            imageObserver.observe(img);
-          });
-        };
-
-        // Observar imagens iniciais e novas
-        if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', observeImages);
-        } else {
-          observeImages();
         }
 
         // Re-observar após mudanças no DOM (para SPAs)
         if (window.MutationObserver) {
           const domObserver = new MutationObserver(() => {
-            setTimeout(observeImages, 100);
+            setTimeout(initializeLazyImages, 100);
           });
           
           domObserver.observe(document.body, {

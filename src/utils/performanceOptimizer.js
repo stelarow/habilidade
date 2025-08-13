@@ -2,15 +2,16 @@
  * Performance Optimizer - Bundle size and runtime performance improvements
  */
 
-// Lazy loading utilities
-export const createLazyComponent = (importFn, fallback = null) => {
-  const LazyComponent = React.lazy(importFn);
-  
-  return React.forwardRef((props, ref) => (
-    <React.Suspense fallback={fallback}>
-      <LazyComponent ref={ref} {...props} />
-    </React.Suspense>
-  ));
+// Lazy loading utilities - moved to LazyComponents.jsx to avoid JSX in .js file
+export const createLazyComponentFactory = (importFn) => {
+  // Returns a factory function for creating lazy components
+  return () => {
+    if (typeof React !== 'undefined') {
+      return React.lazy(importFn);
+    }
+    console.warn('React not available for lazy loading');
+    return null;
+  };
 };
 
 // Memory management
@@ -369,18 +370,19 @@ export const bundleOptimization = {
 
   async loadChartLibrary() {
     try {
-      // Replace recharts with lighter alternative when possible
-      const charts = await import('chart.js/auto');
-      return charts;
+      // Dynamic chart loading - implement when chart library is needed
+      console.log('Chart library loading requested - implement when needed');
+      return null;
     } catch (error) {
       console.warn('Failed to load chart library:', error);
       return null;
     }
   },
 
-  // Code splitting by route
+  // Code splitting by route - moved to LazyComponents.jsx to avoid React dependency
   createRouteChunk(routeLoader) {
-    return React.lazy(routeLoader);
+    console.warn('createRouteChunk moved to LazyComponents.jsx - use that instead');
+    return null;
   }
 };
 
@@ -471,7 +473,7 @@ export const initializePerformanceOptimizations = () => {
 };
 
 export default {
-  createLazyComponent,
+  createLazyComponentFactory,
   cleanupAnimations,
   intersectionObserverManager,
   measurePerformance,

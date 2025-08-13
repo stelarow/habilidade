@@ -234,7 +234,6 @@ const TableOfContents = ({
           metadata.unobserve();
         }
       });
-      }
     };
   }, [headers, offsetTop, updateUrlHash]);
 
