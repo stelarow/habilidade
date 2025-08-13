@@ -15,7 +15,7 @@
     "test:routes": "node -e \"const routes = ['informatica', 'programacao', 'design-grafico', 'projetista-3d', 'edicao-video', 'marketing-digital', 'inteligencia-artificial', 'business-intelligence']; console.log('✅ Testando rotas dos cursos:'); routes.forEach(slug => console.log(`  ✓ /cursos/${slug}`)); console.log(`\\n📊 Total: ${routes.length} rotas configuradas`);\"",
     "optimize:assets": "echo '🎯 Otimizando assets...' && npm run optimize:images",
     "optimize:images": "echo '🖼️ Imagens já otimizadas via Vite'",
-    "analyze:bundle": "echo '📊 Análise de bundle disponível em: https://bundlephobia.com'",
+    "analyze:bundle": "node scripts/analyze-bundle.js",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",

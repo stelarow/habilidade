@@ -32,6 +32,18 @@ export default defineConfig({
 
   base: '/',
   
+  // Definições para remoção de código em produção
+  define: {
+    __DEV__: false,
+    'process.env.NODE_ENV': JSON.stringify('production'),
+    // Remove console logs em produção
+    ...(process.env.NODE_ENV === 'production' ? {
+      'console.log': '(() => {})',
+      'console.debug': '(() => {})',
+      'console.info': '(() => {})'
+    } : {})
+  },
+  
   resolve: {
     dedupe: ['react', 'react-dom']
   },
@@ -41,22 +53,45 @@ export default defineConfig({
   },
   
   build: {
-    // Code splitting otimizado para 2025 com foco em blog
+    // Code splitting otimizado para performance mobile
     rollupOptions: {
       external: [],
       output: {
         manualChunks(id) {
-          // Vendor chunk para bibliotecas principais
+          // Vendor chunk para bibliotecas principais (mais granular)
           if (id.includes('node_modules/react/') || id.includes('node_modules/react-dom/')) {
-            return 'vendor';
+            return 'react-vendor';
           }
           // Router chunk separado
           if (id.includes('node_modules/react-router-dom/')) {
             return 'router';
           }
-          // Utils e hooks
+          // UI Libraries chunk
+          if (id.includes('node_modules/@phosphor-icons/') ||
+              id.includes('node_modules/lucide-react/') ||
+              id.includes('node_modules/react-icons/')) {
+            return 'ui-icons';
+          }
+          // Animation libraries
+          if (id.includes('node_modules/framer-motion/')) {
+            return 'animations';
+          }
+          // Email and external services
+          if (id.includes('node_modules/@emailjs/') ||
+              id.includes('node_modules/@supabase/') ||
+              id.includes('node_modules/axios/')) {
+            return 'external-services';
+          }
+          // Heavy utilities (código pesado raramente usado)
+          if (id.includes('node_modules/html2canvas/') ||
+              id.includes('node_modules/jspdf/') ||
+              id.includes('node_modules/marked/') ||
+              id.includes('node_modules/highlight.js/')) {
+            return 'heavy-utils';
+          }
+          // Utils e hooks (código próprio)
           if (id.includes('/src/hooks/') || id.includes('/src/utils/')) {
-            return 'utils';
+            return 'app-utils';
           }
           // Blog-specific chunk for better caching
           if (id.includes('/src/services/blogAPI.js') || 
@@ -65,11 +100,21 @@ export default defineConfig({
               id.includes('/src/services/cacheService.js') ||
               id.includes('/src/utils/imageOptimizer.js') ||
               id.includes('/src/services/imageService.js')) {
-            return 'blog';
+            return 'blog-api';
           }
           // Blog components chunk
           if (id.includes('/src/components/blog/')) {
             return 'blog-components';
+          }
+          // Course components chunk
+          if (id.includes('/src/components/course/') ||
+              id.includes('/src/pages/courses/')) {
+            return 'course-components';
+          }
+          // Shared components chunk
+          if (id.includes('/src/components/shared/') ||
+              id.includes('/src/components/header/')) {
+            return 'shared-components';
           }
           // Backgrounds em chunk separado (lazy load)
           if (id.includes('/src/components/backgrounds/')) {
@@ -77,24 +122,44 @@ export default defineConfig({
           }
         },
         // Nomes consistentes para cache
-        chunkFileNames: 'assets/[name]-[hash].js',
-        entryFileNames: 'assets/[name]-[hash].js',
-        assetFileNames: 'assets/[name]-[hash].[ext]'
+        chunkFileNames: 'assets/js/[name]-[hash].js',
+        entryFileNames: 'assets/js/[name]-[hash].js',
+        assetFileNames: 'assets/[ext]/[name]-[hash].[ext]'
       }
     },
     
-    // Compressão e minificação 
-    minify: 'esbuild',
+    // Compressão e minificação otimizada
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true, // Remove console.log em produção
+        drop_debugger: true,
+        pure_funcs: ['console.log', 'console.info', 'console.debug'],
+        unused: true,
+        dead_code: true
+      },
+      mangle: true,
+      format: {
+        comments: false
+      }
+    },
     
-    // Otimizações de tamanho
-    chunkSizeWarningLimit: 1000,
-    sourcemap: false, // Desabilitar source maps em produção para reduzir tamanho
+    // Otimizações de tamanho agressivas
+    chunkSizeWarningLimit: 500, // Limite menor para forçar chunks menores
+    sourcemap: false,
     cssCodeSplit: true,
     
-    // Otimizações de performance
+    // Otimizações de performance para mobile
     target: ['es2020', 'chrome80', 'safari13'],
     modulePreload: {
       polyfill: false
+    },
+    
+    // Tree shaking agressivo
+    treeshake: {
+      moduleSideEffects: false,
+      propertyReadSideEffects: false,
+      unknownGlobalSideEffects: false
     }
   },
   
@@ -107,16 +172,25 @@ export default defineConfig({
     historyApiFallback: true
   },
   
-  // Pre-bundling de dependências
+  // Pre-bundling de dependências otimizado
   optimizeDeps: {
     include: [
-      'react',
-      'react-dom',
+      'react/jsx-runtime',
+      'react-dom/client',
       'react-router-dom',
-      '@emailjs/browser',
-      'phosphor-react'
+      '@emailjs/browser'
     ],
-    exclude: ['@vite/client', '@vite/env']
+    exclude: [
+      '@vite/client', 
+      '@vite/env',
+      // Lazy load heavy libraries
+      'html2canvas',
+      'jspdf',
+      'highlight.js',
+      'framer-motion'
+    ],
+    // Force rebuild when dependencies change
+    force: false
   },
   
   // CSS otimizado

@@ -8,8 +8,7 @@ import { getCourseBySlug } from '../utils/courseHelpers';
 import COURSES_DATA from '../data/coursesData';
 import InteractiveLogo from './header/InteractiveLogo';
 import SmartCTA from './header/SmartCTA';
-import MegaMenu from './header/MegaMenu';
-import MobileMegaMenu from './header/MobileMegaMenu';
+import { LazyMegaMenu, LazyMobileMegaMenu } from './LazyComponents';
 
 function Header() {
   const [mobileMenuOpen, toggleMobileMenu, , closeMobileMenu] = useToggle(false);
@@ -103,13 +102,13 @@ function Header() {
           </div>
         </div>
 
-        <MegaMenu 
+        <LazyMegaMenu 
           isOpen={megaMenuOpen} 
           onClose={() => setMegaMenuOpen(false)} 
         />
       </header>
 
-      <MobileMegaMenu 
+      <LazyMobileMegaMenu 
         isOpen={mobileMenuOpen} 
         onClose={closeMobileMenu} 
       />
