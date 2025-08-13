@@ -79,7 +79,7 @@ export const trustedCompaniesData = {
     },
     {
       name: "Nexus Center",
-      logo: "/docs/LOGO.svg",
+      logo: "/images/companies/nexus-center-logo.svg",
       description: "Contact Center"
     }
   ],
