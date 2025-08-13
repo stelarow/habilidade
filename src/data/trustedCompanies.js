@@ -74,7 +74,7 @@ export const trustedCompaniesData = {
     },
     {
       name: "Santa Madeira Casas",
-      logo: "/images/course/sketchup-enscape/SANTA MADEIRA CASAS.webp",
+      logo: "/images/companies/santa-madeira-casas-logo.webp",
       description: "Casas de Madeira"
     },
     {
