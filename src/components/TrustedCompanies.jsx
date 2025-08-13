@@ -66,7 +66,7 @@ const TrustedCompanies = ({
           {/* Grid de empresas - 2 linhas no desktop */}
           <div className="max-w-6xl mx-auto">
             <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
-              {companies.slice(0, 10).map((company, index) => (
+              {companies.map((company, index) => (
                 <motion.div
                   key={`${company.name}-${index}`}
                   className={`group rounded-xl p-4 hover:shadow-lg transition-all duration-300 flex flex-col items-center justify-center ${
