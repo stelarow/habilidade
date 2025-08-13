@@ -1,0 +1,62 @@
+/* Otimizações para Imagens */
+
+/* Placeholder para imagens lazy loading */
+img.lazy,
+img[data-src] {
+  background: linear-gradient(90deg, #f0f0f0 25%, transparent 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading-shimmer 1.5s infinite;
+  min-height: 100px;
+}
+
+/* Animação de carregamento */
+@keyframes loading-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Transição suave quando imagem carrega */
+img.loaded {
+  animation: fade-in 0.3s ease-in-out;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Otimização de rendering para imagens */
+img {
+  image-rendering: optimizeQuality;
+  image-rendering: -webkit-optimize-contrast;
+}
+
+/* Suporte a WebP com fallback */
+.webp img[data-webp] {
+  content: url(attr(data-webp));
+}
+
+/* Responsive images */
+img[srcset] {
+  width: 100%;
+  height: auto;
+}
+
+/* Placeholder para quando WebP não é suportado */
+.no-webp img.lazy {
+  background-color: #f5f5f5;
+}
+
+/* Performance hints para browser */
+img[loading="lazy"] {
+  content-visibility: auto;
+  contain-intrinsic-size: 300px 200px;
+}

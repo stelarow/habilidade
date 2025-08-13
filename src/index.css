@@ -4,6 +4,7 @@
 @import './styles/blog-theme.css';
 @import './styles/blog-typography.css';
 @import './styles/cta-responsive.css';
+@import './styles/optimized-images.css';
 
 @tailwind base;
 @tailwind components;

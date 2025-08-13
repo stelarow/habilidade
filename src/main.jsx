@@ -1,5 +1,6 @@
 import { ViteReactSSG } from 'vite-react-ssg'
 import { routes } from './routes.jsx'
+import { intelligentPreload } from './utils/dynamicImports.js'
 import './index.css'
 
 export const createRoot = ViteReactSSG(
@@ -25,6 +26,9 @@ export const createRoot = ViteReactSSG(
 
       // Preload crítico baseado na rota atual
       const currentPath = window.location.pathname;
+      
+      // Sistema de preload inteligente
+      intelligentPreload(currentPath);
       
       // Preload inteligente baseado na página
       if (currentPath.startsWith('/blog')) {
@@ -72,30 +76,64 @@ export const createRoot = ViteReactSSG(
         });
       });
 
-      // Otimização de performance - Intersection Observer para lazy loading de imagens
+      // Otimização de performance - Intersection Observer aprimorado para lazy loading
       if ('IntersectionObserver' in window) {
         const imageObserver = new IntersectionObserver((entries) => {
           entries.forEach(entry => {
             if (entry.isIntersecting) {
               const img = entry.target;
+              
+              // Suporte a data-src e srcset
               if (img.dataset.src) {
                 img.src = img.dataset.src;
+                
+                // Carregar srcset se disponível
+                if (img.dataset.srcset) {
+                  img.srcset = img.dataset.srcset;
+                }
+                
                 img.classList.remove('lazy');
+                img.classList.add('loaded');
                 imageObserver.unobserve(img);
+              }
+              
+              // Fallback para loading nativo
+              if (img.loading === 'lazy') {
+                img.loading = 'eager';
               }
             }
           });
         }, {
-          rootMargin: '50px 0px',
-          threshold: 0.01
+          rootMargin: '100px 0px', // Aumentado para carregamento mais suave
+          threshold: 0.1
         });
 
-        // Observe lazy images
-        setTimeout(() => {
-          document.querySelectorAll('img.lazy, img[data-src]').forEach(img => {
+        // Observer aprimorado para executar após DOM ready
+        const observeImages = () => {
+          const lazyImages = document.querySelectorAll('img.lazy, img[data-src], img[loading="lazy"]');
+          lazyImages.forEach(img => {
             imageObserver.observe(img);
           });
-        }, 100);
+        };
+
+        // Observar imagens iniciais e novas
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', observeImages);
+        } else {
+          observeImages();
+        }
+
+        // Re-observar após mudanças no DOM (para SPAs)
+        if (window.MutationObserver) {
+          const domObserver = new MutationObserver(() => {
+            setTimeout(observeImages, 100);
+          });
+          
+          domObserver.observe(document.body, {
+            childList: true,
+            subtree: true
+          });
+        }
       }
 
       // Performance analytics (opcional)
