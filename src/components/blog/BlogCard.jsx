@@ -3,6 +3,7 @@ import React, { useState, useRef } from 'react';
 import { Clock, Calendar, User, Tag } from '@phosphor-icons/react';
 import { usePrefetchPost } from '../../hooks/useBlogAPI';
 import { useBlogResponsive } from '../../hooks/useBlogResponsive';
+import { intersectionObserverManager } from '../../utils/performanceOptimizer';
 import BlogBadge from './BlogBadge';
 import { combineClasses, getAnimationClasses } from '../../utils/blogTheme';
 
@@ -77,13 +78,17 @@ const BlogCard = ({ post, variant = 'standard', index = 0 }) => {
     return null; // Will trigger our enhanced placeholder
   };
 
-  // Enhanced intersection observer for lazy loading
+  // Enhanced intersection observer for lazy loading using centralized manager
   React.useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
+    if (!cardRef.current) return;
+
+    const observerMetadata = intersectionObserverManager.observe(
+      cardRef.current,
+      (entry) => {
         if (entry.isIntersecting) {
           setImageState(prev => ({ ...prev, isInView: true }));
-          observer.disconnect();
+          // Auto-unobserve after triggering
+          observerMetadata.unobserve();
         }
       },
       {
@@ -92,11 +97,11 @@ const BlogCard = ({ post, variant = 'standard', index = 0 }) => {
       }
     );
 
-    if (cardRef.current) {
-      observer.observe(cardRef.current);
-    }
-
-    return () => observer.disconnect();
+    return () => {
+      if (observerMetadata) {
+        observerMetadata.unobserve();
+      }
+    };
   }, []);
 
   // Enhanced image loading handlers

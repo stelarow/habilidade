@@ -1,24 +1,78 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
+import { intersectionObserverManager } from '../utils/performanceOptimizer.js';
 
-export default function useInView(options = { threshold: 0.2 }) {
+function useInView(options = {}) {
+  const {
+    triggerOnce = true,
+    threshold = 0.2,
+    rootMargin = '0px',
+    root = null,
+    disabled = false
+  } = options;
+
   const ref = useRef(null);
-  const [visible, setVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const [entry, setEntry] = useState(null);
+  const observerMetadata = useRef(null);
+
+  // Memoized callback to prevent unnecessary observer updates
+  const handleIntersection = useCallback((intersectionEntry) => {
+    const isIntersecting = intersectionEntry.isIntersecting;
+    
+    setEntry(intersectionEntry);
+    
+    if (isIntersecting) {
+      setIsVisible(true);
+      
+      // Auto-unobserve if triggerOnce is enabled
+      if (triggerOnce && observerMetadata.current) {
+        observerMetadata.current.unobserve();
+        observerMetadata.current = null;
+      }
+    } else if (!triggerOnce) {
+      setIsVisible(false);
+    }
+  }, [triggerOnce]);
 
   useEffect(() => {
     const element = ref.current;
-    if (!element) return;
+    
+    // Don't observe if disabled or no element
+    if (disabled || !element) return;
 
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        setVisible(true);
-        observer.unobserve(entry.target);
+    // Clean up existing observation
+    if (observerMetadata.current) {
+      observerMetadata.current.unobserve();
+    }
+
+    // Start new observation with centralized manager
+    observerMetadata.current = intersectionObserverManager.observe(
+      element,
+      handleIntersection,
+      {
+        threshold,
+        rootMargin,
+        root
       }
-    }, options);
+    );
 
-    observer.observe(element);
+    // Cleanup function
+    return () => {
+      if (observerMetadata.current) {
+        observerMetadata.current.unobserve();
+        observerMetadata.current = null;
+      }
+    };
+  }, [handleIntersection, threshold, rootMargin, root, disabled]);
 
-    return () => observer.disconnect();
-  }, [options]);
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (observerMetadata.current) {
+        observerMetadata.current.unobserve();
+      }
+    };
+  }, []);
 
-  return [ref, visible];
+  return [ref, isVisible, entry];
 } 

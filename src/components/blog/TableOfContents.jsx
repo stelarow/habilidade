@@ -6,6 +6,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { List, CaretDown, CaretRight, Hash } from '@phosphor-icons/react';
 import { combineClasses } from '../../utils/blogTheme';
+import { intersectionObserverManager } from '../../utils/performanceOptimizer';
 
 /**
  * Extract headers from HTML content or DOM element
@@ -196,39 +197,43 @@ const TableOfContents = ({
       threshold: 0
     };
 
-    observerRef.current = new IntersectionObserver((entries) => {
-      const visibleHeaders = entries
-        .filter(entry => entry.isIntersecting)
-        .map(entry => {
-          const header = headersRef.current.find(h => h.element === entry.target);
-          return { header, ratio: entry.intersectionRatio };
-        })
-        .filter(item => item.header);
+    // Store observer metadata for cleanup
+    const observerMetadataList = [];
 
-      if (visibleHeaders.length > 0) {
-        // Get the header with the highest intersection ratio
-        const mostVisible = visibleHeaders.reduce((prev, current) => 
-          prev.ratio > current.ratio ? prev : current
-        );
-        setActiveHeader(mostVisible.header.slug);
+    // Handle intersection for table of contents headers
+    const handleHeaderIntersection = (headerId) => (entry) => {
+      const header = headersRef.current.find(h => h.id === headerId);
+      if (!header) return;
+
+      if (entry.isIntersecting) {
+        setActiveHeader(header.slug);
         
-        if (updateUrlHash && mostVisible.header.slug) {
-          const newUrl = `${window.location.pathname}${window.location.search}#${mostVisible.header.slug}`;
+        if (updateUrlHash && header.slug) {
+          const newUrl = `${window.location.pathname}${window.location.search}#${header.slug}`;
           window.history.replaceState(null, '', newUrl);
         }
       }
-    }, observerOptions);
+    };
 
-    // Observe all headers
+    // Observe each header with centralized manager
     headers.forEach(header => {
       if (header.element) {
-        observerRef.current.observe(header.element);
+        const metadata = intersectionObserverManager.observe(
+          header.element,
+          handleHeaderIntersection(header.id),
+          observerOptions
+        );
+        observerMetadataList.push(metadata);
       }
     });
 
     return () => {
-      if (observerRef.current) {
-        observerRef.current.disconnect();
+      // Cleanup all observations
+      observerMetadataList.forEach(metadata => {
+        if (metadata) {
+          metadata.unobserve();
+        }
+      });
       }
     };
   }, [headers, offsetTop, updateUrlHash]);

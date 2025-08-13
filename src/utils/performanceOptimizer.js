@@ -36,47 +36,247 @@ export const cleanupAnimations = () => {
 class IntersectionObserverManager {
   constructor() {
     this.observers = new Map();
+    this.callbacks = new WeakMap();
+    this.activeElements = new WeakSet();
+    this.metrics = {
+      totalObservers: 0,
+      totalElements: 0,
+      observerConfigs: new Set()
+    };
+    
+    // Performance monitoring
+    this.performanceMetrics = {
+      observerCreations: 0,
+      callbackExecutions: 0,
+      averageProcessingTime: 0,
+      lastProcessingTime: 0
+    };
   }
 
+  /**
+   * Observe an element with consolidated observer management
+   * @param {Element} element - DOM element to observe
+   * @param {Function} callback - Callback function (entry) => {}
+   * @param {Object} options - IntersectionObserver options
+   * @returns {Object} - Observer metadata for cleanup
+   */
   observe(element, callback, options = {}) {
-    const key = JSON.stringify(options);
-    
-    if (!this.observers.has(key)) {
-      this.observers.set(key, {
-        observer: new IntersectionObserver(
-          (entries) => {
-            entries.forEach(entry => {
-              const callback = entry.target._intersectionCallback;
-              if (callback) callback(entry);
-            });
-          },
-          options
-        ),
-        elements: new Set()
-      });
+    if (!element || typeof callback !== 'function') {
+      console.warn('[ObserverManager] Invalid element or callback provided');
+      return null;
     }
 
-    const observerData = this.observers.get(key);
-    element._intersectionCallback = callback;
+    // Normalize options for consistent hashing
+    const normalizedOptions = this.normalizeOptions(options);
+    const optionsKey = this.getOptionsKey(normalizedOptions);
+    
+    // Track configuration diversity for optimization insights
+    this.metrics.observerConfigs.add(optionsKey);
+    
+    // Get or create observer for this configuration
+    let observerData = this.observers.get(optionsKey);
+    
+    if (!observerData) {
+      observerData = this.createObserver(normalizedOptions, optionsKey);
+      this.observers.set(optionsKey, observerData);
+      this.performanceMetrics.observerCreations++;
+    }
+
+    // Store callback and register element
+    this.callbacks.set(element, {
+      callback,
+      options: normalizedOptions,
+      optionsKey,
+      registeredAt: Date.now()
+    });
+    
     observerData.observer.observe(element);
     observerData.elements.add(element);
+    this.activeElements.add(element);
+    this.metrics.totalElements++;
+
+    // Return metadata for manual cleanup if needed
+    return {
+      element,
+      optionsKey,
+      unobserve: () => this.unobserve(element)
+    };
   }
 
-  unobserve(element) {
-    this.observers.forEach(({ observer, elements }) => {
-      if (elements.has(element)) {
-        observer.unobserve(element);
-        elements.delete(element);
-        delete element._intersectionCallback;
+  /**
+   * Create a new IntersectionObserver with performance monitoring
+   */
+  createObserver(options, optionsKey) {
+    const observer = new IntersectionObserver(
+      (entries) => this.handleIntersection(entries),
+      options
+    );
+
+    this.metrics.totalObservers++;
+    
+    return {
+      observer,
+      elements: new Set(),
+      options,
+      createdAt: Date.now(),
+      callbackCount: 0
+    };
+  }
+
+  /**
+   * Handle intersection events with performance monitoring
+   */
+  handleIntersection(entries) {
+    const startTime = performance.now();
+    
+    entries.forEach(entry => {
+      const callbackData = this.callbacks.get(entry.target);
+      
+      if (callbackData && callbackData.callback) {
+        try {
+          callbackData.callback(entry);
+          
+          // Update observer data
+          const observerData = this.observers.get(callbackData.optionsKey);
+          if (observerData) {
+            observerData.callbackCount++;
+          }
+          
+        } catch (error) {
+          console.error('[ObserverManager] Callback execution failed:', error);
+        }
       }
+    });
+
+    // Performance tracking
+    const processingTime = performance.now() - startTime;
+    this.performanceMetrics.callbackExecutions++;
+    this.performanceMetrics.lastProcessingTime = processingTime;
+    this.performanceMetrics.averageProcessingTime = 
+      ((this.performanceMetrics.averageProcessingTime * (this.performanceMetrics.callbackExecutions - 1)) + processingTime) / 
+      this.performanceMetrics.callbackExecutions;
+  }
+
+  /**
+   * Stop observing an element
+   */
+  unobserve(element) {
+    if (!element || !this.activeElements.has(element)) {
+      return false;
+    }
+
+    const callbackData = this.callbacks.get(element);
+    if (!callbackData) return false;
+
+    const observerData = this.observers.get(callbackData.optionsKey);
+    if (observerData) {
+      observerData.observer.unobserve(element);
+      observerData.elements.delete(element);
+      
+      // Clean up empty observers
+      if (observerData.elements.size === 0) {
+        observerData.observer.disconnect();
+        this.observers.delete(callbackData.optionsKey);
+        this.metrics.totalObservers--;
+      }
+    }
+
+    this.callbacks.delete(element);
+    this.activeElements.delete(element);
+    this.metrics.totalElements--;
+    
+    return true;
+  }
+
+  /**
+   * Normalize options for consistent observer grouping
+   */
+  normalizeOptions(options) {
+    return {
+      root: options.root || null,
+      rootMargin: options.rootMargin || '0px',
+      threshold: Array.isArray(options.threshold) 
+        ? options.threshold.slice().sort() 
+        : [options.threshold || 0]
+    };
+  }
+
+  /**
+   * Generate unique key for options
+   */
+  getOptionsKey(options) {
+    return JSON.stringify({
+      root: options.root ? 'custom' : null,
+      rootMargin: options.rootMargin,
+      threshold: options.threshold
     });
   }
 
+  /**
+   * Get performance and usage statistics
+   */
+  getStats() {
+    const observerDetails = Array.from(this.observers.entries()).map(([key, data]) => ({
+      optionsKey: key,
+      elementCount: data.elements.size,
+      callbackCount: data.callbackCount,
+      ageMs: Date.now() - data.createdAt,
+      options: data.options
+    }));
+
+    return {
+      summary: {
+        totalObservers: this.metrics.totalObservers,
+        totalElements: this.metrics.totalElements,
+        uniqueConfigurations: this.metrics.observerConfigs.size,
+        averageElementsPerObserver: this.metrics.totalObservers > 0 
+          ? (this.metrics.totalElements / this.metrics.totalObservers).toFixed(2)
+          : 0
+      },
+      performance: this.performanceMetrics,
+      observers: observerDetails,
+      efficiency: {
+        consolidationRatio: this.metrics.observerConfigs.size > 0 
+          ? (this.metrics.totalObservers / this.metrics.observerConfigs.size).toFixed(2)
+          : 1,
+        averageProcessingTime: this.performanceMetrics.averageProcessingTime.toFixed(2) + 'ms'
+      }
+    };
+  }
+
+  /**
+   * Cleanup all observers
+   */
   cleanup() {
     this.observers.forEach(({ observer }) => {
       observer.disconnect();
     });
+    
     this.observers.clear();
+    this.callbacks = new WeakMap();
+    this.activeElements = new WeakSet();
+    
+    // Reset metrics
+    this.metrics = {
+      totalObservers: 0,
+      totalElements: 0,
+      observerConfigs: new Set()
+    };
+    
+    console.log('[ObserverManager] Cleanup completed');
+  }
+
+  /**
+   * Debug helper - log current state
+   */
+  logStats() {
+    const stats = this.getStats();
+    console.group('[ObserverManager] Performance Stats');
+    console.table(stats.summary);
+    console.table(stats.performance);
+    console.table(stats.observers);
+    console.log('Efficiency Metrics:', stats.efficiency);
+    console.groupEnd();
   }
 }
 

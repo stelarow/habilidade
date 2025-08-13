@@ -1,6 +1,8 @@
 import { ViteReactSSG } from 'vite-react-ssg'
 import { routes } from './routes.jsx'
 import { intelligentPreload } from './utils/dynamicImports.js'
+import { intersectionObserverManager } from './utils/performanceOptimizer.js'
+import './utils/observerMonitoring.js' // Auto-inicializa o monitoramento
 import './index.css'
 
 export const createRoot = ViteReactSSG(
@@ -76,42 +78,54 @@ export const createRoot = ViteReactSSG(
         });
       });
 
-      // Otimização de performance - Intersection Observer aprimorado para lazy loading
+      // Otimização de performance - Intersection Observer centralizado para lazy loading
       if ('IntersectionObserver' in window) {
-        const imageObserver = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              const img = entry.target;
-              
-              // Suporte a data-src e srcset
-              if (img.dataset.src) {
-                img.src = img.dataset.src;
-                
-                // Carregar srcset se disponível
-                if (img.dataset.srcset) {
-                  img.srcset = img.dataset.srcset;
-                }
-                
-                img.classList.remove('lazy');
-                img.classList.add('loaded');
-                imageObserver.unobserve(img);
-              }
-              
-              // Fallback para loading nativo
-              if (img.loading === 'lazy') {
-                img.loading = 'eager';
-              }
-            }
-          });
-        }, {
-          rootMargin: '100px 0px', // Aumentado para carregamento mais suave
-          threshold: 0.1
-        });
-
-        // Observer aprimorado para executar após DOM ready
-        const observeImages = () => {
-          const lazyImages = document.querySelectorAll('img.lazy, img[data-src], img[loading="lazy"]');
+        // Função para inicializar lazy loading de imagens
+        const initializeLazyImages = () => {
+          const lazyImages = document.querySelectorAll('img[data-src], img.lazy');
+          
           lazyImages.forEach(img => {
+            intersectionObserverManager.observe(
+              img,
+              (entry) => {
+                if (entry.isIntersecting) {
+                  const imgElement = entry.target;
+                  
+                  // Suporte a data-src e srcset
+                  if (imgElement.dataset.src) {
+                    imgElement.src = imgElement.dataset.src;
+                    
+                    // Carregar srcset se disponível
+                    if (imgElement.dataset.srcset) {
+                      imgElement.srcset = imgElement.dataset.srcset;
+                    }
+                    
+                    imgElement.classList.remove('lazy');
+                    imgElement.classList.add('loaded');
+                    
+                    // Auto-unobserve após carregar
+                    intersectionObserverManager.unobserve(imgElement);
+                  }
+                  
+                  // Fallback para loading nativo
+                  if (imgElement.loading === 'lazy') {
+                    imgElement.loading = 'eager';
+                  }
+                }
+              },
+              {
+                rootMargin: '100px 0px', // Aumentado para carregamento mais suave
+                threshold: 0.1
+              }
+            );
+          });
+        };
+
+        // Executar inicialização de lazy images
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initializeLazyImages);
+        } else {
+          initializeLazyImages();
             imageObserver.observe(img);
           });
         };
