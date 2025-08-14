@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { generateSitemap } from "./src/utils/sitemapGenerator.js"
+import { criticalCssPlugin } from "./src/plugins/criticalCssPlugin.js"
 
 // Custom plugin for sitemap generation
 const sitemapPlugin = () => {
@@ -28,6 +29,14 @@ export default defineConfig({
   plugins: [
     react(),
     sitemapPlugin()
+    // TODO: Re-enable critical CSS plugin after fixing configuration
+    // criticalCssPlugin({
+    //   inline: true,
+    //   extract: true,
+    //   width: 414, // iPhone 12 Pro width
+    //   height: 896,
+    //   minify: true
+    // })
   ],
 
   base: '/',
@@ -76,12 +85,16 @@ export default defineConfig({
               id.includes('node_modules/axios/')) {
             return 'external-services';
           }
-          // Heavy utilities (código pesado raramente usado)
-          if (id.includes('node_modules/html2canvas/') ||
-              id.includes('node_modules/jspdf/') ||
-              id.includes('node_modules/marked/') ||
+          // Heavy utilities - Split into separate chunks for conditional loading
+          if (id.includes('node_modules/html2canvas/')) {
+            return 'html2canvas';
+          }
+          if (id.includes('node_modules/jspdf/')) {
+            return 'jspdf';
+          }
+          if (id.includes('node_modules/marked/') ||
               id.includes('node_modules/highlight.js/')) {
-            return 'heavy-utils';
+            return 'markdown-utils';
           }
           // Utils e hooks (código próprio)
           if (id.includes('/src/hooks/') || id.includes('/src/utils/')) {
@@ -124,6 +137,7 @@ export default defineConfig({
     
     // Compressão e minificação otimizada
     minify: 'terser',
+    cssMinify: 'lightningcss',
     terserOptions: {
       compress: {
         drop_console: true, // Remove console.log em produção
@@ -139,9 +153,9 @@ export default defineConfig({
     },
     
     // Otimizações de tamanho agressivas
-    chunkSizeWarningLimit: 500, // Limite menor para forçar chunks menores
+    chunkSizeWarningLimit: 250, // Limite menor para forçar chunks menores
     sourcemap: false,
-    cssCodeSplit: true,
+    cssCodeSplit: false, // Desabilitar CSS code split para reduzir render-blocking
     
     // Otimizações de performance para mobile
     target: ['es2020', 'chrome80', 'safari13'],
@@ -149,11 +163,14 @@ export default defineConfig({
       polyfill: false
     },
     
-    // Tree shaking agressivo
+    // Tree shaking agressivo para remover código não utilizado
     treeshake: {
       moduleSideEffects: false,
       propertyReadSideEffects: false,
-      unknownGlobalSideEffects: false
+      unknownGlobalSideEffects: false,
+      tryCatchDeoptimization: false,
+      // Remover código morto mais agressivamente
+      preset: 'smallest'
     }
   },
   
@@ -181,7 +198,10 @@ export default defineConfig({
       'html2canvas',
       'jspdf',
       'highlight.js',
-      'framer-motion'
+      'framer-motion',
+      'marked',
+      // Defer Google Analytics related
+      'gtag'
     ],
     // Force rebuild when dependencies change
     force: false

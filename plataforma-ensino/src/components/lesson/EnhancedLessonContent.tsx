@@ -15,11 +15,7 @@ import {
   ChevronDown,
   ChevronUp,
   Eye,
-  EyeOff,
-  Type,
-  Sun,
-  Moon,
-  Contrast
+  EyeOff
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -33,12 +29,6 @@ interface ContentSection {
   isCompleted?: boolean
 }
 
-interface ReadingPreferences {
-  fontSize: 'small' | 'medium' | 'large' | 'xl'
-  contrast: 'normal' | 'high' | 'dark'
-  lineHeight: 'compact' | 'normal' | 'relaxed'
-  showReadingTime: boolean
-}
 
 interface EnhancedLessonContentProps {
   content: string
@@ -59,12 +49,7 @@ export const EnhancedLessonContent: React.FC<EnhancedLessonContentProps> = ({
 }) => {
   const [expandedSections, setExpandedSections] = useState<string[]>(['content'])
   const [completedSections, setCompletedSections] = useState<string[]>([])
-  const [readingPreferences, setReadingPreferences] = useState<ReadingPreferences>({
-    fontSize: 'medium',
-    contrast: 'normal',
-    lineHeight: 'normal',
-    showReadingTime: true
-  })
+  const [showReadingTime] = useState(true)
   const [isReadingMode, setIsReadingMode] = useState(false)
   const [viewType, setViewType] = useState<'structured' | 'reading' | 'outline'>('structured')
   const contentRef = useRef<HTMLDivElement>(null)
@@ -107,33 +92,8 @@ export const EnhancedLessonContent: React.FC<EnhancedLessonContentProps> = ({
     })
   }
 
-  const getFontSizeClass = () => {
-    const sizes = {
-      small: 'text-sm',
-      medium: 'text-base',
-      large: 'text-lg',
-      xl: 'text-xl'
-    }
-    return sizes[readingPreferences.fontSize]
-  }
 
-  const getLineHeightClass = () => {
-    const heights = {
-      compact: 'leading-snug',
-      normal: 'leading-normal',
-      relaxed: 'leading-relaxed'
-    }
-    return heights[readingPreferences.lineHeight]
-  }
 
-  const getContrastClass = () => {
-    const contrasts = {
-      normal: 'lesson-content-enhanced',
-      high: 'lesson-content-enhanced contrast-more',
-      dark: 'lesson-content-enhanced dark'
-    }
-    return contrasts[readingPreferences.contrast]
-  }
 
   const getSectionIcon = (type: ContentSection['type']) => {
     const icons = {
@@ -169,7 +129,7 @@ export const EnhancedLessonContent: React.FC<EnhancedLessonContentProps> = ({
               <CardDescription className="mt-2">{description}</CardDescription>
             </div>
             <div className="flex items-center gap-2">
-              {readingPreferences.showReadingTime && (
+              {showReadingTime && (
                 <Badge variant="outline" className="flex items-center gap-1">
                   <Clock className="w-3 h-3" />
                   {estimatedReadingTime} min
@@ -190,12 +150,7 @@ export const EnhancedLessonContent: React.FC<EnhancedLessonContentProps> = ({
         <CardContent className="p-8">
           <div 
             ref={contentRef}
-            className={cn(
-              'prose prose-slate dark:prose-invert prose-violet max-w-none',
-              getContrastClass(),
-              getFontSizeClass(),
-              getLineHeightClass()
-            )}
+            className="prose prose-slate dark:prose-invert prose-violet max-w-none"
             dangerouslySetInnerHTML={{ __html: content }}
           />
         </CardContent>
@@ -218,7 +173,7 @@ export const EnhancedLessonContent: React.FC<EnhancedLessonContentProps> = ({
             </div>
             
             <div className="flex items-center gap-2 flex-wrap">
-              {readingPreferences.showReadingTime && (
+              {showReadingTime && (
                 <Badge variant="outline" className="flex items-center gap-1">
                   <Clock className="w-3 h-3" />
                   {estimatedReadingTime} min
@@ -342,12 +297,7 @@ export const EnhancedLessonContent: React.FC<EnhancedLessonContentProps> = ({
                 <Separator />
                 <CardContent className="p-6">
                   <div 
-                    className={cn(
-                      'prose prose-slate dark:prose-invert prose-violet max-w-none',
-                      getContrastClass(),
-                      getFontSizeClass(),
-                      getLineHeightClass()
-                    )}
+                    className="prose prose-slate dark:prose-invert prose-violet max-w-none"
                     dangerouslySetInnerHTML={{ __html: section.content }}
                   />
                 </CardContent>
@@ -357,71 +307,6 @@ export const EnhancedLessonContent: React.FC<EnhancedLessonContentProps> = ({
         ))}
       </div>
 
-      {/* Reading Preferences Panel */}
-      <Card className="border-muted">
-        <CardHeader>
-          <CardTitle className="text-lg flex items-center gap-2">
-            <Type className="w-5 h-5" />
-            Preferências de Leitura
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div>
-              <label className="text-sm font-medium mb-2 block">Tamanho da Fonte</label>
-              <div className="flex gap-1">
-                {(['small', 'medium', 'large', 'xl'] as const).map((size) => (
-                  <Button
-                    key={size}
-                    variant={readingPreferences.fontSize === size ? 'default' : 'outline'}
-                    size="sm"
-                    onClick={() => setReadingPreferences(prev => ({ ...prev, fontSize: size }))}
-                    className="text-xs"
-                  >
-                    {size === 'small' ? 'P' : size === 'medium' ? 'M' : size === 'large' ? 'G' : 'XG'}
-                  </Button>
-                ))}
-              </div>
-            </div>
-            
-            <div>
-              <label className="text-sm font-medium mb-2 block">Contraste</label>
-              <div className="flex gap-1">
-                {(['normal', 'high', 'dark'] as const).map((contrast) => (
-                  <Button
-                    key={contrast}
-                    variant={readingPreferences.contrast === contrast ? 'default' : 'outline'}
-                    size="sm"
-                    onClick={() => setReadingPreferences(prev => ({ ...prev, contrast }))}
-                    className="text-xs"
-                  >
-                    {contrast === 'normal' ? <Sun className="w-3 h-3" /> : 
-                     contrast === 'high' ? <Contrast className="w-3 h-3" /> : 
-                     <Moon className="w-3 h-3" />}
-                  </Button>
-                ))}
-              </div>
-            </div>
-            
-            <div>
-              <label className="text-sm font-medium mb-2 block">Espaçamento</label>
-              <div className="flex gap-1">
-                {(['compact', 'normal', 'relaxed'] as const).map((height) => (
-                  <Button
-                    key={height}
-                    variant={readingPreferences.lineHeight === height ? 'default' : 'outline'}
-                    size="sm"
-                    onClick={() => setReadingPreferences(prev => ({ ...prev, lineHeight: height }))}
-                    className="text-xs"
-                  >
-                    {height === 'compact' ? 'C' : height === 'normal' ? 'N' : 'R'}
-                  </Button>
-                ))}
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
     </div>
   )
 }

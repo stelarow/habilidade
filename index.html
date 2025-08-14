@@ -30,6 +30,7 @@
     <!-- Performance optimizations for mobile -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
     
     <!-- Font loading otimizado com preload -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" 
@@ -37,6 +38,9 @@
     <noscript>
       <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet" />
     </noscript>
+    
+    <!-- Critical CSS Performance Metrics -->
+    <!-- Placeholder for critical CSS metrics -->
     
     <!-- Schema.org Structured Data -->
     <script type="application/ld+json">
@@ -309,13 +313,22 @@
     
     <title>Escola Habilidade - Cursos em Florianópolis e São José</title>
     
-    <!-- Google Analytics -->
-    <script async defer src="https://www.googletagmanager.com/gtag/js?id=G-J4RJQLG6WP"></script>
-    <script defer>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-J4RJQLG6WP');
+    <!-- Google Analytics - Deferred for better performance -->
+    <script>
+      // Load Google Analytics after page is interactive
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          const script = document.createElement('script');
+          script.src = 'https://www.googletagmanager.com/gtag/js?id=G-J4RJQLG6WP';
+          script.async = true;
+          document.head.appendChild(script);
+          
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-J4RJQLG6WP');
+        }, 1000); // Delay 1s after load
+      });
     </script>
   </head>
   <body class="font-sans">

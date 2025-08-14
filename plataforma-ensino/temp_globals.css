@@ -796,39 +796,3 @@ body {
     pointer-events: auto;
   }
 
-  #enhanced-lesson-content {
-    scroll-behavior: smooth;
-  }
-
-  /* Loading states for content sections */
-  .content-section-loading {
-    background: linear-gradient(90deg, 
-      rgba(139, 92, 246, 0.05), 
-      rgba(139, 92, 246, 0.15), 
-      rgba(139, 92, 246, 0.05)
-    );
-    background-size: 200% 100%;
-    animation: shimmer 2s infinite;
-  }
-
-  /* Content typography enhancements */
-  .enhanced-lesson-typography {
-    font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-
-  /* High contrast mode improvements */
-  @media (prefers-contrast: high) {
-    .content-section-card {
-      border: 2px solid rgba(139, 92, 246, 1);
-      background: rgba(0, 0, 0, 0.9);
-    }
-
-    .reading-time-badge {
-      background: rgba(139, 92, 246, 1);
-      color: white;
-    }
-  }
-}
