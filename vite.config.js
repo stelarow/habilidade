@@ -30,7 +30,7 @@ export default defineConfig({
     sitemapPlugin()
   ],
 
-  base: '/',
+base: '/',
   
   // Definições para remoção de código em produção
   define: {
