@@ -78,20 +78,26 @@ export const LazyMobileMegaMenu = withLazy(MobileMegaMenu, <MenuFallback />);
 
 // Preload functions for critical components
 export const preloadCriticalComponents = () => {
+  console.log('🔄 PRELOAD: Loading critical components...');
   // Preload components that are likely to be needed
   ContactForm;
   MegaMenu;
   MobileMegaMenu;
+  console.log('✅ PRELOAD: Critical components loaded');
 };
 
 export const preloadBlogComponents = () => {
+  console.log('📝 PRELOAD: Loading blog components...');
   BlogTypography;
   ShareButtons;
   TableOfContents;
+  console.log('✅ PRELOAD: Blog components loaded');
 };
 
 export const preloadCourseComponents = () => {
+  console.log('🎓 PRELOAD: Loading course components...');
   CourseCurriculum;
   CourseTestimonials;
   CourseContactForm;
+  console.log('✅ PRELOAD: Course components loaded');
 };

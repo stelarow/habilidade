@@ -684,7 +684,11 @@ const ResultsDashboard = ({ results, onRestart }) => {
 
   // Função para gerar PDF do resultado
   const generatePDF = async () => {
-    if (!pdfContentRef.current) return;
+    console.log('📄 TESTE VOCACIONAL: Starting PDF generation');
+    if (!pdfContentRef.current) {
+      console.error('❌ PDF: pdfContentRef not found');
+      return;
+    }
     
     setIsGeneratingPDF(true);
     
@@ -692,6 +696,7 @@ const ResultsDashboard = ({ results, onRestart }) => {
     analytics.trackPDFDownloaded(dominantArea.area);
     
     try {
+      console.log('🔧 PDF: Calling html2canvas...');
       // Capturar apenas o conteúdo dos resultados (sem os botões de ação)
       const canvas = await html2canvas(pdfContentRef.current, {
         height: pdfContentRef.current.scrollHeight,
@@ -702,8 +707,12 @@ const ResultsDashboard = ({ results, onRestart }) => {
         backgroundColor: '#f9fafb'
       });
       
+      console.log('✅ PDF: html2canvas completed, canvas size:', canvas.width, 'x', canvas.height);
+      
       const imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF('p', 'mm', 'a4');
+      
+      console.log('📄 PDF: jsPDF instance created');
       
       // Calcular dimensões para o PDF
       const pageWidth = pdf.internal.pageSize.getWidth();
@@ -1114,10 +1123,13 @@ const TesteVocacional = () => {
   
   // Track page view on mount
   useEffect(() => {
+    console.log('🎯 TESTE VOCACIONAL: Component mounted');
+    console.log('📊 TESTE VOCACIONAL: Initial state - step:', currentStep);
     analytics.trackTestPageView();
   }, []);
 
   const handleStartTest = () => {
+    console.log('🚀 TESTE VOCACIONAL: Starting test');
     setCurrentStep('test');
     // Track início do teste
     analytics.trackTestStart();
@@ -1136,6 +1148,7 @@ const TesteVocacional = () => {
   };
 
   const handleTestComplete = (testResults) => {
+    console.log('✅ TESTE VOCACIONAL: Test completed', testResults);
     setResults(testResults);
     setCurrentStep('results');
   };

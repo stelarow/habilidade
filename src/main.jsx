@@ -8,6 +8,8 @@ export const createRoot = ViteReactSSG(
   ({ router, routes, isClient, initialState }) => {
     // Setup providers and initialize performance optimizations
     if (isClient) {
+      console.log('🚀 MAIN.JSX: Client-side initialization started');
+      console.log('📍 CURRENT PATH:', window.location.pathname);
       // Initialize client-side optimizations
       const preconnectLinks = [
         'https://fonts.googleapis.com',
@@ -28,13 +30,18 @@ export const createRoot = ViteReactSSG(
       const currentPath = window.location.pathname;
       
       // Sistema de preload inteligente
+      console.log('🔄 PRELOAD: Starting intelligent preload for', currentPath);
       intelligentPreload(currentPath);
       
       // Preload inteligente baseado na página
       if (currentPath.startsWith('/blog')) {
+        console.log('📝 BLOG PRELOAD: Loading blog components');
         // Preload componentes do blog
         import('./components/LazyComponents.jsx').then(module => {
+          console.log('✅ BLOG COMPONENTS: Loaded successfully');
           module.preloadBlogComponents();
+        }).catch(err => {
+          console.error('❌ BLOG COMPONENTS: Failed to load', err);
         });
       } else if (currentPath.startsWith('/cursos/')) {
         // Preload componentes de curso

@@ -58,7 +58,8 @@ const BlogPost = () => {
   
   // Force scroll to top and reset state when slug changes
   useEffect(() => {
-    console.log('[BlogPost] Slug changed to:', slug);
+    console.log('📝 BLOG POST: Slug changed to:', slug);
+    console.log('🔄 BLOG POST: Scrolling to top and resetting state');
     window.scrollTo(0, 0);
     
     // Force React Query to refetch by removing the cache for this specific post
@@ -76,16 +77,25 @@ const BlogPost = () => {
   
   // Debug logging
   useEffect(() => {
-    console.log('[BlogPost] Data state changed:', { data, isLoading, isError, slug });
-  }, [data, isLoading, isError, slug]);
+    console.log('📊 BLOG POST: Data state changed:', { data, isLoading, isError, slug });
+    if (post) {
+      console.log('✅ BLOG POST: Content loaded successfully:', {
+        title: post.title,
+        hasContent: !!post.content,
+        contentLength: post.content?.length || 0
+      });
+    }
+  }, [data, isLoading, isError, slug, post]);
 
   // Loading state
   if (isLoading) {
+    console.log('⏳ BLOG POST: Loading state active for slug:', slug);
     return <BlogLoading />;
   }
 
   // Error state
   if (isError) {
+    console.error('❌ BLOG POST: Error state active:', error);
     return <BlogError error={error} />;
   }
 

@@ -52,68 +52,49 @@ base: '/',
       external: [],
       output: {
         manualChunks(id) {
-          // Vendor chunk para bibliotecas principais (mais granular)
-          if (id.includes('node_modules/react/') || id.includes('node_modules/react-dom/')) {
+          console.log('🔧 CHUNK PROCESSING:', id);
+          
+          // 1. React vendor (essencial) - Fase 1
+          if (id.includes('node_modules/react/') || 
+              id.includes('node_modules/react-dom/')) {
+            console.log('✅ REACT VENDOR CHUNK:', id);
             return 'react-vendor';
           }
-          // Router chunk separado
+          
+          // 2. Router separado - Fase 1
           if (id.includes('node_modules/react-router-dom/')) {
+            console.log('✅ ROUTER CHUNK:', id);
             return 'router';
           }
-          // UI Libraries chunk
-          if (id.includes('node_modules/@phosphor-icons/') ||
-              id.includes('node_modules/lucide-react/') ||
-              id.includes('node_modules/react-icons/')) {
-            return 'ui-icons';
-          }
-          // Animation libraries
-          if (id.includes('node_modules/framer-motion/')) {
-            return 'animations';
-          }
-          // Email and external services
-          if (id.includes('node_modules/@emailjs/') ||
-              id.includes('node_modules/@supabase/') ||
-              id.includes('node_modules/axios/')) {
-            return 'external-services';
-          }
-          // Heavy utilities (código pesado raramente usado)
+          
+          // 3. Bibliotecas pesadas (lazy load) - Fase 1
           if (id.includes('node_modules/html2canvas/') ||
-              id.includes('node_modules/jspdf/') ||
-              id.includes('node_modules/marked/') ||
-              id.includes('node_modules/highlight.js/')) {
+              id.includes('node_modules/jspdf/')) {
+            console.log('✅ HEAVY UTILS CHUNK:', id);
             return 'heavy-utils';
           }
-          // Utils e hooks (código próprio)
-          if (id.includes('/src/hooks/') || id.includes('/src/utils/')) {
-            return 'app-utils';
+          
+          // 4. Serviços externos - Fase 1 (mais conservador)
+          if (id.includes('node_modules/@emailjs/')) {
+            console.log('✅ EXTERNAL SERVICES CHUNK:', id);
+            return 'external-services';
           }
-          // Blog-specific chunk for better caching
-          if (id.includes('/src/services/blogAPI.js') || 
-              id.includes('/src/utils/blogCache.js') ||
-              id.includes('/src/hooks/useBlogCache.js') ||
-              id.includes('/src/services/cacheService.js') ||
-              id.includes('/src/utils/imageOptimizer.js') ||
-              id.includes('/src/services/imageService.js')) {
-            return 'blog-api';
+          
+          // IMPORTANTE: NÃO dividir marked e highlight.js inicialmente
+          // Eles podem ser necessários para renderização do blog
+          if (id.includes('node_modules/marked/') ||
+              id.includes('node_modules/highlight.js/')) {
+            console.log('⚠️ KEEPING IN MAIN BUNDLE (blog critical):', id);
+            return undefined; // Manter no bundle principal
           }
-          // Blog components chunk
-          if (id.includes('/src/components/blog/')) {
-            return 'blog-components';
+          
+          // Log para outros modules importantes
+          if (id.includes('node_modules/')) {
+            console.log('📦 OTHER MODULE (main bundle):', id);
           }
-          // Course components chunk
-          if (id.includes('/src/components/course/') ||
-              id.includes('/src/pages/courses/')) {
-            return 'course-components';
-          }
-          // Shared components chunk
-          if (id.includes('/src/components/shared/') ||
-              id.includes('/src/components/header/')) {
-            return 'shared-components';
-          }
-          // Backgrounds em chunk separado (lazy load)
-          if (id.includes('/src/components/backgrounds/')) {
-            return 'backgrounds';
-          }
+          
+          // Retornar undefined para manter no bundle principal (mais seguro)
+          return undefined;
         },
         // Nomes consistentes para cache
         chunkFileNames: 'assets/js/[name]-[hash].js',
