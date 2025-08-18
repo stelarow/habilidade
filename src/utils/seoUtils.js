@@ -11,7 +11,7 @@ const BASE_URL = process.env.NODE_ENV === 'production'
 const SITE_CONFIG = {
   name: 'Escola Habilidade',
   description: 'Desenvolva suas habilidades com cursos de tecnologia, design e negócios. Educação de qualidade para o mercado digital.',
-  logo: `${BASE_URL}/assets/logos/original/logo-original.png`,
+  logo: `${BASE_URL}/logo-escola-habilidade.png`,
   twitter: '@escolahabilidade',
   facebook: 'escolahabilidade',
   linkedIn: 'escola-habilidade'

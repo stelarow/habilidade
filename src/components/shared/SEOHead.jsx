@@ -42,7 +42,7 @@ const SEOHead = ({
   const canonicalUrl = canonical || fullUrl;
   
   // Default image
-  const defaultImage = `${baseUrl}/assets/logos/original/logo-original.png`;
+  const defaultImage = `${baseUrl}/logo-escola-habilidade.png`;
   const ogImage = image || defaultImage;
   
   // Schema.org structured data
@@ -218,7 +218,6 @@ const SEOHead = ({
       <meta name="msapplication-TileColor" content="#d400ff" />
       
       {/* Performance and Loading */}
-      <link rel="preload" href="/assets/logos/original/logo-original.png" as="image" />
       <meta name="referrer" content="strict-origin-when-cross-origin" />
       
       {/* Language and Regional */}

@@ -77,7 +77,7 @@ function BlogPost() {
   // SEO data for meta tags
   const seoTitle = `${post.title} | Escola Habilidade`;
   const seoDescription = post.excerpt || `Aprenda ${post.title} com a Escola Habilidade`;
-  const seoImage = (post.featuredImage?.url || post.imageUrl) || 'https://www.escolahabilidade.com/assets/logos/original/logo-original.png';
+  const seoImage = (post.featuredImage?.url || post.imageUrl) || 'https://www.escolahabilidade.com/logo-escola-habilidade.png';
   const seoUrl = `https://www.escolahabilidade.com/blog/${slug}`;
   const seoAuthor = post.author?.name || 'Escola Habilidade';
 
@@ -145,7 +145,7 @@ function BlogPost() {
               url: 'https://www.escolahabilidade.com',
               logo: {
                 '@type': 'ImageObject',
-                url: 'https://www.escolahabilidade.com/assets/logos/original/logo-original.png'
+                url: 'https://www.escolahabilidade.com/logo-escola-habilidade.png'
               }
             },
             mainEntityOfPage: {
