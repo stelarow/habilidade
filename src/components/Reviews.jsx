@@ -98,16 +98,16 @@ const Reviews = () => {
 
   const formatDateConsistent = (dateString) => {
     const months = {
-      0: 'jan', 1: 'fev', 2: 'mar', 3: 'abr', 
-      4: 'mai', 5: 'jun', 6: 'jul', 7: 'ago',
-      8: 'set', 9: 'out', 10: 'nov', 11: 'dez'
+      '01': 'jan', '02': 'fev', '03': 'mar', '04': 'abr', 
+      '05': 'mai', '06': 'jun', '07': 'jul', '08': 'ago',
+      '09': 'set', '10': 'out', '11': 'nov', '12': 'dez'
     };
     
-    const date = new Date(dateString);
-    const month = months[date.getMonth()];
-    const year = date.getFullYear();
+    // Parse directly from ISO string format (YYYY-MM-DD)
+    const [year, month] = dateString.split('-');
+    const monthName = months[month];
     
-    return `${month}. de ${year}`;
+    return `${monthName}. de ${year}`;
   };
 
   function ReviewCard({ review, index }) {
