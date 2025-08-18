@@ -52,7 +52,7 @@ base: '/',
       external: [],
       output: {
         manualChunks(id) {
-          console.log('🔧 CHUNK PROCESSING:', id);
+
           
           // 1. React vendor (essencial) - Fase 1
           if (id.includes('node_modules/react/') || 
@@ -89,9 +89,7 @@ base: '/',
           }
           
           // Log para outros modules importantes
-          if (id.includes('node_modules/')) {
-            console.log('📦 OTHER MODULE (main bundle):', id);
-          }
+
           
           // Retornar undefined para manter no bundle principal (mais seguro)
           return undefined;
