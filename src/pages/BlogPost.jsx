@@ -149,7 +149,7 @@ const BlogPost = () => {
         url: baseUrl,
         logo: {
           '@type': 'ImageObject',
-          url: `${baseUrl}/assets/logos/original/logo-original.png`
+          url: `${baseUrl}/logo-escola-habilidade.png`
         }
       },
       publisher: {
@@ -158,7 +158,7 @@ const BlogPost = () => {
         url: baseUrl,
         logo: {
           '@type': 'ImageObject',
-          url: `${baseUrl}/assets/logos/original/logo-original.png`
+          url: `${baseUrl}/logo-escola-habilidade.png`
         }
       },
       datePublished: post.publishedAt,
@@ -167,7 +167,7 @@ const BlogPost = () => {
         '@type': 'WebPage',
         '@id': articleMeta.url
       },
-      image: post.featuredImage?.url || `${baseUrl}/assets/logos/original/logo-original.png`,
+      image: post.featuredImage?.url || `${baseUrl}/logo-escola-habilidade.png`,
       wordCount: wordCount,
       timeRequired: `PT${readingTime}M`,
       articleSection: post.category?.name || 'Blog',
