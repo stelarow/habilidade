@@ -5,6 +5,13 @@
   publish = "dist"
   functions = "netlify/functions"
 
+# Build específico para staging branch (debug mode)
+[context.branch-deploy]
+  command = "npm install --include=dev && DEBUG_BUILD=true npm run build"
+
+[context.staging]
+  command = "npm install --include=dev && DEBUG_BUILD=true npm run build"
+
 # Configuração de desenvolvimento local
 [dev]
   functions = "netlify/functions"

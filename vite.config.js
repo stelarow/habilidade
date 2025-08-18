@@ -32,10 +32,10 @@ export default defineConfig({
 
 base: '/',
   
-  // Definições para remoção de código em produção
+  // Definições condicionais baseadas em DEBUG_BUILD
   define: {
-    __DEV__: false,
-    'process.env.NODE_ENV': JSON.stringify('production')
+    __DEV__: process.env.DEBUG_BUILD === 'true',
+    'process.env.NODE_ENV': JSON.stringify(process.env.DEBUG_BUILD === 'true' ? 'development' : 'production')
   },
   
   resolve: {
@@ -101,9 +101,9 @@ base: '/',
       }
     },
     
-    // Compressão e minificação otimizada
-    minify: 'terser',
-    terserOptions: {
+    // Compressão e minificação condicional para debug
+    minify: process.env.DEBUG_BUILD === 'true' ? false : 'terser',
+    terserOptions: process.env.DEBUG_BUILD === 'true' ? undefined : {
       compress: {
         drop_console: true, // Remove console.log em produção
         drop_debugger: true,
@@ -117,9 +117,9 @@ base: '/',
       }
     },
     
-    // Otimizações de tamanho agressivas
-    chunkSizeWarningLimit: 500, // Limite menor para forçar chunks menores
-    sourcemap: false,
+    // Otimizações de tamanho agressivas (desabilitadas no debug)
+    chunkSizeWarningLimit: process.env.DEBUG_BUILD === 'true' ? 10000 : 500, // Limite maior para debug
+    sourcemap: process.env.DEBUG_BUILD === 'true' ? true : false, // Sourcemaps para debug
     cssCodeSplit: true,
     
     // Otimizações de performance para mobile
