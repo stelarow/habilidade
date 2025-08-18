@@ -9,10 +9,14 @@ export const createRoot = ViteReactSSG(
     // Configuração SSG limpa - SEM client-side logic para evitar hydration mismatch
     // Toda lógica client-side foi movida para useClientOnlyEffects hook
     
-    // Inicializa error logger apenas no client
+    // Inicializa error logger apenas no client e em produção
     if (isClient) {
+      const isDevelopment = import.meta.env.DEV;
+      const isProduction = window.location.hostname === 'escolahabilidade.com' || 
+                          window.location.hostname === 'www.escolahabilidade.com';
+      
       initializeErrorLogger({
-        enabled: true,
+        enabled: !isDevelopment && isProduction,
         functionUrl: '/.netlify/functions/error-monitoring/log-error'
       });
     }

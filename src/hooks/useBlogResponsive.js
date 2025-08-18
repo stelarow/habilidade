@@ -1,5 +1,13 @@
 import { useState, useEffect, useCallback } from 'react';
 
+// Breakpoint definitions (matching Tailwind defaults) - moved outside to prevent recreation
+const BREAKPOINTS = {
+  mobile: 768,    // < 768px
+  tablet: 1024,   // 768px - 1023px
+  desktop: 1280,  // 1024px - 1279px
+  large: 1536     // >= 1280px
+};
+
 /**
  * Custom hook for blog-specific responsive behavior
  * Provides breakpoint information and optimized rendering decisions
@@ -14,20 +22,12 @@ export const useBlogResponsive = () => {
     isLargeDesktop: false
   });
 
-  // Breakpoint definitions (matching Tailwind defaults)
-  const breakpoints = {
-    mobile: 768,    // < 768px
-    tablet: 1024,   // 768px - 1023px
-    desktop: 1280,  // 1024px - 1279px
-    large: 1536     // >= 1280px
-  };
-
   // Calculate responsive properties
   const calculateResponsiveData = useCallback((width, height) => {
-    const isMobile = width < breakpoints.mobile;
-    const isTablet = width >= breakpoints.mobile && width < breakpoints.tablet;
-    const isDesktop = width >= breakpoints.tablet && width < breakpoints.large;
-    const isLargeDesktop = width >= breakpoints.large;
+    const isMobile = width < BREAKPOINTS.mobile;
+    const isTablet = width >= BREAKPOINTS.mobile && width < BREAKPOINTS.tablet;
+    const isDesktop = width >= BREAKPOINTS.tablet && width < BREAKPOINTS.large;
+    const isLargeDesktop = width >= BREAKPOINTS.large;
 
     // Grid columns based on screen size
     const gridColumns = isMobile ? 1 : isTablet ? 2 : isDesktop ? 3 : 4;
@@ -69,13 +69,20 @@ export const useBlogResponsive = () => {
       // Aspect ratio
       aspectRatio: width / height
     };
-  }, [breakpoints]);
+  }, []);
 
   // Handle window resize
   const handleResize = useCallback(() => {
     const width = window.innerWidth;
     const height = window.innerHeight;
-    setScreenData(calculateResponsiveData(width, height));
+    
+    // Avoid unnecessary state updates if dimensions haven't changed significantly
+    setScreenData(currentData => {
+      if (Math.abs(currentData.width - width) < 5 && Math.abs(currentData.height - height) < 5) {
+        return currentData;
+      }
+      return calculateResponsiveData(width, height);
+    });
   }, [calculateResponsiveData]);
 
   // Initialize and set up event listeners
@@ -197,7 +204,7 @@ export const useBlogResponsive = () => {
     shouldUseAnimations,
     
     // Breakpoint helpers
-    breakpoints,
+    breakpoints: BREAKPOINTS,
     
     // Quick responsive checks
     isSmallScreen: screenData.isMobile,

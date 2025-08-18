@@ -116,7 +116,15 @@ class FrontendErrorLogger {
       try {
         await this.sendError(enrichedError);
       } catch (networkError) {
-        console.warn('Failed to send error to server:', networkError);
+        // Only warn in production, silently fail in development
+        const isDevelopment = window.location.hostname === 'localhost' || 
+                             window.location.hostname === '127.0.0.1' ||
+                             window.location.port === '5173' ||
+                             window.location.port === '3000';
+        
+        if (!isDevelopment) {
+          console.warn('Failed to send error to server:', networkError);
+        }
         this.queueError(enrichedError);
       }
     } else {
@@ -128,19 +136,35 @@ class FrontendErrorLogger {
    * Send error to Netlify Function
    */
   async sendError(errorData) {
-    const response = await fetch(this.functionUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(errorData)
-    });
+    try {
+      const response = await fetch(this.functionUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(errorData)
+      });
 
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+
+      return response.json();
+    } catch (error) {
+      // In development, silently fail instead of logging to console
+      const isDevelopment = window.location.hostname === 'localhost' || 
+                           window.location.hostname === '127.0.0.1' ||
+                           window.location.port === '5173' ||
+                           window.location.port === '3000';
+      
+      if (isDevelopment) {
+        // Fail silently in development
+        return Promise.resolve({ success: false, development: true });
+      }
+      
+      // Re-throw for production environments
+      throw error;
     }
-
-    return response.json();
   }
 
   /**
