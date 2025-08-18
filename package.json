@@ -23,7 +23,17 @@
     "perf:audit": "lighthouse --only-categories=performance --output=json --output-path=lighthouse-audit.json http://localhost:4173",
     "perf:test": "npm run build && npm run preview & sleep 3 && npm run perf:audit",
     "clean": "rm -rf dist/ node_modules/.vite/",
-    "fresh": "npm run clean && npm install && npm run build"
+    "fresh": "npm run clean && npm install && npm run build",
+    "functions:dev": "netlify dev",
+    "functions:serve": "netlify functions:serve",
+    "functions:create": "netlify functions:create",
+    "functions:list": "netlify functions:list",
+    "functions:invoke": "netlify functions:invoke",
+    "functions:invoke:health": "netlify functions:invoke health-check",
+    "functions:invoke:contact": "netlify functions:invoke contact-handler --payload '{\"name\":\"Test User\",\"email\":\"test@example.com\",\"subject\":\"Test Subject\",\"message\":\"Test message\"}'",
+    "functions:invoke:logger": "netlify functions:invoke dev-logger --querystring \"type=debug&source=test&message=Test log message\"",
+    "functions:debug": "NODE_OPTIONS='--inspect' netlify functions:serve",
+    "functions:test": "node scripts/test-functions.js"
   },
   "dependencies": {
     "@dr.pogodin/react-helmet": "^3.0.2",

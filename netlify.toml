@@ -3,6 +3,12 @@
   # Instala dependências de produção e desenvolvimento (evita erro `vite: not found`)
   command = "npm install --include=dev && npm run build"
   publish = "dist"
+  functions = "netlify/functions"
+
+# Configuração de desenvolvimento local
+[dev]
+  functions = "netlify/functions"
+  functionsPort = 9999
 
 # Domain redirects
 [[redirects]]
