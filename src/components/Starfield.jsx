@@ -3,8 +3,12 @@ import { useMemo, useEffect, useState } from 'react';
 function Starfield({ count = 50, className = '' }) {
   const [isMobile, setIsMobile] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [isHydrated, setIsHydrated] = useState(false);
 
   useEffect(() => {
+    // Mark as hydrated (client-only)
+    setIsHydrated(true);
+    
     // Detectar mobile
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
@@ -21,6 +25,9 @@ function Starfield({ count = 50, className = '' }) {
   }, []);
 
   const stars = useMemo(() => {
+    // Only generate stars after hydration to prevent SSR/client mismatch
+    if (!isHydrated) return [];
+    
     // Se preferência de movimento reduzido, não mostrar estrelas
     if (prefersReducedMotion) return [];
     
@@ -37,10 +44,10 @@ function Starfield({ count = 50, className = '' }) {
       arr.push({ left, top, size, delay, duration });
     }
     return arr;
-  }, [count, isMobile, prefersReducedMotion]);
+  }, [count, isMobile, prefersReducedMotion, isHydrated]);
 
-  // Não renderizar nada se preferência de movimento reduzido
-  if (prefersReducedMotion) return null;
+  // Não renderizar nada se preferência de movimento reduzido ou não hidratado
+  if (prefersReducedMotion || !isHydrated) return null;
 
   return (
     <div className={`absolute inset-0 pointer-events-none ${className}`} aria-hidden="true">
