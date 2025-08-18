@@ -96,6 +96,20 @@ const Reviews = () => {
     return name.split(' ').map(n => n[0]).join('').toUpperCase();
   };
 
+  const formatDateConsistent = (dateString) => {
+    const months = {
+      0: 'jan', 1: 'fev', 2: 'mar', 3: 'abr', 
+      4: 'mai', 5: 'jun', 6: 'jul', 7: 'ago',
+      8: 'set', 9: 'out', 10: 'nov', 11: 'dez'
+    };
+    
+    const date = new Date(dateString);
+    const month = months[date.getMonth()];
+    const year = date.getFullYear();
+    
+    return `${month}. de ${year}`;
+  };
+
   function ReviewCard({ review, index }) {
     const [ref, visible] = useInView();
     
@@ -140,10 +154,7 @@ const Reviews = () => {
                 <div className="text-right">
                   <div className="flex items-center gap-1 text-xs text-zinc-500 mb-1">
                     <Calendar size={10} />
-                    {new Date(review.date).toLocaleDateString('pt-BR', {
-                      month: 'short',
-                      year: 'numeric'
-                    })}
+                    {formatDateConsistent(review.date)}
                   </div>
                   <div className="flex items-center gap-1 text-xs text-zinc-500">
                     <MapPin size={10} />
