@@ -11,6 +11,7 @@ class DOMOptimizer {
     this.visibleElements = new Set();
     this.cleanupTasks = new Set();
     this.isServer = typeof window === 'undefined';
+    this.isHydrated = false; // Flag to track hydration status
     this.config = {
       // Limites para elementos DOM
       maxVisibleElements: 200,
@@ -28,10 +29,8 @@ class DOMOptimizer {
       maxIdleTime: 30000
     };
     
-    // Only initialize if we're in browser environment
-    if (!this.isServer) {
-      this.init();
-    }
+    // Don't auto-initialize to avoid hydration issues
+    // Will be manually initialized after hydration
   }
 
   init() {
@@ -40,6 +39,21 @@ class DOMOptimizer {
     this.setupIntersectionObserver();
     this.setupMutationObserver();
     this.setupPeriodicCleanup();
+    
+    // Only run initial DOM optimization if hydrated
+    if (this.isHydrated) {
+      this.optimizeInitialDOM();
+    }
+  }
+
+  /**
+   * Initialize optimizer after hydration is complete
+   */
+  initializeAfterHydration() {
+    if (this.isServer) return;
+    
+    this.isHydrated = true;
+    this.init();
     this.optimizeInitialDOM();
   }
 

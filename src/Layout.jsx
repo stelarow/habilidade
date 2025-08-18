@@ -30,15 +30,25 @@ function Layout() {
   useEffect(() => {
     // Only run in browser environment
     if (typeof window !== 'undefined' && typeof document !== 'undefined') {
-      // Aplicar otimizações baseadas no nível de performance
-      if (performanceLevel === 'LOW') {
-        // Reduzir animações para dispositivos baixa performance
-        document.documentElement.style.setProperty('--animation-duration', '0.1s');
-        document.documentElement.style.setProperty('--transition-duration', '0.1s');
-      }
+      // Wait for React to finish hydration before initializing DOM optimizer
+      const initializeOptimizer = () => {
+        // Aplicar otimizações baseadas no nível de performance
+        if (performanceLevel === 'LOW') {
+          // Reduzir animações para dispositivos baixa performance
+          document.documentElement.style.setProperty('--animation-duration', '0.1s');
+          document.documentElement.style.setProperty('--transition-duration', '0.1s');
+        }
+
+        // Initialize DOM optimizer after hydration
+        domOptimizer.initializeAfterHydration();
+      };
+
+      // Use setTimeout to ensure hydration is complete
+      const timeoutId = setTimeout(initializeOptimizer, 100);
 
       // Cleanup no unmount
       return () => {
+        clearTimeout(timeoutId);
         domOptimizer.destroy();
       };
     }
