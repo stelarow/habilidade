@@ -43,8 +43,15 @@ class DOMErrorBoundary extends Component {
   }
 
   static getDerivedStateFromError(error) {
-    // Captura especificamente erros relacionados ao removeChild
-    if (error.message && error.message.includes('removeChild')) {
+    // Captura erros DOM relacionados ao React 19 + Framer Motion
+    const isDOMError = error.message && (
+      error.message.includes('removeChild') ||
+      error.message.includes('insertBefore') ||
+      error.message.includes('appendChild') ||
+      error.message.includes('Node')
+    );
+    
+    if (isDOMError) {
       return { hasError: true, error };
     }
     // Para outros erros, relança para o Error Boundary pai
@@ -55,10 +62,11 @@ class DOMErrorBoundary extends Component {
     // Log do erro para debugging
     console.warn('🔧 DOM Error Boundary caught:', error.message);
     console.warn('🔧 Error Details:', errorInfo);
+    console.warn('🔧 React Version: 19.1.0, Framer Motion: 12.23.12');
     
     // Track error para analytics
     if (typeof analytics?.trackError === 'function') {
-      analytics.trackError(error.message, 'DOM_BOUNDARY');
+      analytics.trackError(`React19_DOM_Error: ${error.message}`, 'DOM_BOUNDARY');
     }
   }
 
@@ -533,7 +541,7 @@ const VocationalTest = ({ onComplete }) => {
         setCurrentQuestion(currentQuestion + 1);
         // Track progresso
         analytics.trackTestProgress(currentQuestion + 2, questions.length);
-      }, 500); // Aumentado de 300ms para 500ms para evitar race conditions
+      }, 300);
     } else {
       setIsCompleted(true);
       const results = calculateResults(newAnswers);
@@ -550,7 +558,7 @@ const VocationalTest = ({ onComplete }) => {
       
       setTimeout(() => {
         onComplete(results);
-      }, 500);
+      }, 300);
     }
   };
 
@@ -617,7 +625,7 @@ const VocationalTest = ({ onComplete }) => {
   const question = questions[currentQuestion];
 
   return (
-    <div className="max-w-4xl mx-auto" key={`test-container-${currentQuestion}`}>
+    <div className="max-w-4xl mx-auto" key={`test-container-stable`}>
       {/* Progress Bar */}
       <div className="mb-8">
         <div className="flex justify-between text-sm text-gray-600 mb-2">
@@ -636,15 +644,13 @@ const VocationalTest = ({ onComplete }) => {
       </div>
 
       {/* Question */}
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={`question-${currentQuestion}`}
-          initial={{ opacity: 0, x: 50 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -50 }}
-          transition={{ duration: 0.3 }}
-          className="text-center mb-8"
-        >
+      <motion.div
+        key={`question-${currentQuestion}`}
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.4 }}
+        className="text-center mb-8"
+      >
         <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8">
           {question.question}
         </h3>
@@ -681,7 +687,6 @@ const VocationalTest = ({ onComplete }) => {
           </motion.button>
         )}
         </motion.div>
-      </AnimatePresence>
     </div>
   );
 };
@@ -881,11 +886,10 @@ Faça seu teste gratuito: https://escolahabilidade.com/teste-vocacional
   return (
     <motion.div
       ref={resultsRef}
-      key={`results-dashboard-${dominantArea.area}`}
-      initial={{ opacity: 0, y: 50 }}
+      key="results-dashboard-stable"
+      initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -50 }}
-      transition={{ duration: 0.6 }}
+      transition={{ duration: 0.5 }}
       className="max-w-6xl mx-auto"
     >
       {/* Container específico para PDF (exclui botões de ação) */}
@@ -1189,7 +1193,6 @@ Faça seu teste gratuito: https://escolahabilidade.com/teste-vocacional
 const TesteVocacional = () => {
   const [currentStep, setCurrentStep] = useState('intro'); // 'intro', 'test', 'results'
   const [results, setResults] = useState(null);
-  const [isTransitioning, setIsTransitioning] = useState(false);
   
   // Track page view on mount
   useEffect(() => {
@@ -1198,26 +1201,15 @@ const TesteVocacional = () => {
     analytics.trackTestPageView();
   }, []);
 
-  // Cleanup effect para garantir que as animações sejam finalizadas
-  useIsomorphicLayoutEffect(() => {
-    if (isTransitioning) {
-      const timer = setTimeout(() => {
-        setIsTransitioning(false);
-      }, 700); // Ligeiramente maior que a duração da animação (0.6s)
-      
-      return () => clearTimeout(timer);
-    }
-  }, [isTransitioning]);
 
   const handleStartTest = () => {
     console.log('🚀 TESTE VOCACIONAL: Starting test');
-    setIsTransitioning(true);
     setCurrentStep('test');
     // Track início do teste
     analytics.trackTestStart();
     analytics.measureTestDuration.start();
     
-    // Scroll automático para o início do teste com delay para animação
+    // Scroll automático para o início do teste com delay mínimo
     setTimeout(() => {
       const testSection = document.getElementById('teste-section');
       if (testSection) {
@@ -1226,18 +1218,16 @@ const TesteVocacional = () => {
           block: 'start'
         });
       }
-    }, 700); // Delay aumentado para aguardar a animação completa
+    }, 100);
   };
 
   const handleTestComplete = (testResults) => {
     console.log('✅ TESTE VOCACIONAL: Test completed', testResults);
     setResults(testResults);
-    setIsTransitioning(true);
     setCurrentStep('results');
   };
 
   const handleRestart = () => {
-    setIsTransitioning(true);
     setCurrentStep('intro');
     setResults(null);
     // Track reiniciar teste
@@ -1272,7 +1262,6 @@ const TesteVocacional = () => {
         {currentStep === 'intro' && <Hero />}
 
         <main className={currentStep === 'intro' ? 'pt-0' : 'pt-20'}>
-        <AnimatePresence mode="wait">
         {currentStep === 'intro' && (
           <motion.section 
             key="intro" 
@@ -1344,14 +1333,12 @@ const TesteVocacional = () => {
 
         {currentStep === 'test' && (
           <motion.section 
-            key="test"
+            key="test-section"
             id="teste-section" 
             className="py-20 bg-gray-50"
-            layoutId="main-section"
-            initial={{ opacity: 0, x: 100 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -100 }}
-            transition={{ duration: 0.6, ease: "easeInOut" }}
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
           >
             <div className="container mx-auto px-4">
               <DOMErrorBoundary 
@@ -1384,13 +1371,11 @@ const TesteVocacional = () => {
 
         {currentStep === 'results' && (
           <motion.section 
-            key="results"
+            key="results-section"
             className="py-20 bg-gray-50"
-            layoutId="main-section"
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            transition={{ duration: 0.6, ease: "easeInOut" }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
           >
             <div className="container mx-auto px-4">
               <DOMErrorBoundary 
@@ -1428,7 +1413,6 @@ const TesteVocacional = () => {
             </div>
           </motion.section>
         )}
-        </AnimatePresence>
       </main>
 
       {/* Floating WhatsApp */}
