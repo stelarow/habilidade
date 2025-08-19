@@ -92,6 +92,8 @@ const TrustedCompanies = ({
                     <img 
                       src={company.logo}
                       alt={company.name}
+                      width="64"
+                      height="64"
                       className="max-w-full max-h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300"
                       loading="lazy"
                     />
@@ -239,6 +241,8 @@ const TrustedCompanies = ({
                   <img 
                     src={company.logo}
                     alt={company.name}
+                    width="80"
+                    height="80"
                     className="max-w-full max-h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300"
                     loading="lazy"
                   />
@@ -281,6 +285,8 @@ const TrustedCompanies = ({
                   <img 
                     src={company.logo}
                     alt={company.name}
+                    width="80"
+                    height="80"
                     className="max-w-full max-h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300"
                     loading="lazy"
                   />
@@ -323,6 +329,8 @@ const TrustedCompanies = ({
                   <img 
                     src={company.logo}
                     alt={company.name}
+                    width="80"
+                    height="80"
                     className="max-w-full max-h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300"
                     loading="lazy"
                   />
