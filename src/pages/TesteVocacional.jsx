@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, Component, useLayoutEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Helmet } from '@dr.pogodin/react-helmet';
 import LogoH from '../components/LogoH';
@@ -31,6 +31,50 @@ import {
   BarChart3,
   Activity
 } from 'lucide-react';
+
+// Hook seguro para operações DOM que funciona tanto no cliente quanto servidor
+const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
+
+// Error Boundary para capturar erros de DOM Manipulation
+class DOMErrorBoundary extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+
+  static getDerivedStateFromError(error) {
+    // Captura especificamente erros relacionados ao removeChild
+    if (error.message && error.message.includes('removeChild')) {
+      return { hasError: true, error };
+    }
+    // Para outros erros, relança para o Error Boundary pai
+    throw error;
+  }
+
+  componentDidCatch(error, errorInfo) {
+    // Log do erro para debugging
+    console.warn('🔧 DOM Error Boundary caught:', error.message);
+    console.warn('🔧 Error Details:', errorInfo);
+    
+    // Track error para analytics
+    if (typeof analytics?.trackError === 'function') {
+      analytics.trackError(error.message, 'DOM_BOUNDARY');
+    }
+  }
+
+  render() {
+    if (this.state.hasError) {
+      // Renderização alternativa sem animações Framer Motion
+      return (
+        <div className={this.props.className || ''}>
+          {this.props.fallbackChildren || this.props.children}
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
 
 // Componente Radar Chart customizado
 const RadarChart = ({ data, size = 200 }) => {
@@ -489,7 +533,7 @@ const VocationalTest = ({ onComplete }) => {
         setCurrentQuestion(currentQuestion + 1);
         // Track progresso
         analytics.trackTestProgress(currentQuestion + 2, questions.length);
-      }, 300);
+      }, 500); // Aumentado de 300ms para 500ms para evitar race conditions
     } else {
       setIsCompleted(true);
       const results = calculateResults(newAnswers);
@@ -573,7 +617,7 @@ const VocationalTest = ({ onComplete }) => {
   const question = questions[currentQuestion];
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-4xl mx-auto" key={`test-container-${currentQuestion}`}>
       {/* Progress Bar */}
       <div className="mb-8">
         <div className="flex justify-between text-sm text-gray-600 mb-2">
@@ -583,22 +627,24 @@ const VocationalTest = ({ onComplete }) => {
         <div className="w-full bg-gray-200 rounded-full h-2">
           <motion.div 
             className="bg-[#d400ff] h-2 rounded-full"
+            layoutId="progress-bar"
             initial={{ width: 0 }}
             animate={{ width: `${progress}%` }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
           />
         </div>
       </div>
 
       {/* Question */}
-      <motion.div
-        key={currentQuestion}
-        initial={{ opacity: 0, x: 50 }}
-        animate={{ opacity: 1, x: 0 }}
-        exit={{ opacity: 0, x: -50 }}
-        transition={{ duration: 0.5 }}
-        className="text-center mb-8"
-      >
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={`question-${currentQuestion}`}
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -50 }}
+          transition={{ duration: 0.3 }}
+          className="text-center mb-8"
+        >
         <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8">
           {question.question}
         </h3>
@@ -634,7 +680,8 @@ const VocationalTest = ({ onComplete }) => {
             Voltar
           </motion.button>
         )}
-      </motion.div>
+        </motion.div>
+      </AnimatePresence>
     </div>
   );
 };
@@ -834,9 +881,11 @@ Faça seu teste gratuito: https://escolahabilidade.com/teste-vocacional
   return (
     <motion.div
       ref={resultsRef}
+      key={`results-dashboard-${dominantArea.area}`}
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8 }}
+      exit={{ opacity: 0, y: -50 }}
+      transition={{ duration: 0.6 }}
       className="max-w-6xl mx-auto"
     >
       {/* Container específico para PDF (exclui botões de ação) */}
@@ -1140,6 +1189,7 @@ Faça seu teste gratuito: https://escolahabilidade.com/teste-vocacional
 const TesteVocacional = () => {
   const [currentStep, setCurrentStep] = useState('intro'); // 'intro', 'test', 'results'
   const [results, setResults] = useState(null);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   
   // Track page view on mount
   useEffect(() => {
@@ -1148,14 +1198,26 @@ const TesteVocacional = () => {
     analytics.trackTestPageView();
   }, []);
 
+  // Cleanup effect para garantir que as animações sejam finalizadas
+  useIsomorphicLayoutEffect(() => {
+    if (isTransitioning) {
+      const timer = setTimeout(() => {
+        setIsTransitioning(false);
+      }, 700); // Ligeiramente maior que a duração da animação (0.6s)
+      
+      return () => clearTimeout(timer);
+    }
+  }, [isTransitioning]);
+
   const handleStartTest = () => {
     console.log('🚀 TESTE VOCACIONAL: Starting test');
+    setIsTransitioning(true);
     setCurrentStep('test');
     // Track início do teste
     analytics.trackTestStart();
     analytics.measureTestDuration.start();
     
-    // Scroll automático para o início do teste
+    // Scroll automático para o início do teste com delay para animação
     setTimeout(() => {
       const testSection = document.getElementById('teste-section');
       if (testSection) {
@@ -1164,16 +1226,18 @@ const TesteVocacional = () => {
           block: 'start'
         });
       }
-    }, 100); // Pequeno delay para garantir que o componente foi renderizado
+    }, 700); // Delay aumentado para aguardar a animação completa
   };
 
   const handleTestComplete = (testResults) => {
     console.log('✅ TESTE VOCACIONAL: Test completed', testResults);
     setResults(testResults);
+    setIsTransitioning(true);
     setCurrentStep('results');
   };
 
   const handleRestart = () => {
+    setIsTransitioning(true);
     setCurrentStep('intro');
     setResults(null);
     // Track reiniciar teste
@@ -1208,13 +1272,21 @@ const TesteVocacional = () => {
         {currentStep === 'intro' && <Hero />}
 
         <main className={currentStep === 'intro' ? 'pt-0' : 'pt-20'}>
+        <AnimatePresence mode="wait">
         {currentStep === 'intro' && (
-          <section id="teste" className="py-20 bg-white">
+          <motion.section 
+            key="intro" 
+            id="teste" 
+            className="py-20 bg-white"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+          >
             <div className="container mx-auto px-4">
               <motion.div
                 initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
                 className="text-center max-w-4xl mx-auto"
               >
@@ -1267,24 +1339,96 @@ const TesteVocacional = () => {
                 </motion.button>
               </motion.div>
             </div>
-          </section>
+          </motion.section>
         )}
 
         {currentStep === 'test' && (
-          <section id="teste-section" className="py-20 bg-gray-50">
+          <motion.section 
+            key="test"
+            id="teste-section" 
+            className="py-20 bg-gray-50"
+            layoutId="main-section"
+            initial={{ opacity: 0, x: 100 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -100 }}
+            transition={{ duration: 0.6, ease: "easeInOut" }}
+          >
             <div className="container mx-auto px-4">
-              <VocationalTest onComplete={handleTestComplete} />
+              <DOMErrorBoundary 
+                className="max-w-4xl mx-auto"
+                fallbackChildren={
+                  <div className="text-center py-20">
+                    <div className="w-20 h-20 bg-[#d400ff] rounded-full flex items-center justify-center mx-auto mb-6">
+                      <Brain className="text-white" size={40} />
+                    </div>
+                    <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                      Teste Vocacional
+                    </h3>
+                    <p className="text-gray-600 mb-6">
+                      Recarregue a página para continuar com o teste.
+                    </p>
+                    <button
+                      onClick={() => window.location.reload()}
+                      className="bg-[#d400ff] text-white px-8 py-3 rounded-full font-bold hover:bg-purple-600 transition-all duration-300"
+                    >
+                      Recarregar Página
+                    </button>
+                  </div>
+                }
+              >
+                <VocationalTest onComplete={handleTestComplete} />
+              </DOMErrorBoundary>
             </div>
-          </section>
+          </motion.section>
         )}
 
         {currentStep === 'results' && (
-          <section className="py-20 bg-gray-50">
+          <motion.section 
+            key="results"
+            className="py-20 bg-gray-50"
+            layoutId="main-section"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            transition={{ duration: 0.6, ease: "easeInOut" }}
+          >
             <div className="container mx-auto px-4">
-              <ResultsDashboard results={results} onRestart={handleRestart} />
+              <DOMErrorBoundary 
+                className="max-w-6xl mx-auto"
+                fallbackChildren={
+                  <div className="text-center py-20">
+                    <div className="w-20 h-20 bg-[#d400ff] rounded-full flex items-center justify-center mx-auto mb-6">
+                      <Star className="text-white" size={40} />
+                    </div>
+                    <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                      Resultados do Teste
+                    </h3>
+                    <p className="text-gray-600 mb-6">
+                      Houve um problema ao exibir seus resultados. Tente recarregar a página.
+                    </p>
+                    <div className="flex gap-4 justify-center">
+                      <button
+                        onClick={() => window.location.reload()}
+                        className="bg-[#d400ff] text-white px-8 py-3 rounded-full font-bold hover:bg-purple-600 transition-all duration-300"
+                      >
+                        Recarregar Página
+                      </button>
+                      <button
+                        onClick={handleRestart}
+                        className="border-2 border-[#d400ff] text-[#d400ff] px-8 py-3 rounded-full font-bold hover:bg-[#d400ff] hover:text-white transition-all duration-300"
+                      >
+                        Refazer Teste
+                      </button>
+                    </div>
+                  </div>
+                }
+              >
+                <ResultsDashboard results={results} onRestart={handleRestart} />
+              </DOMErrorBoundary>
             </div>
-          </section>
+          </motion.section>
         )}
+        </AnimatePresence>
       </main>
 
       {/* Floating WhatsApp */}
