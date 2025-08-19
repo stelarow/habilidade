@@ -361,17 +361,17 @@ const Hero = () => {
             key={i}
             className="absolute w-2 h-2 bg-white rounded-full opacity-20"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
+              left: `${(i * 37 + 13) % 100}%`,
+              top: `${(i * 23 + 7) % 100}%`,
             }}
             animate={{
               y: [0, -20, 0],
               opacity: [0.2, 0.8, 0.2],
             }}
             transition={{
-              duration: 3 + Math.random() * 2,
+              duration: 3 + (i % 5) * 0.4,
               repeat: Infinity,
-              delay: Math.random() * 3,
+              delay: i * 0.1,
             }}
           />
         ))}
