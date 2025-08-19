@@ -96,6 +96,20 @@ const Reviews = () => {
     return name.split(' ').map(n => n[0]).join('').toUpperCase();
   };
 
+  const formatDateConsistent = (dateString) => {
+    const months = {
+      '01': 'jan', '02': 'fev', '03': 'mar', '04': 'abr', 
+      '05': 'mai', '06': 'jun', '07': 'jul', '08': 'ago',
+      '09': 'set', '10': 'out', '11': 'nov', '12': 'dez'
+    };
+    
+    // Parse directly from ISO string format (YYYY-MM-DD)
+    const [year, month] = dateString.split('-');
+    const monthName = months[month];
+    
+    return `${monthName}. de ${year}`;
+  };
+
   function ReviewCard({ review, index }) {
     const [ref, visible] = useInView();
     
@@ -140,10 +154,7 @@ const Reviews = () => {
                 <div className="text-right">
                   <div className="flex items-center gap-1 text-xs text-zinc-500 mb-1">
                     <Calendar size={10} />
-                    {new Date(review.date).toLocaleDateString('pt-BR', {
-                      month: 'short',
-                      year: 'numeric'
-                    })}
+                    {formatDateConsistent(review.date)}
                   </div>
                   <div className="flex items-center gap-1 text-xs text-zinc-500">
                     <MapPin size={10} />

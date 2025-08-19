@@ -1,6 +1,5 @@
 import React from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 // Create a client with optimized settings
 const createQueryClient = () => {
@@ -50,20 +49,44 @@ const getQueryClient = () => {
   return queryClient;
 };
 
+// Client-only DevTools component to prevent hydration mismatch
+const ClientOnlyDevTools = () => {
+  const [isClient, setIsClient] = React.useState(false);
+  
+  React.useEffect(() => {
+    setIsClient(true);
+  }, []);
+  
+  // Only render on client side and in development
+  if (!isClient || !import.meta.env.DEV) {
+    return null;
+  }
+  
+  // Dynamic import to ensure DevTools are only loaded in development
+  const ReactQueryDevtools = React.lazy(() => 
+    import('@tanstack/react-query-devtools').then(module => ({
+      default: module.ReactQueryDevtools
+    }))
+  );
+  
+  return (
+    <React.Suspense fallback={null}>
+      <ReactQueryDevtools 
+        initialIsOpen={false}
+        position="bottom-right"
+        buttonPosition="bottom-right"
+      />
+    </React.Suspense>
+  );
+};
+
 const QueryProvider = ({ children }) => {
   const client = getQueryClient();
 
   return (
     <QueryClientProvider client={client}>
       {children}
-      {/* Only show devtools in development */}
-      {process.env.NODE_ENV === 'development' && (
-        <ReactQueryDevtools 
-          initialIsOpen={false}
-          position="bottom-right"
-          buttonPosition="bottom-right"
-        />
-      )}
+      <ClientOnlyDevTools />
     </QueryClientProvider>
   );
 };

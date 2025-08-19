@@ -3,10 +3,16 @@ import { useEffect, useRef, useState } from 'react';
 export default function useInView(options = { threshold: 0.2 }) {
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
+  const [hasMounted, setHasMounted] = useState(false);
+
+  // Mark component as mounted to avoid hydration mismatch
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
 
   useEffect(() => {
     const element = ref.current;
-    if (!element) return;
+    if (!element || !hasMounted) return;
 
     const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) {
@@ -18,7 +24,8 @@ export default function useInView(options = { threshold: 0.2 }) {
     observer.observe(element);
 
     return () => observer.disconnect();
-  }, [options]);
+  }, [options, hasMounted]);
 
-  return [ref, visible];
+  // Return false during SSR to ensure consistent hydration
+  return [ref, hasMounted ? visible : false];
 } 
