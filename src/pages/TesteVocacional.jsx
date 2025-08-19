@@ -955,7 +955,7 @@ Faça seu teste gratuito: https://escolahabilidade.com/teste-vocacional
       </div>
 
       {/* Cursos Recomendados */}
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {showCourses && (
           <motion.div
             initial={{ opacity: 0, y: 50 }}
