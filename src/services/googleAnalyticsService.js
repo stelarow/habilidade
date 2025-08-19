@@ -1,23 +1,41 @@
 /**
  * Google Analytics Service
  * Integrates GA4 with the existing analytics system
+ * Now works with LazyAnalyticsLoader for improved performance
  */
+
+import lazyAnalyticsLoader from './LazyAnalyticsLoader.js';
 
 class GoogleAnalyticsService {
   constructor() {
-    this.isEnabled = typeof window !== 'undefined' && typeof gtag !== 'undefined';
+    this.isEnabled = typeof window !== 'undefined';
+  }
+
+  /**
+   * Check if analytics is ready, fallback to lazy loader
+   */
+  isAnalyticsReady() {
+    return typeof window !== 'undefined' && typeof gtag !== 'undefined';
   }
 
   /**
    * Send event to Google Analytics
+   * Uses lazy loading queue if analytics not ready yet
    */
   sendEvent(eventName, parameters = {}) {
     if (!this.isEnabled) return;
 
     try {
-      gtag('event', eventName, parameters);
+      if (this.isAnalyticsReady()) {
+        gtag('event', eventName, parameters);
+      } else {
+        // Queue event through lazy loader
+        lazyAnalyticsLoader.queueEvent(eventName, parameters);
+      }
     } catch (error) {
       console.warn('[GA] Error sending event:', error);
+      // Fallback to lazy loader queue
+      lazyAnalyticsLoader.queueEvent(eventName, parameters);
     }
   }
 
@@ -142,10 +160,32 @@ class GoogleAnalyticsService {
     if (!this.isEnabled) return;
 
     try {
-      gtag('set', 'user_properties', properties);
+      if (this.isAnalyticsReady()) {
+        gtag('set', 'user_properties', properties);
+      } else {
+        // Queue as custom event through lazy loader
+        lazyAnalyticsLoader.queueEvent('set_user_properties', properties);
+      }
     } catch (error) {
       console.warn('[GA] Error setting user properties:', error);
     }
+  }
+
+  /**
+   * Initialize analytics if not already loaded
+   * Useful for forcing analytics load in specific scenarios
+   */
+  ensureAnalyticsLoaded() {
+    if (!this.isAnalyticsReady()) {
+      lazyAnalyticsLoader.forceLoad();
+    }
+  }
+
+  /**
+   * Check if lazy analytics is ready
+   */
+  isLazyAnalyticsReady() {
+    return lazyAnalyticsLoader.isReady();
   }
 
   /**
