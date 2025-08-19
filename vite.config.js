@@ -67,12 +67,8 @@ base: '/',
             return 'router';
           }
           
-          // 3. Bibliotecas pesadas (lazy load) - Fase 1
-          if (id.includes('node_modules/html2canvas/') ||
-              id.includes('node_modules/jspdf/')) {
-            console.log('✅ HEAVY UTILS CHUNK:', id);
-            return 'heavy-utils';
-          }
+          // 3. Bibliotecas pesadas - REMOVIDO: Permitir lazy loading verdadeiro
+          // html2canvas e jspdf agora são carregados dinamicamente apenas quando necessário
           
           // 4. Serviços externos - Fase 1 (mais conservador)
           if (id.includes('node_modules/@emailjs/')) {

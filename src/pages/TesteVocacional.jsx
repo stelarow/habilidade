@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Helmet } from '@dr.pogodin/react-helmet';
 import LogoH from '../components/LogoH';
 import { analytics } from '../utils/analytics';
-import { loadHtml2Canvas, loadJsPDF } from '../utils/dynamicImports';
+import { generatePDF as generatePDFWorker, onLoadProgress } from '../utils/pdfWorker';
 import { 
   Brain,
   Code,
@@ -695,8 +695,17 @@ const VocationalTest = ({ onComplete }) => {
 const ResultsDashboard = ({ results, onRestart }) => {
   const [showCourses, setShowCourses] = useState(false);
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
+  const [pdfProgress, setPdfProgress] = useState({ phase: '', progress: 0, message: '' });
   const resultsRef = useRef(null);
   const pdfContentRef = useRef(null);
+
+  // Setup PDF progress callback
+  useEffect(() => {
+    const unsubscribe = onLoadProgress((progress) => {
+      setPdfProgress(progress);
+    });
+    return unsubscribe;
+  }, []);
 
   // Preparar dados para o gráfico radar
   const radarData = [
@@ -733,87 +742,39 @@ const ResultsDashboard = ({ results, onRestart }) => {
     return messages[area] || "Você tem um perfil único e diversificado!";
   };
 
-  // Função para gerar PDF do resultado
+  // Função para gerar PDF usando o novo PDF Worker
   const generatePDF = async () => {
-    console.log('📄 TESTE VOCACIONAL: Starting PDF generation');
+    console.log('📄 TESTE VOCACIONAL: Starting PDF generation with PDF Worker');
     if (!pdfContentRef.current) {
       console.error('❌ PDF: pdfContentRef not found');
       return;
     }
     
     setIsGeneratingPDF(true);
+    setPdfProgress({ phase: 'start', progress: 0, message: 'Iniciando...' });
     
     // Track download do PDF
     analytics.trackPDFDownloaded(dominantArea.area);
     
     try {
-      console.log('🔧 PDF: Loading PDF libraries dynamically...');
-      
-      // Dynamically load PDF libraries only when needed
-      const [html2canvasModule, jsPDFModule] = await Promise.all([
-        loadHtml2Canvas(),
-        loadJsPDF()
-      ]);
-      
-      const html2canvas = html2canvasModule.default;
-      const jsPDF = jsPDFModule.default;
-      
-      console.log('✅ PDF: Libraries loaded successfully');
-      console.log('🔧 PDF: Calling html2canvas...');
-      
-      // Capturar apenas o conteúdo dos resultados (sem os botões de ação)
-      const canvas = await html2canvas(pdfContentRef.current, {
-        height: pdfContentRef.current.scrollHeight,
-        width: pdfContentRef.current.scrollWidth,
-        scale: 2,
-        useCORS: true,
-        allowTaint: true,
-        backgroundColor: '#f9fafb'
-      });
-      
-      console.log('✅ PDF: html2canvas completed, canvas size:', canvas.width, 'x', canvas.height);
-      
-      const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF('p', 'mm', 'a4');
-      
-      console.log('📄 PDF: jsPDF instance created');
-      
-      // Calcular dimensões para o PDF
-      const pageWidth = pdf.internal.pageSize.getWidth();
-      const pageHeight = pdf.internal.pageSize.getHeight();
-      const imgWidth = pageWidth;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      
-      // Adicionar imagem dos resultados (já inclui header e footer do componente)
-      if (imgHeight > pageHeight - 20) {
-        // Se a imagem for maior que uma página, redimensionar
-        const scaledHeight = pageHeight - 20;
-        const scaledWidth = (canvas.width * scaledHeight) / canvas.height;
-        pdf.addImage(imgData, 'PNG', (pageWidth - scaledWidth) / 2, 10, scaledWidth, scaledHeight);
-      } else {
-        pdf.addImage(imgData, 'PNG', 0, 10, imgWidth, imgHeight);
-      }
-      
-      // Salvar o PDF
+      // Usar o PDF Worker para geração
       const hoje = new Date().toLocaleDateString('pt-BR').replace(/\//g, '-');
-      pdf.save(`Teste-Vocacional-Escola-Habilidade-${hoje}.pdf`);
+      const filename = `Teste-Vocacional-Escola-Habilidade-${hoje}.pdf`;
+      
+      await generatePDFWorker(pdfContentRef.current, filename);
+      
+      console.log('✅ PDF: Generated successfully using PDF Worker');
       
     } catch (error) {
-      console.error('Erro ao gerar PDF:', error);
-      alert('Erro ao gerar PDF. Tente novamente.');
+      console.error('❌ PDF: Generation failed:', error);
+      alert(error.message || 'Erro ao gerar PDF. Tente novamente.');
     } finally {
       setIsGeneratingPDF(false);
+      setPdfProgress({ phase: '', progress: 0, message: '' });
     }
   };
 
-  // Função para preload das bibliotecas PDF (otimização UX)
-  const preloadPDFLibraries = () => {
-    console.log('🔧 PDF: Preloading PDF libraries on hover...');
-    Promise.all([loadHtml2Canvas(), loadJsPDF()]).catch(() => {
-      // Silent fail - libraries will be loaded when actually needed
-      console.log('⚠️ PDF: Preload failed, libraries will be loaded on demand');
-    });
-  };
+  // Preload removido: PDF Worker carrega bibliotecas apenas quando necessário
 
   // Função para compartilhar resultados
   const shareResults = async () => {
@@ -1156,14 +1117,17 @@ Faça seu teste gratuito: https://escolahabilidade.com/teste-vocacional
         <div className="flex flex-wrap justify-center gap-4 text-sm">
           <motion.button
             onClick={generatePDF}
-            onMouseEnter={preloadPDFLibraries}
             disabled={isGeneratingPDF}
             className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-full hover:bg-red-700 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
             whileHover={{ scale: isGeneratingPDF ? 1 : 1.05 }}
             whileTap={{ scale: isGeneratingPDF ? 1 : 0.95 }}
           >
             <Download size={14} />
-            {isGeneratingPDF ? 'Gerando PDF...' : 'Resultado em PDF'}
+            {isGeneratingPDF ? (
+              pdfProgress.message || 'Gerando PDF...'
+            ) : (
+              'Resultado em PDF'
+            )}
           </motion.button>
           
           <motion.button

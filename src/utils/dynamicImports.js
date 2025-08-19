@@ -70,10 +70,11 @@ export const loadHighlightJS = async () => {
 };
 
 /**
- * Função para geração de PDF com carregamento dinâmico
- * Substitui a importação direta
+ * @deprecated Use PDF Worker instead: import { generatePDF } from '../utils/pdfWorker'
+ * Esta função foi movida para o PDF Worker para melhor gestão de cache e performance
  */
 export const generatePDF = async (element, filename = 'documento.pdf') => {
+  console.warn('⚠️ generatePDF from dynamicImports is deprecated. Use PDF Worker instead.');
   try {
     // Carrega as dependências apenas quando necessário
     const [html2canvas, jsPDF] = await Promise.all([
@@ -115,9 +116,11 @@ export const generatePDF = async (element, filename = 'documento.pdf') => {
 };
 
 /**
- * Função para screenshot com carregamento dinâmico
+ * @deprecated Use PDF Worker instead: import { captureScreenshot } from '../utils/pdfWorker'
+ * Esta função foi movida para o PDF Worker para melhor gestão de cache e performance
  */
 export const captureScreenshot = async (element, filename = 'screenshot.png') => {
+  console.warn('⚠️ captureScreenshot from dynamicImports is deprecated. Use PDF Worker instead.');
   try {
     const html2canvas = await loadHtml2Canvas();
     
@@ -150,8 +153,8 @@ export const preloadByRoute = {
   // Blog: preload highlight.js
   '/blog': () => loadHighlightJS(),
   
-  // Páginas com certificados: preload PDF generators
-  '/cursos': () => Promise.all([loadHtml2Canvas(), loadJsPDF()]),
+  // Páginas com certificados: PDF libraries carregadas sob demanda via PDF Worker
+  // '/cursos': REMOVIDO - PDF Worker carrega bibliotecas apenas quando necessário
   
   // Páginas com animações: preload framer-motion
   '/': () => loadFramerMotion()
