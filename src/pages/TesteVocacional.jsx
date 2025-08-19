@@ -955,82 +955,80 @@ Faça seu teste gratuito: https://escolahabilidade.com/teste-vocacional
       </div>
 
       {/* Cursos Recomendados */}
-      <AnimatePresence>
-        {showCourses && (
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="bg-gradient-to-br from-[#d400ff] to-purple-600 rounded-2xl p-8 text-white mb-8"
-          >
-            <div className="text-center mb-8">
-              <div className="flex items-center justify-center gap-2 mb-4">
-                <Award className="text-white" size={24} />
-                <span className="text-sm uppercase tracking-wide text-purple-100 font-semibold">
-                  Metodologia MIT • Harvard • Stanford
-                </span>
-              </div>
-              <h3 className="text-3xl font-bold mb-4">Cursos Cientificamente Recomendados 🎯</h3>
-              <p className="text-purple-100 text-lg">
-                Baseado na análise do seu perfil VIPS, estes cursos têm alta compatibilidade com você em Florianópolis
-              </p>
+      {showCourses && (
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="bg-gradient-to-br from-[#d400ff] to-purple-600 rounded-2xl p-8 text-white mb-8"
+        >
+          <div className="text-center mb-8">
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <Award className="text-white" size={24} />
+              <span className="text-sm uppercase tracking-wide text-purple-100 font-semibold">
+                Metodologia MIT • Harvard • Stanford
+              </span>
             </div>
+            <h3 className="text-3xl font-bold mb-4">Cursos Cientificamente Recomendados 🎯</h3>
+            <p className="text-purple-100 text-lg">
+              Baseado na análise do seu perfil VIPS, estes cursos têm alta compatibilidade com você em Florianópolis
+            </p>
+          </div>
 
-            <div className="grid md:grid-cols-2 gap-6">
-              {recommendedCourses.map((course, index) => (
-                <motion.div
-                  key={course.id}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.2 }}
-                  className="bg-white/10 backdrop-blur-sm rounded-xl p-6 hover:bg-white/20 transition-all duration-300"
+          <div className="grid md:grid-cols-2 gap-6">
+            {recommendedCourses.map((course, index) => (
+              <motion.div
+                key={course.id}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.2 }}
+                className="bg-white/10 backdrop-blur-sm rounded-xl p-6 hover:bg-white/20 transition-all duration-300"
+              >
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
+                    <course.icon className="text-white" size={24} />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-lg">{course.name}</h4>
+                    <p className="text-purple-100 text-sm">{course.subtitle}</p>
+                  </div>
+                </div>
+                
+                <p className="text-purple-100 mb-4">{course.description}</p>
+                
+                <div className="flex justify-between items-center mb-4">
+                  <span className="text-sm">Duração: {course.duration}</span>
+                  <span className="font-bold">{course.price}</span>
+                </div>
+                
+                <motion.a
+                  href={`https://wa.me/5548988559491?text=${encodeURIComponent(
+                    `Olá! Fiz o teste vocacional científico e obtive ${dominantArea.score}% de afinidade com ${
+                      dominantArea.area === 'gestao' ? 'Gestão' : 
+                      dominantArea.area === 'educacao' ? 'Educação' : 
+                      dominantArea.area === 'comunicacao' ? 'Comunicação' :
+                      dominantArea.area === 'logica' ? 'Lógica' : 
+                      dominantArea.area.charAt(0).toUpperCase() + dominantArea.area.slice(1)
+                    }.\n\n` +
+                    `O curso ${course.name} foi recomendado para meu perfil.\n` +
+                    `Gostaria de saber mais sobre:\n` +
+                    `• Valores e formas de pagamento\n` +
+                    `• Horários disponíveis\n` +
+                    `• Início das próximas turmas\n` +
+                    `• Local das aulas (Florianópolis, São José ou Palhoça)`
+                  )}`}
+                  className="w-full bg-white text-[#d400ff] py-3 rounded-lg font-bold hover:bg-gray-100 transition-colors inline-flex items-center justify-center gap-2"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                 >
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
-                      <course.icon className="text-white" size={24} />
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-lg">{course.name}</h4>
-                      <p className="text-purple-100 text-sm">{course.subtitle}</p>
-                    </div>
-                  </div>
-                  
-                  <p className="text-purple-100 mb-4">{course.description}</p>
-                  
-                  <div className="flex justify-between items-center mb-4">
-                    <span className="text-sm">Duração: {course.duration}</span>
-                    <span className="font-bold">{course.price}</span>
-                  </div>
-                  
-                  <motion.a
-                    href={`https://wa.me/5548988559491?text=${encodeURIComponent(
-                      `Olá! Fiz o teste vocacional científico e obtive ${dominantArea.score}% de afinidade com ${
-                        dominantArea.area === 'gestao' ? 'Gestão' : 
-                        dominantArea.area === 'educacao' ? 'Educação' : 
-                        dominantArea.area === 'comunicacao' ? 'Comunicação' :
-                        dominantArea.area === 'logica' ? 'Lógica' : 
-                        dominantArea.area.charAt(0).toUpperCase() + dominantArea.area.slice(1)
-                      }.\n\n` +
-                      `O curso ${course.name} foi recomendado para meu perfil.\n` +
-                      `Gostaria de saber mais sobre:\n` +
-                      `• Valores e formas de pagamento\n` +
-                      `• Horários disponíveis\n` +
-                      `• Início das próximas turmas\n` +
-                      `• Local das aulas (Florianópolis, São José ou Palhoça)`
-                    )}`}
-                    className="w-full bg-white text-[#d400ff] py-3 rounded-lg font-bold hover:bg-gray-100 transition-colors inline-flex items-center justify-center gap-2"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <MessageCircle size={18} />
-                    Quero Este Curso
-                  </motion.a>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+                  <MessageCircle size={18} />
+                  Quero Este Curso
+                </motion.a>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+      )}
 
       {/* Footer para PDF - Informações de contato */}
       <div className="bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl p-6 mt-8 text-center">
