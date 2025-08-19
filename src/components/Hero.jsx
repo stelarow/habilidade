@@ -42,7 +42,7 @@ function Hero() {
         <div className="mt-4 flex flex-col sm:flex-row gap-4 justify-center">
           <GradientButton 
             href="#cursos" 
-            className="px-6 py-3 text-sm"
+            className="px-6 text-sm"
             onClick={(e) => {
               e.preventDefault();
               const element = document.getElementById('cursos');
@@ -56,7 +56,7 @@ function Hero() {
           
           <GradientButton 
             href="/teste-vocacional"
-            className="px-6 py-3 text-sm border-2 border-purple-500/50 bg-transparent hover:bg-purple-500/10 transition-all group"
+            className="px-6 text-sm border-2 border-purple-500/50 bg-transparent hover:bg-purple-500/10 transition-all group"
             onClick={() => {
               analytics.trackHeroTestClick();
             }}
@@ -77,9 +77,9 @@ function Hero() {
           }
         }}
         aria-label="Ir para seção de cursos"
-        className="absolute bottom-4 left-1/2 -translate-x-1/2 text-fuchsia-500 hover:text-cyan-400 transition animate-bounce cursor-pointer"
+        className="absolute bottom-4 left-1/2 -translate-x-1/2 text-fuchsia-500 hover:text-cyan-400 transition animate-bounce cursor-pointer p-2 min-w-[48px] min-h-[48px] flex items-center justify-center"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" className="w-8 h-8">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" className="w-10 h-10">
           <path d="M12 16.5a1 1 0 0 1-.707-.293l-6-6a1 1 0 1 1 1.414-1.414L12 14.086l5.293-5.293a1 1 0 0 1 1.414 1.414l-6 6A1 1 0 0 1 12 16.5z" />
         </svg>
       </button>

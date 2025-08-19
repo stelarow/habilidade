@@ -1,5 +1,5 @@
 function GradientButton({ href, children, className = '', ...props }) {
-  const base = 'btn-neon bg-zinc-900/70 text-white font-semibold rounded-md hover:bg-zinc-900 transition';
+  const base = 'btn-neon bg-zinc-900/70 text-white font-semibold rounded-md hover:bg-zinc-900 transition min-h-[48px] px-4 py-3 flex items-center justify-center';
   const classes = `${base} ${className}`;
 
   if (href) {
