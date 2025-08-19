@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Helmet } from '@dr.pogodin/react-helmet';
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
 import LogoH from '../components/LogoH';
 import { analytics } from '../utils/analytics';
+import { loadHtml2Canvas, loadJsPDF } from '../utils/dynamicImports';
 import { 
   Brain,
   Code,
@@ -696,7 +695,20 @@ const ResultsDashboard = ({ results, onRestart }) => {
     analytics.trackPDFDownloaded(dominantArea.area);
     
     try {
+      console.log('🔧 PDF: Loading PDF libraries dynamically...');
+      
+      // Dynamically load PDF libraries only when needed
+      const [html2canvasModule, jsPDFModule] = await Promise.all([
+        loadHtml2Canvas(),
+        loadJsPDF()
+      ]);
+      
+      const html2canvas = html2canvasModule.default;
+      const jsPDF = jsPDFModule.default;
+      
+      console.log('✅ PDF: Libraries loaded successfully');
       console.log('🔧 PDF: Calling html2canvas...');
+      
       // Capturar apenas o conteúdo dos resultados (sem os botões de ação)
       const canvas = await html2canvas(pdfContentRef.current, {
         height: pdfContentRef.current.scrollHeight,
@@ -740,6 +752,15 @@ const ResultsDashboard = ({ results, onRestart }) => {
     } finally {
       setIsGeneratingPDF(false);
     }
+  };
+
+  // Função para preload das bibliotecas PDF (otimização UX)
+  const preloadPDFLibraries = () => {
+    console.log('🔧 PDF: Preloading PDF libraries on hover...');
+    Promise.all([loadHtml2Canvas(), loadJsPDF()]).catch(() => {
+      // Silent fail - libraries will be loaded when actually needed
+      console.log('⚠️ PDF: Preload failed, libraries will be loaded on demand');
+    });
   };
 
   // Função para compartilhar resultados
@@ -1084,6 +1105,7 @@ Faça seu teste gratuito: https://escolahabilidade.com/teste-vocacional
         <div className="flex flex-wrap justify-center gap-4 text-sm">
           <motion.button
             onClick={generatePDF}
+            onMouseEnter={preloadPDFLibraries}
             disabled={isGeneratingPDF}
             className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-full hover:bg-red-700 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
             whileHover={{ scale: isGeneratingPDF ? 1 : 1.05 }}

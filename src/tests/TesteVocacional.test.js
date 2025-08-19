@@ -2,28 +2,28 @@ import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import TesteVocacional from '../pages/TesteVocacional';
 
-// Mock html2canvas e jsPDF
-jest.mock('html2canvas', () => {
-  return jest.fn(() => Promise.resolve({
-    toDataURL: jest.fn(() => 'data:image/png;base64,mock-image'),
-    height: 1000,
-    width: 800
-  }));
-});
-
-jest.mock('jspdf', () => {
-  const mockPDF = {
-    addImage: jest.fn(),
-    save: jest.fn(),
-    internal: {
-      pageSize: {
-        getWidth: jest.fn(() => 210),
-        getHeight: jest.fn(() => 297)
+// Mock dynamic imports for PDF libraries
+jest.mock('../utils/dynamicImports', () => ({
+  loadHtml2Canvas: jest.fn(() => Promise.resolve({
+    default: jest.fn(() => Promise.resolve({
+      toDataURL: jest.fn(() => 'data:image/png;base64,mock-image'),
+      height: 1000,
+      width: 800
+    }))
+  })),
+  loadJsPDF: jest.fn(() => Promise.resolve({
+    default: jest.fn(() => ({
+      addImage: jest.fn(),
+      save: jest.fn(),
+      internal: {
+        pageSize: {
+          getWidth: jest.fn(() => 210),
+          getHeight: jest.fn(() => 297)
+        }
       }
-    }
-  };
-  return jest.fn(() => mockPDF);
-});
+    }))
+  }))
+}));
 
 // Mock framer-motion para evitar problemas de animação nos testes
 jest.mock('framer-motion', () => ({
