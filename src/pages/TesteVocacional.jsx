@@ -625,7 +625,7 @@ const VocationalTest = ({ onComplete }) => {
   const question = questions[currentQuestion];
 
   return (
-    <div className="max-w-4xl mx-auto" key={`test-container-stable`}>
+    <div className="max-w-4xl mx-auto" key="vocational-test-container">
       {/* Progress Bar */}
       <div className="mb-8">
         <div className="flex justify-between text-sm text-gray-600 mb-2">
@@ -635,7 +635,7 @@ const VocationalTest = ({ onComplete }) => {
         <div className="w-full bg-gray-200 rounded-full h-2">
           <motion.div 
             className="bg-[#d400ff] h-2 rounded-full"
-            layoutId="progress-bar"
+            key="progress-bar-animation"
             initial={{ width: 0 }}
             animate={{ width: `${progress}%` }}
             transition={{ duration: 0.6, ease: "easeOut" }}
@@ -886,7 +886,7 @@ Faça seu teste gratuito: https://escolahabilidade.com/teste-vocacional
   return (
     <motion.div
       ref={resultsRef}
-      key="results-dashboard-stable"
+      key="vocational-results-dashboard"
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
@@ -1264,7 +1264,7 @@ const TesteVocacional = () => {
         <main className={currentStep === 'intro' ? 'pt-0' : 'pt-20'}>
         {currentStep === 'intro' && (
           <motion.section 
-            key="intro" 
+            key="vocational-test-intro-section" 
             id="teste" 
             className="py-20 bg-white"
             initial={{ opacity: 0 }}
@@ -1333,7 +1333,7 @@ const TesteVocacional = () => {
 
         {currentStep === 'test' && (
           <motion.section 
-            key="test-section"
+            key="vocational-test-questions-section"
             id="teste-section" 
             className="py-20 bg-gray-50"
             initial={{ opacity: 0, scale: 0.95 }}
@@ -1371,7 +1371,7 @@ const TesteVocacional = () => {
 
         {currentStep === 'results' && (
           <motion.section 
-            key="results-section"
+            key="vocational-test-results-section"
             className="py-20 bg-gray-50"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}

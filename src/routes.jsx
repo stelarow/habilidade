@@ -164,7 +164,7 @@ export const routes = [
       // Página do teste vocacional
       {
         path: 'teste-vocacional',
-        element: <Suspense fallback={<Loading />}><TesteVocacional /></Suspense>
+        element: <TesteVocacional />
       },
       // Redirects para compatibilidade
       {
