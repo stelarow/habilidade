@@ -15,7 +15,7 @@ class GoogleAnalyticsService {
    * Check if analytics is ready, fallback to lazy loader
    */
   isAnalyticsReady() {
-    return typeof window !== 'undefined' && typeof gtag !== 'undefined';
+    return typeof window !== 'undefined' && typeof window.gtag !== 'undefined';
   }
 
   /**
@@ -27,7 +27,7 @@ class GoogleAnalyticsService {
 
     try {
       if (this.isAnalyticsReady()) {
-        gtag('event', eventName, parameters);
+        window.gtag('event', eventName, parameters);
       } else {
         // Queue event through lazy loader
         lazyAnalyticsLoader.queueEvent(eventName, parameters);
@@ -161,7 +161,7 @@ class GoogleAnalyticsService {
 
     try {
       if (this.isAnalyticsReady()) {
-        gtag('set', 'user_properties', properties);
+        window.gtag('set', 'user_properties', properties);
       } else {
         // Queue as custom event through lazy loader
         lazyAnalyticsLoader.queueEvent('set_user_properties', properties);

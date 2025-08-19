@@ -11,7 +11,10 @@ class LazyAnalyticsLoader {
     this.loadTimeout = 3000; // 3 seconds fallback
     this.interactionEvents = ['click', 'scroll', 'keydown', 'mousemove', 'touchstart'];
     
-    this.init();
+    // Only initialize in browser environment
+    if (typeof window !== 'undefined') {
+      this.init();
+    }
   }
 
   init() {
@@ -32,10 +35,13 @@ class LazyAnalyticsLoader {
   }
 
   hasReducedMotionPreference() {
+    if (typeof window === 'undefined') return false;
     return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   }
 
   setupInteractionObserver() {
+    if (typeof document === 'undefined') return;
+    
     const loadOnInteraction = () => {
       this.loadAnalytics();
       // Remove listeners after first interaction
@@ -50,7 +56,7 @@ class LazyAnalyticsLoader {
   }
 
   setupIntersectionObserver() {
-    if (!window.IntersectionObserver) return;
+    if (typeof window === 'undefined' || !window.IntersectionObserver) return;
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -65,9 +71,11 @@ class LazyAnalyticsLoader {
     });
 
     // Observe footer or other below-the-fold elements
-    const footer = document.querySelector('footer');
-    if (footer) {
-      observer.observe(footer);
+    if (typeof document !== 'undefined') {
+      const footer = document.querySelector('footer');
+      if (footer) {
+        observer.observe(footer);
+      }
     }
   }
 
@@ -80,7 +88,7 @@ class LazyAnalyticsLoader {
   }
 
   loadAnalytics() {
-    if (this.isLoaded) return;
+    if (this.isLoaded || typeof window === 'undefined') return;
     
     this.isLoaded = true;
     
@@ -100,6 +108,11 @@ class LazyAnalyticsLoader {
 
   loadGTMScript() {
     return new Promise((resolve, reject) => {
+      if (typeof document === 'undefined') {
+        reject(new Error('Document not available'));
+        return;
+      }
+      
       const script = document.createElement('script');
       script.async = true;
       script.src = `https://www.googletagmanager.com/gtag/js?id=${this.gtmId}`;
@@ -112,6 +125,8 @@ class LazyAnalyticsLoader {
   }
 
   initializeGTM() {
+    if (typeof window === 'undefined' || typeof document === 'undefined') return;
+    
     // Initialize gtag function
     function gtag() {
       window.dataLayer.push(arguments);
@@ -140,6 +155,8 @@ class LazyAnalyticsLoader {
   }
 
   replayQueuedEvents() {
+    if (typeof window === 'undefined') return;
+    
     // Replay all queued events
     this.eventQueue.forEach(({ eventName, parameters }) => {
       if (typeof gtag === 'function') {
@@ -153,6 +170,8 @@ class LazyAnalyticsLoader {
 
   // Queue events before analytics loads
   queueEvent(eventName, parameters = {}) {
+    if (typeof window === 'undefined') return;
+    
     if (this.isLoaded && typeof gtag === 'function') {
       gtag('event', eventName, parameters);
     } else {
@@ -162,7 +181,7 @@ class LazyAnalyticsLoader {
 
   // Public method to check if analytics is ready
   isReady() {
-    return this.isLoaded && typeof window.gtag === 'function';
+    return typeof window !== 'undefined' && this.isLoaded && typeof window.gtag === 'function';
   }
 
   // Force load analytics (for testing or special cases)
