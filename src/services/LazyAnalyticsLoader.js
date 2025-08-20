@@ -193,4 +193,9 @@ class LazyAnalyticsLoader {
 // Create singleton instance
 const lazyAnalyticsLoader = new LazyAnalyticsLoader();
 
+// Expose globally for other services
+if (typeof window !== 'undefined') {
+  window.lazyAnalyticsLoader = lazyAnalyticsLoader;
+}
+
 export default lazyAnalyticsLoader;

@@ -4,7 +4,6 @@
  * Now works with LazyAnalyticsLoader for improved performance
  */
 
-import lazyAnalyticsLoader from './LazyAnalyticsLoader.js';
 
 class GoogleAnalyticsService {
   constructor() {
@@ -29,13 +28,19 @@ class GoogleAnalyticsService {
       if (this.isAnalyticsReady()) {
         window.gtag('event', eventName, parameters);
       } else {
-        // Queue event through lazy loader
-        lazyAnalyticsLoader.queueEvent(eventName, parameters);
+        // Queue event through lazy loader if available
+        const lazyLoader = window.lazyAnalyticsLoader;
+        if (lazyLoader && typeof lazyLoader.queueEvent === 'function') {
+          lazyLoader.queueEvent(eventName, parameters);
+        }
       }
     } catch (error) {
       console.warn('[GA] Error sending event:', error);
-      // Fallback to lazy loader queue
-      lazyAnalyticsLoader.queueEvent(eventName, parameters);
+      // Fallback to lazy loader queue if available
+      const lazyLoader = window.lazyAnalyticsLoader;
+      if (lazyLoader && typeof lazyLoader.queueEvent === 'function') {
+        lazyLoader.queueEvent(eventName, parameters);
+      }
     }
   }
 
@@ -163,8 +168,11 @@ class GoogleAnalyticsService {
       if (this.isAnalyticsReady()) {
         window.gtag('set', 'user_properties', properties);
       } else {
-        // Queue as custom event through lazy loader
-        lazyAnalyticsLoader.queueEvent('set_user_properties', properties);
+        // Queue as custom event through lazy loader if available
+        const lazyLoader = window.lazyAnalyticsLoader;
+        if (lazyLoader && typeof lazyLoader.queueEvent === 'function') {
+          lazyLoader.queueEvent('set_user_properties', properties);
+        }
       }
     } catch (error) {
       console.warn('[GA] Error setting user properties:', error);
@@ -177,7 +185,10 @@ class GoogleAnalyticsService {
    */
   ensureAnalyticsLoaded() {
     if (!this.isAnalyticsReady()) {
-      lazyAnalyticsLoader.forceLoad();
+      const lazyLoader = window.lazyAnalyticsLoader;
+      if (lazyLoader && typeof lazyLoader.forceLoad === 'function') {
+        lazyLoader.forceLoad();
+      }
     }
   }
 
@@ -185,7 +196,8 @@ class GoogleAnalyticsService {
    * Check if lazy analytics is ready
    */
   isLazyAnalyticsReady() {
-    return lazyAnalyticsLoader.isReady();
+    const lazyLoader = window.lazyAnalyticsLoader;
+    return lazyLoader && typeof lazyLoader.isReady === 'function' ? lazyLoader.isReady() : false;
   }
 
   /**
