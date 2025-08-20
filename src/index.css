@@ -924,3 +924,109 @@ button, a, [role="button"] {
 .energy-pulse-ring {
   animation-duration: 6s; /* Increased from 4s */
 }
+
+/* CSS-Only Starfield Animations - Performance Optimized */
+@keyframes starfieldTwinkle1 {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+@keyframes starfieldTwinkle2 {
+  0%, 100% { opacity: 0.8; }
+  33% { opacity: 0.2; }
+  66% { opacity: 1; }
+}
+
+@keyframes starfieldTwinkle3 {
+  0%, 100% { opacity: 0.5; }
+  25% { opacity: 1; }
+  75% { opacity: 0.1; }
+}
+
+/* CSS-Only Starfield Background */
+.starfield-css {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  will-change: opacity;
+  contain: strict;
+}
+
+.starfield-css::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(1px 1px at 20% 30%, #c084fc, transparent),
+    radial-gradient(1px 1px at 40% 70%, #c084fc, transparent),
+    radial-gradient(2px 2px at 60% 15%, #c084fc, transparent),
+    radial-gradient(1px 1px at 80% 80%, #c084fc, transparent),
+    radial-gradient(2px 2px at 10% 60%, #c084fc, transparent),
+    radial-gradient(1px 1px at 90% 40%, #c084fc, transparent),
+    radial-gradient(1px 1px at 30% 90%, #c084fc, transparent),
+    radial-gradient(2px 2px at 70% 50%, #c084fc, transparent),
+    radial-gradient(1px 1px at 15% 10%, #c084fc, transparent),
+    radial-gradient(1px 1px at 85% 20%, #c084fc, transparent),
+    radial-gradient(2px 2px at 50% 85%, #c084fc, transparent),
+    radial-gradient(1px 1px at 25% 40%, #c084fc, transparent),
+    radial-gradient(1px 1px at 75% 75%, #c084fc, transparent),
+    radial-gradient(2px 2px at 35% 25%, #c084fc, transparent),
+    radial-gradient(1px 1px at 65% 65%, #c084fc, transparent);
+  animation: starfieldTwinkle1 3s infinite ease-in-out;
+  opacity: 0.8;
+  contain: strict;
+}
+
+.starfield-css::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(1px 1px at 45% 20%, #c084fc, transparent),
+    radial-gradient(2px 2px at 25% 60%, #c084fc, transparent),
+    radial-gradient(1px 1px at 75% 35%, #c084fc, transparent),
+    radial-gradient(1px 1px at 55% 80%, #c084fc, transparent),
+    radial-gradient(2px 2px at 15% 85%, #c084fc, transparent),
+    radial-gradient(1px 1px at 85% 55%, #c084fc, transparent),
+    radial-gradient(1px 1px at 35% 15%, #c084fc, transparent),
+    radial-gradient(2px 2px at 65% 90%, #c084fc, transparent),
+    radial-gradient(1px 1px at 95% 70%, #c084fc, transparent),
+    radial-gradient(1px 1px at 5% 45%, #c084fc, transparent),
+    radial-gradient(2px 2px at 50% 5%, #c084fc, transparent),
+    radial-gradient(1px 1px at 80% 25%, #c084fc, transparent),
+    radial-gradient(1px 1px at 20% 75%, #c084fc, transparent),
+    radial-gradient(2px 2px at 40% 45%, #c084fc, transparent),
+    radial-gradient(1px 1px at 70% 60%, #c084fc, transparent);
+  animation: starfieldTwinkle2 4s infinite ease-in-out 1s;
+  opacity: 0.6;
+  contain: strict;
+}
+
+/* Mobile optimized version with fewer stars */
+@media (max-width: 768px) {
+  .starfield-css::before {
+    background-image: 
+      radial-gradient(1px 1px at 20% 30%, #c084fc, transparent),
+      radial-gradient(1px 1px at 60% 15%, #c084fc, transparent),
+      radial-gradient(1px 1px at 80% 80%, #c084fc, transparent),
+      radial-gradient(1px 1px at 30% 90%, #c084fc, transparent),
+      radial-gradient(1px 1px at 70% 50%, #c084fc, transparent),
+      radial-gradient(1px 1px at 15% 10%, #c084fc, transparent),
+      radial-gradient(1px 1px at 85% 20%, #c084fc, transparent),
+      radial-gradient(1px 1px at 50% 85%, #c084fc, transparent);
+  }
+  
+  .starfield-css::after {
+    background-image: 
+      radial-gradient(1px 1px at 45% 20%, #c084fc, transparent),
+      radial-gradient(1px 1px at 25% 60%, #c084fc, transparent),
+      radial-gradient(1px 1px at 75% 35%, #c084fc, transparent),
+      radial-gradient(1px 1px at 55% 80%, #c084fc, transparent),
+      radial-gradient(1px 1px at 35% 15%, #c084fc, transparent),
+      radial-gradient(1px 1px at 65% 90%, #c084fc, transparent),
+      radial-gradient(1px 1px at 80% 25%, #c084fc, transparent),
+      radial-gradient(1px 1px at 40% 45%, #c084fc, transparent);
+  }
+}
