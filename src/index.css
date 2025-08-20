@@ -945,13 +945,11 @@ button, a, [role="button"] {
 
 /* CSS-Only Starfield Background */
 .starfield-css {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
   background-size: 100% 100%;
   background-repeat: no-repeat;
   will-change: opacity;
   contain: strict;
+  transform: translateZ(0); /* Force GPU layer */
 }
 
 .starfield-css::before {
@@ -977,6 +975,8 @@ button, a, [role="button"] {
   animation: starfieldTwinkle1 3s infinite ease-in-out;
   opacity: 0.8;
   contain: strict;
+  transform: translateZ(0); /* Prevent layout shift */
+  will-change: opacity; /* Only animate opacity */
 }
 
 .starfield-css::after {
@@ -1002,6 +1002,8 @@ button, a, [role="button"] {
   animation: starfieldTwinkle2 4s infinite ease-in-out 1s;
   opacity: 0.6;
   contain: strict;
+  transform: translateZ(0); /* Prevent layout shift */
+  will-change: opacity; /* Only animate opacity */
 }
 
 /* Mobile optimized version with fewer stars */

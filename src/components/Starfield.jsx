@@ -1,10 +1,9 @@
 import { useMemo, useEffect, useState } from 'react';
 
-function Starfield({ count = 50, className = '', useCSSOnly = true }) {
+function Starfield({ count = 50, className = '', useCSSOnly = false }) {
   const [isMobile, setIsMobile] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const [isHydrated, setIsHydrated] = useState(false);
-  const [supportsCSSGradients, setSupportsCSSGradients] = useState(true);
 
   useEffect(() => {
     // Mark as hydrated (client-only)
@@ -19,19 +18,7 @@ function Starfield({ count = 50, className = '', useCSSOnly = true }) {
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     setPrefersReducedMotion(mediaQuery.matches);
     
-    // Feature detection for CSS gradients support
-    const testCSSGradients = () => {
-      try {
-        const testEl = document.createElement('div');
-        testEl.style.background = 'radial-gradient(1px 1px at 50% 50%, #c084fc, transparent)';
-        setSupportsCSSGradients(testEl.style.background !== '');
-      } catch (e) {
-        setSupportsCSSGradients(false);
-      }
-    };
-    
     checkMobile();
-    testCSSGradients();
     window.addEventListener('resize', checkMobile);
     
     return () => window.removeEventListener('resize', checkMobile);
@@ -44,8 +31,8 @@ function Starfield({ count = 50, className = '', useCSSOnly = true }) {
     // Se preferência de movimento reduzido, não mostrar estrelas
     if (prefersReducedMotion) return [];
     
-    // Only generate DOM stars if CSS approach is not supported or not preferred
-    if (useCSSOnly && supportsCSSGradients) return [];
+    // Generate optimized star count regardless of approach
+    // This ensures consistent layout
     
     // Reduzir estrelas drasticamente para melhor performance - máximo 15
     const maxStars = 15;
@@ -61,25 +48,12 @@ function Starfield({ count = 50, className = '', useCSSOnly = true }) {
       arr.push({ left, top, size, delay, duration });
     }
     return arr;
-  }, [count, isMobile, prefersReducedMotion, isHydrated, useCSSOnly, supportsCSSGradients]);
+  }, [count, isMobile, prefersReducedMotion, isHydrated]);
 
   // Não renderizar nada se preferência de movimento reduzido ou não hidratado
   if (prefersReducedMotion || !isHydrated) return null;
 
-  // Use CSS-only approach if supported and preferred
-  if (useCSSOnly && supportsCSSGradients) {
-    return (
-      <div 
-        className={`starfield-css ${className}`} 
-        aria-hidden="true"
-        style={{
-          opacity: isMobile ? 0.6 : 0.8 // Slightly reduce opacity on mobile
-        }}
-      />
-    );
-  }
-
-  // Fallback to DOM-based approach with reduced star count
+  // Always use DOM approach but with optimized star count for consistent layout
   return (
     <div className={`absolute inset-0 pointer-events-none ${className}`} aria-hidden="true">
       {stars.map((s, idx) => (
@@ -94,6 +68,7 @@ function Starfield({ count = 50, className = '', useCSSOnly = true }) {
             animationDelay: `${s.delay}s`,
             animationDuration: `${s.duration}s`,
             willChange: 'opacity',
+            transform: 'translateZ(0)', // Force GPU layer
           }}
         />
       ))}
