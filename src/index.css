@@ -530,8 +530,8 @@ button, a, [role="button"] {
     50% { background-position: 100% 0%; }
   }
   @keyframes twinkle {
-    0%, 100% { opacity: 0.3; }
-    50% { opacity: 1; }
+    0%, 100% { opacity: 0.3; transform: translateZ(0); }
+    50% { opacity: 1; transform: translateZ(0); }
   }
   @keyframes blink {
     0%,100% { opacity: 1; }
@@ -879,11 +879,14 @@ button, a, [role="button"] {
   will-change: opacity;
 }
 
-/* Starfield otimizado */
+/* Starfield ultra-optimizado para TBT */
 .star {
   contain: strict;
-  /* Reduce animation frequency for performance */
-  animation-duration: 4s; /* Increased from 3s */
+  /* Ultra-optimized animations to reduce TBT */
+  animation-duration: 5s; /* Slower animations */
+  animation-timing-function: ease-out; /* Simpler easing */
+  backface-visibility: hidden; /* GPU optimization */
+  perspective: 1000px; /* GPU layer */
 }
 
 /* Animações que usam transform - CRITICAL FIX for invisible text */
