@@ -1,5 +1,0 @@
-Problema,Validação,Itens
-"Valor de enumeração inválido no campo ""courseMode"" (em ""hasCourseInstance"")",Não foi iniciado,86
-"É preciso especificar ""courseWorkload"" ou ""courseSchedule"" (em ""hasCourseInstance"")",Não foi iniciado,80
-"Valor de enumeração inválido no campo ""repeatFrequency"" (em ""hasCourseInstance.courseSchedule"")",Não foi iniciado,6
-"O campo ""repeatCount"" não foi encontrado (em ""hasCourseInstance.courseSchedule"")",Não foi iniciado,6
