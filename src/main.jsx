@@ -32,6 +32,17 @@ export const createRoot = ViteReactSSG(
             console.warn('[Performance] Failed to load Lazy Analytics:', error);
           });
       }
+
+      // Initialize lazy schema loader for performance optimization
+      // This will defer Schema.org loading to prevent main thread blocking
+      import('./services/LazySchemaLoader.js')
+        .then(({ default: lazySchemaLoader }) => {
+          // LazySchemaLoader initializes automatically on import
+          console.info('[Performance] Lazy Schema Loader initialized');
+        })
+        .catch(error => {
+          console.warn('[Performance] Failed to load Lazy Schema:', error);
+        });
     }
     
     return router;
