@@ -59,7 +59,7 @@ export const routes = [
     children: [
       {
         index: true,
-        element: <Suspense fallback={<Loading />}><CursoSketchupEnscape /></Suspense>
+        element: <Suspense key="course-sketchup-enscape" fallback={<Loading />}><CursoSketchupEnscape /></Suspense>
       }
     ]
   },
@@ -115,7 +115,7 @@ export const routes = [
       },
       {
         path: 'contato',
-        element: <Suspense fallback={<Loading />}><Contact /></Suspense>
+        element: <Suspense key="contact-page" fallback={<Loading />}><Contact /></Suspense>
       },
       {
         path: 'blog',
@@ -151,15 +151,15 @@ export const routes = [
       // Páginas de localização (SEO local)
       {
         path: 'cursos-florianopolis',
-        element: <Suspense fallback={<Loading />}><CursosFlorianopolis /></Suspense>
+        element: <Suspense key="cursos-florianopolis" fallback={<Loading />}><CursosFlorianopolis /></Suspense>
       },
       {
         path: 'cursos-sao-jose',
-        element: <Suspense fallback={<Loading />}><CursosSaoJose /></Suspense>
+        element: <Suspense key="cursos-sao-jose" fallback={<Loading />}><CursosSaoJose /></Suspense>
       },
       {
         path: 'cursos-palhoca',
-        element: <Suspense fallback={<Loading />}><CursosPalhoca /></Suspense>
+        element: <Suspense key="cursos-palhoca" fallback={<Loading />}><CursosPalhoca /></Suspense>
       },
       // Página do teste vocacional
       {

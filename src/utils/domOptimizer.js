@@ -37,7 +37,8 @@ class DOMOptimizer {
     if (this.isServer) return;
     
     this.setupIntersectionObserver();
-    this.setupMutationObserver();
+    // Temporarily disabled to prevent React DOM conflicts with Suspense boundaries
+    // this.setupMutationObserver();
     this.setupPeriodicCleanup();
     
     // Only run initial DOM optimization if hydrated

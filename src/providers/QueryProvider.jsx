@@ -70,7 +70,7 @@ const ClientOnlyDevTools = () => {
   );
   
   return (
-    <React.Suspense fallback={null}>
+    <React.Suspense key="react-query-devtools" fallback={null}>
       <ReactQueryDevtools 
         initialIsOpen={false}
         position="bottom-right"

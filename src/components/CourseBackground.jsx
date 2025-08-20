@@ -131,6 +131,7 @@ const CourseBackground = ({ courseSlug, className = '', priority = false }) => {
       aria-hidden="true"
     >
       <Suspense 
+        key={`course-background-${courseSlug}`}
         fallback={<BackgroundLoader />}
       >
         <BackgroundComponent 

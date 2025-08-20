@@ -32,7 +32,7 @@ const LazyBackground = ({ type, ...props }) => {
   }
 
   return (
-    <Suspense fallback={<BackgroundFallback />}>
+    <Suspense key={`lazy-background-${type}`} fallback={<BackgroundFallback />}>
       <BackgroundComponent {...props} />
     </Suspense>
   );
