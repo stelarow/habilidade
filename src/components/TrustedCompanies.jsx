@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion } from '../utils/lazyMotion.jsx';
 import { getCompaniesByCategory, courseToCompanyMapping } from '../data/trustedCompanies';
 
 const TrustedCompanies = ({ 

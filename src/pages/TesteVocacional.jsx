@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, Component, useLayoutEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from '../utils/lazyMotion.jsx';
 import { Helmet } from '@dr.pogodin/react-helmet';
 import LogoH from '../components/LogoH';
 import { analytics } from '../utils/analytics';

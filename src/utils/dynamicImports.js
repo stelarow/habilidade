@@ -50,8 +50,10 @@ export const loadJsPDF = async () => {
 /**
  * Framer Motion - Para animações complexas
  * Carrega apenas quando necessário
+ * @deprecated Use the lazy motion utility instead: import { motion, AnimatePresence } from '../utils/lazyMotion'
  */
 export const loadFramerMotion = async () => {
+  console.warn('⚠️ loadFramerMotion is deprecated. Use lazy motion utility instead.');
   return cachedImport(
     () => import('framer-motion'),
     'framer-motion'
@@ -156,8 +158,11 @@ export const preloadByRoute = {
   // Páginas com certificados: PDF libraries carregadas sob demanda via PDF Worker
   // '/cursos': REMOVIDO - PDF Worker carrega bibliotecas apenas quando necessário
   
-  // Páginas com animações: preload framer-motion
-  '/': () => loadFramerMotion()
+  // Páginas com animações: preload framer-motion via lazy utility
+  '/': async () => {
+    const { preloadFramerMotion } = await import('./lazyMotion.jsx');
+    return preloadFramerMotion();
+  }
 };
 
 /**
