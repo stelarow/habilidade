@@ -26,7 +26,7 @@
     "functions:invoke:health": "netlify functions:invoke health-check",
     "functions:invoke:contact": "netlify functions:invoke contact-handler --payload '{\"name\":\"Demo User\",\"email\":\"demo@example.com\",\"subject\":\"Demo Subject\",\"message\":\"Demo message\"}'",
     "functions:invoke:logger": "netlify functions:invoke dev-logger --querystring \"type=debug&source=demo&message=Demo log message\"",
-    "functions:debug": "NODE_OPTIONS='--inspect' netlify functions:serve",
+    "functions:debug": "NODE_OPTIONS='--inspect' netlify functions:serve"
   },
   "dependencies": {
     "@dr.pogodin/react-helmet": "^3.0.2",
