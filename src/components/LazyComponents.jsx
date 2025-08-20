@@ -23,16 +23,16 @@ export const SmartImageUpload = lazy(() => import('./SmartImageUpload.jsx'));
 export const MegaMenu = lazy(() => import('./header/MegaMenu.jsx'));
 export const MobileMegaMenu = lazy(() => import('./header/MobileMegaMenu.jsx'));
 
-// Componentes de fallback otimizados
-const ComponentFallback = ({ height = '200px' }) => (
+// Componentes de fallback otimizados - memoizados para performance
+const ComponentFallback = React.memo(({ height = '200px' }) => (
   <div className={`flex items-center justify-center bg-gray-50 animate-pulse`} style={{ minHeight: height }}>
     <div className="text-gray-400">
       <Loading />
     </div>
   </div>
-);
+));
 
-const FormFallback = () => (
+const FormFallback = React.memo(() => (
   <div className="space-y-4 animate-pulse">
     <div className="h-4 bg-gray-200 rounded w-3/4"></div>
     <div className="h-10 bg-gray-200 rounded"></div>
@@ -40,21 +40,25 @@ const FormFallback = () => (
     <div className="h-32 bg-gray-200 rounded"></div>
     <div className="h-10 bg-blue-200 rounded w-32"></div>
   </div>
-);
+));
 
-const MenuFallback = () => (
+const MenuFallback = React.memo(() => (
   <div className="animate-pulse">
     <div className="h-8 bg-gray-200 rounded w-24"></div>
   </div>
-);
+));
 
 // HOC para lazy loading com fallbacks personalizados
 export const withLazy = (Component, fallback = <ComponentFallback />) => {
-  return React.forwardRef((props, ref) => (
+  const LazyWrapper = (props) => (
     <Suspense fallback={fallback}>
-      <Component {...props} ref={ref} />
+      <Component {...props} />
     </Suspense>
-  ));
+  );
+  
+  LazyWrapper.displayName = `withLazy(${Component.displayName || Component.name || 'Component'})`;
+  
+  return LazyWrapper;
 };
 
 // Componentes wrapeados com lazy loading
