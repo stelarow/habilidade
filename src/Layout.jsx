@@ -39,8 +39,8 @@ function Layout() {
           document.documentElement.style.setProperty('--transition-duration', '0.1s');
         }
 
-        // Initialize DOM optimizer after hydration
-        domOptimizer.initializeAfterHydration();
+        // DOM optimizer disabled to prevent React DOM conflicts
+        // domOptimizer.initializeAfterHydration();
       };
 
       // Use setTimeout to ensure hydration is complete
@@ -49,7 +49,7 @@ function Layout() {
       // Cleanup no unmount
       return () => {
         clearTimeout(timeoutId);
-        domOptimizer.destroy();
+        // domOptimizer.destroy();
       };
     }
   }, [performanceLevel]);

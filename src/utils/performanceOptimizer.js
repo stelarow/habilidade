@@ -2,12 +2,14 @@
  * Performance Optimizer - Bundle size and runtime performance improvements
  */
 
+import React from 'react';
+
 // Lazy loading utilities
 export const createLazyComponent = (importFn, fallback = null) => {
   const LazyComponent = React.lazy(importFn);
   
   return React.forwardRef((props, ref) => (
-    <React.Suspense fallback={fallback}>
+    <React.Suspense key={`lazy-${importFn.toString().slice(0, 20)}`} fallback={fallback}>
       <LazyComponent ref={ref} {...props} />
     </React.Suspense>
   ));

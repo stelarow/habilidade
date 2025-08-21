@@ -8,7 +8,23 @@ class ErrorBoundary extends Component {
   }
 
   static getDerivedStateFromError(error) {
-    // Atualiza o state para mostrar a UI de erro
+    // Capture DOM-related errors that often occur with React 19 + Suspense
+    const isDOMError = error.message && (
+      error.message.includes('removeChild') ||
+      error.message.includes('insertBefore') ||
+      error.message.includes('appendChild') ||
+      error.message.includes('clearSuspenseBoundary') ||
+      error.message.includes('Node') ||
+      error.message.includes('not a child of this node')
+    );
+
+    if (isDOMError) {
+      console.warn('[ErrorBoundary] DOM Error caught and silently handled:', error.message);
+      // For DOM errors, don't show error UI - just continue silently
+      return { hasError: false };
+    }
+
+    // For other errors, show the error UI
     return { hasError: true };
   }
 

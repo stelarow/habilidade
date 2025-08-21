@@ -50,13 +50,15 @@ const MenuFallback = React.memo(() => (
 
 // HOC para lazy loading com fallbacks personalizados
 export const withLazy = (Component, fallback = <ComponentFallback />) => {
+  const componentName = Component.displayName || Component.name || 'Component';
+  
   const LazyWrapper = (props) => (
-    <Suspense fallback={fallback}>
+    <Suspense key={`with-lazy-${componentName}`} fallback={fallback}>
       <Component {...props} />
     </Suspense>
   );
   
-  LazyWrapper.displayName = `withLazy(${Component.displayName || Component.name || 'Component'})`;
+  LazyWrapper.displayName = `withLazy(${componentName})`;
   
   return LazyWrapper;
 };

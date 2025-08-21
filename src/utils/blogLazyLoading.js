@@ -85,7 +85,7 @@ const createLazyComponent = (importFn, fallbackType = 'minimal', options = {}) =
   const LazyComponent = lazy(() => importWithRetries(importFn));
   
   const WrappedComponent = (props) => (
-    <Suspense fallback={LoadingFallbacks[fallbackType]()}>
+    <Suspense key={`blog-lazy-${cacheKey.slice(0, 15)}`} fallback={LoadingFallbacks[fallbackType]()}>
       <LazyComponent {...props} />
     </Suspense>
   );
