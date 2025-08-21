@@ -3,8 +3,7 @@
  * Based on Escola Habilidade design system
  */
 
-/* Custom font loading (optional - using system fonts for performance) */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap');
+/* Custom font loading moved to index.html for better performance - eliminates render-blocking @import */
 
 :root {
   /* Typography scale for optimal reading */
