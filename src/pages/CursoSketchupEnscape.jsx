@@ -3,20 +3,20 @@ import { motion } from '../utils/lazyMotion.jsx';
 import { 
   Clock,
   CheckCircle,
-  MessageCircle,
-  Box,
+  ChatCircle,
+  Cube,
   Camera,
   Lightbulb,
   Target,
-  ChevronDown,
-  ExternalLink,
+  CaretDown,
+  ArrowSquareOut,
   MapPin,
   Phone,
   CalendarCheck,
   GraduationCap,
   Timer,
-  AlertCircle
-} from 'lucide-react';
+  Warning
+} from '@phosphor-icons/react';
 import { CaretRight, House } from '@phosphor-icons/react';
 import InteractiveLogo from '../components/header/InteractiveLogo';
 import TrustedCompanies from '../components/TrustedCompanies';
@@ -222,7 +222,7 @@ const CourseHero = () => {
                 className="btn-neon bg-zinc-900/70 text-white font-semibold rounded-md hover:bg-zinc-900 transition px-6 py-3 text-base inline-flex items-center gap-2 justify-center"
                 whileHover={{ scale: 1.05 }}
               >
-                <MessageCircle size={18} />
+                <ChatCircle size={18} />
                 Garanta sua Vaga - 10x R$ 279,30
               </motion.a>
               
@@ -231,7 +231,7 @@ const CourseHero = () => {
                 className="btn-neon bg-zinc-900/70 text-white font-semibold rounded-md hover:bg-zinc-900 transition px-6 py-3 text-base inline-flex items-center gap-2 justify-center border-2 border-white/20"
                 whileHover={{ scale: 1.05 }}
               >
-                <MessageCircle size={18} />
+                <ChatCircle size={18} />
                 Fale com um Orientador
               </motion.a>
             </motion.div>
@@ -334,7 +334,7 @@ const AboutCourse = () => {
               transition={{ duration: 0.6 }}
             >
               <div className="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Box className="text-white" size={32} />
+                <Cube className="text-white" size={32} />
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-3">Modelagem 3D</h3>
               <p className="text-gray-600">
@@ -410,7 +410,7 @@ const ModuleSection = ({ title, icon: Icon, lessons, color }) => {
             animate={{ rotate: isExpanded ? 180 : 0 }}
             transition={{ duration: 0.3 }}
           >
-            <ChevronDown className="text-gray-400" size={24} />
+            <CaretDown className="text-gray-400" size={24} />
           </motion.div>
         </div>
       </div>
@@ -505,7 +505,7 @@ const Curriculum = () => {
         <div className="max-w-4xl mx-auto space-y-6">
           <ModuleSection 
             title="SketchUp - Modelagem 3D"
-            icon={Box}
+            icon={Cube}
             lessons={sketchupLessons}
             color="purple-600"
           />
@@ -737,7 +737,7 @@ const FinalCTA = () => {
               animate={{ rotate: [0, 10, -10, 0] }}
               transition={{ duration: 2, repeat: Infinity }}
             >
-              <AlertCircle size={20} className="text-purple-400" />
+              <Warning size={20} className="text-purple-400" />
             </motion.div>
             <span className="bg-gradient-to-r from-white to-purple-400 bg-clip-text text-transparent">
               OFERTA LIMITADA
@@ -798,7 +798,7 @@ const FinalCTA = () => {
               }}
               whileTap={{ scale: 0.95 }}
             >
-              <MessageCircle size={24} />
+              <ChatCircle size={24} />
               Garantir Vaga - 10x R$ 279,30
             </motion.a>
             
@@ -865,7 +865,7 @@ const FinalCTA = () => {
                 className="inline-flex items-center gap-2 mt-4 text-purple-600 hover:text-purple-700 font-semibold"
                 whileHover={{ x: 2 }}
               >
-                <ExternalLink size={16} />
+                <ArrowSquareOut size={16} />
                 Abrir no Google Maps
               </motion.a>
             </div>
@@ -888,7 +888,7 @@ const FinalCTA = () => {
                   className="inline-flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 font-semibold"
                   whileHover={{ scale: 1.02 }}
                 >
-                  <MessageCircle size={16} />
+                  <ChatCircle size={16} />
                   Chamar no WhatsApp
                 </motion.a>
               </div>
@@ -929,7 +929,7 @@ const CursoSketchupEnscape = () => {
           y: { duration: 2, repeat: Infinity }
         }}
       >
-        <MessageCircle className="text-white" size={24} />
+        <ChatCircle className="text-white" size={24} />
       </motion.a>
     </div>
   );

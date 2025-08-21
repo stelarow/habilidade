@@ -2,22 +2,22 @@
 import React, { useState, useEffect, useCallback, useMemo, memo, useRef } from 'react';
 import { motion, useReducedMotion } from '../utils/lazyMotion.jsx';
 import { 
-  ArrowLeft,
+  CaretLeft,
   Clock,
   CheckCircle,
-  MessageCircle,
-  Box,
+  ChatCircle,
+  Cube,
   Lightbulb,
   Target,
-  ChevronDown,
-  ExternalLink,
+  CaretDown,
+  ArrowSquareOut,
   MapPin,
   Phone,
   CalendarCheck,
   GraduationCap,
   Timer,
-  AlertCircle
-} from 'lucide-react';
+  Warning
+} from '@phosphor-icons/react';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from '@dr.pogodin/react-helmet';
 
@@ -94,7 +94,7 @@ const CourseHeader = memo(() => {
               className="flex items-center gap-2 text-white hover:text-[#d400ff] transition-colors"
               whileHover={{ x: -2 }}
             >
-              <ArrowLeft size={20} />
+              <CaretLeft size={20} />
               <span>Voltar</span>
             </motion.button>
             <img 
@@ -252,7 +252,7 @@ const CourseHero = memo(() => {
                 className="bg-[#d400ff] text-white px-8 py-4 rounded-full font-semibold text-lg inline-flex items-center gap-2 justify-center hover:bg-[#b300dd] transition-all duration-300"
                 whileHover={{ scale: 1.05, boxShadow: "0 0 30px #d400ff88" }}
               >
-                <MessageCircle size={20} />
+                <ChatCircle size={20} />
                 Garanta sua Vaga - 10x R$ 279,30
               </motion.a>
               
@@ -261,7 +261,7 @@ const CourseHero = memo(() => {
                 className="border-2 border-[#d400ff] text-[#d400ff] px-8 py-4 rounded-full font-semibold text-lg hover:bg-[#d400ff] hover:text-white transition-all duration-300 inline-flex items-center gap-2 justify-center"
                 whileHover={{ scale: 1.05 }}
               >
-                <MessageCircle size={20} />
+                <ChatCircle size={20} />
                 Fale com um Orientador
               </motion.a>
             </motion.div>
@@ -389,7 +389,7 @@ const AboutCourse = memo(() => {
 
           <div className="grid md:grid-cols-3 gap-8 mb-16">
             {[
-              { icon: Box, title: "Modelagem 3D", description: "Domine todas as ferramentas do SketchUp para criar modelos 3D precisos e detalhados." },
+              { icon: Cube, title: "Modelagem 3D", description: "Domine todas as ferramentas do SketchUp para criar modelos 3D precisos e detalhados." },
               { icon: Lightbulb, title: "Renderização", description: "Crie imagens fotorrealísticas com Enscape, incluindo iluminação e materiais profissionais." },
               { icon: Target, title: "Projetos Reais", description: "Desenvolva projetos completos: residências, interiores e documentação técnica." }
             ].map((feature, index) => {
@@ -456,7 +456,7 @@ const ModuleSection = memo(({ title, lessons, icon: IconComponent }) => {
             animate={{ rotate: isExpanded ? 180 : 0 }}
             transition={{ duration: 0.3 }}
           >
-            <ChevronDown className="text-gray-400" size={24} />
+            <CaretDown className="text-gray-400" size={24} />
           </motion.div>
         </div>
       </div>
@@ -863,7 +863,7 @@ const OfferBadge = memo(() => {
         animate={prefersReducedMotion ? {} : { rotate: [0, 5, -5, 0] }}
         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
       >
-        <AlertCircle size={20} className="text-[#d400ff]" />
+        <Warning size={20} className="text-[#d400ff]" />
       </motion.div>
       <span className="bg-gradient-to-r from-white to-[#d400ff] bg-clip-text text-transparent">
         OFERTA LIMITADA
@@ -940,7 +940,7 @@ const CTAButtons = memo(() => {
         whileHover={primaryButtonHover}
         whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
       >
-        <MessageCircle size={24} />
+        <ChatCircle size={24} />
         Garantir Vaga - {PRICING.installments}x {PRICING.installmentPrice}
       </motion.a>
       
@@ -1003,7 +1003,7 @@ const LocationCard = memo(() => {
         style={{ color: '#d400ff', fontWeight: '600' }}
         whileHover={prefersReducedMotion ? {} : { x: 2 }}
       >
-        <ExternalLink size={16} />
+        <ArrowSquareOut size={16} />
         <span style={{ color: '#d400ff', fontWeight: '600' }}>Abrir no Google Maps</span>
       </motion.a>
     </div>
@@ -1039,7 +1039,7 @@ const ContactCard = memo(() => {
           style={{ backgroundColor: '#10b981', color: '#ffffff', fontWeight: '600' }}
           whileHover={prefersReducedMotion ? {} : { scale: 1.02 }}
         >
-          <MessageCircle size={16} />
+          <ChatCircle size={16} />
           <span style={{ color: '#ffffff', fontWeight: '600' }}>Chamar no WhatsApp</span>
         </motion.a>
       </div>
@@ -1156,7 +1156,7 @@ const FAQ = memo(() => {
                 className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
               >
                 <span className="font-semibold text-gray-900">{item.question}</span>
-                <ChevronDown 
+                <CaretDown 
                   className={`text-[#d400ff] transition-transform ${
                     openItem === index ? 'rotate-180' : ''
                   }`}

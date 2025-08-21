@@ -8,29 +8,29 @@ import {
   Brain,
   Code,
   Palette,
-  TrendingUp,
+  TrendUp,
   Users,
   BookOpen,
   MapPin,
-  ArrowRight,
-  ArrowLeft,
+  CaretRight,
+  CaretLeft,
   Check,
   Star,
-  MessageCircle,
+  ChatCircle,
   Phone,
   Target,
-  Award,
+  Trophy,
   Clock,
-  Download,
-  Share2,
-  RefreshCw,
+  DownloadSimpleSimple,
+  ShareNetwork,
+  ArrowsClockwise,
   User,
   Lightbulb,
   Camera,
-  PieChart,
-  BarChart3,
-  Activity
-} from 'lucide-react';
+  ChartPie,
+  ChartBar,
+  Pulse
+} from '@phosphor-icons/react';
 
 // Hook seguro para operações DOM que funciona tanto no cliente quanto servidor
 const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
@@ -341,7 +341,7 @@ const courses = [
     duration: 'Consulte',
     price: 'Consulte valores',
     areas: ['marketing', 'comunicacao', 'gestao'],
-    icon: TrendingUp,
+    icon: TrendUp,
     image: 'keys/curso-marketing?prompt=Digital marketing dashboard with social media analytics and charts'
   },
   {
@@ -363,7 +363,7 @@ const courses = [
     duration: 'Consulte',
     price: 'Consulte valores',
     areas: ['gestao', 'logica', 'tecnologia'],
-    icon: BarChart3,
+    icon: ChartBar,
     image: 'keys/curso-bi?prompt=Business intelligence dashboard with charts and data analysis'
   },
   {
@@ -385,7 +385,7 @@ const courses = [
     duration: 'Consulte',
     price: 'Consulte valores',
     areas: ['design', 'criatividade', 'marketing'],
-    icon: Activity,
+    icon: Pulse,
     image: 'keys/curso-video?prompt=Video editing workspace with timeline and effects'
   },
   {
@@ -459,7 +459,7 @@ const Hero = () => {
               100% personalizado
             </span>
             <span className="flex items-center gap-2">
-              <Award size={16} className="text-[#d400ff]" />
+              <Trophy size={16} className="text-[#d400ff]" />
               Resultado profissional
             </span>
           </div>
@@ -475,7 +475,7 @@ const Hero = () => {
           >
             <Brain size={24} />
             Começar Teste Gratuito
-            <ArrowRight size={20} />
+            <CaretRight size={20} />
           </motion.button>
         </motion.div>
 
@@ -488,7 +488,7 @@ const Hero = () => {
         >
           <div className="text-center">
             <div className="w-16 h-16 bg-[#d400ff]/20 rounded-full flex items-center justify-center mx-auto mb-4">
-              <BarChart3 className="text-[#d400ff]" size={32} />
+              <ChartBar className="text-[#d400ff]" size={32} />
             </div>
             <h3 className="text-white font-semibold text-lg mb-2">Análise Completa</h3>
             <p className="text-gray-300">Dashboard detalhado com suas afinidades profissionais</p>
@@ -669,7 +669,7 @@ const VocationalTest = ({ onComplete }) => {
             >
               <div className="flex items-center justify-between">
                 <span className="text-gray-800 font-medium">{answer.text}</span>
-                <ArrowRight className="text-[#d400ff] opacity-0 group-hover:opacity-100 transition-opacity" size={20} />
+                <CaretRight className="text-[#d400ff] opacity-0 group-hover:opacity-100 transition-opacity" size={20} />
               </div>
             </motion.button>
           ))}
@@ -682,7 +682,7 @@ const VocationalTest = ({ onComplete }) => {
             className="mt-8 text-gray-600 hover:text-[#d400ff] inline-flex items-center gap-2"
             whileHover={{ x: -2 }}
           >
-            <ArrowLeft size={16} />
+            <CaretLeft size={16} />
             Voltar
           </motion.button>
         )}
@@ -754,7 +754,7 @@ const ResultsDashboard = ({ results, onRestart }) => {
     setPdfProgress({ phase: 'start', progress: 0, message: 'Iniciando...' });
     
     // Track download do PDF
-    analytics.trackPDFDownloaded(dominantArea.area);
+    analytics.trackPDFDownloadSimpleed(dominantArea.area);
     
     try {
       // Usar o PDF Worker para geração
@@ -867,7 +867,7 @@ Faça seu teste gratuito: https://escolahabilidade.com/teste-vocacional
         </motion.div>
         
         <div className="flex items-center justify-center gap-2 mb-4">
-          <Award className="text-[#d400ff]" size={24} />
+          <Trophy className="text-[#d400ff]" size={24} />
           <span className="text-sm uppercase tracking-wide text-gray-500 font-semibold">
             Análise Científica MIT • Harvard • Stanford
           </span>
@@ -894,7 +894,7 @@ Faça seu teste gratuito: https://escolahabilidade.com/teste-vocacional
         >
           <div className="text-center mb-6">
             <div className="flex items-center justify-center gap-2 mb-2">
-              <PieChart className="text-[#d400ff]" size={20} />
+              <ChartPie className="text-[#d400ff]" size={20} />
               <span className="text-xs uppercase tracking-wide text-gray-500 font-semibold">
                 Metodologia RIASEC - Stanford
               </span>
@@ -916,7 +916,7 @@ Faça seu teste gratuito: https://escolahabilidade.com/teste-vocacional
           className="bg-white rounded-2xl p-8 shadow-xl"
         >
           <div className="flex items-center gap-2 mb-6">
-            <BarChart3 className="text-[#d400ff]" size={20} />
+            <ChartBar className="text-[#d400ff]" size={20} />
             <span className="text-xs uppercase tracking-wide text-gray-500 font-semibold">
               Modelo VIPS - MIT
             </span>
@@ -978,7 +978,7 @@ Faça seu teste gratuito: https://escolahabilidade.com/teste-vocacional
         >
           <div className="text-center mb-8">
             <div className="flex items-center justify-center gap-2 mb-4">
-              <Award className="text-white" size={24} />
+              <Trophy className="text-white" size={24} />
               <span className="text-sm uppercase tracking-wide text-purple-100 font-semibold">
                 Metodologia MIT • Harvard • Stanford
               </span>
@@ -1035,7 +1035,7 @@ Faça seu teste gratuito: https://escolahabilidade.com/teste-vocacional
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  <MessageCircle size={18} />
+                  <ChatCircle size={18} />
                   Quero Este Curso
                 </motion.a>
               </motion.div>
@@ -1100,7 +1100,7 @@ Faça seu teste gratuito: https://escolahabilidade.com/teste-vocacional
             className="bg-[#d400ff] text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-purple-600 transition-all duration-300 inline-flex items-center justify-center gap-2"
             whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(212, 0, 255, 0.4)" }}
           >
-            <MessageCircle size={20} />
+            <ChatCircle size={20} />
             Falar Conosco
           </motion.a>
           
@@ -1109,7 +1109,7 @@ Faça seu teste gratuito: https://escolahabilidade.com/teste-vocacional
             className="border-2 border-[#d400ff] text-[#d400ff] px-8 py-4 rounded-full font-bold text-lg hover:bg-[#d400ff] hover:text-white transition-all duration-300 inline-flex items-center justify-center gap-2"
             whileHover={{ scale: 1.05 }}
           >
-            <RefreshCw size={20} />
+            <ArrowsClockwise size={20} />
             Refazer Teste
           </motion.button>
         </div>
@@ -1122,7 +1122,7 @@ Faça seu teste gratuito: https://escolahabilidade.com/teste-vocacional
             whileHover={{ scale: isGeneratingPDF ? 1 : 1.05 }}
             whileTap={{ scale: isGeneratingPDF ? 1 : 0.95 }}
           >
-            <Download size={14} />
+            <DownloadSimple size={14} />
             {isGeneratingPDF ? (
               pdfProgress.message || 'Gerando PDF...'
             ) : (
@@ -1136,7 +1136,7 @@ Faça seu teste gratuito: https://escolahabilidade.com/teste-vocacional
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <Share2 size={14} />
+            <ShareNetwork size={14} />
             Compartilhar
           </motion.button>
           
@@ -1245,7 +1245,7 @@ const TesteVocacional = () => {
               >
                 <div className="text-center mb-8">
                   <div className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-100 to-blue-100 px-6 py-3 rounded-full mb-6">
-                    <Award className="text-[#d400ff]" size={20} />
+                    <Trophy className="text-[#d400ff]" size={20} />
                     <span className="text-[#d400ff] font-bold text-sm uppercase tracking-wide">
                       Metodologia MIT • Harvard • Stanford
                     </span>
@@ -1266,7 +1266,7 @@ const TesteVocacional = () => {
                   </div>
                   <div className="text-center">
                     <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Activity className="text-[#d400ff]" size={32} />
+                      <Pulse className="text-[#d400ff]" size={32} />
                     </div>
                     <h3 className="text-xl font-semibold text-gray-900 mb-2">2. Analisamos</h3>
                     <p className="text-gray-600">Análise baseada no modelo Holland RIASEC validado por universidades mundiais</p>
@@ -1288,7 +1288,7 @@ const TesteVocacional = () => {
                 >
                   <Brain size={24} />
                   Iniciar Teste Agora
-                  <ArrowRight size={20} />
+                  <CaretRight size={20} />
                 </motion.button>
               </motion.div>
             </div>
@@ -1394,7 +1394,7 @@ const TesteVocacional = () => {
           y: { duration: 2, repeat: Infinity }
         }}
       >
-        <MessageCircle className="text-white" size={24} />
+        <ChatCircle className="text-white" size={24} />
       </motion.a>
 
       {/* Schema.org para SEO Local */}
