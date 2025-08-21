@@ -154,6 +154,14 @@ const createLazyMotionComponent = (elementType = 'div') => {
         viewport, 
         transition,
         variants,
+        whileTap,
+        whileDrag,
+        whileFocus,
+        exit,
+        drag,
+        layout,
+        layoutId,
+        style,
         ...fallbackProps 
       } = props;
 
@@ -225,6 +233,31 @@ const createLazyMotionComponent = (elementType = 'div') => {
       }
       if (elementType === 'option') {
         return <option ref={ref} {...fallbackProps} />;
+      }
+      // SVG elements
+      if (elementType === 'svg') {
+        return <svg ref={ref} {...fallbackProps} />;
+      }
+      if (elementType === 'circle') {
+        return <circle ref={ref} {...fallbackProps} />;
+      }
+      if (elementType === 'polygon') {
+        return <polygon ref={ref} {...fallbackProps} />;
+      }
+      if (elementType === 'line') {
+        return <line ref={ref} {...fallbackProps} />;
+      }
+      if (elementType === 'path') {
+        return <path ref={ref} {...fallbackProps} />;
+      }
+      if (elementType === 'g') {
+        return <g ref={ref} {...fallbackProps} />;
+      }
+      if (elementType === 'text') {
+        return <text ref={ref} {...fallbackProps} />;
+      }
+      if (elementType === 'rect') {
+        return <rect ref={ref} {...fallbackProps} />;
       }
       
       // Default to div with enhanced behavior only on client
@@ -313,7 +346,16 @@ export const motion = {
   textarea: createLazyMotionComponent('textarea'),
   label: createLazyMotionComponent('label'),
   select: createLazyMotionComponent('select'),
-  option: createLazyMotionComponent('option')
+  option: createLazyMotionComponent('option'),
+  // SVG elements
+  svg: createLazyMotionComponent('svg'),
+  circle: createLazyMotionComponent('circle'),
+  polygon: createLazyMotionComponent('polygon'),
+  line: createLazyMotionComponent('line'),
+  path: createLazyMotionComponent('path'),
+  g: createLazyMotionComponent('g'),
+  text: createLazyMotionComponent('text'),
+  rect: createLazyMotionComponent('rect')
 };
 
 export const AnimatePresence = LazyAnimatePresence;
