@@ -148,6 +148,7 @@ function generateMobileCriticalCSS() {
 
 /**
  * Advanced Critical CSS Plugin for Vite
+ * Now integrates with SSG post-processing
  */
 export function createCriticalCssPlugin() {
   return {
@@ -157,94 +158,49 @@ export function createCriticalCssPlugin() {
       this.isProduction = config.command === 'build';
     },
     
-    transformIndexHtml: {
-      order: 'pre',
-      handler(html, context) {
-        if (!this.isProduction) return html;
-        
-        // Generate mobile-first critical CSS
-        const criticalCSS = generateMobileCriticalCSS();
-        
-        // Anti-FOUC script with mobile optimization
-        const antiFoucScript = `
-          <script>
-            (function() {
-              // Mobile-optimized FOUC prevention
-              document.documentElement.className += ' fouc-prevent';
-              
-              // Faster readiness detection for mobile
-              function makeReady() {
-                document.documentElement.className = 
-                  document.documentElement.className.replace('fouc-prevent', 'fouc-ready');
-              }
-              
-              // Use RAF for smooth transition on mobile
-              if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', function() {
-                  requestAnimationFrame(makeReady);
-                });
-              } else {
-                requestAnimationFrame(makeReady);
-              }
-            })();
-          </script>
-        `;
-        
-        // Async CSS loading for non-critical styles
-        const asyncCssScript = `
-          <script>
-            (function() {
-              // Load non-critical CSS asynchronously
-              function loadCSS(href, before, media) {
-                var link = document.createElement('link');
-                var ref = before || document.getElementsByTagName('script')[0];
-                link.rel = 'stylesheet';
-                link.href = href;
-                link.media = media || 'all';
-                ref.parentNode.insertBefore(link, ref);
-                return link;
-              }
-              
-              // Wait for critical render, then load non-critical CSS
-              setTimeout(function() {
-                var criticalCSSLoaded = document.querySelector('style[data-critical]') || 
-                                       document.documentElement.getAttribute('data-critical-loaded') === 'true';
-                if (criticalCSSLoaded) {
-                  // Find non-critical CSS files and load them
-                  var links = document.querySelectorAll('link[rel="stylesheet"][data-non-critical]');
-                  links.forEach(function(link) {
-                    link.removeAttribute('data-non-critical');
-                    link.media = 'all';
-                  });
-                }
-              }, 500); // Increased delay for consistency with mobile optimization
-            })();
-          </script>
-        `;
-        
-        // Inject critical CSS inline
-        const criticalCssTag = `<style data-critical>${criticalCSS}</style>`;
-        
-        // Transform HTML
-        let transformedHtml = html
-          .replace('<title>', `${criticalCssTag}\n    ${antiFoucScript}\n    <title>`)
-          .replace('</body>', `${asyncCssScript}\n  </body>`);
-        
-        return transformedHtml;
-      }
-    },
+    // Remove transformIndexHtml as SSG plugin handles HTML processing
+    // Keep only bundle processing for development insights
     
     generateBundle(options, bundle) {
-      // Mark CSS files as non-critical for async loading
+      if (!this.isProduction) return;
+      
+      // Analyze CSS files for optimization insights
       for (const fileName in bundle) {
         if (fileName.endsWith('.css')) {
           const cssBundle = bundle[fileName];
           
-          // Modify CSS loading to be non-blocking
           if (cssBundle.type === 'asset') {
-            console.log(`🎨 Processing CSS for async loading: ${fileName}`);
-            // CSS will be loaded asynchronously via the script above
+            const cssSize = Buffer.byteLength(cssBundle.source, 'utf-8');
+            console.log(`📊 CSS Bundle Analysis: ${fileName} (${(cssSize/1024).toFixed(1)}KB)`);
+            
+            // Log if CSS is too large for optimal performance
+            if (cssSize > 150000) { // 150KB threshold
+              console.warn(`⚠️  Large CSS detected: ${fileName} - Will be loaded asynchronously`);
+            }
           }
+        }
+      }
+    },
+    
+    // New: writeBundle hook for additional processing coordination
+    writeBundle: {
+      sequential: true,
+      order: 'pre', // Run before SSG plugin
+      handler: async function(options, bundle) {
+        // Prepare for SSG post-processing
+        console.log('🎨 Critical CSS plugin: Preparing for SSG post-processing...');
+        
+        // Create a manifest of CSS files for SSG plugin
+        const cssFiles = Object.keys(bundle)
+          .filter(fileName => fileName.endsWith('.css'))
+          .map(fileName => ({
+            fileName,
+            size: Buffer.byteLength(bundle[fileName].source, 'utf-8'),
+            isMain: fileName.includes('app-') // Main app CSS
+          }));
+        
+        if (cssFiles.length > 0) {
+          console.log('📝 CSS Files for async loading:', cssFiles.map(f => f.fileName));
         }
       }
     }

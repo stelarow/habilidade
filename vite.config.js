@@ -4,6 +4,7 @@ import { generateSitemap } from "./src/utils/sitemapGenerator.js"
 import purgeCss from 'vite-plugin-purgecss'
 import { createHtmlPlugin } from 'vite-plugin-html'
 import { createCriticalCssPlugin } from './src/utils/critical-css-plugin.js'
+import { createSSGCriticalCSSPlugin } from './src/utils/ssg-critical-css-plugin.js'
 
 // Custom plugin for sitemap generation
 const sitemapPlugin = () => {
@@ -33,7 +34,9 @@ export default defineConfig({
   plugins: [
     react(),
     sitemapPlugin(),
-    createCriticalCssPlugin(),
+    // Critical CSS plugins in correct order
+    createCriticalCssPlugin(), // Analyzes bundles and prepares for SSG
+    createSSGCriticalCSSPlugin(), // Post-processes HTML after SSG
     ...(process.env.DEBUG_BUILD !== 'true' ? [
       purgeCss({
         content: [
@@ -57,7 +60,9 @@ export default defineConfig({
           /^from-purple-500/, /^to-violet-400/, /^from-cyan-500/, /^to-teal-400/,
           /^from-indigo-500/, /^to-blue-400/, /^from-violet-500/, /^to-purple-400/,
           // Padding for gradient borders
-          /^p-\[3px\]$/
+          /^p-\[3px\]$/,
+          // Critical CSS classes (prevent purging)
+          /^fouc-/, /^critical-/
         ],
         defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) || []
       })
