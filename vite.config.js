@@ -1,6 +1,8 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { generateSitemap } from "./src/utils/sitemapGenerator.js"
+import purgeCss from 'vite-plugin-purgecss'
+import { createHtmlPlugin } from 'vite-plugin-html'
 
 // Custom plugin for sitemap generation
 const sitemapPlugin = () => {
@@ -22,12 +24,80 @@ const sitemapPlugin = () => {
   };
 };
 
+// Plugin para otimização de CSS crítico
+const criticalCssPlugin = () => {
+  return {
+    name: 'critical-css-plugin',
+    generateBundle(options, bundle) {
+      // Find the main CSS file
+      const cssFiles = Object.keys(bundle).filter(fileName => 
+        fileName.startsWith('assets/css/') && fileName.endsWith('.css')
+      );
+      
+      if (cssFiles.length > 0) {
+        console.log('🎨 CSS files found:', cssFiles);
+        // Critical CSS will be handled by HTML transformation
+      }
+    },
+    transformIndexHtml(html) {
+      // Add async CSS loading script
+      const asyncCssScript = `
+        <script>
+          (function() {
+            const cssFiles = document.querySelectorAll('link[rel="stylesheet"]');
+            cssFiles.forEach(function(link) {
+              if (link.href.includes('app-')) {
+                // Convert to async loading
+                link.media = 'print';
+                link.onload = function() { this.media = 'all'; };
+                
+                // Add noscript fallback
+                const noscript = document.createElement('noscript');
+                const fallbackLink = link.cloneNode();
+                fallbackLink.media = 'all';
+                noscript.appendChild(fallbackLink);
+                link.parentNode.insertBefore(noscript, link.nextSibling);
+              }
+            });
+          })();
+        </script>
+      `;
+      
+      return html.replace('</head>', asyncCssScript + '</head>');
+    }
+  };
+};
+
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
     react(),
-    sitemapPlugin()
+    sitemapPlugin(),
+    criticalCssPlugin(),
+    ...(process.env.DEBUG_BUILD !== 'true' ? [
+      purgeCss({
+        content: [
+          './index.html',
+          './src/**/*.{js,jsx,ts,tsx}',
+          './src/**/*.css'
+        ],
+        safelist: [
+          // Preserve classes that might be added dynamically
+          /^bg-/, /^text-/, /^border-/, /^hover:/, /^focus:/,
+          // Keep animation classes
+          /^animate-/, /^transition-/, /^transform/,
+          // Blog specific classes
+          /^hljs/, /^language-/, /^code/,
+          // Component states
+          /^active/, /^disabled/, /^loading/
+        ],
+        defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) || []
+      })
+    ] : []),
+    createHtmlPlugin({
+      minify: process.env.DEBUG_BUILD !== 'true'
+    })
   ],
 
 base: '/',

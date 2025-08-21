@@ -2,6 +2,7 @@ import { ViteReactSSG } from 'vite-react-ssg'
 import { routes } from './routes.jsx'
 import './index.css'
 import { initializeErrorLogger } from './utils/frontend-error-logger'
+import { initCriticalCss } from './utils/criticalCss.js'
 
 export const createRoot = ViteReactSSG(
   { routes },
@@ -14,6 +15,9 @@ export const createRoot = ViteReactSSG(
       const isDevelopment = import.meta.env.DEV;
       const isProduction = window.location.hostname === 'escolahabilidade.com' || 
                           window.location.hostname === 'www.escolahabilidade.com';
+      
+      // Initialize critical CSS optimizations first for better performance
+      initCriticalCss();
       
       initializeErrorLogger({
         enabled: !isDevelopment && isProduction,
