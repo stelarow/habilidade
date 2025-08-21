@@ -90,7 +90,15 @@ export default defineConfig({
           // Blog specific classes
           /^hljs/, /^language-/, /^code/,
           // Component states
-          /^active/, /^disabled/, /^loading/
+          /^active/, /^disabled/, /^loading/,
+          // Course card gradient borders - CRITICAL FIX
+          /^from-.*\/60$/, /^to-.*\/60$/, /^from-orange-500/, /^to-amber-400/,
+          /^from-red-500/, /^to-pink-400/, /^from-blue-500/, /^to-indigo-400/,
+          /^from-pink-500/, /^to-rose-400/, /^from-green-500/, /^to-emerald-400/,
+          /^from-purple-500/, /^to-violet-400/, /^from-cyan-500/, /^to-teal-400/,
+          /^from-indigo-500/, /^to-blue-400/, /^from-violet-500/, /^to-purple-400/,
+          // Padding for gradient borders
+          /^p-\[3px\]$/
         ],
         defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) || []
       })

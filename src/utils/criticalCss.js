@@ -150,18 +150,9 @@ export const initCriticalCss = () => {
   // Optimize font loading
   optimizeFontLoading();
   
-  // Load non-critical CSS asynchronously
-  const nonCriticalCss = [
-    '/assets/css/blog-components.css',
-    '/assets/css/course-animations.css'
-  ];
-  
-  // Load after initial render
-  requestIdleCallback(() => {
-    nonCriticalCss.forEach(css => {
-      loadCssAsync(css).catch(console.warn);
-    });
-  }, { timeout: 2000 });
+  // Note: CSS files are now bundled and loaded automatically by Vite
+  // No need to load additional CSS files asynchronously as they're 
+  // included in the main CSS bundle with code splitting
 };
 
 // Auto-initialize if in browser environment
