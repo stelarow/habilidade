@@ -144,15 +144,34 @@ export const optimizeFontLoading = () => {
 };
 
 /**
- * Main initialization function for critical CSS optimization
+ * Mobile-first critical CSS initialization
+ * Optimized for mobile performance and Core Web Vitals
  */
 export const initCriticalCss = () => {
-  // Optimize font loading
+  // Optimize font loading for mobile
   optimizeFontLoading();
   
-  // Note: CSS files are now bundled and loaded automatically by Vite
-  // No need to load additional CSS files asynchronously as they're 
-  // included in the main CSS bundle with code splitting
+  // Mobile-specific optimizations
+  if (window.innerWidth <= 768) {
+    // Disable smooth scrolling on mobile for better performance
+    document.documentElement.style.scrollBehavior = 'auto';
+    
+    // Optimize touch interactions
+    document.body.style.touchAction = 'manipulation';
+    
+    // Prevent zoom on double tap
+    let lastTouchEnd = 0;
+    document.addEventListener('touchend', (event) => {
+      const now = (new Date()).getTime();
+      if (now - lastTouchEnd <= 300) {
+        event.preventDefault();
+      }
+      lastTouchEnd = now;
+    }, false);
+  }
+  
+  // Mark critical CSS as loaded
+  document.documentElement.setAttribute('data-critical-loaded', 'true');
 };
 
 // Auto-initialize if in browser environment

@@ -6,6 +6,7 @@ import ErrorBoundary from './components/ErrorBoundary';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import AccessibilityControls from './components/AccessibilityControls';
+import { CriticalCssLoader, PerformanceMonitor } from './components/MobilePerformanceOptimizer';
 import usePerformanceLevel from './hooks/usePerformanceLevel';
 import useGoogleAnalytics from './hooks/useGoogleAnalytics';
 import useScrollToHash from './hooks/useScrollToHash';
@@ -58,21 +59,26 @@ function Layout() {
     <ErrorBoundary>
       <HelmetProvider>
         <QueryProvider>
-          <div className="App bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 min-h-screen text-zinc-50">
-            {/* Accessibility Controls */}
-            <AccessibilityControls />
-            
-            {/* Header */}
-            <Header />
-            
-            {/* Main Content com lazy loading otimizado */}
-            <main id="main-content" className="relative z-10">
-              <Outlet />
-            </main>
-            
-            {/* Footer */}
-            <Footer />
-          </div>
+          <CriticalCssLoader>
+            <div className="App bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 min-h-screen text-zinc-50">
+              {/* Performance Monitoring (Development) */}
+              <PerformanceMonitor />
+              
+              {/* Accessibility Controls */}
+              <AccessibilityControls />
+              
+              {/* Header */}
+              <Header />
+              
+              {/* Main Content com lazy loading otimizado */}
+              <main id="main-content" className="relative z-10">
+                <Outlet />
+              </main>
+              
+              {/* Footer */}
+              <Footer />
+            </div>
+          </CriticalCssLoader>
         </QueryProvider>
       </HelmetProvider>
     </ErrorBoundary>
