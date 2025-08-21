@@ -207,7 +207,8 @@ export function createCriticalCssPlugin() {
               
               // Wait for critical render, then load non-critical CSS
               setTimeout(function() {
-                var criticalCSSLoaded = document.querySelector('style[data-critical]');
+                var criticalCSSLoaded = document.querySelector('style[data-critical]') || 
+                                       document.documentElement.getAttribute('data-critical-loaded') === 'true';
                 if (criticalCSSLoaded) {
                   // Find non-critical CSS files and load them
                   var links = document.querySelectorAll('link[rel="stylesheet"][data-non-critical]');
@@ -216,7 +217,7 @@ export function createCriticalCssPlugin() {
                     link.media = 'all';
                   });
                 }
-              }, 100); // Small delay to ensure critical render
+              }, 500); // Increased delay for consistency with mobile optimization
             })();
           </script>
         `;

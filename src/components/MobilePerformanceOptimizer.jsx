@@ -113,30 +113,57 @@ export const CriticalCssLoader = ({ children }) => {
   const [criticalLoaded, setCriticalLoaded] = useState(false);
 
   useEffect(() => {
-    // Check if critical CSS is loaded
+    // Multiple methods to check if critical CSS is loaded
     const checkCriticalCss = () => {
+      // Method 1: Check for critical CSS style tag
       const criticalStyle = document.querySelector('style[data-critical]');
       if (criticalStyle) {
-        setCriticalLoaded(true);
+        console.log('[Mobile Performance] Critical CSS detected via style tag');
         return true;
       }
+      
+      // Method 2: Check for data attribute
+      const criticalLoaded = document.documentElement.getAttribute('data-critical-loaded');
+      if (criticalLoaded === 'true') {
+        console.log('[Mobile Performance] Critical CSS detected via data attribute');
+        return true;
+      }
+      
+      // Method 3: Check computed styles (basic check)
+      const bodyStyles = window.getComputedStyle(document.body);
+      if (bodyStyles.backgroundColor && bodyStyles.backgroundColor !== 'rgba(0, 0, 0, 0)') {
+        console.log('[Mobile Performance] Critical CSS detected via computed styles');
+        return true;
+      }
+      
       return false;
     };
 
-    if (!checkCriticalCss()) {
+    if (checkCriticalCss()) {
+      setCriticalLoaded(true);
+    } else {
+      let pollCount = 0;
+      const maxPolls = 50; // 500ms total
+      
       // Poll for critical CSS (fallback)
       const pollInterval = setInterval(() => {
+        pollCount++;
         if (checkCriticalCss()) {
           clearInterval(pollInterval);
+          setCriticalLoaded(true);
+        } else if (pollCount >= maxPolls) {
+          clearInterval(pollInterval);
+          setCriticalLoaded(true);
+          console.warn('[Mobile Performance] Critical CSS timeout after 500ms - proceeding with fallback');
         }
       }, 10);
 
-      // Fallback timeout
+      // Robust fallback timeout
       const fallbackTimeout = setTimeout(() => {
         clearInterval(pollInterval);
         setCriticalLoaded(true);
-        console.warn('[Mobile Performance] Critical CSS timeout - falling back');
-      }, 100);
+        console.warn('[Mobile Performance] Critical CSS timeout - falling back gracefully');
+      }, 500);
 
       return () => {
         clearInterval(pollInterval);
@@ -214,24 +241,48 @@ export const MobileOptimizedImage = ({
 export const PerformanceMonitor = () => {
   useEffect(() => {
     if (process.env.NODE_ENV === 'development') {
+      let totalCLS = 0;
+      let clsCount = 0;
+      let lastLogTime = 0;
+      const LOG_THROTTLE_MS = 2000; // Log aggregated CLS every 2 seconds
+      
       // Monitor FCP, LCP, CLS
       const observer = new PerformanceObserver((list) => {
         list.getEntries().forEach((entry) => {
           if (entry.entryType === 'paint') {
-            console.log(`[Mobile Performance] ${entry.name}:`, entry.startTime);
+            console.log(`[Mobile Performance] ${entry.name}:`, entry.startTime + 'ms');
           }
           if (entry.entryType === 'largest-contentful-paint') {
-            console.log('[Mobile Performance] LCP:', entry.startTime);
+            console.log('[Mobile Performance] LCP:', entry.startTime + 'ms');
           }
           if (entry.entryType === 'layout-shift') {
-            console.log('[Mobile Performance] CLS:', entry.value);
+            // Only log significant CLS values and aggregate small ones
+            if (entry.value > 0.01) {
+              console.log('[Mobile Performance] Significant CLS detected:', entry.value.toFixed(6));
+            }
+            
+            // Aggregate all CLS values
+            totalCLS += entry.value;
+            clsCount++;
+            
+            const now = Date.now();
+            if (now - lastLogTime > LOG_THROTTLE_MS && totalCLS > 0) {
+              console.log(`[Mobile Performance] CLS Summary: ${totalCLS.toFixed(6)} total (${clsCount} shifts)`);
+              lastLogTime = now;
+            }
           }
         });
       });
 
       observer.observe({ entryTypes: ['paint', 'largest-contentful-paint', 'layout-shift'] });
 
-      return () => observer.disconnect();
+      // Log final CLS on cleanup
+      return () => {
+        if (totalCLS > 0) {
+          console.log(`[Mobile Performance] Final CLS: ${totalCLS.toFixed(6)} (${clsCount} total shifts)`);
+        }
+        observer.disconnect();
+      };
     }
   }, []);
 
