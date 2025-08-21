@@ -21,7 +21,7 @@ import {
   Target,
   Trophy,
   Clock,
-  DownloadSimpleSimple,
+  DownloadSimple,
   ShareNetwork,
   ArrowsClockwise,
   User,
@@ -754,7 +754,7 @@ const ResultsDashboard = ({ results, onRestart }) => {
     setPdfProgress({ phase: 'start', progress: 0, message: 'Iniciando...' });
     
     // Track download do PDF
-    analytics.trackPDFDownloadSimpleed(dominantArea.area);
+    analytics.trackPDFDownload(dominantArea.area);
     
     try {
       // Usar o PDF Worker para geração
