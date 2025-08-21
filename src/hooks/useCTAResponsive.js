@@ -71,14 +71,26 @@ export const useCTAResponsive = (options = {}) => {
     setDeviceType(detectDeviceType());
   }, [detectDeviceType]);
 
-  // Handler de scroll
+  // Throttled scroll handler using RAF
   const handleScroll = useCallback(() => {
-    const progress = calculateScrollProgress();
-    setScrollProgress(progress);
+    let ticking = false;
     
-    if (enableSticky && deviceType === 'mobile') {
-      setShowSticky(progress >= stickyThreshold);
-    }
+    const updateScrollState = () => {
+      const progress = calculateScrollProgress();
+      setScrollProgress(progress);
+      
+      if (enableSticky && deviceType === 'mobile') {
+        setShowSticky(progress >= stickyThreshold);
+      }
+      ticking = false;
+    };
+    
+    return () => {
+      if (!ticking) {
+        requestAnimationFrame(updateScrollState);
+        ticking = true;
+      }
+    };
   }, [calculateScrollProgress, enableSticky, deviceType, stickyThreshold]);
 
   // Configura��o inicial e listeners
@@ -86,12 +98,14 @@ export const useCTAResponsive = (options = {}) => {
     setDeviceType(detectDeviceType());
     setIsTouch(detectTouch());
     
+    const throttledScrollHandler = handleScroll();
+    
     if (typeof window !== "undefined") window.addEventListener('resize', handleResize);
-    if (typeof window !== "undefined") window.addEventListener('scroll', handleScroll, { passive: true });
+    if (typeof window !== "undefined") window.addEventListener('scroll', throttledScrollHandler, { passive: true });
     
     return () => {
       if (typeof window !== "undefined") window.removeEventListener('resize', handleResize);
-      if (typeof window !== "undefined") window.removeEventListener('scroll', handleScroll);
+      if (typeof window !== "undefined") window.removeEventListener('scroll', throttledScrollHandler);
     };
   }, [handleResize, handleScroll, detectDeviceType, detectTouch]);
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { WhatsappLogo, X } from '@phosphor-icons/react';
 import { generateWhatsAppMessage } from '../../utils/whatsappMessaging';
 import { useContactAnalytics } from '../../hooks/useContactAnalytics';
@@ -27,9 +27,11 @@ const WhatsAppFloat = ({
     'bottom-center': 'bottom-6 left-1/2 transform -translate-x-1/2'
   };
 
-  // Check scroll progress and time
-  useEffect(() => {
-    const handleScroll = () => {
+  // Throttled scroll handler using RAF
+  const handleScrollThrottled = useCallback(() => {
+    let ticking = false;
+    
+    const updateScrollProgress = () => {
       const winHeight = window.innerHeight;
       const docHeight = document.documentElement.scrollHeight;
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
@@ -37,11 +39,24 @@ const WhatsAppFloat = ({
       const progress = Math.min(scrollTop / trackHeight, 1);
       
       setScrollProgress(progress);
+      ticking = false;
     };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    
+    return () => {
+      if (!ticking) {
+        requestAnimationFrame(updateScrollProgress);
+        ticking = true;
+      }
+    };
   }, []);
+
+  // Check scroll progress and time
+  useEffect(() => {
+    const throttledHandler = handleScrollThrottled();
+
+    window.addEventListener('scroll', throttledHandler, { passive: true });
+    return () => window.removeEventListener('scroll', throttledHandler);
+  }, [handleScrollThrottled]);
 
   // Show button based on time and scroll
   useEffect(() => {
