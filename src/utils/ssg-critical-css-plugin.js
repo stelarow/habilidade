@@ -266,19 +266,20 @@ async function postProcessHTMLFiles(outDir) {
     try {
       let html = fs.readFileSync(filePath, 'utf-8');
       
-      // Skip if already processed
-      if (html.includes('data-critical-css-processed')) {
-        continue;
-      }
-      
       // Generate critical CSS
       const criticalCSS = generateCriticalCSS();
       const asyncLoader = generateAsyncCSSLoader();
       const foucPrevention = generateFOUCPrevention();
       
-      // Inject critical CSS inline before title
+      // Debug log to verify critical CSS content
+      console.log(`🔍 Critical CSS size: ${criticalCSS.length} chars for ${path.relative(outDir, filePath)}`);
+      
+      // Inject critical CSS inline right after the opening <head> tag (more reliable than before title)
       const criticalCSSTag = `<style data-critical>${criticalCSS}</style>`;
-      html = html.replace('<title>', `${criticalCSSTag}\n    ${foucPrevention}\n    <title>`);
+      html = html.replace(
+        /(<head[^>]*>)/i, 
+        `$1\n    ${criticalCSSTag}\n    ${foucPrevention}`
+      );
       
       // Make main CSS async by adding data-async attribute
       html = html.replace(
