@@ -19,12 +19,16 @@ const __dirname = path.dirname(__filename);
  */
 function generateCriticalCSS() {
   return `
-    /* Critical CSS - Mobile-First Above-the-Fold (Optimized ~10KB) */
+    /* Critical CSS - Mobile-First Above-the-Fold (Optimized ~12KB) */
     
     /* CSS Reset (minimal) */
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     html{line-height:1.5;-webkit-text-size-adjust:100%;scroll-behavior:smooth}
-    body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;background-color:#000}
+    body{margin:0;font-family:"Inter",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;background-color:#000}
+    
+    /* Font Loading Optimization */
+    @font-face{font-family:"Inter-fallback";src:local("Arial"),local("Helvetica");font-display:swap}
+    @font-face{font-family:"Montserrat-fallback";src:local("Arial"),local("Helvetica");font-display:swap}
     
     /* Essential Layout */
     .container{width:100%;max-width:1200px;margin:0 auto;padding:0 1rem}
@@ -71,12 +75,21 @@ function generateCriticalCSS() {
     /* Critical CTA Buttons */
     .bg-purple-600{background-color:rgb(147 51 234)}
     .bg-blue-600{background-color:rgb(37 99 235)}
+    .bg-blue-500{background-color:rgb(59 130 246)}
     .hover\\:bg-purple-700:hover{background-color:rgb(126 34 206)}
     .hover\\:bg-blue-700:hover{background-color:rgb(29 78 216)}
+    .hover\\:bg-blue-600:hover{background-color:rgb(37 99 235)}
     .px-6{padding-left:1.5rem;padding-right:1.5rem}
+    .px-8{padding-left:2rem;padding-right:2rem}
+    .py-3{padding-top:0.75rem;padding-bottom:0.75rem}
+    .py-4{padding-top:1rem;padding-bottom:1rem}
     .rounded-lg{border-radius:0.5rem}
+    .rounded-full{border-radius:9999px}
     .transition-colors{transition-property:color,background-color,border-color,text-decoration-color,fill,stroke;transition-timing-function:cubic-bezier(0.4,0,0.2,1);transition-duration:150ms}
+    .transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4,0,0.2,1);transition-duration:150ms}
     .duration-300{transition-duration:300ms}
+    .transform{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}
+    .hover\\:scale-105:hover{--tw-scale-x:1.05;--tw-scale-y:1.05;transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}
     
     /* Critical Spacing */
     .mt-4{margin-top:1rem}.mb-4{margin-bottom:1rem}
@@ -103,6 +116,34 @@ function generateCriticalCSS() {
     .relative{position:relative}
     .absolute{position:absolute}
     .inset-0{inset:0}
+    .pointer-events-none{pointer-events:none}
+    .cursor-pointer{cursor:pointer}
+    
+    /* Header/Navigation Critical */
+    .backdrop-blur-sm{backdrop-filter:blur(4px)}
+    .border-b{border-bottom-width:1px}
+    .border-gray-800{border-color:rgb(31 41 55)}
+    .shadow-lg{box-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)}
+    .justify-between{justify-content:space-between}
+    .items-start{align-items:flex-start}
+    .items-end{align-items:flex-end}
+    .space-x-4>:not([hidden])~:not([hidden]){--tw-space-x-reverse:0;margin-right:calc(1rem * var(--tw-space-x-reverse));margin-left:calc(1rem * calc(1 - var(--tw-space-x-reverse)))}
+    .space-x-6>:not([hidden])~:not([hidden]){--tw-space-x-reverse:0;margin-right:calc(1.5rem * var(--tw-space-x-reverse));margin-left:calc(1.5rem * calc(1 - var(--tw-space-x-reverse)))}
+    
+    /* Logo and Brand */
+    .font-montserrat{font-family:"Montserrat","Montserrat-fallback",sans-serif}
+    .font-inter{font-family:"Inter","Inter-fallback",sans-serif}
+    .text-5xl{font-size:3rem;line-height:1}
+    .leading-none{line-height:1}
+    .tracking-tight{letter-spacing:-0.025em}
+    
+    /* Mobile Menu */
+    .md\\:space-x-6>:not([hidden])~:not([hidden]){margin-right:calc(1.5rem * var(--tw-space-x-reverse));margin-left:calc(1.5rem * calc(1 - var(--tw-space-x-reverse)))}
+    
+    /* Background Gradients for Hero */
+    .bg-gradient-to-br{background-image:linear-gradient(to bottom right,var(--tw-gradient-stops))}
+    .from-gray-900{--tw-gradient-from:#111827 var(--tw-gradient-from-position);--tw-gradient-to:rgb(17 24 39 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}
+    .via-black{--tw-gradient-to:rgb(0 0 0 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),#000 var(--tw-gradient-via-position),var(--tw-gradient-to)}
     
     /* Responsive (Mobile-first) */
     @media (min-width:768px){
@@ -263,19 +304,63 @@ async function injectCriticalCSS() {
         `$1\n    ${criticalCSSTag}\n    ${foucPrevention}`
       );
       
-      // Make main CSS async by adding data-async attribute
-      html = html.replace(
-        /<link rel="stylesheet"([^>]*href="[^"]*\.css"[^>]*)>/g,
-        '<link rel="preload" as="style" data-async$1 onload="this.onload=null;this.rel=\'stylesheet\'">'
-      );
+      // Step 1: Remove ALL existing CSS links to prevent duplication
+      console.log(`🧹 Removing existing CSS links to prevent duplication...`);
+      
+      // Find all CSS links for logging
+      const existingCssLinks = html.match(/<link[^>]*(?:rel="stylesheet"|href="[^"]*\.css")[^>]*>/gi) || [];
+      console.log(`🔍 Found ${existingCssLinks.length} existing CSS links to process`);
+      
+      // Remove ALL CSS stylesheet links (any order of attributes)
+      html = html.replace(/<link[^>]*rel="stylesheet"[^>]*>/gi, '');
+      html = html.replace(/<link[^>]*href="[^"]*\.css"[^>]*rel="[^"]*"[^>]*>/gi, '');
+      html = html.replace(/<link[^>]*as="style"[^>]*href="[^"]*\.css"[^>]*>/gi, '');
+      
+      // Step 2: Extract unique CSS hrefs from removed links
+      const uniqueCssFiles = new Set();
+      existingCssLinks.forEach(link => {
+        const hrefMatch = link.match(/href="([^"]*\.css[^"]*)"/i);
+        if (hrefMatch && !hrefMatch[1].includes('fonts.googleapis.com')) {
+          uniqueCssFiles.add(hrefMatch[1]);
+        }
+      });
+      
+      console.log(`📁 Unique CSS files to make async: ${uniqueCssFiles.size}`);
+      
+      // Step 3: Add back as async links
+      let asyncCssLinks = '';
+      uniqueCssFiles.forEach(href => {
+        asyncCssLinks += `<link rel="preload" as="style" href="${href}" onload="this.onload=null;this.rel='stylesheet'" media="all">\n    `;
+      });
+      
+      // Insert async CSS links before closing head
+      if (asyncCssLinks) {
+        html = html.replace('</head>', `${asyncCssLinks}</head>`);
+      }
+      
+      // Step 4: Optimize Google Fonts loading
+      console.log(`🔤 Optimizing Google Fonts for non-blocking load...`);
+      
+      // Remove existing Google Fonts links
+      html = html.replace(/<link[^>]*fonts\.googleapis\.com[^>]*>/gi, '');
+      html = html.replace(/<link[^>]*fonts\.gstatic\.com[^>]*>/gi, '');
+      
+      // Add optimized Google Fonts loading
+      const optimizedFonts = `
+        <!-- Optimized Google Fonts - Non-blocking -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap"></noscript>
+      `;
+      
+      html = html.replace('</head>', `${optimizedFonts}\n</head>`);
       
       // Add noscript fallback for CSS
-      const noscriptCSS = html.match(/data-async[^>]*href="([^"]*\.css)"/g);
-      if (noscriptCSS) {
-        let noscriptLinks = '<noscript>';
-        noscriptCSS.forEach(match => {
-          const href = match.match(/href="([^"]*)"/)[1];
-          noscriptLinks += `<link rel="stylesheet" href="${href}">`;
+      if (uniqueCssFiles.size > 0) {
+        let noscriptLinks = '<noscript>\n      ';
+        uniqueCssFiles.forEach(href => {
+          noscriptLinks += `<link rel="stylesheet" href="${href}">\n      `;
         });
         noscriptLinks += '</noscript>';
         

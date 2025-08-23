@@ -281,19 +281,51 @@ async function postProcessHTMLFiles(outDir) {
         `$1\n    ${criticalCSSTag}\n    ${foucPrevention}`
       );
       
-      // Make main CSS async by adding data-async attribute
-      html = html.replace(
-        /<link rel="stylesheet"([^>]*href="[^"]*\.css"[^>]*)>/g,
-        '<link rel="preload" as="style" data-async$1 onload="this.onload=null;this.rel=\'stylesheet\'">'
-      );
+      // Use same improved logic as inject-critical-css.js
+      const existingCssLinks = html.match(/<link[^>]*(?:rel="stylesheet"|href="[^"]*\.css")[^>]*>/gi) || [];
+      
+      // Remove ALL CSS stylesheet links
+      html = html.replace(/<link[^>]*rel="stylesheet"[^>]*>/gi, '');
+      html = html.replace(/<link[^>]*href="[^"]*\.css"[^>]*rel="[^"]*"[^>]*>/gi, '');
+      html = html.replace(/<link[^>]*as="style"[^>]*href="[^"]*\.css"[^>]*>/gi, '');
+      
+      // Extract unique CSS files
+      const uniqueCssFiles = new Set();
+      existingCssLinks.forEach(link => {
+        const hrefMatch = link.match(/href="([^"]*\.css[^"]*)"/i);
+        if (hrefMatch && !hrefMatch[1].includes('fonts.googleapis.com')) {
+          uniqueCssFiles.add(hrefMatch[1]);
+        }
+      });
+      
+      // Add back as async links
+      let asyncCssLinks = '';
+      uniqueCssFiles.forEach(href => {
+        asyncCssLinks += `<link rel="preload" as="style" href="${href}" onload="this.onload=null;this.rel='stylesheet'" media="all">\n    `;
+      });
+      
+      if (asyncCssLinks) {
+        html = html.replace('</head>', `${asyncCssLinks}</head>`);
+      }
+      
+      // Optimize Google Fonts
+      html = html.replace(/<link[^>]*fonts\.googleapis\.com[^>]*>/gi, '');
+      html = html.replace(/<link[^>]*fonts\.gstatic\.com[^>]*>/gi, '');
+      
+      const optimizedFonts = `
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap"></noscript>
+      `;
+      
+      html = html.replace('</head>', `${optimizedFonts}\n</head>`);
       
       // Add noscript fallback for CSS
-      const noscriptCSS = html.match(/data-async[^>]*href="([^"]*\.css)"/g);
-      if (noscriptCSS) {
-        let noscriptLinks = '<noscript>';
-        noscriptCSS.forEach(match => {
-          const href = match.match(/href="([^"]*)"/)[1];
-          noscriptLinks += `<link rel="stylesheet" href="${href}">`;
+      if (uniqueCssFiles.size > 0) {
+        let noscriptLinks = '<noscript>\n      ';
+        uniqueCssFiles.forEach(href => {
+          noscriptLinks += `<link rel="stylesheet" href="${href}">\n      `;
         });
         noscriptLinks += '</noscript>';
         
