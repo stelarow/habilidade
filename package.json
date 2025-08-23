@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite-react-ssg dev",
     "build": "npm run build:optimize",
-    "build:optimize": "vite-react-ssg build && npm run optimize:assets && npm run analyze:bundle",
+    "build:optimize": "vite-react-ssg build && npm run optimize:assets && npm run inject:critical-css && npm run analyze:bundle",
     "build:production": "vite-react-ssg build",
     "lint": "eslint .",
     "preview": "vite preview",
@@ -14,6 +14,7 @@
     "optimize:assets": "echo '🎯 Otimizando assets...' && npm run optimize:images",
     "optimize:images": "echo '🖼️ Imagens já otimizadas via Vite'",
     "analyze:bundle": "node scripts/analyze-bundle.js",
+    "inject:critical-css": "node scripts/inject-critical-css.js",
     "perf:audit": "lighthouse --only-categories=performance --output=json --output-path=lighthouse-audit.json http://localhost:4173",
     "perf:test": "npm run build && npm run preview & sleep 3 && npm run perf:audit",
     "clean": "rm -rf dist/ node_modules/.vite/",

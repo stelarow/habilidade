@@ -1,56 +1,21 @@
+#!/usr/bin/env node
 /**
- * SSG Critical CSS Plugin for Vite
- * Post-processes HTML files after SSG build to inject critical CSS inline
- * and make non-critical CSS non-blocking
+ * Post-Build Critical CSS Injector
+ * Runs AFTER SSG to inject critical CSS into all generated HTML files
+ * This solves the timing issue where SSG overwrites the critical CSS injection
  */
 
 import fs from 'fs';
 import path from 'path';
 import { glob } from 'glob';
+import { fileURLToPath } from 'url';
 
-/**
- * Essential mobile-first critical CSS classes
- * Optimized for above-the-fold content (~10KB target)
- */
-const CRITICAL_CSS_CLASSES = [
-  // Core layout (mobile-first)
-  'font-sans', 'flex', 'flex-col', 'items-center', 'justify-center',
-  'w-full', 'h-full', 'min-h-screen', 'container', 'mx-auto',
-  
-  // Mobile navigation essentials
-  'fixed', 'top-0', 'left-0', 'right-0', 'z-50', 'z-40',
-  'px-4', 'py-2', 'py-3', 'bg-black', 'bg-white', 'bg-opacity-95',
-  
-  // Hero section (critical for FCP)
-  'bg-gradient-to-b', 'bg-gradient-to-r', 'from-black', 'to-gray-900',
-  'from-purple-600', 'to-blue-600', 'py-16', 'py-20', 'text-center',
-  
-  // Essential typography
-  'text-white', 'text-gray-100', 'text-gray-900', 'text-gray-700',
-  'font-bold', 'font-semibold', 'font-medium',
-  'text-lg', 'text-xl', 'text-2xl', 'text-3xl', 'text-4xl',
-  
-  // Critical buttons (CTA above fold)
-  'bg-purple-600', 'bg-blue-600', 'hover:bg-purple-700', 'hover:bg-blue-700',
-  'px-6', 'py-3', 'rounded-lg', 'transition-colors', 'duration-300',
-  
-  // Essential spacing (mobile)
-  'mt-4', 'mb-4', 'mt-6', 'mb-6', 'pt-4', 'pb-4', 'space-y-4', 'space-y-6',
-  'gap-4', 'gap-6',
-  
-  // Visibility/responsive
-  'block', 'hidden', 'md:block', 'md:hidden', 'md:flex',
-  
-  // Loading states (prevent CLS)
-  'animate-pulse', 'animate-spin',
-  'w-8', 'h-8', 'border-2', 'border-purple-500', 'border-t-transparent', 'rounded-full',
-  
-  // Essential utilities
-  'overflow-hidden', 'relative', 'absolute', 'inset-0'
-];
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 /**
  * Generates optimized critical CSS inline
+ * Same as the plugin but as a standalone function
  */
 function generateCriticalCSS() {
   return `
@@ -255,26 +220,43 @@ function generateFOUCPrevention() {
 }
 
 /**
- * Post-process HTML files after SSG build
+ * Process HTML files and inject critical CSS
  */
-async function postProcessHTMLFiles(outDir) {
-  const htmlFiles = await glob(`${outDir}/**/*.html`);
+async function injectCriticalCSS() {
+  const distDir = path.resolve(process.cwd(), 'dist');
   
-  console.log(`🎨 Post-processing ${htmlFiles.length} HTML files for Critical CSS...`);
+  if (!fs.existsSync(distDir)) {
+    console.error('❌ dist directory not found. Run this after build completion.');
+    process.exit(1);
+  }
+
+  const htmlFiles = await glob(`${distDir}/**/*.html`);
+  
+  console.log(`🎨 Post-SSG Critical CSS injection starting...`);
+  console.log(`📁 Processing ${htmlFiles.length} HTML files in ${distDir}`);
+  
+  let processedCount = 0;
+  let skippedCount = 0;
   
   for (const filePath of htmlFiles) {
     try {
       let html = fs.readFileSync(filePath, 'utf-8');
       
-      // Generate critical CSS
+      // Skip if already processed
+      if (html.includes('data-critical-css-processed="true"')) {
+        console.log(`⏭️  Already processed: ${path.relative(distDir, filePath)}`);
+        skippedCount++;
+        continue;
+      }
+      
+      // Generate critical CSS components
       const criticalCSS = generateCriticalCSS();
       const asyncLoader = generateAsyncCSSLoader();
       const foucPrevention = generateFOUCPrevention();
       
-      // Debug log to verify critical CSS content
-      console.log(`🔍 Critical CSS size: ${criticalCSS.length} chars for ${path.relative(outDir, filePath)}`);
+      console.log(`🔍 Injecting ${criticalCSS.length} chars of Critical CSS into ${path.relative(distDir, filePath)}`);
       
-      // Inject critical CSS inline right after the opening <head> tag (more reliable than before title)
+      // Inject critical CSS inline right after the opening <head> tag
       const criticalCSSTag = `<style data-critical>${criticalCSS}</style>`;
       html = html.replace(
         /(<head[^>]*>)/i, 
@@ -303,38 +285,34 @@ async function postProcessHTMLFiles(outDir) {
       // Inject async loader before closing body
       html = html.replace('</body>', `${asyncLoader}\n</body>`);
       
-      // Mark as processed
+      // Mark as processed to avoid double-processing
       html = html.replace('<html', '<html data-critical-css-processed="true"');
       
       // Write processed HTML
       fs.writeFileSync(filePath, html);
       
-      console.log(`✅ Processed: ${path.relative(outDir, filePath)}`);
+      console.log(`✅ Processed: ${path.relative(distDir, filePath)}`);
+      processedCount++;
       
     } catch (error) {
       console.error(`❌ Failed to process ${filePath}:`, error);
     }
   }
   
-  console.log('🎨 Critical CSS post-processing completed!');
+  console.log(`🎨 Critical CSS injection completed!`);
+  console.log(`📊 Summary: ${processedCount} processed, ${skippedCount} skipped`);
+  
+  if (processedCount === 0 && skippedCount === 0) {
+    console.warn('⚠️  No files were processed. Check that HTML files exist in dist/');
+  }
 }
 
-/**
- * SSG Critical CSS Plugin
- * Note: Critical CSS injection is now handled by post-build script
- * This plugin remains for configuration purposes but doesn't inject CSS
- */
-export function createSSGCriticalCSSPlugin() {
-  return {
-    name: 'ssg-critical-css',
-    apply: 'build',
-    
-    // Plugin now only provides configuration
-    // Critical CSS injection happens via post-build script
-    configureServer() {
-      console.log('🎨 Critical CSS plugin loaded - injection handled by post-build script');
-    }
-  };
+// Run the script
+if (import.meta.url === `file://${process.argv[1]}`) {
+  injectCriticalCSS().catch(error => {
+    console.error('❌ Critical CSS injection failed:', error);
+    process.exit(1);
+  });
 }
 
-export default createSSGCriticalCSSPlugin;
+export { injectCriticalCSS };
