@@ -234,174 +234,190 @@ const RadarChart = ({ data, size = 200 }) => {
   );
 };
 
-// Perguntas do teste vocacional - Metodologia baseada em MIT, Harvard e Stanford
-// As 8 primeiras perguntas científicas do arquivo de referência
-const questions = [
-  // SEÇÃO 1: VALORES PROFISSIONAIS (baseado no modelo VIPS do MIT)
+// Perguntas do teste vocacional - Versão Completa (15 Perguntas)
+// Metodologia baseada em MIT, Harvard e Stanford
+const allQuestions = [
   {
     id: 1,
     section: "Valores Profissionais",
-    question: "Pensando no seu futuro, o que é mais importante para você em uma carreira?",
+    question: "Se você pudesse criar algo incrível, o que seria?",
     answers: [
-      { text: "Resolver problemas complexos e inovar", scores: { tecnologia: 3, logica: 2, criatividade: 1 } },
-      { text: "Ajudar pessoas e fazer diferença na sociedade", scores: { educacao: 3, comunicacao: 2, gestao: 1 } },
-      { text: "Liderar equipes e tomar decisões estratégicas", scores: { gestao: 3, comunicacao: 2, marketing: 1 } },
-      { text: "Criar e expressar ideias artisticamente", scores: { design: 3, criatividade: 3, marketing: 1 } },
-      { text: "Trabalhar com dados e análises detalhadas", scores: { logica: 3, tecnologia: 2, gestao: 1 } }
+      { text: "Um aplicativo ou programa de computador que resolve um problema difícil.", scores: { tecnologia: 3, logica: 2, criatividade: 1 } },
+      { text: "Um projeto para ajudar as pessoas da sua escola ou bairro.", scores: { educacao: 3, comunicacao: 2, gestao: 1 } },
+      { text: "Um novo negócio ou um time para competir em algo que você gosta.", scores: { gestao: 3, comunicacao: 2, marketing: 1 } },
+      { text: "Um desenho, uma música ou um vídeo que todo mundo achasse muito legal.", scores: { design: 3, criatividade: 3, marketing: 1 } },
+      { text: "Um jeito de organizar informações para que todos entendam um assunto complicado.", scores: { logica: 3, tecnologia: 2, gestao: 1 } }
     ]
   },
   {
     id: 2,
     section: "Valores Profissionais",
-    question: "Qual ambiente de trabalho você prefere?",
+    question: "Onde você se sentiria mais à vontade passando a maior parte do seu dia?",
     answers: [
-      { text: "Laboratório/escritório com tecnologia avançada", scores: { tecnologia: 3, logica: 2, design: 1, comunicacao: -1 } },
-      { text: "Interação direta com pessoas e comunidade", scores: { educacao: 3, comunicacao: 3, marketing: 1, tecnologia: -1 } },
-      { text: "Escritório corporativo com reuniões e apresentações", scores: { gestao: 3, marketing: 2, comunicacao: 2, criatividade: -1 } },
-      { text: "Estúdio criativo com liberdade de expressão", scores: { design: 3, criatividade: 3, marketing: 1, logica: -1 } },
-      { text: "Ambiente estruturado com processos bem definidos", scores: { logica: 3, gestao: 2, tecnologia: 1, criatividade: -1 } }
+      { text: "Num lugar cheio de computadores e tecnologia de ponta, descobrindo como as coisas funcionam.", scores: { tecnologia: 3, logica: 2, design: 1, comunicacao: -1 } },
+      { text: "Conversando e interagindo com muitas pessoas diferentes, ajudando e trocando ideias.", scores: { educacao: 3, comunicacao: 3, marketing: 1, tecnologia: -1 } },
+      { text: "Em reuniões, planejando os próximos passos de um projeto e apresentando ideias.", scores: { gestao: 3, marketing: 2, comunicacao: 2, criatividade: -1 } },
+      { text: "Em um espaço criativo, com liberdade para desenhar, criar e testar coisas novas.", scores: { design: 3, criatividade: 3, marketing: 1, logica: -1 } },
+      { text: "Em um lugar organizado, onde tudo tem um passo a passo claro para ser feito.", scores: { logica: 3, gestao: 2, tecnologia: 1, criatividade: -1 } }
     ]
   },
   {
     id: 3,
-    section: "Valores Profissionais", 
-    question: "No dia a dia, o que te dá mais energia para trabalhar?",
+    section: "Valores Profissionais",
+    question: "O que te deixa mais animado e com vontade de continuar fazendo?",
     answers: [
-      { text: "Resolver um quebra-cabeça lógico ou problema complexo", scores: { logica: 3, tecnologia: 2, criatividade: 1 } },
-      { text: "Interagir com clientes e colegas de equipe", scores: { comunicacao: 3, educacao: 2, marketing: 1 } },
-      { text: "Ver uma ideia sua tomar forma e virar algo concreto", scores: { design: 3, criatividade: 3, tecnologia: 1 } },
-      { text: "Otimizar um processo para torná-lo mais eficiente", scores: { gestao: 3, logica: 2, tecnologia: 1 } },
-      { text: "Aprender algo novo e dominar uma nova habilidade", scores: { educacao: 2, tecnologia: 2, criatividade: 2 } }
+      { text: "Encontrar a resposta para um desafio muito difícil, como um jogo de quebra-cabeça.", scores: { logica: 3, tecnologia: 2, criatividade: 1 } },
+      { text: "Bater papo com a galera, trocar ideias e sentir que está conectado com as pessoas.", scores: { comunicacao: 3, educacao: 2, marketing: 1 } },
+      { text: "Ver uma ideia sua saindo do papel e se transformando em algo real.", scores: { design: 3, criatividade: 3, tecnologia: 1 } },
+      { text: "Encontrar um jeito mais fácil ou mais rápido de fazer uma tarefa que antes era demorada.", scores: { gestao: 3, logica: 2, tecnologia: 1 } },
+      { text: "Aprender uma coisa nova e sentir que você está ficando cada vez melhor naquilo.", scores: { educacao: 2, tecnologia: 2, criatividade: 2 } }
     ]
   },
   {
     id: 4,
     section: "Valores Profissionais",
-    question: "Como você define sucesso profissional?",
+    question: "Para você, o que seria \"mandar muito bem\" no futuro?",
     answers: [
-      { text: "Criar tecnologias que revolucionem o mundo", scores: { tecnologia: 3, logica: 2, criatividade: 2 } },
-      { text: "Formar pessoas e transmitir conhecimento", scores: { educacao: 3, comunicacao: 3, gestao: 1 } },
-      { text: "Construir e liderar uma empresa de sucesso", scores: { gestao: 3, marketing: 3, comunicacao: 2 } },
-      { text: "Criar obras e designs reconhecidos mundialmente", scores: { design: 3, criatividade: 3, marketing: 2 } },
-      { text: "Dominar minha área técnica e ser referência", scores: { tecnologia: 2, logica: 3, educacao: 1 } }
+      { text: "Criar uma tecnologia que mude o jeito como as pessoas vivem.", scores: { tecnologia: 3, logica: 2, criatividade: 2 } },
+      { text: "Ser alguém que ensina coisas importantes e inspira outras pessoas.", scores: { educacao: 3, comunicacao: 3, gestao: 1 } },
+      { text: "Ser o líder de um grande projeto ou ter sua própria empresa de sucesso.", scores: { gestao: 3, marketing: 3, comunicacao: 2 } },
+      { text: "Ter seus desenhos, vídeos ou criações conhecidos e admirados por muita gente.", scores: { design: 3, criatividade: 3, marketing: 2 } },
+      { text: "Ser a pessoa que mais entende de um assunto, a quem todos pedem ajuda.", scores: { tecnologia: 2, logica: 3, educacao: 1 } }
     ]
   },
   {
     id: 5,
     section: "Valores Profissionais",
-    question: "Qual tipo de contribuição você quer deixar?",
+    question: "Pelo que você gostaria de ser lembrado?",
     answers: [
-      { text: "Soluções tecnológicas que facilitem a vida", scores: { tecnologia: 3, logica: 2, gestao: 1 } },
-      { text: "Pessoas mais capacitadas e desenvolvidas", scores: { educacao: 3, comunicacao: 2, gestao: 2 } },
-      { text: "Organizações mais eficientes e bem geridas", scores: { gestao: 3, logica: 2, comunicacao: 1 } },
-      { text: "Mundo mais belo e inspirador através do design", scores: { design: 3, criatividade: 3, marketing: 1 } },
-      { text: "Marcas e produtos conhecidos por milhões", scores: { marketing: 3, comunicacao: 2, design: 2 } }
+      { text: "Por ter criado ferramentas que facilitaram a vida de todo mundo.", scores: { tecnologia: 3, logica: 2, gestao: 1 } },
+      { text: "Por ter ajudado muitas pessoas a aprenderem e a crescerem.", scores: { educacao: 3, comunicacao: 2, gestao: 2 } },
+      { text: "Por ter organizado projetos que funcionaram muito bem e deram ótimos resultados.", scores: { gestao: 3, logica: 2, comunicacao: 1 } },
+      { text: "Por ter deixado o mundo mais bonito e interessante com suas criações.", scores: { design: 3, criatividade: 3, marketing: 1 } },
+      { text: "Por ter criado uma marca ou produto que milhões de pessoas conhecem e gostam.", scores: { marketing: 3, comunicacao: 2, design: 2 } }
     ]
   },
-  // SEÇÃO 2: INTERESSES PROFISSIONAIS (Holland RIASEC - Stanford)
   {
     id: 6,
     section: "Interesses Profissionais",
-    question: "Nas horas livres, você prefere:",
+    question: "No seu tempo livre, o que você mais gosta de fazer?",
     answers: [
-      { text: "Montar/desmontar equipamentos eletrônicos", scores: { tecnologia: 3, logica: 3, criatividade: 1 } },
-      { text: "Participar de trabalhos voluntários e sociais", scores: { educacao: 3, comunicacao: 2, gestao: 1 } },
-      { text: "Organizar eventos ou liderar grupos de amigos", scores: { gestao: 3, comunicacao: 2, marketing: 2 } },
-      { text: "Desenhar, fotografar ou criar conteúdo visual", scores: { design: 3, criatividade: 3, marketing: 1 } },
-      { text: "Fazer planilhas ou organizar informações", scores: { logica: 3, gestao: 2, tecnologia: 1 } }
+      { text: "Mexer no computador, no celular ou tentar entender como um aparelho funciona.", scores: { tecnologia: 3, logica: 3, criatividade: 1 } },
+      { text: "Participar de grupos, projetos sociais ou atividades que ajudem os outros.", scores: { educacao: 3, comunicacao: 2, gestao: 1 } },
+      { text: "Organizar o rolê com os amigos, planejando o que cada um vai fazer.", scores: { gestao: 3, comunicacao: 2, marketing: 2 } },
+      { text: "Desenhar, tirar fotos, editar vídeos ou criar posts legais para a internet.", scores: { design: 3, criatividade: 3, marketing: 1 } },
+      { text: "Organizar suas músicas em playlists, seus jogos por categoria ou fazer listas de filmes.", scores: { logica: 3, gestao: 2, tecnologia: 1 } }
     ]
   },
   {
     id: 7,
     section: "Interesses Profissionais",
-    question: "Qual tipo de desafio te anima mais?",
+    question: "Se você estivesse num jogo, que tipo de missão você escolheria?",
     answers: [
-      { text: "Programar um aplicativo ou sistema complexo", scores: { tecnologia: 3, logica: 3, criatividade: 1 } },
-      { text: "Ensinar algo novo e ver pessoas aprendendo", scores: { educacao: 3, comunicacao: 3, gestao: 1 } },
-      { text: "Convencer pessoas sobre uma ideia ou projeto", scores: { marketing: 3, comunicacao: 3, gestao: 2 } },
-      { text: "Criar uma campanha visual impactante", scores: { design: 3, criatividade: 3, marketing: 2 } },
-      { text: "Analisar dados para encontrar padrões ocultos", scores: { logica: 3, tecnologia: 2, gestao: 1 } }
+      { text: "Uma missão de criar um código ou um sistema para destravar a próxima fase.", scores: { tecnologia: 3, logica: 3, criatividade: 1 } },
+      { text: "Uma missão de ensinar um truque novo para outros jogadores para que o time vença.", scores: { educacao: 3, comunicacao: 3, gestao: 1 } },
+      { text: "Uma missão de convencer outros times a se aliarem ao seu para ganhar o jogo.", scores: { marketing: 3, comunicacao: 3, gestao: 2 } },
+      { text: "Uma missão de criar o visual do seu personagem ou do seu time para que seja o mais legal de todos.", scores: { design: 3, criatividade: 3, marketing: 2 } },
+      { text: "Uma missão de analisar o mapa e os dados do jogo para descobrir o melhor caminho para a vitória.", scores: { logica: 3, tecnologia: 2, gestao: 1 } }
     ]
   },
   {
     id: 8,
     section: "Interesses Profissionais",
-    question: "Qual atividade você faria por horas sem se cansar?",
+    question: "Qual destas coisas você faria por horas, até esquecer do tempo?",
     answers: [
-      { text: "Codificar e resolver bugs complexos", scores: { tecnologia: 3, logica: 3, criatividade: 1 } },
-      { text: "Preparar aulas e materiais educativos", scores: { educacao: 3, comunicacao: 2, design: 1 } },
-      { text: "Planejar estratégias de marketing e vendas", scores: { marketing: 3, gestao: 2, comunicacao: 2 } },
-      { text: "Criar designs e experiências visuais", scores: { design: 3, criatividade: 3, tecnologia: 1 } },
-      { text: "Analisar processos e otimizar operações", scores: { logica: 3, gestao: 3, tecnologia: 2 } }
+      { text: "Tentar resolver um problema num jogo ou programa de computador.", scores: { tecnologia: 3, logica: 3, criatividade: 1 } },
+      { text: "Explicar para um amigo um assunto que você domina e ele tem dificuldade.", scores: { educacao: 3, comunicacao: 2, design: 1 } },
+      { text: "Pensar em jeitos de divulgar algo legal, como uma festa ou um canal na internet.", scores: { marketing: 3, gestao: 2, comunicacao: 2 } },
+      { text: "Editando fotos, criando um desenho no computador ou montando um vídeo.", scores: { design: 3, criatividade: 3, tecnologia: 1 } },
+      { text: "Arrumando e organizando algo (seu quarto, seus arquivos, suas figurinhas) para ficar perfeito.", scores: { logica: 3, gestao: 3, tecnologia: 2 } }
     ]
-  }
-];
-// SEÇÃO 3: HABILIDADES E APTIDÕES (nova seção baseada em metodologia científica)
-const additionalQuestions = [
+  },
   {
     id: 9,
     section: "Habilidades e Aptidões",
-    question: "Com qual destas tarefas você se sente mais à vontade?",
+    question: "Num trabalho em grupo da escola, o que você geralmente faz?",
     answers: [
-      { text: "Organizar uma planilha com dados complexos", scores: { logica: 3, gestao: 2, tecnologia: 1 } },
-      { text: "Criar uma apresentação visualmente atraente", scores: { design: 3, comunicacao: 2, criatividade: 2 } },
-      { text: "Resolver um problema técnico em computador/software", scores: { tecnologia: 3, logica: 2, criatividade: 1 } },
-      { text: "Escrever um texto persuasivo para convencer alguém", scores: { marketing: 3, comunicacao: 3, educacao: 1 } },
-      { text: "Coordenar um projeto com várias pessoas", scores: { gestao: 3, comunicacao: 2, educacao: 1 } }
+      { text: "Pego os dados e as informações da pesquisa para organizar e ver o que significam.", scores: { logica: 3, gestao: 2, tecnologia: 1 } },
+      { text: "Cuido da parte visual, fazendo os slides da apresentação ficarem bonitos e claros.", scores: { design: 3, comunicacao: 2, criatividade: 2 } },
+      { text: "Se o computador ou algum programa dá problema, eu sou a pessoa que tenta resolver.", scores: { tecnologia: 3, logica: 2, criatividade: 1 } },
+      { text: "Escrevo o roteiro do que vamos falar para convencer o professor e a turma da nossa ideia.", scores: { marketing: 3, comunicacao: 3, educacao: 1 } },
+      { text: "Ajudo a organizar quem faz o quê e a garantir que todos entreguem a sua parte a tempo.", scores: { gestao: 3, comunicacao: 2, educacao: 1 } }
     ]
   },
   {
     id: 10,
     section: "Habilidades e Aptidões",
-    question: "Quando você aprende algo novo, prefere:",
+    question: "Qual o seu jeito preferido de aprender algo novo?",
     answers: [
-      { text: "Ler manuais e entender a teoria por trás", scores: { logica: 3, educacao: 2, tecnologia: 1, criatividade: -1 } },
-      { text: "Colocar a mão na massa e aprender fazendo", scores: { tecnologia: 2, criatividade: 3, design: 2, logica: -1 } },
-      { text: "Discutir com outras pessoas e trocar ideias", scores: { comunicacao: 3, educacao: 2, gestao: 1, tecnologia: -1 } },
-      { text: "Assistir vídeos e exemplos visuais", scores: { design: 2, marketing: 2, criatividade: 2, logica: -1 } },
-      { text: "Fazer anotações organizadas e esquemas", scores: { logica: 3, gestao: 2, educacao: 1, criatividade: -1 } }
+      { text: "Ler tudo sobre o assunto para entender a lógica por trás daquilo.", scores: { logica: 3, educacao: 2, tecnologia: 1, criatividade: -1 } },
+      { text: "Ir direto para a prática, testando e descobrindo como funciona na hora.", scores: { tecnologia: 2, criatividade: 3, design: 2, logica: -1 } },
+      { text: "Conversar com outras pessoas que entendem do assunto e trocar ideias.", scores: { comunicacao: 3, educacao: 2, gestao: 1, tecnologia: -1 } },
+      { text: "Assistir a vídeos ou ver imagens que mostrem como fazer.", scores: { design: 2, marketing: 2, criatividade: 2, logica: -1 } },
+      { text: "Fazer um resumo ou um esquema com os pontos mais importantes para não esquecer.", scores: { logica: 3, gestao: 2, educacao: 1, criatividade: -1 } }
     ]
   },
   {
     id: 11,
     section: "Habilidades e Aptidões",
-    question: "Em um projeto em equipe, você naturalmente:",
+    question: "Em um projeto em grupo, qual é o seu papel natural?",
     answers: [
-      { text: "Assume a liderança e organiza as tarefas", scores: { gestao: 3, comunicacao: 2, educacao: 1 } },
-      { text: "Foca na parte técnica e implementação", scores: { tecnologia: 3, logica: 2, design: 1 } },
-      { text: "Cuida da apresentação e comunicação visual", scores: { design: 3, criatividade: 2, marketing: 2 } },
-      { text: "Pesquisa e traz informações relevantes", scores: { logica: 2, educacao: 3, comunicacao: 1 } },
-      { text: "Promove o projeto e busca engajamento", scores: { marketing: 3, comunicacao: 3, gestao: 1 } }
+      { text: "O líder, que organiza as tarefas e mantém o time focado.", scores: { gestao: 3, comunicacao: 2, educacao: 1 } },
+      { text: "O \"nerd\", que cuida da parte mais técnica e resolve os problemas.", scores: { tecnologia: 3, logica: 2, design: 1 } },
+      { text: "O \"artista\", que cuida do visual e deixa tudo mais bonito e apresentável.", scores: { design: 3, criatividade: 2, marketing: 2 } },
+      { text: "O \"pesquisador\", que busca as informações e ajuda a entender o tema.", scores: { logica: 2, educacao: 3, comunicacao: 1 } },
+      { text: "O \"divulgador\", que conta para todo mundo sobre o projeto e anima a galera.", scores: { marketing: 3, comunicacao: 3, gestao: 1 } }
     ]
   },
   {
     id: 12,
-    section: "Preferências de Trabalho",
-    question: "Qual situação profissional te deixaria mais realizado?",
+    section: "Realizações Pessoais",
+    question: "O que te deixaria mais orgulhoso de ter feito?",
     answers: [
-      { text: "Desenvolver um app que milhões de pessoas usam", scores: { tecnologia: 3, criatividade: 2, marketing: 1 } },
-      { text: "Ver ex-alunos conquistas incríveis após seus ensinamentos", scores: { educacao: 3, comunicacao: 2, gestao: 1 } },
-      { text: "Liderar uma empresa que gera centenas de empregos", scores: { gestao: 3, marketing: 2, comunicacao: 2 } },
-      { text: "Criar um design que inspire pessoas no mundo todo", scores: { design: 3, criatividade: 3, marketing: 1 } },
-      { text: "Resolver um problema complexo que ninguém conseguiu", scores: { logica: 3, tecnologia: 2, criatividade: 1 } }
+      { text: "Ter criado um aplicativo que milhões de pessoas usam todos os dias.", scores: { tecnologia: 3, criatividade: 2, marketing: 1 } },
+      { text: "Encontrar pessoas que dissessem: \"Aprendi muito com você!\".", scores: { educacao: 3, comunicacao: 2, gestao: 1 } },
+      { text: "Ter liderado um time que criou algo incrível e muito bem-sucedido.", scores: { gestao: 3, marketing: 2, comunicacao: 2 } },
+      { text: "Ver um desenho ou um vídeo seu famoso no mundo todo.", scores: { design: 3, criatividade: 3, marketing: 1 } },
+      { text: "Ser conhecido por ter resolvido um problema que ninguém mais conseguia.", scores: { logica: 3, tecnologia: 2, criatividade: 1 } }
     ]
   },
   {
     id: 13,
-    section: "Preferências de Trabalho",
-    question: "Como você lida melhor com a pressão e deadlines?",
+    section: "Comportamento sob Pressão",
+    question: "Quando você tem um prazo apertado para entregar algo, o que você faz?",
     answers: [
-      { text: "Criando sistemas e processos organizados", scores: { gestao: 3, logica: 2, tecnologia: 1 } },
-      { text: "Focando na solução técnica mais eficiente", scores: { tecnologia: 3, logica: 3, criatividade: 1 } },
-      { text: "Buscando soluções criativas e inovadoras", scores: { criatividade: 3, design: 2, marketing: 1 } },
-      { text: "Comunicando claramente com a equipe", scores: { comunicacao: 3, gestao: 2, educacao: 1 } },
-      { text: "Analisando dados para tomar a melhor decisão", scores: { logica: 3, gestao: 2, tecnologia: 1 } }
+      { text: "Crio um plano e uma lista de tarefas para não me perder.", scores: { gestao: 3, logica: 2, tecnologia: 1 } },
+      { text: "Foco totalmente em encontrar a solução mais rápida para o problema principal.", scores: { tecnologia: 3, logica: 3, criatividade: 1 } },
+      { text: "Penso em uma ideia diferente ou um jeito novo de fazer as coisas para surpreender.", scores: { criatividade: 3, design: 2, marketing: 1 } },
+      { text: "Chamo a galera para conversar e alinhar o que cada um precisa fazer.", scores: { comunicacao: 3, gestao: 2, educacao: 1 } },
+      { text: "Paro para analisar a situação e pensar no melhor caminho antes de sair fazendo.", scores: { logica: 3, gestao: 2, tecnologia: 1 } }
+    ]
+  },
+  {
+    id: 14,
+    section: "Interesses Digitais",
+    question: "Na internet (YouTube, TikTok, etc.), que tipo de conteúdo você mais gosta de assistir?",
+    answers: [
+      { text: "Vídeos explicando como a tecnologia funciona, tutoriais de programação ou reviews detalhados de eletrônicos.", scores: { tecnologia: 3, logica: 3, educacao: 1 } },
+      { text: "Canais de arte, tutoriais de desenho/edição de vídeo ou perfis com fotos e visuais muito criativos.", scores: { design: 3, criatividade: 3, comunicacao: 1 } },
+      { text: "Vídeos de reviews de produtos, análise de propagandas ou pessoas que são muito boas em convencer os outros sobre uma ideia.", scores: { marketing: 3, comunicacao: 3, gestao: 1 } },
+      { text: "Documentários, canais de curiosidades ou vídeos que ensinam algo novo sobre ciência, história ou qualquer outro assunto.", scores: { educacao: 3, comunicacao: 2, logica: 2 } },
+      { text: "Vídeos sobre como ser mais produtivo, dicas de organização, ou histórias de como empresas de sucesso começaram.", scores: { gestao: 3, logica: 2, marketing: 1 } }
+    ]
+  },
+  {
+    id: 15,
+    section: "Iniciativa e Planejamento",
+    question: "Você tem uma ideia incrível para um projeto (um canal, um app, um evento). Qual é a sua primeira reação?",
+    answers: [
+      { text: "Escrever um plano com todos os passos, do começo ao fim, para não me perder.", scores: { logica: 3, gestao: 3, tecnologia: 1 } },
+      { text: "Chamar meus amigos mais próximos para contar a ideia, ouvir opiniões e ver quem topa participar.", scores: { comunicacao: 3, marketing: 2, gestao: 2 } },
+      { text: "Fazer um rascunho, um desenho ou um modelo de como a ideia vai parecer visualmente.", scores: { criatividade: 3, design: 3, tecnologia: 1 } },
+      { text: "Começar a pesquisar e testar as ferramentas ou os programas que eu precisaria para colocar a ideia em prática.", scores: { tecnologia: 3, logica: 2, criatividade: 1 } },
+      { text: "Começar a estudar tudo sobre o assunto para ter certeza de que sei o suficiente antes de dar o primeiro passo.", scores: { educacao: 3, logica: 2, comunicacao: 1 } }
     ]
   }
 ];
-
-// Combinar perguntas originais com as novas
-const allQuestions = [...questions, ...additionalQuestions];
 
 // Cursos da Escola Habilidade
 const courses = [
@@ -551,7 +567,7 @@ const Hero = () => {
           </h1>
           
           <p className="text-xl md:text-2xl text-gray-200 mb-8 max-w-4xl mx-auto">
-            Em apenas 13 perguntas científicas, descubra o curso da Escola Habilidade que mais combina com você. <strong className="text-[#d400ff]">Metodologia inspirada no MIT, Harvard e Stanford</strong> — disponível para toda a <span className="text-[#d400ff] font-semibold">Grande Florianópolis</span>.
+            Em apenas 15 perguntas científicas, descubra o curso da Escola Habilidade que mais combina com você. <strong className="text-[#d400ff]">Metodologia inspirada no MIT, Harvard e Stanford</strong> — disponível para toda a <span className="text-[#d400ff] font-semibold">Grande Florianópolis</span>.
           </p>
 
           <div className="flex flex-wrap justify-center gap-6 text-gray-300 mb-8">
@@ -1446,7 +1462,7 @@ const TesteVocacional = () => {
                       <User className="text-[#d400ff]" size={32} />
                     </div>
                     <h3 className="text-xl font-semibold text-gray-900 mb-2">1. Responda</h3>
-                    <p className="text-gray-600">13 perguntas científicas baseadas no modelo VIPS (Valores, Interesses, Personalidade, Habilidades)</p>
+                    <p className="text-gray-600">15 perguntas científicas baseadas no modelo VIPS (Valores, Interesses, Personalidade, Habilidades)</p>
                   </div>
                   <div className="text-center">
                     <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
