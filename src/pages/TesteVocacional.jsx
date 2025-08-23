@@ -947,7 +947,7 @@ const ResultsDashboard = ({ results, onRestart }) => {
     setPdfProgress({ phase: 'start', progress: 0, message: 'Iniciando...' });
     
     // Track download do PDF
-    analytics.trackPDFDownload(dominantArea.area);
+    analytics.trackPDFDownloaded(dominantArea.area);
     
     try {
       // Usar o PDF Worker para geração
