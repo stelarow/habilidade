@@ -81,6 +81,39 @@ export const analytics = {
     });
   },
 
+  // Novo: Rastreamento de perfil combinado
+  trackCombinedProfile: (topAreas, profileType = 'unknown') => {
+    trackEvent('teste_vocacional_perfil_combinado', {
+      event_category: 'Teste Vocacional',
+      event_label: 'Perfil Combinado Identificado',
+      primary_area: topAreas[0]?.area || 'desconhecido',
+      secondary_area: topAreas[1]?.area || 'desconhecido',
+      tertiary_area: topAreas[2]?.area || 'desconhecido',
+      primary_score: topAreas[0]?.score || 0,
+      secondary_score: topAreas[1]?.score || 0,
+      tertiary_score: topAreas[2]?.score || 0,
+      profile_type: profileType,
+      combined_profile_key: `${topAreas[0]?.area || 'unknown'}-${topAreas[1]?.area || 'unknown'}`,
+    });
+  },
+
+  // Novo: Rastreamento de compatibilidade de cursos
+  trackCourseCompatibility: (recommendedCourses, userProfile) => {
+    recommendedCourses.forEach((course, index) => {
+      trackEvent('curso_compatibilidade_calculada', {
+        event_category: 'Teste Vocacional',
+        event_label: 'Compatibilidade de Curso',
+        course_name: course.name,
+        course_id: course.id,
+        compatibility_score: course.compatibilityScore,
+        compatibility_percentage: course.compatibilityPercentage,
+        ranking_position: index + 1,
+        user_primary_area: userProfile.primaryArea,
+        user_secondary_area: userProfile.secondaryArea,
+      });
+    });
+  },
+
   trackResultShared: (platform) => {
     trackEvent('share', {
       event_category: 'Teste Vocacional',

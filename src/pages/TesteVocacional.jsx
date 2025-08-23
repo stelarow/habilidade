@@ -85,6 +85,45 @@ class DOMErrorBoundary extends Component {
 }
 
 // Componente Radar Chart customizado
+// Componente Gráfico de Barras para todas as 8 áreas
+const BarChart = ({ data }) => {
+  return (
+    <div className="space-y-4">
+      {data.map((item, index) => (
+        <motion.div
+          key={item.area}
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 * index }}
+          className="space-y-2"
+        >
+          <div className="flex justify-between items-center">
+            <span className="text-sm font-medium text-gray-700 capitalize">
+              {item.area === 'gestao' ? 'Gestão' : 
+               item.area === 'educacao' ? 'Educação' : 
+               item.area === 'comunicacao' ? 'Comunicação' :
+               item.area === 'logica' ? 'Lógica' : item.area}
+            </span>
+            <span className="text-sm font-bold text-gray-600">{item.score}%</span>
+          </div>
+          <div className="w-full bg-gray-200 rounded-full h-3">
+            <motion.div
+              className={`h-3 rounded-full ${
+                index === 0 ? 'bg-[#d400ff]' : 
+                index === 1 ? 'bg-purple-400' : 
+                index === 2 ? 'bg-blue-400' :
+                'bg-gray-400'
+              }`}
+              initial={{ width: 0 }}
+              animate={{ width: `${item.score}%` }}
+              transition={{ duration: 1, delay: 0.3 + index * 0.1 }}
+            />
+          </div>
+        </motion.div>
+      ))}
+    </div>
+  );
+};
 const RadarChart = ({ data, size = 200 }) => {
   const center = size / 2;
   const radius = size / 2 - 20;
@@ -202,7 +241,7 @@ const questions = [
   {
     id: 1,
     section: "Valores Profissionais",
-    question: "O que mais te motiva em uma carreira?",
+    question: "Pensando no seu futuro, o que é mais importante para você em uma carreira?",
     answers: [
       { text: "Resolver problemas complexos e inovar", scores: { tecnologia: 3, logica: 2, criatividade: 1 } },
       { text: "Ajudar pessoas e fazer diferença na sociedade", scores: { educacao: 3, comunicacao: 2, gestao: 1 } },
@@ -216,23 +255,23 @@ const questions = [
     section: "Valores Profissionais",
     question: "Qual ambiente de trabalho você prefere?",
     answers: [
-      { text: "Laboratório/escritório com tecnologia avançada", scores: { tecnologia: 3, logica: 2, design: 1 } },
-      { text: "Interação direta com pessoas e comunidade", scores: { educacao: 3, comunicacao: 3, marketing: 1 } },
-      { text: "Escritório corporativo com reuniões e apresentações", scores: { gestao: 3, marketing: 2, comunicacao: 2 } },
-      { text: "Estúdio criativo com liberdade de expressão", scores: { design: 3, criatividade: 3, marketing: 1 } },
-      { text: "Ambiente estruturado com processos bem definidos", scores: { logica: 3, gestao: 2, tecnologia: 1 } }
+      { text: "Laboratório/escritório com tecnologia avançada", scores: { tecnologia: 3, logica: 2, design: 1, comunicacao: -1 } },
+      { text: "Interação direta com pessoas e comunidade", scores: { educacao: 3, comunicacao: 3, marketing: 1, tecnologia: -1 } },
+      { text: "Escritório corporativo com reuniões e apresentações", scores: { gestao: 3, marketing: 2, comunicacao: 2, criatividade: -1 } },
+      { text: "Estúdio criativo com liberdade de expressão", scores: { design: 3, criatividade: 3, marketing: 1, logica: -1 } },
+      { text: "Ambiente estruturado com processos bem definidos", scores: { logica: 3, gestao: 2, tecnologia: 1, criatividade: -1 } }
     ]
   },
   {
     id: 3,
     section: "Valores Profissionais", 
-    question: "Qual é sua principal motivação no trabalho?",
+    question: "No dia a dia, o que te dá mais energia para trabalhar?",
     answers: [
-      { text: "Autonomia e flexibilidade para inovar", scores: { tecnologia: 2, criatividade: 3, design: 2 } },
-      { text: "Reconhecimento e impacto social do meu trabalho", scores: { educacao: 3, comunicacao: 2, marketing: 1 } },
-      { text: "Crescimento na carreira e liderança", scores: { gestao: 3, marketing: 2, comunicacao: 1 } },
-      { text: "Estabilidade e segurança financeira", scores: { logica: 2, gestao: 2, tecnologia: 2 } },
-      { text: "Desafios intelectuais constantes", scores: { tecnologia: 3, logica: 3, criatividade: 1 } }
+      { text: "Resolver um quebra-cabeça lógico ou problema complexo", scores: { logica: 3, tecnologia: 2, criatividade: 1 } },
+      { text: "Interagir com clientes e colegas de equipe", scores: { comunicacao: 3, educacao: 2, marketing: 1 } },
+      { text: "Ver uma ideia sua tomar forma e virar algo concreto", scores: { design: 3, criatividade: 3, tecnologia: 1 } },
+      { text: "Otimizar um processo para torná-lo mais eficiente", scores: { gestao: 3, logica: 2, tecnologia: 1 } },
+      { text: "Aprender algo novo e dominar uma nova habilidade", scores: { educacao: 2, tecnologia: 2, criatividade: 2 } }
     ]
   },
   {
@@ -297,6 +336,72 @@ const questions = [
     ]
   }
 ];
+// SEÇÃO 3: HABILIDADES E APTIDÕES (nova seção baseada em metodologia científica)
+const additionalQuestions = [
+  {
+    id: 9,
+    section: "Habilidades e Aptidões",
+    question: "Com qual destas tarefas você se sente mais à vontade?",
+    answers: [
+      { text: "Organizar uma planilha com dados complexos", scores: { logica: 3, gestao: 2, tecnologia: 1 } },
+      { text: "Criar uma apresentação visualmente atraente", scores: { design: 3, comunicacao: 2, criatividade: 2 } },
+      { text: "Resolver um problema técnico em computador/software", scores: { tecnologia: 3, logica: 2, criatividade: 1 } },
+      { text: "Escrever um texto persuasivo para convencer alguém", scores: { marketing: 3, comunicacao: 3, educacao: 1 } },
+      { text: "Coordenar um projeto com várias pessoas", scores: { gestao: 3, comunicacao: 2, educacao: 1 } }
+    ]
+  },
+  {
+    id: 10,
+    section: "Habilidades e Aptidões",
+    question: "Quando você aprende algo novo, prefere:",
+    answers: [
+      { text: "Ler manuais e entender a teoria por trás", scores: { logica: 3, educacao: 2, tecnologia: 1, criatividade: -1 } },
+      { text: "Colocar a mão na massa e aprender fazendo", scores: { tecnologia: 2, criatividade: 3, design: 2, logica: -1 } },
+      { text: "Discutir com outras pessoas e trocar ideias", scores: { comunicacao: 3, educacao: 2, gestao: 1, tecnologia: -1 } },
+      { text: "Assistir vídeos e exemplos visuais", scores: { design: 2, marketing: 2, criatividade: 2, logica: -1 } },
+      { text: "Fazer anotações organizadas e esquemas", scores: { logica: 3, gestao: 2, educacao: 1, criatividade: -1 } }
+    ]
+  },
+  {
+    id: 11,
+    section: "Habilidades e Aptidões",
+    question: "Em um projeto em equipe, você naturalmente:",
+    answers: [
+      { text: "Assume a liderança e organiza as tarefas", scores: { gestao: 3, comunicacao: 2, educacao: 1 } },
+      { text: "Foca na parte técnica e implementação", scores: { tecnologia: 3, logica: 2, design: 1 } },
+      { text: "Cuida da apresentação e comunicação visual", scores: { design: 3, criatividade: 2, marketing: 2 } },
+      { text: "Pesquisa e traz informações relevantes", scores: { logica: 2, educacao: 3, comunicacao: 1 } },
+      { text: "Promove o projeto e busca engajamento", scores: { marketing: 3, comunicacao: 3, gestao: 1 } }
+    ]
+  },
+  {
+    id: 12,
+    section: "Preferências de Trabalho",
+    question: "Qual situação profissional te deixaria mais realizado?",
+    answers: [
+      { text: "Desenvolver um app que milhões de pessoas usam", scores: { tecnologia: 3, criatividade: 2, marketing: 1 } },
+      { text: "Ver ex-alunos conquistas incríveis após seus ensinamentos", scores: { educacao: 3, comunicacao: 2, gestao: 1 } },
+      { text: "Liderar uma empresa que gera centenas de empregos", scores: { gestao: 3, marketing: 2, comunicacao: 2 } },
+      { text: "Criar um design que inspire pessoas no mundo todo", scores: { design: 3, criatividade: 3, marketing: 1 } },
+      { text: "Resolver um problema complexo que ninguém conseguiu", scores: { logica: 3, tecnologia: 2, criatividade: 1 } }
+    ]
+  },
+  {
+    id: 13,
+    section: "Preferências de Trabalho",
+    question: "Como você lida melhor com a pressão e deadlines?",
+    answers: [
+      { text: "Criando sistemas e processos organizados", scores: { gestao: 3, logica: 2, tecnologia: 1 } },
+      { text: "Focando na solução técnica mais eficiente", scores: { tecnologia: 3, logica: 3, criatividade: 1 } },
+      { text: "Buscando soluções criativas e inovadoras", scores: { criatividade: 3, design: 2, marketing: 1 } },
+      { text: "Comunicando claramente com a equipe", scores: { comunicacao: 3, gestao: 2, educacao: 1 } },
+      { text: "Analisando dados para tomar a melhor decisão", scores: { logica: 3, gestao: 2, tecnologia: 1 } }
+    ]
+  }
+];
+
+// Combinar perguntas originais com as novas
+const allQuestions = [...questions, ...additionalQuestions];
 
 // Cursos da Escola Habilidade
 const courses = [
@@ -446,7 +551,7 @@ const Hero = () => {
           </h1>
           
           <p className="text-xl md:text-2xl text-gray-200 mb-8 max-w-4xl mx-auto">
-            Em apenas 8 perguntas científicas, descubra o curso da Escola Habilidade que mais combina com você. <strong className="text-[#d400ff]">Metodologia inspirada no MIT, Harvard e Stanford</strong> — disponível para toda a <span className="text-[#d400ff] font-semibold">Grande Florianópolis</span>.
+            Em apenas 13 perguntas científicas, descubra o curso da Escola Habilidade que mais combina com você. <strong className="text-[#d400ff]">Metodologia inspirada no MIT, Harvard e Stanford</strong> — disponível para toda a <span className="text-[#d400ff] font-semibold">Grande Florianópolis</span>.
           </p>
 
           <div className="flex flex-wrap justify-center gap-6 text-gray-300 mb-8">
@@ -520,7 +625,7 @@ const VocationalTest = ({ onComplete }) => {
   const [isCompleted, setIsCompleted] = useState(false);
 
   const handleAnswer = (answerIndex, scores) => {
-    const question = questions[currentQuestion];
+    const question = allQuestions[currentQuestion];
     const answer = question.answers[answerIndex];
     
     // Track resposta
@@ -536,11 +641,11 @@ const VocationalTest = ({ onComplete }) => {
     };
     setAnswers(newAnswers);
 
-    if (currentQuestion < questions.length - 1) {
+    if (currentQuestion < allQuestions.length - 1) {
       setTimeout(() => {
         setCurrentQuestion(currentQuestion + 1);
         // Track progresso
-        analytics.trackTestProgress(currentQuestion + 2, questions.length);
+        analytics.trackTestProgress(currentQuestion + 2, allQuestions.length);
       }, 300);
     } else {
       setIsCompleted(true);
@@ -580,11 +685,20 @@ const VocationalTest = ({ onComplete }) => {
       });
     });
 
+    // Ajustar scores negativos para valores mínimos de 0
+    const adjustedTotals = {};
+    const minScore = Math.min(...Object.values(totals));
+    const adjustment = minScore < 0 ? Math.abs(minScore) : 0;
+    
+    Object.entries(totals).forEach(([area, score]) => {
+      adjustedTotals[area] = score + adjustment;
+    });
+
     // Normalizar para porcentagem
-    const maxScore = Math.max(...Object.values(totals));
-    const normalizedResults = Object.entries(totals).map(([area, score]) => ({
+    const maxScore = Math.max(...Object.values(adjustedTotals));
+    const normalizedResults = Object.entries(adjustedTotals).map(([area, score]) => ({
       area,
-      score: Math.round((score / maxScore) * 100)
+      score: maxScore > 0 ? Math.round((score / maxScore) * 100) : 0
     }));
 
     return normalizedResults;
@@ -621,15 +735,15 @@ const VocationalTest = ({ onComplete }) => {
     );
   }
 
-  const progress = ((currentQuestion + 1) / questions.length) * 100;
-  const question = questions[currentQuestion];
+  const progress = ((currentQuestion + 1) / allQuestions.length) * 100;
+  const question = allQuestions[currentQuestion];
 
   return (
     <div className="max-w-4xl mx-auto" key="vocational-test-container">
       {/* Progress Bar */}
       <div className="mb-8">
         <div className="flex justify-between text-sm text-gray-600 mb-2">
-          <span>Pergunta {currentQuestion + 1} de {questions.length}</span>
+          <span>Pergunta {currentQuestion + 1} de {allQuestions.length}</span>
           <span>{Math.round(progress)}% completo</span>
         </div>
         <div className="w-full bg-gray-200 rounded-full h-2">
@@ -723,23 +837,86 @@ const ResultsDashboard = ({ results, onRestart }) => {
   );
 
   // Recomendar cursos baseado no perfil
-  const recommendedCourses = courses.filter(course => 
-    course.areas.includes(dominantArea.area)
-  ).slice(0, 2);
+  // Calcular score de compatibilidade baseado nas top 3 áreas
+  const calculateCourseCompatibility = (course, userResults) => {
+    // Ordenar resultados do usuário por score (maior para menor)
+    const topAreas = userResults.sort((a, b) => b.score - a.score).slice(0, 3);
+    
+    let compatibilityScore = 0;
+    
+    // Atribuir pesos: 1ª área (3 pontos), 2ª área (2 pontos), 3ª área (1 ponto)
+    topAreas.forEach((userArea, index) => {
+      if (course.areas.includes(userArea.area)) {
+        const weight = 3 - index; // 3, 2, 1
+        compatibilityScore += weight;
+      }
+    });
+    
+    return {
+      ...course,
+      compatibilityScore,
+      compatibilityPercentage: Math.round((compatibilityScore / 6) * 100) // Máximo possível: 6 pontos
+    };
+  };
+  const recommendedCourses = courses
+    .map(course => calculateCourseCompatibility(course, results))
+    .filter(course => course.compatibilityScore > 0) // Apenas cursos com alguma compatibilidade
+    .sort((a, b) => b.compatibilityScore - a.compatibilityScore) // Ordenar por score (maior primeiro)
+    .slice(0, 3); // Pegar os top 3 cursos;
 
   // Mensagens personalizadas por perfil
-  const getPersonalizedMessage = (area) => {
-    const messages = {
-      tecnologia: "Você tem um perfil técnico e analítico! Adora resolver problemas usando lógica e criar soluções inovadoras.",
-      design: "Sua criatividade é seu diferencial! Você tem olhar estético apurado e gosta de trabalhar com elementos visuais.",
-      marketing: "Você é um comunicador nato! Tem facilidade para persuadir e entende como conectar pessoas a produtos/serviços.",
-      gestao: "Líder por natureza! Você tem facilidade para organizar, planejar e coordenar pessoas e projetos.",
-      educacao: "Ensinar é sua vocação! Você tem paciência e satisfação em transmitir conhecimento para outras pessoas.",
-      criatividade: "Sua mente criativa é sua maior força! Você pensa fora da caixa e adora inovar.",
-      comunicacao: "Comunicação é seu talento! Você se expressa bem e consegue convencer pessoas facilmente.",
-      logica: "Raciocínio lógico é seu forte! Você resolve problemas de forma sistemática e organizada."
+  const getPersonalizedMessage = (results) => {
+    // Ordenar por score e pegar as top 3 áreas
+    const topAreas = results.sort((a, b) => b.score - a.score).slice(0, 3);
+    const [first, second, third] = topAreas;
+    
+    // Definir perfis combinados mais comuns
+    const combinedProfiles = {
+      // Tecnologia + outras áreas
+      'tecnologia-logica': "Você tem um perfil **Tecnológico-Analítico**! Combina habilidades técnicas com raciocínio lógico excepcional. É ideal para desenvolvimento de software, programação de sistemas complexos, análise de dados e inteligência artificial.",
+      'tecnologia-criatividade': "Seu perfil é **Tecnológico-Criativo**! Une conhecimento técnico com pensamento inovador. Perfeito para design de interfaces, desenvolvimento de games, soluções criativas em tech e projetos que exigem tanto código quanto criatividade.",
+      'tecnologia-design': "Você é **Tecnológico-Visual**! Combina programação com senso estético. Ideal para desenvolvimento front-end, UX/UI design, criação de aplicativos visuais e projetos que unem código e design.",
+      
+      // Design + outras áreas
+      'design-marketing': "Seu perfil é **Criativo-Estratégico**! Combina talento visual com visão comercial. Excelente para marketing digital, gestão de redes sociais, criação de campanhas visuais e branding que realmente vendem.",
+      'design-comunicacao': "Você tem perfil **Visual-Comunicativo**! Une criação visual com habilidades de comunicação. Perfeito para produção de conteúdo, design editorial, apresentações impactantes e comunicação visual.",
+      
+      // Marketing + outras áreas
+      'marketing-gestao': "Seu perfil é **Comercial-Estratégico**! Combina visão de negócios com liderança. Ideal para gestão comercial, empreendedorismo, desenvolvimento de negócios e liderança de equipes comerciais.",
+      'marketing-comunicacao': "Você é **Comunicativo-Persuasivo**! Excellence em comunicação e persuasão. Perfeito para vendas, marketing digital, relações públicas e qualquer área que exija convencer e engajar pessoas.",
+      
+      // Gestão + outras áreas
+      'gestao-logica': "Seu perfil é **Gerencial-Analítico**! Combina liderança com análise sistemática. Ideal para gestão de projetos, business intelligence, consultoria empresarial e cargos que exigem decisões baseadas em dados.",
+      'gestao-educacao': "Você tem perfil **Líder-Educador**! Une capacidade de gestão com desenvolvimento de pessoas. Excelente para gestão de recursos humanos, treinamentos corporativos e liderança de equipes.",
+      
+      // Educação + outras áreas
+      'educacao-comunicacao': "Seu perfil é **Educativo-Comunicativo**! Combina ensino com excelente comunicação. Perfeito para treinamentos, palestras, criação de conteúdo educativo e qualquer área que envolva transmitir conhecimento.",
+      
+      // Lógica + outras áreas
+      'logica-gestao': "Você é **Analítico-Organizacional**! Combina raciocínio lógico com visão de processos. Ideal para análise de dados, otimização de processos, business intelligence e consultoria analítica."
     };
-    return messages[area] || "Você tem um perfil único e diversificado!";
+    
+    // Criar chave para perfil combinado
+    const profileKey = `${first.area}-${second.area}`;
+    
+    // Se existe perfil combinado específico, usar ele
+    if (combinedProfiles[profileKey]) {
+      return combinedProfiles[profileKey];
+    }
+    
+    // Caso contrário, usar mensagem baseada na área dominante com menção da segunda área
+    const singleAreaMessages = {
+      tecnologia: `Você tem um **perfil técnico e analítico** com forte afinidade por ${second.area === 'logica' ? 'raciocínio lógico' : second.area === 'design' ? 'criação visual' : second.area === 'criatividade' ? 'inovação' : second.area}. Adora resolver problemas complexos usando tecnologia e criar soluções que realmente funcionam.`,
+      design: `Sua **criatividade é seu grande diferencial**, combinada com ${second.area === 'marketing' ? 'visão comercial' : second.area === 'comunicacao' ? 'habilidades de comunicação' : second.area === 'tecnologia' ? 'conhecimento técnico' : second.area}. Você tem olhar estético apurado e transforma ideias em realidade visual.`,
+      marketing: `Você é um **comunicador nato com visão estratégica**, especialmente forte em ${second.area === 'comunicacao' ? 'persuasão' : second.area === 'gestao' ? 'liderança' : second.area === 'design' ? 'comunicação visual' : second.area}. Entende como conectar pessoas, produtos e ideias de forma eficaz.`,
+      gestao: `**Líder por natureza**, com forte capacidade de ${second.area === 'comunicacao' ? 'comunicação' : second.area === 'logica' ? 'análise' : second.area === 'marketing' ? 'visão comercial' : second.area}. Tem facilidade para organizar, planejar e coordenar pessoas e projetos para alcançar resultados.`,
+      educacao: `**Ensinar é sua vocação natural**, combinada com ${second.area === 'comunicacao' ? 'excelente comunicação' : second.area === 'gestao' ? 'capacidade organizacional' : second.area === 'tecnologia' ? 'conhecimento técnico' : second.area}. Tem paciência e satisfação em desenvolver outras pessoas.`,
+      criatividade: `Sua **mente criativa é sua maior força**, especialmente quando aplicada à ${second.area === 'design' ? 'criação visual' : second.area === 'tecnologia' ? 'inovação técnica' : second.area === 'marketing' ? 'comunicação criativa' : second.area}. Pensa fora da caixa e encontra soluções únicas.`,
+      comunicacao: `**Comunicação é seu talento natural**, potencializada por sua ${second.area === 'marketing' ? 'visão estratégica' : second.area === 'educacao' ? 'vocação para ensinar' : second.area === 'gestao' ? 'capacidade de liderança' : second.area}. Se expressa bem e consegue influenciar pessoas positivamente.`,
+      logica: `**Raciocínio lógico é seu diferencial**, especialmente quando combinado com ${second.area === 'tecnologia' ? 'conhecimento técnico' : second.area === 'gestao' ? 'visão organizacional' : second.area === 'educacao' ? 'capacidade de ensinar' : second.area}. Resolve problemas complexos de forma sistemática e organizada.`
+    };
+    
+    return singleAreaMessages[first.area] || "Você tem um **perfil único e diversificado** com múltiplas fortalezas profissionais!";
   };
 
   // Função para gerar PDF usando o novo PDF Worker
@@ -786,7 +963,7 @@ const ResultsDashboard = ({ results, onRestart }) => {
     const shareText = `🎯 Descobri meu perfil vocacional na Escola Habilidade!
     
 📊 Meu perfil dominante: ${areaName} (${dominantArea.score}%)
-${getPersonalizedMessage(dominantArea.area)}
+${getPersonalizedMessage(results)}
 
 ✅ Resultado baseado em metodologia científica de MIT, Harvard e Stanford
 📍 Cursos presenciais em Florianópolis, São José e Palhoça
@@ -844,6 +1021,40 @@ Faça seu teste gratuito: https://escolahabilidade.com/teste-vocacional
     return () => clearTimeout(timer);
   }, []);
 
+  // Analytics para perfis combinados e compatibilidade de cursos
+  useEffect(() => {
+    // Preparar dados para analytics
+    const topAreas = results.sort((a, b) => b.score - a.score).slice(0, 3);
+    const [first, second] = topAreas;
+    
+    // Determinar tipo de perfil
+    const combinedProfiles = {
+      'tecnologia-logica': 'Tecnológico-Analítico',
+      'tecnologia-criatividade': 'Tecnológico-Criativo',
+      'tecnologia-design': 'Tecnológico-Visual',
+      'design-marketing': 'Criativo-Estratégico',
+      'design-comunicacao': 'Visual-Comunicativo',
+      'marketing-gestao': 'Comercial-Estratégico',
+      'marketing-comunicacao': 'Comunicativo-Persuasivo',
+      'gestao-logica': 'Gerencial-Analítico',
+      'gestao-educacao': 'Líder-Educador',
+      'educacao-comunicacao': 'Educativo-Comunicativo',
+      'logica-gestao': 'Analítico-Organizacional'
+    };
+    
+    const profileKey = `${first.area}-${second.area}`;
+    const profileType = combinedProfiles[profileKey] || `${first.area}-dominante`;
+    
+    // Track perfil combinado
+    analytics.trackCombinedProfile(topAreas, profileType);
+    
+    // Track compatibilidade de cursos
+    analytics.trackCourseCompatibility(recommendedCourses, {
+      primaryArea: first.area,
+      secondaryArea: second.area
+    });
+  }, [results, recommendedCourses]);
+
   return (
     <motion.div
       ref={resultsRef}
@@ -879,7 +1090,7 @@ Faça seu teste gratuito: https://escolahabilidade.com/teste-vocacional
         
         <p className="text-xl text-gray-600 max-w-3xl mx-auto">
           <strong>Baseado em metodologias validadas por 2+ milhões de estudantes:</strong><br />
-          {getPersonalizedMessage(dominantArea.area)}
+          {getPersonalizedMessage(results)}
         </p>
       </div>
 
@@ -921,50 +1132,10 @@ Faça seu teste gratuito: https://escolahabilidade.com/teste-vocacional
               Modelo VIPS - MIT
             </span>
           </div>
-          <h3 className="text-2xl font-bold text-gray-900 mb-6">Ranking Científico de Afinidades</h3>
+          <h3 className="text-2xl font-bold text-gray-900 mb-6">Análise Completa de Todas as Áreas</h3>
+          <p className="text-gray-600 mb-6">Veja sua pontuação em todas as 8 áreas vocacionais analisadas</p>
           
-          <div className="space-y-4">
-            {results
-              .sort((a, b) => b.score - a.score)
-              .map((result, index) => (
-                <motion.div
-                  key={result.area}
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5, delay: 0.9 + index * 0.1 }}
-                  className="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold ${
-                      index === 0 ? 'bg-[#d400ff]' : index === 1 ? 'bg-purple-400' : 'bg-gray-400'
-                    }`}>
-                      {index + 1}
-                    </div>
-                    <span className="font-semibold text-gray-800 capitalize">
-                      {result.area === 'gestao' ? 'Gestão' : 
-                       result.area === 'educacao' ? 'Educação' : 
-                       result.area === 'comunicacao' ? 'Comunicação' :
-                       result.area === 'logica' ? 'Lógica' : result.area}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-24 bg-gray-200 rounded-full h-2">
-                      <motion.div 
-                        className={`h-2 rounded-full ${
-                          index === 0 ? 'bg-[#d400ff]' : index === 1 ? 'bg-purple-400' : 'bg-gray-400'
-                        }`}
-                        initial={{ width: 0 }}
-                        animate={{ width: `${result.score}%` }}
-                        transition={{ duration: 1, delay: 1.2 + index * 0.1 }}
-                      />
-                    </div>
-                    <span className="font-bold text-gray-700 w-12 text-right">
-                      {result.score}%
-                    </span>
-                  </div>
-                </motion.div>
-              ))}
-          </div>
+          <BarChart data={results.sort((a, b) => b.score - a.score)} />
         </motion.div>
       </div>
 
@@ -1009,6 +1180,19 @@ Faça seu teste gratuito: https://escolahabilidade.com/teste-vocacional
                 </div>
                 
                 <p className="text-purple-100 mb-4">{course.description}</p>
+                
+                {/* Badge de Compatibilidade */}
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="bg-white/20 rounded-full px-3 py-1 flex items-center gap-2">
+                    <Star size={14} className="text-yellow-300" />
+                    <span className="text-white text-sm font-semibold">
+                      {course.compatibilityPercentage}% Compatible
+                    </span>
+                  </div>
+                  <span className="text-purple-100 text-xs">
+                    Baseado no seu perfil científico
+                  </span>
+                </div>
                 
                 <div className="flex justify-between items-center mb-4">
                   <span className="text-sm">Duração: {course.duration}</span>
@@ -1262,7 +1446,7 @@ const TesteVocacional = () => {
                       <User className="text-[#d400ff]" size={32} />
                     </div>
                     <h3 className="text-xl font-semibold text-gray-900 mb-2">1. Responda</h3>
-                    <p className="text-gray-600">8 perguntas científicas baseadas no modelo VIPS (Valores, Interesses, Personalidade, Habilidades)</p>
+                    <p className="text-gray-600">13 perguntas científicas baseadas no modelo VIPS (Valores, Interesses, Personalidade, Habilidades)</p>
                   </div>
                   <div className="text-center">
                     <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
