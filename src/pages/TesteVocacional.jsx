@@ -585,6 +585,137 @@ const Hero = () => {
             </span>
           </div>
 
+          <motion.div
+            className="text-center mb-8"
+          >
+            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-100/20 to-blue-100/20 px-6 py-3 rounded-full mb-6">
+              <Trophy className="text-[#d400ff]" size={20} />
+              <span className="text-white font-bold text-sm uppercase tracking-wide">
+                Metodologia MIT • Harvard • Stanford
+              </span>
+            </div>
+            
+            <div className="grid md:grid-cols-3 gap-6 mb-8 max-w-3xl mx-auto">
+              <div className="text-center">
+                <div className="w-12 h-12 bg-[#d400ff]/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <User className="text-[#d400ff]" size={24} />
+                </div>
+                <h3 className="text-white font-semibold text-base mb-1">1. Responda</h3>
+                <p className="text-gray-300 text-sm">15 perguntas científicas baseadas no modelo VIPS</p>
+              </div>
+              <div className="text-center">
+                <div className="w-12 h-12 bg-[#d400ff]/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <Pulse className="text-[#d400ff]" size={24} />
+                </div>
+                <h3 className="text-white font-semibold text-base mb-1">2. Analisamos</h3>
+                <p className="text-gray-300 text-sm">Análise baseada no modelo Holland RIASEC</p>
+              </div>
+              <div className="text-center">
+                <div className="w-12 h-12 bg-[#d400ff]/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <Target className="text-[#d400ff]" size={24} />
+                </div>
+                <h3 className="text-white font-semibold text-base mb-1">3. Recomendamos</h3>
+                <p className="text-gray-300 text-sm">Cursos personalizados com base no seu resultado</p>
+              </div>
+            </div>
+          </motion.div>
+
+          <motion.button
+            onClick={() => {
+              // Iniciar teste diretamente
+              const event = new CustomEvent('startVocationalTest');
+              window.dispatchEvent(event);
+            }}
+            className="bg-gradient-to-r from-[#d400ff] to-purple-600 text-white px-12 py-6 rounded-full font-bold text-xl hover:from-purple-600 hover:to-[#d400ff] transition-all duration-300 inline-flex items-center gap-3"
+            whileHover={{ 
+              scale: 1.05, 
+              boxShadow: "0 0 40px rgba(212, 0, 255, 0.5)" 
+            }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <Brain size={24} />
+            Iniciar Teste Vocacional
+            <CaretRight size={20} />
+          </motion.button>
+        </motion.div>
+
+        {/* Benefícios do teste */}
+        <motion.div 
+          className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
+        >
+          <div className="text-center">
+            <div className="w-16 h-16 bg-[#d400ff]/20 rounded-full flex items-center justify-center mx-auto mb-4">
+              <ChartBar className="text-[#d400ff]" size={32} />
+            </div>
+            <h3 className="text-white font-semibold text-lg mb-2">Análise Completa</h3>
+            <p className="text-gray-300">Dashboard detalhado com suas afinidades profissionais</p>
+          </div>
+          <div className="text-center">
+            <div className="w-16 h-16 bg-[#d400ff]/20 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Lightbulb className="text-[#d400ff]" size={32} />
+            </div>
+            <h3 className="text-white font-semibold text-lg mb-2">Recomendação Inteligente</h3>
+            <p className="text-gray-300">Cursos selecionados especificamente para você</p>
+          </div>
+          <div className="text-center">
+            <div className="w-16 h-16 bg-[#d400ff]/20 rounded-full flex items-center justify-center mx-auto mb-4">
+              <MapPin className="text-[#d400ff]" size={32} />
+            </div>
+            <h3 className="text-white font-semibold text-lg mb-2">Cursos Locais</h3>
+            <p className="text-gray-300">Aulas presenciais na Grande Florianópolis</p>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+            transition={{
+              duration: 3 + (i % 5) * 0.4,
+              repeat: Infinity,
+              delay: i * 0.1,
+            }}
+          />
+        ))}
+      </div>
+
+      <div className="relative z-10 text-center px-4 max-w-6xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="mb-8"
+        >
+          <div className="flex items-center justify-center gap-2 mb-6">
+            <Brain className="text-[#d400ff]" size={32} />
+            <span className="text-white font-semibold text-lg">Teste Vocacional Inteligente</span>
+          </div>
+          
+          <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
+            Descubra seu <span className="text-[#d400ff]">Curso Ideal</span>
+          </h1>
+          
+          <p className="text-xl md:text-2xl text-gray-200 mb-8 max-w-4xl mx-auto">
+            Em apenas 15 perguntas científicas, descubra o curso da Escola Habilidade que mais combina com você. <strong className="text-[#d400ff]">Metodologia inspirada no MIT, Harvard e Stanford</strong> — disponível para toda a <span className="text-[#d400ff] font-semibold">Grande Florianópolis</span>.
+          </p>
+
+          <div className="flex flex-wrap justify-center gap-6 text-gray-300 mb-8">
+            <span className="flex items-center gap-2">
+              <Clock size={16} className="text-[#d400ff]" />
+              Apenas 5 minutos
+            </span>
+            <span className="flex items-center gap-2">
+              <Target size={16} className="text-[#d400ff]" />
+              100% personalizado
+            </span>
+            <span className="flex items-center gap-2">
+              <Trophy size={16} className="text-[#d400ff]" />
+              Resultado profissional
+            </span>
+          </div>
+
           <motion.button
             onClick={() => document.getElementById('teste').scrollIntoView({ behavior: 'smooth' })}
             className="bg-gradient-to-r from-[#d400ff] to-purple-600 text-white px-12 py-6 rounded-full font-bold text-xl hover:from-purple-600 hover:to-[#d400ff] transition-all duration-300 inline-flex items-center gap-3"
@@ -1365,25 +1496,33 @@ const TesteVocacional = () => {
     analytics.trackTestPageView();
   }, []);
 
+  // Listener para o evento customizado do Hero
+  useEffect(() => {
+    const handleStartTest = () => {
+      console.log('🚀 TESTE VOCACIONAL: Starting test from Hero');
+      setCurrentStep('test');
+      // Track início do teste
+      analytics.trackTestStart();
+      analytics.measureTestDuration.start();
+      
+      // Scroll automático para o início do teste com delay mínimo
+      setTimeout(() => {
+        const testSection = document.getElementById('teste-section');
+        if (testSection) {
+          testSection.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'start'
+          });
+        }
+      }, 100);
+    };
 
-  const handleStartTest = () => {
-    console.log('🚀 TESTE VOCACIONAL: Starting test');
-    setCurrentStep('test');
-    // Track início do teste
-    analytics.trackTestStart();
-    analytics.measureTestDuration.start();
+    window.addEventListener('startVocationalTest', handleStartTest);
     
-    // Scroll automático para o início do teste com delay mínimo
-    setTimeout(() => {
-      const testSection = document.getElementById('teste-section');
-      if (testSection) {
-        testSection.scrollIntoView({ 
-          behavior: 'smooth', 
-          block: 'start'
-        });
-      }
-    }, 100);
-  };
+    return () => {
+      window.removeEventListener('startVocationalTest', handleStartTest);
+    };
+  }, []);
 
   const handleTestComplete = (testResults) => {
     console.log('✅ TESTE VOCACIONAL: Test completed', testResults);
@@ -1397,7 +1536,6 @@ const TesteVocacional = () => {
     // Track reiniciar teste
     analytics.trackTestRestart();
   };
-
 
   return (
     <>
@@ -1419,6 +1557,159 @@ const TesteVocacional = () => {
               scroll-behavior: smooth;
             }
           `}
+        </style>
+      </Helmet>
+
+      <div className="min-h-screen bg-gray-50">
+        {currentStep === 'intro' && <Hero />}
+
+        <main className={currentStep === 'intro' ? 'pt-0' : 'pt-20'}>
+        {currentStep === 'test' && (
+          <motion.section 
+            key="vocational-test-questions-section"
+            id="teste-section" 
+            className="py-20 bg-gray-50"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+          >
+            <div className="container mx-auto px-4">
+              <DOMErrorBoundary 
+                className="max-w-4xl mx-auto"
+                fallbackChildren={
+                  <div className="text-center py-20">
+                    <div className="w-20 h-20 bg-[#d400ff] rounded-full flex items-center justify-center mx-auto mb-6">
+                      <Brain className="text-white" size={40} />
+                    </div>
+                    <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                      Teste Vocacional
+                    </h3>
+                    <p className="text-gray-600 mb-6">
+                      Recarregue a página para continuar com o teste.
+                    </p>
+                    <button
+                      onClick={() => window.location.reload()}
+                      className="bg-[#d400ff] text-white px-8 py-3 rounded-full font-bold hover:bg-purple-600 transition-all duration-300"
+                    >
+                      Recarregar Página
+                    </button>
+                  </div>
+                }
+              >
+                <VocationalTest onComplete={handleTestComplete} />
+              </DOMErrorBoundary>
+            </div>
+          </motion.section>
+        )}
+
+        {currentStep === 'results' && (
+          <motion.section 
+            key="vocational-test-results-section"
+            className="py-20 bg-gray-50"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+          >
+            <div className="container mx-auto px-4">
+              <DOMErrorBoundary 
+                className="max-w-6xl mx-auto"
+                fallbackChildren={
+                  <div className="text-center py-20">
+                    <div className="w-20 h-20 bg-[#d400ff] rounded-full flex items-center justify-center mx-auto mb-6">
+                      <Star className="text-white" size={40} />
+                    </div>
+                    <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                      Resultados do Teste
+                    </h3>
+                    <p className="text-gray-600 mb-6">
+                      Houve um problema ao exibir seus resultados. Tente recarregar a página.
+                    </p>
+                    <div className="flex gap-4 justify-center">
+                      <button
+                        onClick={() => window.location.reload()}
+                        className="bg-[#d400ff] text-white px-8 py-3 rounded-full font-bold hover:bg-purple-600 transition-all duration-300"
+                      >
+                        Recarregar Página
+                      </button>
+                      <button
+                        onClick={handleRestart}
+                        className="border-2 border-[#d400ff] text-[#d400ff] px-8 py-3 rounded-full font-bold hover:bg-[#d400ff] hover:text-white transition-all duration-300"
+                      >
+                        Refazer Teste
+                      </button>
+                    </div>
+                  </div>
+                }
+              >
+                <ResultsDashboard results={results} onRestart={handleRestart} />
+              </DOMErrorBoundary>
+            </div>
+          </motion.section>
+        )}
+      </main>
+
+      {/* Floating WhatsApp */}
+      <motion.a
+        href="https://wa.me/5548988559491?text=Olá! Gostaria de saber mais sobre os cursos da Escola Habilidade."
+        className="fixed bottom-6 right-6 z-50 w-16 h-16 bg-[#d400ff] rounded-full flex items-center justify-center shadow-lg"
+        whileHover={{ 
+          scale: 1.1,
+          boxShadow: "0 0 20px rgba(212, 0, 255, 0.5)"
+        }}
+        animate={{ 
+          y: [0, -5, 0],
+        }}
+        transition={{ 
+          y: { duration: 2, repeat: Infinity }
+        }}
+      >
+        <ChatCircle className="text-white" size={24} />
+      </motion.a>
+
+      {/* Schema.org para SEO Local */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{
+        __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "EducationalOrganization",
+          "name": "Escola Habilidade - Teste Vocacional",
+          "description": "Teste vocacional gratuito para descobrir o curso ideal em Florianópolis, São José e Palhoça",
+          "url": "https://escolahabilidade.com/teste-vocacional",
+          "areaServed": [
+            {
+              "@type": "City",
+              "name": "Florianópolis"
+            },
+            {
+              "@type": "City", 
+              "name": "São José"
+            },
+            {
+              "@type": "City",
+              "name": "Palhoça"
+            }
+          ],
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "R. Caetano José Ferreira, 426 - Sala 5",
+            "addressLocality": "Kobrasol",
+            "addressRegion": "SC",
+            "postalCode": "88102-280",
+            "addressCountry": "BR"
+          },
+          "telephone": "+55-48-98855-9491",
+          "offers": [
+            {
+              "@type": "Service",
+              "name": "Teste Vocacional Gratuito",
+              "description": "Descubra qual curso combina com seu perfil"
+            }
+          ]
+        })
+      }} />
+      </div>
+    </>
+  );
+};
         </style>
       </Helmet>
 
