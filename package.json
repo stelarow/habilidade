@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "vite-react-ssg dev",
     "build": "npm run build:optimize",
-    "build:optimize": "vite-react-ssg build && npm run optimize:assets && npm run inject:critical-css && npm run analyze:bundle",
-    "build:production": "vite-react-ssg build",
+    "build:optimize": "node scripts/build-ssg.js && npm run optimize:assets && npm run inject:critical-css && npm run analyze:bundle",
+    "build:production": "node scripts/build-ssg.js",
     "lint": "eslint .",
     "preview": "vite preview",
     "deploy": "npm run build:production && git add dist/ && git commit -m \"Deploy: atualização do build\" && git push origin main",

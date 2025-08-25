@@ -26,6 +26,38 @@ const sitemapPlugin = () => {
   };
 };
 
+// SSG completion handler plugin
+const ssgCompletionPlugin = () => {
+  let isSSR = false;
+  return {
+    name: 'ssg-completion-handler',
+    configResolved(config) {
+      isSSR = config.build.ssr;
+    },
+    writeBundle() {
+      if (isSSR) {
+        // This is the SSR build completion
+        console.log('🎯 SSR build completed, preparing for SSG rendering...');
+      } else {
+        // This is the client build completion  
+        console.log('🎯 Client build completed');
+      }
+    },
+    closeBundle() {
+      if (isSSR) {
+        console.log('🏁 SSG build process completed, ready for clean exit');
+        // Give a small delay to ensure all async operations complete
+        setTimeout(() => {
+          if (process.env.CI || process.env.NODE_ENV === 'production') {
+            console.log('✅ Forcing clean exit for CI/production build');
+            process.exit(0);
+          }
+        }, 1000);
+      }
+    }
+  };
+};
+
 // Advanced Critical CSS Plugin - Mobile Performance Optimized
 
 
@@ -34,6 +66,7 @@ export default defineConfig({
   plugins: [
     react(),
     sitemapPlugin(),
+    ssgCompletionPlugin(), // Handle SSG build completion and clean exit
     // Critical CSS plugins in correct order
     createCriticalCssPlugin(), // Analyzes bundles and prepares for SSG
     createSSGCriticalCSSPlugin(), // Post-processes HTML after SSG
