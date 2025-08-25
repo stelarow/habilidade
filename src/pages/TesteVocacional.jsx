@@ -626,7 +626,7 @@ const Hero = () => {
               const event = new CustomEvent('startVocationalTest');
               window.dispatchEvent(event);
             }}
-            className="bg-gradient-to-r from-[#d400ff] to-purple-600 text-white px-12 py-6 rounded-full font-bold text-xl hover:from-purple-600 hover:to-[#d400ff] transition-all duration-300 inline-flex items-center gap-3"
+            className="bg-gradient-to-r from-[#ff00ff] to-[#d400ff] text-white px-12 py-6 rounded-full font-bold text-xl hover:from-purple-600 hover:to-[#d400ff] transition-all duration-300 inline-flex items-center gap-3 shadow-lg"
             whileHover={{ 
               scale: 1.05, 
               boxShadow: "0 0 40px rgba(212, 0, 255, 0.5)" 
