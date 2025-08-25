@@ -334,6 +334,8 @@ export async function loader({ params }) {
   } catch (error) {
     console.error(`[BlogPost Loader] Error loading post ${slug}:`, error);
     throw new Error(`Failed to load post: ${slug}`);
+  }
+}
 
 // Component and entry for vite-react-ssg
 export const Component = BlogPost;
