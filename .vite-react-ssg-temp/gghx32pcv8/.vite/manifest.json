@@ -1,0 +1,503 @@
+{
+  "_BlogEmpty-DUhiSxKY.js": {
+    "file": "assets/js/BlogEmpty-DUhiSxKY.js",
+    "name": "BlogEmpty"
+  },
+  "_BlogError-pFcvE5Id.js": {
+    "file": "assets/js/BlogError-pFcvE5Id.js",
+    "name": "BlogError"
+  },
+  "_Breadcrumbs-CKlA74mN.js": {
+    "file": "assets/js/Breadcrumbs-CKlA74mN.js",
+    "name": "Breadcrumbs"
+  },
+  "_useContactAnalytics-CtFSFhtO.js": {
+    "file": "assets/js/useContactAnalytics-CtFSFhtO.js",
+    "name": "useContactAnalytics"
+  },
+  "src/components/SmartImageUpload.jsx": {
+    "file": "assets/js/SmartImageUpload-DgPEWtLj.js",
+    "name": "SmartImageUpload",
+    "src": "src/components/SmartImageUpload.jsx",
+    "isDynamicEntry": true
+  },
+  "src/components/backgrounds/AdministracaoBackground.jsx": {
+    "file": "assets/js/AdministracaoBackground-BZYEQfa6.js",
+    "name": "AdministracaoBackground",
+    "src": "src/components/backgrounds/AdministracaoBackground.jsx",
+    "isDynamicEntry": true
+  },
+  "src/components/backgrounds/BIBackground.jsx": {
+    "file": "assets/js/BIBackground-D9Fno671.js",
+    "name": "BIBackground",
+    "src": "src/components/backgrounds/BIBackground.jsx",
+    "isDynamicEntry": true
+  },
+  "src/components/backgrounds/DesignGraficoBackground.jsx": {
+    "file": "assets/js/DesignGraficoBackground-40OtB4NG.js",
+    "name": "DesignGraficoBackground",
+    "src": "src/components/backgrounds/DesignGraficoBackground.jsx",
+    "isDynamicEntry": true
+  },
+  "src/components/backgrounds/EdicaoVideoBackground.jsx": {
+    "file": "assets/js/EdicaoVideoBackground-DuPoDq84.js",
+    "name": "EdicaoVideoBackground",
+    "src": "src/components/backgrounds/EdicaoVideoBackground.jsx",
+    "isDynamicEntry": true
+  },
+  "src/components/backgrounds/IABackground.jsx": {
+    "file": "assets/js/IABackground-pAVHl53i.js",
+    "name": "IABackground",
+    "src": "src/components/backgrounds/IABackground.jsx",
+    "isDynamicEntry": true
+  },
+  "src/components/backgrounds/InformaticaBackground.jsx": {
+    "file": "assets/js/InformaticaBackground-BhlcFGXa.js",
+    "name": "InformaticaBackground",
+    "src": "src/components/backgrounds/InformaticaBackground.jsx",
+    "isDynamicEntry": true
+  },
+  "src/components/backgrounds/MarketingDigitalBackground.jsx": {
+    "file": "assets/js/MarketingDigitalBackground-BJZULzs4.js",
+    "name": "MarketingDigitalBackground",
+    "src": "src/components/backgrounds/MarketingDigitalBackground.jsx",
+    "isDynamicEntry": true
+  },
+  "src/components/backgrounds/ProgramacaoBackground.jsx": {
+    "file": "assets/js/ProgramacaoBackground-VvCK0Wfr.js",
+    "name": "ProgramacaoBackground",
+    "src": "src/components/backgrounds/ProgramacaoBackground.jsx",
+    "isDynamicEntry": true
+  },
+  "src/components/backgrounds/Projetista3DBackground.jsx": {
+    "file": "assets/js/Projetista3DBackground-_a4yggrk.js",
+    "name": "Projetista3DBackground",
+    "src": "src/components/backgrounds/Projetista3DBackground.jsx",
+    "isDynamicEntry": true
+  },
+  "src/components/blog/AdvancedSearch.jsx": {
+    "file": "assets/js/AdvancedSearch-DgB_4nPm.js",
+    "name": "AdvancedSearch",
+    "src": "src/components/blog/AdvancedSearch.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "src/main.jsx"
+    ]
+  },
+  "src/components/blog/BlogTypography.jsx": {
+    "file": "assets/js/BlogTypography-DVCPpeHv.js",
+    "name": "BlogTypography",
+    "src": "src/components/blog/BlogTypography.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "src/main.jsx"
+    ]
+  },
+  "src/components/blog/QuickContactModal.jsx": {
+    "file": "assets/js/QuickContactModal-CgewLiVd.js",
+    "name": "QuickContactModal",
+    "src": "src/components/blog/QuickContactModal.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "_useContactAnalytics-CtFSFhtO.js",
+      "src/main.jsx"
+    ]
+  },
+  "src/components/blog/ShareButtons.jsx": {
+    "file": "assets/js/ShareButtons-zQ2d6_oz.js",
+    "name": "ShareButtons",
+    "src": "src/components/blog/ShareButtons.jsx",
+    "isDynamicEntry": true
+  },
+  "src/components/blog/TableOfContents.jsx": {
+    "file": "assets/js/TableOfContents-rMvq4aIq.js",
+    "name": "TableOfContents",
+    "src": "src/components/blog/TableOfContents.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "src/main.jsx"
+    ]
+  },
+  "src/components/course/CourseContactForm.jsx": {
+    "file": "assets/js/CourseContactForm-Dpmq0XZr.js",
+    "name": "CourseContactForm",
+    "src": "src/components/course/CourseContactForm.jsx",
+    "isDynamicEntry": true
+  },
+  "src/components/course/CourseCurriculum.jsx": {
+    "file": "assets/js/CourseCurriculum-CyHszRRV.js",
+    "name": "CourseCurriculum",
+    "src": "src/components/course/CourseCurriculum.jsx",
+    "isDynamicEntry": true
+  },
+  "src/components/course/CourseTestimonials.jsx": {
+    "file": "assets/js/CourseTestimonials-BREMzG4U.js",
+    "name": "CourseTestimonials",
+    "src": "src/components/course/CourseTestimonials.jsx",
+    "isDynamicEntry": true
+  },
+  "src/components/course/CourseToolsOverview.jsx": {
+    "file": "assets/js/CourseToolsOverview-BKbNiKfj.js",
+    "name": "CourseToolsOverview",
+    "src": "src/components/course/CourseToolsOverview.jsx",
+    "isDynamicEntry": true
+  },
+  "src/components/course/CourseWorkflowSection.jsx": {
+    "file": "assets/js/CourseWorkflowSection-CqDk2yhF.js",
+    "name": "CourseWorkflowSection",
+    "src": "src/components/course/CourseWorkflowSection.jsx",
+    "isDynamicEntry": true
+  },
+  "src/components/header/MegaMenu.jsx": {
+    "file": "assets/js/MegaMenu-BMz6zpCJ.js",
+    "name": "MegaMenu",
+    "src": "src/components/header/MegaMenu.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "src/main.jsx"
+    ]
+  },
+  "src/components/header/MobileMegaMenu.jsx": {
+    "file": "assets/js/MobileMegaMenu-CMCK687I.js",
+    "name": "MobileMegaMenu",
+    "src": "src/components/header/MobileMegaMenu.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "src/main.jsx"
+    ]
+  },
+  "src/main.jsx": {
+    "file": "main.mjs",
+    "name": "main",
+    "src": "src/main.jsx",
+    "isEntry": true,
+    "isDynamicEntry": true,
+    "dynamicImports": [
+      "src/components/blog/BlogTypography.jsx",
+      "src/components/blog/AdvancedSearch.jsx",
+      "src/components/blog/TableOfContents.jsx",
+      "src/components/blog/ShareButtons.jsx",
+      "src/components/blog/QuickContactModal.jsx",
+      "src/components/course/CourseCurriculum.jsx",
+      "src/components/course/CourseTestimonials.jsx",
+      "src/components/course/CourseWorkflowSection.jsx",
+      "src/components/course/CourseToolsOverview.jsx",
+      "src/components/course/CourseContactForm.jsx",
+      "src/components/SmartImageUpload.jsx",
+      "src/components/header/MegaMenu.jsx",
+      "src/components/header/MobileMegaMenu.jsx",
+      "src/pages/CoursePage.jsx",
+      "src/pages/Contact.jsx",
+      "src/pages/BlogIndex.jsx",
+      "src/pages/BlogTestPage.jsx",
+      "src/pages/BlogCategory.jsx",
+      "src/pages/NotFound.jsx",
+      "src/pages/CursosFlorianopolis.jsx",
+      "src/pages/CursosSaoJose.jsx",
+      "src/pages/CursosPalhoca.jsx",
+      "src/pages/CursoSketchupEnscape.jsx",
+      "src/pages/TesteVocacional.jsx",
+      "src/pages/courses/Informatica.jsx",
+      "src/pages/courses/DesignGrafico.jsx",
+      "src/pages/courses/Programacao.jsx",
+      "src/pages/courses/MarketingDigital.jsx",
+      "src/pages/courses/InteligenciaArtificial.jsx",
+      "src/pages/courses/BusinessIntelligence.jsx",
+      "src/pages/courses/Projetista3D.jsx",
+      "src/pages/courses/EdicaoVideo.jsx",
+      "src/pages/courses/Administracao.jsx",
+      "src/pages/BlogIndex.jsx",
+      "src/pages/BlogCategory.jsx",
+      "src/pages/BlogPostSSG.jsx",
+      "src/pages/BlogTestPage.jsx",
+      "src/pages/BlogTestPage.jsx",
+      "src/pages/NotFound.jsx",
+      "src/services/LazyAnalyticsLoader.js"
+    ]
+  },
+  "src/pages/BlogCategory.jsx": {
+    "file": "assets/js/BlogCategory-DHWSMBPl.js",
+    "name": "BlogCategory",
+    "src": "src/pages/BlogCategory.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "src/main.jsx",
+      "_BlogEmpty-DUhiSxKY.js",
+      "_BlogError-pFcvE5Id.js",
+      "_Breadcrumbs-CKlA74mN.js"
+    ]
+  },
+  "src/pages/BlogIndex.jsx": {
+    "file": "assets/js/BlogIndex-By7hb-Aj.js",
+    "name": "BlogIndex",
+    "src": "src/pages/BlogIndex.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "src/main.jsx",
+      "_BlogEmpty-DUhiSxKY.js",
+      "_BlogError-pFcvE5Id.js"
+    ]
+  },
+  "src/pages/BlogPostSSG.jsx": {
+    "file": "assets/js/BlogPostSSG-EpEOF46K.js",
+    "name": "BlogPostSSG",
+    "src": "src/pages/BlogPostSSG.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "src/components/blog/ShareButtons.jsx",
+      "_Breadcrumbs-CKlA74mN.js",
+      "_BlogError-pFcvE5Id.js",
+      "src/components/blog/TableOfContents.jsx",
+      "_useContactAnalytics-CtFSFhtO.js",
+      "src/main.jsx"
+    ],
+    "dynamicImports": [
+      "src/utils/blogImageMigration.js",
+      "src/utils/blogImageMigration.js",
+      "src/main.jsx"
+    ]
+  },
+  "src/pages/BlogTestPage.jsx": {
+    "file": "assets/js/BlogTestPage-BL3zGVav.js",
+    "name": "BlogTestPage",
+    "src": "src/pages/BlogTestPage.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "src/main.jsx"
+    ]
+  },
+  "src/pages/Contact.jsx": {
+    "file": "assets/js/Contact-DX7rMh0g.js",
+    "name": "Contact",
+    "src": "src/pages/Contact.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "src/main.jsx"
+    ]
+  },
+  "src/pages/CoursePage.jsx": {
+    "file": "assets/js/CoursePage-DOhGLxGA.js",
+    "name": "CoursePage",
+    "src": "src/pages/CoursePage.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "src/main.jsx",
+      "src/components/course/CourseCurriculum.jsx",
+      "src/components/course/CourseTestimonials.jsx",
+      "src/components/course/CourseWorkflowSection.jsx",
+      "src/components/course/CourseToolsOverview.jsx"
+    ],
+    "dynamicImports": [
+      "src/components/backgrounds/Projetista3DBackground.jsx",
+      "src/components/backgrounds/EdicaoVideoBackground.jsx",
+      "src/components/backgrounds/InformaticaBackground.jsx",
+      "src/components/backgrounds/DesignGraficoBackground.jsx",
+      "src/components/backgrounds/ProgramacaoBackground.jsx",
+      "src/components/backgrounds/MarketingDigitalBackground.jsx",
+      "src/components/backgrounds/IABackground.jsx",
+      "src/components/backgrounds/BIBackground.jsx",
+      "src/components/backgrounds/IABackground.jsx",
+      "src/components/backgrounds/DesignGraficoBackground.jsx",
+      "src/components/backgrounds/InformaticaBackground.jsx",
+      "src/components/backgrounds/ProgramacaoBackground.jsx",
+      "src/components/backgrounds/MarketingDigitalBackground.jsx",
+      "src/components/backgrounds/BIBackground.jsx",
+      "src/components/backgrounds/EdicaoVideoBackground.jsx",
+      "src/components/backgrounds/Projetista3DBackground.jsx",
+      "src/components/backgrounds/AdministracaoBackground.jsx"
+    ]
+  },
+  "src/pages/CursoSketchupEnscape.jsx": {
+    "file": "assets/js/CursoSketchupEnscape-CZY7RpsR.js",
+    "name": "CursoSketchupEnscape",
+    "src": "src/pages/CursoSketchupEnscape.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "src/main.jsx"
+    ]
+  },
+  "src/pages/CursosFlorianopolis.jsx": {
+    "file": "assets/js/CursosFlorianopolis-D5kHodgM.js",
+    "name": "CursosFlorianopolis",
+    "src": "src/pages/CursosFlorianopolis.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "src/main.jsx"
+    ]
+  },
+  "src/pages/CursosPalhoca.jsx": {
+    "file": "assets/js/CursosPalhoca-D7ann5lc.js",
+    "name": "CursosPalhoca",
+    "src": "src/pages/CursosPalhoca.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "src/main.jsx"
+    ]
+  },
+  "src/pages/CursosSaoJose.jsx": {
+    "file": "assets/js/CursosSaoJose-CXfwWFIH.js",
+    "name": "CursosSaoJose",
+    "src": "src/pages/CursosSaoJose.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "src/main.jsx"
+    ]
+  },
+  "src/pages/NotFound.jsx": {
+    "file": "assets/js/NotFound-wSBhes32.js",
+    "name": "NotFound",
+    "src": "src/pages/NotFound.jsx",
+    "isDynamicEntry": true
+  },
+  "src/pages/TesteVocacional.jsx": {
+    "file": "assets/js/TesteVocacional-BlO8rRg5.js",
+    "name": "TesteVocacional",
+    "src": "src/pages/TesteVocacional.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "src/main.jsx"
+    ]
+  },
+  "src/pages/courses/Administracao.jsx": {
+    "file": "assets/js/Administracao-DaylSAlh.js",
+    "name": "Administracao",
+    "src": "src/pages/courses/Administracao.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "src/pages/CoursePage.jsx",
+      "src/main.jsx",
+      "src/components/course/CourseCurriculum.jsx",
+      "src/components/course/CourseTestimonials.jsx",
+      "src/components/course/CourseWorkflowSection.jsx",
+      "src/components/course/CourseToolsOverview.jsx"
+    ]
+  },
+  "src/pages/courses/BusinessIntelligence.jsx": {
+    "file": "assets/js/BusinessIntelligence-CXYpWZ9p.js",
+    "name": "BusinessIntelligence",
+    "src": "src/pages/courses/BusinessIntelligence.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "src/pages/CoursePage.jsx",
+      "src/main.jsx",
+      "src/components/course/CourseCurriculum.jsx",
+      "src/components/course/CourseTestimonials.jsx",
+      "src/components/course/CourseWorkflowSection.jsx",
+      "src/components/course/CourseToolsOverview.jsx"
+    ]
+  },
+  "src/pages/courses/DesignGrafico.jsx": {
+    "file": "assets/js/DesignGrafico-3-9fqh79.js",
+    "name": "DesignGrafico",
+    "src": "src/pages/courses/DesignGrafico.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "src/pages/CoursePage.jsx",
+      "src/main.jsx",
+      "src/components/course/CourseCurriculum.jsx",
+      "src/components/course/CourseTestimonials.jsx",
+      "src/components/course/CourseWorkflowSection.jsx",
+      "src/components/course/CourseToolsOverview.jsx"
+    ]
+  },
+  "src/pages/courses/EdicaoVideo.jsx": {
+    "file": "assets/js/EdicaoVideo-C5ytZCKL.js",
+    "name": "EdicaoVideo",
+    "src": "src/pages/courses/EdicaoVideo.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "src/pages/CoursePage.jsx",
+      "src/main.jsx",
+      "src/components/course/CourseCurriculum.jsx",
+      "src/components/course/CourseTestimonials.jsx",
+      "src/components/course/CourseWorkflowSection.jsx",
+      "src/components/course/CourseToolsOverview.jsx"
+    ]
+  },
+  "src/pages/courses/Informatica.jsx": {
+    "file": "assets/js/Informatica-DUWy3jHH.js",
+    "name": "Informatica",
+    "src": "src/pages/courses/Informatica.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "src/pages/CoursePage.jsx",
+      "src/main.jsx",
+      "src/components/course/CourseCurriculum.jsx",
+      "src/components/course/CourseTestimonials.jsx",
+      "src/components/course/CourseWorkflowSection.jsx",
+      "src/components/course/CourseToolsOverview.jsx"
+    ]
+  },
+  "src/pages/courses/InteligenciaArtificial.jsx": {
+    "file": "assets/js/InteligenciaArtificial-BuHS3pUr.js",
+    "name": "InteligenciaArtificial",
+    "src": "src/pages/courses/InteligenciaArtificial.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "src/pages/CoursePage.jsx",
+      "src/main.jsx",
+      "src/components/course/CourseCurriculum.jsx",
+      "src/components/course/CourseTestimonials.jsx",
+      "src/components/course/CourseWorkflowSection.jsx",
+      "src/components/course/CourseToolsOverview.jsx"
+    ]
+  },
+  "src/pages/courses/MarketingDigital.jsx": {
+    "file": "assets/js/MarketingDigital-uqig0k3n.js",
+    "name": "MarketingDigital",
+    "src": "src/pages/courses/MarketingDigital.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "src/pages/CoursePage.jsx",
+      "src/main.jsx",
+      "src/components/course/CourseCurriculum.jsx",
+      "src/components/course/CourseTestimonials.jsx",
+      "src/components/course/CourseWorkflowSection.jsx",
+      "src/components/course/CourseToolsOverview.jsx"
+    ]
+  },
+  "src/pages/courses/Programacao.jsx": {
+    "file": "assets/js/Programacao--z88QHIC.js",
+    "name": "Programacao",
+    "src": "src/pages/courses/Programacao.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "src/pages/CoursePage.jsx",
+      "src/main.jsx",
+      "src/components/course/CourseCurriculum.jsx",
+      "src/components/course/CourseTestimonials.jsx",
+      "src/components/course/CourseWorkflowSection.jsx",
+      "src/components/course/CourseToolsOverview.jsx"
+    ]
+  },
+  "src/pages/courses/Projetista3D.jsx": {
+    "file": "assets/js/Projetista3D-Kxcm5VsL.js",
+    "name": "Projetista3D",
+    "src": "src/pages/courses/Projetista3D.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "src/pages/CoursePage.jsx",
+      "src/main.jsx",
+      "src/components/course/CourseCurriculum.jsx",
+      "src/components/course/CourseTestimonials.jsx",
+      "src/components/course/CourseWorkflowSection.jsx",
+      "src/components/course/CourseToolsOverview.jsx"
+    ]
+  },
+  "src/services/LazyAnalyticsLoader.js": {
+    "file": "assets/js/LazyAnalyticsLoader-Co2iOqHz.js",
+    "name": "LazyAnalyticsLoader",
+    "src": "src/services/LazyAnalyticsLoader.js",
+    "isDynamicEntry": true
+  },
+  "src/utils/blogImageMigration.js": {
+    "file": "assets/js/blogImageMigration-CV2HZE4g.js",
+    "name": "blogImageMigration",
+    "src": "src/utils/blogImageMigration.js",
+    "isDynamicEntry": true
+  },
+  "style.css": {
+    "file": "assets/css/style-D2c9d0hX.css",
+    "src": "style.css"
+  }
+}

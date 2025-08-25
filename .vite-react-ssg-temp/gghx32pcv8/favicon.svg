@@ -1,0 +1,18 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff69b4;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#da40ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#a000ff;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Left vertical bar -->
+  <rect x="6" y="6" width="6" height="20" fill="url(#grad1)" />
+  
+  <!-- Right vertical bar -->
+  <rect x="20" y="6" width="6" height="20" fill="url(#grad1)" />
+  
+  <!-- Horizontal connecting bar -->
+  <rect x="6" y="13" width="20" height="6" fill="url(#grad1)" />
+</svg>

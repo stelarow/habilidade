@@ -55,7 +55,10 @@
       "mcp__gsc-server__get_search_analytics",
       "mcp__analytics-mcp__run_report",
       "Bash(git push:*)",
-      "mcp__sequential-thinking__sequentialthinking"
+      "mcp__sequential-thinking__sequentialthinking",
+      "mcp__serena__find_file",
+      "mcp__serena__find_symbol",
+      "Bash(npm run build:*)"
     ],
     "deny": []
   }

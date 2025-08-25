@@ -1,0 +1,355 @@
+import { jsx } from "react/jsx-runtime";
+import React, { useRef, useState, useMemo, useEffect } from "react";
+const DesignGraficoBackground = ({
+  performanceConfig,
+  deviceCapabilities,
+  courseSlug
+}) => {
+  const canvasRef = useRef(null);
+  const animationRef = useRef(null);
+  const shapesRef = useRef([]);
+  const brushStrokesRef = useRef([]);
+  const gradientRef = useRef({ phase: 0 });
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const config = useMemo(() => ({
+    // Formas geométricas
+    shapeCount: Math.min((performanceConfig == null ? void 0 : performanceConfig.particleCount) || 25, 8),
+    shapeSpeed: (performanceConfig == null ? void 0 : performanceConfig.staticFallback) ? 0 : 1.5,
+    // Pinceladas
+    brushCount: Math.min((performanceConfig == null ? void 0 : performanceConfig.particleCount) || 15, 6),
+    brushSpeed: (performanceConfig == null ? void 0 : performanceConfig.staticFallback) ? 0 : 2,
+    // Gradientes dinâmicos
+    gradientSpeed: (performanceConfig == null ? void 0 : performanceConfig.staticFallback) ? 0 : 0.02,
+    gradientIntensity: (performanceConfig == null ? void 0 : performanceConfig.staticFallback) ? 0.5 : 1,
+    // Cursor effects
+    cursorInfluence: (performanceConfig == null ? void 0 : performanceConfig.staticFallback) ? 0 : 150,
+    // Cores do tema criativo
+    colors: {
+      primary: "#FF6B9D",
+      // Rosa vibrante
+      secondary: "#C44569",
+      // Rosa escuro
+      accent: "#F8B500",
+      // Amarelo dourado
+      gradient1: "#FF6B9D",
+      // Rosa para gradientes
+      gradient2: "#FF9F43",
+      // Laranja
+      gradient3: "#F8B500",
+      // Amarelo
+      brush: "#FF6B9D80",
+      // Rosa semi-transparente
+      shape: "#C44569",
+      // Rosa escuro para formas
+      glow: "#FF9F43"
+      // Laranja para glow
+    },
+    // Tipos de formas
+    shapeTypes: ["circle", "triangle", "square", "hexagon", "star"]
+  }), [performanceConfig]);
+  class GeometricShape {
+    constructor(canvas) {
+      this.canvas = canvas;
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height;
+      this.vx = (Math.random() - 0.5) * config.shapeSpeed;
+      this.vy = (Math.random() - 0.5) * config.shapeSpeed;
+      this.size = 20 + Math.random() * 60;
+      this.rotation = Math.random() * Math.PI * 2;
+      this.rotationSpeed = (Math.random() - 0.5) * 0.05;
+      this.opacity = 0.1 + Math.random() * 0.3;
+      this.type = config.shapeTypes[Math.floor(Math.random() * config.shapeTypes.length)];
+      this.colorIndex = Math.floor(Math.random() * 3);
+      this.pulse = Math.random() * Math.PI * 2;
+      this.pulseSpeed = 0.02 + Math.random() * 0.03;
+      this.scale = 0.5 + Math.random() * 0.5;
+    }
+    update() {
+      if (config.shapeSpeed === 0) return;
+      this.x += this.vx;
+      this.y += this.vy;
+      this.rotation += this.rotationSpeed;
+      this.pulse += this.pulseSpeed;
+      if (this.x <= -this.size || this.x >= this.canvas.width + this.size) {
+        this.vx *= -0.8;
+        this.x = Math.max(-this.size, Math.min(this.canvas.width + this.size, this.x));
+      }
+      if (this.y <= -this.size || this.y >= this.canvas.height + this.size) {
+        this.vy *= -0.8;
+        this.y = Math.max(-this.size, Math.min(this.canvas.height + this.size, this.y));
+      }
+      this.scale = 0.5 + Math.sin(this.pulse) * 0.2;
+    }
+    draw(ctx) {
+      ctx.save();
+      ctx.translate(this.x, this.y);
+      ctx.rotate(this.rotation);
+      ctx.scale(this.scale, this.scale);
+      ctx.globalAlpha = this.opacity;
+      const colors = [config.colors.gradient1, config.colors.gradient2, config.colors.gradient3];
+      const color = colors[this.colorIndex];
+      ctx.shadowColor = color;
+      ctx.shadowBlur = 20;
+      ctx.fillStyle = color;
+      switch (this.type) {
+        case "circle":
+          this.drawCircle(ctx);
+          break;
+        case "triangle":
+          this.drawTriangle(ctx);
+          break;
+        case "square":
+          this.drawSquare(ctx);
+          break;
+        case "hexagon":
+          this.drawHexagon(ctx);
+          break;
+        case "star":
+          this.drawStar(ctx);
+          break;
+      }
+      ctx.restore();
+    }
+    drawCircle(ctx) {
+      ctx.beginPath();
+      ctx.arc(0, 0, this.size / 2, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    drawTriangle(ctx) {
+      ctx.beginPath();
+      const height = this.size * 0.866;
+      ctx.moveTo(0, -height / 2);
+      ctx.lineTo(-this.size / 2, height / 2);
+      ctx.lineTo(this.size / 2, height / 2);
+      ctx.closePath();
+      ctx.fill();
+    }
+    drawSquare(ctx) {
+      ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
+    }
+    drawHexagon(ctx) {
+      ctx.beginPath();
+      for (let i = 0; i < 6; i++) {
+        const angle = i * Math.PI / 3;
+        const x = Math.cos(angle) * this.size / 2;
+        const y = Math.sin(angle) * this.size / 2;
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.closePath();
+      ctx.fill();
+    }
+    drawStar(ctx) {
+      ctx.beginPath();
+      const spikes = 5;
+      const outerRadius = this.size / 2;
+      const innerRadius = outerRadius * 0.5;
+      for (let i = 0; i < spikes * 2; i++) {
+        const radius = i % 2 === 0 ? outerRadius : innerRadius;
+        const angle = i * Math.PI / spikes;
+        const x = Math.cos(angle) * radius;
+        const y = Math.sin(angle) * radius;
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.closePath();
+      ctx.fill();
+    }
+  }
+  class BrushStroke {
+    constructor(canvas) {
+      this.canvas = canvas;
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height;
+      this.vx = (Math.random() - 0.5) * config.brushSpeed;
+      this.vy = (Math.random() - 0.5) * config.brushSpeed;
+      this.points = [];
+      this.maxPoints = 8 + Math.floor(Math.random() * 12);
+      this.opacity = 0.2 + Math.random() * 0.4;
+      this.width = 2 + Math.random() * 8;
+      this.color = [config.colors.gradient1, config.colors.gradient2, config.colors.gradient3][Math.floor(Math.random() * 3)];
+      this.life = 1;
+      this.decay = 2e-3 + Math.random() * 3e-3;
+      for (let i = 0; i < 3; i++) {
+        this.points.push({
+          x: this.x + (Math.random() - 0.5) * 20,
+          y: this.y + (Math.random() - 0.5) * 20
+        });
+      }
+    }
+    update() {
+      if (config.brushSpeed === 0) return;
+      this.x += this.vx;
+      this.y += this.vy;
+      this.points.push({ x: this.x, y: this.y });
+      if (this.points.length > this.maxPoints) {
+        this.points.shift();
+      }
+      this.life -= this.decay;
+      if (this.life <= 0) {
+        this.life = 1;
+        this.x = Math.random() * this.canvas.width;
+        this.y = Math.random() * this.canvas.height;
+        this.points = [];
+      }
+      if (this.x <= 0 || this.x >= this.canvas.width) this.vx *= -1;
+      if (this.y <= 0 || this.y >= this.canvas.height) this.vy *= -1;
+    }
+    draw(ctx) {
+      if (this.points.length < 2) return;
+      ctx.save();
+      ctx.globalAlpha = this.opacity * this.life;
+      ctx.strokeStyle = this.color;
+      ctx.lineWidth = this.width;
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+      ctx.beginPath();
+      for (let i = 0; i < this.points.length - 1; i++) {
+        const current = this.points[i];
+        const next = this.points[i + 1];
+        const alpha = i / this.points.length * this.life;
+        ctx.globalAlpha = this.opacity * alpha;
+        if (i === 0) {
+          ctx.moveTo(current.x, current.y);
+        } else {
+          const xc = (current.x + next.x) / 2;
+          const yc = (current.y + next.y) / 2;
+          ctx.quadraticCurveTo(current.x, current.y, xc, yc);
+        }
+      }
+      ctx.stroke();
+      ctx.restore();
+    }
+  }
+  const drawDynamicGradient = (ctx) => {
+    const { width, height } = ctx.canvas;
+    gradientRef.current.phase += config.gradientSpeed;
+    const centerX = width / 2 + Math.sin(gradientRef.current.phase) * 100;
+    const centerY = height / 2 + Math.cos(gradientRef.current.phase * 0.7) * 80;
+    const gradient = ctx.createRadialGradient(
+      centerX,
+      centerY,
+      0,
+      centerX,
+      centerY,
+      Math.max(width, height) * 0.8
+    );
+    const phase1 = gradientRef.current.phase;
+    const phase2 = gradientRef.current.phase + Math.PI * 0.5;
+    const phase3 = gradientRef.current.phase + Math.PI;
+    const alpha1 = (Math.sin(phase1) + 1) * 0.5 * config.gradientIntensity;
+    const alpha2 = (Math.sin(phase2) + 1) * 0.5 * config.gradientIntensity;
+    const alpha3 = (Math.sin(phase3) + 1) * 0.5 * config.gradientIntensity;
+    gradient.addColorStop(0, `${config.colors.gradient1}${Math.floor(alpha1 * 255).toString(16).padStart(2, "0")}`);
+    gradient.addColorStop(0.5, `${config.colors.gradient2}${Math.floor(alpha2 * 255).toString(16).padStart(2, "0")}`);
+    gradient.addColorStop(1, `${config.colors.gradient3}${Math.floor(alpha3 * 255).toString(16).padStart(2, "0")}`);
+    ctx.save();
+    ctx.globalAlpha = 0.1;
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, width, height);
+    ctx.restore();
+  };
+  const drawCursorEffect = (ctx) => {
+    if (config.cursorInfluence === 0) return;
+    const { x, y } = mousePosition;
+    ctx.save();
+    const gradient = ctx.createRadialGradient(x, y, 0, x, y, config.cursorInfluence);
+    gradient.addColorStop(0, `${config.colors.glow}40`);
+    gradient.addColorStop(1, `${config.colors.glow}00`);
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    ctx.restore();
+  };
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+      const rect = canvas.getBoundingClientRect();
+      setMousePosition({
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top
+      });
+    };
+    if (config.cursorInfluence > 0) {
+      window.addEventListener("mousemove", handleMouseMove);
+      return () => window.removeEventListener("mousemove", handleMouseMove);
+    }
+  }, [config.cursorInfluence]);
+  const initializeElements = (canvas) => {
+    shapesRef.current = [];
+    brushStrokesRef.current = [];
+    for (let i = 0; i < config.shapeCount; i++) {
+      shapesRef.current.push(new GeometricShape(canvas));
+    }
+    for (let i = 0; i < config.brushCount; i++) {
+      brushStrokesRef.current.push(new BrushStroke(canvas));
+    }
+  };
+  const animate = () => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawDynamicGradient(ctx);
+    drawCursorEffect(ctx);
+    brushStrokesRef.current.forEach((brush) => {
+      brush.update();
+      brush.draw(ctx);
+    });
+    shapesRef.current.forEach((shape) => {
+      shape.update();
+      shape.draw(ctx);
+    });
+    if (config.shapeSpeed > 0 || config.brushSpeed > 0 || config.gradientSpeed > 0) {
+      animationRef.current = requestAnimationFrame(animate);
+    }
+  };
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const handleResize = () => {
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width * ((deviceCapabilities == null ? void 0 : deviceCapabilities.pixelRatio) || 1);
+      canvas.height = rect.height * ((deviceCapabilities == null ? void 0 : deviceCapabilities.pixelRatio) || 1);
+      const ctx = canvas.getContext("2d");
+      ctx.scale((deviceCapabilities == null ? void 0 : deviceCapabilities.pixelRatio) || 1, (deviceCapabilities == null ? void 0 : deviceCapabilities.pixelRatio) || 1);
+      initializeElements(canvas);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    animate();
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, [config, deviceCapabilities]);
+  if (performanceConfig == null ? void 0 : performanceConfig.staticFallback) {
+    return /* @__PURE__ */ jsx(
+      "div",
+      {
+        className: "absolute inset-0 opacity-10",
+        style: {
+          background: `linear-gradient(135deg, ${config.colors.primary} 0%, ${config.colors.secondary} 50%, ${config.colors.accent} 100%)`
+        }
+      }
+    );
+  }
+  return /* @__PURE__ */ jsx(
+    "canvas",
+    {
+      ref: canvasRef,
+      className: "absolute inset-0 w-full h-full pointer-events-none",
+      style: {
+        background: "transparent",
+        zIndex: 1
+      },
+      "aria-hidden": "true"
+    }
+  );
+};
+const DesignGraficoBackground$1 = React.memo(DesignGraficoBackground);
+export {
+  DesignGraficoBackground$1 as default
+};
