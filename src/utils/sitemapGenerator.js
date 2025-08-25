@@ -1,18 +1,7 @@
-// Conditional import to avoid Supabase loading during build time
-let blogAPI = null;
-
-const loadBlogAPI = async () => {
-  if (!blogAPI) {
-    try {
-      const module = await import('../services/blogAPI.js');
-      blogAPI = module.blogAPI || module.default;
-    } catch (error) {
-      console.warn('Failed to load blogAPI:', error);
-      return null;
-    }
-  }
-  return blogAPI;
-};
+/**
+ * SEO-First Sitemap Generator
+ * Uses local JSON data files instead of network calls for reliable SSG builds
+ */
 
 /**
  * Sitemap Generator for SEO optimization
@@ -170,27 +159,40 @@ const BLOG_SLUGS = [
  */
 const fetchBlogPosts = async () => {
   try {
-    const api = await loadBlogAPI();
-    if (!api) {
-      console.log('Using static blog slugs for SSG build');
-      return getBlogPostsFromStaticSlugs();
-    }
+    console.log('Loading blog posts from local JSON files for SEO-first build');
     
-    // Try to fetch from API first
-    const response = await api.getAllPosts(1, 1000);
+    // Use static blog slugs and load data from local files
+    const posts = await Promise.all(
+      BLOG_SLUGS.map(async (slug) => {
+        try {
+          const postModule = await import(`../data/posts/${slug}.json`);
+          const postData = postModule.default || postModule;
+          
+          return {
+            slug: postData.post.slug,
+            title: postData.post.title,
+            publishedAt: postData.post.publishedAt,
+            createdAt: postData.post.createdAt,
+            updatedAt: postData.post.updatedAt,
+            category: postData.post.category
+          };
+        } catch (error) {
+          console.warn(`Failed to load post data for ${slug}, using fallback:`, error.message);
+          // Fallback with basic data
+          return {
+            slug,
+            publishedAt: new Date('2025-01-01').toISOString(),
+            createdAt: new Date('2025-01-01').toISOString()
+          };
+        }
+      })
+    );
     
-    if (response?.posts && response.posts.length > 0) {
-      return response.posts.filter(post => 
-        post.publishedAt && post.slug
-      );
-    }
-    
-    // Fallback to static slugs
-    console.log('API returned no posts, using static blog slugs');
-    return getBlogPostsFromStaticSlugs();
+    console.log(`Successfully loaded ${posts.length} blog posts from local files`);
+    return posts.filter(post => post.slug);
     
   } catch (error) {
-    console.warn('Failed to fetch blog posts from API, using static slugs:', error);
+    console.warn('Failed to fetch blog posts from local files, using static slugs:', error);
     return getBlogPostsFromStaticSlugs();
   }
 };
@@ -211,18 +213,39 @@ const getBlogPostsFromStaticSlugs = () => {
  */
 const fetchCategories = async () => {
   try {
-    const api = await loadBlogAPI();
-    if (!api) return [];
+    console.log('Loading blog categories from local JSON files');
     
-    const response = await api.getCategories();
+    // Extract unique categories from all post files
+    const categoriesMap = new Map();
     
-    if (response?.categories) {
-      return response.categories.filter(category => category.slug);
-    }
+    await Promise.all(
+      BLOG_SLUGS.map(async (slug) => {
+        try {
+          const postModule = await import(`../data/posts/${slug}.json`);
+          const postData = postModule.default || postModule;
+          
+          if (postData.post?.category && postData.post.category.slug) {
+            const category = postData.post.category;
+            categoriesMap.set(category.slug, {
+              id: category.id,
+              name: category.name,
+              slug: category.slug,
+              description: category.description || '',
+              color: category.color || '#3B82F6'
+            });
+          }
+        } catch (error) {
+          console.warn(`Failed to extract category from ${slug}:`, error.message);
+        }
+      })
+    );
     
-    return [];
+    const categories = Array.from(categoriesMap.values());
+    console.log(`Successfully extracted ${categories.length} unique categories from local files`);
+    return categories;
+    
   } catch (error) {
-    console.warn('Failed to fetch categories for sitemap:', error);
+    console.warn('Failed to fetch categories from local files:', error);
     return [];
   }
 };

@@ -310,23 +310,21 @@ function BlogPost() {
 
 // Loader function for vite-react-ssg
 export async function loader({ params }) {
-  // This function runs at build time during SSG
+  // This function runs at build time during SSG - now using static local data
   const { slug } = params;
   
   try {
-    // Import blog API functions
-    const { blogAPI } = await import('../services/blogAPI.js');
-    
-    // Fetch post data
-    const postData = await blogAPI.getPostBySlug(slug);
+    // Import static post data from local JSON files
+    const postData = await import(`../data/posts/${slug}.json`);
     
     if (!postData || !postData.post) {
       throw new Error(`Post not found: ${slug}`);
     }
 
+    // Return the pre-extracted data structure
     return {
       post: postData.post,
-      seoData: {
+      seoData: postData.seoData || {
         title: postData.post.title,
         description: postData.post.excerpt,
         image: postData.post.featuredImage?.url || postData.post.imageUrl,
@@ -336,8 +334,6 @@ export async function loader({ params }) {
   } catch (error) {
     console.error(`[BlogPost Loader] Error loading post ${slug}:`, error);
     throw new Error(`Failed to load post: ${slug}`);
-  }
-}
 
 // Component and entry for vite-react-ssg
 export const Component = BlogPost;

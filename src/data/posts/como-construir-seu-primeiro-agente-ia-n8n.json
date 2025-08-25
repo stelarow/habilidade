@@ -1,0 +1,51 @@
+{
+  "post": {
+    "id": "6f797a89-8dde-4f37-a447-286042f0dd69",
+    "title": "Como Construir seu Primeiro Agente de IA (+Template de Workflow Gratuito)",
+    "slug": "como-construir-seu-primeiro-agente-ia-n8n",
+    "excerpt": "Guia passo a passo para construir agentes de IA com três abordagens práticas: programação do zero, frameworks como LangChain ou ferramentas no-code...",
+    "content": "<div class=\"article-content max-w-4xl mx-auto prose prose-lg\">\n<h1 class=\"text-3xl font-bold mb-8\">Como Construir seu Primeiro Agente de IA (+Template de Workflow Gratuito)</h1>\n\n<img src=\"/images/blog/agente-ia-n8n/n8n-ai-agent-hero.jpg\" alt=\"Agente de IA com n8n\" class=\"w-full h-auto rounded-lg shadow-md mb-6\">\n\n<p class=\"mb-4 leading-relaxed text-gray-700\">Guia passo a passo para construir agentes de IA com três abordagens práticas: programação do zero para controle total, uso de frameworks poderosos como LangChain ou LlamaIndex para desenvolvimento mais rápido, ou ferramentas no-code como n8n para prototipagem rápida e automação.</p>\n\n<h2 class=\"text-2xl font-bold mb-6 mt-10\">O que são Agentes de IA?</h2>\n\n<p class=\"mb-4 leading-relaxed text-gray-700\">Imagine construir um assistente que pode pesquisar tópicos online, resumir as descobertas e salvá-las diretamente no seu Notion - automaticamente. Esse é o tipo de automação inteligente que os agentes de IA tornam possível.</p>\n\n<p class=\"mb-4 leading-relaxed text-gray-700\">Um agente de IA atua como um sistema que age em nome de um usuário para alcançar um resultado específico, percebendo seu ambiente, tomando decisões e executando ações.</p>\n\n<h3 class=\"text-xl font-semibold mb-4 mt-8\">Componentes Fundamentais:</h3>\n<ul class=\"list-disc list-inside space-y-2 mb-6 ml-4\">\n<li class=\"mb-2\"><strong class=\"font-semibold\">Percepção</strong>: Coleta informações do ambiente</li>\n<li class=\"mb-2\"><strong class=\"font-semibold\">Tomada de Decisão</strong>: Usa LLMs ou regras para decidir ações</li>\n<li class=\"mb-2\"><strong class=\"font-semibold\">Ação</strong>: Executa tarefas no mundo real</li>\n<li class=\"mb-2\"><strong class=\"font-semibold\">Memória</strong>: Lembra de interações passadas</li>\n</ul>\n\n<h2 class=\"text-2xl font-bold mb-6 mt-10\">3 Abordagens para Criar Agentes de IA</h2>\n\n<h3 class=\"text-xl font-semibold mb-4 mt-8\">1. Construindo do Zero</h3>\n<p class=\"mb-4 leading-relaxed text-gray-700\">Oferece controle máximo, mas requer expertise técnica significativa e tempo considerável de desenvolvimento.</p>\n\n<h3 class=\"text-xl font-semibold mb-4 mt-8\">2. Usando Frameworks</h3>\n<p class=\"mb-4 leading-relaxed text-gray-700\">Frameworks como LangChain, LlamaIndex ou CrewAI aceleram o desenvolvimento com componentes pré-construídos.</p>\n\n<h3 class=\"text-xl font-semibold mb-4 mt-8\">3. Ferramentas de Automação Visual</h3>\n<p class=\"mb-4 leading-relaxed text-gray-700\">Plataformas como n8n permitem criar agentes através de interface visual drag-and-drop.</p>\n\n<img src=\"/images/blog/agente-ia-n8n/n8n-research-agent-workflow.png\" alt=\"Workflow do agente de pesquisa n8n\" class=\"w-full h-auto rounded-lg shadow-md mb-6\">\n\n<h2 class=\"text-2xl font-bold mb-6 mt-10\">Tutorial Prático: Agente de Pesquisa com n8n</h2>\n\n<p class=\"mb-4 leading-relaxed text-gray-700\">Vamos construir um agente que faz scraping da web, resume conteúdo e salva no Notion automaticamente.</p>\n\n<h3 class=\"text-xl font-semibold mb-4 mt-8\">Pré-requisitos:</h3>\n<ul class=\"list-disc list-inside space-y-2 mb-6 ml-4\">\n<li class=\"mb-2\">Instância n8n (Cloud ou self-hosted)</li>\n<li class=\"mb-2\">Chave da API do Google AI (Gemini)</li>\n<li class=\"mb-2\">Acesso ao Browserless para web scraping</li>\n<li class=\"mb-2\">Webhook do Discord para notificações</li>\n</ul>\n\n<h3 class=\"text-xl font-semibold mb-4 mt-8\">Passo 1: Configure o Gatilho</h3>\n<p class=\"mb-4 leading-relaxed text-gray-700\">Use o nó Chat Trigger para iniciar o workflow quando receber uma mensagem com URL.</p>\n\n<h3 class=\"text-xl font-semibold mb-4 mt-8\">Passo 2: Configure o AI Agent</h3>\n<p class=\"mb-4 leading-relaxed text-gray-700\">Adicione o nó AI Agent como orquestrador central, conectando LLM e ferramentas.</p>\n\n<img src=\"/images/blog/agente-ia-n8n/ai-agent-node-config.png\" alt=\"Configuração do AI Agent\" class=\"w-full h-auto rounded-lg shadow-md mb-6\">\n\n<h3 class=\"text-xl font-semibold mb-4 mt-8\">Passo 3: Defina Instruções Claras</h3>\n<p class=\"mb-4 leading-relaxed text-gray-700\">Configure o Google Gemini com instruções específicas sobre como usar cada ferramenta.</p>\n\n<h3 class=\"text-xl font-semibold mb-4 mt-8\">Passo 4: Ferramenta de Web Scraping</h3>\n<p class=\"mb-4 leading-relaxed text-gray-700\">Use HTTP Request Tool conectado ao Browserless para extrair conteúdo de páginas web.</p>\n\n<img src=\"/images/blog/agente-ia-n8n/browserless-scraping-tool.png\" alt=\"Configuração do web scraping\" class=\"w-full h-auto rounded-lg shadow-md mb-6\">\n\n<h3 class=\"text-xl font-semibold mb-4 mt-8\">Passo 5: Integração com Notion</h3>\n<p class=\"mb-4 leading-relaxed text-gray-700\">Configure o Notion Tool para salvar pesquisas resumidas automaticamente.</p>\n\n<img src=\"/images/blog/agente-ia-n8n/notion-tool-config.png\" alt=\"Configuração do Notion\" class=\"w-full h-auto rounded-lg shadow-md mb-6\">\n\n<h3 class=\"text-xl font-semibold mb-4 mt-8\">Passo 6: Notificações Discord</h3>\n<p class=\"mb-4 leading-relaxed text-gray-700\">Adicione Discord Tool para receber confirmações de tarefas concluídas.</p>\n\n<img src=\"/images/blog/agente-ia-n8n/discord-notification.png\" alt=\"Notificação Discord\" class=\"w-full h-auto rounded-lg shadow-md mb-6\">\n\n<h2 class=\"text-2xl font-bold mb-6 mt-10\">Casos de Uso Avançados</h2>\n\n<h3 class=\"text-xl font-semibold mb-4 mt-8\">Agente de Monitoramento</h3>\n<ul class=\"list-disc list-inside space-y-2 mb-6 ml-4\">\n<li class=\"mb-2\">Monitora RSS feeds de blogs técnicos</li>\n<li class=\"mb-2\">Filtra por palavras-chave relevantes</li>\n<li class=\"mb-2\">Gera boletins semanais automaticamente</li>\n</ul>\n\n<h3 class=\"text-xl font-semibold mb-4 mt-8\">Agente de Análise</h3>\n<ul class=\"list-disc list-inside space-y-2 mb-6 ml-4\">\n<li class=\"mb-2\">Analisa sentimentos em redes sociais</li>\n<li class=\"mb-2\">Gera relatórios de tendências</li>\n<li class=\"mb-2\">Sugere ações baseadas em dados</li>\n</ul>\n\n<h2 class=\"text-2xl font-bold mb-6 mt-10\">Melhores Práticas</h2>\n\n<ul class=\"list-disc list-inside space-y-2 mb-6 ml-4\">\n<li class=\"mb-2\"><strong class=\"font-semibold\">Instruções Claras</strong>: Defina objetivos específicos e limitações</li>\n<li class=\"mb-2\"><strong class=\"font-semibold\">Teste Iterativo</strong>: Refine prompts baseado em resultados</li>\n<li class=\"mb-2\"><strong class=\"font-semibold\">Tratamento de Erros</strong>: Implemente fallbacks para falhas</li>\n<li class=\"mb-2\"><strong class=\"font-semibold\">Monitoramento</strong>: Acompanhe performance e custos</li>\n</ul>\n\n<h2 class=\"text-2xl font-bold mb-6 mt-10\">Conceitos-Chave Aprendidos</h2>\n\n<ul class=\"list-disc list-inside space-y-2 mb-6 ml-4\">\n<li class=\"mb-2\"><strong class=\"font-semibold\">Automação Inteligente</strong>: Agentes executam tarefas complexas autonomamente</li>\n<li class=\"mb-2\"><strong class=\"font-semibold\">Integração Sem Código</strong>: n8n simplifica desenvolvimento visual</li>\n<li class=\"mb-2\"><strong class=\"font-semibold\">Ferramentas Múltiplas</strong>: Combinação de APIs para funcionalidade completa</li>\n<li class=\"mb-2\"><strong class=\"font-semibold\">Iteração Rápida</strong>: Prototipagem e teste acelerados</li>\n</ul>\n\n<p class=\"mb-4 leading-relaxed text-gray-700\">Os agentes de IA representam o futuro da automação, permitindo sistemas que não apenas executam tarefas, mas tomam decisões inteligentes baseadas em contexto e objetivos específicos.</p>\n\n<div class=\"bg-blue-50 border-l-4 border-blue-400 p-4 my-6\">\n<div class=\"flex\">\n<div class=\"ml-3\">\n<p class=\"text-sm text-blue-700\">\n<strong>Template Gratuito:</strong> Acesse o workflow completo do agente de pesquisa no n8n Community e comece a experimentar hoje mesmo!\n</p>\n</div>\n</div>\n</div>\n</div>",
+    "imageUrl": "/images/blog/agente-ia-n8n/n8n-ai-agent-hero.jpg",
+    "featuredImage": {
+      "url": "/images/blog/agente-ia-n8n/n8n-ai-agent-hero.jpg",
+      "alt": "Como Construir seu Primeiro Agente de IA (+Template de Workflow Gratuito)"
+    },
+    "readingTime": 17,
+    "views": 0,
+    "publishedAt": "2025-01-30T16:00:00+00:00",
+    "createdAt": "2025-08-03T21:52:16.270512+00:00",
+    "updatedAt": "2025-08-05T20:12:48.11915+00:00",
+    "seoTitle": "Como Construir seu Primeiro Agente de IA (+Template de Workflow Gratuito)",
+    "seoDescription": "Guia passo a passo para construir agentes de IA com três abordagens práticas: programação do zero, frameworks como LangChain.",
+    "ogImage": null,
+    "canonicalUrl": "https://escolahabilidade.com.br/blog/como-construir-seu-primeiro-agente-ia-n8n",
+    "category": {
+      "id": "a573ba54-bfcd-400f-99a5-1eb3b3204d40",
+      "name": "Programação",
+      "slug": "programacao",
+      "description": "Tutoriais e conceitos de programação",
+      "postCount": 0,
+      "color": "#8B5CF6"
+    },
+    "tags": [],
+    "author": {
+      "id": "875fdd01-2ad5-4018-9d9d-c6cf55c75ae9",
+      "name": "Escola Habilidade",
+      "email": "admin@escolahabilidade.com.br"
+    }
+  },
+  "seoData": {
+    "title": "Como Construir seu Primeiro Agente de IA (+Template de Workflow Gratuito)",
+    "description": "Guia passo a passo para construir agentes de IA com três abordagens práticas: programação do zero, frameworks como LangChain.",
+    "image": "/images/blog/agente-ia-n8n/n8n-ai-agent-hero.jpg",
+    "url": "https://www.escolahabilidade.com/blog/como-construir-seu-primeiro-agente-ia-n8n",
+    "type": "article",
+    "publishedTime": "2025-01-30T16:00:00+00:00",
+    "modifiedTime": "2025-08-05T20:12:48.11915+00:00",
+    "author": "Escola Habilidade",
+    "section": "Programação",
+    "tags": []
+  },
+  "generatedAt": "2025-08-25T14:04:54.813Z",
+  "source": "supabase-extraction"
+}

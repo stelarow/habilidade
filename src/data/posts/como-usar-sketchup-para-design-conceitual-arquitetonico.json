@@ -1,0 +1,51 @@
+{
+  "post": {
+    "id": "b35efffe-0962-4953-97d8-98ec4c0ae40d",
+    "title": "Como Usar SketchUp para Design Conceitual Arquitetônico: Guia Completo",
+    "slug": "como-usar-sketchup-para-design-conceitual-arquitetonico",
+    "excerpt": "Descubra como utilizar o SketchUp para transformar ideias abstratas em conceitos arquitetônicos buildáveis. Guia passo a passo para design conceitual eficiente.",
+    "content": "<div class=\"article-content max-w-4xl mx-auto prose prose-lg\">\n<h1 class=\"text-3xl font-bold mb-8\">Como Usar SketchUp para Design Conceitual Arquitetônico: Guia Completo</h1>\n\n<img src=\"/images/blog/sketchup-design-conceitual/home-banner-image.jpg\" alt=\"Design conceitual arquitetônico no SketchUp\" class=\"w-full h-auto rounded-lg shadow-md mb-6\">\n\n<p class=\"mb-4 leading-relaxed text-gray-700\">Quando se trata de explorar ideias iniciais em arquitetura, os profissionais precisam de uma ferramenta que seja rápida, intuitiva e flexível o suficiente para capturar a criatividade bruta. O <strong class=\"font-semibold\">SketchUp para design conceitual</strong> é exatamente essa ferramenta — uma plataforma leve, mas poderosa, que ajuda a transformar ideias abstratas em conceitos arquitetônicos viáveis.</p>\n\n<p class=\"mb-4 leading-relaxed text-gray-700\">Seja para estudos de massa, testes de arranjos espaciais ou esboços de volumes iniciais, o SketchUp oferece o equilíbrio ideal entre velocidade e precisão para o design esquemático. Neste artigo, apresentamos um <strong class=\"font-semibold\">guia passo a passo</strong> para aproveitar ao máximo as funcionalidades do SketchUp durante as fases iniciais de seu fluxo de trabalho arquitetônico.</p>\n\n<h2 class=\"text-2xl font-bold mb-6 mt-10\">Objetivos de Aprendizagem</h2>\n\n<p class=\"mb-4 leading-relaxed text-gray-700\">Ao final deste tutorial, você será capaz de:</p>\n<ul class=\"list-disc list-inside space-y-2 mb-6 ml-4\">\n<li class=\"mb-2\">Configurar um ambiente de trabalho otimizado para design conceitual</li>\n<li class=\"mb-2\">Criar estudos de massa usando geometrias simples</li>\n<li class=\"mb-2\">Organizar projetos com layers e tags eficientemente</li>\n<li class=\"mb-2\">Utilizar ferramentas de sombra para análise solar</li>\n<li class=\"mb-2\">Exportar apresentações profissionais de conceitos</li>\n</ul>\n\n<h2 class=\"text-2xl font-bold mb-6 mt-10\">Pré-requisitos</h2>\n\n<ul class=\"list-disc list-inside space-y-2 mb-6 ml-4\">\n<li class=\"mb-2\">Conhecimento básico do SketchUp</li>\n<li class=\"mb-2\">Familiaridade com conceitos de design arquitetônico</li>\n<li class=\"mb-2\">SketchUp instalado (versão Free ou Pro)</li>\n</ul>\n\n<h2 class=\"text-2xl font-bold mb-6 mt-10\">Passo 1: Comece com um Template em Branco ou Template de Design Conceitual</h2>\n\n<p class=\"mb-4 leading-relaxed text-gray-700\">A maneira mais simples de começar é com uma tela em branco. Abra o SketchUp e escolha o template <strong class=\"font-semibold\">Architectural Design – Feet and Inches</strong> ou <strong class=\"font-semibold\">Millimeters</strong>, dependendo da sua região.</p>\n\n<h3 class=\"text-xl font-semibold mb-4 mt-8\">Dica Pro: Templates Gratuitos</h3>\n<p class=\"mb-4 leading-relaxed text-gray-700\">Você pode baixar templates gratuitos de design conceitual do <strong class=\"font-semibold\">SketchUp 3D Warehouse</strong> ou Extension Warehouse para acelerar seu fluxo de trabalho. Estes frequentemente incluem:</p>\n<ul class=\"list-disc list-inside space-y-2 mb-6 ml-4\">\n<li class=\"mb-2\">Cenas predefinidas</li>\n<li class=\"mb-2\">Layers organizadas</li>\n<li class=\"mb-2\">Blocos de massa customizados</li>\n<li class=\"mb-2\">Configurações otimizadas para fases iniciais</li>\n</ul>\n\n<p class=\"mb-4 leading-relaxed text-gray-700\"><strong class=\"font-semibold\">💡 Exercício Prático:</strong> Configure um template personalizado com suas configurações preferidas de unidades, estilos visuais e cenas básicas para reutilizar em projetos futuros.</p>\n\n<h2 class=\"text-2xl font-bold mb-6 mt-10\">Passo 2: Crie o Contexto do Terreno ou Base</h2>\n\n<p class=\"mb-4 leading-relaxed text-gray-700\">Antes de mergulhar nos conceitos arquitetônicos, é importante definir o terreno. Importe um mapa, topografia ou planta do edifício usando:</p>\n<ul class=\"list-disc list-inside space-y-2 mb-6 ml-4\">\n<li class=\"mb-2\">Ferramentas de geolocalização</li>\n<li class=\"mb-2\">Imagens de referência</li>\n<li class=\"mb-2\">Dados topográficos existentes</li>\n</ul>\n\n<h3 class=\"text-xl font-semibold mb-4 mt-8\">Ferramentas Essenciais:</h3>\n<ul class=\"list-disc list-inside space-y-2 mb-6 ml-4\">\n<li class=\"mb-2\"><strong class=\"font-semibold\">Rectangle Tool</strong>: Para definir limites básicos</li>\n<li class=\"mb-2\"><strong class=\"font-semibold\">Push/Pull Tool</strong>: Para extrudar elementos</li>\n<li class=\"mb-2\"><strong class=\"font-semibold\">Sandbox Tools</strong>: Para modelagem de contornos em terrenos irregulares</li>\n</ul>\n\n<p class=\"mb-4 leading-relaxed text-gray-700\"><strong class=\"font-semibold\">🎯 Dica de Especialista:</strong> Use a ferramenta \"Sandbox\" para modelagem de contornos se seu projeto estiver em terreno irregular. Isso criará uma base realista para seu design.</p>\n\n<h2 class=\"text-2xl font-bold mb-6 mt-10\">Conceitos-Chave Aprendidos</h2>\n\n<ul class=\"list-disc list-inside space-y-2 mb-6 ml-4\">\n<li class=\"mb-2\"><strong class=\"font-semibold\">Design iterativo</strong>: SketchUp facilita testes rápidos de conceitos</li>\n<li class=\"mb-2\"><strong class=\"font-semibold\">Organização eficiente</strong>: Layers e tags desde o início do projeto</li>\n<li class=\"mb-2\"><strong class=\"font-semibold\">Análise solar</strong>: Validação de estratégias bioclimáticas</li>\n<li class=\"mb-2\"><strong class=\"font-semibold\">Apresentação profissional</strong>: Estilos adequados para cada fase</li>\n<li class=\"mb-2\"><strong class=\"font-semibold\">Fluxo de trabalho otimizado</strong>: Da massa inicial à documentação</li>\n</ul>\n\n<p class=\"mb-4 leading-relaxed text-gray-700\">O SketchUp oferece o equilíbrio perfeito entre simplicidade e funcionalidade para o design conceitual arquitetônico, permitindo explorar ideias rapidamente sem perder qualidade na apresentação.</p>\n</div>",
+    "imageUrl": "/images/blog/sketchup-design-conceitual/home-banner-image.jpg",
+    "featuredImage": {
+      "url": "/images/blog/sketchup-design-conceitual/home-banner-image.jpg",
+      "alt": "Como Usar SketchUp para Design Conceitual Arquitetônico: Guia Completo"
+    },
+    "readingTime": 8,
+    "views": 0,
+    "publishedAt": "2025-08-03T20:26:14.442696+00:00",
+    "createdAt": "2025-08-03T20:26:14.442696+00:00",
+    "updatedAt": "2025-08-05T20:12:48.11915+00:00",
+    "seoTitle": "Como Usar SketchUp para Design Conceitual Arquitetônico",
+    "seoDescription": "Guia completo sobre uso do SketchUp para design conceitual arquitetônico",
+    "ogImage": null,
+    "canonicalUrl": "https://escolahabilidade.com.br/blog/como-usar-sketchup-para-design-conceitual-arquitetonico",
+    "category": {
+      "id": "6f44d898-ec31-4b11-bb4d-4ba5c8c65c64",
+      "name": "Arquitetura",
+      "slug": "arquitetura",
+      "description": "Design arquitetônico e projetos de construção",
+      "postCount": 0,
+      "color": "#06B6D4"
+    },
+    "tags": [],
+    "author": {
+      "id": "875fdd01-2ad5-4018-9d9d-c6cf55c75ae9",
+      "name": "Escola Habilidade",
+      "email": "admin@escolahabilidade.com.br"
+    }
+  },
+  "seoData": {
+    "title": "Como Usar SketchUp para Design Conceitual Arquitetônico",
+    "description": "Guia completo sobre uso do SketchUp para design conceitual arquitetônico",
+    "image": "/images/blog/sketchup-design-conceitual/home-banner-image.jpg",
+    "url": "https://www.escolahabilidade.com/blog/como-usar-sketchup-para-design-conceitual-arquitetonico",
+    "type": "article",
+    "publishedTime": "2025-08-03T20:26:14.442696+00:00",
+    "modifiedTime": "2025-08-05T20:12:48.11915+00:00",
+    "author": "Escola Habilidade",
+    "section": "Arquitetura",
+    "tags": []
+  },
+  "generatedAt": "2025-08-25T14:04:54.471Z",
+  "source": "supabase-extraction"
+}

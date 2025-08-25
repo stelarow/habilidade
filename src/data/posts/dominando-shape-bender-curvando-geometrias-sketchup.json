@@ -1,0 +1,51 @@
+{
+  "post": {
+    "id": "fe61a9fe-0acd-4ba1-9b99-694d856b1412",
+    "title": "Dominando o Shape Bender: Curvando Geometrias no SketchUp",
+    "slug": "dominando-shape-bender-curvando-geometrias-sketchup",
+    "excerpt": "Aprenda a usar a extensão Shape Bender para transformar geometrias retas em curvas complexas no SketchUp. Tutorial completo com dicas profissionais e...",
+    "content": "<div class=\"article-content max-w-4xl mx-auto prose prose-lg\">\n<h1 class=\"text-3xl font-bold mb-8\">Dominando o Shape Bender: Curvando Geometrias no SketchUp</h1>\n\n<img src=\"/images/blog/shape-bender/shape-bender-hero.jpg\" alt=\"Shape Bender SketchUp Extension\" class=\"w-full h-auto rounded-lg shadow-md mb-6\">\n\n<p class=\"mb-4 leading-relaxed text-gray-700\">Aprenda a usar a extensão Shape Bender para transformar geometrias retas em curvas complexas no SketchUp. Esta ferramenta poderosa é essencial para criar elementos curvos profissionais em seus projetos arquitetônicos.</p>\n\n<h2 class=\"text-2xl font-bold mb-6 mt-10\">O que é o Shape Bender?</h2>\n\n<p class=\"mb-4 leading-relaxed text-gray-700\">O Shape Bender é uma extensão gratuita do SketchUp que permite dobrar e deformar geometrias ao longo de curvas definidas pelo usuário. É especialmente útil para criar elementos como:</p>\n\n<ul class=\"list-disc list-inside space-y-2 mb-6 ml-4\">\n<li class=\"mb-2\">Corrimãos curvos e guarda-corpos</li>\n<li class=\"mb-2\">Molduras e perfis arquitetônicos</li>\n<li class=\"mb-2\">Elementos decorativos em espiral</li>\n<li class=\"mb-2\">Tubulações e dutos curvos</li>\n<li class=\"mb-2\">Textos e logotipos deformados</li>\n</ul>\n\n<h2 class=\"text-2xl font-bold mb-6 mt-10\">Instalação da Extensão</h2>\n\n<ol class=\"list-decimal list-inside space-y-2 mb-6 ml-4\">\n<li class=\"mb-2\">Acesse <strong>Window > Extension Warehouse</strong></li>\n<li class=\"mb-2\">Pesquise por \"Shape Bender\"</li>\n<li class=\"mb-2\">Clique em <strong>Install</strong></li>\n<li class=\"mb-2\">Reinicie o SketchUp para ativar a extensão</li>\n</ol>\n\n<h2 class=\"text-2xl font-bold mb-6 mt-10\">Como Usar o Shape Bender</h2>\n\n<h3 class=\"text-xl font-semibold mb-4 mt-8\">Passo 1: Prepare sua Geometria</h3>\n<p class=\"mb-4 leading-relaxed text-gray-700\">Crie o objeto que deseja dobrar. Pode ser um perfil simples ou uma geometria mais complexa.</p>\n\n<h3 class=\"text-xl font-semibold mb-4 mt-8\">Passo 2: Desenhe a Curva de Referência</h3>\n<p class=\"mb-4 leading-relaxed text-gray-700\">Use a ferramenta Arc ou desenhe à mão livre a curva ao longo da qual você quer dobrar sua geometria.</p>\n\n<img src=\"/images/blog/shape-bender/shape-bender-curved-result.jpg\" alt=\"Resultado curvado com Shape Bender\" class=\"w-full h-auto rounded-lg shadow-md mb-6\">\n\n<h3 class=\"text-xl font-semibold mb-4 mt-8\">Passo 3: Execute o Shape Bender</h3>\n<ol class=\"list-decimal list-inside space-y-2 mb-6 ml-4\">\n<li class=\"mb-2\">Selecione sua geometria</li>\n<li class=\"mb-2\">Acesse <strong>Extensions > Shape Bender</strong></li>\n<li class=\"mb-2\">Clique na linha de referência (reta)</li>\n<li class=\"mb-2\">Clique na curva de destino</li>\n<li class=\"mb-2\">Confirme a operação</li>\n</ol>\n\n<h2 class=\"text-2xl font-bold mb-6 mt-10\">Técnicas Avançadas</h2>\n\n<h3 class=\"text-xl font-semibold mb-4 mt-8\">Posicionamento Preciso</h3>\n<p class=\"mb-4 leading-relaxed text-gray-700\">Para resultados mais precisos, alinhe sua geometria com a linha de referência antes de aplicar o Shape Bender.</p>\n\n<img src=\"/images/blog/shape-bender/shape-bender-position-examples.jpg\" alt=\"Exemplos de posicionamento\" class=\"w-full h-auto rounded-lg shadow-md mb-6\">\n\n<h3 class=\"text-xl font-semibold mb-4 mt-8\">Trabalhando com Componentes</h3>\n<p class=\"mb-4 leading-relaxed text-gray-700\">Transforme seus objetos em componentes antes de usar o Shape Bender para manter a editabilidade e facilitar repetições.</p>\n\n<h3 class=\"text-xl font-semibold mb-4 mt-8\">Curvas Complexas</h3>\n<p class=\"mb-4 leading-relaxed text-gray-700\">Use múltiplas operações de Shape Bender para criar curvas em várias direções.</p>\n\n<img src=\"/images/blog/shape-bender/shape-bender-spiral-path.jpg\" alt=\"Caminho em espiral\" class=\"w-full h-auto rounded-lg shadow-md mb-6\">\n\n<h2 class=\"text-2xl font-bold mb-6 mt-10\">Aplicações Práticas</h2>\n\n<h3 class=\"text-xl font-semibold mb-4 mt-8\">Corrimãos Curvos</h3>\n<p class=\"mb-4 leading-relaxed text-gray-700\">Perfeito para criar corrimãos que seguem escadas curvas ou rampas em espiral.</p>\n\n<h3 class=\"text-xl font-semibold mb-4 mt-8\">Elementos Decorativos</h3>\n<p class=\"mb-4 leading-relaxed text-gray-700\">Crie molduras, frisos e outros elementos arquitetônicos com curvaturas personalizadas.</p>\n\n<h3 class=\"text-xl font-semibold mb-4 mt-8\">Texto Curvado</h3>\n<p class=\"mb-4 leading-relaxed text-gray-700\">Transforme texto 3D em letreiros curvos para sinalização e logos.</p>\n\n<img src=\"/images/blog/shape-bender/shape-bender-text-example.jpg\" alt=\"Exemplo de texto curvado\" class=\"w-full h-auto rounded-lg shadow-md mb-6\">\n\n<h2 class=\"text-2xl font-bold mb-6 mt-10\">Dicas e Truques</h2>\n\n<ul class=\"list-disc list-inside space-y-2 mb-6 ml-4\">\n<li class=\"mb-2\"><strong class=\"font-semibold\">Linha de Referência</strong>: Sempre crie uma linha reta como referência inicial</li>\n<li class=\"mb-2\"><strong class=\"font-semibold\">Geometria Simples</strong>: Comece com formas simples antes de tentar geometrias complexas</li>\n<li class=\"mb-2\"><strong class=\"font-semibold\">Backup</strong>: Sempre faça uma cópia do modelo original antes de aplicar o Shape Bender</li>\n<li class=\"mb-2\"><strong class=\"font-semibold\">Limpeza</strong>: Use a extensão CleanUp³ após aplicar o Shape Bender para otimizar a geometria</li>\n</ul>\n\n<h2 class=\"text-2xl font-bold mb-6 mt-10\">Limitações e Soluções</h2>\n\n<h3 class=\"text-xl font-semibold mb-4 mt-8\">Geometria Muito Complexa</h3>\n<p class=\"mb-4 leading-relaxed text-gray-700\">Simplifique a geometria antes de usar o Shape Bender, depois adicione detalhes.</p>\n\n<h3 class=\"text-xl font-semibold mb-4 mt-8\">Curvas Muito Acentuadas</h3>\n<p class=\"mb-4 leading-relaxed text-gray-700\">Divida curvas muito fechadas em segmentos menores para evitar distorções.</p>\n\n<h2 class=\"text-2xl font-bold mb-6 mt-10\">Conceitos-Chave Aprendidos</h2>\n\n<ul class=\"list-disc list-inside space-y-2 mb-6 ml-4\">\n<li class=\"mb-2\"><strong class=\"font-semibold\">Deformação Paramétrica</strong>: Shape Bender permite deformações precisas ao longo de curvas</li>\n<li class=\"mb-2\"><strong class=\"font-semibold\">Linha de Referência</strong>: Essencial para controlar o resultado da deformação</li>\n<li class=\"mb-2\"><strong class=\"font-semibold\">Aplicações Versáteis</strong>: Útil desde elementos estruturais até detalhes decorativos</li>\n<li class=\"mb-2\"><strong class=\"font-semibold\">Workflow Otimizado</strong>: Economiza tempo significativo em modelagem de curvas complexas</li>\n</ul>\n\n<p class=\"mb-4 leading-relaxed text-gray-700\">O Shape Bender é uma ferramenta indispensável para qualquer usuário de SketchUp que trabalha com elementos curvos. Dominar esta extensão abre possibilidades criativas ilimitadas em projetos arquitetônicos e de design.</p>\n</div>",
+    "imageUrl": "/images/blog/shape-bender/shape-bender-hero.jpg",
+    "featuredImage": {
+      "url": "/images/blog/shape-bender/shape-bender-hero.jpg",
+      "alt": "Dominando o Shape Bender: Curvando Geometrias no SketchUp"
+    },
+    "readingTime": 27,
+    "views": 0,
+    "publishedAt": "2025-01-31T15:00:00+00:00",
+    "createdAt": "2025-08-03T21:52:51.470198+00:00",
+    "updatedAt": "2025-08-05T20:12:48.11915+00:00",
+    "seoTitle": "Dominando o Shape Bender: Curvando Geometrias no SketchUp",
+    "seoDescription": "Aprenda a usar a extensão Shape Bender para transformar geometrias retas em curvas complexas no SketchUp.",
+    "ogImage": null,
+    "canonicalUrl": "https://escolahabilidade.com.br/blog/dominando-shape-bender-curvando-geometrias-sketchup",
+    "category": {
+      "id": "6f44d898-ec31-4b11-bb4d-4ba5c8c65c64",
+      "name": "Arquitetura",
+      "slug": "arquitetura",
+      "description": "Design arquitetônico e projetos de construção",
+      "postCount": 0,
+      "color": "#06B6D4"
+    },
+    "tags": [],
+    "author": {
+      "id": "875fdd01-2ad5-4018-9d9d-c6cf55c75ae9",
+      "name": "Escola Habilidade",
+      "email": "admin@escolahabilidade.com.br"
+    }
+  },
+  "seoData": {
+    "title": "Dominando o Shape Bender: Curvando Geometrias no SketchUp",
+    "description": "Aprenda a usar a extensão Shape Bender para transformar geometrias retas em curvas complexas no SketchUp.",
+    "image": "/images/blog/shape-bender/shape-bender-hero.jpg",
+    "url": "https://www.escolahabilidade.com/blog/dominando-shape-bender-curvando-geometrias-sketchup",
+    "type": "article",
+    "publishedTime": "2025-01-31T15:00:00+00:00",
+    "modifiedTime": "2025-08-05T20:12:48.11915+00:00",
+    "author": "Escola Habilidade",
+    "section": "Arquitetura",
+    "tags": []
+  },
+  "generatedAt": "2025-08-25T14:04:54.643Z",
+  "source": "supabase-extraction"
+}
