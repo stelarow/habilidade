@@ -159,15 +159,16 @@ const BLOG_SLUGS = [
  */
 const fetchBlogPosts = async () => {
   try {
-    console.log('Loading blog posts from local JSON files for SEO-first build');
+    console.log('Loading blog posts from unified bundle for SEO-first build (optimized)');
     
-    // Use static blog slugs and load data from local files
-    const posts = await Promise.all(
-      BLOG_SLUGS.map(async (slug) => {
-        try {
-          const postModule = await import(`../data/posts/${slug}.json`);
-          const postData = postModule.default || postModule;
-          
+    // Usa dados unificados do bundle otimizado
+    const { BLOG_POSTS, BLOG_SLUGS: unifiedSlugs } = await import('../data/posts/index.js');
+    
+    const posts = unifiedSlugs.map((slug) => {
+      try {
+        const postData = BLOG_POSTS[slug];
+        
+        if (postData && postData.post) {
           return {
             slug: postData.post.slug,
             title: postData.post.title,
@@ -176,23 +177,29 @@ const fetchBlogPosts = async () => {
             updatedAt: postData.post.updatedAt,
             category: postData.post.category
           };
-        } catch (error) {
-          console.warn(`Failed to load post data for ${slug}, using fallback:`, error.message);
-          // Fallback with basic data
+        } else {
+          console.warn(`Post data not found for ${slug}, using fallback`);
           return {
             slug,
             publishedAt: new Date('2025-01-01').toISOString(),
             createdAt: new Date('2025-01-01').toISOString()
           };
         }
-      })
-    );
+      } catch (error) {
+        console.warn(`Failed to process post data for ${slug}, using fallback:`, error.message);
+        return {
+          slug,
+          publishedAt: new Date('2025-01-01').toISOString(),
+          createdAt: new Date('2025-01-01').toISOString()
+        };
+      }
+    });
     
-    console.log(`Successfully loaded ${posts.length} blog posts from local files`);
+    console.log(`Successfully loaded ${posts.length} blog posts from unified bundle (optimized)`);
     return posts.filter(post => post.slug);
     
   } catch (error) {
-    console.warn('Failed to fetch blog posts from local files, using static slugs:', error);
+    console.warn('Failed to fetch blog posts from unified bundle, using static slugs:', error);
     return getBlogPostsFromStaticSlugs();
   }
 };
@@ -209,43 +216,41 @@ const getBlogPostsFromStaticSlugs = () => {
 };
 
 /**
- * Fetch all categories for sitemap
+ * Fetch all categories for sitemap from unified bundle (optimized)
  */
 const fetchCategories = async () => {
   try {
-    console.log('Loading blog categories from local JSON files');
+    console.log('Loading blog categories from unified bundle (optimized)');
     
-    // Extract unique categories from all post files
+    // Usa dados unificados do bundle otimizado
+    const { BLOG_POSTS } = await import('../data/posts/index.js');
+    
+    // Extract unique categories from unified posts data
     const categoriesMap = new Map();
     
-    await Promise.all(
-      BLOG_SLUGS.map(async (slug) => {
-        try {
-          const postModule = await import(`../data/posts/${slug}.json`);
-          const postData = postModule.default || postModule;
-          
-          if (postData.post?.category && postData.post.category.slug) {
-            const category = postData.post.category;
-            categoriesMap.set(category.slug, {
-              id: category.id,
-              name: category.name,
-              slug: category.slug,
-              description: category.description || '',
-              color: category.color || '#3B82F6'
-            });
-          }
-        } catch (error) {
-          console.warn(`Failed to extract category from ${slug}:`, error.message);
+    for (const [slug, postData] of Object.entries(BLOG_POSTS)) {
+      try {
+        if (postData.post?.category && postData.post.category.slug) {
+          const category = postData.post.category;
+          categoriesMap.set(category.slug, {
+            id: category.id,
+            name: category.name,
+            slug: category.slug,
+            description: category.description || '',
+            color: category.color || '#3B82F6'
+          });
         }
-      })
-    );
+      } catch (error) {
+        console.warn(`Failed to extract category from ${slug}:`, error.message);
+      }
+    }
     
     const categories = Array.from(categoriesMap.values());
-    console.log(`Successfully extracted ${categories.length} unique categories from local files`);
+    console.log(`Successfully extracted ${categories.length} unique categories from unified bundle (optimized)`);
     return categories;
     
   } catch (error) {
-    console.warn('Failed to fetch categories from local files:', error);
+    console.warn('Failed to fetch categories from unified bundle:', error);
     return [];
   }
 };

@@ -3,8 +3,8 @@
  * Substitui completamente as chamadas para Supabase mantendo compatibilidade total
  */
 
-// Importa todos os posts JSON automaticamente
-const postModules = import.meta.glob('../data/posts/*.json', { eager: true });
+// Importa dados unificados para otimização de code splitting
+import { BLOG_POSTS, getAllPosts as getUnifiedPosts, getPostsByCategory as getUnifiedPostsByCategory } from '../data/posts/index.js';
 
 // Debug logging para desenvolvimento
 const logStaticQuery = (operation, params = {}) => {
@@ -22,7 +22,7 @@ let lastCacheUpdate = null;
 const CACHE_DURATION = import.meta.env.DEV ? 5 * 60 * 1000 : 30 * 60 * 1000;
 
 /**
- * Carrega e processa todos os posts dos arquivos JSON
+ * Carrega e processa todos os posts do bundle unificado (otimizado)
  */
 const loadPosts = () => {
   const now = Date.now();
@@ -32,15 +32,14 @@ const loadPosts = () => {
     return postsCache;
   }
 
-  logStaticQuery('loadPosts', { cached: false, modules: Object.keys(postModules).length });
+  logStaticQuery('loadPosts', { cached: false, unified: true });
 
   const posts = [];
   const categoriesSet = new Set();
 
-  for (const [path, module] of Object.entries(postModules)) {
+  // Usa dados unificados do bundle otimizado
+  for (const [slug, postData] of Object.entries(BLOG_POSTS)) {
     try {
-      const postData = module.default || module;
-      
       if (postData?.post) {
         const post = postData.post;
         
@@ -99,7 +98,7 @@ const loadPosts = () => {
         }
       }
     } catch (error) {
-      console.error(`[Static Blog API] Erro ao carregar post ${path}:`, error);
+      console.error(`[Static Blog API] Erro ao carregar post ${slug}:`, error);
     }
   }
 
@@ -120,7 +119,8 @@ const loadPosts = () => {
   logStaticQuery('loadPosts', { 
     loaded: posts.length, 
     categories: uniqueCategories.length,
-    cached: true 
+    cached: true,
+    source: 'unified_bundle'
   });
 
   return posts;

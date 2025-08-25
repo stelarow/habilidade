@@ -310,12 +310,13 @@ function BlogPost() {
 
 // Loader function for vite-react-ssg
 export async function loader({ params }) {
-  // This function runs at build time during SSG - now using static local data
+  // This function runs at build time during SSG - using optimized unified bundle
   const { slug } = params;
   
   try {
-    // Import static post data from local JSON files
-    const postData = await import(`../data/posts/${slug}.json`);
+    // Import from unified blog data bundle (optimized code splitting)
+    const { getPostBySlug } = await import('../data/posts/index.js');
+    const postData = getPostBySlug(slug);
     
     if (!postData || !postData.post) {
       throw new Error(`Post not found: ${slug}`);

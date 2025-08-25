@@ -118,6 +118,12 @@ base: '/',
             return 'external-services';
           }
           
+          // 5. OTIMIZAÇÃO: Dados do blog unificados
+          if (id.includes('/data/posts/') && (id.includes('.json') || id.includes('index.js'))) {
+            console.log('📝 BLOG DATA CHUNK:', id);
+            return 'blog-data';
+          }
+          
           // IMPORTANTE: NÃO dividir marked e highlight.js inicialmente
           // Eles podem ser necessários para renderização do blog
           if (id.includes('node_modules/marked/') ||
