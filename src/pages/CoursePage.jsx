@@ -1,5 +1,6 @@
-import { useParams, Navigate } from 'react-router-dom';
+import { useParams, Navigate, useLoaderData } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
+import { Head } from 'vite-react-ssg';
 import { 
   PaperPlaneTilt, 
   User, 
@@ -41,9 +42,10 @@ import '../styles/course-tools.css';
 
 function CoursePage({ slug }) {
   const { courseSlug } = useParams();
+  const loaderData = useLoaderData();
   const finalSlug = slug || courseSlug;
   const [loading, setLoading] = useState(true);
-  const [course, setCourse] = useState(null);
+  const [course, setCourse] = useState(loaderData?.course || null);
   const [error, setError] = useState(null);
   const [activeSection, setActiveSection] = useState('sketchup');
   
@@ -72,6 +74,18 @@ function CoursePage({ slug }) {
 
   useEffect(() => {
     const loadCourse = async () => {
+      // If course is already loaded from SSG loader, skip loading
+      if (loaderData?.course) {
+        const validatedCourse = validateAndSanitizeCourse(loaderData.course);
+        setCourse(validatedCourse);
+        setFormData(prev => ({
+          ...prev,
+          course: validatedCourse.basicInfo.title
+        }));
+        setLoading(false);
+        return;
+      }
+
       try {
         setLoading(true);
         setError(null);
@@ -108,7 +122,7 @@ function CoursePage({ slug }) {
     if (finalSlug) {
       loadCourse();
     }
-  }, [finalSlug]);
+  }, [finalSlug, loaderData]);
 
   // Handler para botão de matrícula
   const handleEnrollClick = () => {
@@ -222,29 +236,31 @@ function CoursePage({ slug }) {
 
   return (
     <ErrorBoundary>
-      {/* React 19 native metadata support */}
-      <title>{metadata.title}</title>
-      <meta name="description" content={metadata.description} />
-      <meta name="keywords" content={metadata.keywords} />
-      
-      {/* Open Graph */}
-      <meta property="og:title" content={metadata.openGraph.title} />
-      <meta property="og:description" content={metadata.openGraph.description} />
-      <meta property="og:type" content={metadata.openGraph.type} />
-      <meta property="og:image" content={metadata.openGraph.image} />
-      <meta property="og:url" content={metadata.openGraph.url} />
-      
-      {/* Twitter */}
-      <meta name="twitter:card" content={metadata.twitter.card} />
-      <meta name="twitter:title" content={metadata.twitter.title} />
-      <meta name="twitter:description" content={metadata.twitter.description} />
-      <meta name="twitter:image" content={metadata.twitter.image} />
-      
-      {/* Structured Data */}
-      <script 
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(metadata.structuredData) }}
-      />
+      {/* SEO Head with vite-react-ssg */}
+      <Head>
+        <title>{metadata.title}</title>
+        <meta name="description" content={metadata.description} />
+        <meta name="keywords" content={metadata.keywords} />
+        
+        {/* Open Graph */}
+        <meta property="og:title" content={metadata.openGraph.title} />
+        <meta property="og:description" content={metadata.openGraph.description} />
+        <meta property="og:type" content={metadata.openGraph.type} />
+        <meta property="og:image" content={metadata.openGraph.image} />
+        <meta property="og:url" content={metadata.openGraph.url} />
+        
+        {/* Twitter */}
+        <meta name="twitter:card" content={metadata.twitter.card} />
+        <meta name="twitter:title" content={metadata.twitter.title} />
+        <meta name="twitter:description" content={metadata.twitter.description} />
+        <meta name="twitter:image" content={metadata.twitter.image} />
+        
+        {/* Structured Data */}
+        <script 
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(metadata.structuredData) }}
+        />
+      </Head>
       
       <div 
         className="min-h-screen bg-gradient-radial from-gray-900 via-black to-gray-900"
@@ -562,8 +578,25 @@ function CoursePage({ slug }) {
 }
 
 // Loader function for SSG
-export function loader() {
-  return null;
+export async function loader({ params }) {
+  // This function runs at build time during SSG
+  const { courseSlug } = params;
+  
+  try {
+    // Get course data from the static data source
+    const foundCourse = getCourseBySlug(courseSlug, COURSES_DATA);
+    
+    if (!foundCourse) {
+      throw new Error(`Course not found: ${courseSlug}`);
+    }
+
+    // Return course data for SSG
+    return { course: foundCourse };
+  } catch (error) {
+    console.error('SSG Loader error:', error);
+    // Return null to fallback to client-side loading
+    return { course: null };
+  }
 }
 
 // CRITICAL: Export getStaticPaths for vite-react-ssg to generate all course pages
@@ -585,3 +618,4 @@ export function getStaticPaths() {
 // Export both default and Component for vite-react-ssg compatibility
 export default CoursePage;
 export { CoursePage as Component };
+export { getCourseBySlug, validateAndSanitizeCourse };
