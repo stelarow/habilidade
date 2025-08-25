@@ -1,11 +1,11 @@
 import { useQuery, useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { blogAPI } from '../services/blogAPI';
 
-// Cache configuration
+// Cache configuration - Otimizado para sistema estático
 const CACHE_CONFIG = {
-  POSTS_LIST: 5 * 60 * 1000, // 5 minutes for lists
-  POST_DETAIL: 60 * 60 * 1000, // 1 hour for individual posts
-  CATEGORIES: 30 * 60 * 1000, // 30 minutes for categories
+  POSTS_LIST: 30 * 60 * 1000, // 30 minutes for lists (dados estáticos mudam pouco)
+  POST_DETAIL: 2 * 60 * 60 * 1000, // 2 hours for individual posts  
+  CATEGORIES: 60 * 60 * 1000, // 1 hour for categories
 };
 
 // Hook for fetching all posts with pagination

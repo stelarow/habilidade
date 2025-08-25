@@ -1,16 +1,16 @@
-// Blog API service - agora conectado ao Supabase
-import { supabaseBlogAPI } from './supabaseBlogAPI.js';
+// Blog API service - Sistema Estático baseado em JSON local
+import { staticBlogAPI } from './staticBlogAPI.js';
 
-// Re-export das funções do Supabase API
+// Re-export das funções do Static API
 export const blogAPI = {
-  health: supabaseBlogAPI.health,
-  getAllPosts: supabaseBlogAPI.getAllPosts,
-  getPostBySlug: supabaseBlogAPI.getPostBySlug,
-  getPostsByCategory: supabaseBlogAPI.getPostsByCategory,
-  getCategories: supabaseBlogAPI.getCategories,
-  searchPosts: supabaseBlogAPI.searchPosts,
-  getConfig: supabaseBlogAPI.getConfig,
-  setDebugMode: supabaseBlogAPI.setDebugMode
+  health: staticBlogAPI.health,
+  getAllPosts: staticBlogAPI.getAllPosts,
+  getPostBySlug: staticBlogAPI.getPostBySlug,
+  getPostsByCategory: staticBlogAPI.getPostsByCategory,
+  getCategories: staticBlogAPI.getCategories,
+  searchPosts: staticBlogAPI.searchPosts,
+  getConfig: staticBlogAPI.getConfig,
+  setDebugMode: staticBlogAPI.setDebugMode
 };
 
 // Exports helpers
