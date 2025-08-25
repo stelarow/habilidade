@@ -3,9 +3,9 @@ import { Navigate, useParams } from 'react-router-dom';
 import Layout from './Layout.jsx';
 import CourseLayout from './CourseLayout.jsx';
 import Loading from './components/Loading';
+import Home from './pages/Home';
 
-// Importações com lazy loading para code splitting
-const Home = React.lazy(() => import('./pages/Home'));
+// Importações com lazy loading para code splitting (exceto Home que é crítica)
 const CoursePage = React.lazy(() => import('./pages/CoursePage'));
 const Contact = React.lazy(() => import('./pages/Contact'));
 const BlogIndex = React.lazy(() => import('./pages/BlogIndex'));
@@ -69,7 +69,7 @@ export const routes = [
     children: [
       {
         index: true,
-        lazy: () => import('./pages/Home')
+        element: <Home />
       },
       // Rotas estáticas individuais para garantir SSG
       {
