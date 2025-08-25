@@ -1,5 +1,5 @@
 import React from 'react';
-import ContactForm from '../components/ContactForm';
+import { LazyContactForm } from '../components/LazyComponents';
 import SEOHead from '../components/shared/SEOHead';
 import { MapPin, Phone, Envelope, Clock, Users } from '@phosphor-icons/react';
 
@@ -101,7 +101,7 @@ const Contact = () => {
 
             {/* Formulário de Contato */}
             <div>
-              <ContactForm />
+              <LazyContactForm />
             </div>
           </div>
         </div>

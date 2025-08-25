@@ -5,7 +5,7 @@ import HowItWorksSimple from '../components/HowItWorksSimple';
 import Reviews from '../components/Reviews';
 import TrustedCompanies from '../components/TrustedCompanies';
 import LatestBlogSection from '../components/LatestBlogSection';
-import ContactForm from '../components/ContactForm';
+import { LazyContactForm } from '../components/LazyComponents';
 import FAQ from '../components/FAQ';
 import SEOHead from '../components/shared/SEOHead';
 
@@ -25,7 +25,7 @@ function Home() {
       <Reviews />
       <TrustedCompanies variant="home" />
       <LatestBlogSection />
-      <ContactForm />
+      <LazyContactForm />
       <FAQ />
     </>
   );

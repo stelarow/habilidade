@@ -58,7 +58,10 @@
       "mcp__sequential-thinking__sequentialthinking",
       "mcp__serena__find_file",
       "mcp__serena__find_symbol",
-      "Bash(npm run build:*)"
+      "Bash(npm run build:*)",
+      "mcp__serena__list_dir",
+      "mcp__serena__find_symbol",
+      "mcp__serena__think_about_collected_information"
     ],
     "deny": []
   }
