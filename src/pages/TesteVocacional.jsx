@@ -646,27 +646,6 @@ const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
         >
-          <div className="text-center">
-            <div className="w-16 h-16 bg-[#d400ff]/20 rounded-full flex items-center justify-center mx-auto mb-4">
-              <ChartBar className="text-[#d400ff]" size={32} />
-            </div>
-            <h3 className="text-white font-semibold text-lg mb-2">Análise Completa</h3>
-            <p className="text-gray-300">Dashboard detalhado com suas afinidades profissionais</p>
-          </div>
-          <div className="text-center">
-            <div className="w-16 h-16 bg-[#d400ff]/20 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Lightbulb className="text-[#d400ff]" size={32} />
-            </div>
-            <h3 className="text-white font-semibold text-lg mb-2">Recomendação Inteligente</h3>
-            <p className="text-gray-300">Cursos selecionados especificamente para você</p>
-          </div>
-          <div className="text-center">
-            <div className="w-16 h-16 bg-[#d400ff]/20 rounded-full flex items-center justify-center mx-auto mb-4">
-              <MapPin className="text-[#d400ff]" size={32} />
-            </div>
-            <h3 className="text-white font-semibold text-lg mb-2">Cursos Locais</h3>
-            <p className="text-gray-300">Aulas presenciais na Grande Florianópolis</p>
-          </div>
         </motion.div>
       </div>
     </section>
