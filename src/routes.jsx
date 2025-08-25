@@ -8,7 +8,6 @@ import Home from './pages/Home';
 // Importações com lazy loading para code splitting (exceto Home que é crítica)
 const CoursePage = React.lazy(() => import('./pages/CoursePage'));
 const Contact = React.lazy(() => import('./pages/Contact'));
-const BlogIndex = React.lazy(() => import('./pages/BlogIndex'));
 const BlogTestPage = React.lazy(() => import('./pages/BlogTestPage'));
 const BlogCategory = React.lazy(() => import('./pages/BlogCategory'));
 const NotFound = React.lazy(() => import('./pages/NotFound'));
