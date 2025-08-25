@@ -44,7 +44,6 @@ const blogSlugs = [
   '10-extensoes-sketchup-arquitetos',
   'editor-materiais-sketchup-realismo-enscape',
   'guia-completo-enscape-sketchup-iniciantes',
-  'guia-completo-enscape-sketchup',
   'sketchup-2025-visualizacao-3d-materiais-fotorrealistas',
   '5-razoes-organizacoes-investir-treinamento-excel',
   'transforme-dados-em-decisoes-estrategicas-dashboards-empresariais'
