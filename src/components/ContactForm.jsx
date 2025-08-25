@@ -1,5 +1,5 @@
 ﻿import { useState, useRef } from 'react';
-import { PaperPlaneTilt, User, Envelope, Phone, BookOpen, CheckCircle, XCircle } from '@phosphor-icons/react';
+import { PaperPlaneTilt, User, Envelope, Phone, BookOpen, CheckCircle } from '@phosphor-icons/react';
 import emailjs from '@emailjs/browser';
 import Loading from './Loading';
 import GradientButton from './GradientButton';

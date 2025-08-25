@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useRef } from 'react';
-import { Upload, Image, CheckCircle, WarningCircle, X, Eye } from '@phosphor-icons/react';
+import { Upload, CheckCircle, WarningCircle, X, Eye } from '@phosphor-icons/react';
 import imageUploadProcessor from '../utils/imageUploadProcessor';
 
 const SmartImageUpload = ({ 
