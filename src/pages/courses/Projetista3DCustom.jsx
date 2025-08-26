@@ -203,8 +203,7 @@ function Projetista3DCustom({ slug }) {
               </p>
             </div>
             <CourseCurriculum 
-              curriculum={course.curriculum}
-              tools={course.tools}
+              course={course}
             />
           </div>
         </div>

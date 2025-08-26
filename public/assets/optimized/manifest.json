@@ -1,0 +1,31 @@
+{
+  "generated": "2025-08-26T17:28:21.214Z",
+  "config": {
+    "images": {
+      "formats": [
+        "webp",
+        "avif"
+      ],
+      "quality": 85,
+      "breakpoints": [
+        320,
+        640,
+        768,
+        1024,
+        1280,
+        1536
+      ],
+      "maxWidth": 1920
+    },
+    "videos": {
+      "formats": [
+        "webm",
+        "mp4"
+      ],
+      "crf": 28,
+      "maxBitrate": "2M",
+      "preset": "fast"
+    }
+  },
+  "assets": {}
+}

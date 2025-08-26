@@ -126,9 +126,9 @@ function VocationalTestCard() {
     <a
       ref={ref}
       href="/teste-vocacional"
-      className={`card-enter ${visible ? 'in-view' : ''} relative clip-card w-full h-auto min-h-[120px] p-[3px] bg-gradient-to-r from-purple-500/60 to-pink-500/60 transition-transform duration-200 hover:-translate-y-2 hover:scale-[1.02] hover:shadow-[0_0_30px_#a855f7aa] focus-visible:ring-2 ring-purple-500 focus:outline-none block`}
+      className={`card-enter ${visible ? 'in-view' : ''} relative clip-card w-full h-auto min-h-[100px] p-[3px] bg-gradient-to-r from-purple-500/60 to-pink-500/60 transition-transform duration-200 hover:-translate-y-2 hover:scale-[1.02] hover:shadow-[0_0_30px_#a855f7aa] focus-visible:ring-2 ring-purple-500 focus:outline-none block`}
     >
-      <div className="clip-card w-full h-full flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 px-4 md:px-8 py-6 md:py-0 bg-[radial-gradient(ellipse_at_50%_50%,#1e1b2e_0%,#0a0a0a_100%)] hover:bg-[radial-gradient(ellipse_at_50%_50%,#2d1b38_0%,#0a0a0a_100%)] transition">
+      <div className="clip-card w-full h-full flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 px-4 md:px-8 py-4 bg-[radial-gradient(ellipse_at_50%_50%,#1e1b2e_0%,#0a0a0a_100%)] hover:bg-[radial-gradient(ellipse_at_50%_50%,#2d1b38_0%,#0a0a0a_100%)] transition">
         <div className="flex flex-col md:flex-row items-center gap-3 md:gap-4 text-center md:text-left">
           <Brain size={32} weight="duotone" className="text-purple-400 flex-shrink-0" />
           <div>
