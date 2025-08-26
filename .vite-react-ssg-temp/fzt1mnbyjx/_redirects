@@ -1,0 +1,9 @@
+# Domain redirects
+https://escolahabilidade.com/* https://www.escolahabilidade.com/:splat 301!
+https://escolahabilidade.com.br/* https://www.escolahabilidade.com/:splat 301!
+
+# Page redirects  
+/cursos /#cursos 301
+
+# Note: SPA fallback removed for SSG compatibility
+# Each page now has its own static HTML file

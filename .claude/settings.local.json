@@ -59,7 +59,11 @@
       "mcp__serena__check_onboarding_performed",
       "mcp__serena__find_symbol",
       "mcp__serena__find_file",
-      "mcp__serena__think_about_collected_information"
+      "mcp__serena__think_about_collected_information",
+      "WebSearch",
+      "WebFetch(domain:github.com)",
+      "Read(//tmp/projetista-pro-showcase/src/components/**)",
+      "Read(//tmp/projetista-pro-showcase/**)"
     ],
     "deny": []
   }
