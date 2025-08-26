@@ -1,6 +1,6 @@
 import React from 'react';
 import { 
-  UserTie, 
+  User, 
   Trophy, 
   Scroll, 
   Buildings, 
@@ -45,7 +45,7 @@ const TeacherStorySection = () => {
           {/* Header */}
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-black text-white mb-4 flex items-center justify-center gap-3">
-              <UserTie className="w-10 h-10 text-purple-400" />
+              <User className="w-10 h-10 text-purple-400" />
               <span className="bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">
                 QUEM IRÁ TE ENSINAR?
               </span>
