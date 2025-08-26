@@ -174,8 +174,7 @@ function Projetista3DCustom({ slug }) {
 
         {/* 5. Depoimentos dos Alunos */}
         <CourseTestimonials 
-          testimonials={course.testimonials}
-          courseTitle={course.basicInfo.title}
+          course={course}
         />
 
         {/* 6. Empresas Parceiras */}
