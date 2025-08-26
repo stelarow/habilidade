@@ -1,7 +1,7 @@
 # Netlify config for marketing site (Vite)
 [build]
   # Instala dependências de produção e desenvolvimento (evita erro `vite: not found`)
-  command = "npm install --include=dev && npm run build"
+  command = "npm install --include=dev && npm run build:production"
   publish = "dist"
   functions = "netlify/functions"
 
