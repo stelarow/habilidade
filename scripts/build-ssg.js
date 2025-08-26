@@ -53,23 +53,24 @@ function runSSGBuild() {
       reject(error);
     });
 
-    // Force exit after 30 seconds if the process hangs
+    // Force exit after 5 minutes if the process hangs (SSG needs time to render pages)
     forceExitTimeout = setTimeout(() => {
       if (buildCompleted) return;
       buildCompleted = true;
 
-      console.log('⚠️ Build process taking too long, forcing exit...');
+      console.log('⚠️ Build process taking too long (5min timeout), forcing exit...');
       buildProcess.kill('SIGTERM');
       
-      // Give it 5 more seconds for graceful shutdown
+      // Give it 10 more seconds for graceful shutdown
       setTimeout(() => {
         if (buildProcess.exitCode === null) {
           console.log('🔥 Force killing build process...');
           buildProcess.kill('SIGKILL');
         }
-        resolve(0); // Consider it successful since we saw completion messages
-      }, 5000);
-    }, 30000);
+        // Don't resolve as successful if we had to force kill
+        reject(new Error('Build process timed out after 5 minutes'));
+      }, 10000);
+    }, 300000); // 5 minutes timeout
   });
 }
 
