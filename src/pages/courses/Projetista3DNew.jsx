@@ -260,3 +260,6 @@ const Projetista3DNew = () => {
 };
 
 export default Projetista3DNew;
+
+// Required for React Router v6 lazy loading
+export const Component = Projetista3DNew;
