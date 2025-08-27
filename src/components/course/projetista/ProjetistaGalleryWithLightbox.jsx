@@ -1,12 +1,16 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, CaretLeft, CaretRight, PlayCircle, Pause } from '@phosphor-icons/react';
+import { AspectRatio } from '@/components/ui/aspect-ratio';
+import { Card, CardContent } from '@/components/ui/card';
 
 const ProjetistaGalleryWithLightbox = ({ 
   items, 
   columns = 4, 
   className = "",
-  showTitles = true 
+  showTitles = true,
+  layout = "grid", // "grid" | "featured"
+  featuredIndex = 0 // qual item será destacado
 }) => {
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
@@ -36,71 +40,211 @@ const ProjetistaGalleryWithLightbox = ({
   };
 
   const currentItem = selectedIndex !== null ? items[selectedIndex] : null;
+  const featuredItem = items[featuredIndex] || items[0];
+  const otherItems = items.filter((_, index) => index !== featuredIndex);
+
+  // Renderizar layout featured (assimétrico)
+  const renderFeaturedLayout = () => (
+    <div className={`grid grid-cols-1 lg:grid-cols-3 gap-4 ${className}`}>
+      {/* Item em Destaque - Ocupa 2 colunas */}
+      <div className="lg:col-span-2">
+        <Card className="group relative overflow-hidden bg-zinc-800/50 border-zinc-700/50 hover:border-purple-500/50 transition-all duration-300 cursor-pointer">
+          <CardContent className="p-0">
+            <AspectRatio ratio={16 / 9}>
+              <motion.div
+                className="relative w-full h-full"
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.3 }}
+                onClick={() => openLightbox(featuredIndex)}
+              >
+                {featuredItem.type === 'video' ? (
+                  <>
+                    <video
+                      src={featuredItem.src}
+                      className="w-full h-full object-cover"
+                      muted
+                      loop
+                      onMouseEnter={(e) => e.target.play()}
+                      onMouseLeave={(e) => e.target.pause()}
+                    />
+                    <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <div className="bg-white/10 backdrop-blur-sm rounded-full p-4">
+                        <PlayCircle className="w-16 h-16 text-white drop-shadow-lg" />
+                      </div>
+                    </div>
+                    <div className="absolute top-4 right-4">
+                      <div className="bg-red-500 text-white text-sm px-3 py-1 rounded-full font-bold shadow-lg">
+                        VÍDEO
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <img
+                      src={featuredItem.src}
+                      alt={featuredItem.title}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  </>
+                )}
+                
+                {/* Info overlay para item destacado */}
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent p-6">
+                  <div className="text-white">
+                    <h3 className="text-xl font-bold mb-2 line-clamp-2">
+                      {featuredItem.title}
+                    </h3>
+                    {featuredItem.description && (
+                      <p className="text-white/80 text-sm line-clamp-2">
+                        {featuredItem.description}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </motion.div>
+            </AspectRatio>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Grid de Itens Menores - 1 coluna */}
+      <div className="space-y-4">
+        {otherItems.slice(0, 4).map((item, index) => {
+          const originalIndex = items.findIndex(originalItem => originalItem === item);
+          return (
+            <Card key={originalIndex} className="group relative overflow-hidden bg-zinc-800/50 border-zinc-700/50 hover:border-purple-400/50 transition-all duration-300 cursor-pointer">
+              <CardContent className="p-0">
+                <AspectRatio ratio={4 / 3}>
+                  <motion.div
+                    className="relative w-full h-full"
+                    whileHover={{ scale: 1.02 }}
+                    transition={{ duration: 0.2 }}
+                    onClick={() => openLightbox(originalIndex)}
+                  >
+                    {item.type === 'video' ? (
+                      <>
+                        <video
+                          src={item.src}
+                          className="w-full h-full object-cover"
+                          muted
+                          loop
+                          onMouseEnter={(e) => e.target.play()}
+                          onMouseLeave={(e) => e.target.pause()}
+                        />
+                        <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          <PlayCircle className="w-8 h-8 text-white/80" />
+                        </div>
+                        <div className="absolute top-2 right-2">
+                          <div className="bg-red-500/80 text-white text-xs px-2 py-1 rounded font-medium">
+                            VÍDEO
+                          </div>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <img
+                          src={item.src}
+                          alt={item.title}
+                          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      </>
+                    )}
+                    
+                    {showTitles && (
+                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <p className="text-white text-xs font-medium line-clamp-1">
+                          {item.title}
+                        </p>
+                        {item.description && (
+                          <p className="text-white/60 text-xs line-clamp-1">
+                            {item.description}
+                          </p>
+                        )}
+                      </div>
+                    )}
+                  </motion.div>
+                </AspectRatio>
+              </CardContent>
+            </Card>
+          );
+        })}
+      </div>
+    </div>
+  );
+
+  // Renderizar layout grid normal
+  const renderGridLayout = () => (
+    <div 
+      className={`grid gap-4 ${
+        columns === 2 ? 'grid-cols-1 md:grid-cols-2' :
+        columns === 3 ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3' :
+        'grid-cols-1 md:grid-cols-2 lg:grid-cols-4'
+      } ${className}`}
+    >
+      {items.map((item, index) => (
+        <motion.div
+          key={index}
+          className="group relative aspect-video bg-zinc-800 rounded-lg overflow-hidden cursor-pointer"
+          whileHover={{ scale: 1.02 }}
+          transition={{ duration: 0.2 }}
+          onClick={() => openLightbox(index)}
+        >
+          {item.type === 'video' ? (
+            <>
+              <video
+                src={item.src}
+                className="w-full h-full object-cover"
+                muted
+                loop
+                onMouseEnter={(e) => e.target.play()}
+                onMouseLeave={(e) => e.target.pause()}
+              />
+              <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <PlayCircle className="w-12 h-12 text-white/80" />
+              </div>
+              <div className="absolute top-2 right-2">
+                <div className="bg-black/60 text-white text-xs px-2 py-1 rounded">
+                  VIDEO
+                </div>
+              </div>
+            </>
+          ) : (
+            <>
+              <img
+                src={item.src}
+                alt={item.title}
+                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            </>
+          )}
+          
+          {showTitles && (
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <p className="text-white text-sm font-medium line-clamp-1">
+                {item.title}
+              </p>
+              {item.description && (
+                <p className="text-white/80 text-xs line-clamp-1">
+                  {item.description}
+                </p>
+              )}
+            </div>
+          )}
+        </motion.div>
+      ))}
+    </div>
+  );
 
   return (
     <>
-      {/* Gallery Grid */}
-      <div 
-        className={`grid gap-4 ${
-          columns === 2 ? 'grid-cols-1 md:grid-cols-2' :
-          columns === 3 ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3' :
-          'grid-cols-1 md:grid-cols-2 lg:grid-cols-4'
-        } ${className}`}
-      >
-        {items.map((item, index) => (
-          <motion.div
-            key={index}
-            className="group relative aspect-video bg-zinc-800 rounded-lg overflow-hidden cursor-pointer"
-            whileHover={{ scale: 1.02 }}
-            transition={{ duration: 0.2 }}
-            onClick={() => openLightbox(index)}
-          >
-            {item.type === 'video' ? (
-              <>
-                <video
-                  src={item.src}
-                  className="w-full h-full object-cover"
-                  muted
-                  loop
-                  onMouseEnter={(e) => e.target.play()}
-                  onMouseLeave={(e) => e.target.pause()}
-                />
-                <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <PlayCircle className="w-12 h-12 text-white/80" />
-                </div>
-                <div className="absolute top-2 right-2">
-                  <div className="bg-black/60 text-white text-xs px-2 py-1 rounded">
-                    VIDEO
-                  </div>
-                </div>
-              </>
-            ) : (
-              <>
-                <img
-                  src={item.src}
-                  alt={item.title}
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              </>
-            )}
-            
-            {showTitles && (
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <p className="text-white text-sm font-medium line-clamp-1">
-                  {item.title}
-                </p>
-                {item.description && (
-                  <p className="text-white/80 text-xs line-clamp-1">
-                    {item.description}
-                  </p>
-                )}
-              </div>
-            )}
-          </motion.div>
-        ))}
-      </div>
+      {/* Gallery - Layout condicional */}
+      {layout === "featured" ? renderFeaturedLayout() : renderGridLayout()}
 
       {/* Lightbox Modal */}
       <AnimatePresence>

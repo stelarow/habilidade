@@ -63,7 +63,8 @@
       "WebSearch",
       "WebFetch(domain:github.com)",
       "Read(//tmp/projetista-pro-showcase/src/components/**)",
-      "Read(//tmp/projetista-pro-showcase/**)"
+      "Read(//tmp/projetista-pro-showcase/**)",
+      "mcp__shadcn-ui-server__list-components"
     ],
     "deny": []
   }

@@ -127,13 +127,14 @@ export const ProjetistaSuccessCases = () => {
                   </div>
                 </div>
 
-                {/* Projects Gallery */}
+                {/* Projects Gallery with Featured Layout */}
                 <div className="mb-6">
                   <ProjetistaGalleryWithLightbox 
                     items={case_.projects}
-                    columns={2}
+                    layout="featured"
+                    featuredIndex={case_.projects.findIndex(item => item.type === 'video')}
                     className=""
-                    showTitles={false}
+                    showTitles={true}
                   />
                 </div>
 
