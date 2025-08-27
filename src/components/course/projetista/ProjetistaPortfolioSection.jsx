@@ -188,25 +188,6 @@ export const ProjetistaPortfolioSection = () => {
           </p>
         </div>
 
-        {/* Regional Projects */}
-        <div className="mt-16 text-center">
-          <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-cyan-400/10 border border-cyan-400/20 rounded-full text-sm font-medium text-cyan-400">
-            <House className="w-4 h-4" />
-            PROJETOS DA REGIÃO
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-zinc-400">
-            <div className="p-4 bg-zinc-800/50 backdrop-blur border border-zinc-700 rounded-lg">
-              🏘️ Condomínios de Florianópolis
-            </div>
-            <div className="p-4 bg-zinc-800/50 backdrop-blur border border-zinc-700 rounded-lg">
-              🏢 Reformas comerciais de São José
-            </div>
-            <div className="p-4 bg-zinc-800/50 backdrop-blur border border-zinc-700 rounded-lg">
-              🏠 Residências da região
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   );

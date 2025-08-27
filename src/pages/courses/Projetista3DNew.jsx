@@ -196,7 +196,7 @@ const Projetista3DNew = () => {
                   </p>
                   <p className="flex items-center justify-center gap-1">
                     <DeviceMobile className="w-3 h-3" />
-                    WhatsApp: (48) 9999-9999
+                    WhatsApp: (48) 98855-9491
                   </p>
                   <p className="flex items-center justify-center gap-1">
                     <Envelope className="w-3 h-3" />

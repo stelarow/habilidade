@@ -1,7 +1,12 @@
 {
-  "generated": "2025-08-26T18:23:24.393Z",
+  "generated": "2025-08-27T10:42:55.709Z",
   "version": "1.0.0",
   "files": {
+    "banheiro.png": {
+      "source": "cases/carol-orofino/banheiro.png",
+      "optimized": false,
+      "note": "Copied as-is (no external tools available)"
+    },
     "cena banheiro.png": {
       "source": "cases/carol-orofino/cena banheiro.png",
       "optimized": false,
@@ -22,6 +27,21 @@
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
+    "cozinha.png": {
+      "source": "cases/patricia-ricardo-moveis/cozinha.png",
+      "optimized": false,
+      "note": "Copied as-is (no external tools available)"
+    },
+    "quarto-1.png": {
+      "source": "cases/carol-orofino/quarto-1.png",
+      "optimized": false,
+      "note": "Copied as-is (no external tools available)"
+    },
+    "quarto-2.png": {
+      "source": "cases/carol-orofino/quarto-2.png",
+      "optimized": false,
+      "note": "Copied as-is (no external tools available)"
+    },
     "WhatsApp Image 2025-08-19 at 18.03.19.jpeg": {
       "source": "cases/elton-santa-madeira/WhatsApp Image 2025-08-19 at 18.03.19.jpeg",
       "optimized": false,
@@ -32,13 +52,18 @@
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
-    "armario.jpeg": {
-      "source": "cases/lauren/armario.jpeg",
+    "casa-1.jpeg": {
+      "source": "cases/elton-santa-madeira/casa-1.jpeg",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
-    "cozinha.png": {
-      "source": "cases/patricia-ricardo-moveis/cozinha.png",
+    "casa-2.jpeg": {
+      "source": "cases/elton-santa-madeira/casa-2.jpeg",
+      "optimized": false,
+      "note": "Copied as-is (no external tools available)"
+    },
+    "armario.jpeg": {
+      "source": "cases/lauren/armario.jpeg",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
@@ -49,6 +74,11 @@
     },
     "generation-ff879e0f-a55b-45d3-8dcd-8afb1c23630a.png": {
       "source": "hero/generation-ff879e0f-a55b-45d3-8dcd-8afb1c23630a.png",
+      "optimized": false,
+      "note": "Copied as-is (no external tools available)"
+    },
+    "hero-fallback.png": {
+      "source": "hero/hero-fallback.png",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
@@ -67,8 +97,13 @@
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
+    "painel-renderizado.png": {
+      "source": "imagens-projeto/painel-renderizado.png",
+      "optimized": false,
+      "note": "Copied as-is (no external tools available)"
+    },
     "professor-alessandro.jpg": {
-      "source": "imagens-projeto/professor-alessandro.jpg",
+      "source": "professor-alessandro.jpg",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
@@ -77,8 +112,18 @@
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
+    "video-externo.mp4": {
+      "source": "cases/carol-orofino/video-externo.mp4",
+      "optimized": false,
+      "note": "Copied as-is (no external tools available)"
+    },
     "The_camera_dont_202508261226.mp4": {
       "source": "cases/elton-santa-madeira/The_camera_dont_202508261226.mp4",
+      "optimized": false,
+      "note": "Copied as-is (no external tools available)"
+    },
+    "video-empresa.mp4": {
+      "source": "cases/elton-santa-madeira/video-empresa.mp4",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
@@ -102,6 +147,11 @@
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
+    "video-vertical.webm": {
+      "source": "hero/video-vertical.webm",
+      "optimized": false,
+      "note": "Copied as-is (no external tools available)"
+    },
     "Painel, com nicho e ripado - videodo sketchup formato full hd - projeto nao renderizado.mp4": {
       "source": "imagens-projeto/Painel, com nicho e ripado - videodo sketchup formato full hd - projeto nao renderizado.mp4",
       "optimized": false,
@@ -115,7 +165,7 @@
   },
   "note": "Simplified optimization for Netlify build - assets copied as-is",
   "stats": {
-    "totalFiles": 22,
+    "totalFiles": 32,
     "optimizedDir": "public/assets/projetista-3d/optimized",
     "thumbnailsDir": "public/assets/projetista-3d/thumbnails"
   }

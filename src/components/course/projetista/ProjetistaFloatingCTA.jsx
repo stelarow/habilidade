@@ -10,7 +10,7 @@ export const ProjetistaFloatingCTA = () => {
       {/* WhatsApp Floating Button */}
       <div className="fixed bottom-6 right-6 z-50">
         <a 
-          href="https://wa.me/5548999999999?text=Ol%C3%A1%21%20Tenho%20interesse%20no%20Curso%20de%20Projetista%203D%20-%20SketchUp%20%2B%20Enscape"
+          href="https://wa.me/5548988559491?text=Ol%C3%A1%21%20Tenho%20interesse%20no%20Curso%20de%20Projetista%203D%20-%20SketchUp%20%2B%20Enscape"
           target="_blank"
           rel="noopener noreferrer"
           className="group flex items-center gap-3 bg-green-500 hover:bg-green-600 text-white px-4 py-3 rounded-full shadow-2xl transition-all duration-300 hover:scale-105"
@@ -38,16 +38,6 @@ export const ProjetistaFloatingCTA = () => {
         </div>
       </div>
 
-      {/* Scroll-triggered CTA (Desktop) */}
-      <div className="hidden md:block fixed top-6 right-6 z-40">
-        <button className="group bg-gradient-to-r from-purple-500 to-cyan-400 text-white px-6 py-3 rounded-full shadow-2xl transition-all duration-300 hover:scale-105 hover:shadow-purple-500/30">
-          <div className="flex items-center gap-2">
-            <Rocket className="w-4 h-4" />
-            <span className="text-sm font-bold">ÚLTIMAS VAGAS</span>
-          </div>
-          <div className="text-xs opacity-90">43% OFF</div>
-        </button>
-      </div>
     </>
   );
 };
