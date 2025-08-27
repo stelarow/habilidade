@@ -12,16 +12,6 @@ import TrustedCompanies from '../../components/TrustedCompanies';
 import { Helmet } from '@dr.pogodin/react-helmet';
 import { 
   CheckCircle, 
-  MapPin, 
-  DeviceMobile, 
-  Envelope, 
-  Palette, 
-  Buildings, 
-  Desktop, 
-  Trophy, 
-  Star, 
-  Certificate,
-  Heart,
   Rocket
 } from '@phosphor-icons/react';
 
@@ -173,88 +163,6 @@ const Projetista3DNew = () => {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-zinc-900 border-t border-zinc-800 py-12">
-        <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <div className="mb-6">
-              <h3 className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent mb-2">
-                Escola Habilidade
-              </h3>
-              <p className="text-zinc-400">
-                Transformando vidas através da educação profissionalizante
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-3 gap-8 mb-8">
-              <div>
-                <h4 className="font-semibold text-white mb-3">Contato</h4>
-                <div className="space-y-2 text-sm text-zinc-400">
-                  <p className="flex items-center justify-center gap-1">
-                    <MapPin className="w-3 h-3" />
-                    São José, Santa Catarina
-                  </p>
-                  <p className="flex items-center justify-center gap-1">
-                    <DeviceMobile className="w-3 h-3" />
-                    WhatsApp: (48) 98855-9491
-                  </p>
-                  <p className="flex items-center justify-center gap-1">
-                    <Envelope className="w-3 h-3" />
-                    contato@escolahabilidade.com.br
-                  </p>
-                </div>
-              </div>
-              
-              <div>
-                <h4 className="font-semibold text-white mb-3">Cursos</h4>
-                <div className="space-y-2 text-sm text-zinc-400">
-                  <p className="flex items-center justify-center gap-1">
-                    <Palette className="w-3 h-3" />
-                    Projetista 3D - SketchUp + Enscape
-                  </p>
-                  <p className="flex items-center justify-center gap-1">
-                    <Buildings className="w-3 h-3" />
-                    AutoCAD Profissional
-                  </p>
-                  <p className="flex items-center justify-center gap-1">
-                    <Desktop className="w-3 h-3" />
-                    Revit Architecture
-                  </p>
-                </div>
-              </div>
-              
-              <div>
-                <h4 className="font-semibold text-white mb-3">Certificações</h4>
-                <div className="space-y-2 text-sm text-zinc-400">
-                  <p className="flex items-center justify-center gap-1">
-                    <Trophy className="w-3 h-3" />
-                    SketchUp Pro Trimble Certified
-                  </p>
-                  <p className="flex items-center justify-center gap-1">
-                    <Star className="w-3 h-3" />
-                    Enscape Certified Professional
-                  </p>
-                  <p className="flex items-center justify-center gap-1">
-                    <Certificate className="w-3 h-3" />
-                    Certificados Nacionais
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="pt-8 border-t border-zinc-800 text-center">
-              <p className="text-sm text-zinc-500">
-                © 2024 Escola Habilidade. Todos os direitos reservados. | 
-                 <span className="text-purple-400 inline-flex items-center gap-1 ml-1">
-                   Desenvolvido com
-                   <Heart className="w-3 h-3" />
-                   para transformar carreiras
-                 </span>
-              </p>
-            </div>
-          </div>
-        </div>
-      </footer>
     </main>
   );
 };
