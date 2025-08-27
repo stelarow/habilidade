@@ -7,6 +7,7 @@ import {
   Lightbulb,
   Rocket
 } from '@phosphor-icons/react';
+import { CountdownTimer } from '../../shared/CountdownTimer';
 
 export const ProjetistaInvestment = () => {
   return (
@@ -61,15 +62,7 @@ export const ProjetistaInvestment = () => {
                 <span className="text-sm font-medium text-yellow-300">
                   OFERTA VÁLIDA POR:
                 </span>
-                <div className="flex items-center gap-2 font-mono font-bold text-yellow-400">
-                  <span className="px-2 py-1 bg-yellow-400/30 rounded text-sm">7d</span>
-                  <span>:</span>
-                  <span className="px-2 py-1 bg-yellow-400/30 rounded text-sm">23h</span>
-                  <span>:</span>
-                  <span className="px-2 py-1 bg-yellow-400/30 rounded text-sm">45m</span>
-                  <span>:</span>
-                  <span className="px-2 py-1 bg-yellow-400/30 rounded text-sm">12s</span>
-                </div>
+                <CountdownTimer bgClassName="bg-yellow-400/30" />
               </div>
               
               <p className="text-red-400 font-semibold">
