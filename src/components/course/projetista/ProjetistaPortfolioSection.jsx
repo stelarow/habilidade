@@ -187,44 +187,23 @@ export const ProjetistaPortfolioSection = () => {
             Transforme sua criatividade em uma carreira sólida.
           </p>
         </div>
-      </div>
-    </section>
-  );
-}; => setCurrentProject(index)}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                    index === currentProject 
-                      ? 'bg-purple-400 scale-125' 
-                      : 'bg-zinc-600 hover:bg-purple-400/50'
-                  }`}
-                />
-              ))}
-            </div>
 
-            <button
-              onClick={nextProject}
-              className="p-3 rounded-full bg-zinc-800/50 backdrop-blur border border-zinc-700 hover:border-purple-400 transition-colors duration-300 group"
-            >
-              <CaretRight className="w-5 h-5 text-zinc-400 group-hover:text-purple-400" />
-            </button>
+        {/* Regional Projects */}
+        <div className="mt-16 text-center">
+          <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-cyan-400/10 border border-cyan-400/20 rounded-full text-sm font-medium text-cyan-400">
+            <House className="w-4 h-4" />
+            PROJETOS DA REGIÃO
           </div>
-
-          {/* Regional Projects */}
-          <div className="mt-16 text-center">
-            <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-cyan-400/10 border border-cyan-400/20 rounded-full text-sm font-medium text-cyan-400">
-              <House className="w-4 h-4" />
-              PROJETOS DA REGIÃO
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-zinc-400">
+            <div className="p-4 bg-zinc-800/50 backdrop-blur border border-zinc-700 rounded-lg">
+              🏘️ Condomínios de Florianópolis
             </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-zinc-400">
-              <div className="p-4 bg-zinc-800/50 backdrop-blur border border-zinc-700 rounded-lg">
-                🏘️ Condomínios de Florianópolis
-              </div>
-              <div className="p-4 bg-zinc-800/50 backdrop-blur border border-zinc-700 rounded-lg">
-                🏢 Reformas comerciais de São José
-              </div>
-              <div className="p-4 bg-zinc-800/50 backdrop-blur border border-zinc-700 rounded-lg">
-                🏠 Residências da região
-              </div>
+            <div className="p-4 bg-zinc-800/50 backdrop-blur border border-zinc-700 rounded-lg">
+              🏢 Reformas comerciais de São José
+            </div>
+            <div className="p-4 bg-zinc-800/50 backdrop-blur border border-zinc-700 rounded-lg">
+              🏠 Residências da região
             </div>
           </div>
         </div>
