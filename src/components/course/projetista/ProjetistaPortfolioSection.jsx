@@ -1,62 +1,55 @@
 import { Trophy, House, CaretLeft, CaretRight, Sparkle } from '@phosphor-icons/react';
 import { useState } from 'react';
+import ProjetistaGalleryWithLightbox from './ProjetistaGalleryWithLightbox';
 
 const studentProjects = [
   {
-    id: 1,
+    type: 'image',
+    src: "/assets/projetista-3d/imagens-projeto/Painel, com nicho e ripado - imagem renderizada.png",
     title: "Painel com Nicho e Ripado",
-    student: "Amanda Silva",
-    image: "/assets/projetista-3d/imagens-projeto/painel-renderizado.png",
-    description: "Render Ultra Realístico"
+    description: "Render Ultra Realístico - Amanda Silva"
   },
   {
-    id: 2,
+    type: 'image',
+    src: "/assets/projetista-3d/cases/carol-orofino/cena cozinha.png",
     title: "Cozinha Moderna",
-    student: "Carol Orofino",
-    image: "/assets/projetista-3d/cases/carol-orofino/cozinha.png",
-    description: "Design de Interiores"
+    description: "Design de Interiores - Carol Orofino"
   },
   {
-    id: 3,
+    type: 'image',
+    src: "/assets/projetista-3d/cases/carol-orofino/cena banheiro.png",
     title: "Banheiro Residencial", 
-    student: "Carol Orofino",
-    image: "/assets/projetista-3d/cases/carol-orofino/banheiro.png",
-    description: "Projeto Residencial"
+    description: "Projeto Residencial - Carol Orofino"
   },
   {
-    id: 4,
+    type: 'image',
+    src: "/assets/projetista-3d/cases/carol-orofino/cena quarto.png",
     title: "Quarto Master",
-    student: "Carol Orofino", 
-    image: "/assets/projetista-3d/cases/carol-orofino/quarto-2.png",
-    description: "Ambientação Realística"
+    description: "Ambientação Realística - Carol Orofino"
   },
   {
-    id: 5,
+    type: 'image',
+    src: "/assets/projetista-3d/cases/lauren/armario.jpeg",
+    title: "Armário Planejado",
+    description: "Móveis sob Medida - Lauren"
+  },
+  {
+    type: 'image',
+    src: "/assets/projetista-3d/cases/patricia-ricardo-moveis/cozinha.png",
+    title: "Cozinha Planejada",
+    description: "Design Corporativo - Patricia"
+  },
+  {
+    type: 'image',
+    src: "/assets/projetista-3d/cases/patricia-ricardo-moveis/sala.png",
     title: "Sala de Estar",
-    student: "Bruno Santos",
-    image: "/assets/projetista-3d/imagens-projeto/painel-renderizado.png",
-    description: "Projeto Comercial"
+    description: "Projeto Residencial - Patricia"
   },
   {
-    id: 6,
-    title: "Escritório Moderno",
-    student: "Maria Fernandes",
-    image: "/assets/projetista-3d/cases/carol-orofino/cozinha.png",
-    description: "Design Corporativo"
-  },
-  {
-    id: 7,
-    title: "Casa Completa",
-    student: "João Pedro",
-    image: "/assets/projetista-3d/cases/carol-orofino/banheiro.png",
-    description: "Projeto Arquitetônico"
-  },
-  {
-    id: 8,
-    title: "Loft Industrial",
-    student: "Ana Carolina",
-    image: "/assets/projetista-3d/cases/carol-orofino/quarto-2.png",
-    description: "Estilo Industrial"
+    type: 'image',
+    src: "/assets/projetista-3d/imagens-projeto/generation-2f169d5f-c611-4d3e-a5e5-168d6c33520f.png",
+    title: "Projeto Moderno",
+    description: "Arquitetura Contemporânea"
   }
 ];
 
@@ -82,74 +75,14 @@ export const ProjetistaPortfolioSection = () => {
           </p>
         </div>
 
-        {/* Student Projects Mosaic */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-          {studentProjects.map((project, index) => {
-            // Função para gerar iniciais do nome
-            const getInitials = (name) => {
-              return name
-                .split(' ')
-                .map(word => word[0])
-                .join('')
-                .toUpperCase()
-                .slice(0, 2);
-            };
-
-            return (
-              <div 
-                key={project.id}
-                className="group rounded-2xl bg-zinc-800/50 backdrop-blur p-4 border border-zinc-700/50 transition-all duration-300 hover:border-purple-500/50 hover:shadow-2xl hover:shadow-purple-500/10 hover:-translate-y-2 animate-fade-in"
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
-                {/* Project Image Container */}
-                <div className="relative aspect-square bg-zinc-700 rounded-xl overflow-hidden mb-4 group-hover:scale-[1.02] transition-transform duration-300">
-                  <img 
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-full object-cover transition-all duration-500 group-hover:brightness-110"
-                    onError={(e) => {
-                      // Fallback para caso a imagem não carregue
-                      e.target.style.display = 'none';
-                      e.target.nextSibling.style.display = 'flex';
-                    }}
-                  />
-                  
-                  {/* Fallback - Avatar com iniciais (escondido por padrão) */}
-                  <div 
-                    className="absolute inset-0 bg-gradient-to-br from-purple-500 to-cyan-400 items-center justify-center text-white font-bold text-4xl hidden"
-                    style={{ display: 'none' }}
-                  >
-                    {getInitials(project.student)}
-                  </div>
-                  
-                  {/* Overlay com título do projeto */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-                    <h4 className="text-white font-semibold text-sm line-clamp-2">
-                      {project.title}
-                    </h4>
-                  </div>
-                </div>
-                
-                {/* Student Info */}
-                <div className="text-center">
-                  {/* Avatar com iniciais do aluno */}
-                  <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-cyan-400 rounded-full flex items-center justify-center text-white font-bold text-sm mx-auto mb-2 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                    {getInitials(project.student)}
-                  </div>
-                  
-                  {/* Nome do aluno */}
-                  <h3 className="text-white font-semibold text-sm mb-1 line-clamp-1">
-                    {project.student}
-                  </h3>
-                  
-                  {/* Descrição */}
-                  <p className="text-purple-400 text-xs font-medium">
-                    {project.description}
-                  </p>
-                </div>
-              </div>
-            );
-          })}
+        {/* Student Projects Gallery with Lightbox */}
+        <div className="max-w-6xl mx-auto">
+          <ProjetistaGalleryWithLightbox 
+            items={studentProjects}
+            columns={4}
+            className="mb-8"
+            showTitles={true}
+          />
         </div>
 
         {/* Stats Section */}

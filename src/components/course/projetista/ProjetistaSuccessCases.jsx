@@ -6,6 +6,8 @@ import {
   PlayCircle,
   ArrowRight
 } from '@phosphor-icons/react';
+import VideoPlayer from './VideoPlayer';
+import ProjetistaGalleryWithLightbox from './ProjetistaGalleryWithLightbox';
 
 const successCases = [
   {
@@ -19,10 +21,10 @@ const successCases = [
     bgColor: "bg-purple-400/10",
     borderColor: "border-purple-400/20",
     projects: [
-      { type: "image", src: "/assets/projetista-3d/cases/carol-orofino/banheiro.png", title: "Banheiro" },
-      { type: "image", src: "/assets/projetista-3d/cases/carol-orofino/cozinha.png", title: "Cozinha" },
-      { type: "image", src: "/assets/projetista-3d/cases/carol-orofino/quarto-1.png", title: "Quarto 1" },
-      { type: "video", src: "/assets/projetista-3d/cases/carol-orofino/video-externo.mp4", title: "Vídeo Técnico" }
+      { type: "image", src: "/assets/projetista-3d/cases/carol-orofino/cena banheiro.png", title: "Banheiro Moderno" },
+      { type: "image", src: "/assets/projetista-3d/cases/carol-orofino/cena cozinha.png", title: "Cozinha Planejada" },
+      { type: "image", src: "/assets/projetista-3d/cases/carol-orofino/cena quarto 1.png", title: "Quarto Infantil" },
+      { type: "video", src: "/assets/projetista-3d/cases/carol-orofino/video externo.mp4", title: "Apresentação Externa" }
     ]
   },
   {
@@ -51,9 +53,9 @@ const successCases = [
     bgColor: "bg-amber-400/10",
     borderColor: "border-amber-400/20",
     projects: [
-      { type: "video", src: "/assets/projetista-3d/cases/elton-santa-madeira/video-empresa.mp4", title: "Vídeo Empresa" },
-      { type: "image", src: "/assets/projetista-3d/cases/elton-santa-madeira/casa-1.jpeg", title: "Casa 1" },
-      { type: "image", src: "/assets/projetista-3d/cases/elton-santa-madeira/casa-2.jpeg", title: "Casa 2" }
+      { type: "video", src: "/assets/projetista-3d/cases/elton-santa-madeira/The_camera_dont_202508261226.mp4", title: "Apresentação da Empresa" },
+      { type: "image", src: "/assets/projetista-3d/cases/elton-santa-madeira/WhatsApp Image 2025-08-19 at 18.03.19.jpeg", title: "Projeto Residencial 1" },
+      { type: "image", src: "/assets/projetista-3d/cases/elton-santa-madeira/WhatsApp Image 2025-08-19 at 18.03.20.jpeg", title: "Projeto Residencial 2" }
     ]
   },
   {
@@ -67,9 +69,10 @@ const successCases = [
     bgColor: "bg-emerald-400/10",
     borderColor: "border-emerald-400/20",
     projects: [
-      { type: "image", src: "/assets/projetista-3d/cases/patricia-ricardo-moveis/cozinha.png", title: "Cozinha" },
-      { type: "image", src: "/assets/projetista-3d/cases/patricia-ricardo-moveis/sala.png", title: "Sala" },
-      { type: "video", src: "/assets/projetista-3d/cases/patricia-ricardo-moveis/video-cozinha.mp4", title: "Vídeo Cozinha" }
+      { type: "image", src: "/assets/projetista-3d/cases/patricia-ricardo-moveis/cozinha.png", title: "Cozinha Planejada" },
+      { type: "image", src: "/assets/projetista-3d/cases/patricia-ricardo-moveis/sala.png", title: "Sala de Estar" },
+      { type: "video", src: "/assets/projetista-3d/cases/patricia-ricardo-moveis/video-cozinha.mp4", title: "Tour Virtual Cozinha" },
+      { type: "video", src: "/assets/projetista-3d/cases/patricia-ricardo-moveis/video-sala.mp4", title: "Tour Virtual Sala" }
     ]
   }
 ];
@@ -124,40 +127,14 @@ export const ProjetistaSuccessCases = () => {
                   </div>
                 </div>
 
-                {/* Projects Grid */}
-                <div className="grid grid-cols-2 gap-3 mb-6">
-                  {case_.projects.slice(0, 4).map((project, projectIndex) => (
-                    <div 
-                      key={projectIndex}
-                      className="relative aspect-video bg-zinc-700 rounded-lg overflow-hidden group/project"
-                    >
-                      {project.type === 'video' ? (
-                        <div className="relative w-full h-full bg-zinc-800 flex items-center justify-center">
-                          <PlayCircle className="w-12 h-12 text-white/80" />
-                          <div className="absolute inset-0 bg-black/40" />
-                          <span className="absolute bottom-2 left-2 text-xs text-white bg-black/50 px-2 py-1 rounded">
-                            {project.title}
-                          </span>
-                        </div>
-                      ) : (
-                        <div className="relative w-full h-full">
-                          <img 
-                            src={project.src}
-                            alt={project.title}
-                            className="w-full h-full object-cover"
-                          />
-                          <span className="absolute bottom-2 left-2 text-xs text-white bg-black/50 px-2 py-1 rounded">
-                            {project.title}
-                          </span>
-                        </div>
-                      )}
-                      
-                      {/* Hover overlay */}
-                      <div className="absolute inset-0 bg-purple-500/20 opacity-0 group-hover/project:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                        <Eye className="w-6 h-6 text-white" />
-                      </div>
-                    </div>
-                  ))}
+                {/* Projects Gallery */}
+                <div className="mb-6">
+                  <ProjetistaGalleryWithLightbox 
+                    items={case_.projects}
+                    columns={2}
+                    className=""
+                    showTitles={false}
+                  />
                 </div>
 
                 {/* View More Button */}
