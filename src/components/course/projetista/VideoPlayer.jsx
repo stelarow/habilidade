@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { PlayCircle, Pause, VolumeMute, VolumeHigh } from '@phosphor-icons/react';
+import { PlayCircle, Pause, SpeakerSlash, SpeakerHigh } from '@phosphor-icons/react';
 
 const VideoPlayer = ({ 
   src, 
@@ -123,9 +123,9 @@ const VideoPlayer = ({
                 }}
               >
                 {isMuted ? (
-                  <VolumeMute className="w-4 h-4" />
+                  <SpeakerSlash className="w-4 h-4" />
                 ) : (
-                  <VolumeHigh className="w-4 h-4" />
+                  <SpeakerHigh className="w-4 h-4" />
                 )}
               </button>
             </div>
