@@ -17,7 +17,9 @@ const ProjetistaGalleryWithLightbox = ({
 
   const openLightbox = (index) => {
     setSelectedIndex(index);
-    setIsVideoPlaying(false);
+    // Se o item é um vídeo, começar reproduzindo automaticamente
+    const item = items[index];
+    setIsVideoPlaying(item?.type === 'video');
   };
 
   const closeLightbox = () => {
@@ -26,13 +28,19 @@ const ProjetistaGalleryWithLightbox = ({
   };
 
   const navigateToNext = () => {
-    setSelectedIndex((prev) => (prev + 1) % items.length);
-    setIsVideoPlaying(false);
+    const nextIndex = (selectedIndex + 1) % items.length;
+    setSelectedIndex(nextIndex);
+    // Auto-reproduzir se o próximo item for vídeo
+    const nextItem = items[nextIndex];
+    setIsVideoPlaying(nextItem?.type === 'video');
   };
 
   const navigateToPrev = () => {
-    setSelectedIndex((prev) => (prev - 1 + items.length) % items.length);
-    setIsVideoPlaying(false);
+    const prevIndex = (selectedIndex - 1 + items.length) % items.length;
+    setSelectedIndex(prevIndex);
+    // Auto-reproduzir se o item anterior for vídeo
+    const prevItem = items[prevIndex];
+    setIsVideoPlaying(prevItem?.type === 'video');
   };
 
   const toggleVideo = () => {
@@ -305,8 +313,16 @@ const ProjetistaGalleryWithLightbox = ({
                     className="w-full h-full object-contain"
                     controls
                     autoPlay={isVideoPlaying}
+                    playsInline
                     onPlay={() => setIsVideoPlaying(true)}
                     onPause={() => setIsVideoPlaying(false)}
+                    onLoadedData={() => {
+                      // Se deve reproduzir automaticamente, forçar play quando carregar
+                      if (isVideoPlaying) {
+                        const video = document.querySelector('video');
+                        video?.play().catch(console.log); // Catch para browsers que bloqueiam autoplay
+                      }
+                    }}
                   />
                 </div>
               ) : (
@@ -348,7 +364,9 @@ const ProjetistaGalleryWithLightbox = ({
                     onClick={(e) => {
                       e.stopPropagation();
                       setSelectedIndex(index);
-                      setIsVideoPlaying(false);
+                      // Auto-reproduzir se o item selecionado for vídeo
+                      const selectedItem = items[index];
+                      setIsVideoPlaying(selectedItem?.type === 'video');
                     }}
                   />
                 ))}
