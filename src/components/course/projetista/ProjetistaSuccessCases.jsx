@@ -53,6 +53,10 @@ const successCases = [
     bgColor: "bg-amber-400/10",
     borderColor: "border-amber-400/20",
     projects: [
+      { type: "video", src: "/assets/projetista-3d/cases/elton-santa-madeira/The_camera_stand_202508271725.mp4", title: "Novo Projeto - Apresentação Profissional" },
+      { type: "image", src: "/assets/projetista-3d/cases/elton-santa-madeira/generation-26c8b422-1bc0-46ca-aaf7-17479539234c.png", title: "Novo Projeto - Render Premium 1" },
+      { type: "image", src: "/assets/projetista-3d/cases/elton-santa-madeira/generation-59a09ff0-85cb-4c30-8a15-9ea5b45ce26f.png", title: "Novo Projeto - Render Premium 2" },
+      { type: "image", src: "/assets/projetista-3d/cases/elton-santa-madeira/Projeto Chalé Alfredo Vagner esquerda.png", title: "Projeto Chalé Alfredo Vagner" },
       { type: "video", src: "/assets/projetista-3d/cases/elton-santa-madeira/The_camera_dont_202508261226.mp4", title: "Apresentação da Empresa" },
       { type: "image", src: "/assets/projetista-3d/cases/elton-santa-madeira/WhatsApp Image 2025-08-19 at 18.03.19.jpeg", title: "Projeto Residencial 1" },
       { type: "image", src: "/assets/projetista-3d/cases/elton-santa-madeira/WhatsApp Image 2025-08-19 at 18.03.20.jpeg", title: "Projeto Residencial 2" }
@@ -138,14 +142,6 @@ export const ProjetistaSuccessCases = () => {
                   />
                 </div>
 
-                {/* View More Button - Always at bottom */}
-                <button className="w-full flex items-center justify-center gap-2 py-3 px-4 bg-zinc-800/50 backdrop-blur border border-zinc-700 rounded-lg hover:border-purple-400 transition-colors duration-300 group/btn mt-auto">
-                  <Eye className="w-4 h-4 text-zinc-400 group-hover/btn:text-purple-400" />
-                  <span className="text-sm font-medium text-zinc-400 group-hover/btn:text-purple-400">
-                    Ver Portfólio Completo
-                  </span>
-                  <ArrowRight className="w-4 h-4 text-zinc-400 group-hover/btn:text-purple-400 group-hover/btn:translate-x-1 transition-transform duration-300" />
-                </button>
               </div>
             );
           })}
