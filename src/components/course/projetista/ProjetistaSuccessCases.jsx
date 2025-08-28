@@ -175,58 +175,6 @@ export const ProjetistaSuccessCases = () => {
       </div>
     </section>
   );
-}>
-                      "{case_.testimonial}"
-                    </p>
-                  </div>
-                </div>
-
-                {/* Projects Gallery with Featured Layout */}
-                <div className="mb-6">
-                  <ProjetistaGalleryWithLightbox 
-                    items={case_.projects}
-                    layout="featured"
-                    featuredIndex={case_.projects.findIndex(item => item.type === 'video')}
-                    className=""
-                    showTitles={true}
-                  />
-                </div>
-
-                {/* View More Button */}
-                <button className="w-full flex items-center justify-center gap-2 py-3 px-4 bg-zinc-800/50 backdrop-blur border border-zinc-700 rounded-lg hover:border-purple-400 transition-colors duration-300 group/btn">
-                  <Eye className="w-4 h-4 text-zinc-400 group-hover/btn:text-purple-400" />
-                  <span className="text-sm font-medium text-zinc-400 group-hover/btn:text-purple-400">
-                    Ver Portfólio Completo
-                  </span>
-                  <ArrowRight className="w-4 h-4 text-zinc-400 group-hover/btn:text-purple-400 group-hover/btn:translate-x-1 transition-transform duration-300" />
-                </button>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* CTA */}
-        <div className="text-center">
-          <div className="max-w-2xl mx-auto">
-            <h3 className="text-2xl font-bold text-white mb-4">
-              Seu nome pode ser o próximo dessa lista
-            </h3>
-            <p className="text-zinc-400 mb-6">
-              Junte-se aos nossos alunos de sucesso e transforme sua carreira com projetos profissionais
-            </p>
-            <a 
-              href="https://wa.me/5548988559491?text=Ol%C3%A1%21%20Vi%20os%20casos%20de%20sucesso%20e%20quero%20saber%20mais%20sobre%20o%20Curso%20de%20Projetista%203D"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block group relative overflow-hidden rounded-xl px-8 py-4 text-lg font-bold text-white transition-all duration-300 bg-gradient-to-r from-purple-500 to-cyan-400 shadow-2xl shadow-purple-500/30 hover:shadow-purple-500/50 hover:-translate-y-1"
-            >
-              <Trophy className="inline w-5 h-5 mr-2" />
-              QUERO ESSES RESULTADOS TAMBÉM
-              <ArrowRight className="inline w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
 };
+
+export default ProjetistaSuccessCases;
