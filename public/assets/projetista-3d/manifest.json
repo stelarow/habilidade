@@ -1,5 +1,5 @@
 {
-  "generated": "2025-08-27T14:34:14.175Z",
+  "generated": "2025-08-28T22:42:14.791Z",
   "version": "1.0.0",
   "files": {
     "banheiro.png": {
@@ -42,6 +42,11 @@
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
+    "Projeto Chalé Alfredo Vagner esquerda.png": {
+      "source": "cases/elton-santa-madeira/Projeto Chalé Alfredo Vagner esquerda.png",
+      "optimized": false,
+      "note": "Copied as-is (no external tools available)"
+    },
     "WhatsApp Image 2025-08-19 at 18.03.19.jpeg": {
       "source": "cases/elton-santa-madeira/WhatsApp Image 2025-08-19 at 18.03.19.jpeg",
       "optimized": false,
@@ -59,6 +64,16 @@
     },
     "casa-2.jpeg": {
       "source": "cases/elton-santa-madeira/casa-2.jpeg",
+      "optimized": false,
+      "note": "Copied as-is (no external tools available)"
+    },
+    "generation-26c8b422-1bc0-46ca-aaf7-17479539234c.png": {
+      "source": "cases/elton-santa-madeira/generation-26c8b422-1bc0-46ca-aaf7-17479539234c.png",
+      "optimized": false,
+      "note": "Copied as-is (no external tools available)"
+    },
+    "generation-59a09ff0-85cb-4c30-8a15-9ea5b45ce26f.png": {
+      "source": "cases/elton-santa-madeira/generation-59a09ff0-85cb-4c30-8a15-9ea5b45ce26f.png",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
@@ -122,6 +137,11 @@
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
+    "The_camera_stand_202508271725.mp4": {
+      "source": "cases/elton-santa-madeira/The_camera_stand_202508271725.mp4",
+      "optimized": false,
+      "note": "Copied as-is (no external tools available)"
+    },
     "video-empresa.mp4": {
       "source": "cases/elton-santa-madeira/video-empresa.mp4",
       "optimized": false,
@@ -165,7 +185,7 @@
   },
   "note": "Simplified optimization for Netlify build - assets copied as-is",
   "stats": {
-    "totalFiles": 32,
+    "totalFiles": 36,
     "optimizedDir": "public/assets/projetista-3d/optimized",
     "thumbnailsDir": "public/assets/projetista-3d/thumbnails"
   }
