@@ -105,10 +105,6 @@ export const routes = [
         lazy: () => import('./pages/courses/Projetista3D')
       },
       {
-        path: 'cursos/projetista-3d-novo',
-        lazy: () => import('./pages/courses/Projetista3DNew')
-      },
-      {
         path: 'cursos/edicao-video',
         lazy: () => import('./pages/courses/EdicaoVideo')
       },
