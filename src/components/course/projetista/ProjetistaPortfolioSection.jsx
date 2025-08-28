@@ -60,18 +60,18 @@ export const ProjetistaPortfolioSection = () => {
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 mb-4 px-4 py-2 bg-purple-500/10 border border-purple-400/20 rounded-full text-sm font-medium text-purple-400">
             <Trophy className="w-4 h-4" />
-            EVOLUÇÃO DOS NOSSOS ALUNOS
+            APRENDIZADO PRÁTICO
           </div>
           
           <h2 className="text-3xl md:text-5xl font-bold mb-6">
             <span className="bg-gradient-to-r from-purple-400 via-purple-600 to-cyan-400 bg-clip-text text-transparent">PROJETOS</span>
-            <span className="text-white"> DOS NOSSOS </span>
-            <span className="bg-gradient-to-r from-purple-400 via-purple-600 to-cyan-400 bg-clip-text text-transparent">ALUNOS</span>
+            <span className="text-white"> REALIZADOS EM </span>
+            <span className="bg-gradient-to-r from-purple-400 via-purple-600 to-cyan-400 bg-clip-text text-transparent">AULA</span>
           </h2>
           
           <p className="text-xl text-zinc-400 max-w-3xl mx-auto">
-            Veja os resultados profissionais que nossos alunos alcançaram.
-            Renders ultra realísticos criados após o curso.
+            Veja o que você vai criar durante as aulas práticas.
+            Projetos reais desenvolvidos passo a passo.
           </p>
         </div>
 
@@ -103,7 +103,7 @@ export const ProjetistaPortfolioSection = () => {
           </div>
           
           <div className="text-center p-4 bg-zinc-800/30 rounded-lg border border-zinc-700/50">
-            <div className="text-2xl font-bold text-yellow-400 mb-1">4.9★</div>
+            <div className="text-2xl font-bold text-yellow-400 mb-1">4.9⭐</div>
             <div className="text-sm text-zinc-400">Avaliação Média</div>
           </div>
         </div>
@@ -123,5 +123,7 @@ export const ProjetistaPortfolioSection = () => {
 
       </div>
     </section>
+  )
+}
   );
 };
