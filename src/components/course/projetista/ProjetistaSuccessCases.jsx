@@ -81,6 +81,120 @@ const successCases = [
   }
 ];
 
+// Novo layout compacto - vídeo principal + 2 imagens à direita + demais embaixo
+const renderCompactLayout = (projects, caseId) => {
+  const videoItem = projects.find(item => item.type === 'video');
+  const imageItems = projects.filter(item => item.type === 'image');
+  const topImages = imageItems.slice(0, 2); // Primeiras 2 imagens
+  const bottomItems = imageItems.slice(2); // Restante das imagens
+
+  return (
+    <div className="space-y-4">
+      {/* Linha Superior: Vídeo (2/3) + 2 Imagens (1/3) */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        {/* Vídeo Principal - Ocupa 2 colunas */}
+        {videoItem && (
+          <div className="lg:col-span-2">
+            <div className="group relative aspect-video bg-zinc-800 rounded-lg overflow-hidden cursor-pointer hover:scale-[1.02] transition-transform duration-300">
+              <video
+                src={videoItem.src}
+                className="w-full h-full object-cover"
+                muted
+                loop
+                onMouseEnter={(e) => e.target.play()}
+                onMouseLeave={(e) => e.target.pause()}
+              />
+              <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div className="bg-white/10 backdrop-blur-sm rounded-full p-4">
+                  <PlayCircle className="w-16 h-16 text-white drop-shadow-lg" />
+                </div>
+              </div>
+              <div className="absolute top-4 right-4">
+                <div className="bg-red-500 text-white text-sm px-3 py-1 rounded-full font-bold shadow-lg">
+                  VÍDEO
+                </div>
+              </div>
+              {/* Título do vídeo */}
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent p-4">
+                <h4 className="text-white font-bold text-lg line-clamp-2">
+                  {videoItem.title}
+                </h4>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* 2 Imagens na Direita - 1 coluna, empilhadas */}
+        <div className="space-y-4">
+          {topImages.map((item, index) => (
+            <div key={`${caseId}-top-${index}`} className="group relative aspect-[4/3] bg-zinc-800 rounded-lg overflow-hidden cursor-pointer hover:scale-[1.02] transition-transform duration-300">
+              <img
+                src={item.src}
+                alt={item.title}
+                className="w-full h-full object-cover"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              {/* Título da imagem */}
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <p className="text-white text-sm font-medium line-clamp-1">
+                  {item.title}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Linha Inferior: Itens Restantes em Grid */}
+      {bottomItems.length > 0 && (
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {bottomItems.map((item, index) => (
+            <div key={`${caseId}-bottom-${index}`} className="group relative aspect-[4/3] bg-zinc-800 rounded-lg overflow-hidden cursor-pointer hover:scale-[1.02] transition-transform duration-300">
+              {item.type === 'video' ? (
+                <>
+                  <video
+                    src={item.src}
+                    className="w-full h-full object-cover"
+                    muted
+                    loop
+                    onMouseEnter={(e) => e.target.play()}
+                    onMouseLeave={(e) => e.target.pause()}
+                  />
+                  <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <PlayCircle className="w-8 h-8 text-white/80" />
+                  </div>
+                  <div className="absolute top-2 right-2">
+                    <div className="bg-red-500/80 text-white text-xs px-2 py-1 rounded font-medium">
+                      VÍDEO
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <img
+                    src={item.src}
+                    alt={item.title}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </>
+              )}
+              {/* Título */}
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <p className="text-white text-xs font-medium line-clamp-1">
+                  {item.title}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
 export const ProjetistaSuccessCases = () => {
   return (
     <section className="px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
@@ -131,15 +245,9 @@ export const ProjetistaSuccessCases = () => {
                   </div>
                 </div>
 
-                {/* Projects Gallery with Featured Layout */}
+                {/* Projects Gallery with Compact Layout */}
                 <div className="mb-6 flex-1">
-                  <ProjetistaGalleryWithLightbox 
-                    items={case_.projects}
-                    layout="featured"
-                    featuredIndex={case_.projects.findIndex(item => item.type === 'video')}
-                    className=""
-                    showTitles={true}
-                  />
+                  {renderCompactLayout(case_.projects, case_.id)}
                 </div>
 
               </div>
