@@ -12,18 +12,13 @@ import { CountdownTimer } from '../../shared/CountdownTimer';
 export const ProjetistaHeroSection = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950">
-      {/* Background Video */}
+      {/* Background Image */}
       <div className="absolute inset-0">
-        <video 
-          autoPlay 
-          muted 
-          loop 
-          playsInline
+        <img 
+          src="/assets/projetista-3d/hero/hero-bg.png"
+          alt="Projetista 3D Background"
           className="w-full h-full object-cover"
-        >
-          <source src="/assets/projetista-3d/hero/The_video_starts_202508261222.mp4" type="video/mp4" />
-          <source src="/assets/projetista-3d/hero/video-vertical.webm" type="video/webm" />
-        </video>
+        />
         <div className="absolute inset-0 bg-black/60" />
       </div>
 
