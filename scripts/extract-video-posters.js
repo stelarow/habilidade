@@ -45,20 +45,45 @@ async function checkFFmpeg() {
   }
 }
 
+// Função para obter duração do vídeo
+async function getVideoDuration(videoPath) {
+  try {
+    const command = `ffprobe -v quiet -show_entries format=duration -of csv=p=0 "${videoPath}"`;
+    const { stdout } = await execAsync(command);
+    return parseFloat(stdout.trim());
+  } catch (error) {
+    console.warn(`⚠ Não foi possível obter duração de ${path.basename(videoPath)}, usando fallback`);
+    return null;
+  }
+}
+
 // Função para extrair frame usando ffmpeg
 async function extractFrameWithFFmpeg(videoPath, posterPath) {
   try {
-    // Extrai frame no segundo 1 do vídeo (ou 0 se o vídeo for muito curto)
-    const command = `ffmpeg -i "${videoPath}" -ss 00:00:01 -vframes 1 -q:v 2 "${posterPath}" -y`;
+    // Primeiro, tenta obter a duração do vídeo
+    const duration = await getVideoDuration(videoPath);
+    
+    let timestamp = '00:00:01'; // fallback padrão
+    
+    if (duration && duration > 3) {
+      // Se temos duração e o vídeo tem mais de 3 segundos, pega frame 2 segundos antes do final
+      const targetTime = Math.max(1, duration - 2);
+      const hours = Math.floor(targetTime / 3600);
+      const minutes = Math.floor((targetTime % 3600) / 60);
+      const seconds = Math.floor(targetTime % 60);
+      timestamp = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    }
+    
+    const command = `ffmpeg -i "${videoPath}" -ss ${timestamp} -vframes 1 -q:v 2 "${posterPath}" -y`;
     await execAsync(command);
-    console.log(`✓ Poster criado: ${path.basename(posterPath)}`);
+    console.log(`✓ Poster criado (${duration ? `${timestamp}, duração: ${duration.toFixed(1)}s` : 'tempo padrão'}): ${path.basename(posterPath)}`);
     return true;
   } catch (error) {
-    // Tenta extrair o primeiro frame se falhar no segundo 1
+    // Fallback: tenta extrair frame no meio do vídeo
     try {
-      const fallbackCommand = `ffmpeg -i "${videoPath}" -ss 00:00:00 -vframes 1 -q:v 2 "${posterPath}" -y`;
+      const fallbackCommand = `ffmpeg -i "${videoPath}" -ss 00:00:01 -vframes 1 -q:v 2 "${posterPath}" -y`;
       await execAsync(fallbackCommand);
-      console.log(`✓ Poster criado (primeiro frame): ${path.basename(posterPath)}`);
+      console.log(`✓ Poster criado (fallback): ${path.basename(posterPath)}`);
       return true;
     } catch (fallbackError) {
       console.error(`✗ Erro ao criar poster para ${path.basename(videoPath)}:`, fallbackError.message);
@@ -82,7 +107,7 @@ async function createPlaceholderPoster(videoPath, posterPath) {
 
 // Função principal
 async function main() {
-  console.log('🎬 Iniciando extração de posters dos vídeos...\n');
+  console.log('🎬 Iniciando extração de posters dos vídeos (último frame)...\n');
   
   const hasFFmpeg = await checkFFmpeg();
   
