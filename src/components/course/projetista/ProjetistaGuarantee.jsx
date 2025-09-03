@@ -56,9 +56,14 @@ export const ProjetistaGuarantee = () => {
             </div>
 
             <div className="text-center">
-              <button className="group relative overflow-hidden rounded-xl px-8 py-4 text-lg font-bold text-white transition-all duration-300 bg-gradient-to-r from-green-500 to-green-400 shadow-2xl shadow-green-500/30 hover:shadow-green-500/50 hover:-translate-y-1">
+              <a 
+                href="https://wa.me/5548988559491?text=Ol%C3%A1%21%20Quero%20come%C3%A7ar%20gratuitamente%20os%20primeiros%207%20dias%20do%20Curso%20de%20Projetista%203D"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative overflow-hidden rounded-xl px-8 py-4 text-lg font-bold text-white transition-all duration-300 bg-gradient-to-r from-green-500 to-green-400 shadow-2xl shadow-green-500/30 hover:shadow-green-500/50 hover:-translate-y-1 inline-block"
+              >
                 🛡️ COMEÇAR GRATUITAMENTE - PRIMEIROS 7 DIAS GRÁTIS
-              </button>
+              </a>
             </div>
           </div>
         </div>

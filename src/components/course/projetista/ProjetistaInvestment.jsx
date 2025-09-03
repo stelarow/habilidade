@@ -80,10 +80,15 @@ export const ProjetistaInvestment = () => {
 
             {/* CTA Button */}
             <div className="text-center">
-              <button className="group relative overflow-hidden rounded-xl px-8 py-4 text-lg font-bold text-white transition-all duration-300 bg-gradient-to-r from-purple-500 to-cyan-400 shadow-2xl shadow-purple-500/30 hover:shadow-purple-500/50 hover:-translate-y-1 animate-pulse">
+              <a 
+                href="https://wa.me/5548988559491?text=Ol%C3%A1%21%20Quero%20garantir%20minha%20vaga%20no%20Curso%20de%20Projetista%203D%20com%2043%25%20OFF"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative overflow-hidden rounded-xl px-8 py-4 text-lg font-bold text-white transition-all duration-300 bg-gradient-to-r from-purple-500 to-cyan-400 shadow-2xl shadow-purple-500/30 hover:shadow-purple-500/50 hover:-translate-y-1 animate-pulse inline-block"
+              >
                 <Rocket className="inline w-6 h-6 mr-3" />
                 GARANTIR MINHA VAGA AGORA - 43% OFF
-              </button>
+              </a>
             </div>
           </div>
         </div>

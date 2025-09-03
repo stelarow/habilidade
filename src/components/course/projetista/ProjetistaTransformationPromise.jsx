@@ -81,10 +81,15 @@ export const ProjetistaTransformationPromise = () => {
 
         {/* Bottom CTA */}
         <div className="text-center">
-          <button className="group relative overflow-hidden rounded-xl px-8 py-4 text-lg font-bold text-white transition-all duration-300 bg-gradient-to-r from-purple-500 to-cyan-400 shadow-2xl shadow-purple-500/30 hover:shadow-purple-500/50 hover:-translate-y-1">
+          <a 
+            href="https://wa.me/5548988559491?text=Ol%C3%A1%21%20Quero%20conhecer%20mais%20sobre%20o%20Curso%20de%20Projetista%203D%20-%20vagas%20limitadas"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group relative overflow-hidden rounded-xl px-8 py-4 text-lg font-bold text-white transition-all duration-300 bg-gradient-to-r from-purple-500 to-cyan-400 shadow-2xl shadow-purple-500/30 hover:shadow-purple-500/50 hover:-translate-y-1 inline-block"
+          >
             <CurrencyCircleDollar className="inline w-6 h-6 mr-3" />
             QUERO CONHECER O CURSO - VAGAS LIMITADAS
-          </button>
+          </a>
         </div>
       </div>
     </section>

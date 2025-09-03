@@ -93,10 +93,15 @@ export const ProjetistaPainSolution = () => {
 
           {/* CTA */}
           <div className="text-center mt-12">
-            <button className="group relative overflow-hidden rounded-xl px-8 py-4 text-lg font-bold text-white transition-all duration-300 bg-gradient-to-r from-purple-500 to-cyan-400 shadow-2xl shadow-purple-500/30 hover:shadow-purple-500/50 hover:-translate-y-1">
+            <a 
+              href="https://wa.me/5548988559491?text=Ol%C3%A1%21%20Quero%20uma%20solu%C3%A7%C3%A3o%20presencial%20e%20garantir%20minha%20vaga%20no%20Curso%20de%20Projetista%203D"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative overflow-hidden rounded-xl px-8 py-4 text-lg font-bold text-white transition-all duration-300 bg-gradient-to-r from-purple-500 to-cyan-400 shadow-2xl shadow-purple-500/30 hover:shadow-purple-500/50 hover:-translate-y-1 inline-block"
+            >
               <Target className="inline w-5 h-5 mr-2" />
               SIM, QUERO SOLUÇÃO PRESENCIAL - GARANTIR VAGA
-            </button>
+            </a>
           </div>
         </div>
       </div>
