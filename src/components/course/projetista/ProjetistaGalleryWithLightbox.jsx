@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, CaretLeft, CaretRight, PlayCircle, Pause } from '@phosphor-icons/react';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { Card, CardContent } from '@/components/ui/card';
+import VideoPlayer from './VideoPlayer';
 
 const ProjetistaGalleryWithLightbox = ({ 
   items, 
@@ -67,24 +68,15 @@ const ProjetistaGalleryWithLightbox = ({
               >
                 {featuredItem.type === 'video' ? (
                   <>
-                    <video
+                    <VideoPlayer
                       src={featuredItem.src}
-                      className="w-full h-full object-cover"
-                      muted
-                      loop
-                      onMouseEnter={(e) => e.target.play()}
-                      onMouseLeave={(e) => e.target.pause()}
+                      title={featuredItem.title}
+                      muted={true}
+                      autoPlay={false}
+                      controls={true}
+                      className=""
+                      aspectRatio="w-full h-full"
                     />
-                    <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <div className="bg-white/10 backdrop-blur-sm rounded-full p-4">
-                        <PlayCircle className="w-16 h-16 text-white drop-shadow-lg" />
-                      </div>
-                    </div>
-                    <div className="absolute top-4 right-4">
-                      <div className="bg-red-500 text-white text-sm px-3 py-1 rounded-full font-bold shadow-lg">
-                        VÍDEO
-                      </div>
-                    </div>
                   </>
                 ) : (
                   <>
@@ -133,22 +125,15 @@ const ProjetistaGalleryWithLightbox = ({
                   >
                     {item.type === 'video' ? (
                       <>
-                        <video
+                        <VideoPlayer
                           src={item.src}
-                          className="w-full h-full object-cover"
-                          muted
-                          loop
-                          onMouseEnter={(e) => e.target.play()}
-                          onMouseLeave={(e) => e.target.pause()}
+                          title={item.title}
+                          muted={true}
+                          autoPlay={false}
+                          controls={true}
+                          aspectRatio="w-full h-full"
+                          className=""
                         />
-                        <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                          <PlayCircle className="w-8 h-8 text-white/80" />
-                        </div>
-                        <div className="absolute top-2 right-2">
-                          <div className="bg-red-500/80 text-white text-xs px-2 py-1 rounded font-medium">
-                            VÍDEO
-                          </div>
-                        </div>
                       </>
                     ) : (
                       <>

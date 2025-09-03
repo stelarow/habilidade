@@ -99,32 +99,15 @@ const renderCompactLayout = (projects, caseId) => {
         {/* Vídeo Principal - Ocupa 2 colunas */}
         {videoItem && (
           <div className="lg:col-span-2">
-            <div className="group relative aspect-video bg-zinc-800 rounded-lg overflow-hidden cursor-pointer hover:scale-[1.02] transition-transform duration-300">
-              <video
-                src={videoItem.src}
-                className="w-full h-full object-cover"
-                muted
-                loop
-                onMouseEnter={(e) => e.target.play()}
-                onMouseLeave={(e) => e.target.pause()}
-              />
-              <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <div className="bg-white/10 backdrop-blur-sm rounded-full p-4">
-                  <PlayCircle className="w-16 h-16 text-white drop-shadow-lg" />
-                </div>
-              </div>
-              <div className="absolute top-4 right-4">
-                <div className="bg-red-500 text-white text-sm px-3 py-1 rounded-full font-bold shadow-lg">
-                  VÍDEO
-                </div>
-              </div>
-              {/* Título do vídeo */}
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent p-4">
-                <h4 className="text-white font-bold text-lg line-clamp-2">
-                  {videoItem.title}
-                </h4>
-              </div>
-            </div>
+            <VideoPlayer
+              src={videoItem.src}
+              title={videoItem.title}
+              muted={true}
+              autoPlay={false}
+              controls={true}
+              className="hover:scale-[1.02] transition-transform duration-300"
+              aspectRatio="aspect-video"
+            />
           </div>
         )}
 
@@ -154,28 +137,18 @@ const renderCompactLayout = (projects, caseId) => {
       {bottomItems.length > 0 && (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {bottomItems.map((item, index) => (
-            <div key={`${caseId}-bottom-${index}`} className="group relative aspect-[4/3] bg-zinc-800 rounded-lg overflow-hidden cursor-pointer hover:scale-[1.02] transition-transform duration-300">
+            <div key={`${caseId}-bottom-${index}`} className="group relative hover:scale-[1.02] transition-transform duration-300">
               {item.type === 'video' ? (
-                <>
-                  <video
-                    src={item.src}
-                    className="w-full h-full object-cover"
-                    muted
-                    loop
-                    onMouseEnter={(e) => e.target.play()}
-                    onMouseLeave={(e) => e.target.pause()}
-                  />
-                  <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <PlayCircle className="w-8 h-8 text-white/80" />
-                  </div>
-                  <div className="absolute top-2 right-2">
-                    <div className="bg-red-500/80 text-white text-xs px-2 py-1 rounded font-medium">
-                      VÍDEO
-                    </div>
-                  </div>
-                </>
+                <VideoPlayer
+                  src={item.src}
+                  title={item.title}
+                  muted={true}
+                  autoPlay={false}
+                  controls={true}
+                  aspectRatio="aspect-[4/3]"
+                />
               ) : (
-                <>
+                <div className="relative aspect-[4/3] bg-zinc-800 rounded-lg overflow-hidden cursor-pointer">
                   <img
                     src={item.src}
                     alt={item.title}
@@ -183,14 +156,14 @@ const renderCompactLayout = (projects, caseId) => {
                     loading="lazy"
                   />
                   <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                </>
+                  {/* Título */}
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <p className="text-white text-xs font-medium line-clamp-1">
+                      {item.title}
+                    </p>
+                  </div>
+                </div>
               )}
-              {/* Título */}
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <p className="text-white text-xs font-medium line-clamp-1">
-                  {item.title}
-                </p>
-              </div>
             </div>
           ))}
         </div>
