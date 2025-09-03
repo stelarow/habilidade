@@ -6,8 +6,10 @@ import {
   PlayCircle,
   ArrowRight
 } from '@phosphor-icons/react';
+import { useState } from 'react';
 import VideoPlayer from './VideoPlayer';
 import ProjetistaGalleryWithLightbox from './ProjetistaGalleryWithLightbox';
+import MediaModal from '../../shared/MediaModal';
 
 const successCases = [
   {
@@ -86,7 +88,7 @@ const successCases = [
 ];
 
 // Novo layout compacto - vídeo principal + 2 imagens à direita + demais embaixo
-const renderCompactLayout = (projects, caseId) => {
+const renderCompactLayout = (projects, caseId, onMediaClick) => {
   const videoItem = projects.find(item => item.type === 'video');
   const imageItems = projects.filter(item => item.type === 'image');
   const topImages = imageItems.slice(0, 2); // Primeiras 2 imagens
@@ -98,7 +100,7 @@ const renderCompactLayout = (projects, caseId) => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {/* Vídeo Principal - Ocupa 2 colunas */}
         {videoItem && (
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-2 cursor-pointer" onClick={() => onMediaClick(projects.indexOf(videoItem))}>
             <VideoPlayer
               src={videoItem.src}
               poster={videoItem.poster}
@@ -115,7 +117,11 @@ const renderCompactLayout = (projects, caseId) => {
         {/* 2 Imagens na Direita - 1 coluna, empilhadas */}
         <div className="space-y-4">
           {topImages.map((item, index) => (
-            <div key={`${caseId}-top-${index}`} className="group relative aspect-[4/3] bg-zinc-800 rounded-lg overflow-hidden cursor-pointer hover:scale-[1.02] transition-transform duration-300">
+            <div 
+              key={`${caseId}-top-${index}`} 
+              className="group relative aspect-[4/3] bg-zinc-800 rounded-lg overflow-hidden cursor-pointer hover:scale-[1.02] transition-transform duration-300"
+              onClick={() => onMediaClick(projects.indexOf(item))}
+            >
               <img
                 src={item.src}
                 alt={item.title}
@@ -138,7 +144,11 @@ const renderCompactLayout = (projects, caseId) => {
       {bottomItems.length > 0 && (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {bottomItems.map((item, index) => (
-            <div key={`${caseId}-bottom-${index}`} className="group relative hover:scale-[1.02] transition-transform duration-300">
+            <div 
+              key={`${caseId}-bottom-${index}`} 
+              className="group relative hover:scale-[1.02] transition-transform duration-300 cursor-pointer"
+              onClick={() => onMediaClick(projects.indexOf(item))}
+            >
               {item.type === 'video' ? (
                 <VideoPlayer
                   src={item.src}
@@ -150,7 +160,7 @@ const renderCompactLayout = (projects, caseId) => {
                   aspectRatio="aspect-[4/3]"
                 />
               ) : (
-                <div className="relative aspect-[4/3] bg-zinc-800 rounded-lg overflow-hidden cursor-pointer">
+                <div className="relative aspect-[4/3] bg-zinc-800 rounded-lg overflow-hidden">
                   <img
                     src={item.src}
                     alt={item.title}
@@ -175,6 +185,28 @@ const renderCompactLayout = (projects, caseId) => {
 };
 
 export const ProjetistaSuccessCases = () => {
+  const [modalState, setModalState] = useState({
+    isOpen: false,
+    items: [],
+    currentIndex: 0
+  });
+
+  const handleMediaClick = (caseProjects, itemIndex) => {
+    setModalState({
+      isOpen: true,
+      items: caseProjects,
+      currentIndex: itemIndex
+    });
+  };
+
+  const handleCloseModal = () => {
+    setModalState(prev => ({ ...prev, isOpen: false }));
+  };
+
+  const handleNavigateModal = (newIndex) => {
+    setModalState(prev => ({ ...prev, currentIndex: newIndex }));
+  };
+
   return (
     <section className="px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
       <div className="container mx-auto max-w-7xl">
@@ -226,7 +258,7 @@ export const ProjetistaSuccessCases = () => {
 
                 {/* Projects Gallery with Compact Layout */}
                 <div className="mb-6 flex-1">
-                  {renderCompactLayout(case_.projects, case_.id)}
+                  {renderCompactLayout(case_.projects, case_.id, (itemIndex) => handleMediaClick(case_.projects, itemIndex))}
                 </div>
 
               </div>
@@ -256,6 +288,15 @@ export const ProjetistaSuccessCases = () => {
           </div>
         </div>
       </div>
+
+      {/* Modal para visualização ampliada */}
+      <MediaModal
+        isOpen={modalState.isOpen}
+        onClose={handleCloseModal}
+        items={modalState.items}
+        currentIndex={modalState.currentIndex}
+        onNavigate={handleNavigateModal}
+      />
     </section>
   );
 };
