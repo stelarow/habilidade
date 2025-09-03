@@ -140,12 +140,6 @@ const VideoPlayer = ({
         </div>
       </div>
 
-      {/* Loading state */}
-      {!isPlaying && !poster && (
-        <div className="absolute inset-0 bg-zinc-700 animate-pulse flex items-center justify-center">
-          <div className="text-zinc-400 text-sm">Carregando...</div>
-        </div>
-      )}
     </div>
   );
 };

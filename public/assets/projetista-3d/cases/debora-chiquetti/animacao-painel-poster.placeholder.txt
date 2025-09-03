@@ -1,0 +1,3 @@
+<!-- Placeholder para poster de vídeo -->
+<!-- Execute o script com ffmpeg instalado para gerar o poster real -->
+<!-- Vídeo: animacao-painel.mp4 -->

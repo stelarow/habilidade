@@ -24,7 +24,7 @@ const successCases = [
       { type: "image", src: "/assets/projetista-3d/cases/carol-orofino/cena banheiro.png", title: "Banheiro Moderno" },
       { type: "image", src: "/assets/projetista-3d/cases/carol-orofino/cena cozinha.png", title: "Cozinha Planejada" },
       { type: "image", src: "/assets/projetista-3d/cases/carol-orofino/cena quarto 1.png", title: "Quarto Infantil" },
-      { type: "video", src: "/assets/projetista-3d/cases/carol-orofino/video externo.mp4", title: "Apresentação Externa" }
+      { type: "video", src: "/assets/projetista-3d/cases/carol-orofino/video externo.mp4", poster: "/assets/projetista-3d/cases/carol-orofino/video externo-poster.jpg", title: "Apresentação Externa" }
     ]
   },
   {
@@ -40,8 +40,8 @@ const successCases = [
     projects: [
       { type: "image", src: "/assets/projetista-3d/cases/debora-chiquetti/sala-estar.png", title: "Sala de Estar Planejada" },
       { type: "image", src: "/assets/projetista-3d/cases/debora-chiquetti/painel-sala.png", title: "Painel Sala de Estar" },
-      { type: "video", src: "/assets/projetista-3d/cases/debora-chiquetti/animacao-sala.mp4", title: "Animação Sala de Estar" },
-      { type: "video", src: "/assets/projetista-3d/cases/debora-chiquetti/animacao-painel.mp4", title: "Animação do Painel" }
+      { type: "video", src: "/assets/projetista-3d/cases/debora-chiquetti/animacao-sala.mp4", poster: "/assets/projetista-3d/cases/debora-chiquetti/animacao-sala-poster.jpg", title: "Animação Sala de Estar" },
+      { type: "video", src: "/assets/projetista-3d/cases/debora-chiquetti/animacao-painel.mp4", poster: "/assets/projetista-3d/cases/debora-chiquetti/animacao-painel-poster.jpg", title: "Animação do Painel" }
     ]
   },
   {
@@ -55,11 +55,11 @@ const successCases = [
     bgColor: "bg-amber-400/10",
     borderColor: "border-amber-400/20",
     projects: [
-      { type: "video", src: "/assets/projetista-3d/cases/elton-santa-madeira/The_camera_stand_202508271725.mp4", title: "Novo Projeto - Apresentação Profissional" },
+      { type: "video", src: "/assets/projetista-3d/cases/elton-santa-madeira/The_camera_stand_202508271725.mp4", poster: "/assets/projetista-3d/cases/elton-santa-madeira/The_camera_stand_202508271725-poster.jpg", title: "Novo Projeto - Apresentação Profissional" },
       { type: "image", src: "/assets/projetista-3d/cases/elton-santa-madeira/generation-26c8b422-1bc0-46ca-aaf7-17479539234c.png", title: "Novo Projeto - Render Premium 1" },
       { type: "image", src: "/assets/projetista-3d/cases/elton-santa-madeira/generation-59a09ff0-85cb-4c30-8a15-9ea5b45ce26f.png", title: "Novo Projeto - Render Premium 2" },
       { type: "image", src: "/assets/projetista-3d/cases/elton-santa-madeira/Projeto Chalé Alfredo Vagner esquerda.png", title: "Projeto Chalé Alfredo Vagner" },
-      { type: "video", src: "/assets/projetista-3d/cases/elton-santa-madeira/The_camera_dont_202508261226.mp4", title: "Apresentação da Empresa" },
+      { type: "video", src: "/assets/projetista-3d/cases/elton-santa-madeira/The_camera_dont_202508261226.mp4", poster: "/assets/projetista-3d/cases/elton-santa-madeira/The_camera_dont_202508261226-poster.jpg", title: "Apresentação da Empresa" },
       { type: "image", src: "/assets/projetista-3d/cases/elton-santa-madeira/WhatsApp Image 2025-08-19 at 18.03.19.jpeg", title: "Projeto Residencial 1" },
       { type: "image", src: "/assets/projetista-3d/cases/elton-santa-madeira/WhatsApp Image 2025-08-19 at 18.03.20.jpeg", title: "Projeto Residencial 2" }
     ]
@@ -76,11 +76,11 @@ const successCases = [
     borderColor: "border-emerald-400/20",
     projects: [
       { type: "image", src: "/assets/projetista-3d/cases/patricia-ricardo-moveis/salao-beleza.png", title: "Projeto Salão de Beleza" },
-      { type: "video", src: "/assets/projetista-3d/cases/patricia-ricardo-moveis/video-salao-beleza.mp4", title: "Apresentação Salão de Beleza" },
+      { type: "video", src: "/assets/projetista-3d/cases/patricia-ricardo-moveis/video-salao-beleza.mp4", poster: "/assets/projetista-3d/cases/patricia-ricardo-moveis/video-salao-beleza-poster.jpg", title: "Apresentação Salão de Beleza" },
       { type: "image", src: "/assets/projetista-3d/cases/patricia-ricardo-moveis/cozinha.png", title: "Cozinha Planejada" },
       { type: "image", src: "/assets/projetista-3d/cases/patricia-ricardo-moveis/sala.png", title: "Sala de Estar" },
-      { type: "video", src: "/assets/projetista-3d/cases/patricia-ricardo-moveis/video-cozinha.mp4", title: "Tour Virtual Cozinha" },
-      { type: "video", src: "/assets/projetista-3d/cases/patricia-ricardo-moveis/video-sala.mp4", title: "Tour Virtual Sala" }
+      { type: "video", src: "/assets/projetista-3d/cases/patricia-ricardo-moveis/video-cozinha.mp4", poster: "/assets/projetista-3d/cases/patricia-ricardo-moveis/video-cozinha-poster.jpg", title: "Tour Virtual Cozinha" },
+      { type: "video", src: "/assets/projetista-3d/cases/patricia-ricardo-moveis/video-sala.mp4", poster: "/assets/projetista-3d/cases/patricia-ricardo-moveis/video-sala-poster.jpg", title: "Tour Virtual Sala" }
     ]
   }
 ];
@@ -101,6 +101,7 @@ const renderCompactLayout = (projects, caseId) => {
           <div className="lg:col-span-2">
             <VideoPlayer
               src={videoItem.src}
+              poster={videoItem.poster}
               title={videoItem.title}
               muted={true}
               autoPlay={false}
@@ -141,6 +142,7 @@ const renderCompactLayout = (projects, caseId) => {
               {item.type === 'video' ? (
                 <VideoPlayer
                   src={item.src}
+                  poster={item.poster}
                   title={item.title}
                   muted={true}
                   autoPlay={false}
