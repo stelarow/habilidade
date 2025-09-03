@@ -29,9 +29,15 @@ const studentProjects = [
   },
   {
     type: 'image',
-    src: "/assets/projetista-3d/cases/lauren/armario.jpeg",
-    title: "Armário Planejado",
-    description: "Móveis sob Medida - Lauren"
+    src: "/assets/projetista-3d/cases/debora-chiquetti/sala-estar.png",
+    title: "Sala de Estar Planejada",
+    description: "Móveis Planejados - Debora Chiquetti"
+  },
+  {
+    type: 'image',
+    src: "/assets/projetista-3d/cases/patricia-ricardo-moveis/salao-beleza.png",
+    title: "Projeto Salão de Beleza",
+    description: "Design Comercial - Patricia"
   },
   {
     type: 'image',

@@ -15,7 +15,7 @@ const successCases = [
     name: "Carol Orofino",
     profession: "Designer de Interiores",
     company: "Freelancer",
-    testimonial: "Renders profissionais que aumentaram contratos em 300%",
+    testimonial: "Renders profissionais que encantam os clientes",
     icon: UserCheck,
     color: "text-purple-400",
     bgColor: "bg-purple-400/10",
@@ -29,17 +29,19 @@ const successCases = [
   },
   {
     id: 2,
-    name: "Lauren",
+    name: "Debora Chiquetti",
     profession: "Móveis Planejados",
     company: "Legnomobilli Móveis",
-    testimonial: "Domínio total em armários e móveis sob medida",
+    testimonial: "Domínio total em móveis planejados",
     icon: UserCheck,
     color: "text-cyan-400",
     bgColor: "bg-cyan-400/10",
     borderColor: "border-cyan-400/20",
     projects: [
-      { type: "image", src: "/assets/projetista-3d/cases/lauren/armario.jpeg", title: "Armário Render" },
-      { type: "video", src: "/assets/projetista-3d/cases/lauren/video-armario.mp4", title: "Vídeo Animado" }
+      { type: "image", src: "/assets/projetista-3d/cases/debora-chiquetti/sala-estar.png", title: "Sala de Estar Planejada" },
+      { type: "image", src: "/assets/projetista-3d/cases/debora-chiquetti/painel-sala.png", title: "Painel Sala de Estar" },
+      { type: "video", src: "/assets/projetista-3d/cases/debora-chiquetti/animacao-sala.mp4", title: "Animação Sala de Estar" },
+      { type: "video", src: "/assets/projetista-3d/cases/debora-chiquetti/animacao-painel.mp4", title: "Animação do Painel" }
     ]
   },
   {
@@ -67,12 +69,14 @@ const successCases = [
     name: "Patrícia",
     profession: "Empresária",
     company: "Ricardo Móveis",
-    testimonial: "Renders que transformaram minha loja de móveis",
+    testimonial: "Renders que transformaram minha marcenária de móveis",
     icon: Buildings,
     color: "text-emerald-400",
     bgColor: "bg-emerald-400/10",
     borderColor: "border-emerald-400/20",
     projects: [
+      { type: "image", src: "/assets/projetista-3d/cases/patricia-ricardo-moveis/salao-beleza.png", title: "Projeto Salão de Beleza" },
+      { type: "video", src: "/assets/projetista-3d/cases/patricia-ricardo-moveis/video-salao-beleza.mp4", title: "Apresentação Salão de Beleza" },
       { type: "image", src: "/assets/projetista-3d/cases/patricia-ricardo-moveis/cozinha.png", title: "Cozinha Planejada" },
       { type: "image", src: "/assets/projetista-3d/cases/patricia-ricardo-moveis/sala.png", title: "Sala de Estar" },
       { type: "video", src: "/assets/projetista-3d/cases/patricia-ricardo-moveis/video-cozinha.mp4", title: "Tour Virtual Cozinha" },
