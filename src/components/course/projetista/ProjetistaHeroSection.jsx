@@ -17,9 +17,12 @@ export const ProjetistaHeroSection = () => {
         <img 
           src="/assets/projetista-3d/hero/hero-bg.png"
           alt="Projetista 3D Background"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover filter blur-[0.5px]"
         />
-        <div className="absolute inset-0 bg-black/60" />
+        {/* Multi-layered overlay for better text readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/75" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-transparent to-black/50" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_30%,_black/40_70%)]" />
       </div>
 
       {/* Background Pattern */}
