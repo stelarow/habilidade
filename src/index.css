@@ -473,6 +473,7 @@ button, a, [role="button"] {
     text-align: left;
     white-space: nowrap;
     overflow: hidden;
+    vertical-align: middle; /* Alinhamento vertical com o texto estático */
   }
   
   /* Responsive adjustments for typewriter container */
