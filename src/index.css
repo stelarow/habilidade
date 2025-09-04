@@ -235,6 +235,7 @@ button, a, [role="button"] {
   }
   .animate-blink {
     animation: blink 1s steps(1) infinite;
+    vertical-align: top; /* Alinhamento com o container typewriter */
   }
   .star {
     animation: twinkle 3s infinite ease-in-out;
@@ -469,7 +470,6 @@ button, a, [role="button"] {
   /* typewriter container for stable layout */
   .typewriter-container {
     min-width: 18ch; /* Aproximadamente o tamanho de "Inteligência Artificial" */
-    min-height: 1.2em;
     text-align: left;
     white-space: nowrap;
     overflow: hidden;
