@@ -64,7 +64,10 @@
       "WebFetch(domain:github.com)",
       "Read(//tmp/projetista-pro-showcase/src/components/**)",
       "Read(//tmp/projetista-pro-showcase/**)",
-      "mcp__shadcn-ui-server__list-components"
+      "mcp__shadcn-ui-server__list-components",
+      "mcp__serena__replace_symbol_body",
+      "Bash(git rm:*)",
+      "Bash(npm run dev:*)"
     ],
     "deny": []
   }

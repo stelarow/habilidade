@@ -35,37 +35,33 @@ export const ProjetistaHeroSection = () => {
       <div className="container mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20 relative z-10">
         <div className="max-w-4xl mx-auto text-center animate-fade-in">
           {/* Main Headline */}
-          <div className="mb-8">
+          <div className="mb-6">
             <div className="inline-flex items-center gap-2 mb-4 px-4 py-2 bg-purple-500/10 border border-purple-400/20 rounded-full text-sm font-medium text-purple-400">
               <Rocket className="w-4 h-4" />
               ÚNICO CURSO PRESENCIAL EM SC
             </div>
             
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-6">
               <span className="bg-gradient-to-r from-purple-400 via-purple-600 to-cyan-400 bg-clip-text text-transparent">
                 DOMINE SKETCHUP E ENSCAPE
               </span>
               <br />
               <span className="text-white">
-                TRANSFORME SUAS IDEIAS EM PROJETOS 3D
-              </span>
-              <br />
-              <span className="bg-gradient-to-r from-purple-400 via-purple-600 to-cyan-400 bg-clip-text text-transparent">
-                PROFISSIONAIS E REALISTAS
+                TRANSFORME SUAS IDEIAS EM PROJETOS 3D PROFISSIONAIS E REALISTAS
               </span>
             </h1>
           </div>
 
           {/* Key Benefits */}
-          <div className="mb-8 space-y-4">
-            <div className="flex items-center justify-center gap-3 text-lg">
-              <MapPin className="w-6 h-6 text-cyan-400" />
+          <div className="mb-6 space-y-3">
+            <div className="flex items-center justify-center gap-3 text-base">
+              <MapPin className="w-5 h-5 text-cyan-400" />
               <span className="text-zinc-300">
-                Único curso presencial completo em <strong className="text-white">São José SC</strong> com certificado nacional e turmas de até <strong className="text-purple-400">4 alunos</strong>
+                Presencial em <strong className="text-white">São José SC</strong> • Turmas de <strong className="text-purple-400">4 alunos</strong> • Certificado nacional
               </span>
             </div>
             
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-lg">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-base">
               <div className="flex items-center gap-2">
                 <CheckCircle className="w-5 h-5 text-green-500" />
                 <span className="text-green-400">+ de 200 alunos formados</span>
@@ -78,7 +74,7 @@ export const ProjetistaHeroSection = () => {
           </div>
 
           {/* Pricing Section */}
-          <div className="mb-8">
+          <div className="mb-6">
             <div className="inline-flex flex-col sm:flex-row items-center gap-4 p-6 bg-zinc-800/80 backdrop-blur border border-zinc-700 rounded-2xl shadow-2xl">
               <div className="flex items-center gap-2 px-4 py-2 bg-yellow-500/20 border border-yellow-400 rounded-lg">
                 <Lightning className="w-5 h-5 text-yellow-400" />
@@ -100,7 +96,7 @@ export const ProjetistaHeroSection = () => {
           </div>
 
           {/* CTA Button */}
-          <div className="mb-8">
+          <div className="mb-6">
             <a 
               href="https://wa.me/5548988559491?text=Ol%C3%A1%21%20Quero%20dominar%20as%20ferramentas%20do%20Curso%20de%20Projetista%203D"
               target="_blank"

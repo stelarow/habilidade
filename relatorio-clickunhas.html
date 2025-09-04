@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório de Análise - ClickUnhas Loja</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .card { @apply bg-white rounded-lg shadow-md border border-gray-200; }
+        .badge-success { @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800; }
+        .badge-warning { @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800; }
+        .badge-danger { @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800; }
+        .progress-bar { @apply w-full bg-gray-200 rounded-full h-2.5; }
+        .progress-fill { @apply h-2.5 rounded-full transition-all duration-300; }
+        .icon { width: 20px; height: 20px; }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="gradient-bg text-white">
+        <div class="max-w-7xl mx-auto px-4 py-8">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-3xl font-bold">Relatório de Análise Website</h1>
+                    <p class="text-blue-100 mt-2">Análise técnica e estratégica completa</p>
+                </div>
+                <div class="text-right">
+                    <div class="text-sm opacity-90">Data: 28/08/2025</div>
+                    <div class="text-2xl font-bold">7.5/10</div>
+                    <div class="text-sm">Nota Geral</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto px-4 py-8 space-y-8">
+        
+        <!-- Site Info Card -->
+        <div class="card p-6">
+            <div class="flex items-start justify-between mb-4">
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-900">ClickUnhas Loja</h2>
+                    <p class="text-gray-600">https://www.clickunhasloja.com.br/</p>
+                    <span class="badge-success mt-2">E-commerce Ativo</span>
+                </div>
+                <div class="text-right">
+                    <div class="text-sm text-gray-500">Nicho</div>
+                    <div class="font-medium">Produtos para Unhas</div>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+                <div class="bg-blue-50 p-4 rounded-lg">
+                    <div class="flex items-center">
+                        <span class="icon">📱</span>
+                        <div class="ml-3">
+                            <div class="text-sm text-gray-600">WhatsApp</div>
+                            <div class="font-medium">(54) 8 99906-6522</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-green-50 p-4 rounded-lg">
+                    <div class="flex items-center">
+                        <span class="icon">💰</span>
+                        <div class="ml-3">
+                            <div class="text-sm text-gray-600">Faixa de Preço</div>
+                            <div class="font-medium">R$ 12,90 - R$ 743,90</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-purple-50 p-4 rounded-lg">
+                    <div class="flex items-center">
+                        <span class="icon">📦</span>
+                        <div class="ml-3">
+                            <div class="text-sm text-gray-600">Categorias</div>
+                            <div class="font-medium">8+ Categorias</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Performance Overview -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            
+            <!-- Technical Score -->
+            <div class="card p-6">
+                <h3 class="text-xl font-bold text-gray-900 mb-4">Pontuação Técnica</h3>
+                
+                <div class="space-y-4">
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm font-medium text-gray-700">Performance</span>
+                            <span class="text-sm text-gray-500">6/10</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill bg-yellow-500" style="width: 60%"></div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm font-medium text-gray-700">SEO</span>
+                            <span class="text-sm text-gray-500">7/10</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill bg-green-500" style="width: 70%"></div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm font-medium text-gray-700">UX/UI</span>
+                            <span class="text-sm text-gray-500">8/10</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill bg-blue-500" style="width: 80%"></div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm font-medium text-gray-700">Responsividade</span>
+                            <span class="text-sm text-gray-500">8/10</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill bg-green-500" style="width: 80%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Issues Summary -->
+            <div class="card p-6">
+                <h3 class="text-xl font-bold text-gray-900 mb-4">Problemas Identificados</h3>
+                
+                <div class="space-y-3">
+                    <div class="flex items-start">
+                        <span class="badge-danger">Crítico</span>
+                        <div class="ml-3">
+                            <div class="font-medium text-gray-900">Integrações Quebradas</div>
+                            <div class="text-sm text-gray-600">Google Reviews e Instagram API com erro</div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start">
+                        <span class="badge-warning">Alto</span>
+                        <div class="ml-3">
+                            <div class="font-medium text-gray-900">Performance</div>
+                            <div class="text-sm text-gray-600">Site muito pesado, carregamento lento</div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start">
+                        <span class="badge-warning">Médio</span>
+                        <div class="ml-3">
+                            <div class="font-medium text-gray-900">SEO Básico</div>
+                            <div class="text-sm text-gray-600">Meta descriptions genéricas, alt text ausente</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analysis Sections -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            
+            <!-- Strengths -->
+            <div class="card p-6">
+                <h3 class="text-xl font-bold text-green-600 mb-4">✅ Pontos Fortes</h3>
+                <ul class="space-y-2">
+                    <li class="flex items-start">
+                        <span class="text-green-500 mr-2">•</span>
+                        <span>Design responsivo bem implementado</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-green-500 mr-2">•</span>
+                        <span>Amplo catálogo de produtos organizados</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-green-500 mr-2">•</span>
+                        <span>Integração WhatsApp funcional</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-green-500 mr-2">•</span>
+                        <span>Layout de e-commerce bem estruturado</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-green-500 mr-2">•</span>
+                        <span>Navegação intuitiva por categorias</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Opportunities -->
+            <div class="card p-6">
+                <h3 class="text-xl font-bold text-blue-600 mb-4">🚀 Oportunidades</h3>
+                <ul class="space-y-2">
+                    <li class="flex items-start">
+                        <span class="text-blue-500 mr-2">•</span>
+                        <span>Tutoriais em vídeo dos produtos</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-blue-500 mr-2">•</span>
+                        <span>Sistema de reviews de clientes</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-blue-500 mr-2">•</span>
+                        <span>Blog com dicas de nail art</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-blue-500 mr-2">•</span>
+                        <span>Progressive Web App (PWA)</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-blue-500 mr-2">•</span>
+                        <span>Instagram Shopping integrado</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Recommendations -->
+        <div class="card p-6">
+            <h3 class="text-2xl font-bold text-gray-900 mb-6">📋 Recomendações Prioritárias</h3>
+            
+            <div class="space-y-6">
+                <!-- High Priority -->
+                <div>
+                    <h4 class="text-lg font-semibold text-red-600 mb-3">🔴 Alta Prioridade</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-red-50 p-4 rounded-lg">
+                            <div class="font-medium text-gray-900 mb-2">Corrigir Integrações</div>
+                            <div class="text-sm text-gray-600 mb-2">Renovar token Instagram, configurar Google Reviews</div>
+                            <div class="flex justify-between text-xs">
+                                <span class="badge-danger">Alto Impacto</span>
+                                <span class="text-gray-500">Baixo Esforço</span>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-red-50 p-4 rounded-lg">
+                            <div class="font-medium text-gray-900 mb-2">Otimizar Performance</div>
+                            <div class="text-sm text-gray-600 mb-2">Comprimir imagens, implementar lazy loading</div>
+                            <div class="flex justify-between text-xs">
+                                <span class="badge-danger">Alto Impacto</span>
+                                <span class="text-gray-500">Médio Esforço</span>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-red-50 p-4 rounded-lg">
+                            <div class="font-medium text-gray-900 mb-2">Melhorar SEO Básico</div>
+                            <div class="text-sm text-gray-600 mb-2">Meta descriptions específicas, alt text em imagens</div>
+                            <div class="flex justify-between text-xs">
+                                <span class="badge-danger">Alto Impacto</span>
+                                <span class="text-gray-500">Baixo Esforço</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Medium Priority -->
+                <div>
+                    <h4 class="text-lg font-semibold text-yellow-600 mb-3">🟡 Média Prioridade</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-yellow-50 p-4 rounded-lg">
+                            <div class="font-medium text-gray-900 mb-2">UX do Produto</div>
+                            <div class="text-sm text-gray-600 mb-2">Zoom nas imagens, reviews de clientes</div>
+                            <div class="flex justify-between text-xs">
+                                <span class="badge-warning">Médio Impacto</span>
+                                <span class="text-gray-500">Médio Esforço</span>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-yellow-50 p-4 rounded-lg">
+                            <div class="font-medium text-gray-900 mb-2">Otimizar Conversão</div>
+                            <div class="text-sm text-gray-600 mb-2">Badges mais visíveis, senso de urgência</div>
+                            <div class="flex justify-between text-xs">
+                                <span class="badge-warning">Médio Impacto</span>
+                                <span class="text-gray-500">Baixo Esforço</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Price Analysis -->
+        <div class="card p-6">
+            <h3 class="text-xl font-bold text-gray-900 mb-4">💰 Análise de Preços</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-green-50 p-4 rounded-lg text-center">
+                    <div class="text-2xl font-bold text-green-600">R$ 12,90 - R$ 24,90</div>
+                    <div class="text-sm text-gray-600">Produtos Básicos</div>
+                </div>
+                <div class="bg-blue-50 p-4 rounded-lg text-center">
+                    <div class="text-2xl font-bold text-blue-600">R$ 59,90 - R$ 79,90</div>
+                    <div class="text-sm text-gray-600">Produtos Premium</div>
+                </div>
+                <div class="bg-purple-50 p-4 rounded-lg text-center">
+                    <div class="text-2xl font-bold text-purple-600">R$ 270,00 - R$ 743,90</div>
+                    <div class="text-sm text-gray-600">Kits/Equipamentos</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Categories -->
+        <div class="card p-6">
+            <h3 class="text-xl font-bold text-gray-900 mb-4">📦 Categorias Principais</h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <span class="bg-gray-100 px-3 py-2 rounded-full text-sm text-center">Mais Vendidos</span>
+                <span class="bg-gray-100 px-3 py-2 rounded-full text-sm text-center">Lançamentos</span>
+                <span class="bg-gray-100 px-3 py-2 rounded-full text-sm text-center">Destaques</span>
+                <span class="bg-gray-100 px-3 py-2 rounded-full text-sm text-center">Acessórios</span>
+                <span class="bg-gray-100 px-3 py-2 rounded-full text-sm text-center">Alongamento</span>
+                <span class="bg-gray-100 px-3 py-2 rounded-full text-sm text-center">Equipamentos</span>
+                <span class="bg-gray-100 px-3 py-2 rounded-full text-sm text-center">Esmaltes</span>
+                <span class="bg-gray-100 px-3 py-2 rounded-full text-sm text-center">Manicure/Pedicure</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-gray-400">Relatório gerado automaticamente via IA com Playwright e Firecrawl</p>
+            <p class="text-gray-500 text-sm mt-2">Data: 28 de Agosto de 2025</p>
+        </div>
+    </footer>
+</body>
+</html>

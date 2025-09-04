@@ -1,5 +1,5 @@
 {
-  "generated": "2025-08-28T22:42:14.791Z",
+  "generated": "2025-09-04T11:25:12.722Z",
   "version": "1.0.0",
   "files": {
     "banheiro.png": {
@@ -42,8 +42,53 @@
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
+    "video externo-poster.jpg": {
+      "source": "cases/carol-orofino/video externo-poster.jpg",
+      "optimized": false,
+      "note": "Copied as-is (no external tools available)"
+    },
+    "Painel sala de estar.png": {
+      "source": "cases/debora-chiquetti/Painel sala de estar.png",
+      "optimized": false,
+      "note": "Copied as-is (no external tools available)"
+    },
+    "animacao-painel-poster.jpg": {
+      "source": "cases/debora-chiquetti/animacao-painel-poster.jpg",
+      "optimized": false,
+      "note": "Copied as-is (no external tools available)"
+    },
+    "animacao-sala-poster.jpg": {
+      "source": "cases/debora-chiquetti/animacao-sala-poster.jpg",
+      "optimized": false,
+      "note": "Copied as-is (no external tools available)"
+    },
+    "painel-sala.png": {
+      "source": "cases/debora-chiquetti/public/assets/projetista-3d/cases/debora-chiquetti/painel-sala.png",
+      "optimized": false,
+      "note": "Copied as-is (no external tools available)"
+    },
+    "sala-estar.png": {
+      "source": "cases/debora-chiquetti/sala-estar.png",
+      "optimized": false,
+      "note": "Copied as-is (no external tools available)"
+    },
+    "salao-beleza.png": {
+      "source": "cases/patricia-ricardo-moveis/salao-beleza.png",
+      "optimized": false,
+      "note": "Copied as-is (no external tools available)"
+    },
     "Projeto Chalé Alfredo Vagner esquerda.png": {
       "source": "cases/elton-santa-madeira/Projeto Chalé Alfredo Vagner esquerda.png",
+      "optimized": false,
+      "note": "Copied as-is (no external tools available)"
+    },
+    "The_camera_dont_202508261226-poster.jpg": {
+      "source": "cases/elton-santa-madeira/The_camera_dont_202508261226-poster.jpg",
+      "optimized": false,
+      "note": "Copied as-is (no external tools available)"
+    },
+    "The_camera_stand_202508271725-poster.jpg": {
+      "source": "cases/elton-santa-madeira/The_camera_stand_202508271725-poster.jpg",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
@@ -87,8 +132,33 @@
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
+    "video-cozinha-poster.jpg": {
+      "source": "cases/patricia-ricardo-moveis/video-cozinha-poster.jpg",
+      "optimized": false,
+      "note": "Copied as-is (no external tools available)"
+    },
+    "video-sala-poster.jpg": {
+      "source": "cases/patricia-ricardo-moveis/video-sala-poster.jpg",
+      "optimized": false,
+      "note": "Copied as-is (no external tools available)"
+    },
+    "video-salao-beleza-poster.jpg": {
+      "source": "cases/patricia-ricardo-moveis/video-salao-beleza-poster.jpg",
+      "optimized": false,
+      "note": "Copied as-is (no external tools available)"
+    },
     "generation-ff879e0f-a55b-45d3-8dcd-8afb1c23630a.png": {
       "source": "hero/generation-ff879e0f-a55b-45d3-8dcd-8afb1c23630a.png",
+      "optimized": false,
+      "note": "Copied as-is (no external tools available)"
+    },
+    "hero-bg-new.jpg": {
+      "source": "hero/hero-bg-new.jpg",
+      "optimized": false,
+      "note": "Copied as-is (no external tools available)"
+    },
+    "hero-bg.png": {
+      "source": "hero/hero-bg.png",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
@@ -129,6 +199,31 @@
     },
     "video-externo.mp4": {
       "source": "cases/carol-orofino/video-externo.mp4",
+      "optimized": false,
+      "note": "Copied as-is (no external tools available)"
+    },
+    "Animação para o projeto do painel.mp4": {
+      "source": "cases/debora-chiquetti/Animação para o projeto do painel.mp4",
+      "optimized": false,
+      "note": "Copied as-is (no external tools available)"
+    },
+    "Cena da sala de estar com uma animacao divertida.mp4": {
+      "source": "cases/debora-chiquetti/Cena da sala de estar com uma animacao divertida.mp4",
+      "optimized": false,
+      "note": "Copied as-is (no external tools available)"
+    },
+    "animacao-painel.mp4": {
+      "source": "cases/debora-chiquetti/public/assets/projetista-3d/cases/debora-chiquetti/animacao-painel.mp4",
+      "optimized": false,
+      "note": "Copied as-is (no external tools available)"
+    },
+    "animacao-sala.mp4": {
+      "source": "cases/debora-chiquetti/public/assets/projetista-3d/cases/debora-chiquetti/animacao-sala.mp4",
+      "optimized": false,
+      "note": "Copied as-is (no external tools available)"
+    },
+    "video-salao-beleza.mp4": {
+      "source": "cases/patricia-ricardo-moveis/video-salao-beleza.mp4",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
@@ -185,7 +280,7 @@
   },
   "note": "Simplified optimization for Netlify build - assets copied as-is",
   "stats": {
-    "totalFiles": 36,
+    "totalFiles": 55,
     "optimizedDir": "public/assets/projetista-3d/optimized",
     "thumbnailsDir": "public/assets/projetista-3d/thumbnails"
   }

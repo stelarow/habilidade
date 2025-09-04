@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análise de Concorrentes - Mar de Sonhos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+        }
+        
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            border-radius: 9999px;
+            border: 1px solid transparent;
+            padding: 0.125rem 0.75rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            line-height: 1;
+            color: rgb(255 255 255);
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        
+        .badge-success { background-color: rgb(34 197 94); }
+        .badge-warning { background-color: rgb(245 158 11); }
+        .badge-danger { background-color: rgb(239 68 68); }
+        .badge-primary { background-color: rgb(59 130 246); }
+        .badge-secondary { background-color: rgb(107 114 128); }
+        
+        .table-wrapper {
+            overflow-x: auto;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+        }
+        
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .table th,
+        .table td {
+            text-align: left;
+            padding: 0.75rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .table th {
+            background-color: #f9fafb;
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: #374151;
+        }
+        
+        .table tbody tr:hover {
+            background-color: #f9fafb;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 0.5rem;
+            background-color: #e5e7eb;
+            border-radius: 9999px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background-color: rgb(59 130 246);
+            transition: width 0.3s ease;
+        }
+        
+        .alert {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            border-left: 4px solid;
+        }
+        
+        .alert-info {
+            background-color: rgb(239 246 255);
+            border-left-color: rgb(59 130 246);
+            color: rgb(30 64 175);
+        }
+        
+        .alert-warning {
+            background-color: rgb(255 251 235);
+            border-left-color: rgb(245 158 11);
+            color: rgb(146 64 14);
+        }
+        
+        .alert-success {
+            background-color: rgb(240 253 244);
+            border-left-color: rgb(34 197 94);
+            color: rgb(21 128 61);
+        }
+        
+        .icon {
+            width: 1.25rem;
+            height: 1.25rem;
+            display: inline-block;
+        }
+        
+        .separator {
+            height: 1px;
+            background-color: #e5e7eb;
+            margin: 1.5rem 0;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="max-w-7xl mx-auto p-6 space-y-8">
+        <!-- Header -->
+        <div class="text-center space-y-4">
+            <h1 class="text-4xl font-bold text-gray-900">Análise de Concorrentes</h1>
+            <p class="text-xl text-gray-600">Estudo Competitivo - Mar de Sonhos</p>
+            <div class="flex justify-center space-x-2">
+                <span class="badge badge-primary">Tubarão - SC</span>
+                <span class="badge badge-secondary">Pijamas & Sleepwear</span>
+                <span class="badge badge-success">Agosto 2025</span>
+            </div>
+        </div>
+
+        <!-- Resumo Executivo -->
+        <div class="card p-6">
+            <h2 class="text-2xl font-semibold text-gray-900 mb-4">📊 Resumo Executivo</h2>
+            <div class="alert alert-info mb-4">
+                <p><strong>Cenário:</strong> Mercado altamente competitivo com 3 players estabelecidos em Tubarão/SC. Cor do Pano lidera com posição consolidada, PraQnome domina premium e Meu Momento atua no segmento básico.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-blue-50 p-4 rounded-lg">
+                    <h3 class="font-semibold text-blue-900">Líder de Mercado</h3>
+                    <p class="text-blue-700">Cor do Pano (Verificado)</p>
+                    <p class="text-sm text-blue-600">30.2K seguidores</p>
+                </div>
+                <div class="bg-green-50 p-4 rounded-lg">
+                    <h3 class="font-semibold text-green-900">Oportunidade</h3>
+                    <p class="text-green-700">Segmento Médio-Premium</p>
+                    <p class="text-sm text-green-600">R$ 150-250</p>
+                </div>
+                <div class="bg-purple-50 p-4 rounded-lg">
+                    <h3 class="font-semibold text-purple-900">Diferencial</h3>
+                    <p class="text-purple-700">Conexão Emocional</p>
+                    <p class="text-sm text-purple-600">"Sonhos" vs "Momento"</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Análise Comparativa -->
+        <div class="card p-6">
+            <h2 class="text-2xl font-semibold text-gray-900 mb-6">🔍 Análise Comparativa Detalhada</h2>
+            
+            <div class="table-wrapper">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Concorrente</th>
+                            <th>Instagram</th>
+                            <th>Seguidores</th>
+                            <th>Posts</th>
+                            <th>Faixa de Preço</th>
+                            <th>Status</th>
+                            <th>Força</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div>
+                                    <div class="font-semibold">Meu Momento Pijamas</div>
+                                    <div class="text-sm text-gray-500">@meumomentosleepwear</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="flex items-center space-x-2">
+                                    <div class="progress-bar w-16">
+                                        <div class="progress-fill bg-yellow-500" style="width: 20%;"></div>
+                                    </div>
+                                    <span class="text-sm">Básico</span>
+                                </div>
+                            </td>
+                            <td>11.4K</td>
+                            <td>314</td>
+                            <td>R$ 125-160</td>
+                            <td><span class="badge badge-warning">Básico</span></td>
+                            <td>
+                                <div class="progress-bar">
+                                    <div class="progress-fill bg-yellow-500" style="width: 40%;"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div>
+                                    <div class="font-semibold">PraQnome Sleepwear</div>
+                                    <div class="text-sm text-gray-500">@praqnome_sleepwear</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="flex items-center space-x-2">
+                                    <div class="progress-bar w-16">
+                                        <div class="progress-fill bg-green-500" style="width: 85%;"></div>
+                                    </div>
+                                    <span class="text-sm">Forte</span>
+                                </div>
+                            </td>
+                            <td>56.7K</td>
+                            <td>2.161</td>
+                            <td>R$ 197-321</td>
+                            <td><span class="badge badge-primary">Premium</span></td>
+                            <td>
+                                <div class="progress-bar">
+                                    <div class="progress-fill bg-green-500" style="width: 85%;"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div>
+                                    <div class="font-semibold">Cor do Pano ⭐</div>
+                                    <div class="text-sm text-gray-500">@cordopanooficial</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="flex items-center space-x-2">
+                                    <div class="progress-bar w-16">
+                                        <div class="progress-fill bg-blue-600" style="width: 100%;"></div>
+                                    </div>
+                                    <span class="text-sm">Líder</span>
+                                </div>
+                            </td>
+                            <td>30.2K</td>
+                            <td>2.969</td>
+                            <td>R$ 63-320</td>
+                            <td><span class="badge badge-success">Verificado</span></td>
+                            <td>
+                                <div class="progress-bar">
+                                    <div class="progress-fill bg-blue-600" style="width: 100%;"></div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Análise Individual -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Meu Momento -->
+            <div class="card p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-semibold">Meu Momento Pijamas</h3>
+                    <span class="badge badge-warning">Básico</span>
+                </div>
+                
+                <div class="space-y-4">
+                    <div>
+                        <h4 class="font-medium text-green-700 mb-2">✅ Pontos Fortes</h4>
+                        <ul class="text-sm space-y-1 text-gray-600">
+                            <li>• E-commerce estruturado</li>
+                            <li>• Frete grátis diferencial</li>
+                            <li>• Preços competitivos</li>
+                            <li>• WhatsApp integrado</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="separator"></div>
+                    
+                    <div>
+                        <h4 class="font-medium text-red-700 mb-2">❌ Pontos Fracos</h4>
+                        <ul class="text-sm space-y-1 text-gray-600">
+                            <li>• Produtos esgotados frequentes</li>
+                            <li>• Menor presença digital</li>
+                            <li>• Problemas técnicos no site</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-gray-50 p-3 rounded">
+                        <div class="text-sm"><strong>Localização:</strong> Tubarão, SC</div>
+                        <div class="text-sm"><strong>Website:</strong> meumomentosleepwear.com.br</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PraQnome -->
+            <div class="card p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-semibold">PraQnome Sleepwear</h3>
+                    <span class="badge badge-primary">Premium</span>
+                </div>
+                
+                <div class="space-y-4">
+                    <div>
+                        <h4 class="font-medium text-green-700 mb-2">✅ Pontos Fortes</h4>
+                        <ul class="text-sm space-y-1 text-gray-600">
+                            <li>• <strong>Líder em presença digital</strong></li>
+                            <li>• Estratégia multi-cidade</li>
+                            <li>• E-commerce robusto</li>
+                            <li>• Segmentação atacado/varejo</li>
+                            <li>• Alta frequência postagens</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="separator"></div>
+                    
+                    <div>
+                        <h4 class="font-medium text-red-700 mb-2">❌ Pontos Fracos</h4>
+                        <ul class="text-sm space-y-1 text-gray-600">
+                            <li>• Preços altos limitam mercado</li>
+                            <li>• Competição interna</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-gray-50 p-3 rounded">
+                        <div class="text-sm"><strong>Localização:</strong> Multi-cidades SC</div>
+                        <div class="text-sm"><strong>Website:</strong> praqnome.com.br</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cor do Pano -->
+            <div class="card p-6 border-blue-200 bg-blue-50">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-semibold">Cor do Pano ⭐</h3>
+                    <span class="badge badge-success">Verificado</span>
+                </div>
+                
+                <div class="space-y-4">
+                    <div>
+                        <h4 class="font-medium text-green-700 mb-2">✅ Pontos Fortes</h4>
+                        <ul class="text-sm space-y-1 text-gray-600">
+                            <li>• <strong>Perfil verificado</strong></li>
+                            <li>• Maior volume conteúdo (2.969)</li>
+                            <li>• Expansão geográfica agressiva</li>
+                            <li>• Marketing visual profissional</li>
+                            <li>• Programa cashback</li>
+                            <li>• Avaliações positivas</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="separator"></div>
+                    
+                    <div>
+                        <h4 class="font-medium text-red-700 mb-2">❌ Pontos Fracos</h4>
+                        <ul class="text-sm space-y-1 text-gray-600">
+                            <li>• Concorrente mais estabelecido</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-white p-3 rounded border">
+                        <div class="text-sm"><strong>Localização:</strong> 5 cidades SC</div>
+                        <div class="text-sm"><strong>Website:</strong> cordopano.com.br</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Oportunidades de Mercado -->
+        <div class="card p-6">
+            <h2 class="text-2xl font-semibold text-gray-900 mb-6">🎯 Oportunidades Identificadas</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">💰 Gaps de Preço</h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center p-3 bg-yellow-50 rounded">
+                            <span class="font-medium">Meu Momento</span>
+                            <span class="badge badge-warning">R$ 125-160</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-green-50 rounded border-2 border-green-200">
+                            <span class="font-medium">🎯 OPORTUNIDADE</span>
+                            <span class="badge badge-success">R$ 150-250</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-blue-50 rounded">
+                            <span class="font-medium">PraQnome</span>
+                            <span class="badge badge-primary">R$ 197-321</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">📱 Diferenciação Digital</h3>
+                    <div class="space-y-3">
+                        <div class="alert alert-info">
+                            <h4 class="font-medium mb-2">Storytelling Emocional</h4>
+                            <p class="text-sm">Explorar conceito "sonhos" vs "momento" ou "cor" dos concorrentes</p>
+                        </div>
+                        <div class="alert alert-warning">
+                            <h4 class="font-medium mb-2">Conteúdo Personalizado</h4>
+                            <p class="text-sm">Criar experiências mais interativas e personalizadas</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Estratégias Recomendadas -->
+        <div class="card p-6">
+            <h2 class="text-2xl font-semibold text-gray-900 mb-6">🚀 Estratégias Recomendadas</h2>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Imediato -->
+                <div class="border border-red-200 rounded-lg p-4">
+                    <div class="flex items-center mb-3">
+                        <span class="badge badge-danger">Imediato</span>
+                    </div>
+                    <h3 class="font-semibold mb-3">0-3 meses</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li class="flex items-start space-x-2">
+                            <span class="text-red-500">•</span>
+                            <span>Análise e posicionamento de preços estratégico</span>
+                        </li>
+                        <li class="flex items-start space-x-2">
+                            <span class="text-red-500">•</span>
+                            <span>SEO local para competir em Tubarão</span>
+                        </li>
+                        <li class="flex items-start space-x-2">
+                            <span class="text-red-500">•</span>
+                            <span>Desenvolvimento de conteúdo diferenciado</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Médio Prazo -->
+                <div class="border border-yellow-200 rounded-lg p-4">
+                    <div class="flex items-center mb-3">
+                        <span class="badge badge-warning">Médio Prazo</span>
+                    </div>
+                    <h3 class="font-semibold mb-3">3-12 meses</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li class="flex items-start space-x-2">
+                            <span class="text-yellow-500">•</span>
+                            <span>Parcerias com influenciadores locais</span>
+                        </li>
+                        <li class="flex items-start space-x-2">
+                            <span class="text-yellow-500">•</span>
+                            <span>Programa de fidelidade robusto</span>
+                        </li>
+                        <li class="flex items-start space-x-2">
+                            <span class="text-yellow-500">•</span>
+                            <span>Expansão geográfica controlada</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Longo Prazo -->
+                <div class="border border-green-200 rounded-lg p-4">
+                    <div class="flex items-center mb-3">
+                        <span class="badge badge-success">Longo Prazo</span>
+                    </div>
+                    <h3 class="font-semibold mb-3">12+ meses</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li class="flex items-start space-x-2">
+                            <span class="text-green-500">•</span>
+                            <span>Inovação em produtos exclusivos</span>
+                        </li>
+                        <li class="flex items-start space-x-2">
+                            <span class="text-green-500">•</span>
+                            <span>Estratégia omnichannel completa</span>
+                        </li>
+                        <li class="flex items-start space-x-2">
+                            <span class="text-green-500">•</span>
+                            <span>Sustentabilidade como diferencial</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Conclusão -->
+        <div class="card p-6">
+            <h2 class="text-2xl font-semibold text-gray-900 mb-4">📋 Conclusão & Próximos Passos</h2>
+            
+            <div class="alert alert-success mb-4">
+                <h3 class="font-semibold mb-2">Oportunidade Estratégica Identificada</h3>
+                <p>Mar de Sonhos pode se posicionar como a marca mais conectada emocionalmente com o cliente, explorando o conceito de "sonhos" de forma mais profunda que os concorrentes exploram "momento" ou "cor".</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <h4 class="font-semibold mb-3">🎯 Foco Recomendado:</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li>• Segmento médio-premium (R$ 150-250)</li>
+                        <li>• Storytelling emocional diferenciado</li>
+                        <li>• Experiência personalizada superior</li>
+                        <li>• Presença digital estratégica</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-3">📊 KPIs Sugeridos:</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li>• Crescimento de seguidores mensais</li>
+                        <li>• Taxa de engajamento vs concorrentes</li>
+                        <li>• Share of voice em Tubarão</li>
+                        <li>• Conversão e-commerce</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center text-gray-500 text-sm border-t pt-6">
+            <p>Relatório gerado em Agosto de 2025 • Mar de Sonhos - Análise de Concorrentes</p>
+            <p class="mt-2">Dados coletados via Firecrawl e Playwright • Análise baseada em informações públicas</p>
+        </div>
+    </div>
+
+    <script>
+        // Adicionar interatividade simples
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animar barras de progresso
+            const progressBars = document.querySelectorAll('.progress-fill');
+            progressBars.forEach(bar => {
+                const width = bar.style.width;
+                bar.style.width = '0%';
+                setTimeout(() => {
+                    bar.style.width = width;
+                }, 500);
+            });
+            
+            // Adicionar hover effects nos cards
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-2px)';
+                    this.style.boxShadow = '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = '0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
