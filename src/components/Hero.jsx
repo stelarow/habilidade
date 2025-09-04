@@ -85,45 +85,5 @@ function Hero() {
     </Section>
   );
 }
-          >
-            Ver Cursos
-          </GradientButton>
-          
-          <GradientButton 
-            href="/teste-vocacional"
-            className="px-6 text-sm border-2 border-purple-500/50 bg-transparent hover:bg-purple-500/10 transition-all group"
-            onClick={() => {
-              analytics.trackHeroTestClick();
-            }}
-          >
-            <Lightbulb className="w-4 h-4 mr-2 inline-block group-hover:text-yellow-400 transition-colors" />
-            Teste Vocacional Grátis
-          </GradientButton>
-        </div>
-      </div>
-
-      {/* Seta para próxima seção */}
-      <button
-        onClick={(e) => {
-          e.preventDefault();
-          const element = document.getElementById('cursos');
-          if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
-          }
-        }}
-        aria-label="Ir para seção de cursos"
-        className="absolute bottom-4 left-1/2 text-fuchsia-500 hover:text-cyan-400 transition cursor-pointer p-2 min-w-[48px] min-h-[48px] flex items-center justify-center"
-        style={{ 
-          transform: 'translateX(-50%)', 
-          animation: 'bounce 2s infinite' 
-        }}
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" className="w-10 h-10">
-          <path d="M12 16.5a1 1 0 0 1-.707-.293l-6-6a1 1 0 1 1 1.414-1.414L12 14.086l5.293-5.293a1 1 0 0 1 1.414 1.414l-6 6A1 1 0 0 1 12 16.5z" />
-        </svg>
-      </button>
-    </Section>
-  );
-}
 
 export default Hero; 
