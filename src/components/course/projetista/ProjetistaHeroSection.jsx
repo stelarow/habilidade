@@ -120,25 +120,25 @@ export const ProjetistaHeroSection = () => {
 
           {/* Trust Indicators */}
           <div className="mt-12 pt-8 border-t border-zinc-700/50">
-            <p className="text-sm text-zinc-400 mb-4">
+            <p className="text-sm text-zinc-300 mb-4">
               Método comprovado e aprovado por:
             </p>
-            <div className="flex flex-wrap justify-center items-center gap-8 opacity-60">
+            <div className="flex flex-wrap justify-center items-center gap-8 opacity-90">
               <div className="text-xs text-center">
                 <div className="text-2xl font-bold text-purple-400">200+</div>
-                <div className="text-zinc-400">Alunos</div>
+                <div className="text-zinc-300">Alunos</div>
               </div>
               <div className="text-xs text-center">
                 <div className="text-2xl font-bold text-cyan-400">50+</div>
-                <div className="text-zinc-400">Empresas</div>
+                <div className="text-zinc-300">Empresas</div>
               </div>
               <div className="text-xs text-center">
-                <div className="text-2xl font-bold text-purple-600">10+</div>
-                <div className="text-zinc-400">Anos</div>
+                <div className="text-2xl font-bold text-purple-400">10+</div>
+                <div className="text-zinc-300">Anos</div>
               </div>
               <div className="text-xs text-center">
                 <div className="text-2xl font-bold text-green-400">4.9★</div>
-                <div className="text-zinc-400">Avaliação</div>
+                <div className="text-zinc-300">Avaliação</div>
               </div>
             </div>
           </div>
