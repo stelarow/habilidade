@@ -23,10 +23,12 @@ function Hero() {
             Cursos Profissionalizantes em Florianópolis e Região
           </span>
 
-          {/* Texto dinâmico com máquina de escrever */}
+          {/* Texto dinâmico em duas linhas */}
           <span className="block text-2xl sm:text-3xl text-zinc-300 pb-2">
-            Especialista em{' '}
-            <span className="typewriter-container inline-block">
+            Especialista em
+          </span>
+          <span className="block text-2xl sm:text-3xl text-zinc-300 pb-2">
+            <span className="typewriter-container">
               {text}
               {/* Barra piscante estilo cursor */}
               <span className="inline-block animate-blink text-white ml-0.5">|</span>
@@ -53,6 +55,36 @@ function Hero() {
                 element.scrollIntoView({ behavior: 'smooth' });
               }
             }}
+          >
+            Conheça nossos cursos
+          </GradientButton>
+          <GradientButton 
+            href="/teste-vocacional" 
+            className="px-6 text-sm bg-purple-600 border border-purple-500 shadow-purple"
+          >
+            Teste Vocacional
+          </GradientButton>
+        </div>
+
+        {/* Trust indicators */}
+        <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4 text-xs sm:text-sm text-zinc-400">
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+            <span>+500 alunos formados</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
+            <span>Certificados reconhecidos</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 bg-purple-500 rounded-full"></span>
+            <span>Melhor curso presencial em SC</span>
+          </div>
+        </div>
+      </div>
+    </Section>
+  );
+}
           >
             Ver Cursos
           </GradientButton>

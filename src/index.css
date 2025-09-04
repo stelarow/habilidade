@@ -470,7 +470,7 @@ button, a, [role="button"] {
   /* typewriter container for stable layout */
   .typewriter-container {
     min-width: 18ch; /* Aproximadamente o tamanho de "Inteligência Artificial" */
-    text-align: left;
+    text-align: center;
     white-space: nowrap;
     overflow: hidden;
     vertical-align: top; /* Alinhamento vertical com o texto estático */
