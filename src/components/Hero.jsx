@@ -25,9 +25,12 @@ function Hero() {
 
           {/* Texto dinâmico com máquina de escrever */}
           <span className="block text-2xl sm:text-3xl text-zinc-300 pb-2">
-            Especialista em {text}
-            {/* Barra piscante estilo cursor */}
-            <span className="inline-block animate-blink text-white ml-0.5">|</span>
+            Especialista em{' '}
+            <span className="typewriter-container inline-block">
+              {text}
+              {/* Barra piscante estilo cursor */}
+              <span className="inline-block animate-blink text-white ml-0.5">|</span>
+            </span>
           </span>
         </h1>
         <p className="text-zinc-300 text-sm md:text-base lg:text-lg text-center max-w-2xl mx-auto leading-relaxed px-4">

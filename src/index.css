@@ -466,6 +466,30 @@ button, a, [role="button"] {
     opacity: 1;
     animation: techGlow 1.5s ease-in-out infinite;
   }
+  /* typewriter container for stable layout */
+  .typewriter-container {
+    min-width: 18ch; /* Aproximadamente o tamanho de "Inteligência Artificial" */
+    min-height: 1.2em;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  
+  /* Responsive adjustments for typewriter container */
+  @media (max-width: 640px) {
+    .typewriter-container {
+      min-width: 16ch; /* Menor para mobile */
+      min-height: 1.1em;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .typewriter-container {
+      min-width: 14ch; /* Ainda menor para telas muito pequenas */
+      min-height: 1em;
+    }
+  }
+
   /* tech icon effects */
   .tech-icon {
     animation: techFloat 2.5s ease-in-out infinite;
