@@ -38,7 +38,7 @@ export const ProjetistaHeroSection = () => {
           <div className="mb-6">
             <div className="inline-flex items-center gap-2 mb-4 px-4 py-2 bg-purple-500/10 border border-purple-400/20 rounded-full text-sm font-medium text-purple-400">
               <Rocket className="w-4 h-4" />
-              ÚNICO CURSO PRESENCIAL EM SC
+              Melhor curso presencial em SC
             </div>
             
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-6">
