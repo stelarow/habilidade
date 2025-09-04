@@ -77,7 +77,7 @@ function Hero() {
           }
         }}
         aria-label="Ir para seção de cursos"
-        className="absolute bottom-4 left-1/2 -translate-x-1/2 text-fuchsia-500 hover:text-cyan-400 transition animate-bounce cursor-pointer p-2 min-w-[48px] min-h-[48px] flex items-center justify-center"
+        className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-fuchsia-500 hover:text-cyan-400 transition animate-bounce cursor-pointer p-2 min-w-[48px] min-h-[48px] flex items-center justify-center"
       >
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" className="w-10 h-10">
           <path d="M12 16.5a1 1 0 0 1-.707-.293l-6-6a1 1 0 1 1 1.414-1.414L12 14.086l5.293-5.293a1 1 0 0 1 1.414 1.414l-6 6A1 1 0 0 1 12 16.5z" />
