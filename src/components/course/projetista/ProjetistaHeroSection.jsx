@@ -15,7 +15,7 @@ export const ProjetistaHeroSection = () => {
       {/* Background Image */}
       <div className="absolute inset-0">
         <img 
-          src="/assets/projetista-3d/hero/hero-bg.png"
+          src="/assets/projetista-3d/hero/hero-bg-new.jpg"
           alt="Projetista 3D Background"
           className="w-full h-full object-cover filter blur-[0.5px]"
         />
