@@ -41,7 +41,7 @@ export const ProjetistaHeroSection = () => {
               Melhor curso presencial em SC
             </div>
             
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-6">
+            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold leading-tight mb-6">
               <span className="bg-gradient-to-r from-purple-400 via-purple-600 to-cyan-400 bg-clip-text text-transparent">
                 DOMINE SKETCHUP E ENSCAPE
               </span>
