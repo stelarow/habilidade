@@ -40,11 +40,9 @@ function InteractiveLogo() {
           className="relative transition-all duration-300 group-hover:scale-105 group-focus:scale-105"
         />
       </div>
-      
-      {/* Tagline Contextual */}
-      <div className="logo-text-container hidden lg:block">
-        <span className="tagline block text-xs text-gray-400 group-hover:text-gray-300 transition-colors duration-300 whitespace-nowrap">
-          {pageType === 'home' && 'Tecnologia que transforma carreiras'}
+    </Link>
+  );
+}
           {pageType === 'coursePage' && 'Aprenda com os melhores'}
           {pageType === 'other' && 'Sua jornada começa aqui'}
         </span>
