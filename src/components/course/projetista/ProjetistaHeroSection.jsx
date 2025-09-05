@@ -104,7 +104,7 @@ export const ProjetistaHeroSection = () => {
               className="group relative overflow-hidden rounded-xl px-8 py-4 text-lg font-bold text-white transition-all duration-300 bg-gradient-to-r from-purple-500 to-cyan-400 shadow-2xl shadow-purple-500/30 hover:shadow-purple-500/50 hover:-translate-y-1 inline-block"
             >
               <Target className="inline w-6 h-6 mr-3" />
-              QUERO DOMINAR AS FERRAMENTAS - ÚLTIMAS VAGAS
+              MATRICULE-SE AGORA - ÚLTIMAS VAGAS
               <div className="absolute inset-0 rounded-xl bg-white/20 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300" />
             </a>
           </div>
