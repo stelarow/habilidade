@@ -65,18 +65,8 @@ export const ProjetistaInvestment = () => {
                 <CountdownTimer bgClassName="bg-yellow-400/30" />
               </div>
               
-              <p className="text-red-400 font-semibold">
-                🎯 ÚLTIMAS 3 VAGAS DESTA TURMA
-              </p>
             </div>
 
-            {/* ROI Message */}
-            <div className="text-center mb-8">
-              <div className="flex items-center justify-center gap-2 text-lg text-amber-300">
-                <Lightbulb className="w-5 h-5" />
-                <span>COM APENAS 1 PROJETO VOCÊ RECUPERA SEU INVESTIMENTO</span>
-              </div>
-            </div>
 
             {/* CTA Button */}
             <div className="text-center">
