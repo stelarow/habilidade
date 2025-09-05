@@ -8,7 +8,7 @@ export const ProjetistaFloatingCTA = () => {
   return (
     <>
       {/* WhatsApp Floating Button */}
-      <div className="fixed bottom-6 right-6 z-50">
+      <div className="fixed bottom-6 right-6 z-50 hidden md:block">
         <a 
           href="https://wa.me/5548988559491?text=Ol%C3%A1%21%20Tenho%20interesse%20no%20Curso%20de%20Projetista%203D%20-%20SketchUp%20%2B%20Enscape"
           target="_blank"
