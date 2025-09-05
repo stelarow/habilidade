@@ -49,20 +49,20 @@ export const CountdownTimer = ({
   }, []);
 
   return (
-    <div className={`flex items-center gap-2 font-mono font-bold ${textClassName} ${className}`}>
-      <span className={`px-2 py-1 ${bgClassName} rounded text-sm`}>
+    <div className={`flex items-center gap-1 sm:gap-2 font-mono font-bold ${textClassName} ${className}`}>
+      <span className={`px-1 sm:px-2 py-0.5 sm:py-1 ${bgClassName} rounded text-xs sm:text-sm`}>
         {timeLeft.days}d
       </span>
-      <span>:</span>
-      <span className={`px-2 py-1 ${bgClassName} rounded text-sm`}>
+      <span className="text-xs sm:text-sm">:</span>
+      <span className={`px-1 sm:px-2 py-0.5 sm:py-1 ${bgClassName} rounded text-xs sm:text-sm`}>
         {timeLeft.hours.toString().padStart(2, '0')}h
       </span>
-      <span>:</span>
-      <span className={`px-2 py-1 ${bgClassName} rounded text-sm`}>
+      <span className="text-xs sm:text-sm">:</span>
+      <span className={`px-1 sm:px-2 py-0.5 sm:py-1 ${bgClassName} rounded text-xs sm:text-sm`}>
         {timeLeft.minutes.toString().padStart(2, '0')}m
       </span>
-      <span>:</span>
-      <span className={`px-2 py-1 ${bgClassName} rounded text-sm`}>
+      <span className="text-xs sm:text-sm">:</span>
+      <span className={`px-1 sm:px-2 py-0.5 sm:py-1 ${bgClassName} rounded text-xs sm:text-sm`}>
         {timeLeft.seconds.toString().padStart(2, '0')}s
       </span>
     </div>

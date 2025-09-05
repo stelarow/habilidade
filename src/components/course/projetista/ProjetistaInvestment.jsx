@@ -57,9 +57,9 @@ export const ProjetistaInvestment = () => {
 
             {/* Urgency Timer */}
             <div className="text-center mb-8">
-              <div className="inline-flex items-center gap-3 px-6 py-3 bg-yellow-400/20 border border-yellow-400 rounded-xl mb-4">
-                <Clock className="w-5 h-5 text-yellow-400" />
-                <span className="text-sm font-medium text-yellow-300">
+              <div className="inline-flex items-center gap-2 sm:gap-3 px-3 sm:px-6 py-2 sm:py-3 bg-yellow-400/20 border border-yellow-400 rounded-xl mb-4 max-w-full overflow-x-auto">
+                <Clock className="w-4 sm:w-5 h-4 sm:h-5 text-yellow-400 flex-shrink-0" />
+                <span className="text-xs sm:text-sm font-medium text-yellow-300 flex-shrink-0">
                   OFERTA VÁLIDA POR:
                 </span>
                 <CountdownTimer bgClassName="bg-yellow-400/30" />
