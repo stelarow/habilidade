@@ -7,7 +7,7 @@ function SmartCTA() {
   const ctaConfig = useSmartCTA();
 
   return (
-    <div className="cta-group flex items-center gap-3 flex-shrink-0">
+    <div className="cta-group flex items-center gap-2 md:gap-3 flex-shrink-0">
       {/* CTA Primário */}
       <GradientButton
         href={ctaConfig.primary.href}
@@ -32,7 +32,7 @@ function SmartCTA() {
         target="_blank"
         rel="noopener noreferrer"
         className="
-          md:hidden w-10 h-10 rounded-full 
+          md:hidden w-9 h-9 rounded-full 
           bg-gradient-to-r from-fuchsia-600 via-purple-600 to-blue-600 
           hover:from-fuchsia-700 hover:via-purple-700 hover:to-blue-700 
           flex items-center justify-center 
@@ -46,7 +46,7 @@ function SmartCTA() {
         aria-label="Acessar área do aluno"
       >
         <User 
-          size={16} 
+          size={14} 
           weight="bold" 
           className="text-white" 
         />
@@ -54,8 +54,8 @@ function SmartCTA() {
 
       {/* WhatsApp Premium */}
       <WhatsAppButton 
-        size="medium"
-        className="md:w-8 md:h-8" 
+        size="small"
+        className="w-8 h-8 md:w-10 md:h-10" 
       />
     </div>
   );
