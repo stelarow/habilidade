@@ -8,6 +8,7 @@ import { ProjetistaGuarantee } from '../../components/course/projetista/Projetis
 import { ProjetistaInvestment } from '../../components/course/projetista/ProjetistaInvestment';
 import { ProjetistaFAQ } from '../../components/course/projetista/ProjetistaFAQ';
 import { ProjetistaFloatingCTA } from '../../components/course/projetista/ProjetistaFloatingCTA';
+import { ProjetistaCurriculum } from '../../components/course/projetista/ProjetistaCurriculum';
 import TrustedCompanies from '../../components/TrustedCompanies';
 import { Helmet } from '@dr.pogodin/react-helmet';
 import { 
@@ -89,6 +90,9 @@ const Projetista3DNew = () => {
 
       {/* Pain & Solution */}
       <ProjetistaPainSolution />
+
+      {/* Grade Curricular */}
+      <ProjetistaCurriculum />
 
       {/* Testimonials */}
       <ProjetistaTestimonials />
