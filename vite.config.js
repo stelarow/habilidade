@@ -92,7 +92,13 @@ export default defineConfig({
           /^h-0\.5$/, /^w-6$/,
           /^rotate-45$/, /^-rotate-45$/,
           /^translate-y-2$/, /^-translate-y-2$/,
-          /^opacity-0$/
+          /^opacity-0$/,
+          // Menu mobile container e overlay - CRITICAL FIX
+          /^mobile-mega-menu$/, /^fixed$/, /^inset-0$/, 
+          /^z-\[100\]$/, /^lg:hidden$/, /^absolute$/,
+          /^right-0$/, /^top-0$/, /^h-full$/, /^w-full$/,
+          /^max-w-sm$/, /^overflow-y-auto$/, /^shadow-2xl$/,
+          /^backdrop-blur-sm$/, /^bg-black\/60$/
         ],
         defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) || []
       })
