@@ -29,28 +29,28 @@ export const ProjetistaInvestment = () => {
               <div className="flex items-center justify-center gap-4 mb-4">
                 <div className="flex items-center gap-2">
                   <X className="w-5 h-5 text-red-400" />
-                  <span className="text-2xl text-red-400 line-through">DE: R$ 4.893,00</span>
+                  <span className="text-lg md:text-2xl text-red-400 line-through">DE: R$ 4.893,00</span>
                 </div>
               </div>
               
               <div className="flex items-center justify-center gap-2 mb-6">
                 <CheckCircle className="w-6 h-6 text-green-400" />
-                <span className="text-4xl font-bold text-green-400">POR: R$ 2.793,00</span>
+                <span className="text-2xl md:text-4xl font-bold text-green-400">POR: R$ 2.793,00</span>
                 <span className="text-xl text-yellow-400 bg-yellow-400/20 px-3 py-1 rounded-full">(43% OFF)</span>
               </div>
             </div>
 
             {/* Payment Options */}
             <div className="grid md:grid-cols-2 gap-6 mb-8">
-              <div className="text-center p-6 bg-zinc-700/30 rounded-lg border border-zinc-600">
+              <div className="text-center p-4 md:p-6 bg-zinc-700/30 rounded-lg border border-zinc-600">
                 <CreditCard className="w-8 h-8 text-cyan-400 mx-auto mb-3" />
-                <div className="text-2xl font-bold text-cyan-400 mb-2">7x de R$ 399,00</div>
+                <div className="text-lg md:text-2xl font-bold text-cyan-400 mb-2">7x de R$ 399,00</div>
                 <div className="text-zinc-300">sem juros</div>
               </div>
               
-              <div className="text-center p-6 bg-green-500/10 rounded-lg border border-green-400/20">
+              <div className="text-center p-4 md:p-6 bg-green-500/10 rounded-lg border border-green-400/20">
                 <CurrencyCircleDollar className="w-8 h-8 text-green-400 mx-auto mb-3" />
-                <div className="text-2xl font-bold text-green-400 mb-2">R$ 2.513,70</div>
+                <div className="text-lg md:text-2xl font-bold text-green-400 mb-2">R$ 2.513,70</div>
                 <div className="text-green-300">À vista (10% desconto extra)</div>
               </div>
             </div>
