@@ -46,8 +46,8 @@ export const ProjetistaHeroSection = () => {
                 DOMINE SKETCHUP E ENSCAPE
               </span>
               <br />
-              <span className="text-white">
-                TRANSFORME SUAS IDEIAS EM PROJETOS 3D PROFISSIONAIS E REALISTAS
+              <span className="text-white text-xl md:text-2xl lg:text-3xl">
+                TRANSFORME SUAS IDEIAS EM PROJETOS 3D REALISTAS
               </span>
             </h1>
           </div>
