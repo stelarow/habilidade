@@ -28,7 +28,7 @@ function InteractiveLogo() {
     <Link 
       to="/" 
       onClick={handleLogoClick}
-      className="logo-container group flex items-center gap-3 focus:outline-none"
+      className="logo-container group flex items-center gap-3 focus:outline-none min-h-[3rem]"
     >
       {/* "H" Estilizada - Logo da Escola */}
       <div className="logo-wrapper relative">
@@ -43,7 +43,7 @@ function InteractiveLogo() {
       
       {/* Tagline Contextual */}
       <div className="logo-text-container hidden lg:block">
-        <span className="tagline block text-xs text-gray-400 group-hover:text-gray-300 transition-colors duration-300">
+        <span className="tagline block text-xs text-gray-400 group-hover:text-gray-300 transition-colors duration-300 whitespace-nowrap">
           {pageType === 'home' && 'Tecnologia que transforma carreiras'}
           {pageType === 'coursePage' && 'Aprenda com os melhores'}
           {pageType === 'other' && 'Sua jornada começa aqui'}

@@ -43,7 +43,7 @@ function Header() {
       
       <header className="fixed top-0 w-full bg-zinc-900/70 backdrop-blur-md z-50 border-b border-gray-800/50" role="banner">
         <div className="mx-auto max-w-7xl px-4">
-          <div className="flex items-center justify-between h-16">
+          <div className="flex items-center justify-between h-16 min-h-[4rem]">
             
             <InteractiveLogo />
 

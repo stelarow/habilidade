@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia Completo de IA - Macetes e Dicas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            padding: 40px 0;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .content-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .card h2 {
+            color: #667eea;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-align: center;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .ai-tool {
+            background: #f8f9ff;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .ai-tool h3 {
+            color: #333;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .ai-tool .tool-name {
+            background: #667eea;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .tips {
+            margin: 15px 0;
+        }
+
+        .tip {
+            display: flex;
+            align-items: flex-start;
+            margin: 10px 0;
+            padding: 8px;
+            border-radius: 5px;
+        }
+
+        .tip.warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+        }
+
+        .tip.gold {
+            background: #fff8e1;
+            border-left: 4px solid #ff9800;
+        }
+
+        .tip.trick {
+            background: #e8f5e8;
+            border-left: 4px solid #4caf50;
+        }
+
+        .tip.ideal {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+        }
+
+        .tip-icon {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        .links-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+
+        .links-section h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            text-align: center;
+        }
+
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .link-item {
+            background: #f8f9ff;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .link-item:hover {
+            background: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .link-item a {
+            text-decoration: none;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .link-item:hover a {
+            color: white;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section h3 {
+            color: #333;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            padding: 10px 0;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .rules {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .rule {
+            background: #f8f9ff;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+        }
+
+        .rule h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .example {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .example.bad {
+            background: #ffebee;
+            border-left: 4px solid #f44336;
+        }
+
+        .example.good {
+            background: #e8f5e8;
+            border-left: 4px solid #4caf50;
+        }
+
+        .formula {
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            margin: 20px 0;
+        }
+
+        .business-examples {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .business-example {
+            background: #f8f9ff;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+        }
+
+        .business-example h5 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .extra-tip {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .extra-tip h3 {
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        .extra-tip ol {
+            text-align: left;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .extra-tip li {
+            margin: 10px 0;
+            padding: 5px 0;
+        }
+
+        @media (max-width: 768px) {
+            .content-wrapper {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+            
+            .links-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 Guia Completo de IA</h1>
+            <p>Macetes e dicas para usar inteligência artificial como um profissional</p>
+        </div>
+
+        <div class="content-wrapper">
+            <!-- GUIA DE USO -->
+            <div class="card">
+                <h2>🎯 Qual IA Usar Para Cada Situação</h2>
+
+                <div class="ai-tool">
+                    <h3>🎨 Para Criar Imagens</h3>
+                    <div class="tool-name">Gemini</div>
+                    <div class="tips">
+                        <div class="tip warning">
+                            <span class="tip-icon">⚠️</span>
+                            <strong>Não esqueça:</strong> Clicar no botão de imagem
+                        </div>
+                        <div class="tip gold">
+                            <span class="tip-icon">💎</span>
+                            <strong>Dica de ouro:</strong> Use 6 elementos no prompt: sujeito específico, composição, ação, localização, estilo e instruções de edição
+                        </div>
+                        <div class="tip trick">
+                            <span class="tip-icon">✨</span>
+                            <strong>Truque:</strong> Primeiro peça ao Gemini para melhorar seu prompt simples, depois use esse prompt melhorado para gerar a imagem
+                        </div>
+                        <div class="tip ideal">
+                            <span class="tip-icon">🎯</span>
+                            <strong>Ideal para:</strong> Logos, ilustrações, fotos conceituais
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ai-tool">
+                    <h3>🎵 Para Criar Áudio</h3>
+                    <div class="tool-name">Google Labs</div>
+                    <div class="tips">
+                        <div class="tip gold">
+                            <span class="tip-icon">💎</span>
+                            <strong>Dica de ouro:</strong> Posicione o microfone o mais próximo possível do usuário e evite ruídos de fundo
+                        </div>
+                        <div class="tip trick">
+                            <span class="tip-icon">✨</span>
+                            <strong>Truque:</strong> Para voiceovers, use o Google AI Studio com prompts detalhados sobre tom, velocidade e estilo de voz desejados
+                        </div>
+                        <div class="tip ideal">
+                            <span class="tip-icon">🎯</span>
+                            <strong>Ideal para:</strong> Narração, música, efeitos sonoros
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ai-tool">
+                    <h3>🎓 Para Aprender no Computador</h3>
+                    <div class="tool-name">Google AI Studio</div>
+                    <div class="tips">
+                        <div class="tip warning">
+                            <span class="tip-icon">⚠️</span>
+                            <strong>Use a função:</strong> Stream
+                        </div>
+                        <div class="tip gold">
+                            <span class="tip-icon">💎</span>
+                            <strong>Dica de ouro:</strong> Peça explicações "como se eu fosse iniciante" e solicite exemplos práticos
+                        </div>
+                        <div class="tip trick">
+                            <span class="tip-icon">✨</span>
+                            <strong>Truque:</strong> Use prompts como "me ensine passo a passo" seguido de "agora me dê um exercício para praticar"
+                        </div>
+                        <div class="tip ideal">
+                            <span class="tip-icon">🎯</span>
+                            <strong>Ideal para:</strong> Tutoriais passo a passo, aprendizado interativo
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ai-tool">
+                    <h3>💬 Para Conseguir Prompts</h3>
+                    <div class="tool-name">Gemini</div>
+                    <div class="tips">
+                        <div class="tip gold">
+                            <span class="tip-icon">💎</span>
+                            <strong>Dica de ouro:</strong> Seja específico sobre qual IA vai usar o prompt (ChatGPT, Claude, etc.) e o resultado desejado
+                        </div>
+                        <div class="tip trick">
+                            <span class="tip-icon">✨</span>
+                            <strong>Truque:</strong> Peça "crie 3 versões de prompts: simples, intermediário e avançado" para ter opções
+                        </div>
+                        <div class="tip ideal">
+                            <span class="tip-icon">🎯</span>
+                            <strong>Ideal para:</strong> Criar prompts otimizados para ChatGPT, Claude, etc.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ai-tool">
+                    <h3>📁 Para Análise de Arquivos</h3>
+                    <div class="tool-name">Claude Code</div>
+                    <div class="tips">
+                        <div class="tip gold">
+                            <span class="tip-icon">💎</span>
+                            <strong>Dica de ouro:</strong> Use prompts claros e específicos sobre o que analisar, mencione a página exata (ex: /dashboard)
+                        </div>
+                        <div class="tip trick">
+                            <span class="tip-icon">✨</span>
+                            <strong>Truque:</strong> Adicione screenshots junto com o prompt para explicar bugs ou problemas visuais
+                        </div>
+                        <div class="tip ideal">
+                            <span class="tip-icon">🎯</span>
+                            <strong>Ideal para:</strong> Analisar códigos, documentos, planilhas
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ai-tool">
+                    <h3>📝 Para Criar Arquivos</h3>
+                    <div class="tool-name">Claude Code</div>
+                    <div class="tips">
+                        <div class="tip gold">
+                            <span class="tip-icon">💎</span>
+                            <strong>Dica de ouro:</strong> Quebre o trabalho em pequenos pedaços testáveis, implemente uma funcionalidade por vez
+                        </div>
+                        <div class="tip trick">
+                            <span class="tip-icon">✨</span>
+                            <strong>Truque:</strong> Use "Investigue mas não escreva código ainda" para planejar antes de implementar
+                        </div>
+                        <div class="tip ideal">
+                            <span class="tip-icon">🎯</span>
+                            <strong>Ideal para:</strong> Códigos, documentos, scripts
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ai-tool">
+                    <h3>🤖 Para Automatizar no PC</h3>
+                    <div class="tool-name">Claude Code</div>
+                    <div class="tips">
+                        <div class="tip gold">
+                            <span class="tip-icon">💎</span>
+                            <strong>Dica de ouro:</strong> Defina exatamente o que NÃO deve ser tocado (ex: "não edite /shared/Layout.tsx")
+                        </div>
+                        <div class="tip trick">
+                            <span class="tip-icon">✨</span>
+                            <strong>Truque:</strong> Use modo Chat 60-70% do tempo para planejar, só implemente quando estiver satisfeito com o plano
+                        </div>
+                        <div class="tip ideal">
+                            <span class="tip-icon">🎯</span>
+                            <strong>Ideal para:</strong> Scripts, automações, configurações
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ai-tool">
+                    <h3>🌐 Para Criar Páginas Web</h3>
+                    <div class="tool-name">Lovable ou HatchCanvas</div>
+                    <div class="tips">
+                        <div class="tip gold">
+                            <span class="tip-icon">💎</span>
+                            <strong>Dica de ouro:</strong> Use o arquivo Knowledge como "cérebro" do projeto - inclua visão, jornadas do usuário e guias de design
+                        </div>
+                        <div class="tip trick">
+                            <span class="tip-icon">✨</span>
+                            <strong>Truque:</strong> Use modo Chat primeiro para planejar, depois "Implement the plan" quando estiver satisfeito
+                        </div>
+                        <div class="tip ideal">
+                            <span class="tip-icon">🎯</span>
+                            <strong>Ideal para:</strong> Sites, landing pages, portfolios
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ai-tool">
+                    <h3>📊 Para Criar Dashboards</h3>
+                    <div class="tool-name">Lovable ou HatchCanvas</div>
+                    <div class="tips">
+                        <div class="tip gold">
+                            <span class="tip-icon">💎</span>
+                            <strong>Dica de ouro:</strong> Sempre defina qual role/usuário está usando (Admin, Investidor, etc.) para evitar bugs
+                        </div>
+                        <div class="tip trick">
+                            <span class="tip-icon">✨</span>
+                            <strong>Truque:</strong> Use Visual Edit para ajustes rápidos de UI (cores, textos, layout) - é grátis e não gasta créditos
+                        </div>
+                        <div class="tip ideal">
+                            <span class="tip-icon">🎯</span>
+                            <strong>Ideal para:</strong> Painéis de controle, relatórios visuais, análises
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MACETES DE CRIAÇÃO -->
+            <div class="card">
+                <h2>🎯 Como Usar IA Para Criar Páginas Web</h2>
+
+                <div class="section">
+                    <p style="font-size: 1.1rem; margin-bottom: 20px; text-align: center; background: #f0f8ff; padding: 15px; border-radius: 8px; border-left: 5px solid #667eea;">
+                        <strong>Pense na IA como um assistente muito inteligente, mas que precisa de instruções claras. É como pedir ajuda para alguém - quanto mais específico você for, melhor será o resultado.</strong>
+                    </p>
+
+                    <h3>📝 3 Regras de Ouro</h3>
+                    <div class="rules">
+                        <div class="rule">
+                            <h4>1. Seja Específico</h4>
+                            <div class="example bad">❌ "Crie uma página"</div>
+                            <div class="example good">✅ "Crie uma página de vendas para meu curso de culinária, com botão para WhatsApp e cores azul e branco"</div>
+                        </div>
+                        <div class="rule">
+                            <h4>2. Dê Contexto</h4>
+                            <div class="example bad">❌ "Faça um site bonito"</div>
+                            <div class="example good">✅ "Sou dentista e preciso de um site para atrair pacientes em Florianópolis. Quero mostrar meus serviços e facilitar agendamentos"</div>
+                        </div>
+                        <div class="rule">
+                            <h4>3. Peça Exemplos</h4>
+                            <div class="example bad">❌ "Como fazer isso?"</div>
+                            <div class="example good">✅ "Me mostre passo a passo como criar um botão de contato que abra o WhatsApp"</div>
+                        </div>
+                    </div>
+
+                    <h3>🗣️ Fórmula Simples para Prompts</h3>
+                    <div class="formula">
+"Você é um [PAPEL]. 
+Preciso de [O QUE] para [FINALIDADE].
+O público-alvo é [QUEM].
+Deve ter [CARACTERÍSTICAS ESPECÍFICAS]."
+
+<strong>Exemplo prático:</strong>
+"Você é um criador de sites.
+Preciso de uma página inicial para minha loja de roupas.
+O público-alvo são mulheres de 25-45 anos.
+Deve ter cores femininas, fotos dos produtos e botão para Instagram."
+                    </div>
+
+                    <h3>💡 Dicas Práticas</h3>
+                    <div class="rules">
+                        <div class="rule">
+                            <h4>Para Começar:</h4>
+                            <ul>
+                                <li>Use frases como: "Explique como se eu fosse iniciante"</li>
+                                <li>Peça: "Me dê o código pronto para copiar e colar"</li>
+                                <li>Sempre pergunte: "Como faço isso funcionar?"</li>
+                            </ul>
+                        </div>
+                        <div class="rule">
+                            <h4>Para Melhorar:</h4>
+                            <ul>
+                                <li>Diga: "Torne isso mais bonito"</li>
+                                <li>Peça: "Deixe responsivo para celular"</li>
+                                <li>Solicite: "Adicione mais cores/animações"</li>
+                            </ul>
+                        </div>
+                        <div class="rule">
+                            <h4>Para Resolver Problemas:</h4>
+                            <ul>
+                                <li>Informe: "Não está funcionando, o que fazer?"</li>
+                                <li>Explique: "Quero mudar apenas [parte específica]"</li>
+                                <li>Copie e cole o erro que apareceu</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h3>📱 Exemplos Para Diferentes Negócios</h3>
+                    <div class="business-examples">
+                        <div class="business-example">
+                            <h5>🍕 Restaurante:</h5>
+                            <p>"Crie uma página simples para meu restaurante. Preciso mostrar o cardápio, localização e telefone para delivery. Cores quentes e fotos apetitosas."</p>
+                        </div>
+                        <div class="business-example">
+                            <h5>💄 Serviços (salão, oficina, etc.):</h5>
+                            <p>"Faça um site para meu salão de beleza. Quero mostrar os serviços, preços e facilitar agendamento pelo WhatsApp. Design elegante e feminino."</p>
+                        </div>
+                        <div class="business-example">
+                            <h5>🛒 Loja Online:</h5>
+                            <p>"Preciso de uma página de vendas para meu produto [nome do produto]. Deve convencer a comprar, mostrar benefícios e ter botão de pagamento."</p>
+                        </div>
+                    </div>
+
+                    <h3>⚠️ Cuidados Importantes</h3>
+                    <div style="background: #fff3cd; padding: 20px; border-radius: 10px; border-left: 5px solid #ffc107;">
+                        <ul>
+                            <li><strong>Sempre teste</strong> se funciona no celular</li>
+                            <li><strong>Verifique</strong> se os links/botões funcionam</li>
+                            <li><strong>Peça ajuda</strong> se algo der erro</li>
+                            <li><strong>Comece simples</strong> - você pode melhorar depois</li>
+                        </ul>
+                    </div>
+
+                    <h3>🔄 Como Melhorar aos Poucos</h3>
+                    <div class="rules">
+                        <div class="rule">
+                            <h4>Processo Gradual:</h4>
+                            <ol>
+                                <li><strong>Primeira versão:</strong> Peça algo básico e funcional</li>
+                                <li><strong>Segunda versão:</strong> "Torne mais bonito"</li>
+                                <li><strong>Terceira versão:</strong> "Adicione [funcionalidade específica]"</li>
+                                <li><strong>Sempre:</strong> "Explique o que mudou"</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <h3>💬 Linguagem Simples</h3>
+                    <div style="background: #e3f2fd; padding: 20px; border-radius: 10px; border-left: 5px solid #2196f3;">
+                        <p><strong>Em vez de termos técnicos, use:</strong></p>
+                        <ul>
+                            <li>"Página" em vez de "website"</li>
+                            <li>"Botão" em vez de "elemento"</li>
+                            <li>"Cor" em vez de "paleta"</li>
+                            <li>"Funcionar" em vez de "implementar"</li>
+                        </ul>
+                        <p style="margin-top: 15px; font-style: italic;"><strong>Lembre-se:</strong> A IA está aí para ajudar! Não tenha medo de fazer perguntas simples ou pedir explicações. Quanto mais você usar, mais fácil fica.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- LINKS RÁPIDOS -->
+        <div class="links-section">
+            <h3>🔗 Links Rápidos</h3>
+            <div class="links-grid">
+                <div class="link-item">
+                    <strong>Gemini</strong><br>
+                    <a href="https://gemini.google.com" target="_blank">gemini.google.com</a>
+                </div>
+                <div class="link-item">
+                    <strong>Google Labs</strong><br>
+                    <a href="https://labs.google.com" target="_blank">labs.google.com</a>
+                </div>
+                <div class="link-item">
+                    <strong>Google AI Studio</strong><br>
+                    <a href="https://aistudio.google.com" target="_blank">aistudio.google.com</a>
+                </div>
+                <div class="link-item">
+                    <strong>Claude Code</strong><br>
+                    <a href="https://claude.ai/code" target="_blank">claude.ai/code</a>
+                </div>
+                <div class="link-item">
+                    <strong>Lovable</strong><br>
+                    <a href="https://lovable.dev" target="_blank">lovable.dev</a>
+                </div>
+                <div class="link-item">
+                    <strong>HatchCanvas</strong><br>
+                    <a href="https://hatchcanvas.com" target="_blank">hatchcanvas.com</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- DICA EXTRA -->
+        <div class="extra-tip">
+            <h3>💡 Dica Extra: Combine Ferramentas!</h3>
+            <ol>
+                <li>Use <strong>Gemini</strong> para criar o prompt</li>
+                <li>Use <strong>Lovable</strong> para criar a página</li>
+                <li>Use <strong>Claude Code</strong> para analisar e melhorar o código</li>
+            </ol>
+        </div>
+    </div>
+</body>
+</html>
