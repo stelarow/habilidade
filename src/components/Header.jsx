@@ -43,12 +43,14 @@ function Header() {
       
       <header className="fixed top-0 w-full bg-zinc-900/70 backdrop-blur-md z-50 border-b border-gray-800/50" role="banner">
         <div className="mx-auto max-w-7xl px-4">
-          <div className="flex items-center justify-between h-16 min-h-[4rem]">
+          <div className="flex items-center justify-between h-16 min-h-[4rem] flex-nowrap">
             
-            <InteractiveLogo />
+            <div className="flex-shrink-0">
+              <InteractiveLogo />
+            </div>
 
             {/* Navegação Desktop */}
-            <nav className="hidden md:flex items-center gap-6">
+            <nav className="hidden md:flex items-center gap-6 flex-1 justify-center overflow-hidden">
               <button
                 onClick={() => setMegaMenuOpen(!megaMenuOpen)}
                 className="flex items-center gap-1 text-white hover:text-fuchsia-300 transition-colors focus:outline-none focus:ring-2 focus:ring-fuchsia-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-sm px-2 py-1"
@@ -84,7 +86,7 @@ function Header() {
               ))}
             </nav>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 flex-shrink-0">
               <SmartCTA />
               
               {/* Botão Mobile */}

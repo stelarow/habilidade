@@ -28,7 +28,7 @@ function InteractiveLogo() {
     <Link 
       to="/" 
       onClick={handleLogoClick}
-      className="logo-container group flex items-center gap-3 focus:outline-none min-h-[3rem]"
+      className="logo-container group flex items-center gap-3 focus:outline-none min-h-[3rem] flex-shrink-0 min-w-fit"
     >
       {/* "H" Estilizada - Logo da Escola */}
       <div className="logo-wrapper relative">
