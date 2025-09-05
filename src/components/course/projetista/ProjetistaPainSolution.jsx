@@ -29,11 +29,6 @@ export const ProjetistaPainSolution = () => {
         <div className="max-w-4xl mx-auto">
           {/* Pain Points */}
           <div className="mb-12">
-            <div className="flex items-center gap-2 mb-6">
-              <Hand className="w-5 h-5 text-yellow-400" />
-              <span className="text-lg text-white font-medium">Você se encaixa em algum ponto abaixo?</span>
-            </div>
-
             <div className="space-y-4">
               <div className="flex items-center gap-3 p-4 bg-zinc-800/30 backdrop-blur rounded-lg border border-zinc-700/50">
                 <Books className="w-5 h-5 text-red-400" />
