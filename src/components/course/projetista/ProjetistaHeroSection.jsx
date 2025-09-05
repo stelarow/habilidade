@@ -91,11 +91,11 @@ export const ProjetistaHeroSection = () => {
               href="https://wa.me/5548988559491?text=Ol%C3%A1%21%20Quero%20dominar%20as%20ferramentas%20do%20Curso%20de%20Projetista%203D"
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative overflow-hidden rounded-xl px-8 py-4 text-lg font-bold text-white transition-all duration-300 bg-gradient-to-r from-purple-500 to-cyan-400 shadow-2xl shadow-purple-500/30 hover:shadow-purple-500/50 hover:-translate-y-1 inline-block"
+              className="group relative overflow-hidden rounded-xl px-4 sm:px-8 py-4 text-base sm:text-lg font-bold text-white transition-all duration-300 bg-gradient-to-r from-purple-500 to-cyan-400 shadow-2xl shadow-purple-500/30 hover:shadow-purple-500/50 hover:-translate-y-1 inline-block whitespace-nowrap"
             >
-              <Target className="inline w-6 h-6 mr-3" />
+              <Target className="hidden xs:inline w-6 h-6 mr-2 sm:mr-3" />
               <span className="hidden sm:inline">MATRICULE-SE AGORA - ÚLTIMAS VAGAS</span>
-              <span className="sm:hidden">MATRICULE-SE - ÚLTIMAS VAGAS</span>
+              <span className="sm:hidden">QUERO ME MATRICULAR</span>
               <div className="absolute inset-0 rounded-xl bg-white/20 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300" />
             </a>
           </div>
