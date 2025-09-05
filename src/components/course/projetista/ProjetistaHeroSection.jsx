@@ -61,16 +61,6 @@ export const ProjetistaHeroSection = () => {
               </span>
             </div>
             
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-base">
-              <div className="flex items-center gap-2">
-                <CheckCircle className="w-5 h-5 text-green-500" />
-                <span className="text-green-400">+ de 200 alunos formados</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle className="w-5 h-5 text-green-500" />
-                <span className="text-green-400">+ de 50 empresas parceiras</span>
-              </div>
-            </div>
           </div>
 
           {/* Pricing Section */}
