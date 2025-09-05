@@ -47,7 +47,7 @@ export const ProjetistaHeroSection = () => {
               </span>
               <br />
               <span className="text-white text-xl md:text-2xl lg:text-3xl">
-                TRANSFORME SUAS IDEIAS EM PROJETOS 3D REALISTAS
+                Transforme Suas Ideias Em Projetos 3D Realistas
               </span>
             </h1>
           </div>
