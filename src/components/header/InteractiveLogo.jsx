@@ -43,12 +43,5 @@ function InteractiveLogo() {
     </Link>
   );
 }
-          {pageType === 'coursePage' && 'Aprenda com os melhores'}
-          {pageType === 'other' && 'Sua jornada começa aqui'}
-        </span>
-      </div>
-    </Link>
-  );
-}
 
 export default InteractiveLogo; 
