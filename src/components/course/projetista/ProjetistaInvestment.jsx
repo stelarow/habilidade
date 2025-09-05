@@ -33,10 +33,12 @@ export const ProjetistaInvestment = () => {
                 </div>
               </div>
               
-              <div className="flex items-center justify-center gap-2 mb-6">
-                <CheckCircle className="w-6 h-6 text-green-400" />
-                <span className="text-2xl md:text-4xl font-bold text-green-400">POR: R$ 2.793,00</span>
-                <span className="text-xl text-yellow-400 bg-yellow-400/20 px-3 py-1 rounded-full">(43% OFF)</span>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-2 mb-6">
+                <div className="flex items-center gap-2">
+                  <CheckCircle className="w-6 h-6 text-green-400" />
+                  <span className="text-2xl md:text-4xl font-bold text-green-400 whitespace-nowrap">POR: R$ 2.793,00</span>
+                </div>
+                <span className="text-xl text-yellow-400 bg-yellow-400/20 px-3 py-1 rounded-full whitespace-nowrap">(43% OFF)</span>
               </div>
             </div>
 
