@@ -16,7 +16,7 @@ export const ProjetistaGuarantee = () => {
               </div>
               
               <h2 className="text-3xl md:text-4xl font-bold text-green-400 mb-2">
-                🛡️ GARANTIA DE 7 DIAS
+                GARANTIA DE 7 DIAS
               </h2>
               
               <p className="text-xl text-green-300 mb-6">
@@ -62,7 +62,7 @@ export const ProjetistaGuarantee = () => {
                 rel="noopener noreferrer"
                 className="group relative overflow-hidden rounded-xl px-8 py-4 text-lg font-bold text-white transition-all duration-300 bg-gradient-to-r from-green-500 to-green-400 shadow-2xl shadow-green-500/30 hover:shadow-green-500/50 hover:-translate-y-1 inline-block"
               >
-                🛡️ COMEÇAR GRATUITAMENTE - PRIMEIROS 7 DIAS GRÁTIS
+                COMEÇAR GRATUITAMENTE - PRIMEIROS 7 DIAS GRÁTIS
               </a>
             </div>
           </div>
