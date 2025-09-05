@@ -87,7 +87,12 @@ export default defineConfig({
           // Padding for gradient borders
           /^p-\[3px\]$/,
           // Critical CSS classes (prevent purging)
-          /^fouc-/, /^critical-/
+          /^fouc-/, /^critical-/,
+          // Menu mobile hamburger - CRITICAL FIX
+          /^h-0\.5$/, /^w-6$/,
+          /^rotate-45$/, /^-rotate-45$/,
+          /^translate-y-2$/, /^-translate-y-2$/,
+          /^opacity-0$/
         ],
         defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) || []
       })
