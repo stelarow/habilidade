@@ -20,7 +20,7 @@ function Hero() {
             Escola Habilidade
           </span>
           <span className="block text-lg sm:text-xl text-purple-400 font-medium mb-6 tracking-wide">
-            Cursos Profissionalizantes em Florianópolis e Região
+            Cursos Profissionalizantes em São José e Grande Florianópolis
           </span>
 
           {/* Texto dinâmico em duas linhas */}

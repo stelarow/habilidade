@@ -10,14 +10,55 @@ import FAQ from '../components/FAQ';
 import SEOHead from '../components/shared/SEOHead';
 
 function Home() {
+  const schemaData = {
+    '@context': 'https://schema.org',
+    '@type': 'EducationalOrganization',
+    name: 'Escola Habilidade',
+    description: 'Escola de cursos profissionalizantes em São José SC, especializada em Informática, SketchUp, AutoCAD, Revit, Marketing Digital e Programação.',
+    url: 'https://www.escolahabilidade.com',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'Rua Caetano José Ferreira, 426 - Sala 5 - Kobrasol',
+      addressLocality: 'São José',
+      addressRegion: 'SC',
+      addressCountry: 'BR',
+      postalCode: '88102-280'
+    },
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: '-27.5969',
+      longitude: '-48.6356'
+    },
+    telephone: '+55 48 98855-9491',
+    openingHours: 'Mo-Tu 08:00-20:00, We 08:00-22:00, Th 08:00-20:00, Fr 08:00-17:30, Sa 08:00-12:00',
+    areaServed: [
+      {
+        '@type': 'City',
+        name: 'São José',
+        '@id': 'https://www.wikidata.org/wiki/Q986378'
+      },
+      {
+        '@type': 'City', 
+        name: 'Florianópolis',
+        '@id': 'https://www.wikidata.org/wiki/Q25444'
+      },
+      {
+        '@type': 'City',
+        name: 'Palhoça',
+        '@id': 'https://www.wikidata.org/wiki/Q986369'
+      }
+    ]
+  };
+
   return (
     <>
       <SEOHead 
-        title="Escola Habilidade - Cursos em Florianópolis e São José"
-        description="Escola de cursos profissionalizantes em Florianópolis, São José e Palhoça. Cursos de Informática, SketchUp, AutoCAD, Revit, Enscape, Marketing Digital, Programação e IA. Certificado reconhecido. Aulas presenciais e online."
-        keywords="cursos profissionalizantes florianópolis, escola técnica são josé sc, cursos informática palhoça, curso sketchup florianópolis, curso autocad são josé, curso revit palhoça, curso enscape santa catarina, marketing digital florianópolis, programação são josé, inteligência artificial palhoça, cursos técnicos grande florianópolis, escola habilidade"
+        title="Cursos em São José SC | Escola Habilidade - Informática, AutoCAD, SketchUp"
+        description="Escola de cursos profissionalizantes em São José SC, Kobrasol. Cursos de Informática, SketchUp, AutoCAD, Revit, Enscape, Marketing Digital, Programação e IA. Certificado reconhecido. Aulas presenciais e online na Grande Florianópolis."
+        keywords="cursos são josé sc, escola técnica são josé, cursos profissionalizantes são josé, curso informática são josé, curso sketchup são josé, curso autocad são josé, curso revit são josé, marketing digital são josé, programação são josé, cursos técnicos grande florianópolis, escola habilidade kobrasol"
         path="/"
         type="website"
+        schemaData={schemaData}
       />
       <Hero />
       <Courses />
