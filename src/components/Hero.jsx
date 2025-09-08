@@ -10,7 +10,7 @@ function Hero() {
   const text = useTypewriter(words);
 
   return (
-    <Section fullHeight={true} className="flex flex-col items-center justify-center text-center bg-zinc-950 overflow-visible">
+    <Section fullHeight={true} className="flex flex-col items-center justify-center text-center bg-zinc-950 overflow-visible pt-20 sm:pt-0">
       <Starfield />
       {/* Conteúdo */}
       <div className="flex flex-col items-center justify-center max-w-4xl mx-auto px-4">
@@ -55,6 +55,42 @@ function Hero() {
                 element.scrollIntoView({ behavior: 'smooth' });
               }
             }}
+          >
+            Ver Cursos
+          </GradientButton>
+          <GradientButton 
+            href="#contato"
+            className="border-2 border-white bg-transparent hover:bg-white hover:text-black text-white transition-colors px-6 text-sm"
+            onClick={(e) => {
+              e.preventDefault();
+              const element = document.getElementById('contato');
+              if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+              }
+            }}
+          >
+            Teste Vocacional
+          </GradientButton>
+        </div>
+        
+        <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4 text-xs sm:text-sm text-zinc-400">
+          <div className="flex items-center gap-1">
+            <CheckCircle size={14} className="text-green-400" />
+            <span>Certificado Incluso</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <Clock size={14} className="text-blue-400" />
+            <span>Aulas Práticas</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <Users size={14} className="text-purple-400" />
+            <span>Turmas Pequenas</span>
+          </div>
+        </div>
+      </div>
+    </Section>
+  );
+}
           >
             Conheça nossos cursos
           </GradientButton>
