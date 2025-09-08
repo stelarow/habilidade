@@ -91,35 +91,5 @@ function Hero() {
     </Section>
   );
 }
-          >
-            Conheça nossos cursos
-          </GradientButton>
-          <GradientButton 
-            href="/teste-vocacional" 
-            className="px-6 text-sm bg-purple-600 border border-purple-500 shadow-purple"
-          >
-            Teste Vocacional
-          </GradientButton>
-        </div>
-
-        {/* Trust indicators */}
-        <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4 text-xs sm:text-sm text-zinc-400">
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-            <span>+500 alunos formados</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
-            <span>Certificados reconhecidos</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 bg-purple-500 rounded-full"></span>
-            <span>Melhor curso presencial em SC</span>
-          </div>
-        </div>
-      </div>
-    </Section>
-  );
-}
 
 export default Hero; 
