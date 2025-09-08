@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { X, ChevronLeft, ChevronRight, Play, Pause } from 'lucide-react';
+import { X, CaretLeft, CaretRight, PlayCircle, Pause } from '@phosphor-icons/react';
 
 const MediaModal = ({ 
   isOpen, 
@@ -83,7 +83,7 @@ const MediaModal = ({
             className="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-3 bg-black/50 hover:bg-black/70 rounded-full text-white transition-colors duration-200"
             aria-label="Item anterior"
           >
-            <ChevronLeft className="w-6 h-6" />
+            <CaretLeft className="w-6 h-6" />
           </button>
         )}
 
@@ -94,7 +94,7 @@ const MediaModal = ({
             className="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-3 bg-black/50 hover:bg-black/70 rounded-full text-white transition-colors duration-200"
             aria-label="Próximo item"
           >
-            <ChevronRight className="w-6 h-6" />
+            <CaretRight className="w-6 h-6" />
           </button>
         )}
 

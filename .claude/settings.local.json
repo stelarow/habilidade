@@ -67,7 +67,8 @@
       "mcp__shadcn-ui-server__list-components",
       "mcp__serena__replace_symbol_body",
       "Bash(git rm:*)",
-      "Bash(npm run dev:*)"
+      "Bash(npm run dev:*)",
+      "mcp__playwright__browser_console_messages"
     ],
     "deny": []
   }
