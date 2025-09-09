@@ -2,7 +2,7 @@ import useTypewriter from '../hooks/useTypewriter';
 import Starfield from './Starfield';
 import GradientButton from './GradientButton';
 import Section from './Section';
-import { Lightbulb } from '@phosphor-icons/react';
+import { Lightbulb, CheckCircle, Clock, Users } from '@phosphor-icons/react';
 import { analytics } from '../utils/analytics';
 
 function Hero() {
