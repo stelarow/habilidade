@@ -98,7 +98,7 @@ function Hero() {
             }
           }}
           aria-label="Ir para seção de cursos"
-          className="absolute bottom-8 left-1/2 text-purple-500 hover:text-cyan-400 transition cursor-pointer p-2"
+          className="hidden sm:block absolute bottom-8 left-1/2 text-purple-500 hover:text-cyan-400 transition cursor-pointer p-2"
           style={{ 
             transform: 'translateX(-50%)', 
             animation: 'bounce 2s infinite' 
