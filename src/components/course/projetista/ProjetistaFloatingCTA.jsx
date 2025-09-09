@@ -27,13 +27,13 @@ export const ProjetistaFloatingCTA = () => {
         <div className="bg-gradient-to-r from-purple-500 to-cyan-400 p-4 shadow-2xl">
           <div className="text-center">
             <a 
-              href="https://wa.me/5548988559491?text=Ol%C3%A1%21%20Quero%20dominar%20as%20ferramentas%20do%20Curso%20de%20Projetista%203D"
+              href="https://wa.me/5548988559491?text=Ol%C3%A1%21%20Quero%20me%20matricular%20no%20Curso%20de%20Projetista%203D"
               target="_blank"
               rel="noopener noreferrer"
               className="w-full bg-white/20 backdrop-blur text-white font-bold py-3 px-4 rounded-lg transition-all duration-300 hover:bg-white/30 flex items-center justify-center gap-2"
             >
               <Rocket className="w-5 h-5" />
-              <span className="text-sm">QUERO DOMINAR AS FERRAMENTAS</span>
+              <span className="text-sm">MATRICULE-SE</span>
             </a>
             <div className="flex items-center justify-center gap-1 mt-2 text-white text-xs">
               <Lightning className="w-3 h-3" />
