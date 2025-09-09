@@ -60,7 +60,7 @@ function Hero() {
           </GradientButton>
           <GradientButton 
             href="#contato"
-            className="border-2 border-white bg-transparent hover:bg-white hover:text-black text-white transition-colors px-6 text-sm"
+            className="px-6 text-sm"
             onClick={(e) => {
               e.preventDefault();
               const element = document.getElementById('contato');
