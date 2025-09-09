@@ -32,7 +32,7 @@ export const ProjetistaHeroSection = () => {
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse" />
       <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-cyan-400/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
       
-      <div className="container mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20 relative z-10">
+      <div className="container mx-auto max-w-7xl px-4 pt-24 pb-16 sm:px-6 sm:pt-20 sm:pb-16 lg:px-8 lg:py-20 relative z-10">
         <div className="max-w-4xl mx-auto text-center animate-fade-in">
           {/* Main Headline */}
           <div className="mb-6">
