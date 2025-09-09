@@ -87,6 +87,27 @@ function Hero() {
             <span>Turmas Pequenas</span>
           </div>
         </div>
+        
+        {/* Seta de scroll para seção de cursos */}
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            const element = document.getElementById('cursos');
+            if (element) {
+              element.scrollIntoView({ behavior: 'smooth' });
+            }
+          }}
+          aria-label="Ir para seção de cursos"
+          className="absolute bottom-8 left-1/2 text-purple-500 hover:text-cyan-400 transition cursor-pointer p-2"
+          style={{ 
+            transform: 'translateX(-50%)', 
+            animation: 'bounce 2s infinite' 
+          }}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" className="w-8 h-8">
+            <path d="M12 16.5a1 1 0 0 1-.707-.293l-6-6a1 1 0 1 1 1.414-1.414L12 14.086l5.293-5.293a1 1 0 0 1 1.414 1.414l-6 6A1 1 0 0 1 12 16.5z" />
+          </svg>
+        </button>
       </div>
     </Section>
   );
