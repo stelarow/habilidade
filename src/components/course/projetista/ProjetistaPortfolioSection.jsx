@@ -199,10 +199,15 @@ export const ProjetistaPortfolioSection = () => {
 
         {/* Call to Action */}
         <div className="text-center mt-12">
-          <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-500/20 to-cyan-400/20 border border-purple-400/30 rounded-full text-sm font-medium text-purple-400 mb-4">
+          <a 
+            href="https://wa.me/5548988559491?text=Olá! Tenho interesse no curso Projetista 3D e gostaria de saber mais informações sobre como transformar minha criatividade em uma carreira sólida."
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-500/20 to-cyan-400/20 border border-purple-400/30 rounded-full text-sm font-medium text-purple-400 mb-4 hover:from-purple-500/30 hover:to-cyan-400/30 hover:border-purple-400/50 transition-all duration-300 hover:scale-105 cursor-pointer"
+          >
             <Sparkle className="w-4 h-4" />
             SEU PROJETO PODE SER O PRÓXIMO
-          </div>
+          </a>
           
           <p className="text-zinc-300 max-w-2xl mx-auto">
             Junte-se aos nossos alunos e crie projetos profissionais que impressionam.
