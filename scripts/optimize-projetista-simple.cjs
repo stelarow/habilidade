@@ -76,13 +76,27 @@ class SimpleAssetOptimizer {
         const fileName = path.basename(imagePath);
         const copyPath = path.join(OPTIMIZED_DIR, fileName);
         
+        // Skip if file doesn't exist or can't be accessed
+        if (!fs.existsSync(imagePath)) {
+          this.log(`⚠️ Skipping non-existent file: ${imagePath}`);
+          continue;
+        }
+        
+        // Ensure source file is readable
+        try {
+          fs.accessSync(imagePath, fs.constants.R_OK);
+        } catch (err) {
+          this.log(`⚠️ Cannot read file: ${imagePath}`);
+          continue;
+        }
+        
         if (!fs.existsSync(copyPath)) {
           fs.copyFileSync(imagePath, copyPath);
         }
         
         // Create simple thumbnail (copy original for now)
         const thumbnailPath = path.join(THUMBNAILS_DIR, fileName);
-        if (!fs.existsSync(thumbnailPath)) {
+        if (!fs.existsSync(thumbnailPath) && !imagePath.includes('/thumbnails/')) {
           fs.copyFileSync(imagePath, thumbnailPath);
         }
         
