@@ -1,0 +1,17 @@
+{
+  "status": "init",
+  "scope": "codebase",
+  "type": "frontend",
+  "localEndpoint": "http://localhost:5173",
+  "serverPort": 35801,
+  "executionArgs": {
+    "projectName": "escola-habilidade",
+    "projectPath": "/mnt/c/habilidade",
+    "testIds": [],
+    "additionalInstruction": "Focus on testing the most critical conversion elements first: 1) Contact forms with EmailJS integration, 2) WhatsApp buttons and fallback functionality, 3) Course enrollment CTAs, 4) Form validation. These are the highest business impact features.",
+    "envs": {
+      "API_KEY": "sk-user--wf_w5CZobnTe19xCjxbf7vR7xL7S6_fwWwPOs5FdCsmE1dZ4mB3-DATZK0LBmsjZdc1HdPnmkp6S3PiPc4Xsx3UAslWWflrpijzOapl9cLN-8586mvCGz1Yy17ug4_0EBI"
+    }
+  },
+  "proxy": "http://957033df-5d03-4463-8a40-2916aadeef45:q1ELOrfBglfvulhNyc284A9sPePHsGDg@tun.testsprite.com:8080"
+}

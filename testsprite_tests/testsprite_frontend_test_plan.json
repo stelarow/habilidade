@@ -1,0 +1,348 @@
+[
+  {
+    "id": "TC001",
+    "title": "Course Page Content Verification",
+    "description": "Verify that all course pages display complete and accurate information including curriculum, pricing, testimonials, video galleries, and enrollment CTAs.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to the Projetista 3D course page"
+      },
+      {
+        "type": "assertion",
+        "description": "Check that curriculum details are fully displayed and correct"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify that pricing information matches the expected data"
+      },
+      {
+        "type": "assertion",
+        "description": "Ensure testimonials are shown and relevant"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm video gallery is functional and loads videos correctly"
+      },
+      {
+        "type": "assertion",
+        "description": "Click enrollment CTAs and verify navigation to enrollment flow"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to the Informática Nova course page"
+      },
+      {
+        "type": "assertion",
+        "description": "Repeat curriculum, pricing, testimonial, and CTA verifications"
+      }
+    ]
+  },
+  {
+    "id": "TC002",
+    "title": "EmailJS Contact Form Submission Success",
+    "description": "Verify that contact forms successfully send messages through EmailJS using valid input data.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to a page with a contact form (e.g., course page contact form)"
+      },
+      {
+        "type": "action",
+        "description": "Input valid name, email, and message into the contact form fields"
+      },
+      {
+        "type": "action",
+        "description": "Submit the contact form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify EmailJS API is called and confirms successful message delivery"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm UI displays success message to the user"
+      }
+    ]
+  },
+  {
+    "id": "TC003",
+    "title": "Contact Form Fallback to WhatsApp",
+    "description": "Simulate EmailJS failure and verify that the contact form fallback uses WhatsApp integration to send messages.",
+    "category": "error handling",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to a contact form on any page"
+      },
+      {
+        "type": "action",
+        "description": "Simulate EmailJS service failure or network error"
+      },
+      {
+        "type": "action",
+        "description": "Fill and submit the contact form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the fallback mechanism triggers and opens WhatsApp messaging interface with pre-filled message"
+      },
+      {
+        "type": "assertion",
+        "description": "Validate UI informs the user about fallback to WhatsApp"
+      }
+    ]
+  },
+  {
+    "id": "TC004",
+    "title": "Blog System Dynamic Content Loading and Functionality",
+    "description": "Verify the blog system loads content dynamically and supports advanced search, category filters, sharing, and inline CTAs.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to the main blog page"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm blog posts load without page refresh and display correct content"
+      },
+      {
+        "type": "action",
+        "description": "Use advanced search to query specific keywords"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify filtered search results are accurate and relevant"
+      },
+      {
+        "type": "action",
+        "description": "Apply category filters to blog posts"
+      },
+      {
+        "type": "assertion",
+        "description": "Validate that blog posts shown belong to selected categories"
+      },
+      {
+        "type": "action",
+        "description": "Click social share buttons on a blog post"
+      },
+      {
+        "type": "assertion",
+        "description": "Check that correct sharing dialog or window opens for selected platform"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify inline CTAs are present and functional"
+      }
+    ]
+  },
+  {
+    "id": "TC005",
+    "title": "Responsive Navigation Functionality on Desktop and Mobile",
+    "description": "Ensure the mega menu navigation system works seamlessly across popular desktop and mobile devices including logo interactivity and menu fluidity.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Access the site on a desktop browser"
+      },
+      {
+        "type": "action",
+        "description": "Hover over and interact with the mega menu items"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify submenus expand/collapse correctly with smooth animations"
+      },
+      {
+        "type": "action",
+        "description": "Click the interactive logo and confirm expected navigation"
+      },
+      {
+        "type": "action",
+        "description": "Switch to a mobile device or emulator"
+      },
+      {
+        "type": "action",
+        "description": "Open the mobile mega menu"
+      },
+      {
+        "type": "assertion",
+        "description": "Validate menu responds correctly with fluid, touch-friendly UI"
+      },
+      {
+        "type": "action",
+        "description": "Test navigation between menu items and submenus on mobile"
+      },
+      {
+        "type": "assertion",
+        "description": "Ensure no content is clipped or inaccessible"
+      }
+    ]
+  },
+  {
+    "id": "TC006",
+    "title": "Hero Section Animation and Conversion Content Display",
+    "description": "Verify that the main landing page hero section loads animated backgrounds and displays engaging conversion-focused content correctly.",
+    "category": "ui",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Open the landing page"
+      },
+      {
+        "type": "assertion",
+        "description": "Check that the animated background renders and plays without errors"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text content is visible, correctly formatted, and readable"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm calls to action are prominently displayed and clickable"
+      }
+    ]
+  },
+  {
+    "id": "TC007",
+    "title": "Performance Optimization Verification",
+    "description": "Test that performance optimizations such as lazy loading images, optimized image sizes, and mobile enhancements are effective in improving page load times and user experience.",
+    "category": "performance",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Load course and blog pages on desktop and mobile devices"
+      },
+      {
+        "type": "assertion",
+        "description": "Use network throttling to verify images load lazily as they come into viewport"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm images are served in optimized formats and resolutions"
+      },
+      {
+        "type": "assertion",
+        "description": "Measure page load time and confirm it meets expected performance benchmarks"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify mobile-specific performance enhancements improve responsiveness and smooth interactions"
+      }
+    ]
+  },
+  {
+    "id": "TC008",
+    "title": "SEO Component Implementation and Validation",
+    "description": "Confirm that all SEO components, including meta tags, structured data, breadcrumbs, and social sharing configurations, are correctly implemented and pass standard SEO audits.",
+    "category": "security",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Access various pages such as the homepage, course pages, and blog posts"
+      },
+      {
+        "type": "assertion",
+        "description": "Inspect page source to verify presence and correctness of meta title, description, and relevant meta tags"
+      },
+      {
+        "type": "assertion",
+        "description": "Check that structured data (JSON-LD schema) is present and correctly formatted"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify breadcrumb navigation markup follows schema.org standards"
+      },
+      {
+        "type": "assertion",
+        "description": "Use SEO auditing tools to validate the SEO setup without critical errors"
+      },
+      {
+        "type": "assertion",
+        "description": "Test social sharing buttons produce preview content consistent with meta information"
+      }
+    ]
+  },
+  {
+    "id": "TC009",
+    "title": "WhatsApp Integration and Accessibility",
+    "description": "Verify that WhatsApp integration points including floating buttons and smart CTAs are displayed, accessible, and correctly trigger messaging interface on activation.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Load pages containing WhatsApp floating buttons and smart CTAs"
+      },
+      {
+        "type": "assertion",
+        "description": "Check visibility and accessibility of WhatsApp buttons on desktop and mobile"
+      },
+      {
+        "type": "action",
+        "description": "Click the WhatsApp floating button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the WhatsApp messaging interface opens with correct recipient and pre-filled content if applicable"
+      },
+      {
+        "type": "action",
+        "description": "Click smart CTA WhatsApp links embedded in course pages"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm expected WhatsApp chat window or app launches correctly"
+      }
+    ]
+  },
+  {
+    "id": "TC010",
+    "title": "Form Validation and Error Messaging",
+    "description": "Validate client-side and server-side form validations for all contact forms, ensuring proper error messages display for invalid inputs and required fields.",
+    "category": "error handling",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Open a contact form page"
+      },
+      {
+        "type": "action",
+        "description": "Attempt to submit form leaving all required fields empty"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify error messages indicating required fields must be filled"
+      },
+      {
+        "type": "action",
+        "description": "Input invalid email format and attempt to submit"
+      },
+      {
+        "type": "assertion",
+        "description": "Error message should indicate invalid email address"
+      },
+      {
+        "type": "action",
+        "description": "Input excessively long text in message fields"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify constraints prevent submission or produce appropriate warnings"
+      }
+    ]
+  }
+]

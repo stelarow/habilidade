@@ -84,7 +84,8 @@ export const InformaticaNovaTestimonials = () => {
     return Array.from({ length: 5 }, (_, i) => (
       <Star
         key={i}
-        className={`w-5 h-5 ${i < rating ? 'text-yellow-400 fill-current' : 'text-gray-400'}`}
+        className={`w-5 h-5 ${i < rating ? 'text-yellow-400' : 'text-gray-400'}`}
+        weight={i < rating ? "fill" : "regular"}
       />
     ));
   };

@@ -1,0 +1,118 @@
+{
+  "tech_stack": [
+    "JavaScript",
+    "React 19",
+    "Vite",
+    "TailwindCSS",
+    "React Router DOM",
+    "EmailJS",
+    "Supabase",
+    "Node.js",
+    "Netlify"
+  ],
+  "features": [
+    {
+      "name": "Contact Forms",
+      "description": "Multiple contact forms with EmailJS integration and WhatsApp fallback for lead generation",
+      "files": [
+        "src/components/ContactForm.jsx",
+        "src/components/course/CourseContactForm.jsx",
+        "src/components/blog/QuickContactModal.jsx",
+        "src/components/blog/BlogContactSection.jsx"
+      ]
+    },
+    {
+      "name": "Course Pages",
+      "description": "Dedicated course landing pages with curriculum, testimonials, pricing and enrollment CTAs",
+      "files": [
+        "src/components/course/CourseHero.jsx",
+        "src/components/course/CourseCurriculum.jsx",
+        "src/components/course/CourseInvestment.jsx",
+        "src/components/course/CourseEnrollCTA.jsx",
+        "src/components/course/CourseTestimonials.jsx"
+      ]
+    },
+    {
+      "name": "Projetista 3D Course",
+      "description": "Specialized course page for 3D design with portfolio gallery, video player and conversion elements",
+      "files": [
+        "src/components/course/projetista/ProjetistaHeroSection.jsx",
+        "src/components/course/projetista/ProjetistaCurriculum.jsx",
+        "src/components/course/projetista/ProjetistaInvestment.jsx",
+        "src/components/course/projetista/ProjetistaFloatingCTA.jsx",
+        "src/components/course/projetista/ProjetistaGalleryWithLightbox.jsx",
+        "src/components/course/projetista/VideoPlayer.jsx"
+      ]
+    },
+    {
+      "name": "Informática Nova Course",
+      "description": "Complete computer course page with modern curriculum and transformation promise",
+      "files": [
+        "src/components/course/informatica-nova/InformaticaNovaHeroSection.jsx",
+        "src/components/course/informatica-nova/InformaticaNovaCurriculum.jsx",
+        "src/components/course/informatica-nova/InformaticaNovaInvestment.jsx",
+        "src/components/course/informatica-nova/InformaticaNovaFloatingCTA.jsx",
+        "src/components/course/informatica-nova/InformaticaNovaTransformationPromise.jsx"
+      ]
+    },
+    {
+      "name": "Blog System",
+      "description": "Complete blog with dynamic content, SEO optimization, search functionality and engagement features",
+      "files": [
+        "src/components/blog/BlogLayout.jsx",
+        "src/components/blog/BlogCard.jsx",
+        "src/components/blog/BlogHeader.jsx",
+        "src/components/blog/AdvancedSearch.jsx",
+        "src/components/blog/CategoryFilter.jsx",
+        "src/components/blog/ShareButtons.jsx",
+        "src/components/blog/InlineCTA.jsx"
+      ]
+    },
+    {
+      "name": "WhatsApp Integration",
+      "description": "Multiple WhatsApp contact points including floating button and smart CTAs",
+      "files": [
+        "src/components/header/WhatsAppButton.jsx",
+        "src/components/shared/WhatsAppFloat.jsx",
+        "src/components/header/SmartCTA.jsx"
+      ]
+    },
+    {
+      "name": "Navigation System",
+      "description": "Responsive navigation with mega menu for desktop and mobile optimization",
+      "files": [
+        "src/components/Header.jsx",
+        "src/components/header/MegaMenu.jsx",
+        "src/components/header/MobileMegaMenu.jsx",
+        "src/components/header/InteractiveLogo.jsx"
+      ]
+    },
+    {
+      "name": "Hero Sections",
+      "description": "Main landing page hero with animated backgrounds and conversion-focused content",
+      "files": [
+        "src/components/Hero.jsx",
+        "src/components/Starfield.jsx",
+        "src/components/backgrounds/"
+      ]
+    },
+    {
+      "name": "Performance Optimization",
+      "description": "Image optimization, lazy loading and mobile performance enhancements",
+      "files": [
+        "src/components/LazyImage.jsx",
+        "src/components/shared/OptimizedImage.jsx",
+        "src/components/performance/OptimizedImage.jsx",
+        "src/components/MobilePerformanceOptimizer.jsx"
+      ]
+    },
+    {
+      "name": "SEO Components",
+      "description": "SEO optimization with meta tags, structured data and social sharing",
+      "files": [
+        "src/components/shared/SEOHead.jsx",
+        "src/components/blog/Breadcrumbs.jsx"
+      ]
+    }
+  ]
+}

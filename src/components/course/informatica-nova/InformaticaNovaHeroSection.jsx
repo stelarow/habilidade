@@ -24,86 +24,82 @@ export const InformaticaNovaHeroSection = () => {
       
       {/* Conteúdo do Hero */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="max-w-6xl mx-auto text-center pt-20 sm:pt-16 md:pt-8">
+        <div className="max-w-6xl mx-auto text-center pt-12 sm:pt-16 md:pt-8">
           
-          {/* Badge superior */}
-          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500/20 to-cyan-400/20 backdrop-blur-sm border border-blue-500/30 rounded-full px-6 py-3 mb-8 animate-pulse">
-            <Star className="w-5 h-5 text-yellow-400 fill-current" />
-            <span className="text-sm font-medium text-blue-300">
-              Curso Mais Completo de Informática em SC
-            </span>
-          </div>
 
           {/* Título principal */}
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight">
-            <span className="text-white">DOMINE</span>
+            <span className="text-white">CURSO</span>
             <br />
             <span className="bg-gradient-to-r from-blue-400 via-blue-600 to-cyan-400 bg-clip-text text-transparent">
               INFORMÁTICA
             </span>
             <br />
-            <span className="text-white">COMPLETA</span>
+            <span className="text-white">COMPLETO</span>
+            <br />
+            <span className="text-cyan-300 text-2xl md:text-3xl lg:text-4xl font-semibold">
+              GRANDE FLORIANÓPOLIS
+            </span>
           </h1>
 
           {/* Subtítulo */}
-          <p className="text-xl md:text-2xl text-zinc-300 mb-12 max-w-4xl mx-auto leading-relaxed">
-            Do Windows 11 à <strong className="text-cyan-400">Inteligência Artificial</strong>. 
-            184 horas práticas para você se tornar um <strong className="text-blue-400">expert em informática</strong> 
-            e conquistar as melhores oportunidades.
+          <p className="text-lg md:text-2xl text-zinc-300 mb-8 md:mb-12 max-w-4xl mx-auto leading-relaxed">
+            <strong className="text-cyan-400">Excel avançado</strong>, <strong className="text-blue-400">Word profissional</strong>, PowerPoint e <strong className="text-purple-400">IA aplicada</strong>. 
+            <strong className="text-green-400">Curso presencial de informática</strong> em São José, Grande Florianópolis.
           </p>
 
           {/* Stats importantes */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12 max-w-4xl mx-auto">
-            <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6">
-              <div className="flex items-center justify-center mb-3">
-                <Clock className="w-8 h-8 text-blue-400" />
+          <div className="grid grid-cols-3 md:grid-cols-3 gap-4 md:gap-8 mb-8 md:mb-12 max-w-4xl mx-auto">
+            <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-3 md:p-6">
+              <div className="flex items-center justify-center mb-2 md:mb-3">
+                <Clock className="w-5 h-5 md:w-8 md:h-8 text-blue-400" />
               </div>
-              <div className="text-2xl font-bold text-white mb-1">184,5h</div>
-              <div className="text-sm text-zinc-400">Carga horária completa</div>
+              <div className="text-lg md:text-2xl font-bold text-white mb-1">184,5h</div>
+              <div className="text-xs md:text-sm text-zinc-400">Carga horária completa</div>
             </div>
             
-            <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6">
-              <div className="flex items-center justify-center mb-3">
-                <BookOpen className="w-8 h-8 text-cyan-400" />
+            <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-3 md:p-6">
+              <div className="flex items-center justify-center mb-2 md:mb-3">
+                <BookOpen className="w-5 h-5 md:w-8 md:h-8 text-cyan-400" />
               </div>
-              <div className="text-2xl font-bold text-white mb-1">8 Módulos</div>
-              <div className="text-sm text-zinc-400">Do básico ao avançado</div>
+              <div className="text-lg md:text-2xl font-bold text-white mb-1">8 Módulos</div>
+              <div className="text-xs md:text-sm text-zinc-400">Do básico ao avançado</div>
             </div>
             
-            <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6">
-              <div className="flex items-center justify-center mb-3">
-                <Users className="w-8 h-8 text-purple-400" />
+            <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-3 md:p-6">
+              <div className="flex items-center justify-center mb-2 md:mb-3">
+                <Users className="w-5 h-5 md:w-8 md:h-8 text-purple-400" />
               </div>
-              <div className="text-2xl font-bold text-white mb-1">150+</div>
-              <div className="text-sm text-zinc-400">Alunos aprovados</div>
+              <div className="text-lg md:text-2xl font-bold text-white mb-1">150+</div>
+              <div className="text-xs md:text-sm text-zinc-400">Alunos aprovados</div>
             </div>
           </div>
 
           {/* Lista de benefícios principais */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-12 max-w-3xl mx-auto text-left">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8 md:mb-12 max-w-3xl mx-auto text-left">
             <div className="flex items-center gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0" />
-              <span className="text-zinc-300">Windows 11 + Office completo</span>
+              <span className="text-zinc-300">Curso completo de Windows 11 e Office</span>
             </div>
             <div className="flex items-center gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0" />
-              <span className="text-zinc-300">Excel Fundamental + Avançado</span>
+              <span className="text-zinc-300">Excel básico ao avançado profissional</span>
             </div>
             <div className="flex items-center gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0" />
-              <span className="text-zinc-300">Canva para redes sociais</span>
+              <span className="text-zinc-300">Design no Canva para redes sociais</span>
             </div>
             <div className="flex items-center gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0" />
-              <span className="text-zinc-300">Inteligência Artificial aplicada</span>
+              <span className="text-zinc-300">IA aplicada na prática</span>
             </div>
             <div className="flex items-center gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0" />
-              <span className="text-zinc-300">Material didático incluso</span>
+              <span className="text-zinc-300">Apostilas e certificado inclusos</span>
             </div>
             <div className="flex items-center gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0" />
-              <span className="text-zinc-300">Modalidades Presencial e Online</span>
+              <span className="text-zinc-300">Aulas presenciais em São José</span>
             </div>
           </div>
 

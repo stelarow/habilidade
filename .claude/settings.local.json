@@ -68,7 +68,8 @@
       "mcp__serena__replace_symbol_body",
       "Bash(git rm:*)",
       "Bash(npm run dev:*)",
-      "mcp__playwright__browser_console_messages"
+      "mcp__playwright__browser_console_messages",
+      "mcp__serena__list_dir"
     ],
     "deny": []
   }

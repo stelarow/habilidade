@@ -1,6 +1,5 @@
 import { 
   Question, 
-  Hand, 
   Books, 
   Briefcase, 
   ArrowsClockwise, 

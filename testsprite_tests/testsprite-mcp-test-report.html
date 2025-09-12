@@ -1,0 +1,313 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Markdown Preview</title>
+      <style>
+        body {
+          font-family: sans-serif;
+          padding: 40px;
+          line-height: 1.6;
+          background: #fdfdfd;
+          color: #333;
+        }
+        pre {
+          background: #f4f4f4;
+          padding: 10px;
+          border-radius: 5px;
+          overflow-x: auto;
+        }
+        code {
+          font-family: monospace;
+          background: #eee;
+          padding: 2px 4px;
+        }
+        table {
+          border-collapse: collapse;
+          width: 100%;
+          margin-top: 20px;
+        }
+        th, td {
+          border: 1px solid #ccc;
+          padding: 8px 12px;
+          text-align: left;
+        }
+        th {
+          background-color: #f2f2f2;
+          font-weight: bold;
+        }
+      </style>
+    </head>
+    <body>
+      <h1>TestSprite AI Testing Report (MCP)</h1>
+<hr>
+<h2>1️⃣ Document Metadata</h2>
+<ul>
+<li><strong>Project Name:</strong> escola-habilidade</li>
+<li><strong>Version:</strong> 0.0.1</li>
+<li><strong>Date:</strong> 2025-09-10</li>
+<li><strong>Prepared by:</strong> TestSprite AI Team</li>
+</ul>
+<hr>
+<h2>2️⃣ Requirement Validation Summary</h2>
+<h3>Requirement: Course Page Content Management</h3>
+<ul>
+<li><strong>Description:</strong> Displays complete course information including curriculum, pricing, testimonials, and enrollment CTAs.</li>
+</ul>
+<h4>Test 1</h4>
+<ul>
+<li><strong>Test ID:</strong> TC001</li>
+<li><strong>Test Name:</strong> Course Page Content Verification</li>
+<li><strong>Test Code:</strong> <a href="./TC001_Course_Page_Content_Verification.py">TC001_Course_Page_Content_Verification.py</a></li>
+<li><strong>Test Error:</strong> Failed to go to the start URL. Err: Error executing action go_to_url: Page.goto: net::ERR_EMPTY_RESPONSE at http://localhost:5173/</li>
+<li><strong>Test Visualization and Result:</strong> <a href="https://www.testsprite.com/dashboard/mcp/tests/aaa872d6-23f3-4bd3-99f5-10987f5a4cf5/e7ab4dc7-da1a-4219-8011-96913141a93e">View Test Results</a></li>
+<li><strong>Status:</strong> ❌ Failed</li>
+<li><strong>Severity:</strong> High</li>
+<li><strong>Analysis / Findings:</strong> The test failed because the frontend application did not load at the specified URL, resulting in a network error (net::ERR_EMPTY_RESPONSE). This indicates the frontend server or development environment is not running or accessible, preventing content verification.</li>
+</ul>
+<hr>
+<h3>Requirement: Contact Form Functionality</h3>
+<ul>
+<li><strong>Description:</strong> Supports EmailJS integration for message sending and WhatsApp fallback functionality.</li>
+</ul>
+<h4>Test 1</h4>
+<ul>
+<li><strong>Test ID:</strong> TC002</li>
+<li><strong>Test Name:</strong> EmailJS Contact Form Submission Success</li>
+<li><strong>Test Code:</strong> <a href="./TC002_EmailJS_Contact_Form_Submission_Success.py">TC002_EmailJS_Contact_Form_Submission_Success.py</a></li>
+<li><strong>Test Error:</strong> Failed to go to the start URL. Err: Error executing action go_to_url: Page.goto: net::ERR_EMPTY_RESPONSE at http://localhost:5173/</li>
+<li><strong>Test Visualization and Result:</strong> <a href="https://www.testsprite.com/dashboard/mcp/tests/aaa872d6-23f3-4bd3-99f5-10987f5a4cf5/aa9cce8b-b300-449d-a101-03639d28c2d4">View Test Results</a></li>
+<li><strong>Status:</strong> ❌ Failed</li>
+<li><strong>Severity:</strong> High</li>
+<li><strong>Analysis / Findings:</strong> The test failed due to inability to load the frontend application at the start URL, resulting in net::ERR_EMPTY_RESPONSE error. The contact form functionality could not be tested.</li>
+</ul>
+<hr>
+<h4>Test 2</h4>
+<ul>
+<li><strong>Test ID:</strong> TC003</li>
+<li><strong>Test Name:</strong> Contact Form Fallback to WhatsApp</li>
+<li><strong>Test Code:</strong> <a href="./TC003_Contact_Form_Fallback_to_WhatsApp.py">TC003_Contact_Form_Fallback_to_WhatsApp.py</a></li>
+<li><strong>Test Error:</strong> Failed to go to the start URL. Err: Error executing action go_to_url: Page.goto: net::ERR_EMPTY_RESPONSE at http://localhost:5173/</li>
+<li><strong>Test Visualization and Result:</strong> <a href="https://www.testsprite.com/dashboard/mcp/tests/aaa872d6-23f3-4bd3-99f5-10987f5a4cf5/bbcef7d2-909d-480a-a46e-5a7a43996586">View Test Results</a></li>
+<li><strong>Status:</strong> ❌ Failed</li>
+<li><strong>Severity:</strong> High</li>
+<li><strong>Analysis / Findings:</strong> The fallback mechanism to WhatsApp could not be tested because the frontend application failed to load, encountering a net::ERR_EMPTY_RESPONSE error.</li>
+</ul>
+<hr>
+<h3>Requirement: Blog System</h3>
+<ul>
+<li><strong>Description:</strong> Dynamic content loading with advanced search, category filters, sharing, and inline CTAs.</li>
+</ul>
+<h4>Test 1</h4>
+<ul>
+<li><strong>Test ID:</strong> TC004</li>
+<li><strong>Test Name:</strong> Blog System Dynamic Content Loading and Functionality</li>
+<li><strong>Test Code:</strong> <a href="./TC004_Blog_System_Dynamic_Content_Loading_and_Functionality.py">TC004_Blog_System_Dynamic_Content_Loading_and_Functionality.py</a></li>
+<li><strong>Test Error:</strong> Failed to go to the start URL. Err: Error executing action go_to_url: Page.goto: net::ERR_EMPTY_RESPONSE at http://localhost:5173/</li>
+<li><strong>Test Visualization and Result:</strong> <a href="https://www.testsprite.com/dashboard/mcp/tests/aaa872d6-23f3-4bd3-99f5-10987f5a4cf5/31770408-98c8-48c3-ab6f-d1bf779e3407">View Test Results</a></li>
+<li><strong>Status:</strong> ❌ Failed</li>
+<li><strong>Severity:</strong> High</li>
+<li><strong>Analysis / Findings:</strong> The blog system's dynamic content and associated features were not testable because the frontend application did not load, showing a net::ERR_EMPTY_RESPONSE error.</li>
+</ul>
+<hr>
+<h3>Requirement: Responsive Navigation</h3>
+<ul>
+<li><strong>Description:</strong> Mega menu navigation system working seamlessly across desktop and mobile devices.</li>
+</ul>
+<h4>Test 1</h4>
+<ul>
+<li><strong>Test ID:</strong> TC005</li>
+<li><strong>Test Name:</strong> Responsive Navigation Functionality on Desktop and Mobile</li>
+<li><strong>Test Code:</strong> <a href="./TC005_Responsive_Navigation_Functionality_on_Desktop_and_Mobile.py">TC005_Responsive_Navigation_Functionality_on_Desktop_and_Mobile.py</a></li>
+<li><strong>Test Error:</strong> Failed to go to the start URL. Err: Error executing action go_to_url: Page.goto: net::ERR_EMPTY_RESPONSE at http://localhost:5173/</li>
+<li><strong>Test Visualization and Result:</strong> <a href="https://www.testsprite.com/dashboard/mcp/tests/aaa872d6-23f3-4bd3-99f5-10987f5a4cf5/81570bec-6faa-4e23-880a-a6a82ab9decc">View Test Results</a></li>
+<li><strong>Status:</strong> ❌ Failed</li>
+<li><strong>Severity:</strong> High</li>
+<li><strong>Analysis / Findings:</strong> Responsive navigation functionality could not be verified as the frontend app was not accessible due to net::ERR_EMPTY_RESPONSE error at the specified URL.</li>
+</ul>
+<hr>
+<h3>Requirement: Hero Section</h3>
+<ul>
+<li><strong>Description:</strong> Main landing page hero with animated backgrounds and conversion-focused content.</li>
+</ul>
+<h4>Test 1</h4>
+<ul>
+<li><strong>Test ID:</strong> TC006</li>
+<li><strong>Test Name:</strong> Hero Section Animation and Conversion Content Display</li>
+<li><strong>Test Code:</strong> <a href="./TC006_Hero_Section_Animation_and_Conversion_Content_Display.py">TC006_Hero_Section_Animation_and_Conversion_Content_Display.py</a></li>
+<li><strong>Test Error:</strong> Failed to go to the start URL. Err: Error executing action go_to_url: Page.goto: net::ERR_EMPTY_RESPONSE at http://localhost:5173/</li>
+<li><strong>Test Visualization and Result:</strong> <a href="https://www.testsprite.com/dashboard/mcp/tests/aaa872d6-23f3-4bd3-99f5-10987f5a4cf5/a1d04203-7c3e-4b02-a0aa-869fa6b15e48">View Test Results</a></li>
+<li><strong>Status:</strong> ❌ Failed</li>
+<li><strong>Severity:</strong> High</li>
+<li><strong>Analysis / Findings:</strong> The hero section's animation and content could not be validated because the frontend page failed to load, triggering a net::ERR_EMPTY_RESPONSE.</li>
+</ul>
+<hr>
+<h3>Requirement: Performance Optimization</h3>
+<ul>
+<li><strong>Description:</strong> Lazy loading, image optimization, and mobile enhancements for improved page load times.</li>
+</ul>
+<h4>Test 1</h4>
+<ul>
+<li><strong>Test ID:</strong> TC007</li>
+<li><strong>Test Name:</strong> Performance Optimization Verification</li>
+<li><strong>Test Code:</strong> <a href="./TC007_Performance_Optimization_Verification.py">TC007_Performance_Optimization_Verification.py</a></li>
+<li><strong>Test Error:</strong> Failed to go to the start URL. Err: Error executing action go_to_url: Page.goto: net::ERR_EMPTY_RESPONSE at http://localhost:5173/</li>
+<li><strong>Test Visualization and Result:</strong> <a href="https://www.testsprite.com/dashboard/mcp/tests/aaa872d6-23f3-4bd3-99f5-10987f5a4cf5/e6d5d826-12ff-4c47-888d-836898c5be96">View Test Results</a></li>
+<li><strong>Status:</strong> ❌ Failed</li>
+<li><strong>Severity:</strong> High</li>
+<li><strong>Analysis / Findings:</strong> Performance optimization tests could not be performed because the frontend page failed to load, producing a net::ERR_EMPTY_RESPONSE error.</li>
+</ul>
+<hr>
+<h3>Requirement: SEO Components</h3>
+<ul>
+<li><strong>Description:</strong> Meta tags, structured data, breadcrumbs, and social sharing configurations for SEO optimization.</li>
+</ul>
+<h4>Test 1</h4>
+<ul>
+<li><strong>Test ID:</strong> TC008</li>
+<li><strong>Test Name:</strong> SEO Component Implementation and Validation</li>
+<li><strong>Test Code:</strong> <a href="./TC008_SEO_Component_Implementation_and_Validation.py">TC008_SEO_Component_Implementation_and_Validation.py</a></li>
+<li><strong>Test Error:</strong> Failed to go to the start URL. Err: Error executing action go_to_url: Page.goto: net::ERR_EMPTY_RESPONSE at http://localhost:5173/</li>
+<li><strong>Test Visualization and Result:</strong> <a href="https://www.testsprite.com/dashboard/mcp/tests/aaa872d6-23f3-4bd3-99f5-10987f5a4cf5/fc6d4576-76a6-4389-bd6f-5505977b4f60">View Test Results</a></li>
+<li><strong>Status:</strong> ❌ Failed</li>
+<li><strong>Severity:</strong> High</li>
+<li><strong>Analysis / Findings:</strong> SEO component validation failed due to inability to load the frontend application, resulting in net::ERR_EMPTY_RESPONSE error at the base URL.</li>
+</ul>
+<hr>
+<h3>Requirement: WhatsApp Integration</h3>
+<ul>
+<li><strong>Description:</strong> Floating buttons and smart CTAs that trigger WhatsApp messaging interface.</li>
+</ul>
+<h4>Test 1</h4>
+<ul>
+<li><strong>Test ID:</strong> TC009</li>
+<li><strong>Test Name:</strong> WhatsApp Integration and Accessibility</li>
+<li><strong>Test Code:</strong> <a href="./TC009_WhatsApp_Integration_and_Accessibility.py">TC009_WhatsApp_Integration_and_Accessibility.py</a></li>
+<li><strong>Test Error:</strong> Failed to go to the start URL. Err: Error executing action go_to_url: Page.goto: net::ERR_EMPTY_RESPONSE at http://localhost:5173/</li>
+<li><strong>Test Visualization and Result:</strong> <a href="https://www.testsprite.com/dashboard/mcp/tests/aaa872d6-23f3-4bd3-99f5-10987f5a4cf5/a531f605-9185-4b15-a6ca-020294237bf8">View Test Results</a></li>
+<li><strong>Status:</strong> ❌ Failed</li>
+<li><strong>Severity:</strong> High</li>
+<li><strong>Analysis / Findings:</strong> WhatsApp integration features were untestable because the frontend application did not load, experiencing a net::ERR_EMPTY_RESPONSE error.</li>
+</ul>
+<hr>
+<h3>Requirement: Form Validation</h3>
+<ul>
+<li><strong>Description:</strong> Client-side and server-side form validations with proper error messaging for contact forms.</li>
+</ul>
+<h4>Test 1</h4>
+<ul>
+<li><strong>Test ID:</strong> TC010</li>
+<li><strong>Test Name:</strong> Form Validation and Error Messaging</li>
+<li><strong>Test Code:</strong> <a href="./TC010_Form_Validation_and_Error_Messaging.py">TC010_Form_Validation_and_Error_Messaging.py</a></li>
+<li><strong>Test Error:</strong> Failed to go to the start URL. Err: Error executing action go_to_url: Page.goto: net::ERR_EMPTY_RESPONSE at http://localhost:5173/</li>
+<li><strong>Test Visualization and Result:</strong> <a href="https://www.testsprite.com/dashboard/mcp/tests/aaa872d6-23f3-4bd3-99f5-10987f5a4cf5/7d1d2e5e-038e-4b5a-8dc3-39d0e9e673b6">View Test Results</a></li>
+<li><strong>Status:</strong> ❌ Failed</li>
+<li><strong>Severity:</strong> High</li>
+<li><strong>Analysis / Findings:</strong> Form validation tests failed as the frontend page was unreachable, resulting in net::ERR_EMPTY_RESPONSE and preventing verification of client and server-side form validations.</li>
+</ul>
+<hr>
+<h2>3️⃣ Coverage &amp; Matching Metrics</h2>
+<ul>
+<li><strong>0% of product requirements tested successfully</strong></li>
+<li><strong>0% of tests passed</strong></li>
+<li><strong>Key gaps / risks:</strong></li>
+</ul>
+<blockquote>
+<p><strong>Critical Issue:</strong> All tests failed due to frontend server connectivity issues (net::ERR_EMPTY_RESPONSE). No functionality could be validated.</p>
+</blockquote>
+<blockquote>
+<p><strong>Primary Risk:</strong> The development server appears to be inaccessible from the testing environment, preventing any functional verification of the application's critical features including contact forms, navigation, and conversion elements.</p>
+</blockquote>
+<blockquote>
+<p><strong>Immediate Action Required:</strong> Resolve server configuration and connectivity issues before rerunning tests to validate core business functionality.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Requirement</th>
+<th>Total Tests</th>
+<th>✅ Passed</th>
+<th>⚠️ Partial</th>
+<th>❌ Failed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Course Page Content</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Contact Form</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+</tr>
+<tr>
+<td>Blog System</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Responsive Navigation</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Hero Section</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Performance Optimization</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>SEO Components</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>WhatsApp Integration</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Form Validation</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td><strong>TOTAL</strong></td>
+<td><strong>10</strong></td>
+<td><strong>0</strong></td>
+<td><strong>0</strong></td>
+<td><strong>10</strong></td>
+</tr>
+</tbody>
+</table>
+<hr>
+
+    </body>
+    </html>
+  

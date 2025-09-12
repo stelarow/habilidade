@@ -9,7 +9,6 @@ const Home = React.lazy(() => import('./pages/Home'));
 const CoursePage = React.lazy(() => import('./pages/CoursePage'));
 const Contact = React.lazy(() => import('./pages/Contact'));
 const BlogIndex = React.lazy(() => import('./pages/BlogIndex'));
-const BlogTestPage = React.lazy(() => import('./pages/BlogTestPage'));
 const BlogCategory = React.lazy(() => import('./pages/BlogCategory'));
 const NotFound = React.lazy(() => import('./pages/NotFound'));
 const CursosFlorianopolis = React.lazy(() => import('./pages/CursosFlorianopolis'));
@@ -76,6 +75,10 @@ export const routes = [
         lazy: () => import('./pages/courses/Informatica')
       },
       {
+        path: 'cursos/informatica-nova',
+        lazy: () => import('./pages/courses/InformaticaNova')
+      },
+      {
         path: 'cursos/design-grafico',
         lazy: () => import('./pages/courses/DesignGrafico')
       },
@@ -131,19 +134,6 @@ export const routes = [
             path: ':slug',
             lazy: () => import('./pages/BlogPostSSG'),
             getStaticPaths: () => blogSlugs
-          }
-        ]
-      },
-      {
-        path: 'blog-test',
-        children: [
-          {
-            index: true,
-            lazy: () => import('./pages/BlogTestPage')
-          },
-          {
-            path: ':slug',
-            lazy: () => import('./pages/BlogTestPage')
           }
         ]
       },

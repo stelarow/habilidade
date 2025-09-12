@@ -6,53 +6,83 @@ import { handleCTAClick } from '../../../utils/ctaUtils';
 const faqData = [
   {
     id: 1,
-    question: 'É adequado para pessoas sem conhecimento em informática?',
-    answer: 'Sim! Começamos do absoluto zero com Windows 11 e evoluímos gradualmente até tecnologias avançadas como IA aplicada. Nossa metodologia foi desenvolvida especialmente para iniciantes, com acompanhamento individual em turmas pequenas.'
+    question: 'Por que turmas pequenas fazem diferença no aprendizado?',
+    answer: 'Turmas de máximo 5 alunos garantem atenção individual para cada pessoa. O professor consegue acompanhar seu ritmo, tirar dúvidas na hora e adaptar explicações ao seu perfil. Isso acelera o aprendizado e garante que ninguém fica para trás - diferente de turmas tradicionais com 20-30 alunos onde você precisa competir pela atenção.'
   },
   {
     id: 2,
-    question: 'Qual a diferença entre as modalidades Presencial e Online?',
-    answer: 'Presencial: aulas na escola com instrutores especializados, interação direta e ambiente dedicado ao aprendizado. Online: acesso remoto com suporte online, flexibilidade de horários. Ambas têm o mesmo conteúdo completo e apostilas inclusas.'
+    question: 'É adequado para pessoas sem conhecimento em informática?',
+    answer: 'Sim! Começamos do absoluto zero com Windows 11 e evoluímos gradualmente até tecnologias avançadas como IA aplicada. Nossa metodologia foi desenvolvida especialmente para iniciantes, com acompanhamento individual em turmas de no máximo 5 alunos.'
   },
   {
     id: 3,
+    question: 'Qual a diferença entre as modalidades Presencial e Online?',
+    answer: 'Presencial: aulas na escola com professores especializados, interação direta e ambiente dedicado ao aprendizado. Online: acesso remoto com suporte online, flexibilidade de horários. Ambas têm o mesmo conteúdo completo e apostilas inclusas.'
+  },
+  {
+    id: 4,
     question: 'As apostilas estão incluídas no preço?',
     answer: 'Sim! Material didático impresso completo dos 8 módulos incluso sem custo adicional. Você recebe apostilas detalhadas de cada módulo para consulta permanente, além de exercícios práticos para fixar o aprendizado.'
   },
   {
-    id: 4,
+    id: 5,
     question: 'Como a IA está integrada no curso?',
     answer: 'Ensinamos IA de forma prática: ChatGPT para produtividade, geração de imagens e vídeos, automações no trabalho, HARPA AI, D-ID e muito mais. Você aprenderá a usar IA como ferramenta de trabalho real, não apenas teoria.'
   },
   {
-    id: 5,
+    id: 6,
     question: 'Quanto tempo demora para concluir o curso?',
     answer: 'O curso tem 184,5 horas de conteúdo distribuídas em 8 módulos. O ritmo é flexível e depende da sua dedicação. Com estudo regular de 10-15 horas semanais, você pode concluir em aproximadamente 3-4 meses.'
   },
   {
-    id: 6,
+    id: 7,
     question: 'Que tipo de certificado eu recebo?',
     answer: 'Você recebe um Certificado Nacional de 184,5 horas reconhecido em todo território brasileiro. O certificado comprova suas competências em informática moderna e pode ser usado para comprovação profissional.'
   },
   {
-    id: 7,
+    id: 8,
     question: 'Preciso ter computador próprio?',
     answer: 'Para a modalidade presencial, disponibilizamos computadores na escola. Para online, você precisa ter um computador com Windows 10/11, 8GB de RAM (recomendado 16GB) e conexão estável com internet.'
   },
   {
-    id: 8,
+    id: 9,
     question: 'Como funciona o suporte durante o curso?',
-    answer: 'Oferecemos suporte vitalício! Durante o curso, você tem acompanhamento direto dos instrutores, tira-dúvidas e feedback em projetos. Após a conclusão, mantemos canal de suporte para consultas pontuais.'
+    answer: 'Oferecemos suporte vitalício! Durante o curso, você tem acompanhamento direto dos professores, tira-dúvidas e feedback em projetos. Após a conclusão, mantemos canal de suporte para consultas pontuais.'
   },
   {
-    id: 9,
+    id: 10,
     question: 'Posso parcelar o pagamento?',
     answer: 'Sim! Oferecemos parcelamento em até 12x de R$ 59,70 sem juros no cartão de crédito. Também aceitamos PIX e boleto bancário à vista. Todas as formas de pagamento são 100% seguras.'
   },
   {
-    id: 10,
+    id: 11,
     question: 'A garantia de 7 dias é real?',
     answer: 'Absolutamente! Se em até 7 dias você não estiver satisfeito com o curso, devolvemos 100% do valor pago sem perguntas. É nossa forma de demonstrar total confiança na qualidade do conteúdo e metodologia.'
+  },
+  {
+    id: 12,
+    question: 'Onde fica a escola de informática?',
+    answer: 'Nossa escola está localizada na R. Caetano José Ferreira, 426 - Sala 5, Kobrasol, São José - SC, CEP 88102-280. Próximo ao Cantinho da Fama e Colégio Municipal Maria Luiza de Melo. Fácil acesso para alunos de Florianópolis, Palhoça e Biguaçu, com ampla disponibilidade de estacionamento público nas ruas próximas.'
+  },
+  {
+    id: 13,
+    question: 'Vocês atendem alunos de outras cidades além de São José?',
+    answer: 'Sim! Atendemos alunos de toda a Grande Florianópolis. Muitos de nossos alunos vêm de Florianópolis (15 min), Palhoça (10 min) e Biguaçu (12 min). Nossa localização no Kobrasol é estratégica e há amplo estacionamento público disponível nas ruas próximas para facilitar o acesso.'
+  },
+  {
+    id: 14,
+    question: 'Como chegar na escola de informática presencial?',
+    answer: 'Estamos na R. Caetano José Ferreira, 426, Kobrasol - região central de São José com fácil acesso pela BR-101. Próximo ao Cantinho da Fama e Colégio Municipal Maria Luiza de Melo. Diversas linhas de ônibus passam pelo Kobrasol, conectando toda a Grande Florianópolis. Há estacionamento público disponível nas ruas próximas.'
+  },
+  {
+    id: 15,
+    question: 'Tem estacionamento para quem vem de outras cidades?',
+    answer: 'Sim! Há ampla disponibilidade de estacionamento público nas proximidades da escola, na R. Caetano José Ferreira e ruas adjacentes no Kobrasol. É uma das facilidades da localização para quem vem de Florianópolis, Palhoça, Biguaçu e outras cidades da região.'
+  },
+  {
+    id: 16,
+    question: 'Qual o horário de funcionamento da escola?',
+    answer: 'Funcionamos de segunda a sexta das 8h às 20h (sexta até 17h30) e sábados das 8h às 12h. Oferecemos horários flexíveis para atender profissionais que trabalham durante o dia, incluindo turmas vespertinas e noturnas.'
   }
 ];
 

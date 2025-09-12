@@ -39,10 +39,7 @@ img {
   image-rendering: -webkit-optimize-contrast;
 }
 
-/* Suporte a WebP com fallback */
-.webp img[data-webp] {
-  content: url(attr(data-webp));
-}
+/* Suporte a WebP será implementado via JavaScript quando necessário */
 
 /* Responsive images */
 img[srcset] {

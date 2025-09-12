@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pacote Premium AI - Suno + Ferramentas Exclusivas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 20px rgba(255, 255, 255, 0.5); }
+            to { text-shadow: 0 0 30px rgba(255, 255, 255, 0.8); }
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-card {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+            background-size: 400% 400%;
+            animation: gradientShift 3s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .badge {
+            position: absolute;
+            top: -10px;
+            right: 30px;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transform: rotate(3deg);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        .pricing-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .package-title {
+            font-size: 2.5rem;
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .price-container {
+            margin-bottom: 2rem;
+        }
+
+        .original-price {
+            font-size: 1.2rem;
+            color: #999;
+            text-decoration: line-through;
+            margin-right: 1rem;
+        }
+
+        .current-price {
+            font-size: 3.5rem;
+            color: #667eea;
+            font-weight: 900;
+            margin-right: 0.5rem;
+        }
+
+        .price-period {
+            font-size: 1.2rem;
+            color: #666;
+            vertical-align: bottom;
+        }
+
+        .savings {
+            display: inline-block;
+            background: #4ecdc4;
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-left: 1rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #f8f9ff, #e3e7ff);
+            padding: 2rem;
+            border-radius: 15px;
+            border-left: 4px solid #667eea;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1.4rem;
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .feature-description {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .what-included {
+            background: linear-gradient(135deg, #667eea10, #764ba220);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 3rem 0;
+        }
+
+        .what-included h3 {
+            font-size: 2rem;
+            color: #667eea;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .included-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            list-style: none;
+        }
+
+        .included-list li {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .included-list li::before {
+            content: "✅";
+            font-size: 1.2rem;
+            margin-right: 1rem;
+        }
+
+        .cta-section {
+            text-align: center;
+            margin: 4rem 0;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1.5rem 3rem;
+            font-size: 1.3rem;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.4);
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .urgency-text {
+            color: #ff6b6b;
+            font-weight: bold;
+            margin: 1rem 0;
+            font-size: 1.1rem;
+        }
+
+        .guarantee {
+            background: #f8f9ff;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            margin: 3rem 0;
+            border: 2px dashed #667eea;
+        }
+
+        .guarantee-icon {
+            font-size: 4rem;
+            color: #4ecdc4;
+            margin-bottom: 1rem;
+        }
+
+        .testimonials {
+            margin: 4rem 0;
+        }
+
+        .testimonials h3 {
+            text-align: center;
+            font-size: 2rem;
+            color: white;
+            margin-bottom: 3rem;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .testimonial::before {
+            content: '"';
+            font-size: 4rem;
+            color: #667eea;
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            opacity: 0.3;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1rem;
+            color: #555;
+        }
+
+        .testimonial-author {
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .faq-section {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            margin: 3rem 0;
+        }
+
+        .faq-section h3 {
+            text-align: center;
+            font-size: 2rem;
+            color: #667eea;
+            margin-bottom: 3rem;
+        }
+
+        .faq-item {
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 1rem;
+        }
+
+        .faq-question {
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .faq-answer {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .security-badges {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 3rem 0;
+            flex-wrap: wrap;
+        }
+
+        .security-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: white;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .footer {
+            text-align: center;
+            color: white;
+            margin-top: 4rem;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .pricing-card {
+                padding: 2rem;
+            }
+            
+            .current-price {
+                font-size: 2.5rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🚀 Pacote Premium AI</h1>
+            <p class="subtitle">Suno + Ferramentas Exclusivas de Inteligência Artificial</p>
+        </header>
+
+        <div class="pricing-card">
+            <div class="badge">OFERTA LIMITADA</div>
+            
+            <div class="pricing-header">
+                <h2 class="package-title">Acesso Completo por 30 Dias</h2>
+                <div class="price-container">
+                    <span class="original-price">R$ 297</span>
+                    <span class="current-price">R$ 100</span>
+                    <span class="price-period">/mês</span>
+                    <span class="savings">Economia de 66%</span>
+                </div>
+            </div>
+
+            <div class="what-included">
+                <h3>O que está incluso no seu pacote:</h3>
+                <ul class="included-list">
+                    <li><strong>Suno AI Pro</strong> - Crie músicas profissionais com IA</li>
+                    <li><strong>ChatGPT Plus</strong> - Acesso ao GPT-4 mais recente</li>
+                    <li><strong>Midjourney</strong> - Gerador de imagens de alta qualidade</li>
+                    <li><strong>Claude Pro</strong> - Assistant avançado da Anthropic</li>
+                    <li><strong>Runway ML</strong> - Edição de vídeo com IA</li>
+                    <li><strong>Canva Pro</strong> - Design profissional simplificado</li>
+                    <li><strong>Notion AI</strong> - Produtividade potencializada</li>
+                    <li><strong>Suporte Premium</strong> - Atendimento prioritário 24/7</li>
+                    <li><strong>Tutoriais Exclusivos</strong> - Aprenda a usar cada ferramenta</li>
+                    <li><strong>Comunidade VIP</strong> - Network com outros usuários</li>
+                </ul>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎵</div>
+                    <h4 class="feature-title">Suno AI - Criação Musical</h4>
+                    <p class="feature-description">Transforme suas ideias em músicas completas com letras, melodias e arranjos profissionais. Perfeito para criadores de conteúdo, músicos e empresas.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h4 class="feature-title">Design & Criatividade</h4>
+                    <p class="feature-description">Midjourney + Canva Pro para criar imagens impressionantes, logos, posts para redes sociais e materiais de marketing profissionais.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🧠</div>
+                    <h4 class="feature-title">Assistentes IA Avançados</h4>
+                    <p class="feature-description">ChatGPT Plus e Claude Pro para automação, copywriting, análises, programação e resolução de problemas complexos.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🎬</div>
+                    <h4 class="feature-title">Produção de Vídeo</h4>
+                    <p class="feature-description">Runway ML para edição de vídeo com IA, efeitos especiais, remoção de fundo e criação de conteúdo viral.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📚</div>
+                    <h4 class="feature-title">Produtividade Total</h4>
+                    <p class="feature-description">Notion AI para organização, planejamento de projetos, criação de documentos e automação de workflows.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🎓</div>
+                    <h4 class="feature-title">Educação & Suporte</h4>
+                    <p class="feature-description">Tutoriais exclusivos, templates prontos, comunidade VIP e suporte técnico especializado para maximizar seus resultados.</p>
+                </div>
+            </div>
+
+            <div class="cta-section">
+                <p class="urgency-text">⏰ Restam apenas 7 vagas com este desconto!</p>
+                <a href="#" class="cta-button" onclick="alert('Redirecionando para o checkout seguro...')">
+                    GARANTIR MEU ACESSO AGORA
+                </a>
+                <p style="margin-top: 1rem; color: #666;">Cobrança única de R$ 100. Sem taxas extras.</p>
+            </div>
+
+            <div class="guarantee">
+                <div class="guarantee-icon">🛡️</div>
+                <h4 style="color: #667eea; margin-bottom: 1rem;">Garantia de 7 Dias</h4>
+                <p>Se você não ficar 100% satisfeito com o pacote, devolvemos seu dinheiro sem perguntas. Risco zero para você!</p>
+            </div>
+        </div>
+
+        <div class="testimonials">
+            <h3>O que nossos clientes dizem:</h3>
+            <div class="testimonial-grid">
+                <div class="testimonial">
+                    <p class="testimonial-text">Com o Suno AI, criei a trilha sonora completa do meu canal no YouTube. Em uma semana já tinha 50 mil visualizações!</p>
+                    <p class="testimonial-author">- Marina Silva, YouTuber</p>
+                </div>
+                <div class="testimonial">
+                    <p class="testimonial-text">O pacote me economizou mais de R$ 800 por mês. Tenho todas as ferramentas que preciso para minha agência digital.</p>
+                    <p class="testimonial-author">- Carlos Mendes, Empresário</p>
+                </div>
+                <div class="testimonial">
+                    <p class="testimonial-text">Fantástico! Consegui automatizar 70% do meu trabalho usando as IAs incluídas. Minha produtividade triplicou.</p>
+                    <p class="testimonial-author">- Ana Costa, Freelancer</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-section">
+            <h3>Perguntas Frequentes</h3>
+            
+            <div class="faq-item">
+                <p class="faq-question">Como funciona o acesso às ferramentas?</p>
+                <p class="faq-answer">Após a compra, você recebe por email todas as credenciais e links de acesso. Tudo configurado e pronto para usar em até 5 minutos.</p>
+            </div>
+            
+            <div class="faq-item">
+                <p class="faq-question">O Suno AI está realmente incluso?</p>
+                <p class="faq-answer">Sim! Acesso completo ao Suno AI Pro por 30 dias, permitindo criar músicas ilimitadas com qualidade profissional.</p>
+            </div>
+            
+            <div class="faq-item">
+                <p class="faq-question">Posso cancelar a qualquer momento?</p>
+                <p class="faq-answer">O pacote é por 30 dias sem renovação automática. Você tem controle total e pode adquirir novamente se desejar.</p>
+            </div>
+            
+            <div class="faq-item">
+                <p class="faq-question">E se eu tiver dúvidas sobre como usar?</p>
+                <p class="faq-answer">Incluímos tutoriais completos para cada ferramenta + suporte premium 24/7 + acesso à comunidade exclusiva.</p>
+            </div>
+        </div>
+
+        <div class="security-badges">
+            <div class="security-badge">
+                <span>🔒</span>
+                <span>Pagamento Seguro</span>
+            </div>
+            <div class="security-badge">
+                <span>✅</span>
+                <span>SSL Certificado</span>
+            </div>
+            <div class="security-badge">
+                <span>🛡️</span>
+                <span>Garantia Total</span>
+            </div>
+            <div class="security-badge">
+                <span>📱</span>
+                <span>Suporte 24/7</span>
+            </div>
+        </div>
+
+        <div class="cta-section">
+            <a href="#" class="cta-button" onclick="alert('Redirecionando para o checkout seguro...')">
+                QUERO GARANTIR AGORA POR R$ 100
+            </a>
+        </div>
+
+        <footer class="footer">
+            <p>© 2025 Pacote Premium AI. Todos os direitos reservados.</p>
+            <p>Este produto não é afiliado às empresas mencionadas.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Adiciona efeito de contagem regressiva
+        function updateCounter() {
+            const counters = document.querySelectorAll('.urgency-text');
+            counters.forEach(counter => {
+                let current = parseInt(counter.textContent.match(/\d+/));
+                if (current > 1) {
+                    counter.textContent = counter.textContent.replace(/\d+/, current - 1);
+                }
+            });
+        }
+        
+        // Atualiza contador a cada 5 minutos
+        setInterval(updateCounter, 300000);
+
+        // Efeito de scroll suave para links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Adiciona animação aos elementos quando entram na tela
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        });
+
+        document.querySelectorAll('.feature-card, .testimonial').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

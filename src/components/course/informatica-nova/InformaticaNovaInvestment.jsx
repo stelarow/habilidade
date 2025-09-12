@@ -29,7 +29,7 @@ const included = [
   "Material didático impresso incluso",
   "Modalidades Presencial e Online",
   "Certificado Nacional reconhecido",
-  "Suporte vitalício dos instrutores",
+  "Suporte vitalício dos professores",
   "Acesso a projetos práticos reais",
   "Garantia incondicional de 7 dias"
 ];
