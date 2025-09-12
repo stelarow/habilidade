@@ -77,6 +77,31 @@ npm run test:e2e           # E2E tests
 - Blog posts statically generated from `blogSlugs` array
 - Custom sitemap generation via Vite plugin
 
+#### SSG Course Pages Fix
+**Issue**: `/cursos/informatica-nova` and `/cursos/projetista-3d` were not rendering content during SSG, generating only 9.4KB HTML files with loading spinners.
+
+**Solution Applied**:
+1. **vite.config.js**: Added `@phosphor-icons/react` to `ssr.noExternal`
+   ```js
+   ssr: {
+     noExternal: ['phosphor-react', '@phosphor-icons/react']
+   }
+   ```
+2. **src/routes.jsx**: Moved problematic pages from main Layout to CourseLayout
+   ```js
+   // Changed from lazy() inside Layout to CourseLayout + Suspense
+   {
+     path: '/cursos/informatica-nova',
+     element: <CourseLayout />,
+     children: [{
+       index: true,
+       element: <Suspense><InformaticaNova /></Suspense>
+     }]
+   }
+   ```
+
+**Results**: HTML files now properly render at 197KB+ with full SEO content instead of 9.4KB spinner-only files.
+
 ### Code Splitting Strategy
 - **vendor**: React/React-DOM core
 - **router**: React Router isolated chunk

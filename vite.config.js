@@ -126,7 +126,7 @@ base: '/',
   },
   
   ssr: {
-    noExternal: ['phosphor-react']
+    noExternal: ['phosphor-react', '@phosphor-icons/react']
   },
   
   build: {

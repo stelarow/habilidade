@@ -17,6 +17,10 @@ const CursosPalhoca = React.lazy(() => import('./pages/CursosPalhoca'));
 const CursoSketchupEnscape = React.lazy(() => import('./pages/CursoSketchupEnscape'));
 const TesteVocacional = React.lazy(() => import('./pages/TesteVocacional'));
 
+// Imports para páginas que precisam de CourseLayout para funcionar com SSG
+const InformaticaNova = React.lazy(() => import('./pages/courses/InformaticaNova'));
+const Projetista3D = React.lazy(() => import('./pages/courses/Projetista3D'));
+
 // Componente para redirecionamento de cursos
 const CourseRedirect = () => {
   const { courseSlug } = useParams();
@@ -61,6 +65,27 @@ export const routes = [
       }
     ]
   },
+  // Páginas que precisam de CourseLayout para funcionar com SSG
+  {
+    path: '/cursos/informatica-nova',
+    element: <CourseLayout />,
+    children: [
+      {
+        index: true,
+        element: <Suspense key="course-informatica-nova" fallback={<Loading />}><InformaticaNova /></Suspense>
+      }
+    ]
+  },
+  {
+    path: '/cursos/projetista-3d',
+    element: <CourseLayout />,
+    children: [
+      {
+        index: true,
+        element: <Suspense key="course-projetista-3d" fallback={<Loading />}><Projetista3D /></Suspense>
+      }
+    ]
+  },
   {
     path: '/',
     element: <Layout />,
@@ -74,10 +99,11 @@ export const routes = [
         path: 'cursos/informatica',
         lazy: () => import('./pages/courses/Informatica')
       },
-      {
-        path: 'cursos/informatica-nova',
-        lazy: () => import('./pages/courses/InformaticaNova')
-      },
+      // REMOVIDO: Movido para CourseLayout (linha 70-78)
+      // {
+      //   path: 'cursos/informatica-nova',
+      //   lazy: () => import('./pages/courses/InformaticaNova')
+      // },
       {
         path: 'cursos/design-grafico',
         lazy: () => import('./pages/courses/DesignGrafico')
@@ -103,10 +129,11 @@ export const routes = [
         path: 'cursos/business-intelligence',
         element: <Navigate to="/cursos/excel-avancado-business-intelligence" replace />
       },
-      {
-        path: 'cursos/projetista-3d',
-        lazy: () => import('./pages/courses/Projetista3D')
-      },
+      // REMOVIDO: Movido para CourseLayout (linha 79-87)
+      // {
+      //   path: 'cursos/projetista-3d',
+      //   lazy: () => import('./pages/courses/Projetista3D')
+      // },
       {
         path: 'cursos/edicao-video',
         lazy: () => import('./pages/courses/EdicaoVideo')
