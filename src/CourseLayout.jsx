@@ -4,6 +4,7 @@ import { HelmetProvider } from '@dr.pogodin/react-helmet';
 import QueryProvider from './providers/QueryProvider';
 import ErrorBoundary from './components/ErrorBoundary';
 import Footer from './components/Footer';
+import Header from './components/Header';
 import AccessibilityControls from './components/AccessibilityControls';
 import usePerformanceLevel from './hooks/usePerformanceLevel';
 import useGoogleAnalytics from './hooks/useGoogleAnalytics';
@@ -13,8 +14,8 @@ import domOptimizer from './utils/domOptimizer';
 import './styles/blog-animations.css';
 
 /**
- * Layout específico para páginas de curso que precisam de header customizado
- * Remove o header global para evitar conflitos com headers específicos do curso
+ * Layout específico para páginas de curso compatível com SSG
+ * Inclui o header principal para manter navegação consistente em todo o site
  */
 function CourseLayout() {
   const location = useLocation();
@@ -55,7 +56,10 @@ function CourseLayout() {
             {/* Accessibility Controls */}
             <AccessibilityControls />
             
-            {/* Main Content sem header global - cada página de curso define seu próprio header */}
+            {/* Header principal para navegação consistente */}
+            <Header />
+            
+            {/* Main Content */}
             <main id="main-content" className="relative z-10">
               <Outlet />
             </main>
