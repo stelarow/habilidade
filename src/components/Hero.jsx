@@ -4,10 +4,12 @@ import GradientButton from './GradientButton';
 import Section from './Section';
 import { Lightbulb, CheckCircle, Clock, Users } from '@phosphor-icons/react';
 import { analytics } from '../utils/analytics';
+import { useNavigate } from 'react-router-dom';
 
 function Hero() {
   const words = ['Inteligência Artificial', 'Design 3D', 'Programação', 'Marketing'];
   const text = useTypewriter(words);
+  const navigate = useNavigate();
 
   return (
     <Section fullHeight={true} className="flex flex-col items-center justify-center text-center bg-zinc-950 overflow-visible pt-20 sm:pt-0">
@@ -59,14 +61,11 @@ function Hero() {
             Ver Cursos
           </GradientButton>
           <GradientButton 
-            href="#contato"
+            href="/teste-vocacional"
             className="px-6 text-sm"
             onClick={(e) => {
               e.preventDefault();
-              const element = document.getElementById('contato');
-              if (element) {
-                element.scrollIntoView({ behavior: 'smooth' });
-              }
+              navigate('/teste-vocacional');
             }}
           >
             Teste Vocacional
