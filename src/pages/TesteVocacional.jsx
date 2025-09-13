@@ -1190,7 +1190,7 @@ Faça seu teste gratuito: https://escolahabilidade.com/teste-vocacional
             </div>
             <h3 className="text-3xl font-bold mb-4">Cursos Cientificamente Recomendados 🎯</h3>
             <p className="text-purple-100 text-lg">
-              Baseado na análise do seu perfil VIPS, estes cursos têm alta compatibilidade com você em Florianópolis
+              Baseado na análise do seu perfil VIPS, estes cursos têm alta compatibilidade com você
             </p>
           </div>
 
