@@ -1,5 +1,5 @@
 import React from 'react';
-import { CheckCircle, Star, Users, Clock, ArrowRight, Monitor, BookOpen, Lightning } from '@phosphor-icons/react';
+import { CheckCircle, Star, Users, Clock, ArrowRight, Monitor, BookOpen, Lightning, MapPin, Calendar } from '@phosphor-icons/react';
 import { handleCTAClick } from '../../../utils/ctaUtils';
 
 export const InformaticaNovaHeroSection = () => {
@@ -7,7 +7,7 @@ export const InformaticaNovaHeroSection = () => {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950">
       {/* Background Image */}
       <div className="absolute inset-0">
-        <img 
+        <img
           src="/assets/informatica-nova/hero/hero-bg-new.jpg"
           alt="Curso de Informática Background"
           className="w-full h-full object-cover filter blur-[0.5px]"
@@ -21,108 +21,80 @@ export const InformaticaNovaHeroSection = () => {
       {/* Elementos animados de fundo */}
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-pulse" />
       <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-cyan-400/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
-      
-      {/* Conteúdo do Hero */}
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="max-w-6xl mx-auto text-center pt-12 sm:pt-16 md:pt-8">
+
+      {/* Content */}
+      <div className="relative z-10 max-w-7xl mx-auto px-4 text-center">
+        {/* Badge de avaliação */}
+        <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full border border-white/20 mb-6">
+          <div className="flex gap-1">
+            {[...Array(5)].map((_, i) => (
+              <svg key={i} className="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 24 24">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+            ))}
+          </div>
+          <span className="text-white/90 text-sm font-medium">
+            <span>5/5 avaliação dos alunos</span>
+          </span>
+        </div>
+
+        {/* Título Principal */}
+        <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
+          Domine a{' '}
+          <span className="bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-500 bg-clip-text text-transparent">
+            Informática
+          </span>
+          <br />
+          <span className="text-4xl md:text-6xl">
+            do <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">Zero ao Pro</span>
+          </span>
+        </h1>
+
+        {/* Subtítulo */}
+        <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-4xl mx-auto leading-relaxed">
+          Aprenda Windows, pacote Office, internet e muito mais com metodologia prática e suporte completo
+        </p>
+
+        {/* CTAs */}
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+          <a
+            href="#matricula"
+            className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold rounded-full hover:from-blue-700 hover:to-cyan-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl group"
+          >
+            <span>Quero me Matricular</span>
+            <svg className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </a>
           
+          <a
+            href="#conteudo"
+            className="inline-flex items-center px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-full border border-white/20 hover:bg-white/20 transition-all duration-300 transform hover:scale-105"
+          >
+            Ver Grade Curricular
+          </a>
+        </div>
 
-          {/* Título principal */}
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight">
-            <span className="text-white">CURSO</span>
-            <br />
-            <span className="bg-gradient-to-r from-blue-400 via-blue-600 to-cyan-400 bg-clip-text text-transparent">
-              INFORMÁTICA
-            </span>
-            <br />
-            <span className="text-white">COMPLETO</span>
-            <br />
-            <span className="text-cyan-300 text-2xl md:text-3xl lg:text-4xl font-semibold">
-              GRANDE FLORIANÓPOLIS
-            </span>
-          </h1>
-
-          {/* Subtítulo */}
-          <p className="text-lg md:text-2xl text-zinc-300 mb-8 md:mb-12 max-w-4xl mx-auto leading-relaxed">
-            <strong className="text-cyan-400">Excel avançado</strong>, <strong className="text-blue-400">Word profissional</strong>, PowerPoint e <strong className="text-purple-400">IA aplicada</strong>. 
-            <strong className="text-green-400">Curso presencial de informática</strong> em São José, Grande Florianópolis.
-          </p>
-
-          {/* Stats importantes */}
-          <div className="grid grid-cols-3 md:grid-cols-3 gap-4 md:gap-8 mb-8 md:mb-12 max-w-4xl mx-auto">
-            <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-3 md:p-6">
-              <div className="flex items-center justify-center mb-2 md:mb-3">
-                <Clock className="w-5 h-5 md:w-8 md:h-8 text-blue-400" />
-              </div>
-              <div className="text-lg md:text-2xl font-bold text-white mb-1">184,5h</div>
-              <div className="text-xs md:text-sm text-zinc-400">Carga horária completa</div>
-            </div>
-            
-            <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-3 md:p-6">
-              <div className="flex items-center justify-center mb-2 md:mb-3">
-                <BookOpen className="w-5 h-5 md:w-8 md:h-8 text-cyan-400" />
-              </div>
-              <div className="text-lg md:text-2xl font-bold text-white mb-1">8 Módulos</div>
-              <div className="text-xs md:text-sm text-zinc-400">Do básico ao avançado</div>
-            </div>
-            
-            <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-3 md:p-6">
-              <div className="flex items-center justify-center mb-2 md:mb-3">
-                <Users className="w-5 h-5 md:w-8 md:h-8 text-purple-400" />
-              </div>
-              <div className="text-lg md:text-2xl font-bold text-white mb-1">150+</div>
-              <div className="text-xs md:text-sm text-zinc-400">Alunos aprovados</div>
-            </div>
+        {/* Elementos de credibilidade */}
+        <div className="flex flex-wrap justify-center items-center gap-8 text-gray-400">
+          <div className="flex items-center gap-2">
+            <svg className="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <span>Certificado Incluso</span>
           </div>
-
-          {/* Lista de benefícios principais */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8 md:mb-12 max-w-3xl mx-auto text-left">
-            <div className="flex items-center gap-3">
-              <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0" />
-              <span className="text-zinc-300">Curso completo de Windows 11 e Office</span>
-            </div>
-            <div className="flex items-center gap-3">
-              <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0" />
-              <span className="text-zinc-300">Excel básico ao avançado profissional</span>
-            </div>
-            <div className="flex items-center gap-3">
-              <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0" />
-              <span className="text-zinc-300">Design no Canva para redes sociais</span>
-            </div>
-            <div className="flex items-center gap-3">
-              <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0" />
-              <span className="text-zinc-300">IA aplicada na prática</span>
-            </div>
-            <div className="flex items-center gap-3">
-              <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0" />
-              <span className="text-zinc-300">Apostilas e certificado inclusos</span>
-            </div>
-            <div className="flex items-center gap-3">
-              <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0" />
-              <span className="text-zinc-300">Aulas presenciais em São José</span>
-            </div>
+          <div className="flex items-center gap-2">
+            <svg className="w-5 h-5 text-blue-400" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+            </svg>
+            <span>Suporte Vitalício</span>
           </div>
-
-          {/* CTA principal */}
-          <div className="space-y-6">
-            <button 
-              onClick={() => handleCTAClick('hero')}
-              className="group relative overflow-hidden rounded-xl px-8 py-4 text-lg md:text-xl font-bold text-white transition-all duration-300 bg-gradient-to-r from-blue-500 to-cyan-400 shadow-2xl shadow-blue-500/30 hover:shadow-blue-500/50 hover:-translate-y-1 animate-pulse flex items-center justify-center gap-3 mx-auto cursor-pointer"
-            >
-              <Monitor className="w-6 h-6" />
-              DOMINAR INFORMÁTICA AGORA
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </button>
-            
-            {/* Preço em destaque */}
-            <div className="text-center">
-              <div className="inline-block bg-gradient-to-r from-green-500/20 to-emerald-400/20 backdrop-blur-sm border border-green-500/30 rounded-full px-6 py-2">
-                <span className="text-green-300 text-sm">💸 Parcelamento em até </span>
-                <span className="text-green-300 font-bold">12x de R$ 59,70</span>
-              </div>
-            </div>
+          <div className="flex items-center gap-2">
+            <svg className="w-5 h-5 text-purple-400" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+            <span>+1000 Alunos Aprovados</span>
           </div>
-
         </div>
       </div>
     </section>
