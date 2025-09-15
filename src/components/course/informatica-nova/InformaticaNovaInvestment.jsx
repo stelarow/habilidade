@@ -1,25 +1,36 @@
 import React from 'react';
-import { CreditCard, CurrencyDollar, Calendar, CheckCircle, Lightning, ArrowRight, Gift } from '@phosphor-icons/react';
+import { CreditCard, CurrencyDollar, Calendar, CheckCircle, Lightning, ArrowRight, Gift, TrendUp, Clock, Target, Star } from '@phosphor-icons/react';
 import { handleCTAClick } from '../../../utils/ctaUtils';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
 
-const paymentMethods = [
+const paymentOptions = [
+  {
+    icon: Calendar,
+    name: "Boleto Bancário",
+    installments: "12x de R$ 299,90",
+    total: "R$ 3.598,80",
+    description: "Total parcelado em 12x no boleto",
+    highlight: false
+  },
   {
     icon: CreditCard,
     name: "Cartão de Crédito",
-    description: "Até 12x sem juros",
+    installments: "10x de R$ 359,88",
+    total: "R$ 3.598,80",
+    description: "Sem juros no cartão",
     highlight: true
   },
   {
     icon: CurrencyDollar,
-    name: "PIX",
-    description: "Desconto à vista",
-    highlight: false
-  },
-  {
-    icon: Calendar,
-    name: "Boleto Bancário",
-    description: "Pagamento à vista",
-    highlight: false
+    name: "À Vista",
+    installments: "R$ 3.382,87",
+    total: "R$ 3.598,80",
+    description: "6% de desconto à vista",
+    highlight: false,
+    discount: "6% OFF"
   }
 ];
 
@@ -72,54 +83,63 @@ export const InformaticaNovaInvestment = () => {
             </div>
 
             <div className="p-8 md:p-12">
-              {/* Preços */}
-              <div className="text-center mb-10">
-                <div className="flex items-center justify-center gap-4 mb-6">
-                  <div className="text-zinc-400 text-xl line-through">R$ 997</div>
-                  <div className="bg-red-500/90 backdrop-blur-sm px-3 py-1 rounded-full">
-                    <span className="text-white font-bold text-sm">40% OFF</span>
-                  </div>
-                </div>
-                
-                <div className="text-5xl md:text-6xl font-bold text-white mb-4">
-                  R$ 597
-                </div>
-                
-                <div className="text-zinc-300 text-lg mb-2">
-                  ou <span className="font-bold text-green-400">12x de R$ 59,70</span>
-                </div>
-                
-                <div className="text-zinc-400 text-sm">
-                  *Parcelamento sem juros no cartão
-                </div>
-              </div>
-
-              {/* Métodos de pagamento */}
+              {/* Opções de Pagamento */}
               <div className="mb-10">
-                <h4 className="text-lg font-bold text-white text-center mb-6">Formas de Pagamento</h4>
+                <h4 className="text-2xl font-bold text-white text-center mb-8">Escolha sua forma de pagamento</h4>
                 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  {paymentMethods.map((method, index) => {
-                    const IconComponent = method.icon;
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {paymentOptions.map((option, index) => {
+                    const IconComponent = option.icon;
                     return (
                       <div 
                         key={index}
-                        className={`p-4 rounded-xl border text-center ${
-                          method.highlight 
-                            ? 'bg-green-500/10 border-green-500/30 ring-2 ring-green-500/20' 
-                            : 'bg-zinc-800/30 border-zinc-700/50'
+                        className={`relative p-4 md:p-6 rounded-2xl border text-center transition-all duration-300 hover:scale-105 ${
+                          option.highlight 
+                            ? 'bg-gradient-to-br from-green-500/20 to-emerald-400/20 border-green-500/50 ring-2 ring-green-500/30 shadow-lg shadow-green-500/20' 
+                            : 'bg-zinc-800/50 border-zinc-700/50 hover:border-zinc-600/50'
                         }`}
                       >
-                        <IconComponent className={`w-8 h-8 mx-auto mb-3 ${
-                          method.highlight ? 'text-green-400' : 'text-zinc-400'
-                        }`} />
-                        <div className="text-white font-semibold text-sm mb-1">{method.name}</div>
-                        <div className="text-zinc-400 text-xs">{method.description}</div>
-                        {method.highlight && (
-                          <div className="mt-2">
-                            <span className="bg-green-500/20 text-green-300 px-2 py-1 rounded text-xs font-medium">
+                        {/* Badge de destaque */}
+                        {option.highlight && (
+                          <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                            <span className="bg-gradient-to-r from-green-500 to-emerald-400 text-white text-xs font-bold px-3 py-1 rounded-full">
                               RECOMENDADO
                             </span>
+                          </div>
+                        )}
+                        
+                        {/* Badge de desconto */}
+                        {option.discount && (
+                          <div className="absolute -top-3 right-3">
+                            <span className="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                              {option.discount}
+                            </span>
+                          </div>
+                        )}
+                        
+                        <IconComponent className={`w-12 h-12 mx-auto mb-4 ${
+                          option.highlight ? 'text-green-400' : 'text-zinc-400'
+                        }`} />
+                        
+                        <div className="text-white font-bold text-lg mb-2">{option.name}</div>
+                        
+                        <div className={`text-2xl font-bold mb-2 ${
+                          option.highlight ? 'text-green-400' : 'text-white'
+                        }`}>
+                          {option.installments}
+                        </div>
+                        
+                        <div className="text-zinc-400 text-sm mb-3">{option.description}</div>
+                        
+                        {option.name !== "À Vista" && (
+                          <div className="text-zinc-500 text-xs">
+                            Total: {option.total}
+                          </div>
+                        )}
+                        
+                        {option.name === "À Vista" && (
+                          <div className="text-zinc-500 text-xs">
+                            <span className="line-through">De: {option.total}</span>
                           </div>
                         )}
                       </div>
@@ -172,49 +192,223 @@ export const InformaticaNovaInvestment = () => {
           </div>
         </div>
 
-        {/* Comparação de valor */}
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-gradient-to-r from-blue-500/10 to-cyan-400/10 backdrop-blur-sm border border-blue-500/20 rounded-2xl p-8">
-            <h3 className="text-2xl font-bold text-center text-white mb-8">
-              Compare o <span className="text-blue-400">VALOR</span> do seu investimento
+        {/* Comparação de valor com design moderno */}
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-8">
+            <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">
+              Compare o <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">VALOR</span> do seu investimento
             </h3>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {/* Sem o curso */}
-              <div className="text-center">
-                <h4 className="text-lg font-bold text-red-400 mb-4">SEM o curso</h4>
-                <div className="space-y-3 text-sm text-zinc-400">
-                  <div>❌ Limitado a tarefas básicas</div>
-                  <div>❌ Dependente de outros</div>
-                  <div>❌ Oportunidades perdidas</div>
-                  <div>❌ Salário estagnado</div>
-                </div>
-                <div className="mt-6 text-2xl font-bold text-red-400">
-                  Custo: Oportunidades perdidas
-                </div>
-              </div>
-
-              {/* Com o curso */}
-              <div className="text-center">
-                <h4 className="text-lg font-bold text-green-400 mb-4">COM o curso</h4>
-                <div className="space-y-3 text-sm text-zinc-300">
-                  <div>✅ Expert em informática moderna</div>
-                  <div>✅ Autonomia total</div>
-                  <div>✅ Novas oportunidades</div>
-                  <div>✅ Aumento salarial de 45%</div>
-                </div>
-                <div className="mt-6 text-2xl font-bold text-green-400">
-                  Investimento: R$ 597
-                </div>
-              </div>
-            </div>
-            
-            <div className="text-center mt-8 p-6 bg-green-500/10 rounded-xl border border-green-500/20">
-              <p className="text-zinc-300 text-lg">
-                <strong className="text-green-400">O curso se paga sozinho</strong> com o primeiro aumento ou nova oportunidade!
-              </p>
-            </div>
+            <p className="text-zinc-400 text-lg">Veja a diferença que o conhecimento faz na sua carreira</p>
           </div>
+
+          <Tabs defaultValue="depois" className="w-full">
+            <TabsList className="grid w-full grid-cols-2 mb-8 bg-zinc-800/50 border border-zinc-700/50">
+              <TabsTrigger value="antes" className="data-[state=active]:bg-red-500/20 data-[state=active]:text-red-300">
+                Situação Atual
+              </TabsTrigger>
+              <TabsTrigger value="depois" className="data-[state=active]:bg-green-500/20 data-[state=active]:text-green-300">
+                Após o Curso
+              </TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="antes" className="space-y-6">
+              <Card className="bg-gradient-to-br from-red-500/5 to-orange-500/5 border-red-500/20 backdrop-blur-sm">
+                <CardHeader className="text-center pb-4">
+                  <div className="flex items-center justify-center mb-4">
+                    <div className="p-3 rounded-full bg-red-500/20 border border-red-500/30">
+                      <Clock className="w-8 h-8 text-red-400" />
+                    </div>
+                  </div>
+                  <CardTitle className="text-2xl text-red-400">SEM o Curso de Informática</CardTitle>
+                  <CardDescription className="text-zinc-400">Sua situação profissional atual</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-4">
+                      <h4 className="font-semibold text-white flex items-center gap-2">
+                        <Target className="w-5 h-5 text-red-400" />
+                        Limitações Profissionais
+                      </h4>
+                      <ul className="space-y-3">
+                        <li className="flex items-start gap-3 text-zinc-300">
+                          <div className="w-2 h-2 rounded-full bg-red-400 mt-2 flex-shrink-0"></div>
+                          Conhecimento básico limitado
+                        </li>
+                        <li className="flex items-start gap-3 text-zinc-300">
+                          <div className="w-2 h-2 rounded-full bg-red-400 mt-2 flex-shrink-0"></div>
+                          Dependente de colegas para tarefas
+                        </li>
+                        <li className="flex items-start gap-3 text-zinc-300">
+                          <div className="w-2 h-2 rounded-full bg-red-400 mt-2 flex-shrink-0"></div>
+                          Dificuldade com novas tecnologias
+                        </li>
+                        <li className="flex items-start gap-3 text-zinc-300">
+                          <div className="w-2 h-2 rounded-full bg-red-400 mt-2 flex-shrink-0"></div>
+                          Insegurança no ambiente digital
+                        </li>
+                      </ul>
+                    </div>
+
+                    <div className="space-y-4">
+                      <h4 className="font-semibold text-white flex items-center gap-2">
+                        <TrendUp className="w-5 h-5 text-red-400" />
+                        Impacto na Carreira
+                      </h4>
+                      <div className="space-y-4">
+                        <div>
+                          <div className="flex justify-between mb-2">
+                            <span className="text-sm text-zinc-400">Potencial de Crescimento</span>
+                            <span className="text-sm text-red-400">30%</span>
+                          </div>
+                          <div className="relative h-2 w-full overflow-hidden rounded-full bg-zinc-800">
+                            <div className="h-full bg-red-500 transition-all" style={{ width: '30%' }} />
+                          </div>
+                        </div>
+                        <div>
+                          <div className="flex justify-between mb-2">
+                            <span className="text-sm text-zinc-400">Competitividade no Mercado</span>
+                            <span className="text-sm text-red-400">25%</span>
+                          </div>
+                          <div className="relative h-2 w-full overflow-hidden rounded-full bg-zinc-800">
+                            <div className="h-full bg-red-500 transition-all" style={{ width: '25%' }} />
+                          </div>
+                        </div>
+                        <div>
+                          <div className="flex justify-between mb-2">
+                            <span className="text-sm text-zinc-400">Oportunidades Perdidas</span>
+                            <Badge variant="destructive" className="bg-red-500/20 text-red-300 border-red-500/30">
+                              ALTA
+                            </Badge>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <Separator className="my-6 bg-red-500/20" />
+
+                  <div className="text-center p-4 bg-red-500/10 rounded-lg border border-red-500/20">
+                    <h5 className="text-xl font-bold text-red-400 mb-2">Custo Real</h5>
+                    <p className="text-zinc-300">
+                      <strong className="text-red-400">Oportunidades perdidas</strong> e estagnação profissional
+                    </p>
+                    <p className="text-sm text-zinc-500 mt-2">Valor estimado: R$ 50.000+ em oportunidades não aproveitadas</p>
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="depois" className="space-y-6">
+              <Card className="bg-gradient-to-br from-green-500/5 to-emerald-500/5 border-green-500/20 backdrop-blur-sm">
+                <CardHeader className="text-center pb-4">
+                  <div className="flex items-center justify-center mb-4">
+                    <div className="p-3 rounded-full bg-green-500/20 border border-green-500/30">
+                      <Star className="w-8 h-8 text-green-400" />
+                    </div>
+                  </div>
+                  <CardTitle className="text-2xl text-green-400">COM o Curso de Informática</CardTitle>
+                  <CardDescription className="text-zinc-400">Seu potencial após a formação completa</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-4">
+                      <h4 className="font-semibold text-white flex items-center gap-2">
+                        <Target className="w-5 h-5 text-green-400" />
+                        Transformação Profissional
+                      </h4>
+                      <ul className="space-y-3">
+                        <li className="flex items-start gap-3 text-zinc-300">
+                          <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+                          Expert em informática moderna
+                        </li>
+                        <li className="flex items-start gap-3 text-zinc-300">
+                          <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+                          Autonomia total no trabalho
+                        </li>
+                        <li className="flex items-start gap-3 text-zinc-300">
+                          <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+                          Domínio de IA e tecnologias
+                        </li>
+                        <li className="flex items-start gap-3 text-zinc-300">
+                          <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+                          Confiança no ambiente digital
+                        </li>
+                      </ul>
+                    </div>
+
+                    <div className="space-y-4">
+                      <h4 className="font-semibold text-white flex items-center gap-2">
+                        <TrendUp className="w-5 h-5 text-green-400" />
+                        Crescimento de Carreira
+                      </h4>
+                      <div className="space-y-4">
+                        <div>
+                          <div className="flex justify-between mb-2">
+                            <span className="text-sm text-zinc-400">Potencial de Crescimento</span>
+                            <span className="text-sm text-green-400">95%</span>
+                          </div>
+                          <div className="relative h-2 w-full overflow-hidden rounded-full bg-zinc-800">
+                            <div className="h-full bg-green-500 transition-all" style={{ width: '95%' }} />
+                          </div>
+                        </div>
+                        <div>
+                          <div className="flex justify-between mb-2">
+                            <span className="text-sm text-zinc-400">Competitividade no Mercado</span>
+                            <span className="text-sm text-green-400">90%</span>
+                          </div>
+                          <div className="relative h-2 w-full overflow-hidden rounded-full bg-zinc-800">
+                            <div className="h-full bg-green-500 transition-all" style={{ width: '90%' }} />
+                          </div>
+                        </div>
+                        <div>
+                          <div className="flex justify-between mb-2">
+                            <span className="text-sm text-zinc-400">Aumento Salarial Esperado</span>
+                            <Badge className="bg-green-500/20 text-green-300 border-green-500/30">
+                              +45%
+                            </Badge>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <Separator className="my-6 bg-green-500/20" />
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    <div className="text-center p-4 bg-green-500/10 rounded-lg border border-green-500/20">
+                      <TrendUp className="w-8 h-8 text-green-400 mx-auto mb-2" />
+                      <h6 className="font-bold text-green-400">Aumento Médio</h6>
+                      <p className="text-2xl font-bold text-white">45%</p>
+                      <p className="text-xs text-zinc-400">no salário</p>
+                    </div>
+                    <div className="text-center p-4 bg-blue-500/10 rounded-lg border border-blue-500/20">
+                      <Clock className="w-8 h-8 text-blue-400 mx-auto mb-2" />
+                      <h6 className="font-bold text-blue-400">ROI</h6>
+                      <p className="text-2xl font-bold text-white">3-6</p>
+                      <p className="text-xs text-zinc-400">meses para se pagar</p>
+                    </div>
+                    <div className="text-center p-4 bg-purple-500/10 rounded-lg border border-purple-500/20">
+                      <Star className="w-8 h-8 text-purple-400 mx-auto mb-2" />
+                      <h6 className="font-bold text-purple-400">Oportunidades</h6>
+                      <p className="text-2xl font-bold text-white">∞</p>
+                      <p className="text-xs text-zinc-400">possibilidades</p>
+                    </div>
+                  </div>
+
+                  <div className="text-center p-6 bg-gradient-to-r from-green-500/10 to-emerald-400/10 rounded-xl border border-green-500/20">
+                    <h5 className="text-xl font-bold text-green-400 mb-2">Investimento Inteligente</h5>
+                    <p className="text-zinc-300 mb-2">
+                      <strong className="text-green-400">O curso se paga sozinho</strong> com o primeiro aumento ou nova oportunidade!
+                    </p>
+                    <div className="text-2xl font-bold text-green-400">
+                      A partir de R$ 299,90/mês
+                    </div>
+                    <p className="text-sm text-zinc-500 mt-2">Valor total muito menor que o retorno obtido</p>
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+          </Tabs>
         </div>
       </div>
     </section>
