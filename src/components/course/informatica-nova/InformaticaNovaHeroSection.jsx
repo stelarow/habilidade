@@ -9,7 +9,7 @@ export const InformaticaNovaHeroSection = () => {
       {/* Background Image */}
       <div className="absolute inset-0">
         <img
-          src="/assets/informatica-nova/hero/hero-bg-new.jpg"
+          src="/assets/informatica-nova/hero/hero-bg-new.webp"
           alt="Curso de Informática Background"
           className="w-full h-full object-cover filter blur-[0.5px]"
         />
