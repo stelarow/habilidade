@@ -9,12 +9,16 @@ import {
   Monitor,
   Brain,
   Medal,
-  Clock
+  Clock,
+  Table,
+  Palette
 } from '@phosphor-icons/react';
 import { handleCTAClick } from '../../../utils/ctaUtils';
 import { Card, CardContent } from "../../ui/card";
 import { Badge } from "../../ui/badge";
 import { Button } from "../../ui/button";
+import { Progress } from "../../ui/progress";
+import { Separator } from "../../ui/separator";
 
 const transformationBenefits = [
   {
@@ -60,6 +64,49 @@ const beforeAfter = {
   ]
 };
 
+const journeySteps = [
+  {
+    step: 1,
+    title: "Fundamentos",
+    subtitle: "Domínio do Windows 11 e Office",
+    description: "Domine completamente o sistema operacional mais usado no mundo e os fundamentos do pacote Office",
+    icon: Monitor,
+    color: "from-blue-500 to-blue-600",
+    bgColor: "from-blue-500/10 to-blue-600/10",
+    borderColor: "border-blue-500/30"
+  },
+  {
+    step: 2,
+    title: "Produtividade",
+    subtitle: "Excel avançado e automações",
+    description: "Crie planilhas profissionais, dashboards e automações que impressionam gestores",
+    icon: Table,
+    color: "from-cyan-500 to-cyan-600",
+    bgColor: "from-cyan-500/10 to-cyan-600/10",
+    borderColor: "border-cyan-500/30"
+  },
+  {
+    step: 3,
+    title: "Criatividade",
+    subtitle: "Canva profissional e IA",
+    description: "Desenvolva habilidades de design e aprenda a usar IA para potencializar seu trabalho",
+    icon: Palette,
+    color: "from-purple-500 to-purple-600",
+    bgColor: "from-purple-500/10 to-purple-600/10",
+    borderColor: "border-purple-500/30"
+  },
+  {
+    step: "✓",
+    title: "Certificação",
+    subtitle: "Expert em informática moderna",
+    description: "Receba seu certificado de 184 horas e torne-se um profissional reconhecido no mercado",
+    icon: Medal,
+    color: "from-yellow-500 to-yellow-600",
+    bgColor: "from-yellow-500/10 to-yellow-600/10",
+    borderColor: "border-yellow-500/30"
+  }
+];
+
 export const InformaticaNovaTransformationPromise = () => {
   return (
     <section className="px-4 py-16 sm:px-6 lg:px-8 lg:py-20 bg-gradient-to-br from-blue-500/10 via-zinc-950 to-cyan-400/10 relative overflow-hidden">
@@ -70,10 +117,10 @@ export const InformaticaNovaTransformationPromise = () => {
       </div>
 
       <div className="container mx-auto max-w-7xl relative z-10">
-        
+
         {/* Cabeçalho da seção */}
         <div className="text-center mb-16">
-          
+
           <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6">
             <span className="bg-gradient-to-r from-purple-400 via-purple-600 to-cyan-400 bg-clip-text text-transparent">
               SUA VIDA
@@ -85,9 +132,9 @@ export const InformaticaNovaTransformationPromise = () => {
               DO CURSO
             </span>
           </h2>
-          
+
           <p className="text-xl text-zinc-300 max-w-3xl mx-auto leading-relaxed">
-            Veja como você estará após dominar completamente a informática moderna. 
+            Veja como você estará após dominar completamente a informática moderna.
             Esta não é apenas uma promessa, é nossa garantia baseada em resultados reais.
           </p>
         </div>
@@ -137,7 +184,7 @@ export const InformaticaNovaTransformationPromise = () => {
         </div>
 
         {/* Benefícios da Transformação */}
-        <div className="mb-16">
+        <div className="mb-20">
           <h3 className="text-3xl md:text-4xl font-bold text-center mb-12">
             <span className="text-white">O que você </span>
             <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
@@ -169,43 +216,155 @@ export const InformaticaNovaTransformationPromise = () => {
           </div>
         </div>
 
-        {/* Timeline de Transformação */}
-        <div className="bg-gradient-to-br from-zinc-800/30 to-zinc-900/30 backdrop-blur-sm border border-zinc-700/50 rounded-2xl p-8 mb-16">
-          <h3 className="text-2xl font-bold text-center text-white mb-8">
-            Sua Jornada de Transformação
-          </h3>
-          
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white font-bold">1</span>
+        {/* Nova Timeline de Transformação - Mobile First */}
+        <div className="bg-gradient-to-br from-zinc-800/30 to-zinc-900/30 backdrop-blur-sm border border-zinc-700/50 rounded-2xl p-6 md:p-8 mb-16">
+          <div className="text-center mb-8 md:mb-12">
+            <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
+              Sua Jornada de Transformação
+            </h3>
+            <p className="text-zinc-400 text-sm md:text-base max-w-2xl mx-auto">
+              Um caminho estruturado e progressivo que te levará do básico ao expert em informática moderna
+            </p>
+          </div>
+
+          {/* Mobile Layout - Vertical Timeline */}
+          <div className="block md:hidden">
+            <div className="relative">
+              {/* Linha vertical conectora */}
+              <div className="absolute left-6 top-6 bottom-6 w-0.5 bg-gradient-to-b from-blue-500 via-cyan-500 via-purple-500 to-yellow-500"></div>
+
+              <div className="space-y-6">
+                {journeySteps.map((step, index) => {
+                  const IconComponent = step.icon;
+
+                  return (
+                    <div key={index} className="relative flex items-start gap-4">
+                      {/* Ícone da etapa */}
+                      <div className={`relative z-10 w-12 h-12 rounded-full bg-gradient-to-r ${step.color} flex items-center justify-center flex-shrink-0 ring-4 ring-zinc-900`}>
+                        {typeof step.step === 'number' ? (
+                          <span className="text-white font-bold text-sm">{step.step}</span>
+                        ) : (
+                          <IconComponent className="w-6 h-6 text-white" weight="fill" />
+                        )}
+                      </div>
+
+                      {/* Card da etapa */}
+                      <div className={`flex-1 bg-gradient-to-br ${step.bgColor} backdrop-blur-sm border ${step.borderColor} rounded-xl p-4`}>
+                        <div className="flex items-start justify-between mb-2">
+                          <div>
+                            <h4 className="text-white font-bold text-lg">{step.title}</h4>
+                            <p className="text-zinc-300 text-sm font-medium">{step.subtitle}</p>
+                          </div>
+                          <Badge variant="secondary" className="bg-white/10 text-white border-white/20 text-xs">
+                            {typeof step.step === 'number' ? `Etapa ${step.step}` : 'Concluído'}
+                          </Badge>
+                        </div>
+                        <p className="text-zinc-400 text-sm leading-relaxed">{step.description}</p>
+
+                        {/* Progress indicator para mobile */}
+                        <div className="mt-3">
+                          <div className="flex items-center gap-2 text-xs text-zinc-500">
+                            <span>Progresso</span>
+                            <div className="flex-1">
+                              <Progress value={(index + 1) * 25} className="h-1" />
+                            </div>
+                            <span>{(index + 1) * 25}%</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
-              <h4 className="font-semibold text-white mb-2">Etapa 1</h4>
-              <p className="text-zinc-400 text-sm">Domínio do Windows 11 e fundamentos do Office</p>
             </div>
-            
-            <div className="text-center">
-              <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white font-bold">2</span>
+          </div>
+
+          {/* Desktop Layout - Horizontal Timeline */}
+          <div className="hidden md:block">
+            <div className="relative">
+              {/* Linha conectora horizontal na altura dos ícones */}
+              <div className="absolute top-[56px] left-[12.5%] right-[12.5%] h-1 z-0">
+                <div className="absolute inset-0 bg-zinc-700/50 rounded-full"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-cyan-500 via-purple-500 to-yellow-500 rounded-full"></div>
               </div>
-              <h4 className="font-semibold text-white mb-2">Etapa 2</h4>
-              <p className="text-zinc-400 text-sm">Excel avançado e automações que impressionam</p>
+
+              <div className="grid grid-cols-4 gap-6 relative">
+                {journeySteps.map((step, index) => {
+                  const IconComponent = step.icon;
+                  const isLast = index === journeySteps.length - 1;
+
+                  return (
+                    <div key={index} className="relative group">
+                      {/* Removendo linha conectora duplicada entre cards */}
+
+                      {/* Card da etapa */}
+                      <div className={`relative bg-gradient-to-br ${step.bgColor} backdrop-blur-sm border ${step.borderColor} rounded-xl p-6 text-center transition-all duration-300 hover:scale-105 hover:shadow-xl group-hover:border-opacity-60 z-10`}>
+                        {/* Ícone com conexão visual */}
+                        <div className="relative">
+                          {/* Ponto de conexão */}
+                          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full bg-zinc-900 opacity-50"></div>
+
+                          <div className={`relative w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r ${step.color} flex items-center justify-center group-hover:scale-110 transition-transform duration-300 ring-4 ring-zinc-900 shadow-lg`}>
+                            {typeof step.step === 'number' ? (
+                              <span className="text-white font-bold text-lg">{step.step}</span>
+                            ) : (
+                              <IconComponent className="w-8 h-8 text-white" weight="fill" />
+                            )}
+                          </div>
+
+                          {/* Indicador de progresso abaixo do ícone */}
+                          {index > 0 && (
+                            <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2">
+                              <div className="text-xs text-zinc-500 font-medium">
+                                {(index + 1) * 25}% concluído
+                              </div>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Conteúdo */}
+                        <div className="space-y-2 mt-6">
+                          <Badge variant="secondary" className="bg-white/10 text-white border-white/20 text-xs mb-2">
+                            {typeof step.step === 'number' ? `Etapa ${step.step}` : 'Certificação'}
+                          </Badge>
+                          <h4 className="text-white font-bold text-lg">{step.title}</h4>
+                          <p className="text-zinc-300 text-sm font-medium">{step.subtitle}</p>
+                          <Separator className="my-3 bg-zinc-700/50" />
+                          <p className="text-zinc-400 text-xs leading-relaxed">{step.description}</p>
+
+                          {/* Mini progress bar dentro do card */}
+                          <div className="pt-3">
+                            <Progress value={(index + 1) * 25} className="h-1 bg-zinc-800" />
+                          </div>
+                        </div>
+
+                        {/* Hover effect */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-            
-            <div className="text-center">
-              <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white font-bold">3</span>
+
+            {/* Progress summary para desktop */}
+            <div className="mt-8 text-center">
+              <div className="inline-flex items-center gap-4 bg-zinc-800/50 backdrop-blur-sm border border-zinc-700/50 rounded-full px-6 py-3">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded-full bg-gradient-to-r from-blue-500 to-cyan-400"></div>
+                  <span className="text-zinc-400 text-sm">Jornada completa</span>
+                </div>
+                <Separator orientation="vertical" className="h-4 bg-zinc-700" />
+                <div className="flex items-center gap-2">
+                  <Clock className="w-4 h-4 text-zinc-400" />
+                  <span className="text-zinc-400 text-sm">184 horas certificadas</span>
+                </div>
+                <Separator orientation="vertical" className="h-4 bg-zinc-700" />
+                <div className="flex items-center gap-2">
+                  <Medal className="w-4 h-4 text-yellow-400" weight="fill" />
+                  <span className="text-zinc-400 text-sm">Expert certificado</span>
+                </div>
               </div>
-              <h4 className="font-semibold text-white mb-2">Etapa 3</h4>
-              <p className="text-zinc-400 text-sm">Canva profissional e primeiros projetos de IA</p>
-            </div>
-            
-            <div className="text-center">
-              <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-cyan-400 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Medal className="w-6 h-6 text-white" />
-              </div>
-              <h4 className="font-semibold text-white mb-2">Certificação</h4>
-              <p className="text-zinc-400 text-sm">Expert completo em informática moderna</p>
             </div>
           </div>
         </div>
