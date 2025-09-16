@@ -247,29 +247,29 @@ export const InformaticaNovaCurriculum = () => {
           </p>
 
           {/* Estatísticas do curso */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-2xl mx-auto">
-            <div className="bg-zinc-800/50 backdrop-blur-sm border border-zinc-700/50 rounded-xl p-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 max-w-2xl mx-auto">
+            <div className="bg-zinc-800/50 backdrop-blur-sm border border-zinc-700/50 rounded-xl p-3 sm:p-4">
               <div className="flex items-center justify-center mb-2">
-                <BookOpen className="w-6 h-6 text-blue-400" />
+                <BookOpen className="w-5 h-5 sm:w-6 sm:h-6 text-blue-400" />
               </div>
-              <div className="text-2xl font-bold text-white">{curriculum.length}</div>
-              <div className="text-sm text-zinc-400">Módulos</div>
+              <div className="text-xl sm:text-2xl font-bold text-white">{curriculum.length}</div>
+              <div className="text-xs sm:text-sm text-zinc-400">Módulos</div>
             </div>
-            
-            <div className="bg-zinc-800/50 backdrop-blur-sm border border-zinc-700/50 rounded-xl p-4">
+
+            <div className="bg-zinc-800/50 backdrop-blur-sm border border-zinc-700/50 rounded-xl p-3 sm:p-4">
               <div className="flex items-center justify-center mb-2">
-                <Play className="w-6 h-6 text-cyan-400" />
+                <Play className="w-5 h-5 sm:w-6 sm:h-6 text-cyan-400" />
               </div>
-              <div className="text-2xl font-bold text-white">{totalLessons}</div>
-              <div className="text-sm text-zinc-400">Aulas</div>
+              <div className="text-xl sm:text-2xl font-bold text-white">{totalLessons}</div>
+              <div className="text-xs sm:text-sm text-zinc-400">Aulas</div>
             </div>
-            
-            <div className="bg-zinc-800/50 backdrop-blur-sm border border-zinc-700/50 rounded-xl p-4">
+
+            <div className="bg-zinc-800/50 backdrop-blur-sm border border-zinc-700/50 rounded-xl p-3 sm:p-4 col-span-2 md:col-span-1">
               <div className="flex items-center justify-center mb-2">
-                <Clock className="w-6 h-6 text-purple-400" />
+                <Clock className="w-5 h-5 sm:w-6 sm:h-6 text-purple-400" />
               </div>
-              <div className="text-2xl font-bold text-white">{totalHours.toFixed(1)}h</div>
-              <div className="text-sm text-zinc-400">Duração</div>
+              <div className="text-xl sm:text-2xl font-bold text-white">{totalHours.toFixed(1)}h</div>
+              <div className="text-xs sm:text-sm text-zinc-400">Duração</div>
             </div>
           </div>
         </div>
@@ -288,34 +288,56 @@ export const InformaticaNovaCurriculum = () => {
                 {/* Cabeçalho do módulo */}
                 <button
                   onClick={() => toggleModule(module.id)}
-                  className="w-full p-6 text-left flex items-center gap-4 hover:bg-zinc-800/30 transition-colors"
+                  className="w-full p-3 sm:p-6 text-left flex items-center gap-3 sm:gap-4 hover:bg-zinc-800/30 transition-colors"
                 >
-                  <div className={`w-12 h-12 bg-gradient-to-r ${module.color} rounded-lg flex items-center justify-center flex-shrink-0`}>
-                    <IconComponent className="w-6 h-6 text-white" />
+                  <div className={`w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r ${module.color} rounded-lg flex items-center justify-center flex-shrink-0`}>
+                    <IconComponent className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                   </div>
-                  
-                  <div className="flex-grow">
-                    <div className="flex items-center gap-3 mb-2">
-                      <h3 className="text-xl font-bold text-white">
-                        Módulo {module.id}: {module.title}
-                      </h3>
-                      <div className="bg-blue-500/20 backdrop-blur-sm border border-blue-500/30 rounded-full px-3 py-1">
-                        <span className="text-blue-300 text-sm font-medium">{module.duration}</span>
+
+                  <div className="flex-grow min-w-0">
+                    {/* Layout Mobile - Nome prioritário */}
+                    <div className="sm:hidden">
+                      <div className="flex items-center gap-2 text-sm min-w-0">
+                        <h3 className="font-bold text-white whitespace-nowrap flex-shrink-0">
+                          {module.title}
+                        </h3>
+                        <div className="flex items-center gap-1 min-w-0 overflow-hidden">
+                          <span className="text-blue-300 text-xs flex-shrink-0">•</span>
+                          <span className="text-blue-300 text-xs whitespace-nowrap flex-shrink-0">{module.duration}</span>
+                          <span className="text-zinc-400 text-xs flex-shrink-0">•</span>
+                          <div className="flex items-center gap-1 min-w-0 overflow-hidden text-ellipsis">
+                            <span className="text-zinc-400 text-xs whitespace-nowrap">{module.lessons.length} aulas</span>
+                            <span className="text-zinc-400 text-xs flex-shrink-0">•</span>
+                            <span className="text-zinc-400 text-xs whitespace-nowrap truncate">{module.id <= 2 ? 'Básico' : module.id <= 5 ? 'Intermediário' : 'Avançado'}</span>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                    <p className="text-zinc-400 text-sm">{module.description}</p>
-                    <div className="flex items-center gap-4 mt-2 text-xs text-zinc-500">
-                      <span>{module.lessons.length} aulas</span>
-                      <span>•</span>
-                      <span>Nível: {module.id <= 2 ? 'Básico' : module.id <= 5 ? 'Intermediário' : 'Avançado'}</span>
+
+                    {/* Layout Desktop - Layout original */}
+                    <div className="hidden sm:block">
+                      <div className="flex items-center gap-3 mb-2">
+                        <h3 className="text-xl font-bold text-white">
+                          Módulo {module.id}: {module.title}
+                        </h3>
+                        <div className="bg-blue-500/20 backdrop-blur-sm border border-blue-500/30 rounded-full px-3 py-1">
+                          <span className="text-blue-300 text-sm font-medium">{module.duration}</span>
+                        </div>
+                      </div>
+                      <p className="text-zinc-400 text-sm">{module.description}</p>
+                      <div className="flex items-center gap-4 mt-2 text-xs text-zinc-500">
+                        <span>{module.lessons.length} aulas</span>
+                        <span>•</span>
+                        <span>Nível: {module.id <= 2 ? 'Básico' : module.id <= 5 ? 'Intermediário' : 'Avançado'}</span>
+                      </div>
                     </div>
                   </div>
-                  
+
                   <div className="flex-shrink-0">
                     {isOpen ? (
-                      <CaretUp className="w-6 h-6 text-zinc-400" />
+                      <CaretUp className="w-5 h-5 sm:w-6 sm:h-6 text-zinc-400" />
                     ) : (
-                      <CaretDown className="w-6 h-6 text-zinc-400" />
+                      <CaretDown className="w-5 h-5 sm:w-6 sm:h-6 text-zinc-400" />
                     )}
                   </div>
                 </button>

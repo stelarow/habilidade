@@ -52,7 +52,7 @@ const faqData = [
   {
     id: 10,
     question: 'Posso parcelar o pagamento?',
-    answer: 'Sim! Oferecemos parcelamento em até 12x de R$ 59,70 sem juros no cartão de crédito. Também aceitamos PIX e boleto bancário à vista. Todas as formas de pagamento são 100% seguras.'
+    answer: 'Sim! Oferecemos 3 opções: \n• Boleto bancário: 12x de R$ 299,90\n• Cartão de crédito: 10x de R$ 359,88 sem juros\n• À vista: R$ 3.382,87 (6% de desconto)\n\nTodas as formas de pagamento são 100% seguras e processadas por plataformas confiáveis.'
   },
   {
     id: 11,
@@ -136,14 +136,14 @@ export const InformaticaNovaFAQ = () => {
                   {/* Pergunta */}
                   <button
                     onClick={() => toggleItem(item.id)}
-                    className="w-full p-6 text-left flex items-center gap-4 hover:bg-zinc-800/30 transition-colors"
+                    className="w-full p-4 sm:p-5 md:p-6 text-left flex items-center gap-4 hover:bg-zinc-800/30 transition-colors"
                   >
-                    <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
-                      <Question className="w-5 h-5 text-white" />
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
+                      <Question className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                     </div>
                     
                     <div className="flex-grow">
-                      <h3 className="text-lg md:text-xl font-semibold text-white leading-relaxed">
+                      <h3 className="text-base sm:text-lg md:text-xl font-semibold text-white leading-relaxed">
                         {item.question}
                       </h3>
                     </div>
@@ -159,8 +159,8 @@ export const InformaticaNovaFAQ = () => {
 
                   {/* Resposta */}
                   {isOpen && (
-                    <div className="border-t border-zinc-700/50 bg-zinc-900/30 p-6">
-                      <div className="pl-14">
+                    <div className="border-t border-zinc-700/50 bg-zinc-900/30 p-4 sm:p-5 md:p-6">
+                      <div className="pl-12 sm:pl-14">
                         <p className="text-zinc-300 leading-relaxed">
                           {item.answer}
                         </p>

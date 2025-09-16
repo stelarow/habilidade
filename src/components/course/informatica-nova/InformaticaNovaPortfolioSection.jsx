@@ -1,6 +1,13 @@
 import React, { useState } from 'react';
 import { X, CaretLeft, CaretRight, Play, ArrowsOut } from '@phosphor-icons/react';
 import { handleCTAClick } from '../../../utils/ctaUtils';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
+} from '@/components/ui/carousel';
 
 const portfolioItems = [
   {
@@ -58,6 +65,13 @@ const portfolioItems = [
     category: "Canva",
     src: "/assets/informatica-nova/imagens-projeto/logotipo-canva.png",
     alt: "Logotipo criado no Canva"
+  },
+  {
+    id: 9,
+    title: "Dashboard Real de Aluno",
+    category: "Excel Avançado",
+    src: "/assets/informatica-nova/imagens-projeto/dashboard-excel-real.png",
+    alt: "Dashboard real criado por aluno no curso"
   }
 ];
 
@@ -107,12 +121,11 @@ export const InformaticaNovaPortfolioSection = () => {
           </p>
         </div>
 
-        {/* Grid de imagens */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-          {portfolioItems.map((item, index) => (
-            <div 
-              key={item.id}
-              className="group relative bg-zinc-800/50 backdrop-blur-sm border border-zinc-700/50 rounded-xl overflow-hidden hover:border-blue-500/50 transition-all duration-300 cursor-pointer"
+        {/* Componente do Card reutilizável */}
+        {(() => {
+          const ProjectCard = ({ item, index }) => (
+            <div
+              className="group relative bg-zinc-800/50 backdrop-blur-sm border border-zinc-700/50 rounded-xl overflow-hidden hover:border-blue-500/50 transition-all duration-300 cursor-pointer h-full"
               onClick={() => openLightbox(index)}
             >
               {/* Imagem */}
@@ -124,7 +137,7 @@ export const InformaticaNovaPortfolioSection = () => {
                   loading="lazy"
                 />
               </div>
-              
+
               {/* Overlay com informações */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <div className="absolute bottom-0 left-0 right-0 p-4">
@@ -135,7 +148,7 @@ export const InformaticaNovaPortfolioSection = () => {
                     {item.title}
                   </h3>
                 </div>
-                
+
                 {/* Ícone de ampliar */}
                 <div className="absolute top-4 right-4">
                   <div className="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
@@ -144,8 +157,30 @@ export const InformaticaNovaPortfolioSection = () => {
                 </div>
               </div>
             </div>
-          ))}
-        </div>
+          );
+
+          return (
+            <div className="mb-12">
+              <Carousel
+                opts={{
+                  align: "start",
+                  loop: true,
+                }}
+                className="w-full"
+              >
+                <CarouselContent className="-ml-2 md:-ml-4">
+                  {portfolioItems.map((item, index) => (
+                    <CarouselItem key={item.id} className="pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/4">
+                      <ProjectCard item={item} index={index} />
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious />
+                <CarouselNext />
+              </Carousel>
+            </div>
+          );
+        })()}
 
         {/* CTA */}
         <div className="text-center">

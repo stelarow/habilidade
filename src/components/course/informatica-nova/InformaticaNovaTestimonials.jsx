@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Star, CaretLeft, CaretRight, Quotes, MapPin, Calendar } from '@phosphor-icons/react';
+import { AspectRatio } from '@/components/ui/aspect-ratio';
 
 // Depoimentos reais dos dados do coursesData.js
 const testimonials = [
@@ -193,7 +194,7 @@ export const InformaticaNovaTestimonials = () => {
         {/* Estatísticas */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16 max-w-3xl mx-auto">
           <div className="text-center">
-            <div className="text-3xl font-bold text-white mb-2">4.9/5</div>
+            <div className="text-3xl font-bold text-white mb-2">5/5</div>
             <div className="text-zinc-400">Avaliação média</div>
             <div className="flex justify-center gap-1 mt-2">
               {renderStars(5)}
@@ -208,6 +209,36 @@ export const InformaticaNovaTestimonials = () => {
           <div className="text-center">
             <div className="text-3xl font-bold text-white mb-2">92%</div>
             <div className="text-zinc-400">Taxa de satisfação</div>
+          </div>
+        </div>
+
+        {/* Seção Visual - Ambiente da Escola */}
+        <div className="mt-20">
+          <div className="text-center mb-8">
+            <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
+              <span className="text-white">Ambiente</span>{' '}
+              <span className="bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">
+                Acolhedor
+              </span>
+            </h3>
+            <p className="text-zinc-300 max-w-2xl mx-auto">
+              Na Escola Habilidade, aprender é divertido! Nosso ambiente descontraído
+              e acolhedor faz toda a diferença no seu aprendizado.
+            </p>
+          </div>
+
+          <div className="relative max-w-4xl mx-auto">
+            <div className="absolute inset-0 bg-gradient-to-r from-yellow-500/20 to-orange-400/20 rounded-2xl blur-xl" />
+            <div className="relative max-h-[400px] md:max-h-[500px] overflow-hidden rounded-2xl shadow-2xl">
+              <AspectRatio ratio={21/9} className="bg-zinc-800/50">
+                <img
+                  src="/assets/informatica-nova/depoimentos/alunas-felizes-escola.jpg"
+                  alt="Alunas felizes na Escola Habilidade"
+                  className="w-full h-full object-cover object-center"
+                  loading="lazy"
+                />
+              </AspectRatio>
+            </div>
           </div>
         </div>
       </div>

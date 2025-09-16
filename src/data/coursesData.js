@@ -299,6 +299,34 @@ const informatica = {
   // ✅ DADOS DE INVESTIMENTO (OBRIGATÓRIO)
   investment: {
     originalPrice: 997,
+    
+    // Opções de pagamento
+    paymentOptions: {
+      boleto: {
+        totalPrice: 3598.80,
+        installments: {
+          max: 12,
+          value: 299.90
+        },
+        description: 'Boleto bancário'
+      },
+      creditCard: {
+        totalPrice: 3598.80,
+        installments: {
+          max: 10,
+          value: 359.88
+        },
+        description: 'Cartão de crédito sem juros'
+      },
+      cash: {
+        originalPrice: 3598.80,
+        discountPercent: 6,
+        finalPrice: 3382.87,
+        description: 'Pagamento à vista com 6% de desconto'
+      }
+    },
+    
+    // Mantido para compatibilidade com outros componentes
     currentPrice: 597,
     discount: 40,
     installments: {
@@ -1394,6 +1422,34 @@ const marketingDigital = {
   // ✅ DADOS DE INVESTIMENTO (OBRIGATÓRIO)
   investment: {
     originalPrice: 897,
+    
+    // Opções de pagamento
+    paymentOptions: {
+      boleto: {
+        totalPrice: 3598.80,
+        installments: {
+          max: 12,
+          value: 299.90
+        },
+        description: 'Boleto bancário'
+      },
+      creditCard: {
+        totalPrice: 3598.80,
+        installments: {
+          max: 10,
+          value: 359.88
+        },
+        description: 'Cartão de crédito sem juros'
+      },
+      cash: {
+        originalPrice: 3598.80,
+        discountPercent: 6,
+        finalPrice: 3382.87,
+        description: 'Pagamento à vista com 6% de desconto'
+      }
+    },
+    
+    // Mantido para compatibilidade com outros componentes
     currentPrice: 597,
     discount: 33,
     installments: {

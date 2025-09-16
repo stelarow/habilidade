@@ -93,7 +93,7 @@ export const useContactOptimization = () => {
    * @returns {string} Optimized contact URL
    */
   const getOptimizedContactUrl = useCallback((method, message = '', options = {}) => {
-    const { phone = '5548988559491', email = 'alessandro.ferreira@escolahabilidade.com' } = options;
+    const { phone = '5548988559491', email = 'alessandrobatisp@gmail.com' } = options;
 
     switch (method) {
       case 'whatsapp':

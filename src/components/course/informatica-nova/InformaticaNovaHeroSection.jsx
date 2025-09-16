@@ -1,6 +1,7 @@
 import React from 'react';
-import { CheckCircle, Star, Users, Clock, ArrowRight, Monitor, BookOpen, Lightning, MapPin, Calendar } from '@phosphor-icons/react';
+import { CheckCircle, Star, Users, Clock, ArrowRight, Monitor, BookOpen, Lightning, MapPin, Calendar, Certificate, Desktop, GraduationCap, Brain } from '@phosphor-icons/react';
 import { handleCTAClick } from '../../../utils/ctaUtils';
+import { Badge } from '../../../components/ui/badge';
 
 export const InformaticaNovaHeroSection = () => {
   return (
@@ -51,8 +52,48 @@ export const InformaticaNovaHeroSection = () => {
         </h1>
 
         {/* Subtítulo */}
-        <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-4xl mx-auto leading-relaxed">
-          Aprenda Windows, pacote Office, internet e muito mais com metodologia prática e suporte completo
+        <p className="text-xl md:text-2xl text-gray-300 mb-6 max-w-4xl mx-auto leading-relaxed">
+          <span className="font-semibold text-white">Excel do Básico ao Avançado</span>, Word, Canva e{' '}
+          <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent font-semibold">
+            Inteligência Artificial
+          </span>{' '}
+          com metodologia 100% prática
+        </p>
+
+        {/* Badges de Destaque - Mobile First */}
+        <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-6">
+          <Badge
+            variant="secondary"
+            className="bg-blue-500/10 border-blue-400/30 text-white hover:bg-blue-500/20 px-3 py-1.5"
+          >
+            <Users className="w-3 h-3 sm:w-4 sm:h-4 mr-1.5 text-blue-400" />
+            <span className="text-xs sm:text-sm">100% Presencial</span>
+          </Badge>
+
+          <Badge
+            variant="secondary"
+            className="bg-green-500/10 border-green-400/30 text-white hover:bg-green-500/20 px-3 py-1.5"
+          >
+            <Certificate className="w-3 h-3 sm:w-4 sm:h-4 mr-1.5 text-green-400" />
+            <span className="text-xs sm:text-sm">Certificado 184h</span>
+          </Badge>
+
+          <Badge
+            variant="secondary"
+            className="bg-purple-500/10 border-purple-400/30 text-white hover:bg-purple-500/20 px-3 py-1.5"
+          >
+            <Brain className="w-3 h-3 sm:w-4 sm:h-4 mr-1.5 text-purple-400" />
+            <span className="text-xs sm:text-sm">Excel + IA</span>
+          </Badge>
+        </div>
+
+        {/* Localidades Atendidas - Texto explícito para SEO */}
+        <p className="text-sm sm:text-base text-zinc-400 text-center mb-8">
+          📍 Atendemos presencialmente:{' '}
+          <span className="text-cyan-400 font-semibold">São José</span>,{' '}
+          <span className="text-cyan-400 font-semibold">Florianópolis</span>,{' '}
+          <span className="text-cyan-400 font-semibold">Palhoça</span> e{' '}
+          <span className="text-cyan-400 font-semibold">Biguaçu</span>
         </p>
 
         {/* CTAs */}
@@ -87,7 +128,7 @@ export const InformaticaNovaHeroSection = () => {
             <svg className="w-5 h-5 text-blue-400" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
             </svg>
-            <span>Suporte Vitalício</span>
+            <span>Aulas Presenciais</span>
           </div>
           <div className="flex items-center gap-2">
             <svg className="w-5 h-5 text-purple-400" fill="currentColor" viewBox="0 0 24 24">

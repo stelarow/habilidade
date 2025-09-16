@@ -10,7 +10,7 @@ export const EMAIL_CONFIG = {
   PUBLIC_KEY: import.meta.env.VITE_EMAILJS_PUBLIC_KEY || '2FZ-ZnMRFUaI-c8CD',
   
   // Email de destino
-  CONTACT_EMAIL: 'alessandro.ferreira@escolahabilidade.com',
+  CONTACT_EMAIL: 'alessandrobatisp@gmail.com',
   
   // WhatsApp para fallback
   WHATSAPP_NUMBER: '5548988559491'

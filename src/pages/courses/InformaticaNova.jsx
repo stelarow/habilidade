@@ -47,12 +47,22 @@ const courseSchema = {
   "courseMode": "onsite",
   "educationalCredentialAwarded": "Certificado Nacional de 184,5h",
   "timeRequired": "PT184.5H",
-  "offers": {
-    "@type": "Offer",
-    "price": "597.00",
-    "priceCurrency": "BRL",
-    "availability": "https://schema.org/InStock"
-  },
+  "offers": [
+    {
+      "@type": "Offer",
+      "price": "3382.87",
+      "priceCurrency": "BRL",
+      "availability": "https://schema.org/InStock",
+      "description": "Pagamento à vista com 6% de desconto"
+    },
+    {
+      "@type": "Offer",
+      "price": "3598.80",
+      "priceCurrency": "BRL",
+      "availability": "https://schema.org/InStock",
+      "description": "Parcelamento no boleto ou cartão"
+    }
+  ],
   "aggregateRating": {
     "@type": "AggregateRating",
     "ratingValue": "4.9",
@@ -116,7 +126,7 @@ const localBusinessSchema = {
   ],
   "telephone": "+55-48-99999-9999",
   "url": "https://www.escolahabilidade.com.br/cursos/informatica-nova",
-  "priceRange": "R$ 597,00",
+  "priceRange": "R$ 299,90 - R$ 3.598,80",
   "aggregateRating": {
     "@type": "AggregateRating",
     "ratingValue": "4.9",
@@ -129,7 +139,7 @@ const InformaticaNova = () => {
     <main className="min-h-screen bg-zinc-950 text-white">
       {/* SEO e Meta Tags */}
       <Helmet>
-        <title>Curso de Informática Presencial em São José SC | Excel, Word, PowerPoint e IA</title>
+        <title>Curso de Informática Presencial São José SC | Excel Básico ao Avançado, Word, Canva e IA</title>
         <meta name="description" content="Curso de informática presencial em São José SC. Excel, Word, PowerPoint, Canva e IA. Atendemos Florianópolis, Palhoça e Biguaçu. Certificado 184h." />
         <meta name="keywords" content="curso informática presencial, curso informática são josé, curso informática florianópolis, curso informática palhoça, curso informática biguaçu, excel avançado, word, powerpoint, inteligência artificial, canva" />
         

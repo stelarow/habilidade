@@ -22,16 +22,16 @@ export const InformaticaNovaLocationSection = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 items-center">
           
           {/* Informações de Localização */}
-          <div className="space-y-8">
+          <div className="space-y-6 lg:space-y-8">
             
             {/* Endereço Principal */}
-            <div className="bg-zinc-800/50 backdrop-blur border border-zinc-700/50 rounded-2xl p-8">
+            <div className="bg-zinc-800/50 backdrop-blur border border-zinc-700/50 rounded-2xl p-4 sm:p-6 lg:p-8">
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <MapPin className="w-6 h-6 text-blue-400" />
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-blue-400" />
                 </div>
                 <div>
                   <h3 className="text-xl font-bold text-white mb-2">Escola Habilidade</h3>
@@ -51,13 +51,13 @@ export const InformaticaNovaLocationSection = () => {
             </div>
 
             {/* Cidades Atendidas */}
-            <div className="bg-zinc-800/50 backdrop-blur border border-zinc-700/50 rounded-2xl p-8">
+            <div className="bg-zinc-800/50 backdrop-blur border border-zinc-700/50 rounded-2xl p-4 sm:p-6 lg:p-8">
               <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-                <Bus className="w-6 h-6 text-cyan-400" />
+                <Bus className="w-5 h-5 sm:w-6 sm:h-6 text-cyan-400" />
                 Atendemos Toda a Região
               </h3>
               
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 xs:grid-cols-2 gap-3 sm:gap-4">
                 <div className="text-zinc-300">
                   <div className="font-semibold text-white mb-1">São José</div>
                   <div className="text-sm">Sede da escola</div>
@@ -82,14 +82,14 @@ export const InformaticaNovaLocationSection = () => {
           {/* Facilidades de Acesso */}
           <div className="space-y-6">
             
-            <div className="bg-gradient-to-br from-blue-500/20 to-cyan-400/20 backdrop-blur border border-blue-500/30 rounded-2xl p-8">
+            <div className="bg-gradient-to-br from-blue-500/20 to-cyan-400/20 backdrop-blur border border-blue-500/30 rounded-2xl p-4 sm:p-6 lg:p-8">
               <h3 className="text-2xl font-bold text-white mb-6">Fácil Acesso</h3>
               
-              <div className="space-y-6">
+              <div className="space-y-4 sm:space-y-6">
                 
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 bg-blue-500/30 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Car className="w-5 h-5 text-blue-300" />
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-blue-500/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <Car className="w-4 h-4 sm:w-5 sm:h-5 text-blue-300" />
                   </div>
                   <div>
                     <div className="font-semibold text-white mb-1">Estacionamento Público</div>
@@ -98,8 +98,8 @@ export const InformaticaNovaLocationSection = () => {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 bg-cyan-500/30 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Bus className="w-5 h-5 text-cyan-300" />
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-cyan-500/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <Bus className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-300" />
                   </div>
                   <div>
                     <div className="font-semibold text-white mb-1">Transporte Público</div>
@@ -108,8 +108,8 @@ export const InformaticaNovaLocationSection = () => {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 bg-purple-500/30 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Clock className="w-5 h-5 text-purple-300" />
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-purple-500/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-purple-300" />
                   </div>
                   <div>
                     <div className="font-semibold text-white mb-1">Horários Flexíveis</div>
@@ -118,8 +118,8 @@ export const InformaticaNovaLocationSection = () => {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 bg-green-500/30 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Phone className="w-5 h-5 text-green-300" />
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-green-500/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <Phone className="w-4 h-4 sm:w-5 sm:h-5 text-green-300" />
                   </div>
                   <div>
                     <div className="font-semibold text-white mb-1">Atendimento Local</div>

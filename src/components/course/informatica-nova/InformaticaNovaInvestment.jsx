@@ -87,62 +87,66 @@ export const InformaticaNovaInvestment = () => {
               <div className="mb-10">
                 <h4 className="text-2xl font-bold text-white text-center mb-8">Escolha sua forma de pagamento</h4>
                 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
                   {paymentOptions.map((option, index) => {
                     const IconComponent = option.icon;
                     return (
-                      <div 
+                      <Card
                         key={index}
-                        className={`relative p-4 md:p-6 rounded-2xl border text-center transition-all duration-300 hover:scale-105 ${
-                          option.highlight 
-                            ? 'bg-gradient-to-br from-green-500/20 to-emerald-400/20 border-green-500/50 ring-2 ring-green-500/30 shadow-lg shadow-green-500/20' 
+                        className={`relative text-center transition-all duration-300 hover:scale-105 ${
+                          option.highlight
+                            ? 'bg-gradient-to-br from-green-500/20 to-emerald-400/20 border-green-500/50 ring-2 ring-green-500/30 shadow-lg shadow-green-500/20'
                             : 'bg-zinc-800/50 border-zinc-700/50 hover:border-zinc-600/50'
                         }`}
                       >
                         {/* Badge de destaque */}
                         {option.highlight && (
-                          <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                            <span className="bg-gradient-to-r from-green-500 to-emerald-400 text-white text-xs font-bold px-3 py-1 rounded-full">
+                          <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 z-10">
+                            <Badge className="bg-gradient-to-r from-green-500 to-emerald-400 text-white text-xs font-bold px-2 py-1 border-0">
                               RECOMENDADO
-                            </span>
+                            </Badge>
                           </div>
                         )}
-                        
+
                         {/* Badge de desconto */}
                         {option.discount && (
-                          <div className="absolute -top-3 right-3">
-                            <span className="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                          <div className="absolute -top-2 right-2 z-10">
+                            <Badge variant="destructive" className="text-xs font-bold px-2 py-1">
                               {option.discount}
-                            </span>
+                            </Badge>
                           </div>
                         )}
-                        
-                        <IconComponent className={`w-12 h-12 mx-auto mb-4 ${
-                          option.highlight ? 'text-green-400' : 'text-zinc-400'
-                        }`} />
-                        
-                        <div className="text-white font-bold text-lg mb-2">{option.name}</div>
-                        
-                        <div className={`text-2xl font-bold mb-2 ${
-                          option.highlight ? 'text-green-400' : 'text-white'
-                        }`}>
-                          {option.installments}
-                        </div>
-                        
-                        <div className="text-zinc-400 text-sm mb-3">{option.description}</div>
-                        
-                        {option.name !== "À Vista" && (
-                          <div className="text-zinc-500 text-xs">
-                            Total: {option.total}
+
+                        <CardHeader className="pb-2 pt-4 px-3 md:px-6 md:pt-6">
+                          <IconComponent className={`w-8 h-8 md:w-10 md:h-10 mx-auto mb-2 ${
+                            option.highlight ? 'text-green-400' : 'text-zinc-400'
+                          }`} />
+
+                          <CardTitle className="text-white font-bold text-base md:text-lg mb-1">{option.name}</CardTitle>
+                        </CardHeader>
+
+                        <CardContent className="pt-0 pb-4 px-3 md:px-6 space-y-1">
+                          <div className={`text-lg md:text-xl font-bold ${
+                            option.highlight ? 'text-green-400' : 'text-white'
+                          }`}>
+                            {option.installments}
                           </div>
-                        )}
-                        
-                        {option.name === "À Vista" && (
-                          <div className="text-zinc-500 text-xs">
-                            <span className="line-through">De: {option.total}</span>
-                          </div>
-                        )}
-                      </div>
+
+                          <div className="text-zinc-400 text-xs md:text-sm">{option.description}</div>
+
+                          {option.name !== "À Vista" && (
+                            <div className="text-zinc-500 text-xs">
+                              Total: {option.total}
+                            </div>
+                          )}
+
+                          {option.name === "À Vista" && (
+                            <div className="text-zinc-500 text-xs">
+                              <span className="line-through">De: {option.total}</span>
+                            </div>
+                          )}
+                        </CardContent>
+                      </Card>
                     );
                   })}
                 </div>
@@ -375,32 +379,32 @@ export const InformaticaNovaInvestment = () => {
                   <Separator className="my-6 bg-green-500/20" />
 
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                    <div className="text-center p-4 bg-green-500/10 rounded-lg border border-green-500/20">
-                      <TrendUp className="w-8 h-8 text-green-400 mx-auto mb-2" />
-                      <h6 className="font-bold text-green-400">Aumento Médio</h6>
-                      <p className="text-2xl font-bold text-white">45%</p>
+                    <div className="text-center p-3 sm:p-4 bg-green-500/10 rounded-lg border border-green-500/20">
+                      <TrendUp className="w-6 h-6 sm:w-8 sm:h-8 text-green-400 mx-auto mb-1 sm:mb-2" />
+                      <h6 className="text-sm sm:text-base font-bold text-green-400">Aumento Médio</h6>
+                      <p className="text-xl sm:text-2xl font-bold text-white">45%</p>
                       <p className="text-xs text-zinc-400">no salário</p>
                     </div>
-                    <div className="text-center p-4 bg-blue-500/10 rounded-lg border border-blue-500/20">
-                      <Clock className="w-8 h-8 text-blue-400 mx-auto mb-2" />
-                      <h6 className="font-bold text-blue-400">ROI</h6>
-                      <p className="text-2xl font-bold text-white">3-6</p>
+                    <div className="text-center p-3 sm:p-4 bg-blue-500/10 rounded-lg border border-blue-500/20">
+                      <Clock className="w-6 h-6 sm:w-8 sm:h-8 text-blue-400 mx-auto mb-1 sm:mb-2" />
+                      <h6 className="text-sm sm:text-base font-bold text-blue-400">ROI</h6>
+                      <p className="text-xl sm:text-2xl font-bold text-white">3-6</p>
                       <p className="text-xs text-zinc-400">meses para se pagar</p>
                     </div>
-                    <div className="text-center p-4 bg-purple-500/10 rounded-lg border border-purple-500/20">
-                      <Star className="w-8 h-8 text-purple-400 mx-auto mb-2" />
-                      <h6 className="font-bold text-purple-400">Oportunidades</h6>
-                      <p className="text-2xl font-bold text-white">∞</p>
+                    <div className="text-center p-3 sm:p-4 bg-purple-500/10 rounded-lg border border-purple-500/20">
+                      <Star className="w-6 h-6 sm:w-8 sm:h-8 text-purple-400 mx-auto mb-1 sm:mb-2" />
+                      <h6 className="text-sm sm:text-base font-bold text-purple-400">Oportunidades</h6>
+                      <p className="text-xl sm:text-2xl font-bold text-white">∞</p>
                       <p className="text-xs text-zinc-400">possibilidades</p>
                     </div>
                   </div>
 
-                  <div className="text-center p-6 bg-gradient-to-r from-green-500/10 to-emerald-400/10 rounded-xl border border-green-500/20">
-                    <h5 className="text-xl font-bold text-green-400 mb-2">Investimento Inteligente</h5>
-                    <p className="text-zinc-300 mb-2">
+                  <div className="text-center p-4 sm:p-6 bg-gradient-to-r from-green-500/10 to-emerald-400/10 rounded-xl border border-green-500/20">
+                    <h5 className="text-lg sm:text-xl font-bold text-green-400 mb-2">Investimento Inteligente</h5>
+                    <p className="text-sm sm:text-base text-zinc-300 mb-2">
                       <strong className="text-green-400">O curso se paga sozinho</strong> com o primeiro aumento ou nova oportunidade!
                     </p>
-                    <div className="text-2xl font-bold text-green-400">
+                    <div className="text-xl sm:text-2xl font-bold text-green-400">
                       A partir de R$ 299,90/mês
                     </div>
                     <p className="text-sm text-zinc-500 mt-2">Valor total muito menor que o retorno obtido</p>
