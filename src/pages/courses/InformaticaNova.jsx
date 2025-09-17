@@ -1,5 +1,4 @@
 import { InformaticaNovaHeroSection } from '../../components/course/informatica-nova/InformaticaNovaHeroSection';
-import { InformaticaNovaPortfolioSection } from '../../components/course/informatica-nova/InformaticaNovaPortfolioSection';
 import InformaticaNovaMethodSection from '../../components/course/informatica-nova/InformaticaNovaMethodSection';
 import { InformaticaNovaSuccessCases } from '../../components/course/informatica-nova/InformaticaNovaSuccessCases';
 import { InformaticaNovaTransformationPromise } from '../../components/course/informatica-nova/InformaticaNovaTransformationPromise';
@@ -7,6 +6,7 @@ import { InformaticaNovaTestimonials } from '../../components/course/informatica
 import { InformaticaNovaGuarantee } from '../../components/course/informatica-nova/InformaticaNovaGuarantee';
 import { InformaticaNovaInvestment } from '../../components/course/informatica-nova/InformaticaNovaInvestment';
 import { InformaticaNovaFAQ } from '../../components/course/informatica-nova/InformaticaNovaFAQ';
+import InformaticaNovaContactSection from '../../components/course/informatica-nova/InformaticaNovaContactSection';
 import { InformaticaNovaFloatingCTA } from '../../components/course/informatica-nova/InformaticaNovaFloatingCTA';
 import { InformaticaNovaCurriculum } from '../../components/course/informatica-nova/InformaticaNovaCurriculum';
 import { InformaticaNovaLocationSection } from '../../components/course/informatica-nova/InformaticaNovaLocationSection';
@@ -162,7 +162,6 @@ const InformaticaNova = () => {
 
       {/* Seções obrigatórias na ordem */}
       <InformaticaNovaHeroSection />
-      <InformaticaNovaPortfolioSection />
       <InformaticaNovaMethodSection />
       <InformaticaNovaSuccessCases />
       <InformaticaNovaTransformationPromise />
@@ -183,6 +182,10 @@ const InformaticaNova = () => {
       
       <InformaticaNovaGuarantee />
       <InformaticaNovaInvestment />
+
+      {/* Seção de Contato Progressivo */}
+      <InformaticaNovaContactSection />
+
       <InformaticaNovaFAQ />
       <InformaticaNovaFloatingCTA />
       

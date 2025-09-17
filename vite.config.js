@@ -126,7 +126,18 @@ base: '/',
   },
   
   ssr: {
-    noExternal: ['phosphor-react', '@phosphor-icons/react']
+    noExternal: [
+      'phosphor-react',
+      '@phosphor-icons/react',
+      '@radix-ui/react-dialog',
+      '@radix-ui/react-slot',
+      '@radix-ui/react-label',
+      '@radix-ui/react-progress',
+      '@radix-ui/react-separator',
+      '@radix-ui/react-tabs',
+      '@radix-ui/react-icons',
+      'class-variance-authority'
+    ]
   },
   
   build: {
