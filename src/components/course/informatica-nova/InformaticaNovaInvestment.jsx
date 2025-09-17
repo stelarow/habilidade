@@ -73,11 +73,11 @@ export const InformaticaNovaInvestment = () => {
             
             {/* Cabeçalho do card */}
             <div className="bg-gradient-to-r from-green-500/20 to-emerald-400/20 backdrop-blur-sm border-b border-green-500/30 p-8 text-center">
-              <div className="inline-flex items-center gap-2 bg-green-500/90 backdrop-blur-sm px-4 py-2 rounded-full mb-4">
-                <Gift className="w-5 h-5 text-white" />
-                <span className="text-white font-semibold text-sm">OFERTA ESPECIAL</span>
+              <div className="inline-flex items-center gap-2 bg-blue-500/20 backdrop-blur-sm px-4 py-2 rounded-full mb-4 border border-blue-500/30">
+                <Gift className="w-5 h-5 text-blue-400" />
+                <span className="text-blue-400 font-semibold text-sm">Curso Completo</span>
               </div>
-              
+
               <h3 className="text-2xl font-bold text-white mb-2">Curso Completo de Informática</h3>
               <p className="text-zinc-300">Do Windows 11 à Inteligência Artificial</p>
             </div>
@@ -168,12 +168,12 @@ export const InformaticaNovaInvestment = () => {
 
               {/* CTA */}
               <div className="text-center">
-                <button 
+                <button
                   onClick={() => handleCTAClick('investment')}
-                  className="group relative overflow-hidden rounded-xl px-10 py-5 text-xl font-bold text-white transition-all duration-300 bg-gradient-to-r from-green-500 to-emerald-400 shadow-2xl shadow-green-500/30 hover:shadow-green-500/50 hover:-translate-y-1 animate-pulse flex items-center justify-center gap-3 mx-auto mb-4 cursor-pointer"
+                  className="group relative overflow-hidden rounded-xl px-10 py-5 text-xl font-bold text-white transition-all duration-300 bg-gradient-to-r from-green-500 to-emerald-400 shadow-2xl shadow-green-500/30 hover:shadow-green-500/50 hover:-translate-y-1 flex items-center justify-center gap-3 mx-auto mb-4 cursor-pointer"
                 >
                   <Lightning className="w-6 h-6" />
-                  GARANTIR MINHA VAGA AGORA
+                  Escolher Meu Plano
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </button>
                 

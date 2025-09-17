@@ -1,7 +1,8 @@
 import React from 'react';
-import { Users, UserCheck, Target, Star, CheckCircle, X } from '@phosphor-icons/react';
+import { Users, UserCheck, Target, Star, CheckCircle, X, ArrowRight } from '@phosphor-icons/react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { handleCTAClick } from '../../../utils/ctaUtils';
 
 const InformaticaNovaMethodSection = () => {
   const differentials = [
@@ -211,9 +212,19 @@ const InformaticaNovaMethodSection = () => {
             <p className="text-zinc-300 mb-6">
               Junte-se aos 92% de alunos que avaliam nossa escola com 5 estrelas
             </p>
-            <Badge className="bg-yellow-500/20 text-yellow-400 border-yellow-500/30">
-              ⭐ Próxima turma: máximo 5 alunos
-            </Badge>
+            <div className="flex flex-col items-center gap-4">
+              <Badge className="bg-yellow-500/20 text-yellow-400 border-yellow-500/30">
+                ⭐ Próxima turma: máximo 5 alunos
+              </Badge>
+              <button
+                onClick={() => handleCTAClick('method')}
+                className="group relative overflow-hidden rounded-xl px-8 py-4 text-lg font-bold text-white transition-all duration-300 bg-gradient-to-r from-blue-500 to-cyan-400 shadow-2xl shadow-blue-500/30 hover:shadow-blue-500/50 hover:-translate-y-1 flex items-center justify-center gap-3 mx-auto cursor-pointer"
+              >
+                <Users className="w-5 h-5" />
+                Conhecer Nossa Metodologia
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </button>
+            </div>
           </div>
         </div>
       </div>

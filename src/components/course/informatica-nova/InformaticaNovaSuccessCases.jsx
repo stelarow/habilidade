@@ -1,8 +1,9 @@
 import React from 'react';
-import { Medal, TrendUp, Users, CheckCircle } from '@phosphor-icons/react';
+import { Medal, TrendUp, Users, CheckCircle, ArrowRight } from '@phosphor-icons/react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
+import { handleCTAClick } from '../../../utils/ctaUtils';
 import {
   Carousel,
   CarouselContent,
@@ -25,7 +26,7 @@ const successStories = [
     image: "/assets/informatica-nova/cases/mateus-oliveira/foto.jpg",
     title: "Certificação Completa",
     description: "Estudante que completou todo o programa e agora domina Excel, Word, PowerPoint e ferramentas modernas.",
-    achievement: "Certificado 184h",
+    achievement: "Certificado 170h",
     icon: Medal
   },
   {
@@ -161,7 +162,7 @@ export const InformaticaNovaSuccessCases = () => {
             Os Pilares do Nosso Sucesso
           </h3>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <div className="text-center">
               <div className="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
                 <CheckCircle className="w-6 h-6 text-green-400" />
@@ -185,6 +186,18 @@ export const InformaticaNovaSuccessCases = () => {
               <h4 className="font-semibold text-white mb-2">Suporte Completo</h4>
               <p className="text-zinc-400 text-sm">Acompanhamento até a certificação final</p>
             </div>
+          </div>
+
+          {/* CTA */}
+          <div className="text-center">
+            <button
+              onClick={() => handleCTAClick('success-cases')}
+              className="group relative overflow-hidden rounded-xl px-8 py-4 text-lg font-bold text-white transition-all duration-300 bg-gradient-to-r from-green-500 to-emerald-400 shadow-2xl shadow-green-500/30 hover:shadow-green-500/50 hover:-translate-y-1 flex items-center justify-center gap-3 mx-auto cursor-pointer"
+            >
+              <Medal className="w-5 h-5" />
+              Quero Ser o Próximo Caso de Sucesso
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </button>
           </div>
         </div>
       </div>

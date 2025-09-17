@@ -448,7 +448,7 @@ const informatica = {
 
   seoMeta: {
     title: 'Curso de Informática Básica Florianópolis - Windows 11, Office e Excel - Escola Habilidade São José',
-    description: 'Curso completo de informática básica em Florianópolis e São José SC. Windows 11, Excel, Word, PowerPoint, Canva e IA aplicada. 184h, material incluso, aulas presenciais e online.',
+    description: 'Curso completo de informática básica em Florianópolis e São José SC. Windows 11, Excel, Word, PowerPoint, Canva e IA aplicada. 170h, material incluso, aulas presenciais e online.',
     keywords: ['curso informática básica florianópolis', 'windows 11 são josé sc', 'excel completo grande florianópolis', 'office santa catarina', 'informática iniciante SC'],
     ogImage: '/og-images/informatica.jpg',
     ogType: 'website',

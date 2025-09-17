@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { User, Phone, ChatCircle, ArrowLeft, ArrowRight, PaperPlaneTilt, CheckCircle } from '@phosphor-icons/react';
 import { Card, CardContent, CardHeader, CardTitle } from '../../ui/card';
 import { Button } from '../../ui/button';
@@ -11,8 +11,21 @@ import { EMAIL_CONFIG, isEmailConfigured } from '../../../utils/emailConfig';
 import { formatPhoneNumber } from '../../../lib/utils';
 
 // Extraindo StepContent para fora do componente principal para evitar re-criação
-const StepContent = React.memo(({ step, submitStatus, formData, onInputChange }) => {
+const StepContent = React.memo(({ step, submitStatus, formData, onInputChange, phoneInputRef, messageInputRef }) => {
   console.log('🔄 StepContent render:', { step, submitStatus, timestamp: Date.now() });
+
+  // Autofocus quando mudar de step
+  useEffect(() => {
+    const focusTimeout = setTimeout(() => {
+      if (step === 2 && phoneInputRef?.current) {
+        phoneInputRef.current.focus();
+      } else if (step === 3 && messageInputRef?.current) {
+        messageInputRef.current.focus();
+      }
+    }, 100); // Pequeno delay para garantir que o DOM foi atualizado
+
+    return () => clearTimeout(focusTimeout);
+  }, [step, phoneInputRef, messageInputRef]);
 
   if (submitStatus === 'email_success') {
     return (
@@ -75,6 +88,7 @@ const StepContent = React.memo(({ step, submitStatus, formData, onInputChange })
             </Label>
             <Input
               id="phone"
+              ref={phoneInputRef}
               type="tel"
               value={formData.phone}
               maxLength={16} // (XX) 9 XXXX-XXXX = 16 caracteres
@@ -138,6 +152,7 @@ const StepContent = React.memo(({ step, submitStatus, formData, onInputChange })
               </Label>
               <Textarea
                 id="message"
+                ref={messageInputRef}
                 value={formData.message}
                 onChange={(e) => {
                   console.log('🔸 Textarea onChange:', { value: e.target.value, timestamp: Date.now() });
@@ -161,6 +176,8 @@ const StepContent = React.memo(({ step, submitStatus, formData, onInputChange })
   const shouldRerender = (
     prevProps.step !== nextProps.step ||
     prevProps.submitStatus !== nextProps.submitStatus ||
+    prevProps.phoneInputRef !== nextProps.phoneInputRef ||
+    prevProps.messageInputRef !== nextProps.messageInputRef ||
     (nextProps.step === 1 && prevProps.formData.name !== nextProps.formData.name) ||
     (nextProps.step === 2 && prevProps.formData.phone !== nextProps.formData.phone) ||
     (nextProps.step === 3 && (
@@ -198,6 +215,10 @@ const InformaticaNovaInlineContactForm = () => {
   });
 
   const totalSteps = 3;
+
+  // Refs para autofocus
+  const phoneInputRef = useRef(null);
+  const messageInputRef = useRef(null);
 
 
   // Usar useCallback para evitar re-criação da função
@@ -326,6 +347,8 @@ const InformaticaNovaInlineContactForm = () => {
             submitStatus={submitStatus}
             formData={formData}
             onInputChange={handleInputChange}
+            phoneInputRef={phoneInputRef}
+            messageInputRef={messageInputRef}
           />
         </div>
 

@@ -23,7 +23,7 @@ const courseSchema = {
   "@context": "https://schema.org",
   "@type": "Course",
   "name": "Curso de Informática Presencial - Excel, Word, PowerPoint e IA",
-  "description": "Curso presencial de informática em São José SC. Excel avançado, Word, PowerPoint, Canva e Inteligência Artificial. Atendemos toda Grande Florianópolis - Florianópolis, Palhoça, Biguaçu. 184 horas com certificado nacional.",
+  "description": "Curso presencial de informática em São José SC. Excel avançado, Word, PowerPoint, Canva e Inteligência Artificial. Atendemos toda Grande Florianópolis - Florianópolis, Palhoça, Biguaçu. 170 horas com certificado nacional.",
   "provider": {
     "@type": "Organization",
     "name": "Escola Habilidade",
@@ -45,8 +45,8 @@ const courseSchema = {
     ]
   },
   "courseMode": "onsite",
-  "educationalCredentialAwarded": "Certificado Nacional de 184,5h",
-  "timeRequired": "PT184.5H",
+  "educationalCredentialAwarded": "Certificado Nacional de 170h",
+  "timeRequired": "PT170H",
   "offers": [
     {
       "@type": "Offer",
@@ -140,12 +140,12 @@ const InformaticaNova = () => {
       {/* SEO e Meta Tags */}
       <Helmet>
         <title>Curso de Informática Presencial São José SC | Excel Básico ao Avançado, Word, Canva e IA</title>
-        <meta name="description" content="Curso de informática presencial em São José SC. Excel, Word, PowerPoint, Canva e IA. Atendemos Florianópolis, Palhoça e Biguaçu. Certificado 184h." />
+        <meta name="description" content="Curso de informática presencial em São José SC. Excel, Word, PowerPoint, Canva e IA. Atendemos Florianópolis, Palhoça e Biguaçu. Certificado 170h." />
         <meta name="keywords" content="curso informática presencial, curso informática são josé, curso informática florianópolis, curso informática palhoça, curso informática biguaçu, excel avançado, word, powerpoint, inteligência artificial, canva" />
         
         {/* Open Graph */}
         <meta property="og:title" content="Curso de Informática Básica - Windows 11, Office e IA | São José SC" />
-        <meta property="og:description" content="Curso presencial completo de informática em São José SC. 184 horas práticas, Windows 11, Office, Canva e IA aplicada." />
+        <meta property="og:description" content="Curso presencial completo de informática em São José SC. 170 horas práticas, Windows 11, Office, Canva e IA aplicada." />
         <meta property="og:type" content="website" />
         <meta property="og:locale" content="pt_BR" />
         
@@ -212,12 +212,12 @@ const InformaticaNova = () => {
             </p>
 
             <div className="space-y-6">
-              <button 
-                onClick={() => handleCTAClick('hero')}
-                className="group relative overflow-hidden rounded-xl px-12 py-6 text-xl font-bold text-white transition-all duration-300 bg-gradient-to-r from-blue-500 to-cyan-400 shadow-2xl shadow-blue-500/30 hover:shadow-blue-500/50 hover:-translate-y-1 animate-pulse flex items-center justify-center gap-3 mx-auto cursor-pointer"
+              <button
+                onClick={() => handleCTAClick('final')}
+                className="group relative overflow-hidden rounded-xl px-12 py-6 text-xl font-bold text-white transition-all duration-300 bg-gradient-to-r from-blue-500 to-cyan-400 shadow-2xl shadow-blue-500/30 hover:shadow-blue-500/50 hover:-translate-y-1 flex items-center justify-center gap-3 mx-auto cursor-pointer"
               >
                 <Rocket className="w-6 h-6" />
-                QUERO DOMINAR INFORMÁTICA - ÚLTIMAS VAGAS
+                Garantir Minha Vaga
               </button>
               
               <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-zinc-400">

@@ -77,7 +77,7 @@ export const InformaticaNovaFloatingCTA = () => {
                 className="w-full bg-gradient-to-r from-green-500 to-emerald-400 hover:from-green-600 hover:to-emerald-500 text-white font-bold py-3 px-4 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 shadow-lg hover:shadow-green-500/25"
               >
                 <ChatCircle className="w-5 h-5" />
-                Conversar no WhatsApp
+                Falar com Consultor
               </button>
 
               <p className="text-xs text-zinc-500 text-center mt-3">

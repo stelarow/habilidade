@@ -99,7 +99,7 @@ const journeySteps = [
     step: "✓",
     title: "Certificação",
     subtitle: "Expert em informática moderna",
-    description: "Receba seu certificado de 184 horas e torne-se um profissional reconhecido no mercado",
+    description: "Receba seu certificado de 170 horas e torne-se um profissional reconhecido no mercado",
     icon: Medal,
     color: "from-yellow-500 to-yellow-600",
     bgColor: "from-yellow-500/10 to-yellow-600/10",
@@ -357,7 +357,7 @@ export const InformaticaNovaTransformationPromise = () => {
                 <Separator orientation="vertical" className="h-4 bg-zinc-700" />
                 <div className="flex items-center gap-2">
                   <Clock className="w-4 h-4 text-zinc-400" />
-                  <span className="text-zinc-400 text-sm">184 horas certificadas</span>
+                  <span className="text-zinc-400 text-sm">170 horas certificadas</span>
                 </div>
                 <Separator orientation="vertical" className="h-4 bg-zinc-700" />
                 <div className="flex items-center gap-2">
@@ -407,7 +407,7 @@ export const InformaticaNovaTransformationPromise = () => {
               <div className="space-y-4">
                 <div className="flex items-center gap-3">
                   <CheckCircle className="w-5 h-5 text-green-400" />
-                  <span className="text-zinc-200">Certificado oficial de 184 horas</span>
+                  <span className="text-zinc-200">Certificado oficial de 170 horas</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <CheckCircle className="w-5 h-5 text-green-400" />
@@ -441,14 +441,14 @@ export const InformaticaNovaTransformationPromise = () => {
                 className="group relative overflow-hidden bg-gradient-to-r from-purple-500 to-cyan-400 hover:from-purple-600 hover:to-cyan-500 shadow-2xl shadow-purple-500/30 hover:shadow-purple-500/50 hover:-translate-y-1 transition-all duration-300 text-sm sm:text-base md:text-lg font-bold px-4 sm:px-6 md:px-8 py-3 sm:py-4"
               >
                 <Clock className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                <span className="hidden sm:inline">COMEÇAR TRANSFORMAÇÃO AGORA</span>
-                <span className="sm:hidden">COMEÇAR AGORA</span>
+                <span className="hidden sm:inline">Iniciar Minha Transformação</span>
+                <span className="sm:hidden">Iniciar Transformação</span>
                 <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
 
               <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-3">
-                <Badge variant="destructive" className="bg-gradient-to-r from-orange-500 to-red-500 text-white border-0 text-xs sm:text-sm">
-                  ⚡ Vagas limitadas
+                <Badge variant="secondary" className="bg-blue-500/20 text-blue-400 border-blue-500/30 text-xs sm:text-sm">
+                  📅 Turmas mensais
                 </Badge>
                 <div className="text-zinc-300 text-xs sm:text-sm font-medium">
                   Próxima turma em breve

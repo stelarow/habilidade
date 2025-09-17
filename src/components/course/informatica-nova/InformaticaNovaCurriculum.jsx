@@ -227,7 +227,7 @@ export const InformaticaNovaCurriculum = () => {
   const totalLessons = curriculum.reduce((acc, module) => acc + module.lessons.length, 0);
 
   return (
-    <section className="px-4 py-16 sm:px-6 lg:px-8 lg:py-20 bg-gradient-to-b from-zinc-900 to-zinc-950">
+    <section id="curriculum" className="px-4 py-16 sm:px-6 lg:px-8 lg:py-20 bg-gradient-to-b from-zinc-900 to-zinc-950">
       <div className="container mx-auto max-w-7xl">
         
         {/* Cabeçalho da seção */}
@@ -384,12 +384,12 @@ export const InformaticaNovaCurriculum = () => {
               Sua jornada de transformação digital começa aqui.
             </p>
             
-            <button 
+            <button
               onClick={() => handleCTAClick('curriculum')}
               className="group relative overflow-hidden rounded-xl px-8 py-4 text-lg font-bold text-white transition-all duration-300 bg-gradient-to-r from-blue-500 to-cyan-400 shadow-2xl shadow-blue-500/30 hover:shadow-blue-500/50 hover:-translate-y-1 flex items-center justify-center gap-3 mx-auto cursor-pointer"
             >
               <Play className="w-5 h-5" />
-              COMEÇAR AGORA - 8 MÓDULOS COMPLETOS
+              Ver Detalhes do Curso
             </button>
           </div>
         </div>

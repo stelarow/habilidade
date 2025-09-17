@@ -93,7 +93,7 @@ export const InformaticaNovaGuarantee = () => {
                 className="group relative overflow-hidden rounded-xl px-8 py-4 text-lg font-bold text-white transition-all duration-300 bg-gradient-to-r from-emerald-500 to-green-400 shadow-xl shadow-emerald-500/30 hover:shadow-emerald-500/50 hover:-translate-y-1 flex items-center justify-center gap-3 mx-auto cursor-pointer"
               >
                 <Shield className="w-5 h-5" />
-                COMEÇAR SEM RISCOS
+                Começar com Garantia
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </button>
             </CardContent>

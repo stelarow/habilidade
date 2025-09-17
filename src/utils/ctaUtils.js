@@ -14,8 +14,9 @@ const CTA_MESSAGES = {
   curriculum: 'Olá! Fiquei interessado no currículo completo com 8 módulos do Curso de Informática Completa. Gostaria de saber mais sobre a metodologia e como funciona o curso. Obrigado!',
   faq: 'Olá! Ainda tenho algumas dúvidas sobre o Curso de Informática Completa. Gostaria de falar com um especialista para esclarecer algumas questões. Obrigado!',
   portfolio: 'Olá! Fiquei interessado nos projetos do portfólio e gostaria de criar meus próprios projetos com o Curso de Informática Completa. Gostaria de saber mais sobre como funciona na prática. Obrigado!',
+  testimonials: 'Olá! Vi os depoimentos dos alunos e fiquei muito interessado no Curso de Informática Completa. Gostaria de conversar com um especialista para saber mais sobre a experiência dos alunos e como posso começar minha transformação. Obrigado!',
   floating: 'Olá! Tenho interesse no Curso de Informática Completa. Gostaria de saber mais informações sobre conteúdo, horários e formas de pagamento. Obrigado!'
-};
+};;
 
 /**
  * Gera URL do WhatsApp com mensagem personalizada

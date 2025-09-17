@@ -1,6 +1,7 @@
 import React from 'react';
-import { Clock, Shield, WhatsappLogo, CheckCircle } from '@phosphor-icons/react';
+import { Clock, Shield, WhatsappLogo, CheckCircle, ArrowRight } from '@phosphor-icons/react';
 import InformaticaNovaInlineContactForm from './InformaticaNovaInlineContactForm';
+import { handleCTAClick } from '../../../utils/ctaUtils';
 
 const InformaticaNovaContactSection = () => {
   return (
@@ -50,7 +51,26 @@ const InformaticaNovaContactSection = () => {
         {/* Formulário de Contato Integrado */}
         <div className="mb-12">
           <InformaticaNovaInlineContactForm />
+        </div>
 
+        {/* CTA WhatsApp direto */}
+        <div className="text-center mb-12">
+          <div className="bg-gradient-to-r from-green-500/10 to-emerald-500/10 backdrop-blur-sm border border-green-500/20 rounded-2xl p-6">
+            <h3 className="text-xl font-bold text-white mb-4">
+              Prefere falar diretamente conosco?
+            </h3>
+            <p className="text-zinc-300 mb-6">
+              Nossa equipe está pronta para esclarecer todas as suas dúvidas
+            </p>
+            <button
+              onClick={() => handleCTAClick('contact')}
+              className="group relative overflow-hidden rounded-xl px-8 py-4 text-lg font-bold text-white transition-all duration-300 bg-gradient-to-r from-green-500 to-emerald-400 shadow-2xl shadow-green-500/30 hover:shadow-green-500/50 hover:-translate-y-1 flex items-center justify-center gap-3 mx-auto cursor-pointer"
+            >
+              <WhatsappLogo className="w-5 h-5" />
+              Falar com Consultor
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </button>
+          </div>
         </div>
 
         {/* Indicadores de Confiança */}

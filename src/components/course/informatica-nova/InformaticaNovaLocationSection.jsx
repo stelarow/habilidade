@@ -132,11 +132,11 @@ export const InformaticaNovaLocationSection = () => {
 
             {/* CTA de Contato */}
             <div className="text-center">
-              <button 
+              <button
                 onClick={() => handleCTAClick('location-contact')}
                 className="w-full bg-gradient-to-r from-blue-500 to-cyan-400 text-white font-bold py-4 px-8 rounded-xl hover:shadow-lg hover:shadow-blue-500/25 transition-all duration-300 hover:-translate-y-1"
               >
-                FALAR SOBRE LOCALIZAÇÃO
+                Agendar Visita
               </button>
             </div>
 
