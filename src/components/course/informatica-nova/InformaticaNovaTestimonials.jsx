@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { Star, CaretLeft, CaretRight, Quotes, MapPin, Calendar } from '@phosphor-icons/react';
+import { Star, CaretLeft, CaretRight, Quotes, MapPin, Calendar, ArrowRight, Users } from '@phosphor-icons/react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
+import { handleCTAClick } from '../../../utils/ctaUtils';
 
 // Depoimentos reais dos dados do coursesData.js
 const testimonials = [
@@ -92,77 +94,89 @@ export const InformaticaNovaTestimonials = () => {
   };
 
   return (
-    <section className="px-4 py-16 sm:px-6 lg:px-8 lg:py-20 bg-gradient-to-b from-zinc-950 to-zinc-900">
-      <div className="container mx-auto max-w-7xl">
-        
-        {/* Cabeçalho da seção */}
+    <section className="py-20 relative overflow-hidden bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900">
+      {/* Background Effects */}
+      <div className="absolute inset-0">
+        <div className="absolute top-20 left-10 w-64 h-64 bg-yellow-500/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 right-10 w-64 h-64 bg-orange-500/10 rounded-full blur-3xl" />
+      </div>
+
+      <div className="container mx-auto px-4 relative z-10">
+        {/* Header */}
         <div className="text-center mb-16">
-          
-          <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6">
-            <span className="text-white">O QUE NOSSOS</span>
-            <br />
-            <span className="bg-gradient-to-r from-yellow-400 via-orange-500 to-red-400 bg-clip-text text-transparent">
-              ALUNOS DIZEM
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
+            O que nossos alunos falam sobre{' '}
+            <span className="bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">
+              a transformação
             </span>
           </h2>
-          
-          <p className="text-xl text-zinc-300 max-w-3xl mx-auto leading-relaxed">
-            Mais de 150 alunos já transformaram suas vidas com nosso método. 
-            Veja o que eles têm a dizer sobre a experiência.
+          <p className="text-zinc-300 text-lg max-w-3xl mx-auto">
+            Histórias reais de pessoas que mudaram suas vidas através da tecnologia
           </p>
         </div>
 
-        {/* Carousel de depoimentos */}
-        <div className="relative max-w-4xl mx-auto">
-          
-          {/* Depoimento atual */}
-          <div className="bg-gradient-to-br from-zinc-800/50 to-zinc-900/50 backdrop-blur-sm border border-zinc-700/50 rounded-2xl p-8 md:p-12 text-center relative overflow-hidden">
-            
-            {/* Quote icon */}
-            <div className="absolute top-6 left-6 w-12 h-12 bg-gradient-to-r from-blue-500/20 to-cyan-400/20 rounded-full flex items-center justify-center">
-              <Quotes className="w-6 h-6 text-blue-400" />
-            </div>
+        {/* Testimonials Carousel */}
+        <div className="relative max-w-4xl mx-auto mb-12">
+          <div className="relative min-h-[400px] md:min-h-[300px] flex items-center">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentIndex}
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -50 }}
+                transition={{ duration: 0.5 }}
+                className="w-full"
+              >
+                <div className="bg-gradient-to-br from-zinc-800/80 to-zinc-700/80 backdrop-blur-sm border border-zinc-600/50 rounded-2xl p-8 md:p-12 shadow-2xl">
+                  <div className="flex flex-col md:flex-row items-center gap-8">
+                    {/* Avatar */}
+                    <div className="flex-shrink-0">
+                      <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden ring-4 ring-yellow-500/30 shadow-2xl">
+                        <img
+                          src={testimonials[currentIndex].photo}
+                          alt={testimonials[currentIndex].name}
+                          className="w-full h-full object-cover"
+                          loading="lazy"
+                        />
+                      </div>
+                    </div>
 
-            {/* Stars */}
-            <div className="flex justify-center gap-1 mb-6">
-              {renderStars(testimonials[currentIndex].rating)}
-            </div>
+                    {/* Content */}
+                    <div className="flex-1 text-center md:text-left">
+                      <div className="flex justify-center md:justify-start gap-1 mb-4">
+                        {renderStars(testimonials[currentIndex].rating)}
+                      </div>
+                      
+                      <blockquote className="text-lg md:text-xl text-zinc-200 mb-6 leading-relaxed">
+                        "{testimonials[currentIndex].text}"
+                      </blockquote>
 
-            {/* Depoimento */}
-            <blockquote className="text-lg md:text-xl text-zinc-200 leading-relaxed mb-8 max-w-3xl mx-auto">
-              "{testimonials[currentIndex].text}"
-            </blockquote>
-
-            {/* Informações do aluno */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <img
-                src={testimonials[currentIndex].photo}
-                alt={testimonials[currentIndex].name}
-                className="w-16 h-16 rounded-full object-cover border-2 border-white/20"
-              />
-              
-              <div className="text-center sm:text-left">
-                <h3 className="text-xl font-bold text-white mb-1">
-                  {testimonials[currentIndex].name}
-                </h3>
-                <p className="text-blue-300 font-medium text-sm mb-2">
-                  {testimonials[currentIndex].role}
-                </p>
-                <div className="flex items-center justify-center sm:justify-start gap-4 text-xs text-zinc-400">
-                  <div className="flex items-center gap-1">
-                    <MapPin className="w-3 h-3" />
-                    <span>{testimonials[currentIndex].location}</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Calendar className="w-3 h-3" />
-                    <span>{testimonials[currentIndex].date}</span>
+                      <div>
+                        <div className="font-bold text-xl text-white mb-1">
+                          {testimonials[currentIndex].name}
+                        </div>
+                        <div className="text-zinc-400 mb-2">
+                          {testimonials[currentIndex].role}
+                        </div>
+                        <div className="flex items-center justify-center md:justify-start gap-4 text-sm text-zinc-400">
+                          <div className="flex items-center gap-1">
+                            <MapPin className="w-4 h-4" />
+                            <span>{testimonials[currentIndex].location}</span>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <Calendar className="w-4 h-4" />
+                            <span>{testimonials[currentIndex].date}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
+              </motion.div>
+            </AnimatePresence>
           </div>
 
-          {/* Navegação */}
+          {/* Navigation Arrows */}
           <button
             onClick={prevTestimonial}
             className="absolute left-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-colors"
@@ -239,6 +253,26 @@ export const InformaticaNovaTestimonials = () => {
                 />
               </AspectRatio>
             </div>
+          </div>
+        </div>
+
+        {/* CTA após depoimentos */}
+        <div className="text-center mt-16">
+          <div className="bg-gradient-to-r from-yellow-500/10 to-orange-500/10 backdrop-blur-sm border border-yellow-500/20 rounded-2xl p-8 max-w-3xl mx-auto">
+            <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
+              Quer conversar com um especialista?
+            </h3>
+            <p className="text-zinc-300 text-lg mb-6">
+              Nossa equipe conhece cada detalhe do curso e pode ajudar você a dar o próximo passo
+            </p>
+            <button
+              onClick={() => handleCTAClick('testimonials')}
+              className="group relative overflow-hidden rounded-xl px-8 py-4 text-lg font-bold text-white transition-all duration-300 bg-gradient-to-r from-yellow-500 to-orange-500 shadow-2xl shadow-yellow-500/30 hover:shadow-yellow-500/50 hover:-translate-y-1 flex items-center justify-center gap-3 mx-auto cursor-pointer"
+            >
+              <Users className="w-5 h-5" />
+              Falar com Especialista
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </button>
           </div>
         </div>
       </div>
