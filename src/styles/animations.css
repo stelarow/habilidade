@@ -336,6 +336,20 @@
   }
 }
 
+/* Animação shimmer para placeholders de imagem */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s ease-in-out infinite;
+}
+
 /* Responsividade das animações */
 @media (prefers-reduced-motion: reduce) {
   *,
