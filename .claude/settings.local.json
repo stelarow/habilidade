@@ -69,7 +69,10 @@
       "Bash(git rm:*)",
       "Bash(npm run dev:*)",
       "mcp__playwright__browser_console_messages",
-      "mcp__serena__list_dir"
+      "mcp__serena__list_dir",
+      "mcp__shadcn-ui-server__get-component-docs",
+      "mcp__playwright__browser_resize",
+      "Bash(awk:*)"
     ],
     "deny": []
   }

@@ -18,7 +18,7 @@ const CursoSketchupEnscape = React.lazy(() => import('./pages/CursoSketchupEnsca
 const TesteVocacional = React.lazy(() => import('./pages/TesteVocacional'));
 
 // Imports para páginas que precisam de CourseLayout para funcionar com SSG
-const InformaticaNova = React.lazy(() => import('./pages/courses/InformaticaNova'));
+const Informatica = React.lazy(() => import('./pages/courses/Informatica'));
 const Projetista3D = React.lazy(() => import('./pages/courses/Projetista3D'));
 
 // Componente para redirecionamento de cursos
@@ -67,12 +67,12 @@ export const routes = [
   },
   // Páginas que precisam de CourseLayout para funcionar com SSG
   {
-    path: '/cursos/informatica-nova',
+    path: '/cursos/informatica',
     element: <CourseLayout />,
     children: [
       {
         index: true,
-        element: <Suspense key="course-informatica-nova" fallback={<Loading />}><InformaticaNova /></Suspense>
+        element: <Suspense key="course-informatica" fallback={<Loading />}><Informatica /></Suspense>
       }
     ]
   },
@@ -95,10 +95,6 @@ export const routes = [
         lazy: () => import('./pages/Home')
       },
       // Rotas estáticas individuais para garantir SSG
-      {
-        path: 'cursos/informatica',
-        lazy: () => import('./pages/courses/Informatica')
-      },
       // REMOVIDO: Movido para CourseLayout (linha 70-78)
       // {
       //   path: 'cursos/informatica-nova',
