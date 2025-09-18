@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Star, CaretLeft, CaretRight, Quotes, MapPin, Calendar, ArrowRight, Users } from '@phosphor-icons/react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { handleCTAClick } from '../../../utils/ctaUtils';
 
 // Depoimentos reais dos dados do coursesData.js
@@ -10,7 +11,6 @@ const testimonials = [
     id: 1,
     name: 'Letícia Mendes',
     role: 'Informática Fundamental',
-    photo: '/testimonials/leticia-mendes.jpg',
     rating: 5,
     text: 'Estou adorando fazer o curso de Informática Fundamental na Escola Habilidade. As aulas são muito práticas e dinâmicas, e aprendi rapidamente ferramentas como Excel, Canva e até Inteligência Artificial. O professor é atencioso e esclarece todas as dúvidas!',
     location: 'São José - SC',
@@ -20,7 +20,6 @@ const testimonials = [
     id: 2,
     name: 'Mateus Oliveira',
     role: 'Informática Fundamental',
-    photo: '/testimonials/mateus-oliveira.jpg',
     rating: 5,
     text: 'O curso presencial é excelente, o ambiente é muito acolhedor, e as aulas são bastante claras e práticas. Aprendi muito sobre Word, PowerPoint e Windows 11. O professor é dedicado e sempre traz exemplos do dia a dia.',
     location: 'São José - SC',
@@ -30,7 +29,6 @@ const testimonials = [
     id: 3,
     name: 'Gabriela Costa Silva',
     role: 'Informática Fundamental',
-    photo: '/testimonials/gabriela-costa-silva.jpg',
     rating: 5,
     text: 'A Escola Habilidade é incrível! As turmas pequenas ajudam demais na hora de aprender, especialmente ferramentas digitais como Canva e Inteligência Artificial. Estou gostando muito das aulas presenciais e da didática do professor.',
     location: 'São José - SC',
@@ -40,7 +38,6 @@ const testimonials = [
     id: 4,
     name: 'Lucas Felipe Ribeiro',
     role: 'Informática Fundamental',
-    photo: '/testimonials/lucas-felipe-ribeiro.jpg',
     rating: 5,
     text: 'Estou impressionado com a qualidade das aulas presenciais do curso. O professor explica tudo muito bem e o conteúdo é super atualizado. Já estou aplicando o que aprendi no meu dia a dia.',
     location: 'São José - SC',
@@ -50,7 +47,6 @@ const testimonials = [
     id: 5,
     name: 'Carolina Almeida',
     role: 'Informática Fundamental',
-    photo: '/testimonials/carolina-almeida.jpg',
     rating: 5,
     text: 'As aulas são muito práticas e interessantes! Aprendi sobre ferramentas que nem sabia que existiam, e o professor sempre traz uma abordagem descontraída que facilita muito o aprendizado.',
     location: 'São José - SC',
@@ -60,12 +56,30 @@ const testimonials = [
     id: 6,
     name: 'Pedro Henrique Soares',
     role: 'Informática Fundamental',
-    photo: '/testimonials/pedro-henrique-soares.jpg',
     rating: 5,
     text: 'Curso excelente, ambiente confortável e turmas pequenas. Já aprendi muito sobre ferramentas digitais, e o professor é sempre atento e dedicado.',
     location: 'São José - SC',
     date: 'dez. de 2024'
   }
+];
+
+// Função para extrair iniciais do nome
+const getInitials = (name) => {
+  return name
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase())
+    .slice(0, 2)
+    .join('');
+};
+
+// Cores de fundo para os avatares
+const avatarColors = [
+  'bg-gradient-to-br from-blue-500 to-blue-600',
+  'bg-gradient-to-br from-green-500 to-green-600',
+  'bg-gradient-to-br from-purple-500 to-purple-600',
+  'bg-gradient-to-br from-pink-500 to-pink-600',
+  'bg-gradient-to-br from-indigo-500 to-indigo-600',
+  'bg-gradient-to-br from-red-500 to-red-600'
 ];
 
 export const InformaticaNovaTestimonials = () => {
@@ -131,13 +145,14 @@ export const InformaticaNovaTestimonials = () => {
                   <div className="flex flex-col md:flex-row items-center gap-8">
                     {/* Avatar */}
                     <div className="flex-shrink-0">
-                      <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden ring-4 ring-yellow-500/30 shadow-2xl">
-                        <img
-                          src={testimonials[currentIndex].photo}
-                          alt={testimonials[currentIndex].name}
-                          className="w-full h-full object-cover"
-                          loading="lazy"
-                        />
+                      <div className="ring-4 ring-yellow-500/30 shadow-2xl rounded-full">
+                        <Avatar className="w-24 h-24 md:w-32 md:h-32">
+                          <AvatarFallback
+                            className={`${avatarColors[currentIndex % avatarColors.length]} text-white font-bold text-lg md:text-2xl`}
+                          >
+                            {getInitials(testimonials[currentIndex].name)}
+                          </AvatarFallback>
+                        </Avatar>
                       </div>
                     </div>
 
