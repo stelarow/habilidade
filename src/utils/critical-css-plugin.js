@@ -8,44 +8,31 @@ import fs from 'fs';
 import path from 'path';
 
 /**
- * Mobile-first Critical CSS classes
- * These are the minimum styles needed for above-the-fold mobile rendering
+ * Minimal Critical CSS classes - ONLY above-the-fold essentials
+ * Optimized for immediate viewport rendering without layout shift
  */
 const MOBILE_CRITICAL_CLASSES = [
-  // Core layout (mobile-first)
-  'font-sans', 'flex', 'flex-col', 'items-center', 'justify-center',
-  'w-full', 'h-full', 'min-h-screen', 'container', 'mx-auto',
-  
-  // Mobile navigation
-  'fixed', 'top-0', 'left-0', 'right-0', 'z-50', 
-  'px-4', 'py-3', 'bg-black', 'bg-opacity-95',
-  
-  // Mobile typography
-  'text-center', 'text-left', 'text-white', 'text-gray-100', 'text-gray-300',
-  'font-bold', 'font-semibold', 'font-medium',
-  'text-lg', 'text-xl', 'text-2xl', 'text-3xl',
-  
-  // Mobile hero section
-  'bg-gradient-to-b', 'from-black', 'to-gray-900',
-  'py-12', 'py-16', 'px-4', 'space-y-6', 'space-y-8',
-  
-  // Critical buttons (mobile)
-  'bg-purple-600', 'bg-blue-600', 'hover:bg-purple-700', 'hover:bg-blue-700',
-  'px-6', 'py-3', 'rounded-lg', 'font-semibold', 'text-white',
-  'transition-colors', 'duration-300',
-  
-  // Mobile spacing
-  'mt-4', 'mb-4', 'mt-6', 'mb-6', 'pt-4', 'pb-4', 'gap-4',
-  
-  // Responsive visibility
-  'block', 'hidden', 'md:hidden', 'md:block', 'md:flex',
-  
-  // Essential animations (reduced for mobile)
-  'animate-pulse', 'transition-opacity', 'ease-in-out',
-  
-  // Mobile-specific utilities
-  'overflow-hidden', 'relative', 'absolute', 'inset-0',
-  'transform', 'translate-x-0', 'translate-y-0'
+  // Essential layout (header + hero only)
+  'fixed', 'top-0', 'w-full', 'z-50', 'flex', 'flex-col',
+  'items-center', 'justify-center', 'justify-between',
+  'h-16', 'min-h-screen', 'max-w-7xl', 'mx-auto', 'px-4',
+
+  // Header critical styles
+  'bg-zinc-900/70', 'backdrop-blur-md', 'border-b', 'border-gray-800/50',
+
+  // Hero critical styles
+  'bg-zinc-950', 'text-center', 'text-white', 'text-purple-400',
+  'text-zinc-300', 'font-bold', 'font-extrabold',
+  'text-3xl', 'text-5xl', 'text-7xl', 'text-lg',
+  'pt-20', 'mb-10', 'mb-2', 'mb-6', 'leading-relaxed',
+  'tracking-tight', 'tracking-wide',
+
+  // Critical button styles
+  'px-6', 'py-3', 'rounded-lg', 'bg-gradient-to-r',
+  'from-purple-600', 'to-blue-600',
+
+  // Anti-FOUC
+  'fouc-prevent', 'fouc-ready'
 ];
 
 /**

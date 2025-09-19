@@ -3,43 +3,30 @@
  * This eliminates render-blocking CSS and improves First Contentful Paint
  */
 
-// Critical CSS classes that are needed immediately for above-the-fold content
-// Optimized for mobile-first, minimal set (~10KB target)
+// Critical CSS classes - ONLY above-the-fold essentials for immediate render
+// Optimized for minimal set (~2KB target)
 export const criticalCssClasses = [
-  // Core layout (mobile-first)
-  'font-sans', 'flex', 'flex-col', 'items-center', 'justify-center',
-  'w-full', 'h-full', 'min-h-screen', 'container', 'mx-auto',
-  
-  // Mobile navigation essentials (black theme)
-  'fixed', 'top-0', 'left-0', 'right-0', 'z-50', 'z-40',
-  'px-4', 'py-2', 'py-3', 'bg-black', 'bg-white', 'bg-opacity-95',
-  
-  // Hero section (critical for FCP)
-  'bg-gradient-to-b', 'bg-gradient-to-r', 'from-black', 'to-gray-900',
-  'from-purple-600', 'to-blue-600', 'py-16', 'py-20', 'text-center',
-  
-  // Essential typography (minimal set)
-  'text-white', 'text-gray-100', 'text-gray-900', 'text-gray-700',
-  'font-bold', 'font-semibold', 'font-medium',
-  'text-lg', 'text-xl', 'text-2xl', 'text-3xl', 'text-4xl',
-  
-  // Critical CTA buttons (above fold)
-  'bg-purple-600', 'bg-blue-600', 'hover:bg-purple-700', 'hover:bg-blue-700',
-  'px-6', 'py-3', 'rounded-lg', 'transition-colors', 'duration-300',
-  
-  // Essential spacing (mobile)
-  'mt-4', 'mb-4', 'mt-6', 'mb-6', 'pt-4', 'pb-4', 
-  'space-y-4', 'space-y-6', 'gap-4', 'gap-6',
-  
-  // Visibility/responsive (minimal)
-  'block', 'hidden', 'md:block', 'md:hidden', 'md:flex',
-  
-  // Loading states (prevent CLS)
-  'animate-pulse', 'animate-spin',
-  'w-8', 'h-8', 'border-2', 'border-purple-500', 'border-t-transparent', 'rounded-full',
-  
-  // Essential utilities
-  'overflow-hidden', 'relative', 'absolute', 'inset-0'
+  // Essential layout (header + hero only)
+  'fixed', 'top-0', 'w-full', 'z-50', 'flex', 'flex-col',
+  'items-center', 'justify-center', 'justify-between',
+  'h-16', 'min-h-screen', 'max-w-7xl', 'mx-auto', 'px-4',
+
+  // Header critical styles
+  'bg-zinc-900/70', 'backdrop-blur-md', 'border-b', 'border-gray-800/50',
+
+  // Hero critical styles
+  'bg-zinc-950', 'text-center', 'text-white', 'text-purple-400',
+  'text-zinc-300', 'font-bold', 'font-extrabold',
+  'text-3xl', 'text-5xl', 'text-7xl', 'text-lg',
+  'pt-20', 'mb-10', 'mb-2', 'mb-6', 'leading-relaxed',
+  'tracking-tight', 'tracking-wide',
+
+  // Critical button styles
+  'px-6', 'py-3', 'rounded-lg', 'bg-gradient-to-r',
+  'from-purple-600', 'to-blue-600',
+
+  // Anti-FOUC
+  'fouc-prevent', 'fouc-ready'
 ];
 
 /**
