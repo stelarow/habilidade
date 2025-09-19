@@ -19,8 +19,8 @@ const __dirname = path.dirname(__filename);
  */
 function generateCriticalCSS() {
   return `
-    /* Critical CSS - Mobile-First Above-the-Fold (Optimized ~12KB) */
-    
+    /* Critical CSS - Mobile-First Above-the-Fold (Optimized ~18KB) */
+
     /* CSS Reset (minimal) */
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     html{line-height:1.5;-webkit-text-size-adjust:100%;scroll-behavior:smooth}
@@ -118,6 +118,65 @@ function generateCriticalCSS() {
     .inset-0{inset:0}
     .pointer-events-none{pointer-events:none}
     .cursor-pointer{cursor:pointer}
+
+    /* Critical Home Page Elements */
+    .max-w-4xl{max-width:56rem}
+    .max-w-6xl{max-width:72rem}
+    .max-w-md{max-width:28rem}
+    .max-w-lg{max-width:32rem}
+    .max-w-xl{max-width:36rem}
+    .min-w-0{min-width:0px}
+    .object-cover{object-fit:cover}
+    .object-center{object-position:center}
+
+    /* Course Cards Critical Styles */
+    .grid{display:grid}
+    .grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}
+    .grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .col-span-full{grid-column:1/-1}
+    .row-span-2{grid-row:span 2/span 2}
+    .aspect-video{aspect-ratio:16/9}
+    .aspect-square{aspect-ratio:1/1}
+
+    /* Card Layouts */
+    .p-6{padding:1.5rem}
+    .p-8{padding:2rem}
+    .p-\[3px\]{padding:3px}
+    .rounded-xl{border-radius:0.75rem}
+    .rounded-2xl{border-radius:1rem}
+    .border{border-width:1px}
+    .border-gray-800{border-color:rgb(31 41 55)}
+    .border-gray-700{border-color:rgb(55 65 81)}
+
+    /* Gradient Borders for Course Cards */
+    .bg-gradient-to-r{background-image:linear-gradient(to right,var(--tw-gradient-stops))}
+    .bg-gradient-to-br{background-image:linear-gradient(to bottom right,var(--tw-gradient-stops))}
+    .from-orange-500\/60{--tw-gradient-from:rgb(249 115 22 / 0.6) var(--tw-gradient-from-position);--tw-gradient-to:rgb(249 115 22 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}
+    .to-amber-400\/60{--tw-gradient-to:rgb(251 191 36 / 0.6) var(--tw-gradient-to-position)}
+    .from-blue-500\/60{--tw-gradient-from:rgb(59 130 246 / 0.6) var(--tw-gradient-from-position);--tw-gradient-to:rgb(59 130 246 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}
+    .to-indigo-400\/60{--tw-gradient-to:rgb(129 140 248 / 0.6) var(--tw-gradient-to-position)}
+    .from-green-500\/60{--tw-gradient-from:rgb(34 197 94 / 0.6) var(--tw-gradient-from-position);--tw-gradient-to:rgb(34 197 94 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}
+    .to-emerald-400\/60{--tw-gradient-to:rgb(52 211 153 / 0.6) var(--tw-gradient-to-position)}
+    .from-purple-500\/60{--tw-gradient-from:rgb(168 85 247 / 0.6) var(--tw-gradient-from-position);--tw-gradient-to:rgb(168 85 247 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}
+    .to-violet-400\/60{--tw-gradient-to:rgb(167 139 250 / 0.6) var(--tw-gradient-to-position)}
+
+    /* Text Colors for Course Cards */
+    .text-orange-400{color:rgb(251 146 60)}
+    .text-blue-400{color:rgb(96 165 250)}
+    .text-green-400{color:rgb(74 222 128)}
+    .text-purple-400{color:rgb(196 181 253)}
+    .text-pink-400{color:rgb(244 114 182)}
+    .text-cyan-400{color:rgb(34 211 238)}
+    .text-red-400{color:rgb(248 113 113)}
+    .text-yellow-400{color:rgb(250 204 21)}
+
+    /* Critical Spacing */
+    .space-y-8>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(2rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(2rem * var(--tw-space-y-reverse))}
+    .space-y-12>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(3rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(3rem * var(--tw-space-y-reverse))}
+    .mt-8{margin-top:2rem}.mb-8{margin-bottom:2rem}
+    .mt-12{margin-top:3rem}.mb-12{margin-bottom:3rem}
+    .mt-16{margin-top:4rem}.mb-16{margin-bottom:4rem}
     
     /* Header/Navigation Critical */
     .backdrop-blur-sm{backdrop-filter:blur(4px)}
@@ -164,69 +223,173 @@ function generateCriticalCSS() {
 }
 
 /**
- * Async CSS loading script for non-blocking CSS
+ * Advanced Async CSS loading script with progressive enhancement
  */
 function generateAsyncCSSLoader() {
   return `
     <script>
       (function() {
         'use strict';
-        
-        // Performance optimization: Load CSS asynchronously
-        function loadCSS(href, before, media, id) {
-          var link = document.createElement('link');
-          var ref = before || document.getElementsByTagName('script')[0];
-          link.rel = 'stylesheet';
-          link.href = href;
-          link.media = media || 'all';
-          if (id) link.id = id;
-          
-          // Insert before reference
-          ref.parentNode.insertBefore(link, ref);
-          
-          return link;
-        }
-        
-        // Load non-critical CSS after critical render
-        function loadNonCriticalCSS() {
-          // Find CSS links that should be loaded asynchronously
-          var cssLinks = document.querySelectorAll('link[rel="stylesheet"][data-async]');
-          
-          cssLinks.forEach(function(link) {
-            var href = link.getAttribute('data-href') || link.href;
-            var id = link.getAttribute('data-id');
-            
-            // Remove data-async attribute and load
-            link.removeAttribute('data-async');
-            link.removeAttribute('data-href');
-            if (id) link.removeAttribute('data-id');
-            
-            // Force reload with proper media
-            link.media = 'all';
+
+        // Enhanced CSS loading with progressive enhancement and error handling
+        function loadCSS(href, before, media, id, priority) {
+          return new Promise(function(resolve, reject) {
+            var link = document.createElement('link');
+            var ref = before || document.getElementsByTagName('script')[0];
+
+            link.rel = 'stylesheet';
+            link.href = href;
+            link.media = media || 'print'; // Start with print to avoid blocking
+            if (id) link.id = id;
+
+            // Add high priority for critical resources
+            if (priority === 'high') {
+              link.fetchPriority = 'high';
+            }
+
+            // Handle load success
+            link.onload = function() {
+              // Switch to all media after load
+              this.media = 'all';
+              resolve(link);
+            };
+
+            // Handle load errors
+            link.onerror = function() {
+              console.warn('Failed to load CSS:', href);
+              reject(new Error('CSS load failed: ' + href));
+            };
+
+            // Insert before reference
+            ref.parentNode.insertBefore(link, ref);
+
+            // Timeout fallback
+            setTimeout(function() {
+              if (link.media === 'print') {
+                link.media = 'all';
+                resolve(link);
+              }
+            }, 3000);
           });
         }
-        
-        // Mobile-optimized loading strategy
-        var loadTimeout = window.innerWidth <= 768 ? 100 : 50;
-        
-        // Load non-critical CSS after critical content
+
+        // Progressive CSS loading strategy
+        function loadNonCriticalCSS() {
+          var cssFiles = [];
+
+          // Find existing CSS links to load asynchronously
+          var cssLinks = document.querySelectorAll('link[rel="stylesheet"]:not([data-critical])');
+
+          cssLinks.forEach(function(link) {
+            // Skip if already processed
+            if (link.getAttribute('data-async-processed')) return;
+
+            var href = link.href;
+            var id = link.id || null;
+
+            // Mark as processed
+            link.setAttribute('data-async-processed', 'true');
+
+            // Remove original link temporarily
+            link.remove();
+
+            // Determine priority based on filename
+            var priority = 'normal';
+            if (href.includes('app-') || href.includes('main-')) {
+              priority = 'high';
+            }
+
+            cssFiles.push({ href: href, id: id, priority: priority });
+          });
+
+          // Load CSS files in order of priority
+          var highPriority = cssFiles.filter(function(f) { return f.priority === 'high'; });
+          var normalPriority = cssFiles.filter(function(f) { return f.priority === 'normal'; });
+
+          // Load high priority CSS first
+          Promise.all(highPriority.map(function(file) {
+            return loadCSS(file.href, null, 'all', file.id, 'high');
+          })).then(function() {
+            console.log('✅ High priority CSS loaded');
+
+            // Then load normal priority CSS
+            return Promise.all(normalPriority.map(function(file) {
+              return loadCSS(file.href, null, 'all', file.id);
+            }));
+          }).then(function() {
+            console.log('✅ All CSS loaded asynchronously');
+          }).catch(function(error) {
+            console.warn('CSS loading error:', error);
+          });
+        }
+
+        // Connection-aware loading
+        function getOptimalLoadDelay() {
+          var connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+          var isMobile = window.innerWidth <= 768;
+
+          if (connection) {
+            if (connection.effectiveType === '4g') return isMobile ? 50 : 25;
+            if (connection.effectiveType === '3g') return isMobile ? 200 : 100;
+            if (connection.effectiveType === '2g') return isMobile ? 500 : 300;
+          }
+
+          return isMobile ? 100 : 50;
+        }
+
+        // Preload critical resources with priority hints
+        function preloadCriticalResources() {
+          var resources = [
+            {
+              href: 'https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2',
+              as: 'font',
+              type: 'font/woff2',
+              crossorigin: 'anonymous'
+            },
+            {
+              href: 'https://fonts.gstatic.com/s/montserrat/v25/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCtr6Ew-.woff2',
+              as: 'font',
+              type: 'font/woff2',
+              crossorigin: 'anonymous'
+            }
+          ];
+
+          resources.forEach(function(resource) {
+            var link = document.createElement('link');
+            link.rel = 'preload';
+            link.as = resource.as;
+            link.type = resource.type;
+            link.href = resource.href;
+            if (resource.crossorigin) link.crossOrigin = resource.crossorigin;
+            link.fetchPriority = 'high';
+            document.head.appendChild(link);
+          });
+        }
+
+        // Initialize async loading
+        var loadDelay = getOptimalLoadDelay();
+
+        // Preload fonts immediately
+        preloadCriticalResources();
+
+        // Load CSS based on document ready state
         if (document.readyState === 'loading') {
           document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(loadNonCriticalCSS, loadTimeout);
+            setTimeout(loadNonCriticalCSS, loadDelay);
           });
         } else {
-          setTimeout(loadNonCriticalCSS, loadTimeout);
+          setTimeout(loadNonCriticalCSS, loadDelay);
         }
-        
-        // Preload critical fonts
-        var fontPreload = document.createElement('link');
-        fontPreload.rel = 'preload';
-        fontPreload.as = 'font';
-        fontPreload.type = 'font/woff2';
-        fontPreload.href = 'https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2';
-        fontPreload.crossOrigin = 'anonymous';
-        document.head.appendChild(fontPreload);
-        
+
+        // Performance monitoring
+        if (window.performance && performance.mark) {
+          performance.mark('css-async-loader-start');
+          setTimeout(function() {
+            performance.mark('css-async-loader-end');
+            performance.measure('css-async-loader', 'css-async-loader-start', 'css-async-loader-end');
+          }, loadDelay + 1000);
+        }
+
       })();
     </script>
   `;

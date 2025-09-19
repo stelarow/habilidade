@@ -39,12 +39,24 @@
           href="https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2"
           crossorigin />
     
-    <!-- Critical resource hints for mobile performance -->
+    <!-- Advanced resource hints for optimal performance -->
     <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
     <link rel="dns-prefetch" href="https://www.google-analytics.com" />
     <link rel="dns-prefetch" href="https://api.emailjs.com" />
     <link rel="dns-prefetch" href="https://api.escolahabilidade.com" />
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+
+    <!-- CSS preconnect for faster CSS loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Critical CSS will be inlined by build process -->
+    <meta name="css-critical-injection" content="ready" />
+
+    <!-- Prefetch key pages for faster navigation -->
+    <link rel="prefetch" href="/cursos/informatica-nova" />
+    <link rel="prefetch" href="/cursos/projetista-3d" />
+    <link rel="prefetch" href="/contato" />
     
     <!-- Mobile viewport optimization -->
     <meta name="theme-color" content="#000000" />
@@ -52,15 +64,20 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     
-    <!-- Google Fonts - Advanced non-blocking loading for mobile performance -->
+    <!-- Optimized Google Fonts loading with progressive enhancement -->
     <link rel="preload"
           href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap"
           as="style"
-          onload="this.onload=null;this.rel='stylesheet'">
+          onload="this.onload=null;this.rel='stylesheet'"
+          fetchpriority="high">
     <noscript>
       <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap"
             rel="stylesheet" />
     </noscript>
+
+    <!-- CSS optimization meta tags -->
+    <meta name="css-optimization" content="critical-inline,async-load,progressive-enhancement" />
+    <meta name="render-blocking-elimination" content="active" />
     
     <!-- Enhanced font fallback to prevent FOIT and reduce layout shift -->
     <style>
