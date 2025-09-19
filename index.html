@@ -30,6 +30,14 @@
     <!-- Advanced Performance optimizations for mobile -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Critical font preload - Most used fonts on the site -->
+    <link rel="preload" as="font" type="font/woff2"
+          href="https://fonts.gstatic.com/s/montserrat/v25/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCtr6Ew-.woff2"
+          crossorigin />
+    <link rel="preload" as="font" type="font/woff2"
+          href="https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2"
+          crossorigin />
     
     <!-- Critical resource hints for mobile performance -->
     <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
@@ -45,18 +53,47 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     
     <!-- Google Fonts - Advanced non-blocking loading for mobile performance -->
-    <link rel="preload" 
-          href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" 
-          as="style" 
+    <link rel="preload"
+          href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap"
+          as="style"
           onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
-      <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" 
+      <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap"
             rel="stylesheet" />
     </noscript>
     
-    <!-- Font fallback to prevent FOIT on slow connections -->
+    <!-- Enhanced font fallback to prevent FOIT and reduce layout shift -->
     <style>
-      body { font-family: system-ui, -apple-system, sans-serif; }
+      /* Define font fallbacks with size adjustment for reduced CLS */
+      body {
+        font-family: 'Montserrat', system-ui, -apple-system, 'Segoe UI', 'Roboto', sans-serif;
+        font-display: swap;
+      }
+
+      /* Optimized font loading with size-adjust to match Montserrat metrics */
+      @font-face {
+        font-family: 'Fallback Montserrat';
+        src: local('system-ui'), local('-apple-system');
+        size-adjust: 92%; /* Adjusted to match Montserrat size metrics */
+        font-display: swap;
+      }
+
+      /* Inter fallback for blog content */
+      .blog-typography, .font-inter {
+        font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+        font-display: swap;
+      }
+
+      /* Fira Code fallback for code blocks */
+      code, pre, .font-mono {
+        font-family: 'Fira Code', 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+        font-display: swap;
+      }
+
+      /* Prevent invisible text during font swap period */
+      .font-loading {
+        font-display: swap;
+      }
     </style>
     
     <!-- Schema.org Structured Data - Optimized for Core Web Vitals -->
