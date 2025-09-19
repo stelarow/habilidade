@@ -1,53 +1,127 @@
-import React, { Suspense, lazy } from 'react';
+/**
+ * Lazy Backgrounds - Progressive Loading for Heavy Canvas Components
+ */
 
-// Lazy loading dos backgrounds pesados com Suspense otimizado
-const backgrounds = {
-  informatica: lazy(() => import('./backgrounds/InformaticaBackground.jsx')),
-  programacao: lazy(() => import('./backgrounds/ProgramacaoBackground.jsx')),
-  'design-grafico': lazy(() => import('./backgrounds/DesignGraficoBackground.jsx')),
-  'marketing-digital': lazy(() => import('./backgrounds/MarketingDigitalBackground.jsx')),
-  'inteligencia-artificial': lazy(() => import('./backgrounds/IABackground.jsx')),
-  'business-intelligence': lazy(() => import('./backgrounds/BIBackground.jsx')),
-  'projetista-3d': lazy(() => import('./backgrounds/Projetista3DBackground.jsx')),
-  'edicao-video': lazy(() => import('./backgrounds/EdicaoVideoBackground.jsx')),
-  administracao: lazy(() => import('./backgrounds/AdministracaoBackground.jsx'))
-};
+import { lazy, Suspense } from 'react';
+import { withIslandHydration } from './shared/IslandComponent';
 
-// Fallback otimizado para loading
-const BackgroundFallback = () => (
-  <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 animate-pulse">
-    <div className="absolute inset-0 opacity-20">
-      <div className="w-full h-full bg-grid-pattern"></div>
+// Lazy load all background components
+const IABackground = lazy(() => import('./backgrounds/IABackground'));
+const InformaticaBackground = lazy(() => import('./backgrounds/InformaticaBackground'));
+const MarketingDigitalBackground = lazy(() => import('./backgrounds/MarketingDigitalBackground'));
+const ProgramacaoBackground = lazy(() => import('./backgrounds/ProgramacaoBackground'));
+const Projetista3DBackground = lazy(() => import('./backgrounds/Projetista3DBackground'));
+const AdministracaoBackground = lazy(() => import('./backgrounds/AdministracaoBackground'));
+const BIBackground = lazy(() => import('./backgrounds/BIBackground'));
+const DesignGraficoBackground = lazy(() => import('./backgrounds/DesignGraficoBackground'));
+const EdicaoVideoBackground = lazy(() => import('./backgrounds/EdicaoVideoBackground'));
+
+// Background fallback component
+const BackgroundFallback = ({ type }) => (
+  <div className="absolute inset-0 bg-gradient-to-br from-gray-900 to-black opacity-50">
+    <div className="absolute inset-0 flex items-center justify-center">
+      <div className="text-white/20 text-xs">
+        Carregando {type}...
+      </div>
     </div>
   </div>
 );
 
-// Componente principal com error boundary interno
-const LazyBackground = ({ type, ...props }) => {
-  const BackgroundComponent = backgrounds[type];
-  
-  if (!BackgroundComponent) {
-    console.warn(`Background type "${type}" not found`);
-    return <BackgroundFallback />;
-  }
-
-  return (
-    <Suspense key={`lazy-background-${type}`} fallback={<BackgroundFallback />}>
-      <BackgroundComponent {...props} />
+// Create lazy island versions of backgrounds
+export const LazyIABackground = withIslandHydration(
+  (props) => (
+    <Suspense fallback={<BackgroundFallback type="IA" />}>
+      <IABackground {...props} />
     </Suspense>
-  );
-};
+  ),
+  { name: 'IABackground', critical: false }
+);
 
-export default LazyBackground;
+export const LazyInformaticaBackground = withIslandHydration(
+  (props) => (
+    <Suspense fallback={<BackgroundFallback type="Informática" />}>
+      <InformaticaBackground {...props} />
+    </Suspense>
+  ),
+  { name: 'InformaticaBackground', critical: false }
+);
 
-// Export individual components for static imports when needed
-export const preloadBackground = (type) => {
-  if (backgrounds[type]) {
-    backgrounds[type]();
-  }
-};
+export const LazyMarketingDigitalBackground = withIslandHydration(
+  (props) => (
+    <Suspense fallback={<BackgroundFallback type="Marketing Digital" />}>
+      <MarketingDigitalBackground {...props} />
+    </Suspense>
+  ),
+  { name: 'MarketingDigitalBackground', critical: false }
+);
 
-// Preload multiple backgrounds
-export const preloadBackgrounds = (types) => {
-  types.forEach(type => preloadBackground(type));
+export const LazyProgramacaoBackground = withIslandHydration(
+  (props) => (
+    <Suspense fallback={<BackgroundFallback type="Programação" />}>
+      <ProgramacaoBackground {...props} />
+    </Suspense>
+  ),
+  { name: 'ProgramacaoBackground', critical: false }
+);
+
+export const LazyProjetista3DBackground = withIslandHydration(
+  (props) => (
+    <Suspense fallback={<BackgroundFallback type="Projetista 3D" />}>
+      <Projetista3DBackground {...props} />
+    </Suspense>
+  ),
+  { name: 'Projetista3DBackground', critical: false }
+);
+
+export const LazyAdministracaoBackground = withIslandHydration(
+  (props) => (
+    <Suspense fallback={<BackgroundFallback type="Administração" />}>
+      <AdministracaoBackground {...props} />
+    </Suspense>
+  ),
+  { name: 'AdministracaoBackground', critical: false }
+);
+
+export const LazyBIBackground = withIslandHydration(
+  (props) => (
+    <Suspense fallback={<BackgroundFallback type="Business Intelligence" />}>
+      <BIBackground {...props} />
+    </Suspense>
+  ),
+  { name: 'BIBackground', critical: false }
+);
+
+export const LazyDesignGraficoBackground = withIslandHydration(
+  (props) => (
+    <Suspense fallback={<BackgroundFallback type="Design Gráfico" />}>
+      <DesignGraficoBackground {...props} />
+    </Suspense>
+  ),
+  { name: 'DesignGraficoBackground', critical: false }
+);
+
+export const LazyEdicaoVideoBackground = withIslandHydration(
+  (props) => (
+    <Suspense fallback={<BackgroundFallback type="Edição de Vídeo" />}>
+      <EdicaoVideoBackground {...props} />
+    </Suspense>
+  ),
+  { name: 'EdicaoVideoBackground', critical: false }
+);
+
+// Export helper function to get lazy background by type
+export const getLazyBackground = (type) => {
+  const backgrounds = {
+    'ia': LazyIABackground,
+    'informatica': LazyInformaticaBackground,
+    'marketing-digital': LazyMarketingDigitalBackground,
+    'programacao': LazyProgramacaoBackground,
+    'projetista-3d': LazyProjetista3DBackground,
+    'administracao': LazyAdministracaoBackground,
+    'business-intelligence': LazyBIBackground,
+    'design-grafico': LazyDesignGraficoBackground,
+    'edicao-video': LazyEdicaoVideoBackground
+  };
+
+  return backgrounds[type] || null;
 };
