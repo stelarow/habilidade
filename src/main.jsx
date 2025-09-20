@@ -1,6 +1,7 @@
 import { ViteReactSSG } from 'vite-react-ssg'
 import { routes } from './routes.jsx'
 import './index.css'
+import './styles/fonts.css'
 import { initializeErrorLogger } from './utils/frontend-error-logger'
 import { initCriticalCss } from './utils/criticalCss.js'
 

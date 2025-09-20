@@ -27,16 +27,12 @@
     <meta name="twitter:description" content="Transforme seu futuro com nossos cursos técnicos em Informática, Programação, Design, Marketing Digital e IA. Formação profissional de qualidade." />
     <meta name="twitter:image" content="/logo-escola-habilidade.png" />
     
-    <!-- Advanced Performance optimizations for mobile -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
-    <!-- Critical font preload - Most used fonts on the site -->
+    <!-- Self-hosted font preloads for optimal performance -->
     <link rel="preload" as="font" type="font/woff2"
-          href="https://fonts.gstatic.com/s/montserrat/v25/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCtr6Ew-.woff2"
+          href="/fonts/montserrat/montserrat-400.woff2"
           crossorigin />
     <link rel="preload" as="font" type="font/woff2"
-          href="https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2"
+          href="/fonts/inter/inter-400.woff2"
           crossorigin />
     
     <!-- Advanced resource hints for optimal performance -->
@@ -46,9 +42,8 @@
     <link rel="dns-prefetch" href="https://api.escolahabilidade.com" />
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
 
-    <!-- CSS preconnect for faster CSS loading -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Self-hosted fonts CSS -->
+    <link rel="stylesheet" href="/src/styles/fonts.css" />
 
     <!-- Critical CSS will be inlined by build process -->
     <meta name="css-critical-injection" content="ready" />
@@ -57,8 +52,6 @@
     <link rel="prefetch" href="/cursos/projetista-3d" />
     <link rel="prefetch" href="/contato" />
 
-    <!-- Progressive hydration resource hints -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
     
     <!-- Mobile viewport optimization -->
     <meta name="theme-color" content="#000000" />
@@ -66,16 +59,6 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     
-    <!-- Optimized Google Fonts loading with progressive enhancement -->
-    <link rel="preload"
-          href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap"
-          as="style"
-          onload="this.onload=null;this.rel='stylesheet'"
-          fetchpriority="high">
-    <noscript>
-      <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap"
-            rel="stylesheet" />
-    </noscript>
 
     <!-- CSS optimization meta tags -->
     <meta name="css-optimization" content="critical-inline,async-load,progressive-enhancement" />

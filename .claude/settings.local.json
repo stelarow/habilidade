@@ -72,7 +72,10 @@
       "mcp__serena__list_dir",
       "mcp__shadcn-ui-server__get-component-docs",
       "mcp__playwright__browser_resize",
-      "Bash(awk:*)"
+      "Bash(awk:*)",
+      "WebFetch(domain:fonts.gstatic.com)",
+      "WebFetch(domain:fonts.googleapis.com)",
+      "mcp__playwright__browser_close"
     ],
     "deny": []
   }

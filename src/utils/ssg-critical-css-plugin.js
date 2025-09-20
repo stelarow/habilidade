@@ -199,14 +199,22 @@ function generateAsyncCSSLoader() {
           setTimeout(loadNonCriticalCSS, loadTimeout);
         }
         
-        // Preload critical fonts
+        // Preload critical self-hosted fonts
         var fontPreload = document.createElement('link');
         fontPreload.rel = 'preload';
         fontPreload.as = 'font';
         fontPreload.type = 'font/woff2';
-        fontPreload.href = 'https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2';
+        fontPreload.href = '/fonts/inter/inter-400.woff2';
         fontPreload.crossOrigin = 'anonymous';
         document.head.appendChild(fontPreload);
+
+        var montserratPreload = document.createElement('link');
+        montserratPreload.rel = 'preload';
+        montserratPreload.as = 'font';
+        montserratPreload.type = 'font/woff2';
+        montserratPreload.href = '/fonts/montserrat/montserrat-400.woff2';
+        montserratPreload.crossOrigin = 'anonymous';
+        document.head.appendChild(montserratPreload);
         
       })();
     </script>
@@ -300,10 +308,8 @@ async function postProcessHTMLFiles(outDir) {
       html = html.replace(/<link[^>]*fonts\.gstatic\.com[^>]*>/gi, '');
       
       const optimizedFonts = `
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap"></noscript>
+        <!-- Self-hosted fonts - Maximum performance -->
+        <link rel="stylesheet" href="/src/styles/fonts.css">
       `;
       
       html = html.replace('</head>', `${optimizedFonts}\n</head>`);

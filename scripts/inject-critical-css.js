@@ -186,17 +186,17 @@ function generateAsyncCSSLoader() {
           return isMobile ? 100 : 50;
         }
 
-        // Preload critical resources with priority hints
+        // Preload critical resources with priority hints (self-hosted fonts)
         function preloadCriticalResources() {
           var resources = [
             {
-              href: 'https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2',
+              href: '/fonts/inter/inter-400.woff2',
               as: 'font',
               type: 'font/woff2',
               crossorigin: 'anonymous'
             },
             {
-              href: 'https://fonts.gstatic.com/s/montserrat/v25/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCtr6Ew-.woff2',
+              href: '/fonts/montserrat/montserrat-400.woff2',
               as: 'font',
               type: 'font/woff2',
               crossorigin: 'anonymous'
@@ -357,13 +357,10 @@ async function injectCriticalCSS() {
       html = html.replace(/<link[^>]*fonts\.googleapis\.com[^>]*>/gi, '');
       html = html.replace(/<link[^>]*fonts\.gstatic\.com[^>]*>/gi, '');
       
-      // Add optimized Google Fonts loading
+      // Add self-hosted fonts CSS
       const optimizedFonts = `
-        <!-- Optimized Google Fonts - Non-blocking -->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap"></noscript>
+        <!-- Self-hosted fonts - Maximum performance -->
+        <link rel="stylesheet" href="/src/styles/fonts.css">
       `;
       
       html = html.replace('</head>', `${optimizedFonts}\n</head>`);
