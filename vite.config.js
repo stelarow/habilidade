@@ -97,8 +97,9 @@ export default defineConfig({
           /^course-/, /^card-/, /^btn-/, /^nav-/, 'clip-card',
 
           // Course card gradient borders (specific patterns only)
+          'bg-gradient-to-r', // Base gradient class
           /^from-(orange|blue|green|purple|pink|cyan|red|yellow|violet)-500(\/60)?$/,
-          /^to-(amber|indigo|emerald|violet|rose|teal|pink|blue)-400(\/60)?$/,
+          /^to-(amber|indigo|emerald|violet|rose|teal|pink|blue)-(400|500)(\/60)?$/,
 
           // Mobile menu (specific classes only)
           'mobile-mega-menu', 'hamburger-line',
@@ -112,6 +113,8 @@ export default defineConfig({
           // Specific sizing classes that are dynamically used
           /^max-w-(sm|md|lg|xl|2xl|4xl|6xl)$/,
           /^min-h-(screen|full)$/, /^h-(full|screen)$/, /^w-(full|screen)$/,
+          // Course card specific sizing
+          'p-[3px]', 'h-[120px]', 'min-h-[100px]',
 
           // Spacing (be more selective)
           /^p-(\[3px\]|[1-8])$/, /^m-[1-8]$/,
