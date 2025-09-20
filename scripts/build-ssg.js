@@ -81,6 +81,13 @@ async function main() {
     await runSSGBuild();
     const duration = ((Date.now() - startTime) / 1000).toFixed(2);
     console.log(`🎉 Build completed in ${duration}s`);
+
+    // Após o build SSG completar, executar injeção de CSS crítico
+    console.log('🎨 Iniciando injeção de CSS crítico...');
+    const { injectCriticalCSS } = await import('./inject-critical-css.js');
+    await injectCriticalCSS();
+    console.log('✅ CSS crítico injetado com sucesso!');
+
     process.exit(0);
   } catch (error) {
     console.error('❌ Build failed:', error.message);
