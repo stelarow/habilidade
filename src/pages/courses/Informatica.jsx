@@ -11,7 +11,7 @@ import { InformaticaFloatingCTA } from '../../components/course/informatica/Info
 import { InformaticaCurriculum } from '../../components/course/informatica/InformaticaCurriculum';
 import { InformaticaLocationSection } from '../../components/course/informatica/InformaticaLocationSection';
 import TrustedCompanies from '../../components/TrustedCompanies';
-import { Helmet } from '@dr.pogodin/react-helmet';
+import { Head } from 'vite-react-ssg';
 import { 
   CheckCircle, 
   Rocket
@@ -138,7 +138,7 @@ const Informatica = () => {
   return (
     <main className="min-h-screen bg-zinc-950 text-white">
       {/* SEO e Meta Tags */}
-      <Helmet>
+      <Head>
         <title>Curso de Informática Presencial São José SC | Excel Básico ao Avançado, Word, Canva e IA</title>
         <meta name="description" content="Curso de informática presencial em São José SC. Excel, Word, PowerPoint, Canva e IA. Atendemos Florianópolis, Palhoça e Biguaçu. Certificado 170h." />
         <meta name="keywords" content="curso informática presencial, curso informática são josé, curso informática florianópolis, curso informática palhoça, curso informática biguaçu, excel avançado, word, powerpoint, inteligência artificial, canva" />
@@ -158,7 +158,7 @@ const Informatica = () => {
         <script type="application/ld+json">
           {JSON.stringify(localBusinessSchema)}
         </script>
-      </Helmet>
+      </Head>
 
       {/* Seções obrigatórias na ordem */}
       <InformaticaHeroSection />

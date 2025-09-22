@@ -82,7 +82,17 @@ async function main() {
     const duration = ((Date.now() - startTime) / 1000).toFixed(2);
     console.log(`🎉 Build completed in ${duration}s`);
 
-    // Após o build SSG completar, executar injeção de CSS crítico
+    // Após o build SSG completar, transformar meta tags HTML
+    console.log('🏷️ Iniciando transformação de meta tags HTML...');
+    const { transformHtmlMeta } = await import('./transform-html-meta.js');
+    const metaSuccess = await transformHtmlMeta();
+    if (metaSuccess) {
+      console.log('✅ Meta tags HTML transformadas com sucesso!');
+    } else {
+      console.warn('⚠️ Alguns problemas na transformação de meta tags');
+    }
+
+    // Após as meta tags, executar injeção de CSS crítico
     console.log('🎨 Iniciando injeção de CSS crítico...');
     const { injectCriticalCSS } = await import('./inject-critical-css.js');
     await injectCriticalCSS();
