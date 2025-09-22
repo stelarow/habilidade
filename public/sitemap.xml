@@ -1,272 +1,225 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-  
-  <!-- Página Principal -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.escolahabilidade.com/</loc>
-    <lastmod>2025-08-06</lastmod>
+    <lastmod>2025-09-22</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
+    <priority>1</priority>
   </url>
-  
-  <!-- Página de Contato -->
   <url>
     <loc>https://www.escolahabilidade.com/contato</loc>
-    <lastmod>2025-08-10</lastmod>
+    <lastmod>2025-09-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-  
-  <!-- Páginas de Cursos Principais (Alta Prioridade) -->
-  <url>
-    <loc>https://www.escolahabilidade.com/cursos/informatica</loc>
-    <lastmod>2025-08-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.escolahabilidade.com/cursos/projetista-3d</loc>
-    <lastmod>2025-08-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.escolahabilidade.com/cursos/design-grafico</loc>
-    <lastmod>2025-08-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.escolahabilidade.com/cursos/programacao</loc>
-    <lastmod>2025-08-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.escolahabilidade.com/cursos/marketing-digital</loc>
-    <lastmod>2025-08-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.escolahabilidade.com/cursos/edicao-video</loc>
-    <lastmod>2025-08-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.escolahabilidade.com/cursos/business-intelligence</loc>
-    <lastmod>2025-08-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.escolahabilidade.com/cursos/inteligencia-artificial</loc>
-    <lastmod>2025-08-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.escolahabilidade.com/cursos/sketchup-enscape</loc>
-    <lastmod>2025-08-08</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  
-  <!-- Páginas de SEO Local -->
-  <url>
-    <loc>https://www.escolahabilidade.com/cursos-florianopolis</loc>
-    <lastmod>2025-08-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.escolahabilidade.com/cursos-sao-jose</loc>
-    <lastmod>2025-08-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.escolahabilidade.com/cursos-palhoca</loc>
-    <lastmod>2025-08-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  
-  <!-- Blog (Página Principal) -->
   <url>
     <loc>https://www.escolahabilidade.com/blog</loc>
-    <lastmod>2025-08-06</lastmod>
+    <lastmod>2025-09-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
-  
-  <!-- Categorias do Blog -->
   <url>
-    <loc>https://www.escolahabilidade.com/blog/categoria/arquitetura</loc>
-    <lastmod>2025-08-06</lastmod>
+    <loc>https://www.escolahabilidade.com/teste-vocacional</loc>
+    <lastmod>2025-09-22</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.9</priority>
   </url>
-  
   <url>
-    <loc>https://www.escolahabilidade.com/blog/categoria/design</loc>
-    <lastmod>2025-08-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://www.escolahabilidade.com/cursos/informatica</loc>
+    <lastmod>2025-09-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
   </url>
-  
   <url>
-    <loc>https://www.escolahabilidade.com/blog/categoria/tecnologia</loc>
-    <lastmod>2025-08-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://www.escolahabilidade.com/cursos/projetista-3d</loc>
+    <lastmod>2025-09-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
   </url>
-  
   <url>
-    <loc>https://www.escolahabilidade.com/blog/categoria/educacao</loc>
-    <lastmod>2025-08-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://www.escolahabilidade.com/cursos/design-grafico</loc>
+    <lastmod>2025-09-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
   </url>
-  
   <url>
-    <loc>https://www.escolahabilidade.com/blog/categoria/carreira</loc>
-    <lastmod>2025-08-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://www.escolahabilidade.com/cursos/programacao</loc>
+    <lastmod>2025-09-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
   </url>
-  
   <url>
-    <loc>https://www.escolahabilidade.com/blog/categoria/programacao</loc>
-    <lastmod>2025-08-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://www.escolahabilidade.com/cursos/marketing-digital</loc>
+    <lastmod>2025-09-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
   </url>
-  
-  <!-- Blog Posts -->
+  <url>
+    <loc>https://www.escolahabilidade.com/cursos/edicao-video</loc>
+    <lastmod>2025-09-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.escolahabilidade.com/cursos/excel-avancado-business-intelligence</loc>
+    <lastmod>2025-09-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.escolahabilidade.com/cursos/inteligencia-artificial</loc>
+    <lastmod>2025-09-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.escolahabilidade.com/cursos/sketchup-enscape</loc>
+    <lastmod>2025-09-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.escolahabilidade.com/cursos-florianopolis</loc>
+    <lastmod>2025-09-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.escolahabilidade.com/cursos-sao-jose</loc>
+    <lastmod>2025-09-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.escolahabilidade.com/cursos-palhoca</loc>
+    <lastmod>2025-09-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
   <url>
     <loc>https://www.escolahabilidade.com/blog/guia-completo-21-estilos-decoracao-transformar-casa</loc>
-    <lastmod>2025-08-06</lastmod>
+    <lastmod>2025-09-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.9</priority>
   </url>
-  
   <url>
     <loc>https://www.escolahabilidade.com/blog/por-que-enscape-essencial-visualizacao-arquitetonica</loc>
-    <lastmod>2025-08-06</lastmod>
+    <lastmod>2025-09-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.9</priority>
   </url>
-  
   <url>
     <loc>https://www.escolahabilidade.com/blog/o-que-e-sketchup-guia-completo-modelagem-3d-2025</loc>
-    <lastmod>2025-08-06</lastmod>
+    <lastmod>2025-09-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.9</priority>
   </url>
-  
   <url>
     <loc>https://www.escolahabilidade.com/blog/historia-sketchup-software-arquitetura</loc>
-    <lastmod>2025-08-06</lastmod>
+    <lastmod>2025-09-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.9</priority>
   </url>
-  
   <url>
     <loc>https://www.escolahabilidade.com/blog/design-espacos-varejo-sketchup-pro</loc>
-    <lastmod>2025-08-06</lastmod>
+    <lastmod>2025-09-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.9</priority>
   </url>
-  
   <url>
     <loc>https://www.escolahabilidade.com/blog/sketchup-arquitetura-paisagistica</loc>
-    <lastmod>2025-08-06</lastmod>
+    <lastmod>2025-09-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.9</priority>
   </url>
-  
   <url>
     <loc>https://www.escolahabilidade.com/blog/tipos-puxadores-moveis</loc>
-    <lastmod>2025-08-06</lastmod>
+    <lastmod>2025-09-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.9</priority>
   </url>
-  
   <url>
     <loc>https://www.escolahabilidade.com/blog/sketchup-workflows-avancados-arquitetura-paisagistica</loc>
-    <lastmod>2025-08-06</lastmod>
+    <lastmod>2025-09-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.9</priority>
   </url>
-  
   <url>
     <loc>https://www.escolahabilidade.com/blog/como-usar-sketchup-para-design-conceitual-arquitetonico</loc>
-    <lastmod>2025-08-06</lastmod>
+    <lastmod>2025-09-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.9</priority>
   </url>
-  
   <url>
     <loc>https://www.escolahabilidade.com/blog/dominando-shape-bender-curvando-geometrias-sketchup</loc>
-    <lastmod>2025-08-06</lastmod>
+    <lastmod>2025-09-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.9</priority>
   </url>
-  
   <url>
     <loc>https://www.escolahabilidade.com/blog/como-construir-seu-primeiro-agente-ia-n8n</loc>
-    <lastmod>2025-08-06</lastmod>
+    <lastmod>2025-09-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.9</priority>
   </url>
-  
   <url>
     <loc>https://www.escolahabilidade.com/blog/cinco-maneiras-maximizar-vistas-magnificas-casas-personalizadas</loc>
-    <lastmod>2025-08-06</lastmod>
+    <lastmod>2025-09-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.9</priority>
   </url>
-  
   <url>
     <loc>https://www.escolahabilidade.com/blog/10-dicas-especialistas-renderizacoes-enscape-destaque</loc>
-    <lastmod>2025-08-06</lastmod>
+    <lastmod>2025-09-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.9</priority>
   </url>
-  
   <url>
     <loc>https://www.escolahabilidade.com/blog/como-apresentar-projetos-design-interior-sketchup</loc>
-    <lastmod>2025-08-06</lastmod>
+    <lastmod>2025-09-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.9</priority>
   </url>
-  
   <url>
     <loc>https://www.escolahabilidade.com/blog/acelerando-workflow-grey-boxing-sketchup</loc>
-    <lastmod>2025-08-06</lastmod>
+    <lastmod>2025-09-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.9</priority>
   </url>
-  
   <url>
     <loc>https://www.escolahabilidade.com/blog/10-extensoes-sketchup-arquitetos</loc>
-    <lastmod>2025-08-06</lastmod>
+    <lastmod>2025-09-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.escolahabilidade.com/blog/editor-materiais-sketchup-realismo-enscape</loc>
+    <lastmod>2025-09-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.escolahabilidade.com/blog/guia-completo-enscape-sketchup-iniciantes</loc>
+    <lastmod>2025-09-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.escolahabilidade.com/blog/sketchup-2025-visualizacao-3d-materiais-fotorrealistas</loc>
+    <lastmod>2025-09-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.escolahabilidade.com/blog/5-razoes-organizacoes-investir-treinamento-excel</loc>
+    <lastmod>2025-09-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.escolahabilidade.com/blog/transforme-dados-em-decisoes-estrategicas-dashboards-empresariais</loc>
+    <lastmod>2025-09-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
   </url>
 </urlset>
