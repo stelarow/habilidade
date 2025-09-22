@@ -1013,8 +1013,54 @@ button, a, [role="button"] {
   perspective: 1000px; /* GPU layer */
 }
 
+/* Course Card Gradient Borders - Static CSS to prevent PurgeCSS issues */
+.course-border-orange {
+  background: linear-gradient(to right, rgba(249, 115, 22, 0.6), rgba(251, 191, 36, 0.6));
+}
+
+.course-border-red {
+  background: linear-gradient(to right, rgba(239, 68, 68, 0.6), rgba(244, 114, 182, 0.6));
+}
+
+.course-border-blue {
+  background: linear-gradient(to right, rgba(59, 130, 246, 0.6), rgba(99, 102, 241, 0.6));
+}
+
+.course-border-pink {
+  background: linear-gradient(to right, rgba(236, 72, 153, 0.6), rgba(251, 113, 133, 0.6));
+}
+
+.course-border-green {
+  background: linear-gradient(to right, rgba(34, 197, 94, 0.6), rgba(52, 211, 153, 0.6));
+}
+
+.course-border-purple {
+  background: linear-gradient(to right, rgba(168, 85, 247, 0.6), rgba(139, 92, 246, 0.6));
+}
+
+.course-border-cyan {
+  background: linear-gradient(to right, rgba(6, 182, 212, 0.6), rgba(20, 184, 166, 0.6));
+}
+
+.course-border-indigo {
+  background: linear-gradient(to right, rgba(99, 102, 241, 0.6), rgba(59, 130, 246, 0.6));
+}
+
+.course-border-violet {
+  background: linear-gradient(to right, rgba(139, 92, 246, 0.6), rgba(168, 85, 247, 0.6));
+}
+
+/* Purple gradient for vocational test card */
+.bg-gradient-purple {
+  background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
+}
+
+.bg-gradient-purple-hover {
+  background: linear-gradient(135deg, #7c3aed 0%, #9333ea 100%);
+}
+
 /* Animações que usam transform - CRITICAL FIX for invisible text */
-.card-enter, .step-card, 
+.card-enter, .step-card,
 .course-card-enter, .animate-on-scroll {
   /* Remove will-change by default, add only during animation */
   contain: layout style paint;

@@ -3,6 +3,22 @@ module.exports = {
     "./index.html",
     "./src/**/*.{js,jsx,ts,tsx}"
   ],
+  safelist: [
+    'course-border-orange',
+    'course-border-red',
+    'course-border-blue',
+    'course-border-pink',
+    'course-border-green',
+    'course-border-purple',
+    'course-border-cyan',
+    'course-border-indigo',
+    'course-border-violet',
+    'bg-gradient-purple',
+    'bg-gradient-purple-hover',
+    'clip-card',
+    'card-enter',
+    'in-view'
+  ],
   theme: {
     extend: {
       fontFamily: {

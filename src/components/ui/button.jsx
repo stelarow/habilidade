@@ -19,6 +19,8 @@ const buttonVariants = cva(
           "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
+        "gradient-purple": "bg-gradient-purple text-white font-bold transition-all duration-300 hover:bg-gradient-purple-hover hover:scale-105",
+        "course-card": "w-full h-full bg-gradient-to-b from-zinc-900/90 to-zinc-950/95 hover:from-zinc-800/90 hover:to-zinc-900/95 border-0 rounded-none transition-all duration-300 hover:shadow-lg",
       },
       size: {
         default: "h-9 px-4 py-2",

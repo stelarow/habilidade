@@ -1,6 +1,8 @@
 // import { Link } from 'react-router-dom'; // Not needed for SSG
 import Starfield from './Starfield';
 import Section from './Section';
+import { Button } from './ui/button';
+import { Card } from './ui/card';
 import {
   Cube,
   FilmSlate,
@@ -22,7 +24,7 @@ const COURSES = [
     icon: Cube,
     desc: 'SketchUp, Enscape, Renderização com IA, Projetos 3D…',
     textColor: 'text-orange-400',
-    borderGradient: 'from-orange-500/60 to-amber-400/60',
+    borderClass: 'course-border-orange',
     hoverShadow: 'hover:shadow-[0_0_25px_#f97316aa]',
   },
   {
@@ -31,7 +33,7 @@ const COURSES = [
     icon: FilmSlate,
     desc: 'Premiere, After Effects, DaVinci Resolve, Motion Graphics…',
     textColor: 'text-red-400',
-    borderGradient: 'from-red-500/60 to-pink-400/60',
+    borderClass: 'course-border-red',
     hoverShadow: 'hover:shadow-[0_0_25px_#f87171aa]',
   },
   {
@@ -40,7 +42,7 @@ const COURSES = [
     icon: Desktop,
     desc: 'Windows, Word, Excel (fundamental → avançado)…',
     textColor: 'text-blue-400',
-    borderGradient: 'from-blue-500/60 to-indigo-400/60',
+    borderClass: 'course-border-blue',
     hoverShadow: 'hover:shadow-[0_0_25px_#60a5faaa]',
   },
   {
@@ -49,7 +51,7 @@ const COURSES = [
     icon: PenNib,
     desc: 'Photoshop, Illustrator, InDesign, Canva, Social…',
     textColor: 'text-pink-400',
-    borderGradient: 'from-pink-500/60 to-rose-400/60',
+    borderClass: 'course-border-pink',
     hoverShadow: 'hover:shadow-[0_0_25px_#f472b6aa]',
   },
   {
@@ -58,7 +60,7 @@ const COURSES = [
     icon: Code,
     desc: 'Lógica, Python, Java, PHP, Android Studio, Jogos…',
     textColor: 'text-green-400',
-    borderGradient: 'from-green-500/60 to-emerald-400/60',
+    borderClass: 'course-border-green',
     hoverShadow: 'hover:shadow-[0_0_25px_#4ade80aa]',
   },
   {
@@ -67,7 +69,7 @@ const COURSES = [
     icon: ChartLine,
     desc: 'Social Ads, SEO, Copywriting, Canva, Branding, Analytics…',
     textColor: 'text-purple-400',
-    borderGradient: 'from-purple-500/60 to-violet-400/60',
+    borderClass: 'course-border-purple',
     hoverShadow: 'hover:shadow-[0_0_25px_#a78bfaaa]',
   },
   {
@@ -76,7 +78,7 @@ const COURSES = [
     icon: Robot,
     desc: 'Cursor, Prompt Engineering, ChatGPT, Visão…',
     textColor: 'text-cyan-400',
-    borderGradient: 'from-cyan-500/60 to-teal-400/60',
+    borderClass: 'course-border-cyan',
     hoverShadow: 'hover:shadow-[0_0_25px_#22d3eeaa]',
   },
   {
@@ -85,7 +87,7 @@ const COURSES = [
     icon: ChartBar,
     desc: 'Master Excel, Power BI, Dashboards, Storytelling de Dados…',
     textColor: 'text-indigo-400',
-    borderGradient: 'from-indigo-500/60 to-blue-400/60',
+    borderClass: 'course-border-indigo',
     hoverShadow: 'hover:shadow-[0_0_25px_#818cf8aa]',
   },
   {
@@ -94,71 +96,81 @@ const COURSES = [
     icon: Briefcase,
     desc: 'Office, Excel Avançado, DP, Matemática Financeira, Liderança…',
     textColor: 'text-violet-400',
-    borderGradient: 'from-violet-500/60 to-purple-400/60',
+    borderClass: 'course-border-violet',
     hoverShadow: 'hover:shadow-[0_0_25px_#8b5cf6aa]',
   },
 ];
 
-function CourseCard({ title, slug, icon: Icon, desc, textColor, borderGradient, hoverShadow }) {
+function CourseCard({ title, slug, icon: Icon, desc, textColor, borderClass, hoverShadow }) {
   const [ref, visible] = useInView();
   return (
-    <a
+    <div
       ref={ref}
-      href={`/cursos/${slug}`}
-      className={`card-enter ${visible ? 'in-view' : ''} relative clip-card w-full h-[120px] p-[3px] bg-gradient-to-r ${borderGradient} transition-transform duration-200 hover:-translate-y-1.5 hover:scale-[1.02] ${hoverShadow} focus-visible:ring-2 ring-fuchsia-500 focus:outline-none block`}
+      className={`card-enter ${visible ? 'in-view' : ''} relative clip-card w-full h-[120px] p-[3px] ${borderClass} transition-transform duration-200 hover:-translate-y-1.5 hover:scale-[1.02] ${hoverShadow}`}
     >
-      <div
-        className="clip-card w-full h-full flex items-center gap-6 px-8 bg-[radial-gradient(ellipse_at_60%_40%,#181a2a_0%,#0a0a0a_100%)] hover:bg-[radial-gradient(ellipse_at_60%_40%,#1a1c2e_0%,#0a0a0a_100%)] transition"
+      <Button
+        asChild
+        variant="course-card"
+        className="clip-card w-full h-full flex items-center gap-6 px-8 bg-[radial-gradient(ellipse_at_60%_40%,#181a2a_0%,#0a0a0a_100%)] hover:bg-[radial-gradient(ellipse_at_60%_40%,#1a1c2e_0%,#0a0a0a_100%)] transition focus-visible:ring-2 ring-fuchsia-500 focus:outline-none justify-start"
       >
-        <Icon size={32} weight="duotone" className={`${textColor} flex-shrink-0`} />
-        <div className="flex flex-col gap-1 min-w-0 flex-1">
-          <h3 className={`font-semibold text-lg text-left leading-tight truncate ${textColor}`}>{title}</h3>
-          <p className="text-sm text-zinc-300 leading-snug text-left line-clamp-2">{desc}</p>
-        </div>
-      </div>
-    </a>
+        <a href={`/cursos/${slug}`}>
+          <Icon size={32} weight="duotone" className={`${textColor} flex-shrink-0`} />
+          <div className="flex flex-col gap-1 min-w-0 flex-1 text-left">
+            <h3 className={`font-semibold text-lg leading-tight truncate ${textColor}`}>{title}</h3>
+            <p className="text-sm text-zinc-300 leading-snug line-clamp-2">{desc}</p>
+          </div>
+        </a>
+      </Button>
+    </div>
   );
 }
 
 function VocationalTestCard() {
   const [ref, visible] = useInView();
   return (
-    <a
+    <div
       ref={ref}
-      href="/teste-vocacional"
-      className={`card-enter ${visible ? 'in-view' : ''} relative clip-card w-full h-auto min-h-[100px] p-[3px] bg-gradient-to-r from-purple-500/60 to-pink-500/60 transition-transform duration-200 hover:-translate-y-2 hover:scale-[1.02] hover:shadow-[0_0_30px_#a855f7aa] focus-visible:ring-2 ring-purple-500 focus:outline-none block`}
+      className={`card-enter ${visible ? 'in-view' : ''} relative clip-card w-full h-auto min-h-[100px] p-[3px] course-border-purple transition-transform duration-200 hover:-translate-y-2 hover:scale-[1.02] hover:shadow-[0_0_30px_#a855f7aa]`}
     >
-      <div className="clip-card w-full h-full flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 px-4 md:px-8 py-4 bg-[radial-gradient(ellipse_at_50%_50%,#1e1b2e_0%,#0a0a0a_100%)] hover:bg-[radial-gradient(ellipse_at_50%_50%,#2d1b38_0%,#0a0a0a_100%)] transition">
-        <div className="flex flex-col md:flex-row items-center gap-3 md:gap-4 text-center md:text-left">
-          <Brain size={32} weight="duotone" className="text-purple-400 flex-shrink-0" />
-          <div>
-            <h3 className="font-bold text-lg md:text-xl text-purple-400 leading-tight mb-1">
-              Descubra Seu Curso Ideal
-            </h3>
-            <p className="text-xs md:text-sm text-purple-200 opacity-90">
-              Teste Vocacional Científico - Metodologia MIT, Harvard e Stanford
-            </p>
-          </div>
-        </div>
-        
-        <div className="flex flex-col md:flex-row items-center gap-3 md:gap-6">
-          <div className="text-center">
-            <div className="bg-purple-500/20 px-3 md:px-4 py-1.5 md:py-2 rounded-full mb-1">
-              <span className="text-xs md:text-sm text-purple-300 font-semibold">
-                ✨ Apenas 5 minutos
-              </span>
+      <Card className="clip-card w-full h-full bg-[radial-gradient(ellipse_at_50%_50%,#1e1b2e_0%,#0a0a0a_100%)] hover:bg-[radial-gradient(ellipse_at_50%_50%,#2d1b38_0%,#0a0a0a_100%)] transition border-0">
+        <Button
+          asChild
+          variant="course-card"
+          className="w-full h-full flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 px-4 md:px-8 py-4 focus-visible:ring-2 ring-purple-500 focus:outline-none min-h-[100px]"
+        >
+          <a href="/teste-vocacional">
+            <div className="flex flex-col md:flex-row items-center gap-3 md:gap-4 text-center md:text-left">
+              <Brain size={32} weight="duotone" className="text-purple-400 flex-shrink-0" />
+              <div>
+                <h3 className="font-bold text-lg md:text-xl text-purple-400 leading-tight mb-1">
+                  Descubra Seu Curso Ideal
+                </h3>
+                <p className="text-xs md:text-sm text-purple-200 opacity-90">
+                  Teste Vocacional Científico - Metodologia MIT, Harvard e Stanford
+                </p>
+              </div>
             </div>
-            <p className="text-xs text-purple-200 opacity-75">
-              100% Gratuito
-            </p>
-          </div>
-          
-          <div className="bg-purple-400 text-white px-4 md:px-6 py-2 md:py-3 rounded-full font-bold text-xs md:text-sm hover:bg-purple-300 transition-colors">
-            Fazer Teste →
-          </div>
-        </div>
-      </div>
-    </a>
+
+            <div className="flex flex-col md:flex-row items-center gap-3 md:gap-6">
+              <div className="text-center">
+                <div className="bg-purple-500/20 px-3 md:px-4 py-1.5 md:py-2 rounded-full mb-1">
+                  <span className="text-xs md:text-sm text-purple-300 font-semibold">
+                    ✨ Apenas 5 minutos
+                  </span>
+                </div>
+                <p className="text-xs text-purple-200 opacity-75">
+                  100% Gratuito
+                </p>
+              </div>
+
+              <Button variant="gradient-purple" size="sm" className="px-4 md:px-6 py-2 md:py-3 rounded-full text-xs md:text-sm">
+                Fazer Teste →
+              </Button>
+            </div>
+          </a>
+        </Button>
+      </Card>
+    </div>
   );
 }
 
