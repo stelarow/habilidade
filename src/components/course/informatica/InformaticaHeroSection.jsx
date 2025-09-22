@@ -41,13 +41,13 @@ export const InformaticaHeroSection = () => {
 
         {/* Título Principal */}
         <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
-          Domine a{' '}
+          Curso Completo de{' '}
           <span className="bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-500 bg-clip-text text-transparent">
             Informática
           </span>
-          <br />
-          <span className="text-4xl md:text-6xl">
-            do <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">Zero ao Pro</span>
+          {' '}do Básico ao Avançado
+          <span className="block text-2xl md:text-3xl mt-4 text-cyan-300 font-semibold">
+            São José • Florianópolis • Palhoça • Biguaçu
           </span>
         </h1>
 
