@@ -15,124 +15,143 @@ const metaConfig = {
   '/cursos/informatica': {
     title: 'Curso de Informática Presencial São José SC | Excel Básico ao Avançado, Word, Canva e IA',
     description: 'Curso de informática presencial em São José SC. Excel, Word, PowerPoint, Canva e IA. Atendemos Florianópolis, Palhoça e Biguaçu. Certificado 170h.',
-    keywords: 'curso informática presencial, curso informática são josé, curso informática florianópolis, curso informática palhoça, curso informática biguaçu, excel avançado, word, powerpoint, inteligência artificial, canva'
+    keywords: 'curso informática presencial, curso informática são josé, curso informática florianópolis, curso informática palhoça, curso informática biguaçu, excel avançado, word, powerpoint, inteligência artificial, canva',
+    canonical: 'https://www.escolahabilidade.com/cursos/informatica'
   },
 
   // Página de Projetista 3D
   '/cursos/projetista-3d': {
     title: 'Curso Projetista 3D - SketchUp e Enscape | São José SC | Escola Habilidade',
     description: 'Curso de Projetista 3D presencial em São José SC. SketchUp, Enscape, renderização profissional. Certificado reconhecido. Atendemos Grande Florianópolis.',
-    keywords: 'curso projetista 3d, curso sketchup, curso enscape, renderização 3d, projetista são josé, curso presencial 3d'
+    keywords: 'curso projetista 3d, curso sketchup, curso enscape, renderização 3d, projetista são josé, curso presencial 3d',
+    canonical: 'https://www.escolahabilidade.com/cursos/projetista-3d'
   },
 
   // Outras páginas de cursos
   '/cursos/design-grafico': {
     title: 'Curso de Design Gráfico | Photoshop, Illustrator, Canva | São José SC',
     description: 'Curso presencial de Design Gráfico em São José SC. Photoshop, Illustrator, Canva e projetos reais. Certificado reconhecido.',
-    keywords: 'curso design gráfico, photoshop, illustrator, canva, design são josé'
+    keywords: 'curso design gráfico, photoshop, illustrator, canva, design são josé',
+    canonical: 'https://www.escolahabilidade.com/cursos/design-grafico'
   },
 
   '/cursos/programacao': {
     title: 'Curso de Programação | Python, JavaScript, React | São José SC',
     description: 'Curso de Programação presencial em São José SC. Python, JavaScript, React e desenvolvimento web. Do básico ao avançado.',
-    keywords: 'curso programação, python, javascript, react, desenvolvimento web, programação são josé'
+    keywords: 'curso programação, python, javascript, react, desenvolvimento web, programação são josé',
+    canonical: 'https://www.escolahabilidade.com/cursos/programacao'
   },
 
   '/cursos/marketing-digital': {
     title: 'Curso de Marketing Digital | Google Ads, Facebook Ads, SEO | São José SC',
     description: 'Curso presencial de Marketing Digital em São José SC. Google Ads, Facebook Ads, SEO, Analytics. Certificado reconhecido.',
-    keywords: 'curso marketing digital, google ads, facebook ads, seo, marketing são josé'
+    keywords: 'curso marketing digital, google ads, facebook ads, seo, marketing são josé',
+    canonical: 'https://www.escolahabilidade.com/cursos/marketing-digital'
   },
 
   '/cursos/inteligencia-artificial': {
     title: 'Curso de Inteligência Artificial | ChatGPT, Automação, IA | São José SC',
     description: 'Curso presencial de Inteligência Artificial em São José SC. ChatGPT, automação, ferramentas de IA para negócios.',
-    keywords: 'curso inteligência artificial, chatgpt, automação, ia, inteligência artificial são josé'
+    keywords: 'curso inteligência artificial, chatgpt, automação, ia, inteligência artificial são josé',
+    canonical: 'https://www.escolahabilidade.com/cursos/inteligencia-artificial'
   },
 
   // Páginas locais
   '/cursos-florianopolis': {
     title: 'Cursos Profissionalizantes em Florianópolis - Escola Habilidade',
     description: 'Cursos profissionalizantes presenciais em Florianópolis. Informática, Design, Programação, Marketing Digital. Certificado reconhecido.',
-    keywords: 'cursos florianópolis, cursos profissionalizantes florianópolis, escola técnica florianópolis'
+    keywords: 'cursos florianópolis, cursos profissionalizantes florianópolis, escola técnica florianópolis',
+    canonical: 'https://www.escolahabilidade.com/cursos-florianopolis'
   },
 
   '/cursos-sao-jose': {
     title: 'Cursos Profissionalizantes em São José SC - Escola Habilidade',
     description: 'Cursos profissionalizantes presenciais em São José SC. Informática, Design, Programação, Marketing Digital. Localização privilegiada no Kobrasol.',
-    keywords: 'cursos são josé, cursos profissionalizantes são josé, escola técnica são josé, cursos kobrasol'
+    keywords: 'cursos são josé, cursos profissionalizantes são josé, escola técnica são josé, cursos kobrasol',
+    canonical: 'https://www.escolahabilidade.com/cursos-sao-jose'
   },
 
   '/cursos-palhoca': {
     title: 'Cursos Profissionalizantes em Palhoça SC - Escola Habilidade',
     description: 'Cursos profissionalizantes para Palhoça SC. Informática, Design, Programação, Marketing Digital. Localização estratégica próxima a Palhoça.',
-    keywords: 'cursos palhoça, cursos profissionalizantes palhoça, escola técnica palhoça'
+    keywords: 'cursos palhoça, cursos profissionalizantes palhoça, escola técnica palhoça',
+    canonical: 'https://www.escolahabilidade.com/cursos-palhoca'
   },
 
   // Página inicial
   '/': {
     title: 'Cursos em São José SC | Escola Habilidade - Informática, AutoCAD, SketchUp',
     description: 'Escola de cursos profissionalizantes em São José SC. Informática, AutoCAD, SketchUp, Design, Marketing Digital. Certificado reconhecido. Matrículas abertas!',
-    keywords: 'escola habilidade, cursos são josé, cursos profissionalizantes, informática, autocad, sketchup, design, marketing digital'
+    keywords: 'escola habilidade, cursos são josé, cursos profissionalizantes, informática, autocad, sketchup, design, marketing digital',
+    canonical: 'https://www.escolahabilidade.com/'
   },
 
   // Contato
   '/contato': {
     title: 'Contato - Escola Habilidade | Entre em contato conosco',
     description: 'Entre em contato com a Escola Habilidade. Tire suas dúvidas sobre nossos cursos profissionalizantes em Florianópolis, São José e Palhoça. Estamos aqui para ajudar!',
-    keywords: 'contato escola habilidade, telefone, whatsapp, endereço são josé'
+    keywords: 'contato escola habilidade, telefone, whatsapp, endereço são josé',
+    canonical: 'https://www.escolahabilidade.com/contato'
   },
 
   // Blog
   '/blog': {
     title: 'Blog Escola Habilidade | Dicas de Tecnologia, Design e Carreira',
     description: 'Blog com artigos sobre tecnologia, design, programação e desenvolvimento profissional. Tutoriais, dicas e novidades do mercado.',
-    keywords: 'blog tecnologia, dicas design, programação, desenvolvimento profissional, tutoriais'
+    keywords: 'blog tecnologia, dicas design, programação, desenvolvimento profissional, tutoriais',
+    canonical: 'https://www.escolahabilidade.com/blog'
   },
 
   // Página Institucional
   '/habilidade': {
     title: 'Sobre a Escola Habilidade | Nossa História e Missão',
     description: 'Conheça a Escola Habilidade, nossa história de mais de 20 anos formando profissionais em tecnologia na Grande Florianópolis.',
-    keywords: 'escola habilidade, história, missão, cursos profissionalizantes florianópolis'
+    keywords: 'escola habilidade, história, missão, cursos profissionalizantes florianópolis',
+    canonical: 'https://www.escolahabilidade.com/habilidade'
   },
 
   // Teste Vocacional
   '/teste-vocacional': {
     title: 'Teste Vocacional Gratuito | Descubra seu Curso Ideal',
     description: 'Faça nosso teste vocacional gratuito e descubra qual curso técnico combina mais com seu perfil profissional.',
-    keywords: 'teste vocacional, orientação profissional, escolha curso, perfil profissional'
+    keywords: 'teste vocacional, orientação profissional, escolha curso, perfil profissional',
+    canonical: 'https://www.escolahabilidade.com/teste-vocacional'
   },
 
   // Cursos adicionais
   '/cursos/administracao': {
     title: 'Curso de Administração | Gestão Empresarial e Excel | São José SC',
     description: 'Curso de Administração presencial em São José SC. Excel avançado, gestão empresarial, finanças. Certificado reconhecido.',
-    keywords: 'curso administração, gestão empresarial, excel avançado, finanças, administração são josé'
+    keywords: 'curso administração, gestão empresarial, excel avançado, finanças, administração são josé',
+    canonical: 'https://www.escolahabilidade.com/cursos/administracao'
   },
 
   '/cursos/business-intelligence': {
     title: 'Curso Business Intelligence | Power BI, Dados e Analytics | São José SC',
     description: 'Curso de Business Intelligence presencial. Power BI, análise de dados, dashboards profissionais. Certificado reconhecido.',
-    keywords: 'curso business intelligence, power bi, análise dados, dashboards, bi são josé'
+    keywords: 'curso business intelligence, power bi, análise dados, dashboards, bi são josé',
+    canonical: 'https://www.escolahabilidade.com/cursos/business-intelligence'
   },
 
   '/cursos/edicao-video': {
     title: 'Curso de Edição de Vídeo | Premiere, After Effects | São José SC',
     description: 'Curso presencial de Edição de Vídeo. Adobe Premiere, After Effects, produção audiovisual. Certificado reconhecido.',
-    keywords: 'curso edição vídeo, premiere, after effects, produção audiovisual, vídeo são josé'
+    keywords: 'curso edição vídeo, premiere, after effects, produção audiovisual, vídeo são josé',
+    canonical: 'https://www.escolahabilidade.com/cursos/edicao-video'
   },
 
   '/cursos/excel-avancado-business-intelligence': {
     title: 'Curso Excel Avançado e Business Intelligence | Power BI | São José SC',
     description: 'Curso presencial de Excel Avançado com Business Intelligence. Dashboards, análise de dados, Power BI. Certificado.',
-    keywords: 'excel avançado, business intelligence, power bi, dashboards, excel são josé'
+    keywords: 'excel avançado, business intelligence, power bi, dashboards, excel são josé',
+    canonical: 'https://www.escolahabilidade.com/cursos/excel-avancado-business-intelligence'
   },
 
   '/cursos/sketchup-enscape': {
     title: 'Curso SketchUp e Enscape | Modelagem 3D e Renderização | São José SC',
     description: 'Curso presencial de SketchUp e Enscape. Modelagem 3D, renderização fotorrealista para arquitetura. Certificado.',
-    keywords: 'curso sketchup, enscape, modelagem 3d, renderização, arquitetura são josé'
+    keywords: 'curso sketchup, enscape, modelagem 3d, renderização, arquitetura são josé',
+    canonical: 'https://www.escolahabilidade.com/cursos/sketchup-enscape'
   }
 };
 
@@ -197,6 +216,23 @@ function transformHtml(htmlContent, pagePath) {
   const twitterDescRegex = /<meta name="twitter:description" content="[^"]*"/;
   if (twitterDescRegex.test(transformedHtml)) {
     transformedHtml = transformedHtml.replace(twitterDescRegex, `<meta name="twitter:description" content="${config.description}"`);
+  }
+
+  // Atualizar ou adicionar canonical tag se configurado
+  if (config.canonical) {
+    const canonicalRegex = /<link rel="canonical" href="[^"]*"[^>]*>/;
+    if (canonicalRegex.test(transformedHtml)) {
+      // Substituir canonical existente
+      transformedHtml = transformedHtml.replace(canonicalRegex, `<link rel="canonical" href="${config.canonical}" />`);
+      console.log(`✅ Canonical atualizado para: ${pagePath} -> ${config.canonical}`);
+    } else {
+      // Adicionar canonical após meta tags
+      const addCanonicalRegex = /(<meta name="author" content="[^"]*"[^>]*>)/;
+      if (addCanonicalRegex.test(transformedHtml)) {
+        transformedHtml = transformedHtml.replace(addCanonicalRegex, `$1\n    <link rel="canonical" href="${config.canonical}" />`);
+        console.log(`✅ Canonical adicionado para: ${pagePath} -> ${config.canonical}`);
+      }
+    }
   }
 
   return transformedHtml;
