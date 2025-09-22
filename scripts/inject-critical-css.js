@@ -21,6 +21,13 @@ function generateCriticalCSS() {
   return `
     /* Critical CSS - Above-the-Fold Only (~2KB) */
 
+    /* Critical Self-Hosted Fonts */
+    @font-face{font-family:'Montserrat';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/montserrat/montserrat-400.woff2') format('woff2')}
+    @font-face{font-family:'Montserrat';font-style:normal;font-weight:600;font-display:swap;src:url('/fonts/montserrat/montserrat-600.woff2') format('woff2')}
+    @font-face{font-family:'Montserrat';font-style:normal;font-weight:700;font-display:swap;src:url('/fonts/montserrat/montserrat-700.woff2') format('woff2')}
+    @font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/inter/inter-400.woff2') format('woff2')}
+    @font-face{font-family:'Inter';font-style:normal;font-weight:500;font-display:swap;src:url('/fonts/inter/inter-500.woff2') format('woff2')}
+
     /* Essential Reset */
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     html{line-height:1.5;-webkit-text-size-adjust:100%}
@@ -135,6 +142,13 @@ function generateAsyncCSSLoader() {
 
             var href = link.href;
             var id = link.id || null;
+
+            // Skip development paths that shouldn't exist in production
+            if (href.includes('/src/') || href.includes('src/styles/fonts.css')) {
+              console.warn('Skipping development CSS path:', href);
+              link.remove();
+              return;
+            }
 
             // Mark as processed
             link.setAttribute('data-async-processed', 'true');
@@ -332,7 +346,10 @@ async function injectCriticalCSS() {
       const uniqueCssFiles = new Set();
       existingCssLinks.forEach(link => {
         const hrefMatch = link.match(/href="([^"]*\.css[^"]*)"/i);
-        if (hrefMatch && !hrefMatch[1].includes('fonts.googleapis.com')) {
+        if (hrefMatch &&
+            !hrefMatch[1].includes('fonts.googleapis.com') &&
+            !hrefMatch[1].includes('/src/') && // Filter out development paths
+            !hrefMatch[1].includes('src/styles/fonts.css')) { // Specifically exclude fonts.css
           uniqueCssFiles.add(hrefMatch[1]);
         }
       });
@@ -357,13 +374,9 @@ async function injectCriticalCSS() {
       html = html.replace(/<link[^>]*fonts\.googleapis\.com[^>]*>/gi, '');
       html = html.replace(/<link[^>]*fonts\.gstatic\.com[^>]*>/gi, '');
       
-      // Add self-hosted fonts CSS
-      const optimizedFonts = `
-        <!-- Self-hosted fonts - Maximum performance -->
-        <link rel="stylesheet" href="/src/styles/fonts.css">
-      `;
-      
-      html = html.replace('</head>', `${optimizedFonts}\n</head>`);
+      // Self-hosted fonts are already bundled by Vite in the main CSS
+      // No need to add separate link that would cause 404 errors
+      console.log(`✅ Fonts are bundled in main CSS, skipping separate font CSS link`);
       
       // Add noscript fallback for CSS
       if (uniqueCssFiles.size > 0) {
