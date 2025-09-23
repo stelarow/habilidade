@@ -11,7 +11,7 @@ import { InformaticaFloatingCTA } from '../../components/course/informatica/Info
 import { InformaticaCurriculum } from '../../components/course/informatica/InformaticaCurriculum';
 import { InformaticaLocationSection } from '../../components/course/informatica/InformaticaLocationSection';
 import TrustedCompanies from '../../components/TrustedCompanies';
-import { Head } from 'vite-react-ssg';
+import { Helmet } from '@dr.pogodin/react-helmet';
 import { 
   CheckCircle, 
   Rocket
@@ -138,27 +138,27 @@ const Informatica = () => {
   return (
     <main className="min-h-screen bg-zinc-950 text-white">
       {/* SEO e Meta Tags */}
-      <Head>
+      <Helmet>
         <title>Curso de Informática Presencial São José SC | Excel Básico ao Avançado, Word, Canva e IA</title>
         <meta name="description" content="Curso de informática presencial em São José SC. Excel, Word, PowerPoint, Canva e IA. Atendemos Florianópolis, Palhoça e Biguaçu. Certificado 170h." />
         <meta name="keywords" content="curso informática presencial, curso informática são josé, curso informática florianópolis, curso informática palhoça, curso informática biguaçu, excel avançado, word, powerpoint, inteligência artificial, canva" />
-        
+
         {/* Open Graph */}
         <meta property="og:title" content="Curso de Informática Básica - Windows 11, Office e IA | São José SC" />
         <meta property="og:description" content="Curso presencial completo de informática em São José SC. 170 horas práticas, Windows 11, Office, Canva e IA aplicada." />
         <meta property="og:type" content="website" />
         <meta property="og:locale" content="pt_BR" />
-        
+
         {/* Schema.org para Curso */}
         <script type="application/ld+json">
           {JSON.stringify(courseSchema)}
         </script>
-        
+
         {/* Schema.org para LocalBusiness */}
         <script type="application/ld+json">
           {JSON.stringify(localBusinessSchema)}
         </script>
-      </Head>
+      </Helmet>
 
       {/* Seções obrigatórias na ordem */}
       <InformaticaHeroSection />

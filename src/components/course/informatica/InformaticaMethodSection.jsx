@@ -119,6 +119,7 @@ const InformaticaMethodSection = () => {
                 <img
                   src="/assets/informatica-nova/metodologia/aluno-praticando-photoshop.jpg"
                   alt="Aluno praticando Photoshop em aula presencial"
+                  title="Aluno praticando Photoshop em sala de aula"
                   className="relative w-full h-auto rounded-2xl shadow-2xl"
                   loading="lazy"
                 />

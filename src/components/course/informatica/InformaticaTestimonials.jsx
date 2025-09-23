@@ -263,6 +263,7 @@ export const InformaticaTestimonials = () => {
                 <img
                   src="/assets/informatica-nova/depoimentos/alunas-felizes-escola.jpg"
                   alt="Alunas felizes na Escola Habilidade"
+                  title="Alunas celebrando na Escola Habilidade"
                   className="w-full h-full object-cover object-center"
                   loading="lazy"
                 />

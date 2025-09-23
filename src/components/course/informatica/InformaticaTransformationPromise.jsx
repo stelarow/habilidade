@@ -378,6 +378,7 @@ export const InformaticaTransformationPromise = () => {
                 <img
                   src="/assets/informatica-nova/transformacao/aluno-recebendo-premio.jpg"
                   alt="Aluno recebendo reconhecimento na Escola Habilidade"
+                  title="Aluno recebendo reconhecimento profissional"
                   className="relative w-full h-auto rounded-2xl shadow-2xl"
                   loading="lazy"
                 />

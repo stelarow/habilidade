@@ -11,6 +11,7 @@ export const InformaticaHeroSection = () => {
         <img
           src="/assets/informatica-nova/hero/1318912.png"
           alt="Curso de Informática Background"
+          title="Background do curso de informática"
           className="w-full h-full object-cover object-center filter blur-[0.5px]"
         />
         {/* Overlays para legibilidade */}
