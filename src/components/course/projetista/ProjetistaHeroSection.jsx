@@ -14,9 +14,10 @@ export const ProjetistaHeroSection = () => {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950">
       {/* Background Image */}
       <div className="absolute inset-0">
-        <img 
+        <img
           src="/assets/projetista-3d/hero/hero-bg-new.jpg"
           alt="Projetista 3D Background"
+          title="Curso Projetista 3D - SketchUp e Enscape - Escola Habilidade São José SC"
           className="w-full h-full object-cover filter blur-[0.5px]"
         />
         {/* Multi-layered overlay for better text readability */}

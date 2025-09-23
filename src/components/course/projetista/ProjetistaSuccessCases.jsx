@@ -125,6 +125,7 @@ const renderCompactLayout = (projects, caseId, onMediaClick) => {
               <img
                 src={item.src}
                 alt={item.title}
+                title={`${item.title} - Caso de sucesso em Projetista 3D - SketchUp e Enscape`}
                 className="w-full h-full object-cover"
                 loading="lazy"
               />
@@ -164,6 +165,7 @@ const renderCompactLayout = (projects, caseId, onMediaClick) => {
                   <img
                     src={item.src}
                     alt={item.title}
+                    title={`${item.title} - Projeto profissional desenvolvido no curso Projetista 3D`}
                     className="w-full h-full object-cover"
                     loading="lazy"
                   />

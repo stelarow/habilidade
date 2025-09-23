@@ -83,6 +83,7 @@ const ProjetistaGalleryWithLightbox = ({
                     <img
                       src={featuredItem.src}
                       alt={featuredItem.title}
+                      title={`${featuredItem.title} - Projeto desenvolvido com SketchUp e Enscape - Curso Projetista 3D`}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       loading="lazy"
                     />
@@ -140,6 +141,7 @@ const ProjetistaGalleryWithLightbox = ({
                         <img
                           src={item.src}
                           alt={item.title}
+                          title={`${item.title} - Renderização profissional SketchUp e Enscape - Projetista 3D`}
                           className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                           loading="lazy"
                         />
@@ -210,6 +212,7 @@ const ProjetistaGalleryWithLightbox = ({
               <img
                 src={item.src}
                 alt={item.title}
+                title={`${item.title} - Portfolio de projetos 3D - Curso SketchUp e Enscape`}
                 className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                 loading="lazy"
               />
@@ -315,6 +318,7 @@ const ProjetistaGalleryWithLightbox = ({
                   <img
                     src={currentItem?.src}
                     alt={currentItem?.title}
+                    title={`${currentItem?.title} - Visualização ampliada - Projeto Projetista 3D`}
                     className="w-full h-full object-contain max-h-[80vh] rounded-lg"
                   />
                 </div>
