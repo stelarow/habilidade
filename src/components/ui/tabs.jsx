@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils'
 function Tabs({
   className,
   ...props
-) {
+}) {
   return (
     <TabsPrimitive.Root
       data-slot="tabs"
@@ -16,7 +16,7 @@ function Tabs({
 function TabsList({
   className,
   ...props
-) {
+}) {
   return (
     <TabsPrimitive.List
       data-slot="tabs-list"
@@ -31,7 +31,7 @@ function TabsList({
 function TabsTrigger({
   className,
   ...props
-) {
+}) {
   return (
     <TabsPrimitive.Trigger
       data-slot="tabs-trigger"
@@ -46,7 +46,7 @@ function TabsTrigger({
 function TabsContent({
   className,
   ...props
-) {
+}) {
   return (
     <TabsPrimitive.Content
       data-slot="tabs-content"

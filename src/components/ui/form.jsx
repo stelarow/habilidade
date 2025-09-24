@@ -57,7 +57,7 @@ function FormItem({ className, ...props ) {
 function FormLabel({
   className,
   ...props
-) {
+}) {
   const { error, formItemId } = useFormField()
   return (
     <Label

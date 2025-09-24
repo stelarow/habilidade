@@ -5,7 +5,7 @@ function Progress({
   className,
   value,
   ...props
-) {
+}) {
   return (
     <ProgressPrimitive.Root
       data-slot="progress"

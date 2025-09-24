@@ -4,28 +4,28 @@ import { Cross2Icon } from '@radix-ui/react-icons'
 import { cn } from '@/lib/utils'
 function Dialog({
   ...props
-) {
+}) {
   return <DialogPrimitive.Root data-slot="dialog" {...props} />
 }
 function DialogTrigger({
   ...props
-) {
+}) {
   return <DialogPrimitive.Trigger data-slot="dialog-trigger" {...props} />
 }
 function DialogPortal({
   ...props
-) {
+}) {
   return <DialogPrimitive.Portal data-slot="dialog-portal" {...props} />
 }
 function DialogClose({
   ...props
-) {
+}) {
   return <DialogPrimitive.Close data-slot="dialog-close" {...props} />
 }
 function DialogOverlay({
   className,
   ...props
-) {
+}) {
   return (
     <DialogPrimitive.Overlay
       data-slot="dialog-overlay"
@@ -92,7 +92,7 @@ function DialogFooter({ className, ...props ) {
 function DialogTitle({
   className,
   ...props
-) {
+}) {
   return (
     <DialogPrimitive.Title
       data-slot="dialog-title"
@@ -104,7 +104,7 @@ function DialogTitle({
 function DialogDescription({
   className,
   ...props
-) {
+}) {
   return (
     <DialogPrimitive.Description
       data-slot="dialog-description"
