@@ -53,6 +53,7 @@
     "clsx": "^2.1.1",
     "embla-carousel-react": "^8.6.0",
     "framer-motion": "^12.23.12",
+    "glob": "^11.0.3",
     "highlight.js": "^11.11.1",
     "html2canvas": "^1.4.1",
     "jspdf": "^3.0.1",
@@ -68,7 +69,6 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.29.0",
-    "@fullhuman/postcss-purgecss": "^7.0.2",
     "@tanstack/react-query-devtools": "^5.83.0",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
@@ -90,7 +90,6 @@
     "terser": "^5.43.1",
     "vite": "^7.0.0",
     "vite-plugin-html": "^3.2.2",
-    "vite-plugin-purgecss": "^0.2.13",
     "vite-react-ssg": "^0.8.8"
   }
 }

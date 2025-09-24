@@ -2,7 +2,6 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
 import { generateSitemap } from "./src/utils/sitemapGenerator.js"
-import purgeCss from 'vite-plugin-purgecss'
 import { createHtmlPlugin } from 'vite-plugin-html'
 import { createCriticalCssPlugin } from './src/utils/critical-css-plugin.js'
 import { createSSGCriticalCSSPlugin } from './src/utils/ssg-critical-css-plugin.js'
@@ -66,97 +65,6 @@ export default defineConfig({
     // Critical CSS plugins in correct order
     createCriticalCssPlugin(), // Analyzes bundles and prepares for SSG
     createSSGCriticalCSSPlugin(), // Post-processes HTML after SSG
-    ...(process.env.DEBUG_BUILD !== 'true' ? [
-      purgeCss({
-        content: [
-          './index.html',
-          './src/**/*.{js,jsx,ts,tsx}',
-          './src/**/*.css',
-          './src/data/**/*.js' // Include data files for dynamic classes
-        ],
-        // More aggressive purging with refined safelist
-        safelist: [
-          // Essential layout classes
-          'container', 'flex', 'grid', 'block', 'hidden', 'relative', 'absolute', 'fixed',
-          // Critical above-the-fold classes (already inline in critical CSS)
-          /^bg-(black|white|gray-(100|900))$/,
-          /^text-(white|gray-(100|700|900)|center)$/,
-          /^font-(bold|semibold|medium)$/,
-          /^text-(lg|xl|2xl|3xl|4xl|5xl)$/,
-
-          // Interactive states (hover, focus, active)
-          /^hover:/, /^focus:/, /^active:/,
-
-          // Animation classes (keep for UX)
-          /^animate-(pulse|spin)$/, /^transition/, /^transform/, /^duration-/,
-
-          // Blog specific classes (only if blog exists)
-          /^hljs/, /^language-/, /^code/, /^pre/, /^blog-/,
-
-          // Component-specific patterns
-          /^course-/, /^card-/, /^btn-/, /^nav-/, 'clip-card',
-
-          // Course card gradient borders (specific patterns only)
-          'bg-gradient-to-r', // Base gradient class
-          /^from-(orange|blue|green|purple|pink|cyan|red|yellow|violet)-500(\/60)?$/,
-          /^to-(amber|indigo|emerald|violet|rose|teal|pink|blue)-(400|500)(\/60)?$/,
-
-          // Mobile menu (specific classes only)
-          'mobile-mega-menu', 'hamburger-line',
-          /^h-0\.5$/, /^w-6$/, /^rotate-45$/, /^-rotate-45$/,
-          /^translate-y-[12]$/, /^-translate-y-[12]$/,
-
-          // Z-index and positioning (specific values only)
-          /^z-(10|20|30|40|50|\[100\])$/,
-          /^(top|bottom|left|right)-0$/,
-
-          // Specific sizing classes that are dynamically used
-          /^max-w-(sm|md|lg|xl|2xl|4xl|6xl)$/,
-          /^min-h-(screen|full)$/, /^h-(full|screen)$/, /^w-(full|screen)$/,
-          // Course card specific sizing
-          'p-[3px]', 'h-[120px]', 'min-h-[100px]',
-
-          // Spacing (be more selective)
-          /^p-(\[3px\]|[1-8])$/, /^m-[1-8]$/,
-          /^px-[1-8]$/, /^py-[1-8]$/,
-          /^mt-[1-8]$/, /^mb-[1-8]$/,
-
-          // Border and shadow (specific patterns)
-          /^border-(gray-(700|800)|transparent)$/,
-          /^rounded-(lg|xl|2xl|full)$/,
-          /^shadow-(lg|xl|2xl)$/,
-
-          // Backdrop and overlay effects
-          /^backdrop-blur-(sm|md)$/, /^bg-black\/[0-9]{2}$/,
-
-          // Grid layouts (specific columns)
-          /^grid-cols-[1-3]$/, /^col-span/, /^row-span/,
-
-          // FOUC prevention and critical CSS classes
-          /^fouc-/, /^critical-/, /^loading-/
-        ],
-
-        // More aggressive extraction patterns
-        defaultExtractor: content => {
-          // Enhanced pattern matching for Tailwind classes
-          const tailwindClasses = content.match(/[\w-/:[\]]+(?<!:)/g) || [];
-
-          // Additional extraction for dynamic classes
-          const dynamicClasses = content.match(/['"`]([\w-/:[\]]+)['"`]/g)?.map(s => s.slice(1, -1)) || [];
-
-          return [...tailwindClasses, ...dynamicClasses];
-        },
-
-        // Aggressive whitespace removal
-        fontFace: false,
-        keyframes: false,
-        variables: false,
-
-        // Skip unused CSS custom properties
-        rejected: true,
-        rejectedCss: process.env.DEBUG_BUILD === 'true' // Only log in debug mode
-      })
-    ] : []),
     createHtmlPlugin({
       minify: process.env.DEBUG_BUILD !== 'true'
     })

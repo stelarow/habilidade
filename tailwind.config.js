@@ -4,20 +4,57 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}"
   ],
   safelist: [
-    'course-border-orange',
-    'course-border-red',
-    'course-border-blue',
-    'course-border-pink',
-    'course-border-green',
-    'course-border-purple',
-    'course-border-cyan',
-    'course-border-indigo',
-    'course-border-violet',
-    'bg-gradient-purple',
-    'bg-gradient-purple-hover',
-    'clip-card',
-    'card-enter',
-    'in-view'
+    // Classes existentes (manter)
+    'course-border-orange', 'course-border-red', 'course-border-blue',
+    'course-border-pink', 'course-border-green', 'course-border-purple',
+    'course-border-cyan', 'course-border-indigo', 'course-border-violet',
+    'bg-gradient-purple', 'bg-gradient-purple-hover',
+    'clip-card', 'card-enter', 'in-view',
+
+    // Adicionar padrões dinâmicos
+    { pattern: /bg-(red|blue|green|purple|orange|pink|cyan|indigo|violet)-(100|200|300|400|500|600|700|800|900)/ },
+    { pattern: /text-(red|blue|green|purple|orange|pink|cyan|indigo|violet)-(100|200|300|400|500|600|700|800|900)/ },
+    { pattern: /border-(red|blue|green|purple|orange|pink|cyan|indigo|violet)-(100|200|300|400|500|600|700|800|900)/ },
+    { pattern: /from-(red|blue|green|purple|orange|pink|cyan|indigo|violet)-(100|200|300|400|500|600|700|800|900)/ },
+    { pattern: /to-(amber|indigo|emerald|violet|rose|teal|pink|blue)-(100|200|300|400|500|600|700|800|900)/ },
+
+    // Gradientes específicos mais usados (sem padrões problemáticos)
+    'hover:from-purple-600', 'hover:to-blue-600', 'hover:from-orange-500', 'hover:to-amber-400',
+    'hover:bg-purple-600', 'hover:bg-blue-600', 'hover:text-white', 'hover:text-purple-400',
+
+    // Classes de animação
+    'animate-fade-in', 'animate-scale-in', 'animate-float', 'animate-pulse-glow',
+    'animate-blink', 'animate-gradient', 'animate-bounce', 'animate-spin',
+    'animation-delay-300', 'animation-delay-500', 'animation-complete',
+
+    // Responsividade específica mais comum
+    'sm:text-lg', 'sm:text-xl', 'sm:text-2xl', 'sm:text-3xl', 'sm:text-4xl',
+    'md:text-xl', 'md:text-2xl', 'md:text-3xl', 'md:text-4xl', 'md:text-5xl',
+    'lg:text-2xl', 'lg:text-3xl', 'lg:text-4xl', 'lg:text-5xl', 'lg:text-6xl',
+    'xl:text-3xl', 'xl:text-4xl', 'xl:text-5xl', 'xl:text-6xl', 'xl:text-7xl',
+
+    // Classes customizadas do projeto
+    'gradient-text', 'gradient-text-ai', 'gradient-text-design',
+    'gradient-text-programming', 'gradient-text-marketing',
+    'neon', 'neon-strong', 'stroke-outline', 'underline-light',
+    'btn-neon', 'glass-hover', 'pulse-border', 'corner-glow', 'glow-hover',
+
+    // Classes de starfield e efeitos especiais
+    'star', 'starfield-css', 'word-fade',
+
+    // Classes de revisão e avatares
+    'review-star-fill', 'avatar-glow',
+
+    // Classes de cards especiais
+    'choose-card-special', 'special-badge', 'special-card',
+
+    // Classes do sistema de timeline
+    'timeline-container', 'timeline-dynamic', 'dynamic-step',
+
+    // Utilitários de texto e layout
+    'text-container-center', 'text-content-left', 'flex-center-both',
+    'grid-responsive-cards', 'card-consistent', 'flex-aligned-content',
+    'text-responsive-sm', 'text-responsive-md', 'text-responsive-lg'
   ],
   theme: {
     extend: {
