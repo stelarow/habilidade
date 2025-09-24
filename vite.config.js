@@ -87,7 +87,6 @@ base: '/',
   
   ssr: {
     noExternal: [
-      'phosphor-react',
       '@phosphor-icons/react',
       '@radix-ui/react-dialog',
       '@radix-ui/react-slot',
