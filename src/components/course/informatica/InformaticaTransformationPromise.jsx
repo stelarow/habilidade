@@ -386,6 +386,7 @@ export const InformaticaTransformationPromise = () => {
                   title="Aluno recebendo reconhecimento profissional"
                   className="relative w-full h-auto rounded-2xl shadow-2xl"
                   loading="lazy"
+                  decoding="async"
                 />
               </div>
             </div>
