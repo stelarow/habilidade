@@ -98,6 +98,7 @@ function CoursePage({ slug }) {
         
         if (!foundCourse) {
           setError('Curso não encontrado');
+          setLoading(false);
           return;
         }
 
