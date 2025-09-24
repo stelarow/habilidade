@@ -44,7 +44,6 @@ function CoursePage({ slug }) {
   const { courseSlug } = useParams();
   const loaderData = useLoaderData();
   const finalSlug = slug || courseSlug;
-  const [loading, setLoading] = useState(true);
   const [course, setCourse] = useState(loaderData?.course || null);
   const [error, setError] = useState(null);
   const [activeSection, setActiveSection] = useState('sketchup');
@@ -82,23 +81,17 @@ function CoursePage({ slug }) {
           ...prev,
           course: validatedCourse.basicInfo.title
         }));
-        setLoading(false);
         return;
       }
 
       try {
-        setLoading(true);
         setError(null);
-        
-        // Simula carregamento
-        await new Promise(resolve => setTimeout(resolve, 300));
-        
+
         // Busca curso pelos dados
         const foundCourse = getCourseBySlug(finalSlug, COURSES_DATA);
-        
+
         if (!foundCourse) {
           setError('Curso não encontrado');
-          setLoading(false);
           return;
         }
 
@@ -115,8 +108,6 @@ function CoursePage({ slug }) {
       } catch (err) {
         console.error('Erro ao carregar curso:', err);
         setError('Erro ao carregar dados do curso');
-      } finally {
-        setLoading(false);
       }
     };
 
@@ -214,18 +205,6 @@ function CoursePage({ slug }) {
     }
   };
 
-  // Loading state
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gradient-radial from-gray-900 via-black to-gray-900 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500 mx-auto mb-4"></div>
-          <p className="text-white text-lg">Carregando curso...</p>
-          <p className="text-gray-400 text-sm mt-2">Preparando conteúdo exclusivo...</p>
-        </div>
-      </div>
-    );
-  }
 
   // Error state - Redirect to 404
   if (error || !course) {
