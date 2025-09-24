@@ -159,7 +159,6 @@ const BLOG_SLUGS = [
  */
 const fetchBlogPosts = async () => {
   try {
-    console.log('Loading blog posts from unified bundle for SEO-first build (optimized)');
     
     // Usa dados unificados do bundle otimizado
     const { BLOG_POSTS, BLOG_SLUGS: unifiedSlugs } = await import('../data/posts/index.js');
@@ -195,7 +194,6 @@ const fetchBlogPosts = async () => {
       }
     });
     
-    console.log(`Successfully loaded ${posts.length} blog posts from unified bundle (optimized)`);
     return posts.filter(post => post.slug);
     
   } catch (error) {
@@ -220,7 +218,6 @@ const getBlogPostsFromStaticSlugs = () => {
  */
 const fetchCategories = async () => {
   try {
-    console.log('Loading blog categories from unified bundle (optimized)');
     
     // Usa dados unificados do bundle otimizado
     const { BLOG_POSTS } = await import('../data/posts/index.js');
@@ -246,7 +243,6 @@ const fetchCategories = async () => {
     }
     
     const categories = Array.from(categoriesMap.values());
-    console.log(`Successfully extracted ${categories.length} unique categories from unified bundle (optimized)`);
     return categories;
     
   } catch (error) {
@@ -260,7 +256,6 @@ const fetchCategories = async () => {
  */
 export const generateSitemap = async () => {
   try {
-    console.log('Generating sitemap...');
     
     // Fetch dynamic content
     const [blogPosts, categories] = await Promise.all([
@@ -309,15 +304,7 @@ export const generateSitemap = async () => {
     const fullSitemap = `${sitemapHeader}
 ${sitemapEntries}
 ${sitemapFooter}`;
-    
-    console.log(`Sitemap generated with ${allUrls.length} URLs:`, {
-      static: STATIC_PAGES.length,
-      courses: COURSE_PAGES.length,
-      seoLocal: SEO_LOCAL_PAGES.length,
-      posts: blogPosts.length,
-      categories: categories.length
-    });
-    
+
     return fullSitemap;
     
   } catch (error) {
@@ -353,7 +340,6 @@ export const saveSitemap = async (outputPath = '/public/sitemap.xml') => {
       const fullPath = path.resolve(process.cwd(), outputPath.replace('/public/', 'public/'));
       await fs.promises.writeFile(fullPath, sitemapContent, 'utf8');
       
-      console.log(`Sitemap saved to: ${fullPath}`);
       return fullPath;
     } else {
       // Client-side - return content for download

@@ -12,7 +12,6 @@ import { formatPhoneNumber } from '../../../lib/utils';
 
 // Extraindo StepContent para fora do componente principal para evitar re-criação
 const StepContent = React.memo(({ step, submitStatus, formData, onInputChange, phoneInputRef, messageInputRef }) => {
-  console.log('🔄 StepContent render:', { step, submitStatus, timestamp: Date.now() });
 
   // Autofocus quando mudar de step
   useEffect(() => {
@@ -93,9 +92,7 @@ const StepContent = React.memo(({ step, submitStatus, formData, onInputChange, p
               value={formData.phone}
               maxLength={16} // (XX) 9 XXXX-XXXX = 16 caracteres
               onChange={(e) => {
-                console.log('📞 Phone onChange - Raw value:', e.target.value);
                 const formattedValue = formatPhoneNumber(e.target.value);
-                console.log('📞 Phone onChange - Formatted value:', formattedValue);
                 onInputChange('phone', formattedValue);
               }}
               onKeyDown={(e) => {
@@ -116,7 +113,6 @@ const StepContent = React.memo(({ step, submitStatus, formData, onInputChange, p
 
                 // Bloqueia qualquer tecla que não seja número
                 if (!/[0-9]/.test(e.key)) {
-                  console.log('🚫 Phone onKeyDown - Blocked key:', e.key);
                   e.preventDefault();
                 }
               }}
@@ -155,7 +151,6 @@ const StepContent = React.memo(({ step, submitStatus, formData, onInputChange, p
                 ref={messageInputRef}
                 value={formData.message}
                 onChange={(e) => {
-                  console.log('🔸 Textarea onChange:', { value: e.target.value, timestamp: Date.now() });
                   onInputChange('message', e.target.value);
                 }}
                 placeholder="Deixe uma mensagem sobre suas expectativas, horários preferidos, etc..."
@@ -188,19 +183,10 @@ const StepContent = React.memo(({ step, submitStatus, formData, onInputChange, p
     ))
   );
 
-  console.log('🔍 StepContent memo comparison:', {
-    step: nextProps.step,
-    shouldRerender,
-    prevData: prevProps.formData,
-    nextData: nextProps.formData,
-    timestamp: Date.now()
-  });
-
   return !shouldRerender;
 });
 
 const InformaticaInlineContactForm = () => {
-  console.log('📝 InlineContactForm render:', { timestamp: Date.now() });
 
   const [step, setStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -223,19 +209,16 @@ const InformaticaInlineContactForm = () => {
 
   // Usar useCallback para evitar re-criação da função
   const handleInputChange = useCallback((field, value) => {
-    console.log('⚡ Input change:', { field, value, timestamp: Date.now() });
     setFormData(prev => ({ ...prev, [field]: value }));
   }, []);
 
   const nextStep = useCallback(() => {
-    console.log('⚡ State update:', { action: 'nextStep', currentStep: step, newStep: step + 1, timestamp: Date.now() });
     if (step < totalSteps) {
       setStep(step + 1);
     }
   }, [step, totalSteps]);
 
   const prevStep = useCallback(() => {
-    console.log('⚡ State update:', { action: 'prevStep', currentStep: step, newStep: step - 1, timestamp: Date.now() });
     if (step > 1) {
       setStep(step - 1);
     }

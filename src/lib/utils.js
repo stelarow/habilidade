@@ -15,14 +15,6 @@ export function formatPhoneNumber(value) {
   // Limita a 11 dígitos (2 do DDD + 9 do celular)
   const limitedPhone = phoneNumber.slice(0, 11);
 
-  // Debug log
-  console.log('🔧 formatPhoneNumber:', {
-    input: value,
-    cleaned: phoneNumber,
-    limited: limitedPhone,
-    length: limitedPhone.length
-  });
-
   // Aplica a formatação (XX) 9XXXX-XXXX
   if (limitedPhone.length === 0) {
     return '';
