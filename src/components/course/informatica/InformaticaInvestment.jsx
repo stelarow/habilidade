@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
+import { ScrollReveal, CardGridReveal } from '../../../components/shared/ScrollReveal';
 
 const paymentOptions = [
   {
@@ -51,25 +52,28 @@ export const InformaticaInvestment = () => {
       <div className="container mx-auto max-w-7xl">
         
         {/* Cabeçalho da seção */}
-        <div className="text-center mb-16">
-          
-          <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6">
-            <span className="text-white">INVISTA NO SEU</span>
-            <br />
-            <span className="bg-gradient-to-r from-green-400 via-emerald-500 to-cyan-400 bg-clip-text text-transparent">
-              FUTURO
-            </span>
-          </h2>
-          
-          <p className="text-xl text-zinc-300 max-w-3xl mx-auto leading-relaxed">
-            Um investimento que se paga em poucas semanas. 
-            Profissionais com domínio em informática ganham em média 45% mais.
-          </p>
-        </div>
+        <ScrollReveal animation="fade-up">
+          <div className="text-center mb-16">
+
+            <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6">
+              <span className="text-white">INVISTA NO SEU</span>
+              <br />
+              <span className="bg-gradient-to-r from-green-400 via-emerald-500 to-cyan-400 bg-clip-text text-transparent">
+                FUTURO
+              </span>
+            </h2>
+
+            <p className="text-xl text-zinc-300 max-w-3xl mx-auto leading-relaxed">
+              Um investimento que se paga em poucas semanas.
+              Profissionais com domínio em informática ganham em média 45% mais.
+            </p>
+          </div>
+        </ScrollReveal>
 
         {/* Card principal de preço */}
-        <div className="max-w-4xl mx-auto mb-16">
-          <div className="bg-gradient-to-br from-zinc-800/50 to-zinc-900/50 backdrop-blur-sm border border-zinc-700/50 rounded-3xl overflow-hidden">
+        <ScrollReveal animation="zoom-in" delay={0.2}>
+          <div className="max-w-4xl mx-auto mb-16">
+            <div className="bg-gradient-to-br from-zinc-800/50 to-zinc-900/50 backdrop-blur-sm border border-zinc-700/50 rounded-3xl overflow-hidden">
             
             {/* Cabeçalho do card */}
             <div className="bg-gradient-to-r from-green-500/20 to-emerald-400/20 backdrop-blur-sm border-b border-green-500/30 p-8 text-center">
@@ -193,11 +197,13 @@ export const InformaticaInvestment = () => {
                 </div>
               </div>
             </div>
+            </div>
           </div>
-        </div>
+        </ScrollReveal>
 
         {/* Comparação de valor com design moderno */}
-        <div className="max-w-6xl mx-auto">
+        <ScrollReveal animation="slide-left" delay={0.3}>
+          <div className="max-w-6xl mx-auto">
           <div className="text-center mb-8">
             <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">
               Compare o <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">VALOR</span> do seu investimento
@@ -413,7 +419,8 @@ export const InformaticaInvestment = () => {
               </Card>
             </TabsContent>
           </Tabs>
-        </div>
+          </div>
+        </ScrollReveal>
       </div>
     </section>
   );

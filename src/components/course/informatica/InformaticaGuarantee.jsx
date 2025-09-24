@@ -4,6 +4,7 @@ import { handleCTAClick } from '../../../utils/ctaUtils';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../ui/card';
 import { Badge } from '../../ui/badge';
 import { Alert, AlertDescription } from '../../ui/alert';
+import { ScrollReveal, CardGridReveal } from '../../../components/shared/ScrollReveal';
 
 const guaranteeFeatures = [
   {
@@ -35,21 +36,24 @@ export const InformaticaGuarantee = () => {
       <div className="container mx-auto max-w-6xl relative z-10">
 
         {/* Header Compacto */}
-        <div className="text-center mb-8">
-          <h2 className="text-2xl md:text-4xl font-bold mb-4">
-            <span className="bg-gradient-to-r from-emerald-400 via-green-500 to-cyan-400 bg-clip-text text-transparent">
-              RISCO ZERO
-            </span>
-            <span className="text-white"> PARA VOCÊ</span>
-          </h2>
-          <p className="text-lg text-zinc-300 max-w-2xl mx-auto">
-            Testamos nossa metodologia com mais de 150 alunos. Temos tanta confiança que oferecemos garantia total.
-          </p>
-        </div>
+        <ScrollReveal animation="fade-up">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl md:text-4xl font-bold mb-4">
+              <span className="bg-gradient-to-r from-emerald-400 via-green-500 to-cyan-400 bg-clip-text text-transparent">
+                RISCO ZERO
+              </span>
+              <span className="text-white"> PARA VOCÊ</span>
+            </h2>
+            <p className="text-lg text-zinc-300 max-w-2xl mx-auto">
+              Testamos nossa metodologia com mais de 150 alunos. Temos tanta confiança que oferecemos garantia total.
+            </p>
+          </div>
+        </ScrollReveal>
 
         {/* Card Principal com Badge */}
-        <div className="max-w-4xl mx-auto mb-8">
-          <Card className="bg-gradient-to-br from-emerald-500/20 to-green-400/20 backdrop-blur-sm border-2 border-emerald-500/30 text-center">
+        <ScrollReveal animation="zoom-in" delay={0.2}>
+          <div className="max-w-4xl mx-auto mb-8">
+            <Card className="bg-gradient-to-br from-emerald-500/20 to-green-400/20 backdrop-blur-sm border-2 border-emerald-500/30 text-center">
             <CardHeader className="pb-4">
               <div className="flex items-center justify-center gap-3 mb-4">
                 <div className="w-16 h-16 bg-gradient-to-r from-emerald-500 to-green-400 rounded-full flex items-center justify-center">
@@ -97,11 +101,13 @@ export const InformaticaGuarantee = () => {
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </button>
             </CardContent>
-          </Card>
-        </div>
+            </Card>
+          </div>
+        </ScrollReveal>
 
         {/* Alert com Razões da Garantia */}
-        <div className="max-w-4xl mx-auto">
+        <ScrollReveal animation="slide-right" delay={0.3}>
+          <div className="max-w-4xl mx-auto">
           <Alert className="bg-white/5 border-white/10">
             <Shield className="h-4 w-4 text-emerald-400" />
             <AlertDescription className="text-zinc-300">
@@ -125,7 +131,8 @@ export const InformaticaGuarantee = () => {
               </div>
             </AlertDescription>
           </Alert>
-        </div>
+          </div>
+        </ScrollReveal>
       </div>
     </section>
   );

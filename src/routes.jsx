@@ -21,6 +21,7 @@ const TesteVocacional = React.lazy(() => import('./pages/TesteVocacional'));
 const Informatica = React.lazy(() => import('./pages/courses/Informatica'));
 const Projetista3D = React.lazy(() => import('./pages/courses/Projetista3D'));
 
+
 // Componente para redirecionamento de cursos
 const CourseRedirect = () => {
   const { courseSlug } = useParams();
@@ -107,6 +108,10 @@ export const routes = [
       {
         path: 'cursos/programacao',
         lazy: () => import('./pages/courses/Programacao')
+      },
+      {
+        path: 'cursos/programacao-nova',
+        lazy: () => import('./pages/courses/ProgramacaoNova')
       },
       {
         path: 'cursos/marketing-digital',

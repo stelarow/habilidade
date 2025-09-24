@@ -88,6 +88,27 @@ module.exports = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      animation: {
+        'fade-in': 'fadeIn 0.8s ease-in-out',
+        'slide-up': 'slideUp 0.6s ease-out',
+        'slide-up-delayed': 'slideUp 0.6s ease-out 0.2s both',
+        'float': 'float 3s ease-in-out infinite',
+        'pulse-slow': 'pulse 3s ease-in-out infinite',
+      },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: '0', transform: 'translateY(10px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        slideUp: {
+          '0%': { opacity: '0', transform: 'translateY(20px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        float: {
+          '0%, 100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-5px)' },
+        },
+      },
     },
   },
   plugins: [

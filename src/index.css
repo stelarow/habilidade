@@ -1,5 +1,6 @@
 @import './styles/tailwind-theme.css';
 @import './styles/accessibility.css';
+@import './styles/animations.css';
 @import './styles/curriculum-mobile.css';
 @import './styles/blog-theme.css';
 @import './styles/blog-typography.css';
