@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { 
-  CaretDown, 
-  CaretUp, 
-  Play, 
-  Clock, 
+import {
+  CaretDown,
+  CaretUp,
+  Play,
+  Clock,
   CheckCircle,
   Monitor,
   FileText,
@@ -15,6 +15,7 @@ import {
   BookOpen
 } from '@phosphor-icons/react';
 import { handleCTAClick } from '../../../utils/ctaUtils';
+import { ScrollReveal, CardGridReveal } from '../../../components/shared/ScrollReveal';
 
 // Dados do currículo baseados nos dados reais do coursesData.js
 const curriculum = [
@@ -232,22 +233,29 @@ export const InformaticaCurriculum = () => {
         
         {/* Cabeçalho da seção */}
         <div className="text-center mb-16">
+
+          <ScrollReveal animation="fade-up">
+            <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6">
+              <span className="text-white">O QUE VOCÊ VAI</span>
+              <br />
+              <span className="bg-gradient-to-r from-blue-400 via-blue-600 to-cyan-400 bg-clip-text text-transparent">
+                APRENDER
+              </span>
+            </h2>
+          </ScrollReveal>
           
-          <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6">
-            <span className="text-white">O QUE VOCÊ VAI</span>
-            <br />
-            <span className="bg-gradient-to-r from-blue-400 via-blue-600 to-cyan-400 bg-clip-text text-transparent">
-              APRENDER
-            </span>
-          </h2>
-          
-          <p className="text-xl text-zinc-300 max-w-3xl mx-auto leading-relaxed mb-8">
-            8 módulos completos, {totalLessons} aulas práticas, {totalHours.toFixed(1)} horas de conteúdo. 
-            Do básico ao avançado em informática moderna.
-          </p>
+          <ScrollReveal animation="fade-up" delay={0.2}>
+            <p className="text-xl text-zinc-300 max-w-3xl mx-auto leading-relaxed mb-8">
+              8 módulos completos, {totalLessons} aulas práticas, {totalHours.toFixed(1)} horas de conteúdo.
+              Do básico ao avançado em informática moderna.
+            </p>
+          </ScrollReveal>
 
           {/* Estatísticas do curso */}
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 max-w-2xl mx-auto">
+          <CardGridReveal
+            className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 max-w-2xl mx-auto"
+            staggerDelay={0.1}
+          >
             <div className="bg-zinc-800/50 backdrop-blur-sm border border-zinc-700/50 rounded-xl p-3 sm:p-4">
               <div className="flex items-center justify-center mb-2">
                 <BookOpen className="w-5 h-5 sm:w-6 sm:h-6 text-blue-400" />
@@ -271,20 +279,23 @@ export const InformaticaCurriculum = () => {
               <div className="text-xl sm:text-2xl font-bold text-white">{totalHours.toFixed(1)}h</div>
               <div className="text-xs sm:text-sm text-zinc-400">Duração</div>
             </div>
-          </div>
+          </CardGridReveal>
         </div>
 
         {/* Módulos do curriculum */}
         <div className="space-y-4">
-          {curriculum.map((module) => {
+          {curriculum.map((module, index) => {
             const IconComponent = module.icon;
             const isOpen = openModule === module.id;
-            
+
             return (
-              <div 
+              <ScrollReveal
                 key={module.id}
-                className="bg-gradient-to-br from-zinc-800/50 to-zinc-900/50 backdrop-blur-sm border border-zinc-700/50 rounded-xl overflow-hidden hover:border-blue-500/30 transition-all duration-300"
+                animation="slide-left"
+                delay={index * 0.1}
               >
+                <div className="bg-gradient-to-br from-zinc-800/50 to-zinc-900/50 backdrop-blur-sm border border-zinc-700/50 rounded-xl overflow-hidden hover:border-blue-500/30 transition-all duration-300">
+
                 {/* Cabeçalho do módulo */}
                 <button
                   onClick={() => toggleModule(module.id)}
@@ -367,14 +378,16 @@ export const InformaticaCurriculum = () => {
                     </div>
                   </div>
                 )}
-              </div>
+                </div>
+              </ScrollReveal>
             );
           })}
         </div>
 
         {/* CTA final */}
-        <div className="text-center mt-16">
-          <div className="bg-gradient-to-r from-blue-500/20 to-cyan-400/20 backdrop-blur-sm border border-blue-500/30 rounded-2xl p-8 max-w-3xl mx-auto">
+        <ScrollReveal animation="zoom-in" delay={0.3}>
+          <div className="text-center mt-16">
+            <div className="bg-gradient-to-r from-blue-500/20 to-cyan-400/20 backdrop-blur-sm border border-blue-500/30 rounded-2xl p-8 max-w-3xl mx-auto">
             <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
               Pronto para dominar tudo isso?
             </h3>
@@ -391,8 +404,9 @@ export const InformaticaCurriculum = () => {
               <Play className="w-5 h-5" />
               Ver Detalhes do Curso
             </button>
+            </div>
           </div>
-        </div>
+        </ScrollReveal>
       </div>
     </section>
   );

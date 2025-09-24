@@ -18,6 +18,7 @@ import { Card, CardContent } from "../../ui/card";
 import { Badge } from "../../ui/badge";
 import { Button } from "../../ui/button";
 import { Progress } from "../../ui/progress";
+import { ScrollReveal, CardGridReveal } from '../../../components/shared/ScrollReveal';
 import { Separator } from "../../ui/separator";
 
 const transformationBenefits = [
@@ -119,28 +120,30 @@ export const InformaticaTransformationPromise = () => {
       <div className="container mx-auto max-w-7xl relative z-10">
 
         {/* Cabeçalho da seção */}
-        <div className="text-center mb-16">
+        <ScrollReveal animation="fade-up">
+          <div className="text-center mb-16">
 
-          <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6">
-            <span className="bg-gradient-to-r from-purple-400 via-purple-600 to-cyan-400 bg-clip-text text-transparent">
-              SUA VIDA
-            </span>
-            <br />
-            <span className="text-white">ANTES E DEPOIS</span>
-            <br />
-            <span className="bg-gradient-to-r from-purple-400 via-purple-600 to-cyan-400 bg-clip-text text-transparent">
-              DO CURSO
-            </span>
-          </h2>
+            <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6">
+              <span className="bg-gradient-to-r from-purple-400 via-purple-600 to-cyan-400 bg-clip-text text-transparent">
+                SUA VIDA
+              </span>
+              <br />
+              <span className="text-white">ANTES E DEPOIS</span>
+              <br />
+              <span className="bg-gradient-to-r from-purple-400 via-purple-600 to-cyan-400 bg-clip-text text-transparent">
+                DO CURSO
+              </span>
+            </h2>
 
-          <p className="text-xl text-zinc-300 max-w-3xl mx-auto leading-relaxed">
-            Veja como você estará após dominar completamente a informática moderna.
-            Esta não é apenas uma promessa, é nossa garantia baseada em resultados reais.
-          </p>
-        </div>
+            <p className="text-xl text-zinc-300 max-w-3xl mx-auto leading-relaxed">
+              Veja como você estará após dominar completamente a informática moderna.
+              Esta não é apenas uma promessa, é nossa garantia baseada em resultados reais.
+            </p>
+          </div>
+        </ScrollReveal>
 
         {/* Antes vs Depois */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-20">
+        <CardGridReveal className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-20" staggerDelay={0.2}>
 
           {/* ANTES */}
           <div className="bg-gradient-to-br from-red-500/10 to-orange-500/10 backdrop-blur-sm border border-red-500/20 rounded-2xl p-4 md:p-8">
@@ -181,7 +184,7 @@ export const InformaticaTransformationPromise = () => {
               ))}
             </div>
           </div>
-        </div>
+        </CardGridReveal>
 
         {/* Benefícios da Transformação */}
         <div className="mb-20">
@@ -217,7 +220,8 @@ export const InformaticaTransformationPromise = () => {
         </div>
 
         {/* Nova Timeline de Transformação - Mobile First */}
-        <div className="bg-gradient-to-br from-zinc-800/30 to-zinc-900/30 backdrop-blur-sm border border-zinc-700/50 rounded-2xl p-6 md:p-8 mb-16">
+        <ScrollReveal animation="slide-left" delay={0.3}>
+          <div className="bg-gradient-to-br from-zinc-800/30 to-zinc-900/30 backdrop-blur-sm border border-zinc-700/50 rounded-2xl p-6 md:p-8 mb-16">
           <div className="text-center mb-8 md:mb-12">
             <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
               Sua Jornada de Transformação
@@ -370,7 +374,8 @@ export const InformaticaTransformationPromise = () => {
         </div>
 
         {/* Seção Visual - Reconhecimento */}
-        <div className="mb-16">
+        <ScrollReveal animation="fade-up" delay={0.4}>
+          <div className="mb-16">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="order-2 lg:order-1">
               <div className="relative">
@@ -421,10 +426,12 @@ export const InformaticaTransformationPromise = () => {
               </div>
             </div>
           </div>
-        </div>
+          </div>
+        </ScrollReveal>
 
         {/* CTA de Transformação */}
-        <Card className="bg-gradient-to-r from-purple-500/20 to-cyan-400/20 backdrop-blur-sm border-purple-500/30">
+        <ScrollReveal animation="zoom-in" delay={0.5}>
+          <Card className="bg-gradient-to-r from-purple-500/20 to-cyan-400/20 backdrop-blur-sm border-purple-500/30">
           <CardContent className="text-center p-4 sm:p-6 md:p-8">
             <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-3 sm:mb-4">
               Pronto para sua <span className="bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">TRANSFORMAÇÃO</span>?
@@ -457,7 +464,9 @@ export const InformaticaTransformationPromise = () => {
               </div>
             </div>
           </CardContent>
-        </Card>
+          </Card>
+        </ScrollReveal>
+        </ScrollReveal>
       </div>
     </section>
   );
