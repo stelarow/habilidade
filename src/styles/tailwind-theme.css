@@ -11,4 +11,9 @@
   --color-zinc-800: #27272a;
   --color-zinc-900: #18181b;
   --color-zinc-950: #09090b;
+
+  /* Cores customizadas para página de programação */
+  --color-navy: oklch(0.08 0.02 240);
+  --color-teal: oklch(0.65 0.15 180);
+  --color-hero-gradient: oklch(0.12 0.02 240);
 }

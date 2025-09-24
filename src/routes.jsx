@@ -114,6 +114,10 @@ export const routes = [
         lazy: () => import('./pages/courses/ProgramacaoNova')
       },
       {
+        path: 'cursos/programacao-nova2',
+        lazy: () => import('./pages/courses/ProgramacaoNova2')
+      },
+      {
         path: 'cursos/marketing-digital',
         lazy: () => import('./pages/courses/MarketingDigital')
       },
