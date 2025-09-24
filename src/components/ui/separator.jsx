@@ -6,7 +6,7 @@ function Separator({
   orientation = 'horizontal',
   decorative = true,
   ...props
-) {
+}) {
   return (
     <SeparatorPrimitive.Root
       data-slot="separator"
