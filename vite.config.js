@@ -4,9 +4,6 @@ import path from 'path'
 import { generateSitemap } from "./src/utils/sitemapGenerator.js"
 import { createHtmlPlugin } from 'vite-plugin-html'
 import { createCriticalCssPlugin } from './src/utils/critical-css-plugin.js'
-import { createSSGCriticalCSSPlugin } from './src/utils/ssg-critical-css-plugin.js'
-import { createSafeCopyPlugin } from './src/utils/safe-copy-plugin.js'
-import { createProgressiveHydrationPlugin } from './src/utils/progressive-hydration-plugin.js'
 
 // Custom plugin for sitemap generation
 const sitemapPlugin = () => {
@@ -59,12 +56,8 @@ export default defineConfig({
   plugins: [
     react(),
     sitemapPlugin(),
-    ssgProgressPlugin(), // Log SSG build progress without force exit
-    createSafeCopyPlugin(), // Safe copy plugin to handle file copying with retry
-    createProgressiveHydrationPlugin(), // Progressive hydration optimization
-    // Critical CSS plugins in correct order
-    createCriticalCssPlugin(), // Analyzes bundles and prepares for SSG
-    createSSGCriticalCSSPlugin(), // Post-processes HTML after SSG
+    ssgProgressPlugin(),
+    createCriticalCssPlugin(), // Analyzes bundles - simplified version
     createHtmlPlugin({
       minify: process.env.DEBUG_BUILD !== 'true'
     })
