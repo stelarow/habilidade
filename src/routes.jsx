@@ -103,11 +103,17 @@ export const routes = [
       // },
       {
         path: 'cursos/design-grafico',
-        lazy: () => import('./pages/courses/DesignGrafico')
+        lazy: async () => {
+          const { default: Component, loader } = await import('./pages/courses/DesignGrafico');
+          return { Component, loader };
+        }
       },
       {
         path: 'cursos/programacao',
-        lazy: () => import('./pages/courses/Programacao')
+        lazy: async () => {
+          const { default: Component, loader } = await import('./pages/courses/Programacao');
+          return { Component, loader };
+        }
       },
       {
         path: 'cursos/programacao-nova',
@@ -119,15 +125,24 @@ export const routes = [
       },
       {
         path: 'cursos/marketing-digital',
-        lazy: () => import('./pages/courses/MarketingDigital')
+        lazy: async () => {
+          const { default: Component, loader } = await import('./pages/courses/MarketingDigital');
+          return { Component, loader };
+        }
       },
       {
         path: 'cursos/inteligencia-artificial',
-        lazy: () => import('./pages/courses/InteligenciaArtificial')
+        lazy: async () => {
+          const { default: Component, loader } = await import('./pages/courses/InteligenciaArtificial');
+          return { Component, loader };
+        }
       },
       {
         path: 'cursos/excel-avancado-business-intelligence',
-        lazy: () => import('./pages/courses/BusinessIntelligence')
+        lazy: async () => {
+          const { default: Component, loader } = await import('./pages/courses/BusinessIntelligence');
+          return { Component, loader };
+        }
       },
       // Redirect 301: business-intelligence → excel-avancado-business-intelligence
       {
@@ -141,11 +156,17 @@ export const routes = [
       // },
       {
         path: 'cursos/edicao-video',
-        lazy: () => import('./pages/courses/EdicaoVideo')
+        lazy: async () => {
+          const { default: Component, loader } = await import('./pages/courses/EdicaoVideo');
+          return { Component, loader };
+        }
       },
       {
         path: 'cursos/administracao',
-        lazy: () => import('./pages/courses/Administracao')
+        lazy: async () => {
+          const { default: Component, loader } = await import('./pages/courses/Administracao');
+          return { Component, loader };
+        }
       },
       {
         path: 'contato',
