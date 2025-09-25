@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposta de Orçamento - Condomínio Grand Ville</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 40px 30px;
+            border-radius: 20px 20px 0 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+            font-weight: 300;
+            position: relative;
+            z-index: 1;
+        }
+
+        .content {
+            background: white;
+            padding: 0;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .professional-info {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 30px;
+            border-bottom: 3px solid #2a5298;
+        }
+
+        .professional-info h2 {
+            color: #2a5298;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            display: flex;
+            align-items: center;
+        }
+
+        .professional-info h2::before {
+            content: '👨‍💼';
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        .client-info {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+            padding: 30px;
+            border-bottom: 3px solid #f39c12;
+        }
+
+        .client-info h2 {
+            color: #d68910;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            display: flex;
+            align-items: center;
+        }
+
+        .client-info h2::before {
+            content: '🏢';
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        .section {
+            padding: 40px 30px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .section:last-child {
+            border-bottom: none;
+        }
+
+        .section h2 {
+            color: #2a5298;
+            margin-bottom: 25px;
+            font-size: 2em;
+            text-align: center;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            border-radius: 2px;
+        }
+
+        .price-card {
+            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .price-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .price-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            border-color: #f39c12;
+        }
+
+        .price-card:hover::before {
+            left: 100%;
+        }
+
+        .price-card h3 {
+            color: #2a5298;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .price-card h3::before {
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        .basic-package h3::before { content: '📐'; }
+        .render-package h3::before { content: '📸'; }
+        .complete-package h3::before { content: '🎯'; }
+
+        .price {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #e67e22;
+            text-align: center;
+            margin: 20px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .details {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #2a5298;
+        }
+
+        .details h4 {
+            color: #2a5298;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .details ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .details li {
+            padding: 8px 0;
+            border-bottom: 1px solid #dee2e6;
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .details li:last-child {
+            border-bottom: none;
+        }
+
+        .details li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #28a745;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .hours-breakdown {
+            background: linear-gradient(135deg, #e8f5e8 0%, #d4edda 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 2px solid #28a745;
+        }
+
+        .hours-breakdown h4 {
+            color: #155724;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 1.4em;
+        }
+
+        .hour-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #c3e6cb;
+        }
+
+        .hour-item:last-child {
+            border-bottom: none;
+            font-weight: bold;
+            font-size: 1.1em;
+            color: #155724;
+        }
+
+        .complete-package {
+            border: 3px solid #f39c12;
+            position: relative;
+        }
+
+        .complete-package::after {
+            content: '⭐ MAIS POPULAR';
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            margin-top: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .footer h3 {
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            font-size: 1.1em;
+        }
+
+        .contact-item::before {
+            margin-right: 8px;
+            font-size: 1.2em;
+        }
+
+        .email::before { content: '📧'; }
+        .phone::before { content: '📱'; }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .section {
+                padding: 20px 15px;
+            }
+
+            .contact-info {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .price {
+                font-size: 2em;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+
+            .container {
+                box-shadow: none;
+            }
+
+            .price-card:hover {
+                transform: none;
+            }
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #f39c12;
+            margin: 20px 0;
+        }
+
+        .highlight h4 {
+            color: #856404;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .payment-terms {
+            background: linear-gradient(135deg, #e8f5e8 0%, #d4edda 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border: 3px solid #28a745;
+            box-shadow: 0 8px 25px rgba(40, 167, 69, 0.2);
+        }
+
+        .payment-terms h2 {
+            color: #155724;
+            margin-bottom: 25px;
+            font-size: 2em;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .payment-terms h2::before {
+            content: '💰';
+            margin-right: 15px;
+            font-size: 1.2em;
+        }
+
+        .payment-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .payment-item {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid #28a745;
+        }
+
+        .payment-item h4 {
+            color: #155724;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .payment-item h4::before {
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        .payment-50::before { content: '1️⃣'; }
+        .delivery-50::before { content: '2️⃣'; }
+
+        .payment-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #28a745;
+            margin: 10px 0;
+        }
+
+        .deadline-info {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border-left: 5px solid #f39c12;
+            text-align: center;
+        }
+
+        .deadline-info h4 {
+            color: #856404;
+            font-size: 1.4em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .deadline-info h4::before {
+            content: '⏰';
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        .deadline-value {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #d68910;
+            margin: 10px 0;
+        }
+
+        @media (max-width: 768px) {
+            .payment-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>PROPOSTA DE ORÇAMENTO</h1>
+            <p class="subtitle">Modelagem 3D e Visualização Profissional</p>
+        </div>
+
+        <div class="content">
+            <div class="professional-info">
+                <h2>Profissional Responsável</h2>
+                <p><strong>Alessandro Ferreira</strong></p>
+                <p>Especialista em Modelagem 3D e Renderização</p>
+            </div>
+
+            <div class="client-info">
+                <h2>Cliente</h2>
+                <p><strong>Condomínio Grand Ville - Residencial Clube Adair Francisco Thiesen</strong></p>
+                <p>📍 R. Nereu Ghizoni, 890 - Guarda do Cubatão</p>
+                <p>Palhoça - SC, 88135-360</p>
+            </div>
+
+            <div class="section">
+                <h2>🎯 PROJETO 3D DEMONSTRATIVO - SKETCHUP</h2>
+
+                <div class="price-card basic-package">
+                    <h3>Modelagem Completa</h3>
+                    <div class="price">R$ 3.360,00</div>
+
+                    <div class="highlight">
+                        <h4>💼 Investimento Total</h4>
+                        <p><strong>42 horas × R$ 80/hora = R$ 3.360,00</strong></p>
+                    </div>
+
+                    <div class="hours-breakdown">
+                        <h4>⏱️ Detalhamento das Horas</h4>
+                        <div class="hour-item">
+                            <span>🚧 Modelagem Cancela e Guaritas</span>
+                        </div>
+                        <div class="hour-item">
+                            <span>🏆 Modelagem 2 Quadras</span>
+                        </div>
+                        <div class="hour-item">
+                            <span>🌿 Modelagem Paisagismo</span>
+                        </div>
+                        <div class="hour-item">
+                            <span>🔄 Revisões e Ajustes (até 3 alterações)</span>
+                        </div>
+                        <div class="hour-item">
+                            <span>🏘️ Modelagem dos Arredores (Volumetria Básica)</span>
+                        </div>
+                        <div class="hour-item">
+                            <span><strong>TOTAL: 42 HORAS</strong></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>📸 PACOTE DE RENDERIZAÇÕES</h2>
+
+                <div class="price-card render-package">
+                    <h3>Pacote Básico</h3>
+                    <div class="price">R$ 600,00</div>
+
+                    <div class="details">
+                        <h4>📦 Incluso no Pacote:</h4>
+                        <ul>
+                            <li>3 Fotos Renderizadas Ultra Realistas</li>
+                            <li>Vídeo de Montagem (8 segundos)</li>
+                            <li>Qualidade profissional e impactante</li>
+                            <li>Formatos otimizados para apresentação</li>
+                        </ul>
+                    </div>
+
+                    <div class="highlight">
+                        <h4>💡 Detalhamento do Investimento</h4>
+                        <p>R$ 200 por imagem + <strong>vídeo de brinde</strong></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🎯 PACOTE COMPLETO</h2>
+
+                <div class="price-card complete-package">
+                    <h3>Solução Completa Premium</h3>
+                    <div class="price">R$ 2.000,00</div>
+
+                    <div class="details">
+                        <h4>🎁 Tudo Incluído:</h4>
+                        <ul>
+                            <li>10 Fotos Renderizadas Ultra Realistas</li>
+                            <li>Vídeo de Montagem Profissional (8 segundos)</li>
+                            <li>Página Web Exclusiva com Logo da Empresa</li>
+                            <li>Galeria de Imagens Integrada</li>
+                            <li>Imagem 360° Interativa</li>
+                            <li>Design Responsivo para Todos Dispositivos</li>
+                            <li>Hospedagem Inclusa por 1 ano</li>
+                        </ul>
+                    </div>
+
+                    <div class="highlight">
+                        <h4>🎯 Valor Excepcional</h4>
+                        <p>R$ 200 por imagem + <strong>Página Web Impactante</strong> + <strong>Vídeo de Montagem</strong> + <strong>Imagem 360° de brinde</strong></p>
+                    </div>
+
+                    <div class="details">
+                        <h4>⭐ Benefícios Exclusivos:</h4>
+                        <ul>
+                            <li>Apresentação profissional para investidores</li>
+                            <li>Material de marketing de alta qualidade</li>
+                            <li>Experiência imersiva 360°</li>
+                            <li>Facilita vendas e locações</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="payment-terms">
+                <h2>Condições de Pagamento</h2>
+
+                <div class="payment-grid">
+                    <div class="payment-item">
+                        <h4 class="payment-50">Aprovação do Projeto</h4>
+                        <div class="payment-value">50% do valor total</div>
+                        <p>Pagamento na assinatura do contrato</p>
+                    </div>
+
+                    <div class="payment-item">
+                        <h4 class="delivery-50">Entrega do Projeto</h4>
+                        <div class="payment-value">50% do valor total</div>
+                        <p>Pagamento na conclusão e entrega</p>
+                    </div>
+                </div>
+
+                <div class="deadline-info">
+                    <h4>Prazo de Entrega</h4>
+                    <div class="deadline-value">7 dias corridos</div>
+                    <p>A partir da aprovação do projeto e confirmação do primeiro pagamento</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <h3>📞 Informações de Contato</h3>
+            <div class="contact-info">
+                <div class="contact-item email">
+                    <span>alessandrobatisp@gmail.com</span>
+                </div>
+                <div class="contact-item phone">
+                    <span>(48) 99999-9999</span>
+                </div>
+            </div>
+            <p style="margin-top: 20px; opacity: 0.8;">
+                Orçamento válido por 30 dias • Todas as condições podem ser negociadas
+            </p>
+        </div>
+    </div>
+</body>
+</html>

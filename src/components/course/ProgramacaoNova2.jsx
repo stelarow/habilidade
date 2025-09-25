@@ -3,7 +3,9 @@ import { CompanyLogos } from "./programacao/CompanyLogos"
 import { PlatformSection } from "./programacao/PlatformSection"
 import { AISection } from "./programacao/AISection"
 import { FrameworksSection } from "./programacao/FrameworksSection"
+import { InvestmentSection } from "./programacao/InvestmentSection"
 import { TestimonialSection } from "./programacao/TestimonialSection"
+import { FAQSection } from "./programacao/FAQSection"
 
 export function ProgramacaoNova2() {
   return (
@@ -13,7 +15,9 @@ export function ProgramacaoNova2() {
       <PlatformSection />
       <AISection />
       <FrameworksSection />
+      <InvestmentSection />
       <TestimonialSection />
+      <FAQSection />
     </main>
   )
 }
