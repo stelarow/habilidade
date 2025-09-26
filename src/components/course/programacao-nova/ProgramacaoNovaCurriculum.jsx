@@ -247,7 +247,7 @@ const curriculum = [
     color: 'from-pink-500 to-pink-600',
     lessons: [
       { id: 151, title: 'Introdução à IA para Programadores', duration: '90 min' },
-      { id: 152, title: 'GitHub Copilot', duration: '90 min' },
+      { id: 152, title: 'Claude Code', duration: '90 min' },
       { id: 153, title: 'ChatGPT para Código', duration: '90 min' },
       { id: 154, title: 'Code Review com IA', duration: '90 min' },
       { id: 155, title: 'Geração de Testes', duration: '90 min' },

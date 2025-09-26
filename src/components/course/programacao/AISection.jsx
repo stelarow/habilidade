@@ -15,19 +15,24 @@ export function AISection() {
               como desenvolvedor
             </h2>
             <p className="text-lg text-white/80 mb-8 text-pretty">
-              Metodologia comprovada com 6 linguagens essenciais: Lógica, Python, Java, PHP, Android e Cursor IA.
+              Metodologia comprovada com 6 disciplinas essenciais: Lógica, Python, Java, PHP, Android e claude code.
               Crie um portfólio completo e desenvolva habilidades valorizadas pelo mercado.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" className="bg-teal text-navy hover:bg-teal/90 w-full sm:w-auto">
-                Ver grade curricular
+              <Button 
+                size="lg" 
+                className="bg-teal text-navy hover:bg-teal/90 w-full sm:w-auto"
+                onClick={() => window.open('https://wa.me/5548988559491', '_blank')}
+              >
+                Falar com um especialista
               </Button>
               <Button
                 variant="outline-light"
                 size="lg"
                 className="w-full sm:w-auto"
+                onClick={() => window.open('https://wa.me/5548988559491', '_blank')}
               >
-                Projetos do curso
+                Agendar primeira aula Grátis
               </Button>
             </div>
           </div>
@@ -42,7 +47,7 @@ export function AISection() {
             <div className="space-y-1 min-w-0">
               <div className="text-blue-400 break-words"># Projeto Sistema de Cadastro</div>
               <div className="text-green-400 break-words">def criar_usuario(nome, email):</div>
-              <div className="text-white ml-2 sm:ml-4 break-words">usuario = {'{"nome": nome, "email": email}'}</div>
+              <div className="text-white ml-2 sm:ml-4 break-words">usuario = {'{\"nome\": nome, \"email\": email}'}</div>
               <div className="text-white ml-2 sm:ml-4 break-words">salvar_database(usuario)</div>
               <div className="text-green-400 break-words">    return "Usuário criado com sucesso!"</div>
               <div className="text-gray-400 break-words"># Conectando com MySQL...</div>
@@ -59,7 +64,7 @@ export function AISection() {
           </div>
           <div>
             <div className="text-2xl sm:text-3xl font-bold mb-2 text-teal">6</div>
-            <div className="text-xs sm:text-sm text-white/60">Linguagens diferentes</div>
+            <div className="text-xs sm:text-sm text-white/60">Disciplinas diferentes</div>
           </div>
           <div>
             <div className="text-2xl sm:text-3xl font-bold mb-2 text-teal">92</div>

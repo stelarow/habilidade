@@ -11,12 +11,10 @@ export function HeroSection() {
           {/* Coluna Esquerda - Conteúdo */}
           <div className="text-center lg:text-left">
             <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 text-balance text-white">
-              Programação
-              <br />
-              Completa Full-Stack
+              Curso de programação em são josé e grande florianópolis
             </h1>
             <p className="text-lg lg:text-xl text-white/80 mb-6 text-pretty">
-              Domine Lógica, Python, Java, PHP, Android e Cursor IA para desenvolvimento completo.
+              Domine Lógica, Python, Java, PHP, Android e Claude Code para desenvolvimento completo.
               6 módulos completos para iniciar sua carreira como programador.
             </p>
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-6 mb-8 text-sm text-white/70">
@@ -37,8 +35,8 @@ export function HeroSection() {
               <Button size="lg" className="bg-teal text-navy hover:bg-teal/90 font-semibold px-8 w-full sm:w-auto">
                 Começar agora
               </Button>
-              <Button variant="ghost-light" size="lg" className="flex items-center gap-2 w-full sm:w-auto justify-center">
-                <div className="w-4 h-4 border-l-[6px] border-l-white border-y-[4px] border-y-transparent flex-shrink-0"></div>
+              <Button variant="outline" size="lg" className="flex items-center gap-2 w-full sm:w-auto justify-center border-white text-white hover:bg-white hover:text-navy">
+                <div className="w-4 h-4 border-l-[6px] border-l-current border-y-[4px] border-y-transparent flex-shrink-0"></div>
                 Ver grade curricular
               </Button>
             </div>
@@ -78,7 +76,7 @@ export function HeroSection() {
                     </div>
                     <div className="flex items-center gap-2">
                       <span className="text-teal-600 flex-shrink-0">6.</span>
-                      <span className="text-gray-800 min-w-0">Cursor IA (15h)</span>
+                      <span className="text-gray-800 min-w-0">Claude Code (15h)</span>
                     </div>
                     <div className="bg-gray-900 text-green-400 p-2 sm:p-3 rounded mt-4 space-y-1">
                       <div className="text-xs sm:text-sm">$ Carreira: Desenvolvedor Full-Stack</div>
@@ -86,7 +84,7 @@ export function HeroSection() {
                       <div className="text-xs sm:text-sm">$ Status: Qualificado para vagas</div>
                       <SalaryTooltip>
                         <div className="text-teal-400 cursor-help border-b border-dotted border-teal-400 text-xs sm:text-sm">
-                          $ Média salarial júnior: R$ 4.154* ℹ️
+                          $ Média salarial júnior: R$ 4.154* ⓘ
                         </div>
                       </SalaryTooltip>
                     </div>

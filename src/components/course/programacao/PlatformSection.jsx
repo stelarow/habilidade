@@ -22,10 +22,10 @@ export function PlatformSection() {
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto text-center mb-16">
           <h2 className="text-3xl lg:text-4xl font-bold mb-6">
-            A plataforma completa para se tornar desenvolvedor
+            O curso de programação completo em são josé, presencial para você se transformar em um programador full stack
           </h2>
           <p className="text-lg text-muted-foreground">
-            Do planejamento ao deploy, aprenda todo o ciclo de desenvolvimento com metodologia comprovada
+            Do planejamento ao deploy, aprenda todo o ciclo de desenvolvimento com metodologia prática.
           </p>
         </div>
 

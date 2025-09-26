@@ -19,8 +19,8 @@ export function FAQSection() {
     },
     {
       id: 4,
-      question: 'O que é o Cursor e quando estará disponível?',
-      answer: 'Cursor é um IDE com IA integrada para desenvolvimento. O conteúdo programático está sendo desenvolvido pela equipe.'
+      question: 'O que é o Claude Code e quando estará disponível?',
+      answer: 'Claude Code é uma ferramenta de IA para desenvolvimento de código. O conteúdo programático está sendo desenvolvido pela equipe.'
     }
   ]
 

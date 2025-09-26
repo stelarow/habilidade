@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import { CountdownTimer } from "@/components/shared/CountdownTimer"
 
 export function InvestmentSection() {
   return (
@@ -11,7 +12,7 @@ export function InvestmentSection() {
             Transforme sua carreira
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Invista no seu futuro como programador com o curso mais completo da região
+            Invista no seu futuro como programador com o curso mais completo da grande florianópolis
           </p>
         </div>
 
@@ -20,8 +21,19 @@ export function InvestmentSection() {
             {/* Badge de desconto */}
             <div className="absolute -top-3 -right-3">
               <Badge className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 text-sm font-bold">
-                40% OFF
+                32% OFF
               </Badge>
+            </div>
+
+            {/* Contador de promoção */}
+            <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+              <p className="text-sm font-semibold text-yellow-800 mb-2">🔥 Promoção válida por apenas:</p>
+              <CountdownTimer 
+                className="justify-center"
+                textClassName="text-yellow-600" 
+                bgClassName="bg-yellow-100"
+              />
+              <p className="text-xs text-yellow-700 mt-2">Oferta expira toda segunda-feira</p>
             </div>
 
             <div className="mb-6">
@@ -32,10 +44,14 @@ export function InvestmentSection() {
             {/* Preços */}
             <div className="mb-8">
               <div className="flex items-center justify-center gap-3 mb-2">
-                <span className="text-lg text-muted-foreground line-through">De R$ 1.497</span>
-                <span className="text-4xl font-bold text-teal">R$ 897</span>
+                <span className="text-lg text-muted-foreground line-through">De R$ 6.998</span>
+                <span className="text-4xl font-bold text-teal">R$ 4.788</span>
               </div>
-              <p className="text-sm text-muted-foreground">ou 12x de R$ 89,70 sem juros</p>
+              <div className="space-y-1">
+                <p className="text-sm text-muted-foreground">12x sem juros no boleto: R$ 399</p>
+                <p className="text-sm text-muted-foreground">10x sem juros no cartão: R$ 478,80</p>
+                <p className="text-sm font-semibold text-green-600">À vista com + 6% de desconto: R$ 4.501</p>
+              </div>
             </div>
 
             {/* Terminal de desconto */}
@@ -48,8 +64,8 @@ export function InvestmentSection() {
               </div>
               <div className="text-left space-y-1">
                 <div className="text-green-400">$ calcular_economia()</div>
-                <div className="text-white">Economia: R$ 600,00</div>
-                <div className="text-white">Desconto: 40%</div>
+                <div className="text-white">Economia: R$ 2.210,00</div>
+                <div className="text-white">Desconto: 32%</div>
                 <div className="text-teal">Status: ✓ Promoção ativa!</div>
               </div>
             </div>

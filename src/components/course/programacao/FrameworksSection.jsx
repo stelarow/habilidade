@@ -139,13 +139,13 @@ export function FrameworksSection() {
     },
     {
       id: 6,
-      title: 'Cursor IA',
-      description: 'Desenvolvimento assistido por Inteligência Artificial com Cursor IDE',
+      title: 'Claude Code',
+      description: 'Desenvolvimento assistido por Inteligência Artificial com Claude Code',
       duration: '15 horas',
       color: 'bg-teal-500',
       icon: <Robot size={16} className="text-teal-500" />,
       lessons: [
-        { id: 83, title: 'Introdução ao Cursor IDE', duration: '90 min', type: 'theory' },
+        { id: 83, title: 'Introdução ao Claude Code', duration: '90 min', type: 'theory' },
         { id: 84, title: 'Configuração e Primeiros Passos', duration: '90 min', type: 'practice' },
         { id: 85, title: 'IA Assistant para Programação', duration: '90 min', type: 'practice' },
         { id: 86, title: 'Geração Automática de Código', duration: '90 min', type: 'practice' },
@@ -154,7 +154,7 @@ export function FrameworksSection() {
         { id: 89, title: 'Documentação Automatizada', duration: '90 min', type: 'theory' },
         { id: 90, title: 'Testes Unitários com IA', duration: '90 min', type: 'practice' },
         { id: 91, title: 'Otimização de Performance com IA', duration: '90 min', type: 'practice' },
-        { id: 92, title: 'Projeto Final: App Completo com Cursor', duration: '90 min', type: 'project' },
+        { id: 92, title: 'Projeto Final: App Completo com Claude Code', duration: '90 min', type: 'project' },
       ],
     }
   ]
