@@ -54,65 +54,37 @@ const ssgProgressPlugin = () => {
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
-    react({ 
-      jsxRuntime: 'automatic',
-      jsxImportSource: 'react'
-    }),
-    
-    // Plugin para geração do sitemap com todas as rotas e posts
+    react(),
     sitemapPlugin(),
-    
-    // Plugin para mostrar progresso do SSG
     ssgProgressPlugin(),
-    
-    // Otimização de CSS crítico - experimental
-    process.env.NODE_ENV === 'production' && {
-      name: 'critical-css',
-      generateBundle(options, bundle) {
-        // Plugin customizado para CSS crítico
-      }
-    }
-  ].filter(Boolean),
+    createCriticalCssPlugin(), // Analyzes bundles - simplified version
+    createHtmlPlugin({
+      minify: process.env.DEBUG_BUILD !== 'true'
+    })
+  ],
 
+base: '/',
+
+  // Definições condicionais baseadas em DEBUG_BUILD
   define: {
-    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
-    'process.env.DEBUG_BUILD': JSON.stringify(process.env.DEBUG_BUILD || 'false')
+    __DEV__: process.env.DEBUG_BUILD === 'true',
+    'process.env.NODE_ENV': JSON.stringify(process.env.DEBUG_BUILD === 'true' ? 'development' : 'production')
   },
 
   resolve: {
+    dedupe: ['react', 'react-dom'],
     alias: {
-      '@': path.resolve(__dirname, 'src'),
-      'react': 'react',
-      'react-dom': 'react-dom'
+      "@": path.resolve(__dirname, "./src")
     }
   },
 
-  css: {
-    postcss: {
-      plugins: [
-        // PostCSS plugins são configurados via postcss.config.js
-      ]
-    }
-  },
-
-  // Configurações específicas para SSG
-  ssgOptions: {
-    script: 'async',
-    formatting: 'minify',
-    format: 'esm',
-    mock: false,
-    entry: path.resolve(__dirname, 'src/main.jsx'),
-    dirStyle: 'nested'
-  },
-
+  //
   server: {
-    port: 3000,
-    host: true,
-    open: true,
-    cors: true,
     hmr: {
-      overlay: true
-    }
+      overlay: false
+    },
+    // Configuração para SPA - redirecionar todas as rotas para index.html
+    historyApiFallback: true
   },
 
   // Configurações de build otimizadas
@@ -127,42 +99,42 @@ export default defineConfig({
           // 1. React vendor (essencial) - Fase 1
           if (id.includes('node_modules/react/') ||
               id.includes('node_modules/react-dom/')) {
+            console.log('✅ REACT VENDOR CHUNK:', id);
             return 'react-vendor';
           }
-          
+
           // 2. Router separado - Fase 1
           if (id.includes('node_modules/react-router-dom/')) {
+            console.log('✅ ROUTER CHUNK:', id);
             return 'router';
           }
           
-          // 3. Bibliotecas pesadas - permitir chunks maiores
-          if (id.includes('node_modules/html2canvas/') ||
-              id.includes('node_modules/jspdf/')) {
-            return 'heavy-libs';
-          }
-          
+          // 3. Bibliotecas pesadas - REMOVIDO: Permitir lazy loading verdadeiro
+          // html2canvas e jspdf agora são carregados dinamicamente apenas quando necessário
+
           // 4. Serviços externos - Fase 1 (mais conservador)
           if (id.includes('node_modules/@emailjs/')) {
+            console.log('✅ EXTERNAL SERVICES CHUNK:', id);
             return 'external-services';
           }
-          
+
           // 5. OTIMIZAÇÃO: Dados do blog unificados
           if (id.includes('/data/posts/') && (id.includes('.json') || id.includes('index.js'))) {
+            console.log('📝 BLOG DATA CHUNK:', id);
             return 'blog-data';
           }
-          
-          // 6. Consolidar marked e highlight.js em chunk de conteúdo
+
+          // IMPORTANTE: NÃO dividir marked e highlight.js inicialmente
+          // Eles podem ser necessários para renderização do blog
           if (id.includes('node_modules/marked/') ||
               id.includes('node_modules/highlight.js/')) {
-            return 'content-libs';
+            console.log('⚠️ KEEPING IN MAIN BUNDLE (blog critical):', id);
+            return undefined; // Manter no bundle principal
           }
+
+          // Log para outros modules importantes
           
-          // 7. Outras bibliotecas node_modules em chunk comum
-          if (id.includes('node_modules/')) {
-            return 'vendor-libs';
-          }
-          
-          // Retornar undefined para manter no bundle principal
+          // Retornar undefined para manter no bundle principal (mais seguro)
           return undefined;
         },
         // Nomes consistentes para cache
@@ -188,8 +160,8 @@ export default defineConfig({
       }
     },
     
-    // Limite de chunk size ajustado para valor moderno
-    chunkSizeWarningLimit: process.env.DEBUG_BUILD === 'true' ? 10000 : 1500,
+    // Otimizações de tamanho agressivas (desabilitadas no debug)
+    chunkSizeWarningLimit: process.env.DEBUG_BUILD === 'true' ? 10000 : 500, // Limite maior para debug
     sourcemap: process.env.DEBUG_BUILD === 'true' ? true : false, // Sourcemaps para debug
     cssCodeSplit: true,
     
@@ -200,52 +172,66 @@ export default defineConfig({
       // Progressive hydration: only preload critical chunks
       resolveDependencies: (url, deps, { hostType }) => {
         const criticalChunks = ['react-vendor', 'router', 'external-services'];
-        return deps.filter(dep => 
-          criticalChunks.some(chunk => dep.includes(chunk))
+        return deps.filter(dep =>
+          criticalChunks.some(chunk => dep.includes(chunk)) ||
+          dep.includes('main') ||
+          dep.includes('index')
         );
       }
     },
     
-    // Configurações de saída
-    outDir: 'dist',
-    assetsDir: 'assets',
-    emptyOutDir: true,
-    copyPublicDir: true
+    // Tree shaking agressivo
+    treeshake: {
+      moduleSideEffects: false,
+      propertyReadSideEffects: false,
+      unknownGlobalSideEffects: false
+    }
   },
 
-  // Configurações específicas para SSR/SSG
   ssr: {
-    noExternal: ['phosphor-react', '@phosphor-icons/react']
+    noExternal: [
+      '@phosphor-icons/react',
+      '@radix-ui/react-dialog',
+      '@radix-ui/react-slot',
+      '@radix-ui/react-label',
+      '@radix-ui/react-progress',
+      '@radix-ui/react-separator',
+      '@radix-ui/react-tabs',
+      '@radix-ui/react-icons',
+      'class-variance-authority'
+    ]
   },
 
-  // Configurações de preview
-  preview: {
-    port: 4173,
-    host: true,
-    open: true
-  },
-
-  // Otimizações de dependências
+  // Pre-bundling de dependências otimizado
   optimizeDeps: {
     include: [
-      'react',
-      'react-dom',
+      'react/jsx-runtime',
+      'react-dom/client',
       'react-router-dom',
       '@emailjs/browser'
     ],
     exclude: [
-      'html2canvas', // Carregamento dinâmico
-      'jspdf'        // Carregamento dinâmico
+      '@vite/client',
+      '@vite/env',
+      // Lazy load heavy libraries
+      'html2canvas',
+      'jspdf',
+      'highlight.js',
+      'framer-motion'
     ],
-    esbuildOptions: {
-      target: 'es2020'
-    }
+    // Force rebuild when dependencies change
+    force: false
   },
 
-  // Configurações experimentais para performance
-  experimental: {
-    renderBuiltUrl(filename) {
-      return `./${filename}`;
+  // CSS otimizado para mobile performance com code splitting avançado
+  css: {
+    devSourcemap: false,
+    modules: false,
+    // Configurações avançadas para otimização de CSS
+    preprocessorOptions: {
+      css: {
+        charset: false // Remove charset declarations for smaller files
+      }
     }
   }
 })
