@@ -33,14 +33,6 @@ function Header() {
 
   return (
     <>
-      {/* Skip Links */}
-      <a 
-        href="#main-content" 
-        className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-fuchsia-600 text-white px-4 py-2 rounded-md z-[60] transition-all"
-      >
-        Pular para o conteúdo principal
-      </a>
-      
       <header className="fixed top-0 w-full bg-zinc-900/70 backdrop-blur-md z-50 border-b border-gray-800/50" role="banner">
         <div className="mx-auto max-w-7xl px-4">
           <div className="flex items-center justify-between h-16 min-h-[4rem] flex-nowrap">

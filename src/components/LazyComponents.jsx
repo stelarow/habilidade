@@ -79,8 +79,8 @@ export const LazyContactForm = withLazy(ContactForm, <FormFallback />);
 export const LazyCourseContactForm = withLazy(CourseContactForm, <FormFallback />);
 export const LazySmartImageUpload = withLazy(SmartImageUpload, <ComponentFallback height="150px" />);
 
-export const LazyMegaMenu = withLazy(MegaMenu, <MenuFallback />);
-export const LazyMobileMegaMenu = withLazy(MobileMegaMenu, <MenuFallback />);
+export const LazyMegaMenu = withLazy(MegaMenu, null);
+export const LazyMobileMegaMenu = withLazy(MobileMegaMenu, null);
 
 // Preload functions for critical components
 export const preloadCriticalComponents = () => {

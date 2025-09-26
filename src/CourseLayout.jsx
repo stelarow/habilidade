@@ -5,7 +5,6 @@ import QueryProvider from './providers/QueryProvider';
 import ErrorBoundary from './components/ErrorBoundary';
 import Footer from './components/Footer';
 import Header from './components/Header';
-import AccessibilityControls from './components/AccessibilityControls';
 import usePerformanceLevel from './hooks/usePerformanceLevel';
 import useGoogleAnalytics from './hooks/useGoogleAnalytics';
 import useScrollToHash from './hooks/useScrollToHash';
@@ -53,9 +52,7 @@ function CourseLayout() {
       <HelmetProvider>
         <QueryProvider>
           <div className="App bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 min-h-screen text-zinc-50">
-            {/* Accessibility Controls */}
-            <AccessibilityControls />
-            
+
             {/* Header principal para navegação consistente */}
             <Header />
             
