@@ -1,5 +1,5 @@
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Clock, Calendar, User } from '@phosphor-icons/react';
 import '../styles/blog-article.css';
@@ -55,13 +55,15 @@ const getCategoryColor = (categorySlug) => {
 
 const BlogPost = () => {
   const { slug } = useParams();
-  
+  const [processedContent, setProcessedContent] = useState('');
+  const [isProcessingContent, setIsProcessingContent] = useState(false);
+
   // Force scroll to top and reset state when slug changes
   useEffect(() => {
     console.log('📝 BLOG POST: Slug changed to:', slug);
     console.log('🔄 BLOG POST: Scrolling to top and resetting state');
     window.scrollTo(0, 0);
-    
+
     // Force React Query to refetch by removing the cache for this specific post
     // This ensures fresh data is loaded when navigating between posts
     return () => {
@@ -74,6 +76,29 @@ const BlogPost = () => {
   // Fetch post data
   const { data, isLoading, isError, error } = usePost(slug);
   const post = data?.post;
+
+  // Process content asynchronously when post data is available
+  useEffect(() => {
+    if (!post?.content) {
+      setProcessedContent('');
+      return;
+    }
+
+    const processContentAsync = async () => {
+      setIsProcessingContent(true);
+      try {
+        const processed = await processContent(post.content, slug, post.title);
+        setProcessedContent(processed);
+      } catch (error) {
+        console.warn('Error processing content:', error);
+        setProcessedContent(post.content); // Fallback to raw content
+      } finally {
+        setIsProcessingContent(false);
+      }
+    };
+
+    processContentAsync();
+  }, [post?.content, slug, post?.title]);
   
   // Debug logging
   useEffect(() => {
@@ -270,7 +295,7 @@ const BlogPost = () => {
                   prose-ul:text-zinc-300 prose-ol:text-zinc-300
                   prose-li:marker:text-zinc-500
                   prose-img:rounded-lg prose-img:shadow-lg"
-                dangerouslySetInnerHTML={{ __html: processContent(post.content, slug, post.title) }}
+                dangerouslySetInnerHTML={{ __html: isProcessingContent ? 'Processando conteúdo...' : processedContent }}
               />
 
               {/* Tags */}

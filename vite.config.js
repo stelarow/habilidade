@@ -124,13 +124,8 @@ base: '/',
             return 'blog-data';
           }
 
-          // IMPORTANTE: NÃO dividir marked e highlight.js inicialmente
-          // Eles podem ser necessários para renderização do blog
-          if (id.includes('node_modules/marked/') ||
-              id.includes('node_modules/highlight.js/')) {
-            console.log('⚠️ KEEPING IN MAIN BUNDLE (blog critical):', id);
-            return undefined; // Manter no bundle principal
-          }
+          // marked e highlight.js agora são carregados dinamicamente
+          // via dynamic imports no contentProcessor.js
 
           // Log para outros modules importantes
           

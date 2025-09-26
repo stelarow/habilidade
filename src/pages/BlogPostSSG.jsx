@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useParams, useLoaderData } from 'react-router-dom';
 import { Head } from 'vite-react-ssg';
 import { Clock, Calendar, User } from '@phosphor-icons/react';
@@ -53,26 +53,52 @@ const getCategoryColor = (categorySlug) => {
 function BlogPost() {
   const { slug } = useParams();
   const loaderData = useLoaderData();
-  
+
   // Use loader data directly (available during SSG build)
   const post = loaderData?.post;
   const articleReference = useRef(null);
-  
+  const [processedContent, setProcessedContent] = useState('');
+  const [isProcessing, setIsProcessing] = useState(true);
+
   // Force scroll to top when component mounts
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [slug]);
+
+  // Process content asynchronously
+  useEffect(() => {
+    if (!post?.content) {
+      setIsProcessing(false);
+      return;
+    }
+
+    const processContentAsync = async () => {
+      try {
+        const processed = await processContent(post.content, slug, post.title);
+        setProcessedContent(processed);
+      } catch (error) {
+        console.warn('Error processing content:', error);
+        setProcessedContent(post.content); // Fallback to raw content
+      } finally {
+        setIsProcessing(false);
+      }
+    };
+
+    processContentAsync();
+  }, [post?.content, slug, post?.title]);
 
   // Loading state (should not happen with SSG, but good fallback)
   if (!post) {
     return <BlogError error={{ message: 'Post não encontrado' }} />;
   }
 
+  // Show loading while processing content
+  if (isProcessing) {
+    return <BlogLoading />;
+  }
+
   const readingTime = calculateReadingTime(post.content);
   const categoryColor = getCategoryColor(post.category?.slug);
-
-  // Process content with title to remove duplicates
-  const processedContent = processContent(post.content, slug, post.title);
 
   // SEO data for meta tags
   const seoTitle = `${post.title} | Escola Habilidade`;

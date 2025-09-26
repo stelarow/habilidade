@@ -1,19 +1,37 @@
-import { marked } from 'marked';
-import hljs from 'highlight.js/lib/core';
+// Dynamic imports for blog-specific libraries (lazy loaded)
+let marked = null;
+let hljs = null;
 
-// Import only the languages we need to keep bundle size small
-import javascript from 'highlight.js/lib/languages/javascript';
-import python from 'highlight.js/lib/languages/python';
-import sql from 'highlight.js/lib/languages/sql';
-import css from 'highlight.js/lib/languages/css';
-import html from 'highlight.js/lib/languages/xml';
+// Initialize markdown and highlight.js only when needed
+const initializeMarkdown = async () => {
+  if (!marked) {
+    const { marked: markedLib } = await import('marked');
+    marked = markedLib;
+  }
 
-// Register languages
-hljs.registerLanguage('javascript', javascript);
-hljs.registerLanguage('python', python);
-hljs.registerLanguage('sql', sql);
-hljs.registerLanguage('css', css);
-hljs.registerLanguage('html', html);
+  if (!hljs) {
+    const hljsCore = await import('highlight.js/lib/core');
+    hljs = hljsCore.default;
+
+    // Load only essential languages
+    const [javascript, python, sql, css, html] = await Promise.all([
+      import('highlight.js/lib/languages/javascript'),
+      import('highlight.js/lib/languages/python'),
+      import('highlight.js/lib/languages/sql'),
+      import('highlight.js/lib/languages/css'),
+      import('highlight.js/lib/languages/xml')
+    ]);
+
+    // Register languages
+    hljs.registerLanguage('javascript', javascript.default);
+    hljs.registerLanguage('python', python.default);
+    hljs.registerLanguage('sql', sql.default);
+    hljs.registerLanguage('css', css.default);
+    hljs.registerLanguage('html', html.default);
+  }
+
+  return { marked, hljs };
+};
 
 // Helper function to safely extract text from tokens or fallback to string conversion
 function extractText(textOrTokens, parser) {
@@ -44,8 +62,9 @@ function extractText(textOrTokens, parser) {
   return str === '[object Object]' ? '' : str;
 }
 
-// Configure marked with custom renderer for v16 - consolidated configuration
-marked.use({
+// Configure marked - will be called after dynamic import
+const configureMarked = (markedLib, hljsLib) => {
+  markedLib.use({
   renderer: {
     // Override heading rendering to add Tailwind classes
     heading(token) {
@@ -227,28 +246,29 @@ marked.use({
     }
   },
   
-  // Highlight function integrated within marked.use()
-  highlight: function(code, lang) {
-    // Safely handle language parameter
-    if (!lang || typeof lang !== 'string') {
-      return code;
-    }
-    try {
-      if (hljs.getLanguage(lang)) {
-        return hljs.highlight(code, { language: lang }).value;
+    // Highlight function integrated within marked.use()
+    highlight: function(code, lang) {
+      // Safely handle language parameter
+      if (!lang || typeof lang !== 'string') {
+        return code;
       }
-    } catch (error) {
-      console.warn('Highlight.js error:', error);
-    }
-    return code;
-  },
+      try {
+        if (hljsLib.getLanguage(lang)) {
+          return hljsLib.highlight(code, { language: lang }).value;
+        }
+      } catch (error) {
+        console.warn('Highlight.js error:', error);
+      }
+      return code;
+    },
   
-  // Other marked options
-  breaks: true,
-  gfm: true,
-  pedantic: false,
-  silent: true
-});
+    // Other marked options
+    breaks: true,
+    gfm: true,
+    pedantic: false,
+    silent: true
+  });
+};
 
 /**
  * Detects if content is markdown or HTML
@@ -378,22 +398,22 @@ function removeDuplicateContent(content, postTitle) {
  * @param {string} postTitle - Post title for duplicate removal
  * @returns {string} - Processed HTML content ready for rendering
  */
-export function processContent(content, slug, postTitle) {
+export async function processContent(content, slug, postTitle) {
   if (!content || typeof content !== 'string') return '';
   
   // Import image migration system
   let processedContent = content;
   
-  try {
-    // Apply smart image optimization to existing content
-    if (typeof window !== 'undefined') {
+  // Apply smart image optimization to existing content (development only)
+  if (typeof window !== 'undefined' && process.env.NODE_ENV !== 'production') {
+    try {
       // Client-side: use dynamic import to avoid SSR issues
       import('../utils/blogImageMigration.js').then(({ default: blogImageMigration }) => {
         processedContent = blogImageMigration.migrateBlogContent(processedContent);
       }).catch(console.error);
+    } catch (error) {
+      // Image migration failed, continuing with original content
     }
-  } catch (error) {
-    // Image migration failed, continuing with original content
   }
   
   // Fix image paths first
@@ -401,16 +421,19 @@ export function processContent(content, slug, postTitle) {
   
   // Convert markdown to HTML if needed
   if (isMarkdown(processedContent)) {
-    // Converting markdown to HTML for slug (debug logging disabled for SSG)
-    
     try {
-      // Debug: marked configuration (logging disabled for SSG)
-      
-      processedContent = marked(processedContent);
+      // Initialize markdown libraries dynamically
+      const { marked: markedLib, hljs: hljsLib } = await initializeMarkdown();
+
+      // Configure marked with highlight.js
+      configureMarked(markedLib, hljsLib);
+
+      // Process markdown to HTML
+      processedContent = markedLib(processedContent);
     } catch (error) {
-      // Error handling without console output during SSG
-      // marked.js error occurred
-      throw error; // Re-throw to see the full error
+      console.warn('Failed to load markdown libraries, using basic fallback:', error);
+      // Fallback to basic markdown processing
+      processedContent = basicMarkdownToHtml(processedContent);
     }
   }
   
@@ -419,8 +442,8 @@ export function processContent(content, slug, postTitle) {
     processedContent = removeDuplicateContent(processedContent, postTitle);
   }
   
-  // Apply client-side image optimization after content is processed
-  if (typeof window !== 'undefined') {
+  // Apply client-side image optimization after content is processed (development only)
+  if (typeof window !== 'undefined' && process.env.NODE_ENV !== 'production') {
     // Schedule image optimization for next tick to ensure DOM is ready
     setTimeout(() => {
       import('../utils/blogImageMigration.js').then(({ default: blogImageMigration }) => {
