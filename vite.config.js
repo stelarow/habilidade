@@ -161,7 +161,7 @@ base: '/',
     },
     
     // Otimizações de tamanho agressivas (desabilitadas no debug)
-    chunkSizeWarningLimit: process.env.DEBUG_BUILD === 'true' ? 10000 : 500, // Limite maior para debug
+    chunkSizeWarningLimit: process.env.DEBUG_BUILD === 'true' ? 10000 : 1500, // Increased from 500KB to 1500KB for better chunk utilization, // Limite maior para debug
     sourcemap: process.env.DEBUG_BUILD === 'true' ? true : false, // Sourcemaps para debug
     cssCodeSplit: true,
     
