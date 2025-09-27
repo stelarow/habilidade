@@ -1,8 +1,22 @@
 import { Button } from "@/components/ui/button"
 import { SalaryTooltip } from "@/components/shared/SalaryTooltip"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { useConsoleTypewriter } from "@/hooks/useConsoleTypewriter"
 
 export function HeroSection() {
+  const consoleLines = [
+    "$ Carreira: Desenvolvedor Full-Stack",
+    "$ Portfolio: 6 projetos completos", 
+    "$ Status: Qualificado para vagas",
+    "$ Média salarial júnior: R$ 4.154*"
+  ]
+
+  const { displayLines } = useConsoleTypewriter(consoleLines, {
+    speed: 60,
+    pauseBetweenLines: 800,
+    startDelay: 1500
+  })
+
   return (
     <section className="bg-navy text-white py-20 lg:py-32 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-navy via-hero-gradient to-navy"></div>
@@ -11,7 +25,7 @@ export function HeroSection() {
           {/* Coluna Esquerda - Conteúdo */}
           <div className="text-center lg:text-left">
             <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 text-balance text-white">
-              Curso de programação em são josé e grande florianópolis
+              Curso De Programação Em São José E Grande Florianópolis
             </h1>
             <p className="text-lg lg:text-xl text-white/80 mb-6 text-pretty">
               Domine Lógica, Python, Java, PHP, Android e Claude Code para desenvolvimento completo.
@@ -32,12 +46,21 @@ export function HeroSection() {
               </span>
             </div>
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-stretch sm:items-center">
-              <Button size="lg" className="bg-teal text-navy hover:bg-teal/90 font-semibold px-8 w-full sm:w-auto">
-                Começar agora
+              <Button
+                size="lg"
+                className="bg-teal text-navy hover:bg-teal/90 font-semibold px-8 w-full sm:w-auto"
+                onClick={() => window.open('https://wa.me/5548988559491', '_blank')}
+              >
+                Matricule-se
               </Button>
-              <Button variant="outline" size="lg" className="flex items-center gap-2 w-full sm:w-auto justify-center border-white text-white hover:bg-white hover:text-navy">
+              <Button
+                variant="outline"
+                size="lg"
+                className="flex items-center gap-2 w-full sm:w-auto justify-center border-white text-white hover:bg-white hover:text-navy"
+                onClick={() => document.getElementById('grade-curricular')?.scrollIntoView({ behavior: 'smooth' })}
+              >
                 <div className="w-4 h-4 border-l-[6px] border-l-current border-y-[4px] border-y-transparent flex-shrink-0"></div>
-                Ver grade curricular
+                Ver Grade Curricular
               </Button>
             </div>
           </div>
@@ -78,15 +101,26 @@ export function HeroSection() {
                       <span className="text-teal-600 flex-shrink-0">6.</span>
                       <span className="text-gray-800 min-w-0">Claude Code (15h)</span>
                     </div>
-                    <div className="bg-gray-900 text-green-400 p-2 sm:p-3 rounded mt-4 space-y-1">
-                      <div className="text-xs sm:text-sm">$ Carreira: Desenvolvedor Full-Stack</div>
-                      <div className="text-xs sm:text-sm">$ Portfolio: 6 projetos completos</div>
-                      <div className="text-xs sm:text-sm">$ Status: Qualificado para vagas</div>
-                      <SalaryTooltip>
-                        <div className="text-teal-400 cursor-help border-b border-dotted border-teal-400 text-xs sm:text-sm">
-                          $ Média salarial júnior: R$ 4.154* ⓘ
-                        </div>
-                      </SalaryTooltip>
+                    <div className="bg-gray-900 text-green-400 p-2 sm:p-3 rounded mt-4 space-y-1 min-h-[120px]">
+                      {displayLines.map((line, index) => {
+                        if (line.includes("Média salarial")) {
+                          return (
+                            <SalaryTooltip key={index}>
+                              <div className="text-teal-400 cursor-help border-b border-dotted border-teal-400 text-xs sm:text-sm">
+                                {line} ⓘ
+                              </div>
+                            </SalaryTooltip>
+                          )
+                        }
+                        return (
+                          <div key={index} className="text-xs sm:text-sm">
+                            {line}
+                            {index === displayLines.length - 1 && (
+                              <span className="animate-pulse ml-1 text-green-400">|</span>
+                            )}
+                          </div>
+                        )
+                      })}
                     </div>
                   </div>
                 </ScrollArea>
