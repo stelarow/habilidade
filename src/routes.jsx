@@ -110,18 +110,7 @@ export const routes = [
       },
       {
         path: 'cursos/programacao',
-        lazy: async () => {
-          const { default: Component, loader } = await import('./pages/courses/Programacao');
-          return { Component, loader };
-        }
-      },
-      {
-        path: 'cursos/programacao-nova',
-        lazy: () => import('./pages/courses/ProgramacaoNova')
-      },
-      {
-        path: 'cursos/programacao-nova2',
-        lazy: () => import('./pages/courses/ProgramacaoNova2')
+        lazy: () => import('./pages/courses/Programacao')
       },
       {
         path: 'cursos/marketing-digital',

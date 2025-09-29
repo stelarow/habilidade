@@ -1,22 +1,10 @@
-import CoursePage, { getCourseBySlug } from '../CoursePage';
-import COURSES_DATA from '../../data/coursesData';
+import { ProgramacaoNova2 } from '../../components/course/ProgramacaoNova2';
 
-export default function Programacao() {
-  return <CoursePage slug="programacao" />;
+function ProgramacaoNova2Page() {
+  return <ProgramacaoNova2 />;
 }
 
-// SSG Loader for this specific course
-export async function loader() {
-  try {
-    const foundCourse = getCourseBySlug('programacao', COURSES_DATA);
-    if (!foundCourse) {
-      throw new Error('Course programacao not found');
-    }
-    return { course: foundCourse };
-  } catch (error) {
-    console.error('SSG Loader error for Programacao:', error);
-    return { course: null };
-  }
-}
+export default ProgramacaoNova2Page;
 
-export const Component = Programacao;
+// Required for React Router v6 lazy loading
+export const Component = ProgramacaoNova2Page;
