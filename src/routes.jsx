@@ -1,25 +1,9 @@
 import React, { Suspense } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 import Layout from './Layout.jsx';
-import CourseLayout from './CourseLayout.jsx';
 import Loading from './components/Loading';
 
-// Importações com lazy loading para code splitting
-const Home = React.lazy(() => import('./pages/Home'));
-const CoursePage = React.lazy(() => import('./pages/CoursePage'));
-const Contact = React.lazy(() => import('./pages/Contact'));
-const BlogIndex = React.lazy(() => import('./pages/BlogIndex'));
-const BlogCategory = React.lazy(() => import('./pages/BlogCategory'));
-const NotFound = React.lazy(() => import('./pages/NotFound'));
-const CursosFlorianopolis = React.lazy(() => import('./pages/CursosFlorianopolis'));
-const CursosSaoJose = React.lazy(() => import('./pages/CursosSaoJose'));
-const CursosPalhoca = React.lazy(() => import('./pages/CursosPalhoca'));
-const CursoSketchupEnscape = React.lazy(() => import('./pages/CursoSketchupEnscape'));
-const TesteVocacional = React.lazy(() => import('./pages/TesteVocacional'));
-
-// Imports para páginas que precisam de CourseLayout para funcionar com SSG
-const Informatica = React.lazy(() => import('./pages/courses/Informatica'));
-const Projetista3D = React.lazy(() => import('./pages/courses/Projetista3D'));
+// Lazy loading removido - usando React Router lazy() diretamente nas rotas
 
 
 // Componente para redirecionamento de cursos
@@ -55,38 +39,6 @@ const blogSlugs = [
 
 // Configuração das rotas para vite-react-ssg
 export const routes = [
-  // Rotas de curso com layout específico (sem header global) - DEVEM VIR ANTES das rotas gerais
-  {
-    path: '/cursos/sketchup-enscape',
-    element: <CourseLayout />,
-    children: [
-      {
-        index: true,
-        element: <Suspense key="course-sketchup-enscape" fallback={<Loading />}><CursoSketchupEnscape /></Suspense>
-      }
-    ]
-  },
-  // Páginas que precisam de CourseLayout para funcionar com SSG
-  {
-    path: '/cursos/informatica',
-    element: <CourseLayout />,
-    children: [
-      {
-        index: true,
-        element: <Suspense key="course-informatica" fallback={<Loading />}><Informatica /></Suspense>
-      }
-    ]
-  },
-  {
-    path: '/cursos/projetista-3d',
-    element: <CourseLayout />,
-    children: [
-      {
-        index: true,
-        element: <Suspense key="course-projetista-3d" fallback={<Loading />}><Projetista3D /></Suspense>
-      }
-    ]
-  },
   {
     path: '/',
     element: <Layout />,
@@ -95,12 +47,19 @@ export const routes = [
         index: true,
         lazy: () => import('./pages/Home')
       },
-      // Rotas estáticas individuais para garantir SSG
-      // REMOVIDO: Movido para CourseLayout (linha 70-78)
-      // {
-      //   path: 'cursos/informatica-nova',
-      //   lazy: () => import('./pages/courses/InformaticaNova')
-      // },
+      // Rotas de cursos
+      {
+        path: 'cursos/sketchup-enscape',
+        lazy: () => import('./pages/CursoSketchupEnscape')
+      },
+      {
+        path: 'cursos/informatica',
+        lazy: () => import('./pages/courses/Informatica')
+      },
+      {
+        path: 'cursos/projetista-3d',
+        lazy: () => import('./pages/courses/Projetista3D')
+      },
       {
         path: 'cursos/design-grafico',
         lazy: async () => {
@@ -138,11 +97,6 @@ export const routes = [
         path: 'cursos/business-intelligence',
         element: <Navigate to="/cursos/excel-avancado-business-intelligence" replace />
       },
-      // REMOVIDO: Movido para CourseLayout (linha 79-87)
-      // {
-      //   path: 'cursos/projetista-3d',
-      //   lazy: () => import('./pages/courses/Projetista3D')
-      // },
       {
         path: 'cursos/edicao-video',
         lazy: async () => {
@@ -159,7 +113,7 @@ export const routes = [
       },
       {
         path: 'contato',
-        element: <Suspense key="contact-page" fallback={<Loading />}><Contact /></Suspense>
+        lazy: () => import('./pages/Contact')
       },
       {
         path: 'blog',
@@ -182,20 +136,20 @@ export const routes = [
       // Páginas de localização (SEO local)
       {
         path: 'cursos-florianopolis',
-        element: <Suspense key="cursos-florianopolis" fallback={<Loading />}><CursosFlorianopolis /></Suspense>
+        lazy: () => import('./pages/CursosFlorianopolis')
       },
       {
         path: 'cursos-sao-jose',
-        element: <Suspense key="cursos-sao-jose" fallback={<Loading />}><CursosSaoJose /></Suspense>
+        lazy: () => import('./pages/CursosSaoJose')
       },
       {
         path: 'cursos-palhoca',
-        element: <Suspense key="cursos-palhoca" fallback={<Loading />}><CursosPalhoca /></Suspense>
+        lazy: () => import('./pages/CursosPalhoca')
       },
       // Página do teste vocacional
       {
         path: 'teste-vocacional',
-        element: <TesteVocacional />
+        lazy: () => import('./pages/TesteVocacional')
       },
       // Redirects para compatibilidade
       {

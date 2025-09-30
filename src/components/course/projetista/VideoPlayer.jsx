@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { motion } from '../../../utils/motion';
 import { PlayCircle, Pause, SpeakerSlash, SpeakerHigh } from '@phosphor-icons/react';
 
 const VideoPlayer = ({ 

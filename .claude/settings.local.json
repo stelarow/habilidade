@@ -75,7 +75,9 @@
       "Bash(awk:*)",
       "WebFetch(domain:fonts.gstatic.com)",
       "WebFetch(domain:fonts.googleapis.com)",
-      "mcp__playwright__browser_close"
+      "mcp__playwright__browser_close",
+      "Bash(git show:*)",
+      "mcp__serena__find_referencing_symbols"
     ],
     "deny": []
   }

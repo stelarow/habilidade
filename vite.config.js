@@ -3,7 +3,6 @@ import react from '@vitejs/plugin-react'
 import path from 'path'
 import { generateSitemap } from "./src/utils/sitemapGenerator.js"
 import { createHtmlPlugin } from 'vite-plugin-html'
-import { createCriticalCssPlugin } from './src/utils/critical-css-plugin.js'
 
 // Custom plugin for sitemap generation
 const sitemapPlugin = () => {
@@ -57,7 +56,6 @@ export default defineConfig({
     react(),
     sitemapPlugin(),
     ssgProgressPlugin(),
-    createCriticalCssPlugin(), // Analyzes bundles - simplified version
     createHtmlPlugin({
       minify: process.env.DEBUG_BUILD !== 'true'
     })

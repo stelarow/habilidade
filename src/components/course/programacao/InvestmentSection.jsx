@@ -33,7 +33,7 @@ export function InvestmentSection() {
                 textClassName="text-yellow-600" 
                 bgClassName="bg-yellow-100"
               />
-              <p className="text-xs text-yellow-700 mt-2">Oferta expira toda segunda-feira</p>
+              <p className="text-xs text-yellow-700 mt-2">Tempo limitado</p>
             </div>
 
             <div className="mb-6">
@@ -43,12 +43,15 @@ export function InvestmentSection() {
 
             {/* Preços */}
             <div className="mb-8">
-              <div className="flex items-center justify-center gap-3 mb-2">
-                <span className="text-lg text-muted-foreground line-through">De R$ 6.998</span>
-                <span className="text-4xl font-bold text-teal">R$ 4.788</span>
+              <div className="text-center mb-4">
+                <div className="text-4xl font-bold text-teal mb-2">12x R$ 399,90</div>
+                <p className="text-lg text-muted-foreground">mensais no boleto</p>
               </div>
-              <div className="space-y-1">
-                <p className="text-sm text-muted-foreground">12x sem juros no boleto: R$ 399</p>
+              <div className="space-y-1 text-center">
+                <div className="flex items-center justify-center gap-3 mb-2">
+                  <span className="text-sm text-muted-foreground line-through">De R$ 6.998</span>
+                  <span className="text-lg font-semibold text-muted-foreground">Total: R$ 4.788</span>
+                </div>
                 <p className="text-sm text-muted-foreground">10x sem juros no cartão: R$ 478,80</p>
                 <p className="text-sm font-semibold text-green-600">À vista com + 6% de desconto: R$ 4.501</p>
               </div>

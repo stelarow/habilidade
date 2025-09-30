@@ -58,7 +58,10 @@ export function FAQSection() {
 
         {/* Console motivacional */}
         <div className="max-w-2xl mx-auto mt-12">
-          <div className="bg-gray-900 rounded-lg p-6 font-mono text-sm">
+          <div
+            className="bg-gray-900 rounded-lg p-6 font-mono text-sm cursor-pointer hover:bg-gray-800 transition-colors duration-300 border-2 border-transparent hover:border-teal/30"
+            onClick={() => window.open('https://wa.me/5548988559491', '_blank')}
+          >
             <div className="flex items-center gap-2 mb-4">
               <div className="w-3 h-3 bg-red-500 rounded-full"></div>
               <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
@@ -71,6 +74,7 @@ export function FAQSection() {
               <div className="text-white ml-4">entre_em_contato()</div>
               <div className="text-white ml-4">fale_com_consultor()</div>
               <div className="text-teal">print("Estamos aqui para ajudar! 🚀")</div>
+              <div className="text-yellow-400 mt-3 text-center">{'>>> Clique aqui para conversar no WhatsApp'}</div>
             </div>
           </div>
         </div>

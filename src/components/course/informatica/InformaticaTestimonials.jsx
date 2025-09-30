@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Star, CaretLeft, CaretRight, Quotes, MapPin, Calendar, ArrowRight, Users } from '@phosphor-icons/react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from '../../../utils/motion';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { handleCTAClick } from '../../../utils/ctaUtils';

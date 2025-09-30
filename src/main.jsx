@@ -3,7 +3,6 @@ import { routes } from './routes.jsx'
 import './index.css'
 import './styles/fonts.css'
 import { initializeErrorLogger } from './utils/frontend-error-logger'
-import { initCriticalCss } from './utils/criticalCss.js'
 
 export const createRoot = ViteReactSSG(
   { routes },
@@ -14,12 +13,9 @@ export const createRoot = ViteReactSSG(
     // Inicializa error logger apenas no client e em produção
     if (isClient) {
       const isDevelopment = import.meta.env.DEV;
-      const isProduction = window.location.hostname === 'escolahabilidade.com' || 
+      const isProduction = window.location.hostname === 'escolahabilidade.com' ||
                           window.location.hostname === 'www.escolahabilidade.com';
-      
-      // Initialize critical CSS optimizations first for better performance
-      initCriticalCss();
-      
+
       initializeErrorLogger({
         enabled: !isDevelopment && isProduction,
         functionUrl: '/.netlify/functions/error-monitoring/log-error'

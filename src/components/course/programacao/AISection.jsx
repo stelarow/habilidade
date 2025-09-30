@@ -71,8 +71,8 @@ export function AISection() {
             <div className="text-xs sm:text-sm text-white/60">Aulas práticas</div>
           </div>
           <div>
-            <div className="text-2xl sm:text-3xl font-bold mb-2 text-teal">R$ 897</div>
-            <div className="text-xs sm:text-sm text-white/60">Investimento</div>
+            <div className="text-2xl sm:text-3xl font-bold mb-2 text-teal">R$ 399,90</div>
+            <div className="text-xs sm:text-sm text-white/60">por mês</div>
           </div>
         </div>
       </div>

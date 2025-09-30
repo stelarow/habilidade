@@ -74,7 +74,6 @@ export function CompanyLogos() {
                   <p className="text-foreground/80 text-sm mb-3 italic">"{testimonial.text}"</p>
                   <div>
                     <p className="font-semibold text-foreground">{testimonial.name}</p>
-                    <p className="text-xs text-muted-foreground">{testimonial.role}</p>
                   </div>
                 </div>
               </div>

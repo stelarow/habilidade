@@ -9,7 +9,6 @@ import usePerformanceLevel from './hooks/usePerformanceLevel';
 import useGoogleAnalytics from './hooks/useGoogleAnalytics';
 import useScrollToHash from './hooks/useScrollToHash';
 import useUrlCleanup from './hooks/useUrlCleanup';
-import domOptimizer from './utils/domOptimizer';
 import './styles/blog-animations.css';
 
 function Layout() {
@@ -25,31 +24,14 @@ function Layout() {
   // Auto-scroll to hash anchors
   useScrollToHash();
 
-  // Inicializar otimizações ao montar o Layout
+  // Aplicar otimizações de performance
   useEffect(() => {
-    // Only run in browser environment
     if (typeof window !== 'undefined' && typeof document !== 'undefined') {
-      // Wait for React to finish hydration before initializing DOM optimizer
-      const initializeOptimizer = () => {
-        // Aplicar otimizações baseadas no nível de performance
-        if (performanceLevel === 'LOW') {
-          // Reduzir animações para dispositivos baixa performance
-          document.documentElement.style.setProperty('--animation-duration', '0.1s');
-          document.documentElement.style.setProperty('--transition-duration', '0.1s');
-        }
-
-        // DOM optimizer disabled to prevent React DOM conflicts
-        // domOptimizer.initializeAfterHydration();
-      };
-
-      // Use setTimeout to ensure hydration is complete
-      const timeoutId = setTimeout(initializeOptimizer, 100);
-
-      // Cleanup no unmount
-      return () => {
-        clearTimeout(timeoutId);
-        // domOptimizer.destroy();
-      };
+      if (performanceLevel === 'LOW') {
+        // Reduzir animações para dispositivos baixa performance
+        document.documentElement.style.setProperty('--animation-duration', '0.1s');
+        document.documentElement.style.setProperty('--transition-duration', '0.1s');
+      }
     }
   }, [performanceLevel]);
 

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, lazy } from 'react';
 import { CaretDown } from '@phosphor-icons/react';
 import { useParams } from 'react-router-dom';
 import useToggle from '../hooks/useToggle';
@@ -8,7 +8,9 @@ import { getCourseBySlug } from '../utils/courseHelpers';
 import COURSES_DATA from '../data/coursesData';
 import InteractiveLogo from './header/InteractiveLogo';
 import SmartCTA from './header/SmartCTA';
-import { LazyMegaMenu, LazyMobileMegaMenu } from './LazyComponents';
+
+const LazyMegaMenu = lazy(() => import('./header/MegaMenu'));
+const LazyMobileMegaMenu = lazy(() => import('./header/MobileMegaMenu'));
 
 function Header() {
   const [mobileMenuOpen, toggleMobileMenu, , closeMobileMenu] = useToggle(false);
