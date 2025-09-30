@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, Component, useLayoutEffect } from 'react';
+import React, { useState, useEffect, useRef, Component as ReactComponent, useLayoutEffect } from 'react';
 import { motion, AnimatePresence } from '../utils/lazyMotion.jsx';
 import { Helmet } from '@dr.pogodin/react-helmet';
 import LogoH from '../components/LogoH';
@@ -36,7 +36,7 @@ import {
 const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 
 // Error Boundary para capturar erros de DOM Manipulation
-class DOMErrorBoundary extends Component {
+class DOMErrorBoundary extends ReactComponent {
   constructor(props) {
     super(props);
     this.state = { hasError: false, error: null };
@@ -1599,3 +1599,6 @@ const TesteVocacional = () => {
 };
 
 export default TesteVocacional;
+
+// Export para React Router lazy loading
+export const Component = TesteVocacional;
