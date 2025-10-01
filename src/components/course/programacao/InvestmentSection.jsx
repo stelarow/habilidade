@@ -109,16 +109,18 @@ export function InvestmentSection() {
 
             {/* Botões de ação */}
             <div className="space-y-3">
-              <Button 
-                size="lg" 
+              <Button
+                size="lg"
                 className="w-full bg-teal hover:bg-teal/90 text-navy font-semibold transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-teal/50"
+                onClick={() => window.open('https://wa.me/5548988559491?text=Quero%20me%20matricular%20em%20um%20curso%20mas%20preciso%20de%20ajuda%20para%20escolher%20o%20melhor%20para%20mim.%20Podem%20me%20orientar%3F', '_blank')}
               >
                 Matricular-se agora
               </Button>
-              <Button 
-                variant="secondary" 
-                size="lg" 
+              <Button
+                variant="secondary"
+                size="lg"
                 className="w-full transition-all duration-300 hover:scale-105"
+                onClick={() => window.open('https://wa.me/5548988559491?text=Gostaria%20de%20agendar%20uma%20consulta%20gratuita%20de%2015%20minutos%20para%20conversar%20sobre%20qual%20curso%20seria%20ideal%20para%20meu%20perfil.', '_blank')}
               >
                 Falar com consultor
               </Button>

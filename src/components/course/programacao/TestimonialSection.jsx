@@ -107,7 +107,17 @@ export function TestimonialSection() {
             <p className="text-white/80 mb-4">
               Mais de 133 horas de curso prático para você dominar programação
             </p>
-            <div className="bg-gray-900 rounded-lg p-4 font-mono text-sm max-w-md mx-auto">
+            <div
+              className="bg-gray-900 rounded-lg p-4 font-mono text-sm max-w-md mx-auto cursor-pointer hover:bg-gray-800 hover:scale-105 transition-all duration-300 hover:shadow-lg hover:shadow-teal/50"
+              onClick={() => window.open('https://wa.me/5548988559491?text=Tenho%20interesse%20em%20aprender%20programa%C3%A7%C3%A3o.%20Quais%20linguagens%20voc%C3%AAs%20ensinam%3F%20%C3%89%20para%20iniciantes%3F', '_blank')}
+              role="button"
+              tabIndex={0}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  window.open('https://wa.me/5548988559491?text=Tenho%20interesse%20em%20aprender%20programa%C3%A7%C3%A3o.%20Quais%20linguagens%20voc%C3%AAs%20ensinam%3F%20%C3%89%20para%20iniciantes%3F', '_blank')
+                }
+              }}
+            >
               <div className="text-green-400">console.log('Próximo passo:')</div>
               <div className="text-teal">{'> \'Matricule-se agora!\' 🚀'}</div>
             </div>
