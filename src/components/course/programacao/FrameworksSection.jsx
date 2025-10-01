@@ -2,8 +2,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../ui/tabs"
 import { Badge } from "../../ui/badge"
 import { ScrollArea } from "../../ui/scroll-area"
 import { BookOpen, Code, PencilSimple, Rocket, Book, Brain, Coffee, Database, DeviceMobile, Robot } from "@phosphor-icons/react"
+import { useScrollAnimation } from "@/hooks/useScrollAnimation"
 
 export function FrameworksSection() {
+  const [titleRef, titleVisible] = useScrollAnimation({ threshold: 0.3, once: true })
   const curriculum = [
     {
       id: 1,
@@ -202,9 +204,11 @@ export function FrameworksSection() {
   }
 
   return (
-    <section className="py-12 sm:py-16 lg:py-20 bg-background">
+    <section id="grade-curricular" className="py-12 sm:py-16 lg:py-20 bg-background">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-8 sm:mb-12">
+        <div ref={titleRef} className={`text-center mb-8 sm:mb-12 transition-all duration-700 ${
+          titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+        }`}>
           <div className="text-teal font-semibold mb-3 sm:mb-4 text-sm sm:text-base">GRADE CURRICULAR</div>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 sm:mb-6">
             6 Módulos Completos de Programação
@@ -231,8 +235,12 @@ export function FrameworksSection() {
           {curriculum.map((module) => {
             const stats = getModuleStats(module.lessons)
             return (
-              <TabsContent key={module.id} value={module.id.toString()} className="mt-6 sm:mt-8">
-                <div className="bg-card border rounded-lg p-4 sm:p-6">
+              <TabsContent
+                key={module.id}
+                value={module.id.toString()}
+                className="mt-6 sm:mt-8 data-[state=active]:animate-in data-[state=active]:fade-in-0 data-[state=active]:slide-in-from-bottom-4 duration-500"
+              >
+                <div className="bg-card border rounded-lg p-4 sm:p-6 hover:shadow-lg transition-shadow duration-300">
                   {/* Cabeçalho do Módulo */}
                   <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-6">
                     <div className="flex items-center gap-3 sm:gap-4">
@@ -275,7 +283,7 @@ export function FrameworksSection() {
                     <ScrollArea className="h-[300px] sm:h-[400px] pr-4">
                       <div className="space-y-2">
                         {module.lessons.map((lesson) => (
-                          <div key={lesson.id} className="flex items-center justify-between p-3 sm:p-4 bg-muted/30 rounded-lg hover:bg-muted/50 transition-colors">
+                          <div key={lesson.id} className="flex items-center justify-between p-3 sm:p-4 bg-muted/30 rounded-lg hover:bg-muted/50 hover:scale-[1.02] hover:shadow-md transition-all duration-200">
                             <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
                               <div className="text-teal flex-shrink-0">
                                 {getTypeIcon(lesson.type)}
