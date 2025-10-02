@@ -221,14 +221,9 @@ function CoursePage({ slug }) {
         <title>{metadata.title}</title>
         <meta name="description" content={metadata.description} />
         <meta name="keywords" content={metadata.keywords} />
-        
-        {/* Open Graph */}
-        <meta property="og:title" content={metadata.openGraph.title} />
-        <meta property="og:description" content={metadata.openGraph.description} />
-        <meta property="og:type" content={metadata.openGraph.type} />
-        <meta property="og:image" content={metadata.openGraph.image} />
-        <meta property="og:url" content={metadata.openGraph.url} />
-        
+
+        {/* Open Graph tags gerenciadas por transform-html-meta.js durante build */}
+
         {/* Twitter */}
         <meta name="twitter:card" content={metadata.twitter.card} />
         <meta name="twitter:title" content={metadata.twitter.title} />
