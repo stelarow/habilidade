@@ -30,10 +30,10 @@ const courseSchema = {
     "name": "Escola Habilidade",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Rua Principal, Centro",
+      "streetAddress": "Rua Caetano José Ferreira, 426 - Sala 5 - Kobrasol",
       "addressLocality": "São José",
       "addressRegion": "SC", 
-      "postalCode": "88000-000",
+      "postalCode": "88103-265",
       "addressCountry": "BR"
     },
     "url": "https://www.escolahabilidade.com.br",
@@ -74,10 +74,10 @@ const courseSchema = {
     "name": "Escola Habilidade",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Rua Principal, Centro",
+      "streetAddress": "Rua Caetano José Ferreira, 426 - Sala 5 - Kobrasol",
       "addressLocality": "São José",
       "addressRegion": "Santa Catarina",
-      "postalCode": "88000-000",
+      "postalCode": "88103-265",
       "addressCountry": "BR"
     }
   }
@@ -88,14 +88,14 @@ const localBusinessSchema = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
   "name": "Escola Habilidade - Curso de Informática",
-  "image": "https://www.escolahabilidade.com.br/assets/informatica-nova/hero/hero-bg-new.jpg",
+  "image": "https://www.escolahabilidade.com.br/assets/informatica-nova/hero/1318912.png",
   "description": "Escola de informática em São José SC. Cursos presenciais de Excel, Word, PowerPoint, Canva e Inteligência Artificial. Atendemos Florianópolis, Palhoça e Biguaçu.",
   "address": {
     "@type": "PostalAddress",
-    "streetAddress": "Rua Principal, Centro",
+    "streetAddress": "Rua Caetano José Ferreira, 426 - Sala 5 - Kobrasol",
     "addressLocality": "São José",
     "addressRegion": "SC",
-    "postalCode": "88000-000",
+    "postalCode": "88103-265",
     "addressCountry": "BR"
   },
   "geo": {
@@ -125,7 +125,7 @@ const localBusinessSchema = {
       "containedInPlace": "SC"
     }
   ],
-  "telephone": "+55-48-99999-9999",
+  "telephone": "+55-48-98855-9491",
   "url": "https://www.escolahabilidade.com.br/cursos/informatica",
   "priceRange": "R$ 299,90 - R$ 3.598,80",
   "aggregateRating": {
@@ -144,10 +144,17 @@ const Informatica = () => {
         <meta name="description" content="Curso de informática presencial em São José SC. Excel, Word, PowerPoint, Canva e IA. Atendemos Florianópolis, Palhoça e Biguaçu. Certificado 170h." />
         <meta name="keywords" content="curso informática presencial, curso informática são josé, curso informática florianópolis, curso informática palhoça, curso informática biguaçu, excel avançado, word, powerpoint, inteligência artificial, canva" />
 
+        {/* Canonical URL */}
+        <link rel="canonical" href="https://www.escolahabilidade.com.br/cursos/informatica" />
+
         {/* Open Graph */}
-        <meta property="og:title" content="Curso de Informática Básica - Windows 11, Office e IA | São José SC" />
-        <meta property="og:description" content="Curso presencial completo de informática em São José SC. 170 horas práticas, Windows 11, Office, Canva e IA aplicada." />
+        <meta property="og:title" content="Curso de Informática Presencial São José SC | Excel Básico ao Avançado, Word, Canva e IA" />
+        <meta property="og:description" content="Curso de informática presencial em São José SC. Excel, Word, PowerPoint, Canva e IA. Atendemos Florianópolis, Palhoça e Biguaçu. Certificado 170h." />
         <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.escolahabilidade.com.br/cursos/informatica" />
+        <meta property="og:image" content="https://www.escolahabilidade.com.br/assets/informatica-nova/hero/1318912.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
         <meta property="og:locale" content="pt_BR" />
 
         {/* Schema.org para Curso */}
