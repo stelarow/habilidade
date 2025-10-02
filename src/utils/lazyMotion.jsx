@@ -40,9 +40,9 @@ const loadFramerMotion = async () => {
  * Fallback component during motion loading
  * Uses basic CSS transitions to maintain visual consistency
  */
-const FallbackDiv = forwardRef(({ 
-  children, 
-  className = '', 
+const FallbackDiv = forwardRef(({
+  children,
+  className = '',
   style = {},
   initial,
   animate,
@@ -50,17 +50,33 @@ const FallbackDiv = forwardRef(({
   whileInView,
   viewport,
   transition,
-  ...props 
+  variants,
+  whileTap,
+  whileDrag,
+  whileFocus,
+  exit,
+  drag,
+  layout,
+  layoutId,
+  ...props
 }, ref) => {
   // Remove motion-specific props before passing to DOM
-  const { 
-    initial: _, 
-    animate: __, 
-    whileHover: ___, 
-    whileInView: ____, 
-    viewport: _____, 
-    transition: ______, 
-    ...domProps 
+  const {
+    initial: _,
+    animate: __,
+    whileHover: ___,
+    whileInView: ____,
+    viewport: _____,
+    transition: ______,
+    variants: _______,
+    whileTap: ________,
+    whileDrag: _________,
+    whileFocus: __________,
+    exit: ___________,
+    drag: ____________,
+    layout: _____________,
+    layoutId: ______________,
+    ...domProps
   } = props;
 
   const fallbackStyle = {

@@ -149,4 +149,6 @@ const Contact = () => {
   );
 };
 
+// Export both default and Component for vite-react-ssg compatibility
 export default Contact;
+export { Contact as Component };

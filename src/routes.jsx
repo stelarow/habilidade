@@ -133,6 +133,11 @@ export const routes = [
           }
         ]
       },
+      // Página de orçamento
+      {
+        path: 'orcamento/santa-madeira-casas',
+        lazy: () => import('./pages/OrcamentoSantaMadeira')
+      },
       // Páginas de localização (SEO local)
       {
         path: 'cursos-florianopolis',

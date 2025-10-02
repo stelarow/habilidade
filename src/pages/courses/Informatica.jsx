@@ -145,17 +145,9 @@ const Informatica = () => {
         <meta name="keywords" content="curso informática presencial, curso informática são josé, curso informática florianópolis, curso informática palhoça, curso informática biguaçu, excel avançado, word, powerpoint, inteligência artificial, canva" />
 
         {/* Canonical URL */}
-        <link rel="canonical" href="https://www.escolahabilidade.com.br/cursos/informatica" />
+        <link rel="canonical" href="https://www.escolahabilidade.com/cursos/informatica" />
 
-        {/* Open Graph */}
-        <meta property="og:title" content="Curso de Informática Presencial São José SC | Excel Básico ao Avançado, Word, Canva e IA" />
-        <meta property="og:description" content="Curso de informática presencial em São José SC. Excel, Word, PowerPoint, Canva e IA. Atendemos Florianópolis, Palhoça e Biguaçu. Certificado 170h." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.escolahabilidade.com.br/cursos/informatica" />
-        <meta property="og:image" content="https://www.escolahabilidade.com.br/assets/informatica-nova/hero/1318912.png" />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
-        <meta property="og:locale" content="pt_BR" />
+        {/* Open Graph tags gerenciadas por transform-html-meta.js durante build */}
 
         {/* Schema.org para Curso */}
         <script type="application/ld+json">

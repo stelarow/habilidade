@@ -24,8 +24,7 @@ const STATIC_RESOURCES = [
   '/',
   '/blog',
   '/static/css/main.css',
-  '/static/js/main.js',
-  '/manifest.json'
+  '/static/js/main.js'
 ];
 
 // API endpoints that should be cached

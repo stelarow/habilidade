@@ -46,8 +46,10 @@ const getCategoryColor = (categorySlug) => {
     'programacao': 'bg-orange-500/20 text-orange-300 border-orange-500/30',
     'marketing': 'bg-red-500/20 text-red-300 border-red-500/30',
   };
-  
-  return colors[categorySlug] || 'bg-zinc-500/20 text-zinc-300 border-zinc-500/30';
+
+  // Safely convert to string and lowercase to prevent toLowerCase error
+  const slug = String(categorySlug || '').toLowerCase();
+  return colors[slug] || 'bg-zinc-500/20 text-zinc-300 border-zinc-500/30';
 };
 
 function BlogPost() {

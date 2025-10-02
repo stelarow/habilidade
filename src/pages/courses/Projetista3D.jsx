@@ -24,13 +24,9 @@ const Projetista3DNew = () => {
         <title>Curso Projetista 3D - SketchUp e Enscape | São José SC | Escola Habilidade</title>
         <meta name="description" content="Curso presencial completo de SketchUp e Enscape em São José SC. 56 horas práticas, turmas pequenas de até 4 alunos, certificado nacional. Transforme sua carreira como Projetista 3D." />
         <meta name="keywords" content="curso sketchup, curso enscape, projetista 3d, são josé sc, florianópolis, curso presencial, certificado, arquitetura, design" />
-        
-        {/* Open Graph */}
-        <meta property="og:title" content="Curso Projetista 3D - SketchUp e Enscape | São José SC" />
-        <meta property="og:description" content="Único curso presencial completo em SC. 56 horas práticas, certificado nacional, turmas de até 4 alunos." />
-        <meta property="og:type" content="website" />
-        <meta property="og:locale" content="pt_BR" />
-        
+
+        {/* Open Graph tags gerenciadas por transform-html-meta.js durante build */}
+
         {/* Local Business Schema */}
         <script type="application/ld+json">
           {JSON.stringify({

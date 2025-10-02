@@ -136,9 +136,9 @@ const BlogCategory = () => {
     if (!debouncedSearchQuery) return posts;
     
     return posts.filter(post => 
-      post.title.toLowerCase().includes(debouncedSearchQuery.toLowerCase()) ||
-      post.content.toLowerCase().includes(debouncedSearchQuery.toLowerCase()) ||
-      post.excerpt?.toLowerCase().includes(debouncedSearchQuery.toLowerCase())
+      String(post.title || '').toLowerCase().includes(debouncedSearchQuery.toLowerCase()) ||
+      String(post.content || '').toLowerCase().includes(debouncedSearchQuery.toLowerCase()) ||
+      String(post.excerpt || '').toLowerCase().includes(debouncedSearchQuery.toLowerCase())
     );
   }, [posts, debouncedSearchQuery]);
 
@@ -154,7 +154,7 @@ const BlogCategory = () => {
       <div className="min-h-screen bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950">
         <SEOHead 
           title={`Categoria ${currentCategory.name} - Blog Escola Habilidade`}
-          description={`Artigos sobre ${currentCategory.name.toLowerCase()}.`}
+          description={`Artigos sobre ${String(currentCategory.name || '').toLowerCase()}.`}
           path={`/blog/categoria/${categorySlug}`}
         />
         <BlogLoading />
@@ -168,7 +168,7 @@ const BlogCategory = () => {
       <div className="min-h-screen bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950">
         <SEOHead 
           title={`Categoria ${currentCategory.name} - Blog Escola Habilidade`}
-          description={`Artigos sobre ${currentCategory.name.toLowerCase()}.`}
+          description={`Artigos sobre ${String(currentCategory.name || '').toLowerCase()}.`}
           path={`/blog/categoria/${categorySlug}`}
         />
         <BlogError error={error} onRetry={() => window.location.reload()} />
@@ -180,9 +180,9 @@ const BlogCategory = () => {
     <div className="min-h-screen bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950">
       <SEOHead 
         title={`${currentCategory.name} - Blog Escola Habilidade`}
-        description={currentCategory.description || `Artigos sobre ${currentCategory.name.toLowerCase()} para impulsionar seu crescimento profissional.`}
+        description={currentCategory.description || `Artigos sobre ${String(currentCategory.name || '').toLowerCase()} para impulsionar seu crescimento profissional.`}
         path={`/blog/categoria/${categorySlug}`}
-        keywords={`${currentCategory.name.toLowerCase()}, artigos, blog, escola habilidade`}
+        keywords={`${String(currentCategory.name || '').toLowerCase()}, artigos, blog, escola habilidade`}
       />
 
       <div className="container mx-auto px-4 py-8">

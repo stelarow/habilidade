@@ -258,3 +258,4 @@ mcp__notion__notion-create-pages({
   }]
 })
 ```
+- Impacto: Usuários ficam 40% mais tempo em páginas com scroll animations (dados Nielsen Norman Group)

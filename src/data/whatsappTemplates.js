@@ -144,8 +144,9 @@ export const getTemplate = (criteria = {}) => {
     return whatsappTemplates.actions[action];
   }
 
-  if (category && whatsappTemplates.byCategory[category.toLowerCase()]) {
-    return whatsappTemplates.byCategory[category.toLowerCase()];
+  const categoryKey = String(category || '').toLowerCase();
+  if (category && whatsappTemplates.byCategory[categoryKey]) {
+    return whatsappTemplates.byCategory[categoryKey];
   }
 
   if (hasArticle && whatsappTemplates.byContext.article) {
@@ -207,11 +208,11 @@ export const courseTemplates = {
  * @returns {Object|null} Course template or null
  */
 export const getCourseTemplate = (content = '') => {
-  const lowerContent = content.toLowerCase();
-  
+  const lowerContent = String(content || '').toLowerCase();
+
   for (const [courseKey, template] of Object.entries(courseTemplates)) {
-    const hasKeyword = template.relatedKeywords.some(keyword => 
-      lowerContent.includes(keyword.toLowerCase())
+    const hasKeyword = template.relatedKeywords.some(keyword =>
+      lowerContent.includes(String(keyword || '').toLowerCase())
     );
     
     if (hasKeyword) {

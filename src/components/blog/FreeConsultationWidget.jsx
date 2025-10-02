@@ -34,49 +34,49 @@ const FreeConsultationWidget = ({
     const offers = {
       'tecnologia': {
         title: 'Consultoria Gratuita em Tecnologia',
-        description: 'Descubra qual curso de tecnologia é ideal para sua carreira',
-        benefits: ['Análise do seu perfil técnico', 'Roadmap personalizado', 'Dicas de mercado'],
+        description: 'Descubra qual curso de tecnologia ï¿½ ideal para sua carreira',
+        benefits: ['Anï¿½lise do seu perfil tï¿½cnico', 'Roadmap personalizado', 'Dicas de mercado'],
         urgent: 'Mercado aquecido - 15 vagas abertas esta semana'
       },
       'design': {
         title: 'Consultoria Gratuita em Design',
-        description: 'Encontre sua especialização no mundo do design',
-        benefits: ['Portfolio review gratuito', 'Tendências do mercado', 'Networking'],
+        description: 'Encontre sua especializaï¿½ï¿½o no mundo do design',
+        benefits: ['Portfolio review gratuito', 'Tendï¿½ncias do mercado', 'Networking'],
         urgent: 'Mercado criativo em alta - Aproveite!'
       },
       'programacao': {
         title: 'Consultoria Gratuita para Programadores',
-        description: 'Acelere sua carreira na programação',
-        benefits: ['Code review', 'Mentoria técnica', 'Oportunidades no mercado'],
+        description: 'Acelere sua carreira na programaï¿½ï¿½o',
+        benefits: ['Code review', 'Mentoria tï¿½cnica', 'Oportunidades no mercado'],
         urgent: 'Programadores em alta demanda'
       },
       'marketing': {
         title: 'Consultoria Gratuita em Marketing Digital',
-        description: 'Domine as estratégias que geram resultados',
-        benefits: ['Audit gratuito do seu negócio', 'Estratégias comprovadas', 'Cases de sucesso'],
-        urgent: 'Marketing digital nunca foi tão importante'
+        description: 'Domine as estratï¿½gias que geram resultados',
+        benefits: ['Audit gratuito do seu negï¿½cio', 'Estratï¿½gias comprovadas', 'Cases de sucesso'],
+        urgent: 'Marketing digital nunca foi tï¿½o importante'
       }
     };
 
-    return offers[categoryName?.toLowerCase()] || {
+    return offers[String(categoryName || '').toLowerCase()] || {
       title: 'Consultoria Gratuita Personalizada',
-      description: 'Descubra qual curso é perfeito para seus objetivos',
-      benefits: ['Análise personalizada', 'Orientação de carreira', 'Suporte especializado'],
-      urgent: 'Vagas limitadas - Garante já a sua!'
+      description: 'Descubra qual curso ï¿½ perfeito para seus objetivos',
+      benefits: ['Anï¿½lise personalizada', 'Orientaï¿½ï¿½o de carreira', 'Suporte especializado'],
+      urgent: 'Vagas limitadas - Garante jï¿½ a sua!'
     };
   };
 
   const offer = customOffer || getOfferByCategory(category?.name || category);
 
   const handleConsultationClick = (method = 'whatsapp') => {
-    const message = `Olá! Gostaria de agendar a consultoria gratuita de 15 minutos.
+    const message = `Olï¿½! Gostaria de agendar a consultoria gratuita de 15 minutos.
 
-=Ë *Dados da solicitação:*
-${article ? `=Ö Artigo lido: ${article.title}` : ''}
-${category ? `<¯ Categoria de interesse: ${category.name || category}` : ''}
-${selectedTime ? `ð Horário preferido: ${selectedTime}` : ''}
+=ï¿½ *Dados da solicitaï¿½ï¿½o:*
+${article ? `=ï¿½ Artigo lido: ${article.title}` : ''}
+${category ? `<ï¿½ Categoria de interesse: ${category.name || category}` : ''}
+${selectedTime ? `ï¿½ Horï¿½rio preferido: ${selectedTime}` : ''}
 
-Estou interessado(a) em ${offer.title.toLowerCase()} para entender melhor como posso me desenvolver profissionalmente.`;
+Estou interessado(a) em ${String(offer.title || '').toLowerCase()} para entender melhor como posso me desenvolver profissionalmente.`;
 
     if (method === 'whatsapp') {
       const whatsappUrl = `https://wa.me/${EMAIL_CONFIG.WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
@@ -105,9 +105,9 @@ Estou interessado(a) em ${offer.title.toLowerCase()} para entender melhor como p
   };
 
   const timeSlots = [
-    'Manhã (8h-12h)',
+    'Manhï¿½ (8h-12h)',
     'Tarde (12h-18h)', 
-    'Flexível'
+    'Flexï¿½vel'
   ];
 
   if (variant === 'compact') {
@@ -153,7 +153,7 @@ Estou interessado(a) em ${offer.title.toLowerCase()} para entender melhor como p
 
           <div className="bg-green-500/10 rounded-lg p-2 mb-3">
             <p className="text-green-300 text-xs font-medium">
-              ñ 15 minutos gratuitos
+              ï¿½ 15 minutos gratuitos
             </p>
           </div>
 
@@ -165,7 +165,7 @@ Estou interessado(a) em ${offer.title.toLowerCase()} para entender melhor como p
           </button>
 
           <p className="text-zinc-400 text-xs">
-            =Þ (48) 9 8855-9491
+            =ï¿½ (48) 9 8855-9491
           </p>
         </div>
       </div>
@@ -187,7 +187,7 @@ Estou interessado(a) em ${offer.title.toLowerCase()} para entender melhor como p
 
         {offer.urgent && (
           <div className="bg-white/20 rounded-lg p-2 text-center">
-            <p className="text-sm font-medium">¡ {offer.urgent}</p>
+            <p className="text-sm font-medium">ï¿½ {offer.urgent}</p>
           </div>
         )}
       </div>
@@ -200,7 +200,7 @@ Estou interessado(a) em ${offer.title.toLowerCase()} para entender melhor como p
 
         {/* Benefits */}
         <div className="mb-6">
-          <h4 className="text-white font-semibold mb-3 text-center">O que você vai receber:</h4>
+          <h4 className="text-white font-semibold mb-3 text-center">O que vocï¿½ vai receber:</h4>
           <div className="space-y-2">
             {offer.benefits.map((benefit, index) => (
               <div key={index} className="flex items-center gap-3">
@@ -213,7 +213,7 @@ Estou interessado(a) em ${offer.title.toLowerCase()} para entender melhor como p
 
         {/* Time Selection */}
         <div className="mb-6">
-          <h4 className="text-white font-semibold mb-3">Qual seu horário preferido?</h4>
+          <h4 className="text-white font-semibold mb-3">Qual seu horï¿½rio preferido?</h4>
           <div className="grid grid-cols-1 gap-2">
             {timeSlots.map((time) => (
               <button
@@ -283,7 +283,7 @@ Estou interessado(a) em ${offer.title.toLowerCase()} para entender melhor como p
         {/* Fine Print */}
         <div className="mt-4 text-center">
           <p className="text-xs text-zinc-500">
-            Consulta sem compromisso. Atendimento de segunda a sexta, das 8h às 18h.
+            Consulta sem compromisso. Atendimento de segunda a sexta, das 8h ï¿½s 18h.
           </p>
         </div>
       </div>
