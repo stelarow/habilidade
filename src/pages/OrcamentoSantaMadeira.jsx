@@ -152,29 +152,51 @@ function OrcamentoSantaMadeira() {
 
       <main className="min-h-screen bg-gradient-to-b from-emerald-50 to-white">
         {/* Hero Section - Regra 60-30-10: 60% teal (dominante), 30% white (secundária), 10% lime (destaque) */}
-        <section className="relative min-h-screen flex items-center bg-gradient-to-br from-teal-600 via-teal-500 to-emerald-500 overflow-hidden py-20">
-          {/* Background Pattern */}
-          <div className="absolute inset-0 opacity-10">
-            <div className="absolute inset-0" style={{
-              backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")'
-            }} />
+        <section className="relative min-h-screen flex items-center overflow-hidden py-24" style={{
+          background: `
+            radial-gradient(circle at 0% 0%, rgba(13, 148, 136, 0.4) 0%, transparent 50%),
+            radial-gradient(circle at 100% 100%, rgba(16, 185, 129, 0.3) 0%, transparent 50%),
+            linear-gradient(135deg, #0f766e 0%, #14b8a6 50%, #10b981 100%)
+          `
+        }}>
+          {/* Decorative Shapes */}
+          <div className="absolute inset-0 overflow-hidden">
+            <motion.div
+              className="absolute top-20 right-20 w-96 h-96 bg-lime-400/5 rounded-full blur-3xl"
+              animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
+              transition={{ duration: 8, repeat: Infinity }}
+            />
+            <motion.div
+              className="absolute bottom-20 left-20 w-80 h-80 bg-teal-300/5 rounded-full blur-3xl"
+              animate={{ scale: [1.2, 1, 1.2], opacity: [0.5, 0.3, 0.5] }}
+              transition={{ duration: 10, repeat: Infinity }}
+            />
           </div>
 
           <div className="relative z-10 max-w-7xl mx-auto px-4 w-full">
-            <div className="grid lg:grid-cols-[1fr_0.9fr] gap-8 lg:gap-12 items-start">
+            <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
               {/* Left Column - Text Content + Comparison Cards */}
-              <div className="space-y-5 lg:space-y-6">
+              <div className="space-y-6 lg:space-y-8">
                 <motion.div
                   initial={{ opacity: 0, x: -30 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.8 }}
-                  className="text-white"
+                  className="text-white space-y-3"
                 >
-                  <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight">
-                    PROPOSTA NOVO SITE<br />
+                  <p className="text-xs md:text-sm uppercase tracking-widest text-white/80 font-semibold">
+                    Proposta Novo Site
+                  </p>
+                  <h1 className="text-5xl md:text-6xl lg:text-7xl font-black leading-tight">
+                    SANTA MADEIRA
+                    <br />
                     {/* 10% cor de destaque (lime) */}
-                    <span className="text-lime-400 drop-shadow-lg">SANTA MADEIRA CASAS</span>
+                    <span className="text-lime-400" style={{ textShadow: '0 0 40px rgba(132, 204, 22, 0.5)' }}>
+                      CASAS
+                    </span>
                   </h1>
+                  <p className="text-base md:text-lg text-white/90 font-medium pt-2">
+                    Modernização WordPress → Next.js
+                  </p>
                 </motion.div>
 
                 {/* Comparison Bars - Animated Progress - 30% cor secundária (white cards) */}
@@ -185,10 +207,21 @@ function OrcamentoSantaMadeira() {
                   className="space-y-4 bg-white/10 backdrop-blur-md p-5 lg:p-6 rounded-2xl border border-white/20 shadow-xl"
                 >
                   {/* Velocidade */}
-                  <div className="space-y-1.5">
-                    <div className="flex items-center gap-2 mb-2">
-                      <Lightning className="w-4 h-4 text-lime-400" weight="fill" />
-                      <span className="text-white font-bold text-xs uppercase tracking-wider">Velocidade</span>
+                  <motion.div
+                    className="space-y-1.5 p-3 rounded-xl transition-all cursor-pointer"
+                    whileHover={{ scale: 1.02, x: 4, backgroundColor: 'rgba(255, 255, 255, 0.05)' }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-2">
+                        <div className="bg-lime-400/20 p-1.5 rounded-lg ring-1 ring-lime-400/40 backdrop-blur-sm">
+                          <Lightning className="w-5 h-5 text-lime-400" weight="fill" />
+                        </div>
+                        <span className="text-white font-bold text-sm uppercase tracking-wider">Velocidade</span>
+                      </div>
+                      <Badge className="bg-lime-400/20 text-lime-400 border-lime-400/40 font-bold">
+                        +186%
+                      </Badge>
                     </div>
 
                     {/* Atual */}
@@ -216,19 +249,33 @@ function OrcamentoSantaMadeira() {
                         initial={{ width: "0%" }}
                         animate={{ width: "35%" }}
                         transition={{ duration: 1.5, delay: 0.7, ease: "easeOut" }}
-                        className="h-2 bg-lime-500 rounded-full"
-                        style={{ backgroundColor: '#84cc16' }}
+                        className="h-2.5 rounded-full"
+                        style={{
+                          background: 'linear-gradient(90deg, #84cc16 0%, #a3e635 100%)',
+                          boxShadow: '0 0 10px rgba(132, 204, 22, 0.4)'
+                        }}
                       />
                     </div>
-                  </div>
+                  </motion.div>
 
                   <Separator className="bg-white/10" />
 
                   {/* SEO */}
-                  <div className="space-y-1.5">
-                    <div className="flex items-center gap-2 mb-2">
-                      <Target className="w-4 h-4 text-lime-400" weight="fill" />
-                      <span className="text-white font-bold text-xs uppercase tracking-wider">SEO</span>
+                  <motion.div
+                    className="space-y-1.5 p-3 rounded-xl transition-all cursor-pointer"
+                    whileHover={{ scale: 1.02, x: 4, backgroundColor: 'rgba(255, 255, 255, 0.05)' }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-2">
+                        <div className="bg-lime-400/20 p-1.5 rounded-lg ring-1 ring-lime-400/40 backdrop-blur-sm">
+                          <Target className="w-5 h-5 text-lime-400" weight="fill" />
+                        </div>
+                        <span className="text-white font-bold text-sm uppercase tracking-wider">SEO</span>
+                      </div>
+                      <Badge className="bg-lime-400/20 text-lime-400 border-lime-400/40 font-bold">
+                        +150%
+                      </Badge>
                     </div>
 
                     {/* Atual */}
@@ -256,19 +303,33 @@ function OrcamentoSantaMadeira() {
                         initial={{ width: "0%" }}
                         animate={{ width: "100%" }}
                         transition={{ duration: 1.5, delay: 1.1, ease: "easeOut" }}
-                        className="h-2 bg-lime-500 rounded-full"
-                        style={{ backgroundColor: '#84cc16' }}
+                        className="h-2.5 rounded-full"
+                        style={{
+                          background: 'linear-gradient(90deg, #84cc16 0%, #a3e635 100%)',
+                          boxShadow: '0 0 10px rgba(132, 204, 22, 0.4)'
+                        }}
                       />
                     </div>
-                  </div>
+                  </motion.div>
 
                   <Separator className="bg-white/10" />
 
                   {/* Plugins */}
-                  <div className="space-y-1.5">
-                    <div className="flex items-center gap-2 mb-2">
-                      <Code className="w-4 h-4 text-lime-400" weight="fill" />
-                      <span className="text-white font-bold text-xs uppercase tracking-wider">Plugins</span>
+                  <motion.div
+                    className="space-y-1.5 p-3 rounded-xl transition-all cursor-pointer"
+                    whileHover={{ scale: 1.02, x: 4, backgroundColor: 'rgba(255, 255, 255, 0.05)' }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-2">
+                        <div className="bg-lime-400/20 p-1.5 rounded-lg ring-1 ring-lime-400/40 backdrop-blur-sm">
+                          <Code className="w-5 h-5 text-lime-400" weight="fill" />
+                        </div>
+                        <span className="text-white font-bold text-sm uppercase tracking-wider">Plugins</span>
+                      </div>
+                      <Badge className="bg-lime-400/20 text-lime-400 border-lime-400/40 font-bold">
+                        -100%
+                      </Badge>
                     </div>
 
                     {/* Atual */}
@@ -302,7 +363,7 @@ function OrcamentoSantaMadeira() {
                         />
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 </motion.div>
               </div>
 
@@ -311,17 +372,31 @@ function OrcamentoSantaMadeira() {
                 initial={{ opacity: 0, x: 30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                className="flex items-center justify-center lg:sticky lg:top-24"
+                className="flex items-center justify-center"
               >
-                <Card className="bg-white/95 backdrop-blur-sm border-2 border-teal-200 shadow-2xl overflow-hidden w-full max-w-lg">
-                  <CardContent className="p-8 lg:p-10 flex items-center justify-center aspect-square">
-                    <img
-                      src="/logo-santamadeiracasas-color.png.webp"
-                      alt="Santa Madeira Casas"
-                      className="w-full h-auto object-contain"
-                    />
-                  </CardContent>
-                </Card>
+                <motion.div
+                  whileHover={{ scale: 1.02, rotate: 1 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                  className="relative w-full max-w-md"
+                >
+                  <Badge className="absolute -top-4 left-1/2 -translate-x-1/2 z-10 bg-lime-400 text-gray-900 border-lime-500 shadow-lg font-bold px-4 py-1.5">
+                    Cliente Exclusivo
+                  </Badge>
+                  <Card className="relative bg-white/95 backdrop-blur-sm border-2 border-teal-300 overflow-hidden w-full transition-all duration-500 hover:border-lime-400"
+                    style={{
+                      boxShadow: '0 0 60px rgba(20, 184, 166, 0.4), 0 20px 40px rgba(0, 0, 0, 0.1)'
+                    }}
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-br from-teal-400/10 via-transparent to-lime-400/10 pointer-events-none" />
+                    <CardContent className="p-10 flex items-center justify-center aspect-square relative z-10">
+                      <img
+                        src="/logo-santamadeiracasas-color.png.webp"
+                        alt="Santa Madeira Casas"
+                        className="w-full h-auto object-contain"
+                      />
+                    </CardContent>
+                  </Card>
+                </motion.div>
               </motion.div>
             </div>
           </div>
@@ -943,15 +1018,15 @@ function OrcamentoSantaMadeira() {
                           <div className="space-y-2">
                             <div className="flex items-center gap-2">
                               <Target className="w-4 h-4 md:w-5 md:h-5 text-lime-600 flex-shrink-0" />
-                              <span className="text-sm md:text-base text-gray-900 font-medium">Pago quando atingir 1º lugar no Google</span>
+                              <span className="text-sm md:text-base text-gray-900 font-medium">Pago na entrega do site completo</span>
                             </div>
                             <div className="flex items-center gap-2">
                               <Globe className="w-4 h-4 md:w-5 md:h-5 text-lime-600 flex-shrink-0" />
-                              <span className="text-sm md:text-base text-gray-900">Busca regional orgânica</span>
+                              <span className="text-sm md:text-base text-gray-900">Site otimizado e funcionando</span>
                             </div>
                             <div className="flex items-center gap-2">
                               <Shield className="w-4 h-4 md:w-5 md:h-5 text-lime-600 flex-shrink-0" />
-                              <span className="text-sm md:text-base text-gray-900 font-medium">Garantia de resultado</span>
+                              <span className="text-sm md:text-base text-gray-900 font-medium">SEO otimizado garantido</span>
                             </div>
                           </div>
                         </div>
@@ -964,8 +1039,8 @@ function OrcamentoSantaMadeira() {
                     <div className="ml-6 md:ml-8">
                       <p className="font-semibold text-blue-900 mb-1 text-sm md:text-base">Por que essa estrutura?</p>
                       <p className="text-blue-800 text-xs md:text-sm">
-                        Queremos que você tenha <strong>certeza do resultado</strong>. A segunda parcela só é paga quando você estiver
-                        aparecendo em 1º lugar nas buscas regionais. Seu sucesso é nosso sucesso!
+                        Queremos que você tenha <strong>certeza do resultado</strong>. A segunda parcela é paga na entrega do site completo,
+                        totalmente otimizado para SEO e pronto para gerar resultados. Seu sucesso é nosso sucesso!
                       </p>
                     </div>
                   </Alert>
@@ -1626,12 +1701,9 @@ function OrcamentoSantaMadeira() {
 
           <div className="max-w-5xl mx-auto text-center relative z-10">
             <ScrollReveal>
-              <h2 className="text-4xl md:text-6xl font-bold mb-6">
+              <h2 className="text-4xl md:text-6xl font-bold mb-12">
                 Vamos Transformar Seu Negócio?
               </h2>
-              <p className="text-xl md:text-2xl text-white mb-12 max-w-3xl mx-auto">
-                Site 3x mais rápido • +65% orçamentos • R$ 7.200 economia/ano • Garantia de 1º lugar no Google
-              </p>
 
               <div className="mb-12">
                 <div className="mb-6">
@@ -1659,7 +1731,7 @@ function OrcamentoSantaMadeira() {
 
               <div className="mt-12">
                 <p className="text-white text-base font-semibold">
-                  Quanto mais rápido começarmos, mais rápido você verá resultados
+                  Quanto mais rápido começarmos, mais rápido você será visto e notado
                 </p>
               </div>
             </ScrollReveal>
