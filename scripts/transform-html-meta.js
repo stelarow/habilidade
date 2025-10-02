@@ -16,7 +16,8 @@ const metaConfig = {
     title: 'Curso de Informática Presencial São José SC | Excel Básico ao Avançado, Word, Canva e IA',
     description: 'Curso de informática presencial em São José SC. Excel, Word, PowerPoint, Canva e IA. Atendemos Florianópolis, Palhoça e Biguaçu. Certificado 170h.',
     keywords: 'curso informática presencial, curso informática são josé, curso informática florianópolis, curso informática palhoça, curso informática biguaçu, excel avançado, word, powerpoint, inteligência artificial, canva',
-    canonical: 'https://www.escolahabilidade.com/cursos/informatica'
+    canonical: 'https://www.escolahabilidade.com/cursos/informatica',
+    ogImage: 'https://www.escolahabilidade.com/assets/informatica-nova/hero/1318912.png'
   },
 
   // Página de Projetista 3D
@@ -163,6 +164,12 @@ function transformHtml(htmlContent, pagePath) {
     return htmlContent;
   }
 
+  // Definir imagem padrão se não houver
+  const defaultOgImage = 'https://www.escolahabilidade.com/logo-escola-habilidade.png';
+  if (!config.ogImage) {
+    config.ogImage = defaultOgImage;
+  }
+
   let transformedHtml = htmlContent;
 
   // Substituir title
@@ -194,28 +201,80 @@ function transformHtml(htmlContent, pagePath) {
     console.log(`✅ Meta keywords atualizada para: ${pagePath}`);
   }
 
-  // Atualizar Open Graph title se existir
+  // Adicionar ou atualizar Open Graph tags
+  const ogSiteNameRegex = /<meta property="og:site_name"[^>]*>/;
+  const insertionPoint = ogSiteNameRegex.test(transformedHtml) ? ogSiteNameRegex : /<meta property="og:locale"[^>]*>/;
+
+  // Open Graph title
   const ogTitleRegex = /<meta property="og:title" content="[^"]*"/;
   if (ogTitleRegex.test(transformedHtml)) {
     transformedHtml = transformedHtml.replace(ogTitleRegex, `<meta property="og:title" content="${config.title}"`);
+  } else {
+    transformedHtml = transformedHtml.replace(insertionPoint, `$&\n    <meta property="og:title" content="${config.title}" />`);
   }
 
-  // Atualizar Open Graph description se existir
+  // Open Graph description
   const ogDescRegex = /<meta property="og:description" content="[^"]*"/;
   if (ogDescRegex.test(transformedHtml)) {
     transformedHtml = transformedHtml.replace(ogDescRegex, `<meta property="og:description" content="${config.description}"`);
+  } else {
+    const ogTitleTag = /<meta property="og:title"[^>]*>/;
+    transformedHtml = transformedHtml.replace(ogTitleTag, `$&\n    <meta property="og:description" content="${config.description}" />`);
   }
 
-  // Atualizar Twitter title se existir
+  // Open Graph URL
+  const ogUrlRegex = /<meta property="og:url" content="[^"]*"/;
+  if (ogUrlRegex.test(transformedHtml)) {
+    transformedHtml = transformedHtml.replace(ogUrlRegex, `<meta property="og:url" content="${config.canonical}"`);
+  } else {
+    const ogDescTag = /<meta property="og:description"[^>]*>/;
+    transformedHtml = transformedHtml.replace(ogDescTag, `$&\n    <meta property="og:url" content="${config.canonical}" />`);
+  }
+
+  // Open Graph image
+  if (config.ogImage) {
+    const ogImageRegex = /<meta property="og:image" content="[^"]*"/;
+    if (ogImageRegex.test(transformedHtml)) {
+      transformedHtml = transformedHtml.replace(ogImageRegex, `<meta property="og:image" content="${config.ogImage}"`);
+    } else {
+      const ogUrlTag = /<meta property="og:url"[^>]*>/;
+      transformedHtml = transformedHtml.replace(ogUrlTag, `$&\n    <meta property="og:image" content="${config.ogImage}" />\n    <meta property="og:image:width" content="1200" />\n    <meta property="og:image:height" content="630" />`);
+    }
+  }
+
+  // Atualizar Twitter title se existir, senão adicionar
   const twitterTitleRegex = /<meta name="twitter:title" content="[^"]*"/;
   if (twitterTitleRegex.test(transformedHtml)) {
     transformedHtml = transformedHtml.replace(twitterTitleRegex, `<meta name="twitter:title" content="${config.title}"`);
+  } else {
+    const twitterCardTag = /<meta name="twitter:card"[^>]*>/;
+    if (twitterCardTag.test(transformedHtml)) {
+      transformedHtml = transformedHtml.replace(twitterCardTag, `$&\n    <meta name="twitter:title" content="${config.title}" />`);
+    }
   }
 
-  // Atualizar Twitter description se existir
+  // Atualizar Twitter description se existir, senão adicionar
   const twitterDescRegex = /<meta name="twitter:description" content="[^"]*"/;
   if (twitterDescRegex.test(transformedHtml)) {
     transformedHtml = transformedHtml.replace(twitterDescRegex, `<meta name="twitter:description" content="${config.description}"`);
+  } else {
+    const twitterTitleTag = /<meta name="twitter:title"[^>]*>/;
+    if (twitterTitleTag.test(transformedHtml)) {
+      transformedHtml = transformedHtml.replace(twitterTitleTag, `$&\n    <meta name="twitter:description" content="${config.description}" />`);
+    }
+  }
+
+  // Twitter image
+  if (config.ogImage) {
+    const twitterImageRegex = /<meta name="twitter:image" content="[^"]*"/;
+    if (twitterImageRegex.test(transformedHtml)) {
+      transformedHtml = transformedHtml.replace(twitterImageRegex, `<meta name="twitter:image" content="${config.ogImage}"`);
+    } else {
+      const twitterDescTag = /<meta name="twitter:description"[^>]*>/;
+      if (twitterDescTag.test(transformedHtml)) {
+        transformedHtml = transformedHtml.replace(twitterDescTag, `$&\n    <meta name="twitter:image" content="${config.ogImage}" />`);
+      }
+    }
   }
 
   // Atualizar ou adicionar canonical tag se configurado
