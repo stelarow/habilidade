@@ -259,13 +259,38 @@ function generateAsyncCSSLoader() {
 }
 
 /**
- * FOUC prevention script with noscript fallback for crawlers
+ * FOUC prevention script - CRAWLER-SAFE version
+ * Content visible by default, FOUC prevention only for real browsers
  */
 function generateFOUCPrevention() {
   return `
     <script>
       (function() {
-        // Prevent FOUC with optimized approach
+        // Detect crawlers and bots - they should see content immediately
+        var ua = navigator.userAgent || '';
+        var isCrawler = /bot|crawler|spider|crawling|google|bing|yahoo|baidu|yandex|duckduck|perplexity|chatgpt|claude|anthropic|openai/i.test(ua);
+
+        // Detect headless browsers often used by crawlers
+        var isHeadless = navigator.webdriver ||
+                        (window.navigator && window.navigator.webdriver) ||
+                        (window.callPhantom || window._phantom);
+
+        // If crawler or headless, show content immediately
+        if (isCrawler || isHeadless) {
+          document.documentElement.classList.add('fouc-ready');
+          return;
+        }
+
+        // Only apply FOUC prevention for real browsers with modern features
+        var canApplyFOUC = 'requestAnimationFrame' in window &&
+                          'classList' in document.documentElement;
+
+        if (!canApplyFOUC) {
+          document.documentElement.classList.add('fouc-ready');
+          return;
+        }
+
+        // Apply FOUC prevention only for modern browsers
         document.documentElement.classList.add('fouc-prevent');
 
         function makeReady() {
@@ -283,15 +308,6 @@ function generateFOUCPrevention() {
         }
       })();
     </script>
-    <noscript>
-      <style>
-        /* Ensure content is visible for crawlers without JavaScript */
-        html.fouc-prevent, .fouc-prevent {
-          opacity: 1 !important;
-          visibility: visible !important;
-        }
-      </style>
-    </noscript>
   `;
 }
 
