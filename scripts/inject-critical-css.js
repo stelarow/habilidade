@@ -259,7 +259,7 @@ function generateAsyncCSSLoader() {
 }
 
 /**
- * FOUC prevention script
+ * FOUC prevention script with noscript fallback for crawlers
  */
 function generateFOUCPrevention() {
   return `
@@ -267,12 +267,12 @@ function generateFOUCPrevention() {
       (function() {
         // Prevent FOUC with optimized approach
         document.documentElement.classList.add('fouc-prevent');
-        
+
         function makeReady() {
           document.documentElement.classList.remove('fouc-prevent');
           document.documentElement.classList.add('fouc-ready');
         }
-        
+
         // Fast ready detection for mobile
         if (document.readyState === 'loading') {
           document.addEventListener('DOMContentLoaded', function() {
@@ -283,6 +283,15 @@ function generateFOUCPrevention() {
         }
       })();
     </script>
+    <noscript>
+      <style>
+        /* Ensure content is visible for crawlers without JavaScript */
+        html.fouc-prevent, .fouc-prevent {
+          opacity: 1 !important;
+          visibility: visible !important;
+        }
+      </style>
+    </noscript>
   `;
 }
 
