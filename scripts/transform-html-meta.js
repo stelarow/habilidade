@@ -179,11 +179,18 @@ function transformHtml(htmlContent, pagePath) {
     console.log(`✅ Title atualizado para: ${pagePath}`);
   }
 
-  // Substituir meta description
+  // Substituir ou adicionar meta description
   const descriptionRegex = /<meta name="description" content="[^"]*"/;
   if (descriptionRegex.test(transformedHtml)) {
     transformedHtml = transformedHtml.replace(descriptionRegex, `<meta name="description" content="${config.description}"`);
     console.log(`✅ Meta description atualizada para: ${pagePath}`);
+  } else {
+    // Adicionar meta description após viewport ou charset se não existir
+    const addDescRegex = /(<meta name="viewport"[^>]*>|<meta charset="[^"]*">)/;
+    if (addDescRegex.test(transformedHtml)) {
+      transformedHtml = transformedHtml.replace(addDescRegex, `$1\n    <meta name="description" content="${config.description}" />`);
+      console.log(`✅ Meta description adicionada para: ${pagePath}`);
+    }
   }
 
   // Substituir ou adicionar meta keywords se configurado
