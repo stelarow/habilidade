@@ -44,7 +44,7 @@ export const ProjetistaHeroSection = () => {
             
             <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold leading-tight mb-6">
               <span className="bg-gradient-to-r from-purple-400 via-purple-600 to-cyan-400 bg-clip-text text-transparent">
-                DOMINE SKETCHUP E ENSCAPE
+                DOMINE SKETCHUP E ENSCAPE{' '}
               </span>
               <br />
               <span className="text-white text-xl md:text-2xl lg:text-3xl">

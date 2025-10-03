@@ -43,7 +43,7 @@ const Projetista3DNew = () => {
                 "addressRegion": "SC",
                 "addressCountry": "BR"
               },
-              "url": "https://www.escolahabilidade.com.br"
+              "url": "https://www.escolahabilidade.com"
             },
             "courseMode": "onsite",
             "educationalCredentialAwarded": "Certificado Nacional de 56h",
