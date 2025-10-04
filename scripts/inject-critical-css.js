@@ -189,7 +189,7 @@ function generateAsyncCSSLoader() {
         // Connection-aware loading
         function getOptimalLoadDelay() {
           var connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-          var isMobile = window.innerWidth <= 768;
+          var isMobile = window.matchMedia('(max-width: 768px)').matches;
 
           if (connection) {
             if (connection.effectiveType === '4g') return isMobile ? 50 : 25;
