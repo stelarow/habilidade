@@ -32,14 +32,14 @@ const courseSchema = {
       "@type": "PostalAddress",
       "streetAddress": "Rua Caetano José Ferreira, 426 - Sala 5 - Kobrasol",
       "addressLocality": "São José",
-      "addressRegion": "SC", 
+      "addressRegion": "SC",
       "postalCode": "88103-265",
       "addressCountry": "BR"
     },
     "url": "https://www.escolahabilidade.com.br",
     "areaServed": [
       "São José, SC",
-      "Florianópolis, SC", 
+      "Florianópolis, SC",
       "Palhoça, SC",
       "Biguaçu, SC",
       "Grande Florianópolis"
@@ -69,6 +69,92 @@ const courseSchema = {
     "ratingValue": "4.9",
     "reviewCount": "150"
   },
+  "review": [
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5",
+        "bestRating": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Letícia Mendes"
+      },
+      "reviewBody": "Estou adorando fazer o curso de Informática Fundamental na Escola Habilidade. As aulas são muito práticas e dinâmicas, e aprendi rapidamente ferramentas como Excel, Canva e até Inteligência Artificial. O professor é atencioso e esclarece todas as dúvidas!",
+      "datePublished": "2024-12-15"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5",
+        "bestRating": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Mateus Oliveira"
+      },
+      "reviewBody": "O curso presencial é excelente, o ambiente é muito acolhedor, e as aulas são bastante claras e práticas. Aprendi muito sobre Word, PowerPoint e Windows 11. O professor é dedicado e sempre traz exemplos do dia a dia.",
+      "datePublished": "2024-12-20"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5",
+        "bestRating": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Gabriela Costa Silva"
+      },
+      "reviewBody": "A Escola Habilidade é incrível! As turmas pequenas ajudam demais na hora de aprender, especialmente ferramentas digitais como Canva e Inteligência Artificial. Estou gostando muito das aulas presenciais e da didática do professor.",
+      "datePublished": "2025-01-10"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5",
+        "bestRating": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Lucas Felipe Ribeiro"
+      },
+      "reviewBody": "Estou impressionado com a qualidade das aulas presenciais do curso. O professor explica tudo muito bem e o conteúdo é super atualizado. Já estou aplicando o que aprendi no meu dia a dia.",
+      "datePublished": "2024-12-18"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5",
+        "bestRating": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Carolina Almeida"
+      },
+      "reviewBody": "As aulas são muito práticas e interessantes! Aprendi sobre ferramentas que nem sabia que existiam, e o professor sempre traz uma abordagem descontraída que facilita muito o aprendizado.",
+      "datePublished": "2024-11-25"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5",
+        "bestRating": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Pedro Henrique Soares"
+      },
+      "reviewBody": "Curso excelente, ambiente confortável e turmas pequenas. Já aprendi muito sobre ferramentas digitais, e o professor é sempre atento e dedicado.",
+      "datePublished": "2024-12-22"
+    }
+  ],
   "location": {
     "@type": "Place",
     "name": "Escola Habilidade",
@@ -110,13 +196,13 @@ const localBusinessSchema = {
       "containedInPlace": "SC"
     },
     {
-      "@type": "City", 
+      "@type": "City",
       "name": "Florianópolis",
       "containedInPlace": "SC"
     },
     {
       "@type": "City",
-      "name": "Palhoça", 
+      "name": "Palhoça",
       "containedInPlace": "SC"
     },
     {
@@ -135,6 +221,142 @@ const localBusinessSchema = {
   }
 };
 
+// Schema FAQPage - 16 perguntas frequentes
+const faqPageSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Por que turmas pequenas fazem diferença no aprendizado?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Turmas de máximo 5 alunos garantem atenção individual para cada pessoa. O professor consegue acompanhar seu ritmo, tirar dúvidas na hora e adaptar explicações ao seu perfil. Isso acelera o aprendizado e garante que ninguém fica para trás - diferente de turmas tradicionais com 20-30 alunos onde você precisa competir pela atenção."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "É adequado para pessoas sem conhecimento em informática?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sim! Começamos do absoluto zero com Windows 11 e evoluímos gradualmente até tecnologias avançadas como IA aplicada. Nossa metodologia foi desenvolvida especialmente para iniciantes, com acompanhamento individual em turmas de no máximo 5 alunos."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Qual a diferença entre as modalidades Presencial e Online?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Presencial: aulas na escola com professores especializados, interação direta e ambiente dedicado ao aprendizado. Online: acesso remoto com suporte online, flexibilidade de horários. Ambas têm o mesmo conteúdo completo e apostilas inclusas."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "As apostilas estão incluídas no preço?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sim! Material didático impresso completo dos 8 módulos incluso sem custo adicional. Você recebe apostilas detalhadas de cada módulo para consulta permanente, além de exercícios práticos para fixar o aprendizado."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Como a IA está integrada no curso?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ensinamos IA de forma prática: ChatGPT para produtividade, geração de imagens e vídeos, automações no trabalho, HARPA AI, D-ID e muito mais. Você aprenderá a usar IA como ferramenta de trabalho real, não apenas teoria."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Quanto tempo demora para concluir o curso?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "O curso tem 184,5 horas de conteúdo distribuídas em 8 módulos. O ritmo é flexível e depende da sua dedicação. Com estudo regular de 10-15 horas semanais, você pode concluir em aproximadamente 3-4 meses."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Que tipo de certificado eu recebo?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Você recebe um Certificado Nacional de 184,5 horas reconhecido em todo território brasileiro. O certificado comprova suas competências em informática moderna e pode ser usado para comprovação profissional."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Preciso ter computador próprio?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Para a modalidade presencial, disponibilizamos computadores na escola. Para online, você precisa ter um computador com Windows 10/11, 8GB de RAM (recomendado 16GB) e conexão estável com internet."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Como funciona o suporte durante o curso?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Oferecemos suporte vitalício! Durante o curso, você tem acompanhamento direto dos professores, tira-dúvidas e feedback em projetos. Após a conclusão, mantemos canal de suporte para consultas pontuais."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Posso parcelar o pagamento?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sim! Oferecemos 3 opções: Boleto bancário: 12x de R$ 299,90; Cartão de crédito: 10x de R$ 359,88 sem juros; À vista: R$ 3.382,87 (6% de desconto). Todas as formas de pagamento são 100% seguras e processadas por plataformas confiáveis."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "A garantia de 7 dias é real?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Absolutamente! Se em até 7 dias você não estiver satisfeito com o curso, devolvemos 100% do valor pago sem perguntas. É nossa forma de demonstrar total confiança na qualidade do conteúdo e metodologia."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Onde fica a escola de informática?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nossa escola está localizada na R. Caetano José Ferreira, 426 - Sala 5, Kobrasol, São José - SC, CEP 88102-280. Próximo ao Cantinho da Fama e Colégio Municipal Maria Luiza de Melo. Fácil acesso para alunos de Florianópolis, Palhoça e Biguaçu, com ampla disponibilidade de estacionamento público nas ruas próximas."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Vocês atendem alunos de outras cidades além de São José?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sim! Atendemos alunos de toda a Grande Florianópolis. Muitos de nossos alunos vêm de Florianópolis (15 min), Palhoça (10 min) e Biguaçu (12 min). Nossa localização no Kobrasol é estratégica e há amplo estacionamento público disponível nas ruas próximas para facilitar o acesso."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Como chegar na escola de informática presencial?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Estamos na R. Caetano José Ferreira, 426, Kobrasol - região central de São José com fácil acesso pela BR-101. Próximo ao Cantinho da Fama e Colégio Municipal Maria Luiza de Melo. Diversas linhas de ônibus passam pelo Kobrasol, conectando toda a Grande Florianópolis. Há estacionamento público disponível nas ruas próximas."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Tem estacionamento para quem vem de outras cidades?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sim! Há ampla disponibilidade de estacionamento público nas proximidades da escola, na R. Caetano José Ferreira e ruas adjacentes no Kobrasol. É uma das facilidades da localização para quem vem de Florianópolis, Palhoça, Biguaçu e outras cidades da região."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Qual o horário de funcionamento da escola?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Funcionamos de segunda a sexta das 8h às 20h (sexta até 17h30) e sábados das 8h às 12h. Oferecemos horários flexíveis para atender profissionais que trabalham durante o dia, incluindo turmas vespertinas e noturnas."
+      }
+    }
+  ]
+};
+
 const Informatica = () => {
   return (
     <main className="min-h-screen bg-zinc-950 text-white">
@@ -143,6 +365,9 @@ const Informatica = () => {
         <title>Curso de Informática Presencial São José SC | Excel Básico ao Avançado, Word, Canva e IA</title>
         <meta name="description" content="Curso de informática presencial em São José SC. Excel, Word, PowerPoint, Canva e IA. Atendemos Florianópolis, Palhoça e Biguaçu. Certificado 170h." />
         <meta name="keywords" content="curso informática presencial, curso informática são josé, curso informática florianópolis, curso informática palhoça, curso informática biguaçu, excel avançado, word, powerpoint, inteligência artificial, canva" />
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+        <meta name="author" content="Escola Habilidade" />
+        <meta name="theme-color" content="#3b82f6" />
 
         {/* Canonical URL */}
         <link rel="canonical" href="https://www.escolahabilidade.com/cursos/informatica" />
@@ -157,6 +382,11 @@ const Informatica = () => {
         {/* Schema.org para LocalBusiness */}
         <script type="application/ld+json">
           {JSON.stringify(localBusinessSchema)}
+        </script>
+
+        {/* Schema.org para FAQPage - 16 perguntas frequentes */}
+        <script type="application/ld+json">
+          {JSON.stringify(faqPageSchema)}
         </script>
       </Helmet>
 
