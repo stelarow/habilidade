@@ -374,22 +374,12 @@ const Informatica = () => {
         <link rel="canonical" href="https://www.escolahabilidade.com/cursos/informatica" />
 
         {/* Open Graph tags gerenciadas por transform-html-meta.js durante build */}
-
-        {/* Schema.org para Curso */}
-        <script type="application/ld+json">
-          {JSON.stringify(courseSchema)}
-        </script>
-
-        {/* Schema.org para LocalBusiness */}
-        <script type="application/ld+json">
-          {JSON.stringify(localBusinessSchema)}
-        </script>
-
-        {/* Schema.org para FAQPage - 16 perguntas frequentes */}
-        <script type="application/ld+json">
-          {JSON.stringify(faqPageSchema)}
-        </script>
       </Helmet>
+
+      {/* Schema.org JSON-LD - Renderizado fora do Helmet para compatibilidade com SSG */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify(courseSchema)}} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify(localBusinessSchema)}} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify(faqPageSchema)}} />
 
       {/* Seções organizadas para conversão otimizada */}
       <InformaticaHeroSection />
