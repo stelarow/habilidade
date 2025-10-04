@@ -225,6 +225,7 @@ const localBusinessSchema = {
 const faqPageSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
+  "name": "Perguntas Frequentes - Curso de Informática",
   "mainEntity": [
     {
       "@type": "Question",
