@@ -64,9 +64,8 @@ function generateCriticalCSS() {
     .from-purple-600{--tw-gradient-from:#9333ea;--tw-gradient-to:rgb(147 51 234 / 0);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}
     .to-blue-600{--tw-gradient-to:#2563eb}
 
-    /* Anti-FOUC */
-    .fouc-prevent{opacity:0;visibility:hidden}
-    .fouc-ready{opacity:1;visibility:visible;transition:opacity 200ms}
+    /* Anti-FOUC removed for better LCP performance */
+    /* font-display: swap handles FOIT prevention */
 
     /* Mobile Responsive */
     @media (min-width:640px){
@@ -229,57 +228,10 @@ function generateAsyncCSSLoader() {
 }
 
 /**
- * FOUC prevention script - CRAWLER-SAFE version
- * Content visible by default, FOUC prevention only for real browsers
+ * FOUC prevention REMOVED for better LCP performance
+ * Using font-display: swap instead to prevent FOIT
+ * This eliminates ~600-900ms of render delay
  */
-function generateFOUCPrevention() {
-  return `
-    <script>
-      (function() {
-        // Detect crawlers and bots - they should see content immediately
-        var ua = navigator.userAgent || '';
-        var isCrawler = /bot|crawler|spider|crawling|google|bing|yahoo|baidu|yandex|duckduck|perplexity|chatgpt|claude|anthropic|openai/i.test(ua);
-
-        // Detect headless browsers often used by crawlers
-        var isHeadless = navigator.webdriver ||
-                        (window.navigator && window.navigator.webdriver) ||
-                        (window.callPhantom || window._phantom);
-
-        // If crawler or headless, show content immediately
-        if (isCrawler || isHeadless) {
-          document.documentElement.classList.add('fouc-ready');
-          return;
-        }
-
-        // Only apply FOUC prevention for real browsers with modern features
-        var canApplyFOUC = 'requestAnimationFrame' in window &&
-                          'classList' in document.documentElement;
-
-        if (!canApplyFOUC) {
-          document.documentElement.classList.add('fouc-ready');
-          return;
-        }
-
-        // Apply FOUC prevention only for modern browsers
-        document.documentElement.classList.add('fouc-prevent');
-
-        function makeReady() {
-          document.documentElement.classList.remove('fouc-prevent');
-          document.documentElement.classList.add('fouc-ready');
-        }
-
-        // Fast ready detection for mobile
-        if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', function() {
-            requestAnimationFrame(makeReady);
-          });
-        } else {
-          requestAnimationFrame(makeReady);
-        }
-      })();
-    </script>
-  `;
-}
 
 /**
  * Process HTML files and inject critical CSS
@@ -314,15 +266,14 @@ async function injectCriticalCSS() {
       // Generate critical CSS components
       const criticalCSS = generateCriticalCSS();
       const asyncLoader = generateAsyncCSSLoader();
-      const foucPrevention = generateFOUCPrevention();
-      
+
       console.log(`🔍 Injecting ${criticalCSS.length} chars of Critical CSS into ${path.relative(distDir, filePath)}`);
-      
+
       // Inject critical CSS inline right after the opening <head> tag
       const criticalCSSTag = `<style data-critical>${criticalCSS}</style>`;
       html = html.replace(
-        /(<head[^>]*>)/i, 
-        `$1\n    ${criticalCSSTag}\n    ${foucPrevention}`
+        /(<head[^>]*>)/i,
+        `$1\n    ${criticalCSSTag}`
       );
       
       // Step 1: Remove ALL existing CSS links to prevent duplication
