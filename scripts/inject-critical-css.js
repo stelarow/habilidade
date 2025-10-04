@@ -200,40 +200,10 @@ function generateAsyncCSSLoader() {
           return isMobile ? 100 : 50;
         }
 
-        // Preload critical resources with priority hints (self-hosted fonts)
-        function preloadCriticalResources() {
-          var resources = [
-            {
-              href: '/fonts/inter/inter-400.woff2',
-              as: 'font',
-              type: 'font/woff2',
-              crossorigin: 'anonymous'
-            },
-            {
-              href: '/fonts/montserrat/montserrat-400.woff2',
-              as: 'font',
-              type: 'font/woff2',
-              crossorigin: 'anonymous'
-            }
-          ];
-
-          resources.forEach(function(resource) {
-            var link = document.createElement('link');
-            link.rel = 'preload';
-            link.as = resource.as;
-            link.type = resource.type;
-            link.href = resource.href;
-            if (resource.crossorigin) link.crossOrigin = resource.crossorigin;
-            link.fetchPriority = 'high';
-            document.head.appendChild(link);
-          });
-        }
-
         // Initialize async loading
         var loadDelay = getOptimalLoadDelay();
 
-        // Preload fonts immediately
-        preloadCriticalResources();
+        // Note: Font preloading is handled in index.html <head> to avoid duplication
 
         // Load CSS based on document ready state
         if (document.readyState === 'loading') {
