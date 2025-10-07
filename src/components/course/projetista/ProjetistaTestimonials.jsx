@@ -2211,7 +2211,6 @@ export const ProjetistaTestimonials = () => {
     }
   ];
 
-  const displayedReviews = reviews.slice(0, visibleCount);
   const hasMoreReviews = visibleCount < reviews.length;
   const remainingReviews = reviews.length - visibleCount;
 
@@ -2247,9 +2246,9 @@ export const ProjetistaTestimonials = () => {
     return `${monthName}. de ${year}`;
   };
 
-  function ReviewCard({ review, index }) {
+  function ReviewCard({ review, index, isVisible }) {
     return (
-      <div className="break-inside-avoid group">
+      <div className={`break-inside-avoid group ${!isVisible ? 'hidden' : ''}`}>
         <div className={`bg-gradient-to-r ${review.gradient} rounded-2xl p-[2px] transition-all duration-300 group-hover:shadow-lg group-hover:-translate-y-2 group-hover:shadow-${review.shadowColor} tech-card`}>
           <div className="w-full bg-zinc-900 rounded-2xl p-6 relative overflow-hidden transition-colors duration-300 group-hover:bg-zinc-800">
             <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-pulse"></div>
@@ -2328,8 +2327,13 @@ export const ProjetistaTestimonials = () => {
 
         {/* Mosaico de Reviews */}
         <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6 mb-12">
-          {displayedReviews.map((review, index) => (
-            <ReviewCard key={review.id} review={review} index={index} />
+          {reviews.map((review, index) => (
+            <ReviewCard
+              key={review.id}
+              review={review}
+              index={index}
+              isVisible={index < visibleCount}
+            />
           ))}
         </div>
 
