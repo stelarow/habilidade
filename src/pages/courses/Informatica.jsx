@@ -26,7 +26,7 @@ const courseSchema = {
   "name": "Curso de Informática Presencial - Excel, Word, PowerPoint e IA",
   "description": "Curso presencial de informática em São José SC. Excel avançado, Word, PowerPoint, Canva e Inteligência Artificial. Atendemos toda Grande Florianópolis - Florianópolis, Palhoça, Biguaçu. 170 horas com certificado nacional.",
   "provider": {
-    "@type": "Organization",
+    "@type": "EducationalOrganization",
     "name": "Escola Habilidade",
     "address": {
       "@type": "PostalAddress",
@@ -45,9 +45,16 @@ const courseSchema = {
       "Grande Florianópolis"
     ]
   },
-  "courseMode": "onsite",
-  "educationalCredentialAwarded": "Certificado Nacional de 170h",
-  "timeRequired": "PT170H",
+  "hasCourseInstance": {
+    "@type": "CourseInstance",
+    "courseMode": "https://schema.org/OnSiteEventAttendanceMode",
+    "courseWorkload": "PT170H"
+  },
+  "educationalCredentialAwarded": {
+    "@type": "EducationalOccupationalCredential",
+    "credentialCategory": "Certificado Profissionalizante",
+    "name": "Certificado Nacional de 170h"
+  },
   "offers": [
     {
       "@type": "Offer",

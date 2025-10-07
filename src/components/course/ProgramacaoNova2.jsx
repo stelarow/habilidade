@@ -15,7 +15,7 @@ const courseSchema = {
   "name": "Curso de Programação Completo - Lógica, Python, Java, PHP, Android e IA",
   "description": "Curso presencial de programação em São José SC. 133 horas com Lógica de Programação, Python, Java, PHP, Android Studio e Claude Code. Certificado nacional. Atendemos Grande Florianópolis - Florianópolis, Palhoça, Biguaçu.",
   "provider": {
-    "@type": "Organization",
+    "@type": "EducationalOrganization",
     "name": "Escola Habilidade",
     "address": {
       "@type": "PostalAddress",
@@ -34,9 +34,16 @@ const courseSchema = {
       "Grande Florianópolis"
     ]
   },
-  "courseMode": "onsite",
-  "educationalCredentialAwarded": "Certificado Nacional de 133h",
-  "timeRequired": "PT133H",
+  "hasCourseInstance": {
+    "@type": "CourseInstance",
+    "courseMode": "https://schema.org/OnSiteEventAttendanceMode",
+    "courseWorkload": "PT133H"
+  },
+  "educationalCredentialAwarded": {
+    "@type": "EducationalOccupationalCredential",
+    "credentialCategory": "Certificado Profissionalizante",
+    "name": "Certificado Nacional de 133h"
+  },
   "offers": [
     {
       "@type": "Offer",
@@ -293,6 +300,10 @@ export function ProgramacaoNova2() {
         <link rel="canonical" href="https://www.escolahabilidade.com/cursos/programacao" />
 
         {/* Open Graph tags gerenciadas por transform-html-meta.js durante build */}
+
+        {/* Twitter Card tags para melhor compartilhamento em redes sociais */}
+        <meta name="twitter:title" content="Curso de Programação | Python, JavaScript, React | São José SC" />
+        <meta name="twitter:description" content="Curso de Programação presencial em São José SC. Python, JavaScript, React e desenvolvimento web. Do básico ao avançado." />
       </Helmet>
 
       {/* Schema.org JSON-LD - Renderizado fora do Helmet para compatibilidade com SSG */}
