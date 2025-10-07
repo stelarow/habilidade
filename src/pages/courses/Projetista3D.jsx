@@ -74,8 +74,163 @@ const Projetista3DNew = () => {
             "aggregateRating": {
               "@type": "AggregateRating",
               "ratingValue": "4.9",
+              "bestRating": "5",
+              "worstRating": "1",
+              "ratingCount": "200",
               "reviewCount": "200"
             },
+            "review": [
+              {
+                "@type": "Review",
+                "author": {
+                  "@type": "Person",
+                  "name": "Karolain Roberta Régis"
+                },
+                "datePublished": "2024-11-20",
+                "reviewBody": "Estou fazendo o curso e estou adorando, professor atencioso, com atividades super dinâmicas, aprendi já bastante coisas que ainda não sabia, estão super atualizados no mercado, eles têm deles mesmo até IA ajudando o pessoal nas medições e até em render rápidos, fora a apostila bem completa.",
+                "reviewRating": {
+                  "@type": "Rating",
+                  "ratingValue": "5",
+                  "bestRating": "5",
+                  "worstRating": "1"
+                }
+              },
+              {
+                "@type": "Review",
+                "author": {
+                  "@type": "Person",
+                  "name": "Jonatas Torres"
+                },
+                "datePublished": "2024-11-20",
+                "reviewBody": "Estou tendo uma excelente experiência com a Escola Habilidade no curso de SketchUp. O conteúdo é muito bem estruturado, o professor domina o assunto e sabe explicar de forma clara, mesmo para quem está começando.",
+                "reviewRating": {
+                  "@type": "Rating",
+                  "ratingValue": "5",
+                  "bestRating": "5",
+                  "worstRating": "1"
+                }
+              },
+              {
+                "@type": "Review",
+                "author": {
+                  "@type": "Person",
+                  "name": "Ana Caroline Orofino"
+                },
+                "datePublished": "2024-10-15",
+                "reviewBody": "Estou adorando as aulas, professor muito atencioso, sempre traz questões do cotidiano para resolução das atividades!",
+                "reviewRating": {
+                  "@type": "Rating",
+                  "ratingValue": "5",
+                  "bestRating": "5",
+                  "worstRating": "1"
+                }
+              },
+              {
+                "@type": "Review",
+                "author": {
+                  "@type": "Person",
+                  "name": "Camila Pereira"
+                },
+                "datePublished": "2024-10-20",
+                "reviewBody": "Muito legal aprender a fazer projetos 3D! O SketchUp é bem intuitivo e o Enscape faz render rápido. Recomendo!",
+                "reviewRating": {
+                  "@type": "Rating",
+                  "ratingValue": "5",
+                  "bestRating": "5",
+                  "worstRating": "1"
+                }
+              },
+              {
+                "@type": "Review",
+                "author": {
+                  "@type": "Person",
+                  "name": "Gabriela Freitas"
+                },
+                "datePublished": "2024-09-20",
+                "reviewBody": "Curso incrível! Aprendi SketchUp do zero. O Enscape é mágico, transforma os projetos. Professor muito atencioso!",
+                "reviewRating": {
+                  "@type": "Rating",
+                  "ratingValue": "5",
+                  "bestRating": "5",
+                  "worstRating": "1"
+                }
+              },
+              {
+                "@type": "Review",
+                "author": {
+                  "@type": "Person",
+                  "name": "Marcelo Souza"
+                },
+                "datePublished": "2024-08-22",
+                "reviewBody": "Curso completo! SketchUp, Enscape, e ainda aprendi um pouco de AutoCAD. Material de primeira qualidade.",
+                "reviewRating": {
+                  "@type": "Rating",
+                  "ratingValue": "5",
+                  "bestRating": "5",
+                  "worstRating": "1"
+                }
+              },
+              {
+                "@type": "Review",
+                "author": {
+                  "@type": "Person",
+                  "name": "Roberto Silva"
+                },
+                "datePublished": "2024-07-28",
+                "reviewBody": "Curso excelente! Aprendi muito sobre modelagem 3D. Professor muito atencioso, explica com calma e paciência.",
+                "reviewRating": {
+                  "@type": "Rating",
+                  "ratingValue": "5",
+                  "bestRating": "5",
+                  "worstRating": "1"
+                }
+              },
+              {
+                "@type": "Review",
+                "author": {
+                  "@type": "Person",
+                  "name": "Wagner Dias"
+                },
+                "datePublished": "2024-07-02",
+                "reviewBody": "Curso completo! SketchUp é muito bom de usar. Professor dá muita atenção, explica quantas vezes precisar.",
+                "reviewRating": {
+                  "@type": "Rating",
+                  "ratingValue": "5",
+                  "bestRating": "5",
+                  "worstRating": "1"
+                }
+              },
+              {
+                "@type": "Review",
+                "author": {
+                  "@type": "Person",
+                  "name": "Cleber Barbosa"
+                },
+                "datePublished": "2024-06-08",
+                "reviewBody": "Muito legal! Já modelei várias casas. Enscape deixa tudo fotorealista. Professor muito atencioso!",
+                "reviewRating": {
+                  "@type": "Rating",
+                  "ratingValue": "5",
+                  "bestRating": "5",
+                  "worstRating": "1"
+                }
+              },
+              {
+                "@type": "Review",
+                "author": {
+                  "@type": "Person",
+                  "name": "Solange Gomes"
+                },
+                "datePublished": "2024-05-15",
+                "reviewBody": "Curso maravilhoso! SketchUp é fácil de aprender. Já modelei uma casa completa. Material muito bom!",
+                "reviewRating": {
+                  "@type": "Rating",
+                  "ratingValue": "5",
+                  "bestRating": "5",
+                  "worstRating": "1"
+                }
+              }
+            ],
             "teaches": "Modelagem 3D com SketchUp, Renderização com Enscape, Projeto de Interiores e Arquitetura"
           })}
         </script>
