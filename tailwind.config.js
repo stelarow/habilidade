@@ -12,14 +12,14 @@ module.exports = {
     'bg-gradient-purple', 'bg-gradient-purple-hover',
     'clip-card', 'card-enter', 'in-view',
 
-    // Adicionar padrões dinâmicos
-    { pattern: /bg-(red|blue|green|purple|orange|pink|cyan|indigo|violet)-(100|200|300|400|500|600|700|800|900)/ },
-    { pattern: /text-(red|blue|green|purple|orange|pink|cyan|indigo|violet)-(100|200|300|400|500|600|700|800|900)/ },
-    { pattern: /border-(red|blue|green|purple|orange|pink|cyan|indigo|violet)-(100|200|300|400|500|600|700|800|900)/ },
-    { pattern: /from-(red|blue|green|purple|orange|pink|cyan|indigo|violet)-(100|200|300|400|500|600|700|800|900)/ },
-    { pattern: /to-(amber|indigo|emerald|violet|rose|teal|pink|blue)-(100|200|300|400|500|600|700|800|900)/ },
+    // FASE 1: Padrões regex REMOVIDOS para reduzir bundle
+    // { pattern: /bg-(red|blue|green|purple|orange|pink|cyan|indigo|violet)-(100|200|300|400|500|600|700|800|900)/ },
+    // { pattern: /text-(red|blue|green|purple|orange|pink|cyan|indigo|violet)-(100|200|300|400|500|600|700|800|900)/ },
+    // { pattern: /border-(red|blue|green|purple|orange|pink|cyan|indigo|violet)-(100|200|300|400|500|600|700|800|900)/ },
+    // { pattern: /from-(red|blue|green|purple|orange|pink|cyan|indigo|violet)-(100|200|300|400|500|600|700|800|900)/ },
+    // { pattern: /to-(amber|indigo|emerald|violet|rose|teal|pink|blue)-(100|200|300|400|500|600|700|800|900)/ },
 
-    // Gradientes específicos mais usados (sem padrões problemáticos)
+    // Gradientes específicos mais usados
     'hover:from-purple-600', 'hover:to-blue-600', 'hover:from-orange-500', 'hover:to-amber-400',
     'hover:bg-purple-600', 'hover:bg-blue-600', 'hover:text-white', 'hover:text-purple-400',
 
