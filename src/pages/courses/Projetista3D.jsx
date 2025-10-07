@@ -28,7 +28,7 @@ const Projetista3DNew = () => {
 
         {/* Open Graph tags gerenciadas por transform-html-meta.js durante build */}
 
-        {/* Local Business Schema */}
+        {/* Course Schema */}
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
@@ -70,6 +70,56 @@ const Projetista3DNew = () => {
               }
             }
           })}
+        </script>
+
+        {/* VideoObject Schema - Casos de Sucesso */}
+        <script type="application/ld+json">
+          {JSON.stringify([
+            {
+              "@context": "https://schema.org",
+              "@type": "VideoObject",
+              "name": "Apresentação Externa - Projeto SketchUp e Enscape por Carol Orofino",
+              "description": "Render profissional de apresentação externa criado no curso Projetista 3D. Exemplo de trabalho de aluna freelancer em Design de Interiores usando SketchUp e Enscape.",
+              "thumbnailUrl": "https://www.escolahabilidade.com/assets/projetista-3d/cases/carol-orofino/video externo-poster.jpg",
+              "uploadDate": "2024-08-27",
+              "contentUrl": "https://www.escolahabilidade.com/assets/projetista-3d/cases/carol-orofino/video externo.mp4",
+              "embedUrl": "https://www.escolahabilidade.com/assets/projetista-3d/cases/carol-orofino/video externo.mp4",
+              "duration": "PT8S"
+            },
+            {
+              "@context": "https://schema.org",
+              "@type": "VideoObject",
+              "name": "Animação Sala de Estar - Projeto Móveis Planejados por Debora Chiquetti",
+              "description": "Animação profissional de sala de estar com móveis planejados. Projeto desenvolvido no curso de Projetista 3D usando SketchUp e Enscape pela empresa Legnomobilli Móveis.",
+              "thumbnailUrl": "https://www.escolahabilidade.com/assets/projetista-3d/cases/debora-chiquetti/animacao-sala-poster.jpg",
+              "uploadDate": "2024-08-27",
+              "contentUrl": "https://www.escolahabilidade.com/assets/projetista-3d/cases/debora-chiquetti/animacao-sala.mp4",
+              "embedUrl": "https://www.escolahabilidade.com/assets/projetista-3d/cases/debora-chiquetti/animacao-sala.mp4",
+              "duration": "PT10S"
+            },
+            {
+              "@context": "https://schema.org",
+              "@type": "VideoObject",
+              "name": "Apresentação Profissional Casa Madeira - Santa Madeira Casas",
+              "description": "Apresentação profissional de projeto residencial em casa de madeira. Trabalho desenvolvido para empresa Santa Madeira Casas usando SketchUp e Enscape no curso Projetista 3D.",
+              "thumbnailUrl": "https://www.escolahabilidade.com/assets/projetista-3d/cases/elton-santa-madeira/The_camera_stand_202508271725-poster.jpg",
+              "uploadDate": "2024-08-27",
+              "contentUrl": "https://www.escolahabilidade.com/assets/projetista-3d/cases/elton-santa-madeira/The_camera_stand_202508271725.mp4",
+              "embedUrl": "https://www.escolahabilidade.com/assets/projetista-3d/cases/elton-santa-madeira/The_camera_stand_202508271725.mp4",
+              "duration": "PT12S"
+            },
+            {
+              "@context": "https://schema.org",
+              "@type": "VideoObject",
+              "name": "Tour Virtual Salão de Beleza - Ricardo Móveis",
+              "description": "Tour virtual de projeto comercial para salão de beleza com móveis planejados. Render profissional desenvolvido no curso Projetista 3D para a marcenaria Ricardo Móveis.",
+              "thumbnailUrl": "https://www.escolahabilidade.com/assets/projetista-3d/cases/patricia-ricardo-moveis/video-salao-beleza-poster.jpg",
+              "uploadDate": "2024-09-05",
+              "contentUrl": "https://www.escolahabilidade.com/assets/projetista-3d/cases/patricia-ricardo-moveis/video-salao-beleza.mp4",
+              "embedUrl": "https://www.escolahabilidade.com/assets/projetista-3d/cases/patricia-ricardo-moveis/video-salao-beleza.mp4",
+              "duration": "PT8S"
+            }
+          ])}
         </script>
       </Helmet>
 
