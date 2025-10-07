@@ -19,7 +19,7 @@ const __dirname = path.dirname(__filename);
  */
 function generateCriticalCSS() {
   return `
-    /* Critical CSS - Above-the-Fold Only (~2KB) */
+    /* Critical CSS - Above-the-Fold Expanded (~8KB) - Prevents FOUC */
 
     /* Critical Self-Hosted Fonts */
     @font-face{font-family:'Montserrat';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/montserrat/montserrat-400.woff2') format('woff2')}
@@ -28,51 +28,112 @@ function generateCriticalCSS() {
     @font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/inter/inter-400.woff2') format('woff2')}
     @font-face{font-family:'Inter';font-style:normal;font-weight:500;font-display:swap;src:url('/fonts/inter/inter-500.woff2') format('woff2')}
 
-    /* Essential Reset */
+    /* Essential Reset & Base Styles */
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    html{line-height:1.5;-webkit-text-size-adjust:100%}
-    body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;-webkit-font-smoothing:antialiased;background-color:#000}
+    html{line-height:1.5;-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+    body{margin:0;font-family:'Montserrat',system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;background-color:#000;color:#fafafa}
 
-    /* Critical Layout (Header + Hero Only) */
-    .fixed{position:fixed}.top-0{top:0}.w-full{width:100%}.z-50{z-index:50}
-    .flex{display:flex}.flex-col{flex-direction:column}.items-center{align-items:center}
-    .justify-center{justify-content:center}.justify-between{justify-content:space-between}
-    .h-16{height:4rem}.min-h-screen{min-height:100vh}.max-w-7xl{max-width:80rem}
-    .mx-auto{margin-left:auto;margin-right:auto}.px-4{padding-left:1rem;padding-right:1rem}
+    /* Layout Utilities */
+    .fixed{position:fixed}.relative{position:relative}.absolute{position:absolute}
+    .top-0{top:0}.left-0{left:0}.right-0{right:0}.bottom-0{bottom:0}
+    .z-10{z-index:10}.z-50{z-index:50}
+    .w-full{width:100%}.h-full{height:100%}.h-16{height:4rem}
+    .min-h-screen{min-height:100vh}.max-w-7xl{max-width:80rem}
 
-    /* Header Critical Styles */
+    /* Flexbox */
+    .flex{display:flex}.inline-flex{display:inline-flex}
+    .flex-col{flex-direction:column}.flex-row{flex-direction:row}
+    .items-start{align-items:flex-start}.items-center{align-items:center}.items-end{align-items:flex-end}
+    .justify-start{justify-content:flex-start}.justify-center{justify-content:center}.justify-between{justify-content:space-between}
+    .flex-1{flex:1 1 0%}.flex-shrink-0{flex-shrink:0}
+
+    /* Grid */
+    .grid{display:grid}.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}
+    .gap-2{gap:0.5rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.gap-8{gap:2rem}
+
+    /* Spacing - Margin */
+    .m-0{margin:0}.mx-auto{margin-left:auto;margin-right:auto}
+    .mb-2{margin-bottom:0.5rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}
+    .mb-8{margin-bottom:2rem}.mb-10{margin-bottom:2.5rem}.mb-12{margin-bottom:3rem}
+    .mt-4{margin-top:1rem}.mt-8{margin-top:2rem}.mt-16{margin-top:4rem}
+
+    /* Spacing - Padding */
+    .p-4{padding:1rem}.p-6{padding:1.5rem}
+    .px-4{padding-left:1rem;padding-right:1rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}
+    .py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}
+    .py-4{padding-top:1rem;padding-bottom:1rem}.py-8{padding-top:2rem;padding-bottom:2rem}
+    .py-16{padding-top:4rem;padding-bottom:4rem}.py-20{padding-top:5rem;padding-bottom:5rem}
+    .pt-20{padding-top:5rem}.pb-12{padding-bottom:3rem}
+
+    /* Background Colors & Gradients */
+    .bg-zinc-900{background-color:rgb(24 24 27)}.bg-zinc-950{background-color:rgb(9 9 11)}
     .bg-zinc-900\\/70{background-color:rgb(24 24 27 / 0.7)}
-    .backdrop-blur-md{backdrop-filter:blur(12px)}
-    .border-b{border-bottom-width:1px}.border-gray-800\\/50{border-color:rgb(31 41 55 / 0.5)}
-
-    /* Hero Critical Styles */
-    .bg-zinc-950{background-color:rgb(9 9 11)}.text-center{text-align:center}
-    .text-white{color:rgb(255 255 255)}.text-purple-400{color:rgb(196 181 253)}
-    .text-zinc-300{color:rgb(212 212 216)}
-    .font-bold{font-weight:700}.font-extrabold{font-weight:800}
-    .text-3xl{font-size:1.875rem;line-height:2.25rem}.text-5xl{font-size:3rem;line-height:1}
-    .text-7xl{font-size:4.5rem;line-height:1}.text-lg{font-size:1.125rem;line-height:1.75rem}
-    .pt-20{padding-top:5rem}.mb-10{margin-bottom:2.5rem}.mb-2{margin-bottom:0.5rem}
-    .mb-6{margin-bottom:1.5rem}.leading-relaxed{line-height:1.625}
-    .tracking-tight{letter-spacing:-0.025em}.tracking-wide{letter-spacing:0.025em}
-
-    /* Critical Button Styles */
-    .px-6{padding-left:1.5rem;padding-right:1.5rem}
-    .py-3{padding-top:0.75rem;padding-bottom:0.75rem}
-    .rounded-lg{border-radius:0.5rem}
+    .bg-gradient-to-br{background-image:linear-gradient(to bottom right,var(--tw-gradient-stops))}
     .bg-gradient-to-r{background-image:linear-gradient(to right,var(--tw-gradient-stops))}
-    .from-purple-600{--tw-gradient-from:#9333ea;--tw-gradient-to:rgb(147 51 234 / 0);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}
-    .to-blue-600{--tw-gradient-to:#2563eb}
+    .from-zinc-950{--tw-gradient-from:#09090b var(--tw-gradient-from-position);--tw-gradient-to:rgb(9 9 11 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}
+    .via-zinc-900{--tw-gradient-to:rgb(24 24 27 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),rgb(24 24 27) var(--tw-gradient-via-position),var(--tw-gradient-to)}
+    .to-zinc-950{--tw-gradient-to:#09090b var(--tw-gradient-to-position)}
+    .from-purple-600{--tw-gradient-from:#9333ea var(--tw-gradient-from-position);--tw-gradient-to:rgb(147 51 234 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}
+    .to-blue-600{--tw-gradient-to:#2563eb var(--tw-gradient-to-position)}
 
-    /* Anti-FOUC removed for better LCP performance */
-    /* font-display: swap handles FOIT prevention */
+    /* Text Colors */
+    .text-white{color:rgb(255 255 255)}.text-zinc-50{color:rgb(250 250 250)}
+    .text-zinc-300{color:rgb(212 212 216)}.text-zinc-400{color:rgb(161 161 170)}
+    .text-purple-400{color:rgb(192 132 252)}.text-blue-400{color:rgb(96 165 250)}
+
+    /* Typography */
+    .font-sans{font-family:'Montserrat',ui-sans-serif,system-ui}
+    .font-bold{font-weight:700}.font-extrabold{font-weight:800}.font-semibold{font-weight:600}
+    .text-xs{font-size:0.75rem;line-height:1rem}.text-sm{font-size:0.875rem;line-height:1.25rem}
+    .text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}
+    .text-xl{font-size:1.25rem;line-height:1.75rem}.text-2xl{font-size:1.5rem;line-height:2rem}
+    .text-3xl{font-size:1.875rem;line-height:2.25rem}.text-4xl{font-size:2.25rem;line-height:2.5rem}
+    .text-5xl{font-size:3rem;line-height:1}.text-6xl{font-size:3.75rem;line-height:1}
+    .text-7xl{font-size:4.5rem;line-height:1}
+    .text-center{text-align:center}.text-left{text-align:left}
+    .leading-tight{line-height:1.25}.leading-relaxed{line-height:1.625}.leading-snug{line-height:1.375}
+    .tracking-tight{letter-spacing:-0.025em}.tracking-wide{letter-spacing:0.025em}
+    .line-clamp-2{overflow:hidden;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2}
+    .truncate{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+    /* Borders & Rounded */
+    .border{border-width:1px}.border-b{border-bottom-width:1px}
+    .border-zinc-700{border-color:rgb(63 63 70)}.border-gray-800\\/50{border-color:rgb(31 41 55 / 0.5)}
+    .rounded-lg{border-radius:0.5rem}.rounded-xl{border-radius:0.75rem}
+
+    /* Effects */
+    .backdrop-blur-md{backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+    .backdrop-blur-sm{backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+    .shadow-lg{box-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1),0 4px 6px -4px rgb(0 0 0 / 0.1)}
+
+    /* Visibility & Display */
+    .hidden{display:none}.block{display:block}.inline-block{display:inline-block}
+    .overflow-hidden{overflow:hidden}.overflow-y-auto{overflow-y:auto}
+
+    /* Transitions */
+    .transition{transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter;transition-timing-function:cubic-bezier(0.4,0,0.2,1);transition-duration:150ms}
+    .duration-200{transition-duration:200ms}.duration-300{transition-duration:300ms}
 
     /* Mobile Responsive */
     @media (min-width:640px){
+      .sm\\:text-lg{font-size:1.125rem;line-height:1.75rem}
+      .sm\\:text-xl{font-size:1.25rem;line-height:1.75rem}
       .sm\\:text-5xl{font-size:3rem;line-height:1}
       .sm\\:text-7xl{font-size:4.5rem;line-height:1}
       .sm\\:pt-0{padding-top:0}
+      .sm\\:px-6{padding-left:1.5rem;padding-right:1.5rem}
       .sm\\:flex-row{flex-direction:row}
+      .sm\\:gap-4{gap:1rem}
+    }
+    @media (min-width:768px){
+      .md\\:text-2xl{font-size:1.5rem;line-height:2rem}
+      .md\\:text-6xl{font-size:3.75rem;line-height:1}
+      .md\\:px-8{padding-left:2rem;padding-right:2rem}
+      .md\\:gap-6{gap:1.5rem}
+    }
+    @media (min-width:1024px){
+      .lg\\:px-8{padding-left:2rem;padding-right:2rem}
+      .lg\\:text-8xl{font-size:6rem;line-height:1}
     }
   `;
 }
@@ -265,7 +326,6 @@ async function injectCriticalCSS() {
       
       // Generate critical CSS components
       const criticalCSS = generateCriticalCSS();
-      const asyncLoader = generateAsyncCSSLoader();
 
       console.log(`🔍 Injecting ${criticalCSS.length} chars of Critical CSS into ${path.relative(distDir, filePath)}`);
 
@@ -302,15 +362,17 @@ async function injectCriticalCSS() {
       
       console.log(`📁 Unique CSS files to make async: ${uniqueCssFiles.size}`);
       
-      // Step 3: Add back as async links
-      let asyncCssLinks = '';
+      // Step 3: Add back as SYNCHRONOUS links to prevent FOUC
+      // CSS is now loaded blocking but AFTER critical inline CSS for immediate render
+      let cssLinks = '';
       uniqueCssFiles.forEach(href => {
-        asyncCssLinks += `<link rel="preload" as="style" href="${href}" onload="this.onload=null;this.rel='stylesheet'" media="all">\n    `;
+        // Load main app CSS synchronously to prevent FOUC
+        cssLinks += `<link rel="stylesheet" href="${href}">\n    `;
       });
-      
-      // Insert async CSS links before closing head
-      if (asyncCssLinks) {
-        html = html.replace('</head>', `${asyncCssLinks}</head>`);
+
+      // Insert CSS links before closing head (after critical inline CSS)
+      if (cssLinks) {
+        html = html.replace('</head>', `${cssLinks}</head>`);
       }
       
       // Step 4: Optimize Google Fonts loading
@@ -324,20 +386,13 @@ async function injectCriticalCSS() {
       // No need to add separate link that would cause 404 errors
       console.log(`✅ Fonts are bundled in main CSS, skipping separate font CSS link`);
       
-      // Add noscript fallback for CSS
-      if (uniqueCssFiles.size > 0) {
-        let noscriptLinks = '<noscript>\n      ';
-        uniqueCssFiles.forEach(href => {
-          noscriptLinks += `<link rel="stylesheet" href="${href}">\n      `;
-        });
-        noscriptLinks += '</noscript>';
-        
-        html = html.replace('</head>', `${noscriptLinks}\n</head>`);
-      }
-      
-      // Inject async loader before closing body
-      html = html.replace('</body>', `${asyncLoader}\n</body>`);
-      
+      // No noscript fallback needed since CSS loads synchronously now
+      // No async loader needed - CSS loads directly in <head>
+
+      // Remove any existing async CSS loader script (from previous processing)
+      console.log(`🧹 Removing old async CSS loader script if present...`);
+      html = html.replace(/<script>\s*\(function\(\)\s*\{\s*'use strict';[\s\S]*?loadNonCriticalCSS[\s\S]*?<\/script>/gi, '');
+
       // Mark as processed to avoid double-processing
       html = html.replace('<html', '<html data-critical-css-processed="true"');
       
