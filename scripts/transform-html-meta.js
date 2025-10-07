@@ -40,7 +40,8 @@ const metaConfig = {
     title: 'Curso de Programação | Python, JavaScript, React | São José SC',
     description: 'Curso de Programação presencial em São José SC. Python, JavaScript, React e desenvolvimento web. Do básico ao avançado.',
     keywords: 'curso programação, python, javascript, react, desenvolvimento web, programação são josé',
-    canonical: 'https://www.escolahabilidade.com/cursos/programacao'
+    canonical: 'https://www.escolahabilidade.com/cursos/programacao',
+    ogImage: 'https://www.escolahabilidade.com/assets/programacao/og-image-programacao.png'
   },
 
   '/cursos/marketing-digital': {

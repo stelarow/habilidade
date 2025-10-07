@@ -1,189 +1,189 @@
 {
-  "generated": "2025-10-02T18:08:25.467Z",
+  "generated": "2025-10-07T11:10:47.608Z",
   "version": "1.0.0",
   "files": {
     "banheiro.png": {
-      "source": "cases\\carol-orofino\\banheiro.png",
+      "source": "cases/carol-orofino/banheiro.png",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
     "cena banheiro.png": {
-      "source": "cases\\carol-orofino\\cena banheiro.png",
+      "source": "cases/carol-orofino/cena banheiro.png",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
     "cena cozinha.png": {
-      "source": "cases\\carol-orofino\\cena cozinha.png",
+      "source": "cases/carol-orofino/cena cozinha.png",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
     "cena quarto 1.png": {
-      "source": "cases\\carol-orofino\\cena quarto 1.png",
+      "source": "cases/carol-orofino/cena quarto 1.png",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
     "cena quarto.png": {
-      "source": "cases\\carol-orofino\\cena quarto.png",
+      "source": "cases/carol-orofino/cena quarto.png",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
     "cozinha.png": {
-      "source": "cases\\patricia-ricardo-moveis\\cozinha.png",
+      "source": "cases/patricia-ricardo-moveis/cozinha.png",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
     "quarto-1.png": {
-      "source": "cases\\carol-orofino\\quarto-1.png",
+      "source": "cases/carol-orofino/quarto-1.png",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
     "quarto-2.png": {
-      "source": "cases\\carol-orofino\\quarto-2.png",
+      "source": "cases/carol-orofino/quarto-2.png",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
     "video externo-poster.jpg": {
-      "source": "cases\\carol-orofino\\video externo-poster.jpg",
-      "optimized": false,
-      "note": "Copied as-is (no external tools available)"
-    },
-    "animacao-painel-poster.jpg": {
-      "source": "cases\\debora-chiquetti\\animacao-painel-poster.jpg",
-      "optimized": false,
-      "note": "Copied as-is (no external tools available)"
-    },
-    "animacao-sala-poster.jpg": {
-      "source": "cases\\debora-chiquetti\\animacao-sala-poster.jpg",
+      "source": "cases/carol-orofino/video externo-poster.jpg",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
     "Painel sala de estar.png": {
-      "source": "cases\\debora-chiquetti\\Painel sala de estar.png",
+      "source": "cases/debora-chiquetti/Painel sala de estar.png",
+      "optimized": false,
+      "note": "Copied as-is (no external tools available)"
+    },
+    "animacao-painel-poster.jpg": {
+      "source": "cases/debora-chiquetti/animacao-painel-poster.jpg",
+      "optimized": false,
+      "note": "Copied as-is (no external tools available)"
+    },
+    "animacao-sala-poster.jpg": {
+      "source": "cases/debora-chiquetti/animacao-sala-poster.jpg",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
     "painel-sala.png": {
-      "source": "cases\\debora-chiquetti\\public\\assets\\projetista-3d\\cases\\debora-chiquetti\\painel-sala.png",
+      "source": "cases/debora-chiquetti/public/assets/projetista-3d/cases/debora-chiquetti/painel-sala.png",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
     "sala-estar.png": {
-      "source": "cases\\debora-chiquetti\\sala-estar.png",
+      "source": "cases/debora-chiquetti/sala-estar.png",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
     "salao-beleza.png": {
-      "source": "cases\\patricia-ricardo-moveis\\salao-beleza.png",
-      "optimized": false,
-      "note": "Copied as-is (no external tools available)"
-    },
-    "casa-1.jpeg": {
-      "source": "cases\\elton-santa-madeira\\casa-1.jpeg",
-      "optimized": false,
-      "note": "Copied as-is (no external tools available)"
-    },
-    "casa-2.jpeg": {
-      "source": "cases\\elton-santa-madeira\\casa-2.jpeg",
-      "optimized": false,
-      "note": "Copied as-is (no external tools available)"
-    },
-    "generation-26c8b422-1bc0-46ca-aaf7-17479539234c.png": {
-      "source": "cases\\elton-santa-madeira\\generation-26c8b422-1bc0-46ca-aaf7-17479539234c.png",
-      "optimized": false,
-      "note": "Copied as-is (no external tools available)"
-    },
-    "generation-59a09ff0-85cb-4c30-8a15-9ea5b45ce26f.png": {
-      "source": "cases\\elton-santa-madeira\\generation-59a09ff0-85cb-4c30-8a15-9ea5b45ce26f.png",
+      "source": "cases/patricia-ricardo-moveis/salao-beleza.png",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
     "Projeto Chalé Alfredo Vagner esquerda.png": {
-      "source": "cases\\elton-santa-madeira\\Projeto Chalé Alfredo Vagner esquerda.png",
+      "source": "cases/elton-santa-madeira/Projeto Chalé Alfredo Vagner esquerda.png",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
     "The_camera_dont_202508261226-poster.jpg": {
-      "source": "cases\\elton-santa-madeira\\The_camera_dont_202508261226-poster.jpg",
+      "source": "cases/elton-santa-madeira/The_camera_dont_202508261226-poster.jpg",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
     "The_camera_stand_202508271725-poster.jpg": {
-      "source": "cases\\elton-santa-madeira\\The_camera_stand_202508271725-poster.jpg",
+      "source": "cases/elton-santa-madeira/The_camera_stand_202508271725-poster.jpg",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
     "WhatsApp Image 2025-08-19 at 18.03.19.jpeg": {
-      "source": "cases\\elton-santa-madeira\\WhatsApp Image 2025-08-19 at 18.03.19.jpeg",
+      "source": "cases/elton-santa-madeira/WhatsApp Image 2025-08-19 at 18.03.19.jpeg",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
     "WhatsApp Image 2025-08-19 at 18.03.20.jpeg": {
-      "source": "cases\\elton-santa-madeira\\WhatsApp Image 2025-08-19 at 18.03.20.jpeg",
+      "source": "cases/elton-santa-madeira/WhatsApp Image 2025-08-19 at 18.03.20.jpeg",
+      "optimized": false,
+      "note": "Copied as-is (no external tools available)"
+    },
+    "casa-1.jpeg": {
+      "source": "cases/elton-santa-madeira/casa-1.jpeg",
+      "optimized": false,
+      "note": "Copied as-is (no external tools available)"
+    },
+    "casa-2.jpeg": {
+      "source": "cases/elton-santa-madeira/casa-2.jpeg",
+      "optimized": false,
+      "note": "Copied as-is (no external tools available)"
+    },
+    "generation-26c8b422-1bc0-46ca-aaf7-17479539234c.png": {
+      "source": "cases/elton-santa-madeira/generation-26c8b422-1bc0-46ca-aaf7-17479539234c.png",
+      "optimized": false,
+      "note": "Copied as-is (no external tools available)"
+    },
+    "generation-59a09ff0-85cb-4c30-8a15-9ea5b45ce26f.png": {
+      "source": "cases/elton-santa-madeira/generation-59a09ff0-85cb-4c30-8a15-9ea5b45ce26f.png",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
     "armario.jpeg": {
-      "source": "cases\\lauren\\armario.jpeg",
+      "source": "cases/lauren/armario.jpeg",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
     "sala.png": {
-      "source": "cases\\patricia-ricardo-moveis\\sala.png",
+      "source": "cases/patricia-ricardo-moveis/sala.png",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
     "video-cozinha-poster.jpg": {
-      "source": "cases\\patricia-ricardo-moveis\\video-cozinha-poster.jpg",
+      "source": "cases/patricia-ricardo-moveis/video-cozinha-poster.jpg",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
     "video-sala-poster.jpg": {
-      "source": "cases\\patricia-ricardo-moveis\\video-sala-poster.jpg",
+      "source": "cases/patricia-ricardo-moveis/video-sala-poster.jpg",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
     "video-salao-beleza-poster.jpg": {
-      "source": "cases\\patricia-ricardo-moveis\\video-salao-beleza-poster.jpg",
+      "source": "cases/patricia-ricardo-moveis/video-salao-beleza-poster.jpg",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
     "generation-ff879e0f-a55b-45d3-8dcd-8afb1c23630a.png": {
-      "source": "hero\\generation-ff879e0f-a55b-45d3-8dcd-8afb1c23630a.png",
+      "source": "hero/generation-ff879e0f-a55b-45d3-8dcd-8afb1c23630a.png",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
     "hero-bg-new.jpg": {
-      "source": "hero\\hero-bg-new.jpg",
+      "source": "hero/hero-bg-new.jpg",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
     "hero-bg.png": {
-      "source": "hero\\hero-bg.png",
+      "source": "hero/hero-bg.png",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
     "hero-fallback.png": {
-      "source": "hero\\hero-fallback.png",
-      "optimized": false,
-      "note": "Copied as-is (no external tools available)"
-    },
-    "generation-2f169d5f-c611-4d3e-a5e5-168d6c33520f.png": {
-      "source": "imagens-projeto\\generation-2f169d5f-c611-4d3e-a5e5-168d6c33520f.png",
+      "source": "hero/hero-fallback.png",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
     "Painel, com nicho e ripado - imagem renderizada.png": {
-      "source": "imagens-projeto\\Painel, com nicho e ripado - imagem renderizada.png",
+      "source": "imagens-projeto/Painel, com nicho e ripado - imagem renderizada.png",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
     "Painel-grande-sketchup.png": {
-      "source": "imagens-projeto\\Painel-grande-sketchup.png",
+      "source": "imagens-projeto/Painel-grande-sketchup.png",
+      "optimized": false,
+      "note": "Copied as-is (no external tools available)"
+    },
+    "generation-2f169d5f-c611-4d3e-a5e5-168d6c33520f.png": {
+      "source": "imagens-projeto/generation-2f169d5f-c611-4d3e-a5e5-168d6c33520f.png",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
     "painel-renderizado.png": {
-      "source": "imagens-projeto\\painel-renderizado.png",
+      "source": "imagens-projeto/painel-renderizado.png",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
@@ -193,87 +193,87 @@
       "note": "Copied as-is (no external tools available)"
     },
     "video externo.mp4": {
-      "source": "cases\\carol-orofino\\video externo.mp4",
+      "source": "cases/carol-orofino/video externo.mp4",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
     "video-externo.mp4": {
-      "source": "cases\\carol-orofino\\video-externo.mp4",
-      "optimized": false,
-      "note": "Copied as-is (no external tools available)"
-    },
-    "animacao-painel.mp4": {
-      "source": "cases\\debora-chiquetti\\public\\assets\\projetista-3d\\cases\\debora-chiquetti\\animacao-painel.mp4",
-      "optimized": false,
-      "note": "Copied as-is (no external tools available)"
-    },
-    "animacao-sala.mp4": {
-      "source": "cases\\debora-chiquetti\\public\\assets\\projetista-3d\\cases\\debora-chiquetti\\animacao-sala.mp4",
+      "source": "cases/carol-orofino/video-externo.mp4",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
     "Animação para o projeto do painel.mp4": {
-      "source": "cases\\debora-chiquetti\\Animação para o projeto do painel.mp4",
+      "source": "cases/debora-chiquetti/Animação para o projeto do painel.mp4",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
     "Cena da sala de estar com uma animacao divertida.mp4": {
-      "source": "cases\\debora-chiquetti\\Cena da sala de estar com uma animacao divertida.mp4",
+      "source": "cases/debora-chiquetti/Cena da sala de estar com uma animacao divertida.mp4",
+      "optimized": false,
+      "note": "Copied as-is (no external tools available)"
+    },
+    "animacao-painel.mp4": {
+      "source": "cases/debora-chiquetti/public/assets/projetista-3d/cases/debora-chiquetti/animacao-painel.mp4",
+      "optimized": false,
+      "note": "Copied as-is (no external tools available)"
+    },
+    "animacao-sala.mp4": {
+      "source": "cases/debora-chiquetti/public/assets/projetista-3d/cases/debora-chiquetti/animacao-sala.mp4",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
     "video-salao-beleza.mp4": {
-      "source": "cases\\patricia-ricardo-moveis\\video-salao-beleza.mp4",
+      "source": "cases/patricia-ricardo-moveis/video-salao-beleza.mp4",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
     "The_camera_dont_202508261226.mp4": {
-      "source": "cases\\elton-santa-madeira\\The_camera_dont_202508261226.mp4",
+      "source": "cases/elton-santa-madeira/The_camera_dont_202508261226.mp4",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
     "The_camera_stand_202508271725.mp4": {
-      "source": "cases\\elton-santa-madeira\\The_camera_stand_202508271725.mp4",
+      "source": "cases/elton-santa-madeira/The_camera_stand_202508271725.mp4",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
     "video-empresa.mp4": {
-      "source": "cases\\elton-santa-madeira\\video-empresa.mp4",
+      "source": "cases/elton-santa-madeira/video-empresa.mp4",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
     "video-armario.mp4": {
-      "source": "cases\\lauren\\video-armario.mp4",
+      "source": "cases/lauren/video-armario.mp4",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
     "video-cozinha.mp4": {
-      "source": "cases\\patricia-ricardo-moveis\\video-cozinha.mp4",
+      "source": "cases/patricia-ricardo-moveis/video-cozinha.mp4",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
     "video-sala.mp4": {
-      "source": "cases\\patricia-ricardo-moveis\\video-sala.mp4",
+      "source": "cases/patricia-ricardo-moveis/video-sala.mp4",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
     "The_video_starts_202508261222.mp4": {
-      "source": "hero\\The_video_starts_202508261222.mp4",
+      "source": "hero/The_video_starts_202508261222.mp4",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
     "video-vertical.webm": {
-      "source": "hero\\video-vertical.webm",
+      "source": "hero/video-vertical.webm",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
     "Painel, com nicho e ripado - videodo sketchup formato full hd - projeto nao renderizado.mp4": {
-      "source": "imagens-projeto\\Painel, com nicho e ripado - videodo sketchup formato full hd - projeto nao renderizado.mp4",
+      "source": "imagens-projeto/Painel, com nicho e ripado - videodo sketchup formato full hd - projeto nao renderizado.mp4",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     },
     "Video vertical - projeto renderizado.webm": {
-      "source": "imagens-projeto\\Video vertical - projeto renderizado.webm",
+      "source": "imagens-projeto/Video vertical - projeto renderizado.webm",
       "optimized": false,
       "note": "Copied as-is (no external tools available)"
     }
@@ -281,7 +281,7 @@
   "note": "Simplified optimization for Netlify build - assets copied as-is",
   "stats": {
     "totalFiles": 55,
-    "optimizedDir": "public\\assets\\projetista-3d\\optimized",
-    "thumbnailsDir": "public\\assets\\projetista-3d\\thumbnails"
+    "optimizedDir": "public/assets/projetista-3d/optimized",
+    "thumbnailsDir": "public/assets/projetista-3d/thumbnails"
   }
 }

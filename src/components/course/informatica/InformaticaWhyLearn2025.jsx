@@ -67,14 +67,14 @@ const InformaticaWhyLearn2025 = () => {
             <TrendUp className="w-3 h-3 mr-1" />
             Análise de Mercado • 2025
           </Badge>
-          <h1 className="text-4xl md:text-6xl font-bold text-white mt-4 mb-6">
+          <h2 className="text-4xl md:text-6xl font-bold text-white mt-4 mb-6">
             <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
               O Mercado Exige
             </span>
             <span className="block text-white mt-2">
               Profissionais Digitais
             </span>
-          </h1>
+          </h2>
           <p className="text-xl text-zinc-400 max-w-3xl mx-auto">
             A revolução digital transformou completamente o mercado de trabalho
           </p>
