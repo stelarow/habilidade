@@ -36,19 +36,35 @@ const Projetista3DNew = () => {
             "name": "Curso Projetista 3D - SketchUp e Enscape",
             "description": "Curso presencial completo de SketchUp e Enscape em São José SC. 56 horas práticas, turmas pequenas, certificado nacional.",
             "provider": {
-              "@type": "Organization",
+              "@type": "EducationalOrganization",
               "name": "Escola Habilidade",
               "address": {
                 "@type": "PostalAddress",
+                "streetAddress": "R. Caetano José Ferreira, 426 - Sala 5 - Kobrasol",
                 "addressLocality": "São José",
                 "addressRegion": "SC",
+                "postalCode": "88102-280",
                 "addressCountry": "BR"
               },
-              "url": "https://www.escolahabilidade.com"
+              "url": "https://www.escolahabilidade.com",
+              "areaServed": [
+                "São José, SC",
+                "Florianópolis, SC",
+                "Palhoça, SC",
+                "Biguaçu, SC",
+                "Santo Amaro da Imperatriz, SC"
+              ]
             },
-            "courseMode": "onsite",
-            "educationalCredentialAwarded": "Certificado Nacional de 56h",
-            "timeRequired": "PT56H",
+            "hasCourseInstance": {
+              "@type": "CourseInstance",
+              "courseMode": "https://schema.org/OnSiteEventAttendanceMode",
+              "courseWorkload": "PT56H"
+            },
+            "educationalCredentialAwarded": {
+              "@type": "EducationalOccupationalCredential",
+              "credentialCategory": "Certificado Profissionalizante",
+              "name": "Certificado Nacional de 56h"
+            },
             "offers": {
               "@type": "Offer",
               "price": "2793.00",
@@ -60,15 +76,7 @@ const Projetista3DNew = () => {
               "ratingValue": "4.9",
               "reviewCount": "200"
             },
-            "location": {
-              "@type": "Place",
-              "address": {
-                "@type": "PostalAddress",
-                "addressLocality": "São José",
-                "addressRegion": "Santa Catarina",
-                "addressCountry": "BR"
-              }
-            }
+            "teaches": "Modelagem 3D com SketchUp, Renderização com Enscape, Projeto de Interiores e Arquitetura"
           })}
         </script>
 
