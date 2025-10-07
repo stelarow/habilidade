@@ -23,9 +23,10 @@ const metaConfig = {
   // Página de Projetista 3D
   '/cursos/projetista-3d': {
     title: 'Curso Projetista 3D - SketchUp e Enscape | São José SC | Escola Habilidade',
-    description: 'Curso de Projetista 3D presencial em São José SC. SketchUp, Enscape, renderização profissional. Certificado reconhecido. Atendemos Grande Florianópolis.',
-    keywords: 'curso projetista 3d, curso sketchup, curso enscape, renderização 3d, projetista são josé, curso presencial 3d',
-    canonical: 'https://www.escolahabilidade.com/cursos/projetista-3d'
+    description: 'Curso presencial completo de SketchUp e Enscape em São José SC. 56 horas práticas, turmas pequenas de até 4 alunos, certificado nacional. Transforme sua carreira como Projetista 3D.',
+    keywords: 'curso sketchup, curso enscape, projetista 3d, são josé sc, florianópolis, curso presencial, certificado, arquitetura, design',
+    canonical: 'https://www.escolahabilidade.com/cursos/projetista-3d',
+    ogImage: 'https://www.escolahabilidade.com/logo-escola-habilidade.png'
   },
 
   // Outras páginas de cursos
