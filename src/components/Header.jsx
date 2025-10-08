@@ -1,4 +1,4 @@
-import { useState, lazy } from 'react';
+import { useState } from 'react';
 import { CaretDown } from '@phosphor-icons/react';
 import { useParams } from 'react-router-dom';
 import useToggle from '../hooks/useToggle';
@@ -8,9 +8,8 @@ import { getCourseBySlug } from '../utils/courseHelpers';
 import COURSES_DATA from '../data/coursesData';
 import InteractiveLogo from './header/InteractiveLogo';
 import SmartCTA from './header/SmartCTA';
-
-const LazyMegaMenu = lazy(() => import('./header/MegaMenu'));
-const LazyMobileMegaMenu = lazy(() => import('./header/MobileMegaMenu'));
+import MegaMenu from './header/MegaMenu';
+import MobileMegaMenu from './header/MobileMegaMenu';
 
 function Header() {
   const [mobileMenuOpen, toggleMobileMenu, , closeMobileMenu] = useToggle(false);
@@ -98,15 +97,15 @@ function Header() {
           </div>
         </div>
 
-        <LazyMegaMenu 
-          isOpen={megaMenuOpen} 
-          onClose={() => setMegaMenuOpen(false)} 
+        <MegaMenu
+          isOpen={megaMenuOpen}
+          onClose={() => setMegaMenuOpen(false)}
         />
       </header>
 
-      <LazyMobileMegaMenu 
-        isOpen={mobileMenuOpen} 
-        onClose={closeMobileMenu} 
+      <MobileMegaMenu
+        isOpen={mobileMenuOpen}
+        onClose={closeMobileMenu}
       />
 
       {/* Overlay para fechar menu ao clicar fora */}

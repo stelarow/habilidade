@@ -1,16 +1,19 @@
 /**
- * Lazy Analytics Loader
- * Defers Google Analytics/GTM loading to reduce main thread blocking
+ * Lazy Analytics Loader - Otimizado para LCP
+ * Defers Google Analytics/GTM loading para após interação ou scroll significativo
  */
+
+import observerPool from '../utils/IntersectionObserverPool';
 
 class LazyAnalyticsLoader {
   constructor() {
     this.gtmId = 'G-J4RJQLG6WP';
     this.isLoaded = false;
     this.eventQueue = [];
-    this.loadTimeout = 3000; // 3 seconds fallback
-    this.interactionEvents = ['click', 'scroll', 'keydown', 'mousemove', 'touchstart'];
-    
+    this.scrollThreshold = 0.5; // Carregar após 50% de scroll
+    this.interactionEvents = ['click', 'touchstart', 'keydown'];
+    this.scrollListener = null;
+
     // Only initialize in browser environment
     if (typeof window !== 'undefined') {
       this.init();
@@ -24,14 +27,16 @@ class LazyAnalyticsLoader {
       return;
     }
 
-    // Set up interaction observers
+    // Set up interaction observers (apenas eventos críticos)
     this.setupInteractionObserver();
-    
-    // Set up intersection observer for below-the-fold content
+
+    // Set up scroll observer para carregar após scroll significativo
+    this.setupScrollObserver();
+
+    // Set up intersection observer usando pool compartilhado
     this.setupIntersectionObserver();
-    
-    // Fallback timeout to ensure analytics loads eventually
-    this.setupFallbackTimeout();
+
+    // REMOVIDO: Fallback timeout de 3s - carrega apenas sob demanda
   }
 
   hasReducedMotionPreference() {
@@ -41,50 +46,76 @@ class LazyAnalyticsLoader {
 
   setupInteractionObserver() {
     if (typeof document === 'undefined') return;
-    
+
     const loadOnInteraction = () => {
       this.loadAnalytics();
-      // Remove listeners after first interaction
-      this.interactionEvents.forEach(event => {
-        document.removeEventListener(event, loadOnInteraction, { passive: true });
-      });
+      this.cleanup();
     };
 
+    // Apenas eventos de interação real (removido mousemove)
     this.interactionEvents.forEach(event => {
-      document.addEventListener(event, loadOnInteraction, { passive: true });
+      document.addEventListener(event, loadOnInteraction, { passive: true, once: true });
     });
+  }
+
+  setupScrollObserver() {
+    if (typeof window === 'undefined') return;
+
+    let ticking = false;
+    this.scrollListener = () => {
+      if (!ticking && !this.isLoaded) {
+        window.requestAnimationFrame(() => {
+          const scrollPercent = (window.scrollY / (document.body.scrollHeight - window.innerHeight));
+          if (scrollPercent >= this.scrollThreshold) {
+            this.loadAnalytics();
+            this.cleanup();
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', this.scrollListener, { passive: true });
   }
 
   setupIntersectionObserver() {
-    if (typeof window === 'undefined' || !window.IntersectionObserver) return;
+    if (typeof window === 'undefined' || typeof document === 'undefined') return;
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting && entry.intersectionRatio > 0.1) {
-          this.loadAnalytics();
-          observer.disconnect();
-        }
-      });
-    }, {
-      rootMargin: '100px',
-      threshold: 0.1
-    });
-
-    // Observe footer or other below-the-fold elements
-    if (typeof document !== 'undefined') {
+    // Aguarda o footer estar disponível no DOM
+    const waitForFooter = () => {
       const footer = document.querySelector('footer');
       if (footer) {
-        observer.observe(footer);
+        // Usa o pool compartilhado ao invés de criar novo observer
+        observerPool.observe(footer, (entry) => {
+          if (entry.isIntersecting && entry.intersectionRatio > 0.1) {
+            this.loadAnalytics();
+            this.cleanup();
+            observerPool.unobserve(footer);
+          }
+        }, {
+          rootMargin: '200px',
+          threshold: 0.1
+        });
+      } else {
+        // Retry após um frame se footer ainda não existe
+        requestAnimationFrame(waitForFooter);
       }
-    }
+    };
+
+    waitForFooter();
   }
 
-  setupFallbackTimeout() {
-    setTimeout(() => {
-      if (!this.isLoaded) {
-        this.loadAnalytics();
-      }
-    }, this.loadTimeout);
+  cleanup() {
+    // Remove event listeners após carregar
+    if (this.scrollListener) {
+      window.removeEventListener('scroll', this.scrollListener);
+      this.scrollListener = null;
+    }
+
+    this.interactionEvents.forEach(event => {
+      document.removeEventListener(event, this.loadAnalytics, { passive: true });
+    });
   }
 
   loadAnalytics() {

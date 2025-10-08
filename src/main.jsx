@@ -21,17 +21,31 @@ export const createRoot = ViteReactSSG(
         functionUrl: '/.netlify/functions/error-monitoring/log-error'
       });
 
-      // Initialize lazy analytics loader for performance optimization
-      // This will defer GTM loading to prevent main thread blocking
+      // Defer lazy analytics loader para após first paint (otimização LCP)
       if (!isDevelopment && isProduction) {
-        import('./services/LazyAnalyticsLoader.js')
-          .then(({ default: lazyAnalyticsLoader }) => {
-            // LazyAnalyticsLoader initializes automatically on import
-            console.info('[Performance] Lazy Analytics Loader initialized');
-          })
-          .catch(error => {
-            console.warn('[Performance] Failed to load Lazy Analytics:', error);
-          });
+        // Usa requestIdleCallback para carregar apenas quando browser está idle
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(() => {
+            import('./services/LazyAnalyticsLoader.js')
+              .then(({ default: lazyAnalyticsLoader }) => {
+                console.info('[Performance] Lazy Analytics Loader initialized (deferred)');
+              })
+              .catch(error => {
+                console.warn('[Performance] Failed to load Lazy Analytics:', error);
+              });
+          }, { timeout: 3000 });
+        } else {
+          // Fallback: aguarda 1s para garantir que LCP já aconteceu
+          setTimeout(() => {
+            import('./services/LazyAnalyticsLoader.js')
+              .then(({ default: lazyAnalyticsLoader }) => {
+                console.info('[Performance] Lazy Analytics Loader initialized (deferred)');
+              })
+              .catch(error => {
+                console.warn('[Performance] Failed to load Lazy Analytics:', error);
+              });
+          }, 1000);
+        }
       }
 
     }

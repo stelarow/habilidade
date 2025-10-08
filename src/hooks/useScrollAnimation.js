@@ -1,7 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
+import observerPool from '../utils/IntersectionObserverPool';
 
 /**
  * Hook para animações baseadas em scroll
+ * Usa Singleton IntersectionObserverPool para melhor performance
  * @param {Object} options - Opções de configuração
  * @returns {Array} - [ref, isVisible, hasAnimated]
  */
@@ -16,34 +18,36 @@ export function useScrollAnimation(options = {}) {
   const [isVisible, setIsVisible] = useState(false);
   const [hasAnimated, setHasAnimated] = useState(false);
   const elementRef = useRef(null);
+  const timeoutRef = useRef(null);
 
   useEffect(() => {
     const element = elementRef.current;
     if (!element) return;
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          if (delay > 0) {
-            setTimeout(() => {
-              setIsVisible(true);
-              if (once) setHasAnimated(true);
-            }, delay);
-          } else {
+    const handleIntersection = (entry) => {
+      if (entry.isIntersecting) {
+        if (delay > 0) {
+          timeoutRef.current = setTimeout(() => {
             setIsVisible(true);
             if (once) setHasAnimated(true);
-          }
-        } else if (!once && !hasAnimated) {
-          setIsVisible(false);
+          }, delay);
+        } else {
+          setIsVisible(true);
+          if (once) setHasAnimated(true);
         }
-      },
-      { threshold }
-    );
+      } else if (!once && !hasAnimated) {
+        setIsVisible(false);
+      }
+    };
 
-    observer.observe(element);
+    // Usa o pool compartilhado ao invés de criar novo observer
+    observerPool.observe(element, handleIntersection, { threshold });
 
     return () => {
-      observer.unobserve(element);
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+      observerPool.unobserve(element);
     };
   }, [threshold, once, delay, hasAnimated]);
 
