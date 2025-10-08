@@ -57,6 +57,7 @@ const CursosFlorianopolis = () => {
       itemListElement: cursos.map(curso => ({
         '@type': 'Course',
         name: curso.nome,
+        description: courseDescriptions[curso.slug] || 'Curso profissionalizante com certificado reconhecido',
         url: `https://www.escolahabilidade.com/cursos/${curso.slug}`,
         provider: {
           '@type': 'EducationalOrganization',
