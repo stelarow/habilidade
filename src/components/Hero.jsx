@@ -12,7 +12,7 @@ function Hero() {
   const navigate = useNavigate();
 
   return (
-    <Section fullHeight={true} className="flex flex-col items-center justify-center text-center bg-zinc-950 overflow-visible pt-20 sm:pt-0">
+    <Section fullHeight={false} className="flex flex-col items-center justify-center text-center bg-zinc-950 overflow-visible pt-20 sm:pt-0 min-h-[75vh]">
       <Starfield />
       {/* Conteúdo */}
       <div className="flex flex-col items-center justify-center max-w-4xl mx-auto px-4">

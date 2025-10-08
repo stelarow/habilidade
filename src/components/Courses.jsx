@@ -176,7 +176,7 @@ function VocationalTestCard() {
 
 function Courses() {
   return (
-    <Section id="cursos" className="px-3 sm:px-4 lg:px-6 py-8 bg-zinc-950 text-white items-start justify-start min-h-0 overflow-x-hidden">
+    <Section id="cursos" className="px-3 sm:px-4 lg:px-6 pt-4 pb-8 bg-zinc-950 text-white items-start justify-start min-h-0 overflow-x-hidden">
       <Starfield className="opacity-20" />
 
       <div className="relative z-10 max-w-7xl mx-auto w-full">
