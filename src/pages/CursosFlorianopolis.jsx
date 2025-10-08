@@ -4,6 +4,19 @@ import SEOHead from '../components/shared/SEOHead';
 import { MapPin, Phone, WhatsappLogo, Clock } from '@phosphor-icons/react';
 
 const CursosFlorianopolis = () => {
+  // Descrições dos cursos para schemas
+  const courseDescriptions = {
+    'informatica': 'Windows, Word, Excel (fundamental ao avançado), PowerPoint',
+    'autocad-2d-3d': 'AutoCAD 2D e 3D para projetos técnicos e arquitetônicos',
+    'revit': 'Revit Architecture para projetos BIM e construção civil',
+    'marketing-digital': 'Social Ads, SEO, Copywriting, Canva, Branding, Analytics',
+    'programacao': 'Lógica, Python, Java, PHP, Android Studio, Desenvolvimento de Jogos',
+    'design-grafico': 'Photoshop, Illustrator, InDesign, Canva, Social Media',
+    'edicao-video': 'Premiere, After Effects, DaVinci Resolve, Motion Graphics',
+    'business-intelligence': 'Master Excel, Power BI, Dashboards, Storytelling de Dados',
+    'inteligencia-artificial': 'Cursor, Prompt Engineering, ChatGPT, Claude, IA aplicada'
+  };
+
   const cursos = [
     { nome: 'Informática Completa', slug: 'informatica', destaque: true },
 
