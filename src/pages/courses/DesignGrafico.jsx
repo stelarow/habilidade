@@ -1,6 +1,5 @@
 import CoursePage, { getCourseBySlug } from '../CoursePage';
 import COURSES_DATA from '../../data/coursesData';
-import { Helmet } from '@dr.pogodin/react-helmet';
 
 // JSON-LD Schema para Course
 const courseSchema = {
@@ -30,11 +29,8 @@ const courseSchema = {
 export default function DesignGrafico() {
   return (
     <>
-      <Helmet>
-        <script type="application/ld+json">
-          {JSON.stringify(courseSchema)}
-        </script>
-      </Helmet>
+      {/* Schema.org JSON-LD - Renderizado fora do Helmet para compatibilidade com SSG */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify(courseSchema)}} />
       <CoursePage slug="design-grafico" />
     </>
   );
