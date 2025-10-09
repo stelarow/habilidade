@@ -4,18 +4,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Architecture Overview
 
-This is a React-based educational website with two main components:
-- **Main Site**: Vite + React 19 + SSG for marketing site (escolahabilidade.com)
-- **LMS Platform**: Next.js 14 + Supabase in `/plataforma-ensino/` subdirectory
+This is a React-based educational website for marketing and course information (escolahabilidade.com).
 
 ### Core Technologies
 - **Frontend**: React 19, Vite 7, TailwindCSS 4
 - **Routing**: React Router v6 with SSG via `vite-react-ssg`
 - **Styling**: TailwindCSS + PostCSS with custom design system
 - **Email**: EmailJS integration for contact forms
-- **Database**: Supabase (for LMS platform)
 - **Testing**: Jest + React Testing Library
-- **Deployment**: Netlify (main site), separate LMS deployment
+- **Deployment**: Netlify
 
 ## Development Commands
 
@@ -59,14 +56,6 @@ npm run test:data
 
 # Route validation
 npm run test:routes
-```
-
-### LMS Platform (plataforma-ensino/)
-```bash
-cd plataforma-ensino
-npm run dev                 # Development server
-npm run build:production    # Build (requires 10+ min timeout)
-npm run test:e2e           # E2E tests
 ```
 
 ## Build System Architecture
@@ -178,7 +167,6 @@ src/components/
 
 ### Environment Variables
 - EmailJS configuration in production
-- Supabase keys for LMS platform
 - Build-time optimizations enabled
 
 ## Development Guidelines
@@ -200,11 +188,6 @@ src/components/
 git clone [repo-url]
 npm install
 npm run dev
-
-# For LMS development
-cd plataforma-ensino
-npm install
-npm run dev
 ```
 
 ## Integration Points
@@ -218,7 +201,6 @@ npm run dev
 
 ### External Services
 - EmailJS: Contact form processing
-- Supabase: LMS data persistence
 - Netlify: Hosting and deployment
 - Google Fonts: Typography
 
@@ -230,14 +212,12 @@ npm run dev
 - `troubleshooting-routing-spa-netlify`
 
 ### Common Issues
-- Build timeouts: LMS platform needs 10+ minute build timeout
 - Static asset paths: Always use relative paths for Netlify
 - Sitemap generation: Auto-generated, never edit manually
 - Email fallback: WhatsApp integration activates on EmailJS failure
 
 ### System Credentials
 - sudo password: `123`
-- LMS login: alessandrobatisp@gmail.com / $Stelarow123
 
 ## Notion Integration
 

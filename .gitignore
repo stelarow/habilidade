@@ -23,10 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 
-# Embedded git repositories / Examples
-plataforma-ensino/Exemplo-pagina-aula/
-
-
 # Claude development files
 .claude/settings.local.json
 

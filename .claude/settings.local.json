@@ -77,7 +77,19 @@
       "WebFetch(domain:fonts.googleapis.com)",
       "mcp__playwright__browser_close",
       "Bash(git show:*)",
-      "mcp__serena__find_referencing_symbols"
+      "mcp__serena__find_referencing_symbols",
+      "Bash(for:*)",
+      "Bash(do python3 -m json.tool \"$file\")",
+      "Bash(/dev/null)",
+      "Bash(echo:*)",
+      "Bash(done)",
+      "Bash(curl -s \"https://www.escolahabilidade.com/cursos/projetista-3d\")",
+      "Bash(curl -s -I \"https://www.escolahabilidade.com/cursos/projetista-3d\")",
+      "Bash(test:*)",
+      "Bash(sed:*)",
+      "Bash(curl -s \"https://www.escolahabilidade.com/\")",
+      "Bash(curl -s \"https://www.escolahabilidade.com/cursos/programacao\")",
+      "Bash(cat:*)"
     ],
     "deny": []
   }

@@ -8,13 +8,13 @@ on:
     branches: [ main ]
     paths:
       - 'package*.json'
-      - 'plataforma-ensino/package*.json'
+      - './package*.json'
       - '.github/workflows/security-audit.yml'
   pull_request:
     branches: [ main ]
     paths:
       - 'package*.json'
-      - 'plataforma-ensino/package*.json'
+      - './package*.json'
   workflow_dispatch:
     inputs:
       scan_type:
@@ -46,9 +46,6 @@ jobs:
     name: 🔍 Dependency Security Scan
     runs-on: ubuntu-latest
     if: github.event.inputs.scan_type == 'dependencies' || github.event.inputs.scan_type == 'full' || github.event.inputs.scan_type == null
-    strategy:
-      matrix:
-        project: ['main-website', 'learning-platform']
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -58,26 +55,18 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
-          cache-dependency-path: ${{ matrix.project == 'learning-platform' && 'plataforma-ensino/package-lock.json' || 'package-lock.json' }}
+          cache-dependency-path: package-lock.json
 
-      - name: Set working directory
-        id: workdir
-        run: |
-          if [ "${{ matrix.project }}" == "learning-platform" ]; then
-            echo "path=./plataforma-ensino" >> $GITHUB_OUTPUT
-          else
-            echo "path=." >> $GITHUB_OUTPUT
-          fi
 
       - name: Install dependencies
-        working-directory: ${{ steps.workdir.outputs.path }}
+        
         run: npm ci --prefer-offline --no-audit
 
       - name: Run npm audit
-        working-directory: ${{ steps.workdir.outputs.path }}
+        
         run: |
-          echo "🔍 Running npm audit for ${{ matrix.project }}..."
-          npm audit --audit-level=moderate --json > npm-audit-${{ matrix.project }}.json || true
+          echo "🔍 Running npm audit for main-website..."
+          npm audit --audit-level=moderate --json > npm-audit-main-website.json || true
           npm audit --audit-level=moderate
 
       - name: Run Snyk vulnerability scan
@@ -86,12 +75,12 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          args: --file=${{ steps.workdir.outputs.path }}/package.json --json > snyk-results-${{ matrix.project }}.json
+          args: --file=${{ steps.workdir.outputs.path }}/package.json --json > snyk-results-main-website.json
 
       - name: Run OWASP Dependency Check
         uses: dependency-check/Dependency-Check_Action@main
         with:
-          project: 'habilidade-${{ matrix.project }}'
+          project: 'habilidade-main-website'
           path: ${{ steps.workdir.outputs.path }}
           format: 'JSON'
           out: 'dependency-check-reports'
@@ -103,28 +92,28 @@ jobs:
       - name: Upload dependency scan results
         uses: actions/upload-artifact@v4
         with:
-          name: dependency-scan-${{ matrix.project }}-${{ github.sha }}
+          name: dependency-scan-main-website-${{ github.sha }}
           path: |
-            npm-audit-${{ matrix.project }}.json
-            snyk-results-${{ matrix.project }}.json
+            npm-audit-main-website.json
+            snyk-results-main-website.json
             dependency-check-reports/
           retention-days: 30
 
       - name: Parse and report critical vulnerabilities
         run: |
-          echo "📊 Analyzing vulnerability scan results for ${{ matrix.project }}..."
+          echo "📊 Analyzing vulnerability scan results for main-website..."
           
           # Parse npm audit results
-          if [ -f "npm-audit-${{ matrix.project }}.json" ]; then
-            HIGH_VULNS=$(jq '.metadata.vulnerabilities.high // 0' npm-audit-${{ matrix.project }}.json)
-            CRITICAL_VULNS=$(jq '.metadata.vulnerabilities.critical // 0' npm-audit-${{ matrix.project }}.json)
+          if [ -f "npm-audit-main-website.json" ]; then
+            HIGH_VULNS=$(jq '.metadata.vulnerabilities.high // 0' npm-audit-main-website.json)
+            CRITICAL_VULNS=$(jq '.metadata.vulnerabilities.critical // 0' npm-audit-main-website.json)
             
             echo "🔴 Critical vulnerabilities: $CRITICAL_VULNS"
             echo "🟠 High vulnerabilities: $HIGH_VULNS"
             
             if [ "$CRITICAL_VULNS" -gt 0 ]; then
-              echo "❌ Critical vulnerabilities found in ${{ matrix.project }}!"
-              echo "CRITICAL_VULNS_${{ matrix.project }}=$CRITICAL_VULNS" >> $GITHUB_ENV
+              echo "❌ Critical vulnerabilities found in main-website!"
+              echo "CRITICAL_VULNS_main-website=$CRITICAL_VULNS" >> $GITHUB_ENV
             fi
           fi
 
@@ -174,7 +163,7 @@ jobs:
           
           # Learning platform
           echo "Analyzing learning platform..."
-          cd plataforma-ensino
+          cd .
           npx eslint src/ --ext .js,.jsx,.ts,.tsx --format json > ../eslint-security-platform.json || true
           cd ..
 
@@ -252,9 +241,6 @@ jobs:
     name: 📜 License Compliance Check
     runs-on: ubuntu-latest
     if: github.event.inputs.scan_type == 'full' || github.event.inputs.scan_type == null
-    strategy:
-      matrix:
-        project: ['main-website', 'learning-platform']
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -264,29 +250,21 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
-          cache-dependency-path: ${{ matrix.project == 'learning-platform' && 'plataforma-ensino/package-lock.json' || 'package-lock.json' }}
+          cache-dependency-path: package-lock.json
 
-      - name: Set working directory
-        id: workdir
-        run: |
-          if [ "${{ matrix.project }}" == "learning-platform" ]; then
-            echo "path=./plataforma-ensino" >> $GITHUB_OUTPUT
-          else
-            echo "path=." >> $GITHUB_OUTPUT
-          fi
 
       - name: Install dependencies
-        working-directory: ${{ steps.workdir.outputs.path }}
+        
         run: npm ci --prefer-offline --no-audit
 
       - name: Install license checker
         run: npm install -g license-checker
 
       - name: Check licenses
-        working-directory: ${{ steps.workdir.outputs.path }}
+        
         run: |
-          echo "📜 Checking licenses for ${{ matrix.project }}..."
-          license-checker --json > licenses-${{ matrix.project }}.json
+          echo "📜 Checking licenses for main-website..."
+          license-checker --json > licenses-main-website.json
           license-checker --summary
           
           # Check for problematic licenses
@@ -296,8 +274,8 @@ jobs:
       - name: Upload license results
         uses: actions/upload-artifact@v4
         with:
-          name: license-compliance-${{ matrix.project }}-${{ github.sha }}
-          path: ${{ steps.workdir.outputs.path }}/licenses-${{ matrix.project }}.json
+          name: license-compliance-main-website-${{ github.sha }}
+          path: ${{ steps.workdir.outputs.path }}/licenses-main-website.json
           retention-days: 30
 
   security-report:

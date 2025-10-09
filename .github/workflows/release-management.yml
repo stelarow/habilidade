@@ -235,9 +235,6 @@ $(cat CHANGELOG_TEMP.md)
     name: 🏗️ Build Release Assets
     runs-on: ubuntu-latest
     needs: pre-release-validation
-    strategy:
-      matrix:
-        project: ['main-website', 'learning-platform']
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -247,16 +244,11 @@ $(cat CHANGELOG_TEMP.md)
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
-          cache-dependency-path: ${{ matrix.project == 'learning-platform' && 'plataforma-ensino/package-lock.json' || 'package-lock.json' }}
+          cache-dependency-path: package-lock.json
 
       - name: Set working directory
         id: workdir
         run: |
-          if [ "${{ matrix.project }}" == "learning-platform" ]; then
-            echo "path=./plataforma-ensino" >> $GITHUB_OUTPUT
-          else
-            echo "path=." >> $GITHUB_OUTPUT
-          fi
 
       - name: Install dependencies
         working-directory: ${{ steps.workdir.outputs.path }}
@@ -273,11 +265,6 @@ $(cat CHANGELOG_TEMP.md)
       - name: Build for production
         working-directory: ${{ steps.workdir.outputs.path }}
         run: |
-          if [ "${{ matrix.project }}" == "learning-platform" ]; then
-            npm run build:production
-          else
-            npm run build:production
-          fi
         env:
           CI: false
           NODE_ENV: production
@@ -287,24 +274,17 @@ $(cat CHANGELOG_TEMP.md)
       - name: Generate build artifacts
         working-directory: ${{ steps.workdir.outputs.path }}
         run: |
-          echo "📦 Generating build artifacts for ${{ matrix.project }}..."
+          echo "📦 Generating build artifacts for main-website..."
           
-          if [ "${{ matrix.project }}" == "learning-platform" ]; then
-            BUILD_DIR=".next"
-            tar -czf ../build-${{ matrix.project }}-${{ needs.pre-release-validation.outputs.version }}.tar.gz $BUILD_DIR
-          else
-            BUILD_DIR="dist"
-            tar -czf build-${{ matrix.project }}-${{ needs.pre-release-validation.outputs.version }}.tar.gz $BUILD_DIR
-          fi
 
       - name: Generate build metadata
         working-directory: ${{ steps.workdir.outputs.path }}
         run: |
-          echo "📋 Generating build metadata for ${{ matrix.project }}..."
+          echo "📋 Generating build metadata for main-website..."
           
-          cat > build-metadata-${{ matrix.project }}.json << EOF
+          cat > build-metadata-main-website.json << EOF
           {
-            "project": "${{ matrix.project }}",
+            "project": "main-website",
             "version": "${{ needs.pre-release-validation.outputs.version }}",
             "buildDate": "$(date -u)",
             "gitCommit": "$GITHUB_SHA",
@@ -317,10 +297,10 @@ $(cat CHANGELOG_TEMP.md)
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: build-assets-${{ matrix.project }}-${{ github.sha }}
+          name: build-assets-main-website-${{ github.sha }}
           path: |
-            ${{ steps.workdir.outputs.path }}/build-${{ matrix.project }}-*.tar.gz
-            ${{ steps.workdir.outputs.path }}/build-metadata-${{ matrix.project }}.json
+            ${{ steps.workdir.outputs.path }}/build-main-website-*.tar.gz
+            ${{ steps.workdir.outputs.path }}/build-metadata-main-website.json
           retention-days: 90
 
   create-release:

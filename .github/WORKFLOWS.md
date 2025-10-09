@@ -2,12 +2,11 @@
 
 ## 🚀 GitHub Actions Automation Suite
 
-This repository implements a comprehensive GitHub Actions workflow system designed for the **Escola Habilidade** dual-architecture educational platform.
+This repository implements a comprehensive GitHub Actions workflow system designed for the **Escola Habilidade** educational website.
 
 ### 📋 Repository Structure
 
 - **Main Website**: React 19 + Vite (root directory)
-- **Learning Platform**: Next.js 14 + TypeScript + Supabase (`/plataforma-ensino/`)
 
 ## 🔄 Available Workflows
 
@@ -34,29 +33,6 @@ This repository implements a comprehensive GitHub Actions workflow system design
 
 ---
 
-### 2. CI - Learning Platform (`ci-learning-platform.yml`)
-
-**Trigger**: Push/PR to main/develop affecting learning platform files
-**Purpose**: Continuous Integration for Next.js + Supabase application
-
-**Features**:
-- 🔧 TypeScript strict mode checking
-- 🧹 Next.js linting with auto-fix suggestions
-- 🧪 Unit tests with Jest + E2E tests with Playwright
-- 🏗️ Production & development builds
-- 🗄️ Supabase connection validation
-- 🔒 Advanced security scanning with CodeQL
-- ⚡ Lighthouse CI performance monitoring
-- 📊 Bundle analysis and optimization
-
-**Quality Gates**:
-- TypeScript compilation success
-- All unit and E2E tests pass
-- Both build configurations work
-- Database connectivity verified
-- Security scans pass
-
----
 
 ### 3. Production Deployment (`cd-production.yml`)
 
@@ -73,9 +49,8 @@ This repository implements a comprehensive GitHub Actions workflow system design
 - 📊 Deployment status tracking
 - 🚨 Automatic rollback on failure
 
-**Deployment Targets**:
+**Deployment Target**:
 - **Main Website**: https://stelarow.github.io/habilidade
-- **Learning Platform**: Vercel production environment
 
 ---
 
@@ -168,15 +143,11 @@ This repository implements a comprehensive GitHub Actions workflow system design
 graph TD
     A[Developer Push] --> B{Path Detection}
     B -->|Main Website| C[CI - Main Website]
-    B -->|Learning Platform| D[CI - Learning Platform]
-    B -->|Both| E[CI - Both Platforms]
-    C --> F[Quality Gates]
-    D --> F
-    E --> F
-    F --> G{Quality Pass?}
-    G -->|Yes| H[Deploy to Production]
-    G -->|No| I[Block Deployment]
-    H --> J[Release Management]
+    C --> D[Quality Gates]
+    D --> E{Quality Pass?}
+    E -->|Yes| F[Deploy to Production]
+    E -->|No| G[Block Deployment]
+    F --> H[Release Management]
 ```
 
 ### Security & Quality Monitoring
@@ -205,20 +176,6 @@ graph TD
 - `SNYK_TOKEN` - Snyk vulnerability scanning
 - `SEMGREP_APP_TOKEN` - Semgrep security analysis
 - `GITLEAKS_LICENSE` - GitLeaks secrets detection
-
-**Learning Platform**:
-- `NEXT_PUBLIC_SUPABASE_URL` - Supabase project URL
-- `NEXT_PUBLIC_SUPABASE_ANON_KEY` - Supabase anonymous key
-- `SUPABASE_SERVICE_ROLE_KEY` - Supabase service role key
-- `SUPABASE_PROJECT_REF` - Supabase project reference
-- `SUPABASE_ACCESS_TOKEN` - Supabase management token
-
-**Deployment**:
-- `VERCEL_TOKEN` - Vercel deployment token
-- `VERCEL_ORG_ID` - Vercel organization ID
-- `VERCEL_PROJECT_ID` - Vercel project ID
-- `NEXTAUTH_SECRET` - NextAuth.js secret
-- `NEXTAUTH_URL` - NextAuth.js callback URL
 
 **Performance Monitoring**:
 - `LHCI_GITHUB_APP_TOKEN` - Lighthouse CI integration

@@ -21,7 +21,6 @@ Configure the following settings in **Settings > Branches > Add protection rule*
 
 **Required status checks** (select after workflows run at least once):
 - `ci-main-website / status-check`
-- `ci-learning-platform / status-check`
 - `quality-gates / quality-gates-summary`
 - `security-audit / security-report` (if running security checks)
 
@@ -63,7 +62,6 @@ Configure the following settings in **Settings > Branches > Add protection rule*
 
 **Required status checks**:
 - `ci-main-website / status-check`
-- `ci-learning-platform / status-check`
 
 ## 🔒 Security Considerations
 
@@ -81,8 +79,6 @@ Create `.github/CODEOWNERS` to define who can approve changes:
 package.json @tech-lead
 
 # Learning platform
-/plataforma-ensino/ @backend-team @frontend-team
-/plataforma-ensino/src/ @full-stack-team
 
 # Infrastructure and workflows
 /.github/ @devops-team @tech-lead
@@ -177,7 +173,6 @@ If you prefer using GitHub CLI (`gh`):
 # Create main branch protection
 gh api repos/:owner/:repo/branches/main/protection \
   --method PUT \
-  --field required_status_checks='{"strict":true,"checks":[{"context":"ci-main-website / status-check"},{"context":"ci-learning-platform / status-check"},{"context":"quality-gates / quality-gates-summary"}]}' \
   --field enforce_admins=true \
   --field required_pull_request_reviews='{"required_approving_review_count":1,"dismiss_stale_reviews":true,"require_code_owner_reviews":true}' \
   --field restrictions=null \

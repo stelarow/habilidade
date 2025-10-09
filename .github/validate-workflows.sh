@@ -153,15 +153,6 @@ validate_workflow_requirements() {
                 print_status "WARNING" "$filename should specify Node.js version"
             fi
             ;;
-        "ci-learning-platform.yml")
-            if ! grep -q "plataforma-ensino" "$file"; then
-                print_status "ERROR" "$filename should reference learning platform directory"
-                return 1
-            fi
-            if ! grep -q "SUPABASE" "$file"; then
-                print_status "WARNING" "$filename should include Supabase configuration"
-            fi
-            ;;
         "cd-production.yml")
             if ! grep -q "environment:" "$file"; then
                 print_status "WARNING" "$filename should use GitHub environments for production"

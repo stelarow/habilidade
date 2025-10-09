@@ -1,10 +1,9 @@
 # Project Overview - Escola Habilidade
 
 ## Project Structure
-Dual-architecture educational platform with two distinct applications:
+Educational marketing website with course catalog and information.
 
 - **Main Website** (`/`) - React 19 + Vite marketing site with course catalog
-- **Learning Platform** (`/plataforma-ensino/`) - Next.js 14 + TypeScript + Supabase LMS
 
 ## Tech Stack
 
@@ -15,13 +14,5 @@ Dual-architecture educational platform with two distinct applications:
 - Phosphor React icons
 - React Router DOM
 
-### Learning Platform  
-- Next.js 14
-- TypeScript
-- Supabase (database and auth)
-- Tailwind CSS
-- Radix UI components
-- React Hook Form + Zod
-
 ## Purpose
-Educational platform for Escola Habilidade offering technology courses including programming, design, marketing, and office skills.
+Educational marketing website for Escola Habilidade offering technology courses including programming, design, marketing, and office skills.

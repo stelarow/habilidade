@@ -44,9 +44,6 @@ jobs:
     name: 📊 Code Quality Analysis
     runs-on: ubuntu-latest
     if: github.event.inputs.analysis_type == 'code-quality' || github.event.inputs.analysis_type == 'full' || github.event.inputs.analysis_type == null
-    strategy:
-      matrix:
-        project: ['main-website', 'learning-platform']
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -58,66 +55,43 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
-          cache-dependency-path: ${{ matrix.project == 'learning-platform' && 'plataforma-ensino/package-lock.json' || 'package-lock.json' }}
-
-      - name: Set working directory
-        id: workdir
-        run: |
-          if [ "${{ matrix.project }}" == "learning-platform" ]; then
-            echo "path=./plataforma-ensino" >> $GITHUB_OUTPUT
-          else
-            echo "path=." >> $GITHUB_OUTPUT
-          fi
+          cache-dependency-path: 'package-lock.json'
 
       - name: Install dependencies
-        working-directory: ${{ steps.workdir.outputs.path }}
         run: npm ci --prefer-offline --no-audit
 
       - name: Run ESLint with detailed reporting
-        working-directory: ${{ steps.workdir.outputs.path }}
         run: |
-          echo "🔍 Running ESLint analysis for ${{ matrix.project }}..."
-          npx eslint src/ --ext .js,.jsx,.ts,.tsx --format json > eslint-report-${{ matrix.project }}.json || true
-          npx eslint src/ --ext .js,.jsx,.ts,.tsx --format html > eslint-report-${{ matrix.project }}.html || true
+          echo "🔍 Running ESLint analysis..."
+          npx eslint src/ --ext .js,.jsx,.ts,.tsx --format json > eslint-report.json || true
+          npx eslint src/ --ext .js,.jsx,.ts,.tsx --format html > eslint-report.html || true
           npx eslint src/ --ext .js,.jsx,.ts,.tsx || true
 
       - name: Run SonarJS analysis
-        working-directory: ${{ steps.workdir.outputs.path }}
         run: |
-          echo "🎯 Running SonarJS analysis for ${{ matrix.project }}..."
-          npx eslint src/ --ext .js,.jsx,.ts,.tsx -c sonarjs.config.js --format json > sonarjs-report-${{ matrix.project }}.json || true
+          echo "🎯 Running SonarJS analysis..."
+          npx eslint src/ --ext .js,.jsx,.ts,.tsx -c sonarjs.config.js --format json > sonarjs-report.json || true
         continue-on-error: true
 
       - name: Analyze code complexity
-        working-directory: ${{ steps.workdir.outputs.path }}
         run: |
-          echo "📏 Analyzing code complexity for ${{ matrix.project }}..."
-          npx plato -r -d complexity-report-${{ matrix.project }} src/ || echo "Plato analysis completed with warnings"
-
-      - name: Check TypeScript strict mode (Learning Platform only)
-        if: matrix.project == 'learning-platform'
-        working-directory: ${{ steps.workdir.outputs.path }}
-        run: |
-          echo "🔧 Checking TypeScript configuration..."
-          npx tsc --noEmit --strict || echo "TypeScript strict mode issues found"
+          echo "📏 Analyzing code complexity..."
+          npx plato -r -d complexity-report src/ || echo "Plato analysis completed with warnings"
 
       - name: Upload code quality reports
         uses: actions/upload-artifact@v4
         with:
-          name: code-quality-${{ matrix.project }}-${{ github.sha }}
+          name: code-quality-${{ github.sha }}
           path: |
-            ${{ steps.workdir.outputs.path }}/eslint-report-${{ matrix.project }}.*
-            ${{ steps.workdir.outputs.path }}/sonarjs-report-${{ matrix.project }}.json
-            ${{ steps.workdir.outputs.path }}/complexity-report-${{ matrix.project }}/
+            eslint-report.*
+            sonarjs-report.json
+            complexity-report/
           retention-days: 30
 
   test-coverage-analysis:
     name: 🧪 Test Coverage Analysis
     runs-on: ubuntu-latest
     if: github.event.inputs.analysis_type == 'test-coverage' || github.event.inputs.analysis_type == 'full' || github.event.inputs.analysis_type == null
-    strategy:
-      matrix:
-        project: ['main-website', 'learning-platform']
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -127,45 +101,26 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
-          cache-dependency-path: ${{ matrix.project == 'learning-platform' && 'plataforma-ensino/package-lock.json' || 'package-lock.json' }}
-
-      - name: Set working directory
-        id: workdir
-        run: |
-          if [ "${{ matrix.project }}" == "learning-platform" ]; then
-            echo "path=./plataforma-ensino" >> $GITHUB_OUTPUT
-          else
-            echo "path=." >> $GITHUB_OUTPUT
-          fi
+          cache-dependency-path: 'package-lock.json'
 
       - name: Install dependencies
-        working-directory: ${{ steps.workdir.outputs.path }}
         run: npm ci --prefer-offline --no-audit
 
-      - name: Setup test environment (Learning Platform)
-        if: matrix.project == 'learning-platform'
-        working-directory: ${{ steps.workdir.outputs.path }}
-        run: |
-          echo "NEXT_PUBLIC_SUPABASE_URL=http://localhost:54321" >> .env.test
-          echo "NEXT_PUBLIC_SUPABASE_ANON_KEY=test-key" >> .env.test
-
       - name: Run tests with coverage
-        working-directory: ${{ steps.workdir.outputs.path }}
         run: |
-          echo "🧪 Running test suite with coverage for ${{ matrix.project }}..."
+          echo "🧪 Running test suite with coverage..."
           npm run test:coverage -- --coverage --watchAll=false --passWithNoTests
         env:
           CI: true
 
       - name: Generate coverage reports
-        working-directory: ${{ steps.workdir.outputs.path }}
         run: |
-          echo "📊 Generating coverage reports for ${{ matrix.project }}..."
-          
+          echo "📊 Generating coverage reports..."
+
           # Generate different coverage report formats
           if [ -d "coverage" ]; then
             # Create coverage summary
-            echo "## Coverage Summary for ${{ matrix.project }}" > coverage-summary.md
+            echo "## Coverage Summary" > coverage-summary.md
             if [ -f "coverage/coverage-summary.json" ]; then
               node -e "
                 const coverage = require('./coverage/coverage-summary.json').total;
@@ -180,18 +135,17 @@ jobs:
           fi
 
       - name: Check coverage quality gate
-        working-directory: ${{ steps.workdir.outputs.path }}
         run: |
-          echo "🎯 Checking coverage quality gate for ${{ matrix.project }}..."
-          
+          echo "🎯 Checking coverage quality gate..."
+
           if [ -f "coverage/coverage-summary.json" ]; then
             COVERAGE=$(node -e "console.log(require('./coverage/coverage-summary.json').total.lines.pct)")
             echo "Current coverage: $COVERAGE%"
             echo "Required coverage: ${{ env.QUALITY_GATE_COVERAGE }}%"
-            
+
             if (( $(echo "$COVERAGE < ${{ env.QUALITY_GATE_COVERAGE }}" | bc -l) )); then
               echo "❌ Coverage below quality gate threshold!"
-              echo "COVERAGE_FAILED_${{ matrix.project }}=true" >> $GITHUB_ENV
+              echo "COVERAGE_FAILED=true" >> $GITHUB_ENV
             else
               echo "✅ Coverage meets quality gate threshold"
             fi
@@ -202,26 +156,23 @@ jobs:
       - name: Upload coverage reports
         uses: actions/upload-artifact@v4
         with:
-          name: test-coverage-${{ matrix.project }}-${{ github.sha }}
+          name: test-coverage-${{ github.sha }}
           path: |
-            ${{ steps.workdir.outputs.path }}/coverage/
-            ${{ steps.workdir.outputs.path }}/coverage-summary.md
+            coverage/
+            coverage-summary.md
           retention-days: 30
 
       - name: Upload to Codecov
         uses: codecov/codecov-action@v3
         with:
-          directory: ${{ steps.workdir.outputs.path }}
-          flags: ${{ matrix.project }}
-          name: ${{ matrix.project }}-coverage
+          directory: ./
+          flags: main-website
+          name: main-website-coverage
 
   performance-analysis:
     name: ⚡ Performance Analysis
     runs-on: ubuntu-latest
     if: github.event.inputs.analysis_type == 'performance' || github.event.inputs.analysis_type == 'full' || github.event.inputs.analysis_type == null
-    strategy:
-      matrix:
-        project: ['main-website', 'learning-platform']
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -231,93 +182,70 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
-          cache-dependency-path: ${{ matrix.project == 'learning-platform' && 'plataforma-ensino/package-lock.json' || 'package-lock.json' }}
-
-      - name: Set working directory and build command
-        id: config
-        run: |
-          if [ "${{ matrix.project }}" == "learning-platform" ]; then
-            echo "path=./plataforma-ensino" >> $GITHUB_OUTPUT
-            echo "build-cmd=npm run build:production" >> $GITHUB_OUTPUT
-            echo "start-cmd=npm start" >> $GITHUB_OUTPUT
-            echo "port=3000" >> $GITHUB_OUTPUT
-          else
-            echo "path=." >> $GITHUB_OUTPUT
-            echo "build-cmd=npm run build:production" >> $GITHUB_OUTPUT
-            echo "start-cmd=npm run preview" >> $GITHUB_OUTPUT
-            echo "port=4173" >> $GITHUB_OUTPUT
-          fi
+          cache-dependency-path: 'package-lock.json'
 
       - name: Install dependencies
-        working-directory: ${{ steps.config.outputs.path }}
         run: npm ci --prefer-offline --no-audit
 
       - name: Build application
-        working-directory: ${{ steps.config.outputs.path }}
-        run: ${{ steps.config.outputs.build-cmd }}
+        run: npm run build:production
         env:
           CI: false
           NODE_ENV: production
 
       - name: Start application
-        working-directory: ${{ steps.config.outputs.path }}
-        run: ${{ steps.config.outputs.start-cmd }} &
+        run: npm run preview &
         env:
-          PORT: ${{ steps.config.outputs.port }}
+          PORT: 4173
 
       - name: Wait for application
-        run: npx wait-on http://localhost:${{ steps.config.outputs.port }} --timeout 60000
+        run: npx wait-on http://localhost:4173 --timeout 60000
 
       - name: Install Lighthouse CLI
         run: npm install -g @lhci/cli lighthouse
 
       - name: Run Lighthouse performance audit
         run: |
-          echo "⚡ Running Lighthouse performance audit for ${{ matrix.project }}..."
-          lighthouse http://localhost:${{ steps.config.outputs.port }} \
+          echo "⚡ Running Lighthouse performance audit..."
+          lighthouse http://localhost:4173 \
             --only-categories=performance \
             --output=json \
-            --output-path=lighthouse-performance-${{ matrix.project }}.json \
+            --output-path=lighthouse-performance.json \
             --chrome-flags="--headless --no-sandbox"
 
       - name: Run comprehensive Lighthouse audit
         run: |
-          echo "🔍 Running comprehensive Lighthouse audit for ${{ matrix.project }}..."
-          lighthouse http://localhost:${{ steps.config.outputs.port }} \
+          echo "🔍 Running comprehensive Lighthouse audit..."
+          lighthouse http://localhost:4173 \
             --output=json \
             --output=html \
-            --output-path=lighthouse-full-${{ matrix.project }} \
+            --output-path=lighthouse-full \
             --chrome-flags="--headless --no-sandbox"
 
       - name: Analyze bundle size
-        working-directory: ${{ steps.config.outputs.path }}
         run: |
-          echo "📦 Analyzing bundle size for ${{ matrix.project }}..."
-          
-          if [ "${{ matrix.project }}" == "learning-platform" ]; then
-            BUILD_DIR=".next"
-          else
-            BUILD_DIR="dist"
-          fi
-          
+          echo "📦 Analyzing bundle size..."
+
+          BUILD_DIR="dist"
+
           # Generate bundle size report
-          du -sh $BUILD_DIR > bundle-size-${{ matrix.project }}.txt
-          find $BUILD_DIR -name "*.js" -o -name "*.css" | xargs ls -lh > bundle-details-${{ matrix.project }}.txt
+          du -sh $BUILD_DIR > bundle-size.txt
+          find $BUILD_DIR -name "*.js" -o -name "*.css" | xargs ls -lh > bundle-details.txt
 
       - name: Check performance quality gates
         run: |
-          echo "🎯 Checking performance quality gates for ${{ matrix.project }}..."
-          
+          echo "🎯 Checking performance quality gates..."
+
           # Parse Lighthouse performance score
-          PERF_SCORE=$(node -e "console.log(require('./lighthouse-performance-${{ matrix.project }}.json').lhr.categories.performance.score * 100)")
+          PERF_SCORE=$(node -e "console.log(require('./lighthouse-performance.json').lhr.categories.performance.score * 100)")
           echo "Performance score: $PERF_SCORE"
-          
+
           # Set quality gate thresholds
           PERF_THRESHOLD=85
-          
+
           if (( $(echo "$PERF_SCORE < $PERF_THRESHOLD" | bc -l) )); then
             echo "❌ Performance score below threshold ($PERF_THRESHOLD)!"
-            echo "PERF_FAILED_${{ matrix.project }}=true" >> $GITHUB_ENV
+            echo "PERF_FAILED=true" >> $GITHUB_ENV
           else
             echo "✅ Performance score meets threshold"
           fi
@@ -325,19 +253,16 @@ jobs:
       - name: Upload performance reports
         uses: actions/upload-artifact@v4
         with:
-          name: performance-analysis-${{ matrix.project }}-${{ github.sha }}
+          name: performance-analysis-${{ github.sha }}
           path: |
-            lighthouse-*-${{ matrix.project }}.*
-            bundle-*-${{ matrix.project }}.txt
+            lighthouse-*.*
+            bundle-*.txt
           retention-days: 30
 
   accessibility-analysis:
     name: ♿ Accessibility Analysis
     runs-on: ubuntu-latest
     if: github.event.inputs.analysis_type == 'accessibility' || github.event.inputs.analysis_type == 'full' || github.event.inputs.analysis_type == null
-    strategy:
-      matrix:
-        project: ['main-website', 'learning-platform']
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -347,42 +272,24 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
-          cache-dependency-path: ${{ matrix.project == 'learning-platform' && 'plataforma-ensino/package-lock.json' || 'package-lock.json' }}
-
-      - name: Set working directory and build command
-        id: config
-        run: |
-          if [ "${{ matrix.project }}" == "learning-platform" ]; then
-            echo "path=./plataforma-ensino" >> $GITHUB_OUTPUT
-            echo "build-cmd=npm run build:production" >> $GITHUB_OUTPUT
-            echo "start-cmd=npm start" >> $GITHUB_OUTPUT
-            echo "port=3000" >> $GITHUB_OUTPUT
-          else
-            echo "path=." >> $GITHUB_OUTPUT
-            echo "build-cmd=npm run build:production" >> $GITHUB_OUTPUT
-            echo "start-cmd=npm run preview" >> $GITHUB_OUTPUT
-            echo "port=4173" >> $GITHUB_OUTPUT
-          fi
+          cache-dependency-path: 'package-lock.json'
 
       - name: Install dependencies
-        working-directory: ${{ steps.config.outputs.path }}
         run: npm ci --prefer-offline --no-audit
 
       - name: Build application
-        working-directory: ${{ steps.config.outputs.path }}
-        run: ${{ steps.config.outputs.build-cmd }}
+        run: npm run build:production
         env:
           CI: false
           NODE_ENV: production
 
       - name: Start application
-        working-directory: ${{ steps.config.outputs.path }}
-        run: ${{ steps.config.outputs.start-cmd }} &
+        run: npm run preview &
         env:
-          PORT: ${{ steps.config.outputs.port }}
+          PORT: 4173
 
       - name: Wait for application
-        run: npx wait-on http://localhost:${{ steps.config.outputs.port }} --timeout 60000
+        run: npx wait-on http://localhost:4173 --timeout 60000
 
       - name: Install accessibility tools
         run: |
@@ -392,48 +299,48 @@ jobs:
 
       - name: Run Axe accessibility scan
         run: |
-          echo "♿ Running Axe accessibility scan for ${{ matrix.project }}..."
-          axe http://localhost:${{ steps.config.outputs.port }} \
+          echo "♿ Running Axe accessibility scan for main-website..."
+          axe http://localhost:4173 \
             --tags wcag2a,wcag2aa,wcag21aa \
             --reporter json \
-            --output-file axe-results-${{ matrix.project }}.json || true
+            --output-file axe-results.json || true
 
       - name: Run Pa11y accessibility scan
         run: |
-          echo "🔍 Running Pa11y accessibility scan for ${{ matrix.project }}..."
-          pa11y http://localhost:${{ steps.config.outputs.port }} \
+          echo "🔍 Running Pa11y accessibility scan for main-website..."
+          pa11y http://localhost:4173 \
             --standard WCAG2AA \
-            --reporter json > pa11y-results-${{ matrix.project }}.json || true
+            --reporter json > pa11y-results.json || true
 
       - name: Run Lighthouse accessibility audit
         run: |
-          echo "💡 Running Lighthouse accessibility audit for ${{ matrix.project }}..."
-          lighthouse http://localhost:${{ steps.config.outputs.port }} \
+          echo "💡 Running Lighthouse accessibility audit for main-website..."
+          lighthouse http://localhost:4173 \
             --only-categories=accessibility \
             --output=json \
-            --output-path=lighthouse-a11y-${{ matrix.project }}.json \
+            --output-path=lighthouse-a11y.json \
             --chrome-flags="--headless --no-sandbox"
 
       - name: Analyze accessibility results
         run: |
-          echo "📊 Analyzing accessibility results for ${{ matrix.project }}..."
+          echo "📊 Analyzing accessibility results for main-website..."
           
           # Parse Axe results
-          if [ -f "axe-results-${{ matrix.project }}.json" ]; then
-            VIOLATIONS=$(node -e "console.log(require('./axe-results-${{ matrix.project }}.json').violations.length)")
+          if [ -f "axe-results.json" ]; then
+            VIOLATIONS=$(node -e "console.log(require('./axe-results.json').violations.length)")
             echo "Axe violations: $VIOLATIONS"
           fi
           
           # Parse Lighthouse accessibility score
-          if [ -f "lighthouse-a11y-${{ matrix.project }}.json" ]; then
-            A11Y_SCORE=$(node -e "console.log(require('./lighthouse-a11y-${{ matrix.project }}.json').lhr.categories.accessibility.score * 100)")
+          if [ -f "lighthouse-a11y.json" ]; then
+            A11Y_SCORE=$(node -e "console.log(require('./lighthouse-a11y.json').lhr.categories.accessibility.score * 100)")
             echo "Lighthouse accessibility score: $A11Y_SCORE"
             
             # Check quality gate
             A11Y_THRESHOLD=90
             if (( $(echo "$A11Y_SCORE < $A11Y_THRESHOLD" | bc -l) )); then
               echo "❌ Accessibility score below threshold ($A11Y_THRESHOLD)!"
-              echo "A11Y_FAILED_${{ matrix.project }}=true" >> $GITHUB_ENV
+              echo "A11Y_FAILED=true" >> $GITHUB_ENV
             else
               echo "✅ Accessibility score meets threshold"
             fi
@@ -442,11 +349,11 @@ jobs:
       - name: Upload accessibility reports
         uses: actions/upload-artifact@v4
         with:
-          name: accessibility-analysis-${{ matrix.project }}-${{ github.sha }}
+          name: accessibility-analysis-${{ github.sha }}
           path: |
-            axe-results-${{ matrix.project }}.json
-            pa11y-results-${{ matrix.project }}.json
-            lighthouse-a11y-${{ matrix.project }}.json
+            axe-results.json
+            pa11y-results.json
+            lighthouse-a11y.json
           retention-days: 30
 
   quality-gates-summary:
