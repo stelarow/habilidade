@@ -10,6 +10,7 @@ export const ADAPTIVE_NAVIGATION = {
   coursePage: [
     { label: 'Currículo', href: '#curriculo', icon: 'BookOpen', description: 'Grade do curso' },
     { label: 'Depoimentos', href: '#depoimentos', icon: 'Star', description: 'Avaliações dos alunos' },
+    { label: 'Localização', href: '#localizacao', icon: 'MapPin', description: 'Nossa escola em São José' },
     { label: 'FAQ', href: '#faq', icon: 'Question', description: 'Dúvidas frequentes' },
     { label: 'Blog', href: '/blog', icon: 'Article', description: 'Artigos e conteúdos', external: true },
     { label: 'Contato', href: '#contato', icon: 'Phone', description: 'Tire suas dúvidas' }

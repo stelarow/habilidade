@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 // Using native anchor tags for SSG instead of React Router Link
-import { 
-  X, CaretRight, GraduationCap, WhatsappLogo, 
-  BookOpen, Star, Phone, House, MagnifyingGlass, Play, Question 
+import {
+  X, CaretRight, GraduationCap, WhatsappLogo,
+  BookOpen, Star, Phone, House, MagnifyingGlass, Play, Question, MapPin
 } from '@phosphor-icons/react';
 import { usePageContext } from '../../hooks/usePageContext';
 import { ADAPTIVE_NAVIGATION } from '../../constants/adaptiveNavigation';
@@ -52,7 +52,7 @@ function MobileMegaMenu({ isOpen, onClose }) {
   // Mapeamento de ícones
   const getIconComponent = (iconName) => {
     const icons = {
-      BookOpen, Star, Phone, House, Play, Question
+      BookOpen, Star, Phone, House, Play, Question, MapPin
     };
     return icons[iconName] || BookOpen;
   };

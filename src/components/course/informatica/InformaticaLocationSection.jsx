@@ -40,12 +40,14 @@ export const InformaticaLocationSection = () => {
                     Kobrasol, São José - SC<br />
                     CEP 88102-280
                   </p>
-                  <button 
-                    onClick={() => handleCTAClick('location')}
+                  <a
+                    href="https://www.google.com/maps/place/Escola+Habilidade/@-27.5923906,-48.6175692,17z/data=!3m1!4b1!4m6!3m5!1s0x9527492f4454ef8d:0xd345f5e77312fdec!8m2!3d-27.5923906!4d-48.6149943!16s%2Fg%2F11w49mrz34"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="text-blue-400 hover:text-blue-300 transition-colors font-medium"
                   >
                     Ver no Google Maps →
-                  </button>
+                  </a>
                 </div>
               </div>
             </div>

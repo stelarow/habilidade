@@ -89,7 +89,8 @@
       "Bash(sed:*)",
       "Bash(curl -s \"https://www.escolahabilidade.com/\")",
       "Bash(curl -s \"https://www.escolahabilidade.com/cursos/programacao\")",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Bash(curl -s \"https://www.escolahabilidade.com/cursos/excel-avancado-business-intelligence\")"
     ],
     "deny": []
   }
