@@ -217,6 +217,16 @@
     
     <!-- Lazy Analytics Loading - Deferred to prevent main thread blocking -->
     <!-- Analytics will be loaded by LazyAnalyticsLoader service -->
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-16951445133">
+</script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-16951445133');
+</script>
   </head>
   <body class="font-sans">
     <div id="root"></div>
