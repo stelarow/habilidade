@@ -171,7 +171,7 @@ const localBusinessSchema = {
   "@type": "LocalBusiness",
   "name": "Escola Habilidade - Curso de Programação",
   "image": "https://www.escolahabilidade.com.br/logo-escola-habilidade.png",
-  "description": "Escola de programação em São José SC. Cursos presenciais de Lógica, Python, Java, PHP, Android e IA. Atendemos Florianópolis, Palhoça e Biguaçu.",
+  "description": "Escola Habilidade - Cursos presenciais de programação em São José SC. Lógica, Python, Java, PHP, Android e IA. Atendemos Florianópolis, Palhoça e Biguaçu.",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "Rua Caetano José Ferreira, 426 - Sala 5 - Kobrasol",
