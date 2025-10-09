@@ -100,7 +100,7 @@ export const InformaticaFAQ = () => {
   };
 
   return (
-    <section className="px-4 py-16 sm:px-6 lg:px-8 lg:py-20 bg-gradient-to-b from-zinc-950 to-zinc-900">
+    <section id="faq" className="px-4 py-16 sm:px-6 lg:px-8 lg:py-20 bg-gradient-to-b from-zinc-950 to-zinc-900">
       <div className="container mx-auto max-w-7xl">
         
         {/* Cabeçalho da seção */}

@@ -5,7 +5,7 @@ import { handleCTAClick } from '../../../utils/ctaUtils';
 
 const InformaticaContactSection = () => {
   return (
-    <section className="py-16 px-4 sm:px-6 lg:px-8 lg:py-20 bg-gradient-to-br from-blue-500/10 via-zinc-950 to-cyan-400/10 relative overflow-hidden">
+    <section id="contato" className="py-16 px-4 sm:px-6 lg:px-8 lg:py-20 bg-gradient-to-br from-blue-500/10 via-zinc-950 to-cyan-400/10 relative overflow-hidden">
       {/* Background Effects */}
       <div className="absolute inset-0">
         <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl animate-pulse" />

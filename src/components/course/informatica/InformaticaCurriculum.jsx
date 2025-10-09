@@ -228,7 +228,7 @@ export const InformaticaCurriculum = () => {
   const totalLessons = curriculum.reduce((acc, module) => acc + module.lessons.length, 0);
 
   return (
-    <section id="curriculum" className="px-4 py-16 sm:px-6 lg:px-8 lg:py-20 bg-gradient-to-b from-zinc-900 to-zinc-950">
+    <section id="curriculo" className="px-4 py-16 sm:px-6 lg:px-8 lg:py-20 bg-gradient-to-b from-zinc-900 to-zinc-950">
       <div className="container mx-auto max-w-7xl">
         
         {/* Cabeçalho da seção */}

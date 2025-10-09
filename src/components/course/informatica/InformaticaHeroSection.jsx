@@ -5,7 +5,7 @@ import { Badge } from '../../../components/ui/badge';
 
 export const InformaticaHeroSection = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950">
+    <section id="inicio" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950">
       {/* Background Image */}
       <div className="absolute inset-0">
         <img

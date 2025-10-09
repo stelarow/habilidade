@@ -4,7 +4,7 @@ import { handleCTAClick } from '../../../utils/ctaUtils';
 
 export const InformaticaLocationSection = () => {
   return (
-    <section className="px-4 py-16 sm:px-6 lg:px-8 lg:py-20 bg-zinc-900/50">
+    <section id="localizacao" className="px-4 py-16 sm:px-6 lg:px-8 lg:py-20 bg-zinc-900/50">
       <div className="container mx-auto max-w-7xl">
         
         {/* Header da seção */}

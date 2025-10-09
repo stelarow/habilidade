@@ -56,6 +56,7 @@ const InformaticaWhyLearn2025 = () => {
 
   return (
     <section
+      id="diferenciais"
       ref={sectionRef}
       className="px-4 py-16 sm:px-6 lg:px-8 lg:py-20 bg-zinc-950"
     >

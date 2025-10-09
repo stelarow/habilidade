@@ -48,7 +48,7 @@ const included = [
 
 export const InformaticaInvestment = () => {
   return (
-    <section className="px-4 py-16 sm:px-6 lg:px-8 lg:py-20 bg-gradient-to-b from-zinc-900 to-zinc-950">
+    <section id="investimento" className="px-4 py-16 sm:px-6 lg:px-8 lg:py-20 bg-gradient-to-b from-zinc-900 to-zinc-950">
       <div className="container mx-auto max-w-7xl">
         
         {/* Cabeçalho da seção */}

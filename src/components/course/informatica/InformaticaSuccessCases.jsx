@@ -38,7 +38,7 @@ const successStories = [
 
 export const InformaticaSuccessCases = () => {
   return (
-    <section className="px-4 py-16 sm:px-6 lg:px-8 lg:py-20 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 relative overflow-hidden">
+    <section id="casos-de-sucesso" className="px-4 py-16 sm:px-6 lg:px-8 lg:py-20 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 relative overflow-hidden">
       {/* Background Effects */}
       <div className="absolute inset-0">
         <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-green-500/10 rounded-full blur-3xl animate-pulse" />

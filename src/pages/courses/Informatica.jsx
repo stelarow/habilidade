@@ -403,7 +403,7 @@ const Informatica = () => {
       <InformaticaLocationSection />
 
       {/* Empresas Parceiras */}
-      <section className="px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+      <section id="empresas-parceiras" className="px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
         <TrustedCompanies
           variant="course"
           courseSlug="informatica"
@@ -423,7 +423,7 @@ const Informatica = () => {
       <InformaticaFloatingCTA />
       
       {/* CTA Final - Estrutura padronizada */}
-      <section className="px-4 py-16 sm:px-6 lg:px-8 lg:py-20 bg-gradient-to-br from-blue-500/20 via-zinc-950 to-cyan-400/20 relative overflow-hidden">
+      <section id="cta-final" className="px-4 py-16 sm:px-6 lg:px-8 lg:py-20 bg-gradient-to-br from-blue-500/20 via-zinc-950 to-cyan-400/20 relative overflow-hidden">
         {/* Background Effects */}
         <div className="absolute inset-0">
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-500/30 rounded-full blur-3xl animate-pulse" />
