@@ -9,6 +9,7 @@ import { Progress } from '../../ui/progress';
 import emailjs from '@emailjs/browser';
 import { EMAIL_CONFIG, isEmailConfigured } from '../../../utils/emailConfig';
 import { formatPhoneNumber } from '../../../lib/utils';
+import { trackGoogleAdsConversion } from '../../../utils/ctaUtils';
 
 // Extraindo StepContent para fora do componente principal para evitar re-criação
 const StepContent = React.memo(({ step, submitStatus, formData, onInputChange, phoneInputRef, messageInputRef }) => {
@@ -257,7 +258,10 @@ const InformaticaInlineContactForm = () => {
 
   const sendWhatsApp = () => {
     const message = `*Nova solicitação de contato - ${formData.course}*%0A%0A*Nome:* ${formData.name}%0A*Telefone:* ${formData.phone}%0A*Curso de interesse:* ${formData.course}%0A*Mensagem:* ${formData.message || 'Nenhuma mensagem adicional'}`;
-    window.open(`https://wa.me/${EMAIL_CONFIG.WHATSAPP_NUMBER}?text=${message}`, '_blank');
+    const whatsappUrl = `https://wa.me/${EMAIL_CONFIG.WHATSAPP_NUMBER}?text=${message}`;
+    
+    // Track de conversão do Google Ads e abre WhatsApp
+    trackGoogleAdsConversion(whatsappUrl);
   };
 
   const handleSubmit = async () => {
@@ -268,6 +272,8 @@ const InformaticaInlineContactForm = () => {
       const emailResult = await sendEmail();
 
       if (emailResult.success) {
+        // Registra conversão do Google Ads para envio de formulário bem-sucedido
+        trackGoogleAdsConversion();
         setSubmitStatus('email_success');
         setFormData({ name: '', email: '', phone: '', course: 'Informática', message: '' });
         setTimeout(() => {

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste de Tracking Google Ads - WhatsApp</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .test-button {
+            background: linear-gradient(to right, #25d366, #128c7e);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 10px;
+            display: inline-block;
+        }
+        .test-button:hover {
+            opacity: 0.9;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        #console-output {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 10px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Teste de Tracking Google Ads - Botões WhatsApp</h1>
+    
+    <div class="test-container">
+        <h2>Status do Gtag</h2>
+        <div id="gtag-status" class="status info">Verificando...</div>
+    </div>
+
+    <div class="test-container">
+        <h2>Botões de Teste (Simulando botões da página)</h2>
+        <p>Clique em cada botão para testar o tracking de conversão:</p>
+        
+        <button class="test-button" onclick="testTracking('hero')">
+            Quero Conhecer o Curso (Hero)
+        </button>
+        
+        <button class="test-button" onclick="testTracking('contact')">
+            Falar com Consultor (Contact)
+        </button>
+        
+        <button class="test-button" onclick="testTracking('floating')">
+            Botão Flutuante (Floating)
+        </button>
+        
+        <button class="test-button" onclick="testTracking('investment')">
+            Escolher Meu Plano (Investment)
+        </button>
+        
+        <button class="test-button" onclick="testTracking('final')">
+            Garantir Minha Vaga (Final)
+        </button>
+    </div>
+
+    <div class="test-container">
+        <h2>Console de Debug</h2>
+        <div id="console-output"></div>
+        <button onclick="clearConsole()" style="margin-top: 10px;">Limpar Console</button>
+    </div>
+
+    <!-- Google Ads Tag -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16951445133"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'AW-16951445133');
+
+        // Simulação das funções do ctaUtils.js
+        const WHATSAPP_NUMBER = '5548988559491';
+        
+        const CTA_MESSAGES = {
+            hero: 'Olá! Tenho interesse em dominar informática e gostaria de saber mais sobre o Curso de Informática Completa. Podem me informar sobre conteúdo, horários e formas de pagamento? Obrigado!',
+            contact: 'Olá! Gostaria de saber mais informações sobre o Curso de Informática Completa. Podem me ajudar? Obrigado!',
+            floating: 'Olá! Tenho interesse no Curso de Informática Completa. Gostaria de saber mais informações sobre conteúdo, horários e formas de pagamento. Obrigado!',
+            investment: 'Olá! Estou interessado em garantir minha vaga no Curso de Informática Completa. Gostaria de saber mais sobre as condições de pagamento e próximas turmas. Obrigado!',
+            final: 'Olá! Quero garantir minha vaga no Curso de Informática Completa. Podem me informar sobre as próximas turmas e formas de pagamento? Obrigado!'
+        };
+
+        function generateWhatsAppURL(ctaType, customMessage = null) {
+            const message = customMessage || CTA_MESSAGES[ctaType] || CTA_MESSAGES.floating;
+            const encodedMessage = encodeURIComponent(message);
+            return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
+        }
+
+        function trackCTAClick(ctaType, action = 'click', section = 'informatica-test') {
+            if (typeof gtag !== 'undefined') {
+                gtag('event', action, {
+                    event_category: 'CTA',
+                    event_label: `${section}-${ctaType}`,
+                    custom_parameter: ctaType
+                });
+                logToConsole(`✓ CTA Click tracked: ${ctaType} in ${section}`);
+            } else {
+                logToConsole(`✗ Gtag not available for CTA tracking: ${ctaType}`);
+            }
+        }
+
+        function trackGoogleAdsConversion(url) {
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'conversion', {
+                    'send_to': 'AW-16951445133/VUrgCKqOmaobEI2NipM_',
+                    'event_callback': function() {
+                        if (typeof(url) !== 'undefined') {
+                            logToConsole(`✓ Conversion tracked successfully, opening WhatsApp: ${url}`);
+                            // Em produção, descomente a linha abaixo
+                            // window.open(url, '_blank');
+                        }
+                    }
+                });
+                return false;
+            } else {
+                // Fallback se gtag não estiver disponível
+                logToConsole(`✗ Gtag not available, fallback to direct WhatsApp: ${url}`);
+                if (typeof(url) !== 'undefined') {
+                    // Em produção, descomente a linha abaixo
+                    // window.open(url, '_blank');
+                }
+                return false;
+            }
+        }
+
+        function handleCTAClick(ctaType, customMessage = null) {
+            // Track do evento
+            trackCTAClick(ctaType);
+            
+            // Gera URL do WhatsApp
+            const whatsappUrl = generateWhatsAppURL(ctaType, customMessage);
+            
+            // Track de conversão do Google Ads e abre WhatsApp
+            trackGoogleAdsConversion(whatsappUrl);
+        }
+
+        // Funções de teste
+        function testTracking(ctaType) {
+            logToConsole(`\n=== Testando clique no botão: ${ctaType} ===`);
+            handleCTAClick(ctaType);
+            logToConsole(`URL do WhatsApp que seria aberta: ${generateWhatsAppURL(ctaType)}`);
+        }
+
+        function logToConsole(message) {
+            const output = document.getElementById('console-output');
+            const timestamp = new Date().toLocaleTimeString();
+            output.textContent += `[${timestamp}] ${message}\n`;
+            output.scrollTop = output.scrollHeight;
+        }
+
+        function clearConsole() {
+            document.getElementById('console-output').textContent = '';
+        }
+
+        // Verificar status do gtag
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                const statusDiv = document.getElementById('gtag-status');
+                if (typeof gtag !== 'undefined') {
+                    statusDiv.className = 'status success';
+                    statusDiv.textContent = '✓ Gtag carregado com sucesso (AW-16951445133)';
+                    logToConsole('✓ Gtag initialized successfully');
+                } else {
+                    statusDiv.className = 'status error';
+                    statusDiv.textContent = '✗ Erro: Gtag não foi carregado';
+                    logToConsole('✗ Gtag failed to load');
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

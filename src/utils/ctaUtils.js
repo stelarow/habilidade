@@ -50,6 +50,30 @@ export const trackCTAClick = (ctaType, action = 'click', section = 'informatica-
 };
 
 /**
+ * Função para tracking de conversão do Google Ads
+ * @param {string} url - URL para redirecionar após a conversão
+ */
+export const trackGoogleAdsConversion = (url) => {
+  if (typeof gtag !== 'undefined') {
+    gtag('event', 'conversion', {
+      'send_to': 'AW-16951445133/VUrgCKqOmaobEI2NipM_',
+      'event_callback': function() {
+        if (typeof(url) !== 'undefined') {
+          window.open(url, '_blank');
+        }
+      }
+    });
+    return false;
+  } else {
+    // Fallback se gtag não estiver disponível
+    if (typeof(url) !== 'undefined') {
+      window.open(url, '_blank');
+    }
+    return false;
+  }
+};
+
+/**
  * Handler principal para CTAs
  * @param {string} ctaType - Tipo do CTA
  * @param {string} customMessage - Mensagem customizada opcional
@@ -58,9 +82,11 @@ export const handleCTAClick = (ctaType, customMessage = null) => {
   // Track do evento
   trackCTAClick(ctaType);
   
-  // Gera URL e abre WhatsApp
+  // Gera URL do WhatsApp
   const whatsappUrl = generateWhatsAppURL(ctaType, customMessage);
-  window.open(whatsappUrl, '_blank');
+  
+  // Track de conversão do Google Ads e abre WhatsApp
+  trackGoogleAdsConversion(whatsappUrl);
 };
 
 /**
