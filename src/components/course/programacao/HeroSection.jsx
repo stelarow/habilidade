@@ -12,9 +12,9 @@ export function HeroSection() {
   ]
 
   const { displayLines } = useConsoleTypewriter(consoleLines, {
-    speed: 60,
-    pauseBetweenLines: 800,
-    startDelay: 1500
+    speed: 30, // Reduzido de 60 para 30ms (2x mais rápido)
+    pauseBetweenLines: 400, // Reduzido de 800 para 400ms (2x mais rápido)
+    startDelay: 1000 // Reduzido de 1500 para 1000ms
   })
 
   return (

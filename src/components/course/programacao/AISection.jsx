@@ -23,7 +23,7 @@ export function AISection() {
     "✓ Sistema funcionando perfeitamente! 🚀"
   ]
 
-  const visibleLines = useStaggerAnimation(codeLines.length, 150, codeVisible)
+  const visibleLines = useStaggerAnimation(codeLines.length, 75, codeVisible) // Reduzido de 150ms para 75ms (2x mais rápido)
 
   return (
     <section className="py-20 bg-navy text-white relative overflow-hidden">

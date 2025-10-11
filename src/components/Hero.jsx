@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 function Hero() {
   const words = ['Inteligência Artificial', 'Design 3D', 'Programação', 'Marketing'];
-  const text = useTypewriter(words);
+  const text = useTypewriter(words, 60, 1500); // Reduzido de 120ms para 60ms (2x mais rápido) e pause de 2000ms para 1500ms
   const navigate = useNavigate();
 
   return (
