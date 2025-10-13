@@ -193,8 +193,8 @@ const localBusinessSchema = {
   },
   "geo": {
     "@type": "GeoCoordinates",
-    "latitude": "-27.611",
-    "longitude": "-48.635"
+    "latitude": "-27.5923906",
+    "longitude": "-48.6149943"
   },
   "areaServed": [
     {

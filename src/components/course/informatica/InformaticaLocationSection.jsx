@@ -81,14 +81,29 @@ export const InformaticaLocationSection = () => {
 
           </div>
 
-          {/* Facilidades de Acesso */}
+          {/* Mapa e Facilidades de Acesso */}
           <div className="space-y-6">
-            
+
+            {/* Google Maps */}
+            <div className="bg-zinc-800/50 backdrop-blur border border-zinc-700/50 rounded-2xl p-2 overflow-hidden">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3536.5!2d-48.6149943!3d-27.5923906!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9527492f4454ef8d%3A0xd345f5e77312fdec!2sEscola%20Habilidade!5e0!3m2!1spt-BR!2sbr!4v1641234567890!5m2!1spt-BR!2sbr"
+                width="100%"
+                height="350"
+                style={{ border: 0, borderRadius: '1rem' }}
+                allowFullScreen=""
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Localização da Escola Habilidade - R. Caetano José Ferreira, 426, Kobrasol, São José - SC"
+                className="w-full"
+              />
+            </div>
+
             <div className="bg-gradient-to-br from-blue-500/20 to-cyan-400/20 backdrop-blur border border-blue-500/30 rounded-2xl p-4 sm:p-6 lg:p-8">
               <h3 className="text-2xl font-bold text-white mb-6">Fácil Acesso</h3>
-              
+
               <div className="space-y-4 sm:space-y-6">
-                
+
                 <div className="flex items-start gap-4">
                   <div className="w-8 h-8 sm:w-10 sm:h-10 bg-blue-500/30 rounded-lg flex items-center justify-center flex-shrink-0">
                     <Car className="w-4 h-4 sm:w-5 sm:h-5 text-blue-300" />
