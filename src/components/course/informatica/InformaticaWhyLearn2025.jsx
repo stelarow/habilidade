@@ -77,7 +77,7 @@ const InformaticaWhyLearn2025 = () => {
             </span>
           </h2>
           <p className="text-xl text-zinc-400 max-w-3xl mx-auto">
-            A revolução digital transformou completamente o mercado de trabalho
+            As mudanças com o computador mudaram o jeito de trabalhar
           </p>
         </header>
 
@@ -90,11 +90,11 @@ const InformaticaWhyLearn2025 = () => {
             data-scroll-reveal="slide-up"
           >
             <blockquote className="text-xl leading-relaxed text-zinc-300 border-l-4 border-blue-500 pl-6 bg-blue-500/5 py-6 rounded-r-lg mb-8">
-              <strong className="text-white">A revolução digital transformou completamente o mercado de trabalho.</strong> Hoje,
-              <mark className="bg-blue-500/20 text-blue-400 px-1 rounded mx-1">94% das vagas de emprego</mark>
-              exigem conhecimentos básicos de informática, e profissionais com domínio avançado de ferramentas como Excel ganham em média
-              <mark className="bg-blue-500/20 text-blue-400 px-1 rounded mx-1">45% mais</mark>
-              que seus colegas.
+              <strong className="text-white">As mudanças com o computador mudaram o jeito de trabalhar.</strong> Hoje,
+              <mark className="bg-blue-500/20 text-blue-400 px-1 rounded mx-1">94 em cada 100 vagas de emprego</mark>
+              pedem que você saiba usar o computador. E as pessoas que sabem usar bem programas como o Excel ganham
+              <mark className="bg-blue-500/20 text-blue-400 px-1 rounded mx-1">quase o dobro a mais de salário</mark>
+              do que seus colegas.
             </blockquote>
 
             {/* Progress bars das estatísticas */}
@@ -147,14 +147,14 @@ const InformaticaWhyLearn2025 = () => {
               </div>
               <div className="mb-12 pl-4 sm:pl-16">
                 <p className="text-lg leading-relaxed text-zinc-300 mb-4">
-                  Empresas de todos os setores buscam profissionais com habilidades digitais sólidas. De startups a
-                  multinacionais, o conhecimento em informática é <strong className="text-white">requisito básico</strong>.
-                  A transformação digital não é mais uma tendência futura - é a realidade atual do mercado.
+                  Empresas de todos os tipos procuram pessoas que sabem usar bem o computador. De empresas pequenas a
+                  grandes, saber informática é <strong className="text-white">algo básico que pedem</strong>.
+                  As mudanças digitais não são mais algo do futuro - é o que está acontecendo agora no mundo do trabalho.
                 </p>
                 <p className="text-lg leading-relaxed text-zinc-300">
-                  Profissionais que não dominam as ferramentas digitais básicas encontram-se em
-                  <mark className="bg-green-500/20 text-green-400 px-1 rounded">desvantagem significativa</mark>,
-                  perdendo oportunidades valiosas de crescimento e desenvolvimento profissional.
+                  Pessoas que não sabem usar as ferramentas básicas do computador ficam em
+                  <mark className="bg-green-500/20 text-green-400 px-1 rounded">desvantagem grande</mark>,
+                  perdendo chances importantes de crescer e se desenvolver no trabalho.
                 </p>
               </div>
             </div>
@@ -171,14 +171,14 @@ const InformaticaWhyLearn2025 = () => {
               </div>
               <div className="mb-12 pl-4 sm:pl-16">
                 <p className="text-lg leading-relaxed text-zinc-300 mb-4">
-                  Profissionais certificados em informática têm acesso a melhores oportunidades e salários mais
-                  competitivos. Nossos alunos relatam <mark className="bg-yellow-500/20 text-yellow-400 px-1 rounded">
-                  aumentos de 30% a 60%</mark> após a conclusão do curso.
+                  Pessoas que têm certificado em informática conseguem melhores oportunidades e salários maiores.
+                  Nossos alunos contam que tiveram <mark className="bg-yellow-500/20 text-yellow-400 px-1 rounded">
+                  aumentos de 30% a 60%</mark> depois que terminaram o curso.
                 </p>
                 <p className="text-lg leading-relaxed text-zinc-300">
-                  Este não é apenas um número - é a diferença entre estagnação e crescimento profissional.
-                  O investimento em capacitação digital retorna rapidamente através de promoções, bonificações
-                  e novas oportunidades de trabalho que antes pareciam <strong className="text-white">inalcançáveis</strong>.
+                  Esse não é só um número - é a diferença entre ficar parado e crescer no trabalho.
+                  O dinheiro que você investe em aprender informática volta rápido através de promoções, bônus
+                  e novas chances de trabalho que antes pareciam <strong className="text-white">impossíveis</strong>.
                 </p>
               </div>
             </div>
@@ -195,14 +195,14 @@ const InformaticaWhyLearn2025 = () => {
               </div>
               <div className="mb-12 pl-4 sm:pl-16">
                 <p className="text-lg leading-relaxed text-zinc-300 mb-4">
-                  Com o domínio das ferramentas digitais, você pode trabalhar de qualquer lugar, ampliando suas
-                  oportunidades para além da região. A geografia não é mais uma limitação para sua carreira.
+                  Sabendo usar as ferramentas digitais, você pode trabalhar de qualquer lugar, aumentando suas
+                  chances para além da sua cidade. O lugar onde você mora não é mais um problema para sua carreira.
                 </p>
                 <p className="text-lg leading-relaxed text-zinc-300">
-                  Empresas <mark className="bg-blue-500/20 text-blue-400 px-1 rounded">globais</mark> estão contratando
-                  talentos brasileiros, oferecendo salários em moeda estrangeira e benefícios internacionais.
-                  A flexibilidade do trabalho remoto permite equilibrar vida pessoal e profissional de forma
-                  <strong className="text-white">nunca antes possível</strong>.
+                  Empresas <mark className="bg-blue-500/20 text-blue-400 px-1 rounded">de outros países</mark> estão contratando
+                  brasileiros talentosos, oferecendo salários em dólar ou euro e benefícios internacionais.
+                  A flexibilidade de trabalhar de casa permite equilibrar vida pessoal e trabalho de um jeito
+                  <strong className="text-white">que nunca foi possível antes</strong>.
                 </p>
               </div>
             </div>
@@ -219,15 +219,15 @@ const InformaticaWhyLearn2025 = () => {
               </div>
               <div className="mb-12 pl-4 sm:pl-16">
                 <p className="text-lg leading-relaxed text-zinc-300 mb-4">
-                  Crie seu próprio negócio online, ofereça serviços freelance ou desenvolva projetos paralelos
-                  para renda extra. O conhecimento em informática abre portas para o empreendedorismo digital,
-                  onde o investimento inicial é <strong className="text-white">mínimo</strong> e o potencial de
-                  crescimento é <strong className="text-white">ilimitado</strong>.
+                  Crie seu próprio negócio pela internet, ofereça serviços como freelancer ou desenvolva projetos extras
+                  para ganhar dinheiro. O conhecimento em informática abre portas para trabalhar por conta própria na internet,
+                  onde você precisa de <strong className="text-white">pouco dinheiro para começar</strong> e pode
+                  <strong className="text-white"> crescer muito</strong>.
                 </p>
                 <p className="text-lg leading-relaxed text-zinc-300">
-                  Desde consultoria em Excel até gestão de redes sociais, as possibilidades são
-                  <mark className="bg-purple-500/20 text-purple-400 px-1 rounded">vastas e crescentes</mark>.
-                  O mercado digital oferece oportunidades únicas de monetização que não existiam há poucos anos.
+                  Desde dar consultoria em Excel até gerenciar redes sociais, as possibilidades são
+                  <mark className="bg-purple-500/20 text-purple-400 px-1 rounded">muitas e estão crescendo</mark>.
+                  O mercado digital oferece oportunidades únicas de ganhar dinheiro que não existiam há poucos anos.
                 </p>
               </div>
             </div>
@@ -239,9 +239,9 @@ const InformaticaWhyLearn2025 = () => {
               <Alert className="border-blue-500/20 bg-blue-500/5 mb-8">
                 <Lightning className="h-5 w-5 text-blue-400" />
                 <AlertDescription className="text-lg text-zinc-300 leading-relaxed">
-                  <strong className="text-white">O momento de agir é agora.</strong> Cada dia sem essas
-                  habilidades é uma oportunidade perdida. O mercado não espera - evolua agora ou fique
-                  para trás. Nossa metodologia comprovada já transformou centenas de vidas em São José e região.
+                  <strong className="text-white">O momento de começar é agora.</strong> Cada dia sem essas
+                  habilidades é uma chance perdida. O mercado não espera - aprenda agora ou fique
+                  para trás. Nossa forma de ensinar já mudou a vida de centenas de pessoas em São José e região.
                 </AlertDescription>
               </Alert>
 

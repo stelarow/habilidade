@@ -10,21 +10,21 @@ const InformaticaMethodSection = () => {
       icon: Users,
       title: "Turmas Pequenas",
       subtitle: "Máximo 5 alunos",
-      description: "Ambiente intimista onde cada aluno recebe atenção individual",
+      description: "Ambiente acolhedor onde cada aluno recebe atenção pessoal",
       highlight: "5x mais atenção"
     },
     {
       icon: UserCheck,
       title: "Professor em Sala",
       subtitle: "100% presencial",
-      description: "Professor dedicado presente fisicamente em todas as aulas",
+      description: "Professor dedicado presente pessoalmente em todas as aulas",
       highlight: "Suporte imediato"
     },
     {
       icon: Target,
       title: "Acompanhamento Individual",
       subtitle: "Personalizado",
-      description: "Ritmo de aprendizado respeitado com feedback constante",
+      description: "Seu ritmo de aprendizado é respeitado com retorno constante do professor",
       highlight: "Seu ritmo"
     }
   ];
@@ -34,18 +34,18 @@ const InformaticaMethodSection = () => {
       title: "Escola Tradicional",
       items: [
         { text: "Turmas de 20-30 alunos", negative: true },
-        { text: "Professor dividido", negative: true },
-        { text: "Ritmo padronizado", negative: true },
+        { text: "Professor dividido entre muitos alunos", negative: true },
+        { text: "Ritmo igual para todos", negative: true },
         { text: "Dúvidas ficam para depois", negative: true }
       ]
     },
     habilidade: {
       title: "Escola Habilidade",
       items: [
-        { text: "Máximo 5 alunos por turma", negative: false },
-        { text: "Professor dedicado", negative: false },
+        { text: "No máximo 5 alunos por turma", negative: false },
+        { text: "Professor dedicado só para você", negative: false },
         { text: "Acompanhamento personalizado", negative: false },
-        { text: "Dúvidas resolvidas na hora", negative: false }
+        { text: "Dúvidas tiradas na hora", negative: false }
       ]
     }
   };
@@ -78,8 +78,8 @@ const InformaticaMethodSection = () => {
           </h2>
           
           <p className="text-xl text-zinc-300 max-w-3xl mx-auto">
-            Nosso método exclusivo com turmas reduzidas garante que cada aluno 
-            receba a atenção necessária para dominar completamente a informática
+            Nossa forma especial de ensinar com turmas pequenas garante que cada aluno
+            receba toda a atenção necessária para aprender bem informática
           </p>
         </div>
 
@@ -95,7 +95,7 @@ const InformaticaMethodSection = () => {
               </h3>
               <p className="text-zinc-300 text-lg mb-6 leading-relaxed">
                 Veja como nossos alunos aprendem fazendo. Cada exercício é acompanhado
-                de perto pelo professor, garantindo que você domine cada ferramenta.
+                de perto pelo professor, garantindo que você aprenda bem cada ferramenta.
               </p>
               <div className="space-y-4">
                 <div className="flex items-center gap-3">
@@ -209,10 +209,10 @@ const InformaticaMethodSection = () => {
         <div className="text-center mt-16">
           <div className="bg-gradient-to-r from-blue-500/10 via-transparent to-cyan-400/10 rounded-2xl p-8">
             <h3 className="text-2xl font-bold text-white mb-4">
-              Experimente a diferença de aprender em uma turma pequena
+              Sinta a diferença de aprender em uma turma pequena
             </h3>
             <p className="text-zinc-300 mb-6">
-              Junte-se aos 92% de alunos que avaliam nossa escola com 5 estrelas
+              Junte-se aos 92% de alunos que dão 5 estrelas para nossa escola
             </p>
             <div className="flex flex-col items-center gap-4">
               <Badge className="bg-yellow-500/20 text-yellow-400 border-yellow-500/30">

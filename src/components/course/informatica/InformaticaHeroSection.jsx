@@ -61,7 +61,7 @@ export const InformaticaHeroSection = () => {
           <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent font-semibold">
             Inteligência Artificial
           </span>{' '}
-          com metodologia 100% prática
+          com aulas totalmente práticas
         </p>
 
         {/* Badge de Preço */}
@@ -103,7 +103,7 @@ export const InformaticaHeroSection = () => {
 
         {/* Localidades Atendidas - Texto explícito para SEO */}
         <p className="text-sm sm:text-base text-zinc-400 text-center mb-8">
-          📍 Atendemos presencialmente:{' '}
+          📍 Aulas presenciais em:{' '}
           <span className="text-cyan-400 font-semibold">São José</span>,{' '}
           <span className="text-cyan-400 font-semibold">Florianópolis</span>,{' '}
           <span className="text-cyan-400 font-semibold">Palhoça</span> e{' '}
@@ -136,19 +136,19 @@ export const InformaticaHeroSection = () => {
             <svg className="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 24 24">
               <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
             </svg>
-            <span>Certificado Incluso</span>
+            <span>Certificado Incluído</span>
           </div>
           <div className="flex items-center gap-2">
             <svg className="w-5 h-5 text-blue-400" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
             </svg>
-            <span>Aulas 100% Presenciais em São José/SC</span>
+            <span>Todas as Aulas Presenciais em São José/SC</span>
           </div>
           <div className="flex items-center gap-2">
             <svg className="w-5 h-5 text-purple-400" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
             </svg>
-            <span>+1000 Alunos Aprovados</span>
+            <span>Mais de 1000 Alunos Formados</span>
           </div>
         </div>
       </div>

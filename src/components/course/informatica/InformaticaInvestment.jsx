@@ -13,7 +13,7 @@ const paymentOptions = [
     name: "Boleto Bancário",
     installments: "12x de R$ 299,90",
     total: "R$ 3.598,80",
-    description: "Total parcelado em 12x no boleto",
+    description: "Total dividido em 12x no boleto",
     highlight: false
   },
   {
@@ -29,7 +29,7 @@ const paymentOptions = [
     name: "À Vista",
     installments: "R$ 3.382,87",
     total: "R$ 3.598,80",
-    description: "6% de desconto à vista",
+    description: "6% de desconto pagando tudo de uma vez",
     highlight: false,
     discount: "6% OFF"
   }
@@ -37,13 +37,13 @@ const paymentOptions = [
 
 const included = [
   "184,5 horas de conteúdo completo",
-  "8 módulos do básico ao avançado",
-  "Material didático impresso incluso",
-  "Modalidades Presencial e Online",
+  "8 módulos do mais fácil ao mais difícil",
+  "Material didático impresso incluído",
+  "Formas Presencial e Online",
   "Certificado Nacional reconhecido",
-  "Suporte vitalício dos professores",
+  "Suporte para sempre dos professores",
   "Acesso a projetos práticos reais",
-  "Garantia incondicional de 7 dias"
+  "Garantia sem condições de 7 dias"
 ];
 
 export const InformaticaInvestment = () => {
@@ -65,7 +65,7 @@ export const InformaticaInvestment = () => {
 
             <p className="text-xl text-zinc-300 max-w-3xl mx-auto leading-relaxed">
               Um investimento que se paga em poucas semanas.
-              Profissionais com domínio em informática ganham em média 45% mais.
+              Pessoas que sabem bem informática ganham em média 45% mais.
             </p>
           </div>
         </ScrollReveal>
@@ -83,13 +83,13 @@ export const InformaticaInvestment = () => {
               </div>
 
               <h3 className="text-2xl font-bold text-white mb-2">Curso Completo de Informática</h3>
-              <p className="text-zinc-300">Do Windows 11 à Inteligência Artificial</p>
+              <p className="text-zinc-300">Do Windows 11 até a Inteligência Artificial</p>
             </div>
 
             <div className="p-8 md:p-12">
               {/* Opções de Pagamento */}
               <div className="mb-10">
-                <h4 className="text-2xl font-bold text-white text-center mb-8">Escolha sua forma de pagamento</h4>
+                <h4 className="text-2xl font-bold text-white text-center mb-8">Escolha como você quer pagar</h4>
                 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
                   {paymentOptions.map((option, index) => {
@@ -230,7 +230,7 @@ export const InformaticaInvestment = () => {
                     </div>
                   </div>
                   <CardTitle className="text-2xl text-red-400">SEM o Curso de Informática</CardTitle>
-                  <CardDescription className="text-zinc-400">Sua situação profissional atual</CardDescription>
+                  <CardDescription className="text-zinc-400">Sua situação no trabalho atual</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -246,11 +246,11 @@ export const InformaticaInvestment = () => {
                         </li>
                         <li className="flex items-start gap-3 text-zinc-300">
                           <div className="w-2 h-2 rounded-full bg-red-400 mt-2 flex-shrink-0"></div>
-                          Dependente de colegas para tarefas
+                          Precisa de colegas para fazer tarefas
                         </li>
                         <li className="flex items-start gap-3 text-zinc-300">
                           <div className="w-2 h-2 rounded-full bg-red-400 mt-2 flex-shrink-0"></div>
-                          Dificuldade com novas tecnologias
+                          Dificuldade com tecnologias novas
                         </li>
                         <li className="flex items-start gap-3 text-zinc-300">
                           <div className="w-2 h-2 rounded-full bg-red-400 mt-2 flex-shrink-0"></div>
@@ -300,9 +300,9 @@ export const InformaticaInvestment = () => {
                   <div className="text-center p-4 bg-red-500/10 rounded-lg border border-red-500/20">
                     <h5 className="text-xl font-bold text-red-400 mb-2">Custo Real</h5>
                     <p className="text-zinc-300">
-                      <strong className="text-red-400">Oportunidades perdidas</strong> e estagnação profissional
+                      <strong className="text-red-400">Chances perdidas</strong> e ficar parado no trabalho
                     </p>
-                    <p className="text-sm text-zinc-500 mt-2">Valor estimado: R$ 50.000+ em oportunidades não aproveitadas</p>
+                    <p className="text-sm text-zinc-500 mt-2">Valor estimado: R$ 50.000+ em chances que você não aproveitou</p>
                   </div>
                 </CardContent>
               </Card>
@@ -317,7 +317,7 @@ export const InformaticaInvestment = () => {
                     </div>
                   </div>
                   <CardTitle className="text-2xl text-green-400">COM o Curso de Informática</CardTitle>
-                  <CardDescription className="text-zinc-400">Seu potencial após a formação completa</CardDescription>
+                  <CardDescription className="text-zinc-400">Seu potencial depois de terminar o curso</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -329,15 +329,15 @@ export const InformaticaInvestment = () => {
                       <ul className="space-y-3">
                         <li className="flex items-start gap-3 text-zinc-300">
                           <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
-                          Expert em informática moderna
+                          Especialista em informática moderna
                         </li>
                         <li className="flex items-start gap-3 text-zinc-300">
                           <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
-                          Autonomia total no trabalho
+                          Total independência no trabalho
                         </li>
                         <li className="flex items-start gap-3 text-zinc-300">
                           <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
-                          Domínio de IA e tecnologias
+                          Conhecimento de IA e tecnologias
                         </li>
                         <li className="flex items-start gap-3 text-zinc-300">
                           <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
@@ -372,7 +372,7 @@ export const InformaticaInvestment = () => {
                         </div>
                         <div>
                           <div className="flex justify-between mb-2">
-                            <span className="text-sm text-zinc-400">Aumento Salarial Esperado</span>
+                            <span className="text-sm text-zinc-400">Aumento de Salário Esperado</span>
                             <Badge className="bg-green-500/20 text-green-300 border-green-500/30">
                               +45%
                             </Badge>
@@ -395,7 +395,7 @@ export const InformaticaInvestment = () => {
                       <Clock className="w-6 h-6 sm:w-8 sm:h-8 text-blue-400 mx-auto mb-1 sm:mb-2" />
                       <h6 className="text-sm sm:text-base font-bold text-blue-400">ROI</h6>
                       <p className="text-xl sm:text-2xl font-bold text-white">3-6</p>
-                      <p className="text-xs text-zinc-400">meses para se pagar</p>
+                      <p className="text-xs text-zinc-400">meses para você recuperar o investimento</p>
                     </div>
                     <div className="text-center p-3 sm:p-4 bg-purple-500/10 rounded-lg border border-purple-500/20">
                       <Star className="w-6 h-6 sm:w-8 sm:h-8 text-purple-400 mx-auto mb-1 sm:mb-2" />
@@ -408,12 +408,12 @@ export const InformaticaInvestment = () => {
                   <div className="text-center p-4 sm:p-6 bg-gradient-to-r from-green-500/10 to-emerald-400/10 rounded-xl border border-green-500/20">
                     <h5 className="text-lg sm:text-xl font-bold text-green-400 mb-2">Investimento Inteligente</h5>
                     <p className="text-sm sm:text-base text-zinc-300 mb-2">
-                      <strong className="text-green-400">O curso se paga sozinho</strong> com o primeiro aumento ou nova oportunidade!
+                      <strong className="text-green-400">O curso se paga sozinho</strong> com o primeiro aumento ou nova chance!
                     </p>
                     <div className="text-xl sm:text-2xl font-bold text-green-400">
                       A partir de R$ 299,90/mês
                     </div>
-                    <p className="text-sm text-zinc-500 mt-2">Valor total muito menor que o retorno obtido</p>
+                    <p className="text-sm text-zinc-500 mt-2">Valor total muito menor que o que você vai ganhar</p>
                   </div>
                 </CardContent>
               </Card>

@@ -25,25 +25,25 @@ const transformationBenefits = [
   {
     icon: TrendUp,
     title: "Aumento Salarial",
-    description: "Profissionais com domínio em informática ganham em média 45% mais",
+    description: "Pessoas que sabem bem informática ganham em média 45% mais",
     metric: "+45% salário"
   },
   {
     icon: Briefcase,
     title: "Novas Oportunidades",
-    description: "Acesso a vagas em todas as áreas que exigem conhecimento tecnológico",
+    description: "Acesso a vagas em todas as áreas que pedem conhecimento de tecnologia",
     metric: "100+ vagas/mês"
   },
   {
     icon: CurrencyDollar,
     title: "Autonomia Financeira",
-    description: "Crie projetos freelance usando Excel, Canva e IA para renda extra",
+    description: "Crie projetos freelance usando Excel, Canva e IA para ganhar dinheiro extra",
     metric: "R$ 2.000+ extra"
   },
   {
     icon: Users,
     title: "Reconhecimento",
-    description: "Torne-se a referência em tecnologia no seu ambiente de trabalho",
+    description: "Torne-se a pessoa que mais sabe de tecnologia no seu trabalho",
     metric: "Expert reconhecido"
   }
 ];
@@ -51,16 +51,16 @@ const transformationBenefits = [
 const beforeAfter = {
   before: [
     "Dificuldade com computadores básicos",
-    "Limitado ao papel e caneta",
-    "Dependência de outros para tarefas digitais",
+    "Preso ao papel e caneta",
+    "Precisa de ajuda de outros para tarefas no computador",
     "Perdido nos ambientes digitais",
-    "Medo de novas tecnologias"
+    "Medo de tecnologias novas"
   ],
   after: [
-    "Domínio completo de Windows 11",
+    "Conhecimento completo de Windows 11",
     "Excel avançado e automações",
     "Criação profissional no Canva",
-    "Uso estratégico de IA no trabalho",
+    "Uso inteligente de IA no trabalho",
     "Confiança total em tecnologia"
   ]
 };
@@ -70,7 +70,7 @@ const journeySteps = [
     step: 1,
     title: "Fundamentos",
     subtitle: "Domínio do Windows 11 e Office",
-    description: "Domine completamente o sistema operacional mais usado no mundo e os fundamentos do pacote Office",
+    description: "Aprenda bem o sistema operacional mais usado no mundo e os fundamentos do pacote Office",
     icon: Monitor,
     color: "from-blue-500 to-blue-600",
     bgColor: "from-blue-500/10 to-blue-600/10",
@@ -80,7 +80,7 @@ const journeySteps = [
     step: 2,
     title: "Produtividade",
     subtitle: "Excel avançado e automações",
-    description: "Crie planilhas profissionais, dashboards e automações que impressionam gestores",
+    description: "Crie planilhas profissionais, painéis e automações que impressionam chefes",
     icon: Table,
     color: "from-cyan-500 to-cyan-600",
     bgColor: "from-cyan-500/10 to-cyan-600/10",
@@ -90,7 +90,7 @@ const journeySteps = [
     step: 3,
     title: "Criatividade",
     subtitle: "Canva profissional e IA",
-    description: "Desenvolva habilidades de design e aprenda a usar IA para potencializar seu trabalho",
+    description: "Desenvolva habilidades de design e aprenda a usar IA para melhorar seu trabalho",
     icon: Palette,
     color: "from-purple-500 to-purple-600",
     bgColor: "from-purple-500/10 to-purple-600/10",
@@ -136,8 +136,8 @@ export const InformaticaTransformationPromise = () => {
             </h2>
 
             <p className="text-xl text-zinc-300 max-w-3xl mx-auto leading-relaxed">
-              Veja como você estará após dominar completamente a informática moderna.
-              Esta não é apenas uma promessa, é nossa garantia baseada em resultados reais.
+              Veja como você estará depois de aprender bem a informática moderna.
+              Essa não é só uma promessa, é nossa garantia baseada em resultados reais.
             </p>
           </div>
         </ScrollReveal>
@@ -152,7 +152,7 @@ export const InformaticaTransformationPromise = () => {
                 <Monitor className="w-6 h-6 md:w-8 md:h-8 text-white opacity-50" />
               </div>
               <h3 className="text-xl md:text-2xl font-bold text-red-400 mb-2">ANTES DO CURSO</h3>
-              <p className="text-sm md:text-base text-zinc-400">Limitações que você vai deixar para trás</p>
+              <p className="text-sm md:text-base text-zinc-400">Problemas que você vai deixar para trás</p>
             </div>
 
             <div className="space-y-2 md:space-y-4">
@@ -172,7 +172,7 @@ export const InformaticaTransformationPromise = () => {
                 <Brain className="w-6 h-6 md:w-8 md:h-8 text-white" />
               </div>
               <h3 className="text-xl md:text-2xl font-bold text-green-400 mb-2">DEPOIS DO CURSO</h3>
-              <p className="text-sm md:text-base text-zinc-400">Suas novas habilidades e oportunidades</p>
+              <p className="text-sm md:text-base text-zinc-400">Suas novas habilidades e chances</p>
             </div>
 
             <div className="space-y-2 md:space-y-4">
@@ -407,7 +407,7 @@ export const InformaticaTransformationPromise = () => {
               </h3>
 
               <p className="text-zinc-300 text-lg mb-6 leading-relaxed">
-                Na Escola Habilidade, cada conquista é celebrada. Reconhecemos o
+                Na Escola Habilidade, cada conquista é comemorada. Reconhecemos o
                 progresso dos nossos alunos e incentivamos a excelência em cada etapa.
               </p>
 
@@ -418,11 +418,11 @@ export const InformaticaTransformationPromise = () => {
                 </div>
                 <div className="flex items-center gap-3">
                   <CheckCircle className="w-5 h-5 text-green-400" />
-                  <span className="text-zinc-200">Reconhecimento por projetos de destaque</span>
+                  <span className="text-zinc-200">Reconhecimento por projetos que se destacam</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <CheckCircle className="w-5 h-5 text-green-400" />
-                  <span className="text-zinc-200">Networking com outros profissionais</span>
+                  <span className="text-zinc-200">Fazer contatos com outros profissionais</span>
                 </div>
               </div>
             </div>
@@ -439,7 +439,7 @@ export const InformaticaTransformationPromise = () => {
             </h3>
 
             <p className="text-zinc-300 text-sm sm:text-base md:text-lg mb-6 sm:mb-8 max-w-2xl mx-auto leading-relaxed">
-              Esta é sua oportunidade de sair da zona de conforto e dominar as tecnologias
+              Esta é sua chance de sair da zona de conforto e aprender as tecnologias
               que vão definir seu sucesso profissional nos próximos anos.
             </p>
 

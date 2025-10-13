@@ -22,7 +22,7 @@ const curriculum = [
   {
     id: 1,
     title: 'Windows 11',
-    description: 'Sistema operacional moderno e produtividade total',
+    description: 'Sistema operacional moderno para ser mais produtivo',
     duration: '18 horas',
     icon: Monitor,
     color: 'from-blue-500 to-blue-600',
@@ -44,7 +44,7 @@ const curriculum = [
   {
     id: 2,
     title: 'Word (Fundamental)',
-    description: 'Processamento de texto profissional',
+    description: 'Criação de textos profissionais',
     duration: '21 horas',
     icon: FileText,
     color: 'from-blue-600 to-blue-700',
@@ -68,7 +68,7 @@ const curriculum = [
   {
     id: 3,
     title: 'Excel (Fundamental)',
-    description: 'Planilhas eletrônicas para análise de dados',
+    description: 'Planilhas no computador para analisar informações',
     duration: '27 horas',
     icon: ChartBar,
     color: 'from-green-500 to-green-600',
@@ -96,7 +96,7 @@ const curriculum = [
   {
     id: 4,
     title: 'Excel (Avançado)',
-    description: 'Análise avançada de dados e automatização',
+    description: 'Análise avançada de dados e automação',
     duration: '19,5 horas',
     icon: ChartBar,
     color: 'from-green-600 to-green-700',
@@ -119,7 +119,7 @@ const curriculum = [
   {
     id: 5,
     title: 'PowerPoint (Fundamental)',
-    description: 'Apresentações profissionais e impactantes',
+    description: 'Apresentações profissionais que impressionam',
     duration: '18 horas',
     icon: Presentation,
     color: 'from-orange-500 to-orange-600',
@@ -141,7 +141,7 @@ const curriculum = [
   {
     id: 6,
     title: 'Ambientes Digitais',
-    description: 'Navegação e ferramentas da internet moderna',
+    description: 'Como usar a internet e suas ferramentas',
     duration: '24 horas',
     icon: Globe,
     color: 'from-cyan-500 to-cyan-600',
@@ -167,7 +167,7 @@ const curriculum = [
   {
     id: 7,
     title: 'Canva',
-    description: 'Design gráfico acessível para todos',
+    description: 'Criação de design gráfico fácil para todos',
     duration: '18 horas',
     icon: Palette,
     color: 'from-purple-500 to-purple-600',
@@ -189,7 +189,7 @@ const curriculum = [
   {
     id: 8,
     title: 'Inteligência Artificial (Informática)',
-    description: 'IA aplicada à produtividade e trabalho',
+    description: 'IA aplicada para ser mais produtivo no trabalho',
     duration: '24 horas',
     icon: Brain,
     color: 'from-pink-500 to-pink-600',
@@ -247,7 +247,7 @@ export const InformaticaCurriculum = () => {
           <ScrollReveal animation="fade-up" delay={0.2}>
             <p className="text-xl text-zinc-300 max-w-3xl mx-auto leading-relaxed mb-8">
               8 módulos completos, {totalLessons} aulas práticas, {totalHours.toFixed(1)} horas de conteúdo.
-              Do básico ao avançado em informática moderna.
+              Do mais fácil ao mais difícil em informática moderna.
             </p>
           </ScrollReveal>
 
@@ -389,12 +389,12 @@ export const InformaticaCurriculum = () => {
           <div className="text-center mt-16">
             <div className="bg-gradient-to-r from-blue-500/20 to-cyan-400/20 backdrop-blur-sm border border-blue-500/30 rounded-2xl p-8 max-w-3xl mx-auto">
             <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
-              Pronto para dominar tudo isso?
+              Pronto para aprender tudo isso?
             </h3>
-            
+
             <p className="text-zinc-300 text-lg mb-6">
-              Metodologia comprovada, material incluso e suporte vitalício. 
-              Sua jornada de transformação digital começa aqui.
+              Forma de ensinar comprovada, material incluído e suporte para sempre.
+              Sua jornada de mudança digital começa aqui.
             </p>
             
             <button

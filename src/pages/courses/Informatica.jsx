@@ -434,14 +434,14 @@ const Informatica = () => {
             <h2 className="text-3xl md:text-6xl font-bold mb-8">
               <span className="bg-gradient-to-r from-blue-400 via-blue-600 to-cyan-400 bg-clip-text text-transparent">PRONTO PARA</span>
               <br />
-              <span className="text-white">DOMINAR A</span>
+              <span className="text-white">APRENDER</span>
               <br />
               <span className="bg-gradient-to-r from-blue-400 via-blue-600 to-cyan-400 bg-clip-text text-transparent">INFORMÁTICA?</span>
             </h2>
-            
+
             <p className="text-xl text-zinc-300 mb-12 max-w-2xl mx-auto">
               Junte-se a mais de 150 alunos que já mudaram de vida
-              com nosso método presencial comprovado.
+              com nossa forma de ensinar presencial comprovada.
             </p>
 
             <div className="space-y-6">
@@ -460,11 +460,11 @@ const Informatica = () => {
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-green-400" />
-                  <span>Material Incluso</span>
+                  <span>Material Incluído</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-green-400" />
-                  <span>Suporte Vitalício</span>
+                  <span>Suporte Para Sempre</span>
                 </div>
               </div>
             </div>
