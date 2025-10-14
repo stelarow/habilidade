@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import SEOHead from '../components/shared/SEOHead';
 import { MapPin, Phone, WhatsappLogo, Clock, GraduationCap } from '@phosphor-icons/react';
+import { SaoJoseFAQ } from '../components/course/SaoJoseFAQ';
 
 const CursosSaoJose = () => {
   // Descrições dos cursos para schemas
@@ -30,47 +31,103 @@ const CursosSaoJose = () => {
     { nome: 'Inteligência Artificial', slug: 'inteligencia-artificial', destaque: false },
   ];
 
-  const schemaData = {
-    '@context': 'https://schema.org',
-    '@type': 'EducationalOrganization',
-    name: 'Escola Habilidade - São José SC',
-    description: 'Escola de cursos profissionalizantes em São José SC. Informática, SketchUp, AutoCAD, Revit, Marketing Digital.',
-    url: 'https://www.escolahabilidade.com/cursos-sao-jose',
-    areaServed: {
-      '@type': 'City',
-      name: 'São José',
-      '@id': 'https://www.wikidata.org/wiki/Q986378'
+  const schemaData = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'EducationalOrganization',
+      name: 'Escola Habilidade - São José SC',
+      description: 'Escola de cursos profissionalizantes em São José SC. Informática, SketchUp, AutoCAD, Revit, Marketing Digital.',
+      url: 'https://www.escolahabilidade.com/cursos-sao-jose',
+      areaServed: {
+        '@type': 'City',
+        name: 'São José',
+        '@id': 'https://www.wikidata.org/wiki/Q986378'
+      },
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'São José',
+        addressRegion: 'SC',
+        addressCountry: 'BR',
+        postalCode: '88102-280',
+        streetAddress: 'Rua Caetano José Ferreira, 426 - Sala 5 - Kobrasol'
+      },
+      geo: {
+        '@type': 'GeoCoordinates',
+        latitude: '-27.5969',
+        longitude: '-48.6356'
+      },
+      telephone: '+55 48 98855-9491',
+      openingHours: 'Mo-Tu 08:00-20:00, We 08:00-22:00, Th 08:00-20:00, Fr 08:00-17:30, Sa 08:00-12:00',
+      hasOfferCatalog: {
+        '@type': 'OfferCatalog',
+        name: 'Cursos Disponíveis em São José SC',
+        itemListElement: cursos.map(curso => ({
+          '@type': 'Course',
+          name: curso.nome,
+          description: courseDescriptions[curso.slug] || 'Curso profissionalizante com certificado reconhecido',
+          url: `https://www.escolahabilidade.com/cursos/${curso.slug}`,
+          provider: {
+            '@type': 'EducationalOrganization',
+            name: 'Escola Habilidade'
+          }
+        }))
+      }
     },
-    address: {
-      '@type': 'PostalAddress',
-      addressLocality: 'São José',
-      addressRegion: 'SC',
-      addressCountry: 'BR',
-      postalCode: '88102-280',
-      streetAddress: 'Rua Caetano José Ferreira, 426 - Sala 5 - Kobrasol'
-    },
-    geo: {
-      '@type': 'GeoCoordinates',
-      latitude: '-27.5969',
-      longitude: '-48.6356'
-    },
-    telephone: '+55 48 98855-9491',
-    openingHours: 'Mo-Tu 08:00-20:00, We 08:00-22:00, Th 08:00-20:00, Fr 08:00-17:30, Sa 08:00-12:00',
-    hasOfferCatalog: {
-      '@type': 'OfferCatalog',
-      name: 'Cursos Disponíveis em São José SC',
-      itemListElement: cursos.map(curso => ({
-        '@type': 'Course',
-        name: curso.nome,
-        description: courseDescriptions[curso.slug] || 'Curso profissionalizante com certificado reconhecido',
-        url: `https://www.escolahabilidade.com/cursos/${curso.slug}`,
-        provider: {
-          '@type': 'EducationalOrganization',
-          name: 'Escola Habilidade'
+    {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: [
+        {
+          '@type': 'Question',
+          name: 'Onde fica a Escola Habilidade em São José?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Fica na Rua Caetano José Ferreira, 426 - Sala 5, no bairro Kobrasol em São José SC. É fácil de chegar! Fica perto da BR-101 e da SC-281, com ônibus que param perto e estacionamento na rua.'
+          }
+        },
+        {
+          '@type': 'Question',
+          name: 'Qual o melhor curso em São José SC?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'A Escola Habilidade tem os melhores cursos profissionalizantes de São José! Oferecemos Informática, SketchUp, AutoCAD, Revit e Marketing Digital com turmas pequenas (até 4 alunos) e certificado nacional. Nota 4.9 estrelas e mais de 200 alunos formados.'
+          }
+        },
+        {
+          '@type': 'Question',
+          name: 'Tem curso de SketchUp em São José SC?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Sim! O curso de SketchUp fica aqui no Kobrasol, São José. São 56 horas de aula presencial com turmas de até 4 alunos. Inclui SketchUp e Enscape (pra fazer imagens realistas). Certificado nacional e apostila de 360 páginas.'
+          }
+        },
+        {
+          '@type': 'Question',
+          name: 'Quais os horários da Escola Habilidade?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Funcionamos de segunda a sábado! Segunda, terça e quinta das 8h às 20h. Quarta das 8h às 22h (pra quem trabalha o dia todo). Sexta das 8h às 17h30. Sábado das 8h às 12h. Temos turmas de manhã, tarde e noite.'
+          }
+        },
+        {
+          '@type': 'Question',
+          name: 'A Escola Habilidade é boa?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Sim! Temos nota 5 estrelas e mais de 200 avaliações positivas. Os alunos elogiam as turmas pequenas (só 4 pessoas), professor certificado pela Trimble, projetos reais em sala e discussões sobre casos do dia a dia. Estamos há mais de 10 anos em São José formando profissionais.'
+          }
+        },
+        {
+          '@type': 'Question',
+          name: 'Quais cursos a Escola Habilidade oferece em São José?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Oferecemos vários cursos profissionalizantes: Informática Completa, SketchUp com Enscape, AutoCAD 2D e 3D, Revit, Marketing Digital, Programação, Design Gráfico, Business Intelligence e Inteligência Artificial. Todos com certificado nacional.'
+          }
         }
-      }))
+      ]
     }
-  };
+  ];
 
   return (
     <>
@@ -263,6 +320,11 @@ const CursosSaoJose = () => {
                   </Link>
                 ))}
               </div>
+            </div>
+
+            {/* FAQ Section */}
+            <div className="mb-12">
+              <SaoJoseFAQ />
             </div>
 
             {/* CTA Final */}

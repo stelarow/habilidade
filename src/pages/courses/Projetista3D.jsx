@@ -284,6 +284,80 @@ const Projetista3DNew = () => {
             }
           ])}
         </script>
+
+        {/* FAQPage Schema */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "Qual o valor de um curso de SketchUp?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "O curso de SketchUp na Escola Habilidade custa R$ 2.793,00 e pode ser parcelado em 7x de R$ 399 no boleto (tipo mensalidade). Se pagar à vista, fica R$ 2.625,42 (6% de desconto). O curso tem 56 horas de aula e inclui tudo: apostila de 360 páginas, certificado nacional, acesso aos programas e material completo."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Quanto tempo dura um curso de SketchUp?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "O curso tem 56 horas de aula presencial divididas em 28 encontros de 2 horas cada. Dá pra fazer em 2 a 3 meses dependendo da turma que você escolher. É presencial aqui em São José SC, no bairro Kobrasol."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "É difícil aprender SketchUp?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Não! O SketchUp é considerado o programa 3D mais fácil de aprender. Em poucas aulas você já consegue fazer projetos simples. Nosso curso começa do zero, não precisa saber nada antes. Com turmas de 4 alunos, o professor te ajuda sempre que precisar."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Qual PC roda SketchUp?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Precisa de um computador com 8GB de RAM no mínimo (16GB é melhor), processador Intel i5 ou AMD Ryzen 5 (ou superior) e placa de vídeo dedicada de 2GB. Funciona no Windows ou Mac. Notebook também serve se tiver essas configurações."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Quanto ganha quem trabalha com SketchUp?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Quem tá começando como projetista 3D ganha entre R$ 2.500 e R$ 4.000 por mês. Com experiência, pode ganhar de R$ 6.000 a R$ 10.000. Trabalhando como freelancer dá pra faturar R$ 8.000 a R$ 15.000 por mês."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Existe um curso de SketchUp certificado em Florianópolis?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Sim! A Escola Habilidade fica em São José (do lado de Florianópolis) e dá certificado nacional de 56 horas. O certificado é reconhecido em todo Brasil e aceito por empresas da região. Já formamos mais de 200 alunos."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Quais são as avaliações sobre a Escola Habilidade em São José?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Temos nota 5 estrelas com mais de 200 avaliações! Os alunos elogiam as turmas pequenas (só 4 alunos), professor certificado pela Trimble, projetos reais em sala de aula e discussões sobre casos do dia a dia. Você pode ver os depoimentos no Google e no nosso site."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Qual é o melhor SketchUp ou AutoCAD?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Depende do trabalho! AutoCAD é melhor pra desenho técnico 2D (plantas baixas). SketchUp é melhor pra modelagem 3D (visualizar o projeto em três dimensões). O ideal é saber os dois. No nosso curso você aprende SketchUp completo e também uma introdução ao AutoCAD."
+                }
+              }
+            ]
+          })}
+        </script>
       </Helmet>
 
       {/* Hero Section */}
