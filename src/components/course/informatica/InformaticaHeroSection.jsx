@@ -28,7 +28,7 @@ export const InformaticaHeroSection = () => {
       <div className="absolute bottom-1/4 right-2 sm:right-1/4 w-32 h-32 sm:w-56 md:w-64 lg:w-80 sm:h-56 md:h-64 lg:h-80 bg-cyan-400/20 rounded-full blur-2xl md:blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
 
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 text-center">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 pt-20 sm:pt-16 md:pt-0 text-center">
         {/* Título Principal - Renderização imediata para LCP */}
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-8 leading-tight">
           Curso Completo de{' '}
