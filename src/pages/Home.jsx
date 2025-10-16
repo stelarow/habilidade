@@ -5,6 +5,7 @@ import HowItWorksSimple from '../components/HowItWorksSimple';
 import Reviews from '../components/Reviews';
 import TrustedCompanies from '../components/TrustedCompanies';
 import LatestBlogSection from '../components/LatestBlogSection';
+import LocationSection from '../components/LocationSection';
 import ContactForm from '../components/ContactForm';
 import FAQ from '../components/FAQ';
 import SEOHead from '../components/shared/SEOHead';
@@ -38,8 +39,8 @@ function Home() {
     },
     geo: {
       '@type': 'GeoCoordinates',
-      latitude: '-27.5969',
-      longitude: '-48.6356'
+      latitude: '-27.5923906',
+      longitude: '-48.6149943'
     },
     telephone: '+55 48 98855-9491',
     openingHoursSpecification: [
@@ -122,7 +123,11 @@ function Home() {
     sameAs: [
       'https://www.instagram.com/habilidade.escola/',
       'https://www.facebook.com/p/Habilidadeescola-61561880682538/'
-    ]
+    ],
+    hasMap: {
+      '@type': 'Map',
+      url: 'https://www.google.com/maps/place/Escola+Habilidade/@-27.5923906,-48.6149943,17z/data=!3m1!4b1!4m6!3m5!1s0x9527492f4454ef8d:0xd345f5e77312fdec!8m2!3d-27.5923906!4d-48.6149943!16s%2Fg%2F11w49mrz34'
+    }
   };
 
   // Schema 2: ItemList - Lista de 9 Cursos
@@ -357,6 +362,7 @@ function Home() {
       <TrustedCompanies variant="home" />
       <LatestBlogSection />
       <ContactForm />
+      <LocationSection />
       <FAQ />
     </>
   );
