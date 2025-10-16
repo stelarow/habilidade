@@ -1,15 +1,24 @@
-import { 
-  Trophy, 
-  UserCheck, 
-  Buildings, 
-  Eye, 
+import {
+  Trophy,
+  UserCheck,
+  Buildings,
+  Eye,
   PlayCircle,
-  ArrowRight
+  ArrowRight,
+  CaretLeft,
+  CaretRight
 } from '@phosphor-icons/react';
 import { useState } from 'react';
 import VideoPlayer from './VideoPlayer';
 import ProjetistaGalleryWithLightbox from './ProjetistaGalleryWithLightbox';
 import MediaModal from '../../shared/MediaModal';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext
+} from '../../ui/carousel';
 
 const successCases = [
   {
@@ -87,104 +96,14 @@ const successCases = [
   }
 ];
 
-// Novo layout compacto - vídeo principal + 2 imagens à direita + demais embaixo
-const renderCompactLayout = (projects, caseId, onMediaClick) => {
-  const videoItem = projects.find(item => item.type === 'video');
-  const imageItems = projects.filter(item => item.type === 'image');
-  const topImages = imageItems.slice(0, 2); // Primeiras 2 imagens
-  const bottomItems = imageItems.slice(2); // Restante das imagens
-
-  return (
-    <div className="space-y-4">
-      {/* Linha Superior: Vídeo (2/3) + 2 Imagens (1/3) */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        {/* Vídeo Principal - Ocupa 2 colunas */}
-        {videoItem && (
-          <div className="lg:col-span-2 cursor-pointer" onClick={() => onMediaClick(projects.indexOf(videoItem))}>
-            <VideoPlayer
-              src={videoItem.src}
-              poster={videoItem.poster}
-              title={videoItem.title}
-              muted={true}
-              autoPlay={false}
-              controls={true}
-              className="hover:scale-[1.02] transition-transform duration-300"
-              aspectRatio="aspect-video"
-            />
-          </div>
-        )}
-
-        {/* 2 Imagens na Direita - 1 coluna, empilhadas */}
-        <div className="space-y-4">
-          {topImages.map((item, index) => (
-            <div 
-              key={`${caseId}-top-${index}`} 
-              className="group relative aspect-[4/3] bg-zinc-800 rounded-lg overflow-hidden cursor-pointer hover:scale-[1.02] transition-transform duration-300"
-              onClick={() => onMediaClick(projects.indexOf(item))}
-            >
-              <img
-                src={item.src}
-                alt={item.title}
-                title={`${item.title} - Caso de sucesso em Projetista 3D - SketchUp e Enscape`}
-                className="w-full h-full object-cover"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              {/* Título da imagem */}
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <p className="text-white text-sm font-medium line-clamp-1">
-                  {item.title}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Linha Inferior: Itens Restantes em Grid */}
-      {bottomItems.length > 0 && (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {bottomItems.map((item, index) => (
-            <div 
-              key={`${caseId}-bottom-${index}`} 
-              className="group relative hover:scale-[1.02] transition-transform duration-300 cursor-pointer"
-              onClick={() => onMediaClick(projects.indexOf(item))}
-            >
-              {item.type === 'video' ? (
-                <VideoPlayer
-                  src={item.src}
-                  poster={item.poster}
-                  title={item.title}
-                  muted={true}
-                  autoPlay={false}
-                  controls={true}
-                  aspectRatio="aspect-[4/3]"
-                />
-              ) : (
-                <div className="relative aspect-[4/3] bg-zinc-800 rounded-lg overflow-hidden">
-                  <img
-                    src={item.src}
-                    alt={item.title}
-                    title={`${item.title} - Projeto profissional desenvolvido no curso Projetista 3D`}
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  {/* Título */}
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <p className="text-white text-xs font-medium line-clamp-1">
-                      {item.title}
-                    </p>
-                  </div>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-};
+// Componente de Badge para contador de projetos
+const ProjectCounter = ({ current, total, accentColor }) => (
+  <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-purple-500/20 to-cyan-400/20 border border-purple-400/30`}>
+    <span className="text-xs font-semibold text-white">
+      {current} / {total} projetos
+    </span>
+  </div>
+);
 
 export const ProjetistaSuccessCases = () => {
   const [modalState, setModalState] = useState({
@@ -192,6 +111,14 @@ export const ProjetistaSuccessCases = () => {
     items: [],
     currentIndex: 0
   });
+
+  // Estado para rastrear índice atual de cada carousel
+  const [carouselIndexes, setCarouselIndexes] = useState(
+    successCases.reduce((acc, case_) => {
+      acc[case_.id] = 0;
+      return acc;
+    }, {})
+  );
 
   const handleMediaClick = (caseProjects, itemIndex) => {
     setModalState({
@@ -233,9 +160,11 @@ export const ProjetistaSuccessCases = () => {
         <div className="grid lg:grid-cols-2 gap-8 mb-12">
           {successCases.map((case_, index) => {
             const IconComponent = case_.icon;
+            const currentIndex = carouselIndexes[case_.id] || 0;
+
             return (
-              <div 
-                key={case_.id} 
+              <div
+                key={case_.id}
                 className="relative rounded-2xl bg-zinc-800/50 backdrop-blur p-6 border border-zinc-700/50 transition-all duration-300 hover:border-purple-500/50 hover:shadow-2xl hover:shadow-purple-500/10 group animate-fade-in flex flex-col"
                 style={{ animationDelay: `${index * 150}ms` }}
               >
@@ -244,7 +173,7 @@ export const ProjetistaSuccessCases = () => {
                   <div className={`p-3 rounded-xl ${case_.bgColor} border ${case_.borderColor}`}>
                     <IconComponent className={`w-6 h-6 ${case_.color}`} />
                   </div>
-                  
+
                   <div className="flex-1">
                     <h3 className="text-xl font-bold text-white mb-1">
                       {case_.name}
@@ -258,9 +187,102 @@ export const ProjetistaSuccessCases = () => {
                   </div>
                 </div>
 
-                {/* Projects Gallery with Compact Layout */}
-                <div className="mb-6 flex-1">
-                  {renderCompactLayout(case_.projects, case_.id, (itemIndex) => handleMediaClick(case_.projects, itemIndex))}
+                {/* Carousel de Projetos */}
+                <div className="mb-4 flex-1 relative">
+                  <Carousel
+                    className="w-full"
+                    opts={{ loop: true }}
+                    setApi={(api) => {
+                      if (api) {
+                        api.on('select', () => {
+                          setCarouselIndexes(prev => ({
+                            ...prev,
+                            [case_.id]: api.selectedScrollSnap()
+                          }));
+                        });
+                      }
+                    }}
+                  >
+                    <CarouselContent>
+                      {case_.projects.map((project, projectIndex) => (
+                        <CarouselItem key={projectIndex}>
+                          <div
+                            className="cursor-pointer group/item"
+                            onClick={() => handleMediaClick(case_.projects, projectIndex)}
+                          >
+                            {project.type === 'video' ? (
+                              <div className="relative aspect-video bg-zinc-900 rounded-lg overflow-hidden">
+                                <VideoPlayer
+                                  src={project.src}
+                                  poster={project.poster}
+                                  title={project.title}
+                                  muted={true}
+                                  autoPlay={false}
+                                  controls={false}
+                                  className="hover:scale-105 transition-transform duration-300"
+                                  aspectRatio="aspect-video"
+                                />
+                                {/* Overlay com ícone de play */}
+                                <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 group-hover/item:opacity-100 transition-opacity duration-300">
+                                  <PlayCircle className="w-16 h-16 text-white drop-shadow-lg" weight="fill" />
+                                </div>
+                              </div>
+                            ) : (
+                              <div className="relative aspect-video bg-zinc-900 rounded-lg overflow-hidden">
+                                <img
+                                  src={project.src}
+                                  alt={project.title}
+                                  title={`${project.title} - Projeto profissional desenvolvido no curso Projetista 3D`}
+                                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                                  loading="lazy"
+                                />
+                                {/* Overlay hover */}
+                                <div className="absolute inset-0 bg-black/20 opacity-0 group-hover/item:opacity-100 transition-opacity duration-300" />
+                              </div>
+                            )}
+
+                            {/* Título do projeto */}
+                            <div className="mt-3 px-1">
+                              <p className="text-sm font-medium text-white line-clamp-1">
+                                {project.title}
+                              </p>
+                            </div>
+                          </div>
+                        </CarouselItem>
+                      ))}
+                    </CarouselContent>
+
+                    {/* Setas customizadas com gradiente */}
+                    <CarouselPrevious
+                      className="left-2 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 border-none text-white shadow-lg"
+                    />
+                    <CarouselNext
+                      className="right-2 bg-gradient-to-r from-cyan-400 to-cyan-500 hover:from-cyan-500 hover:to-cyan-600 border-none text-white shadow-lg"
+                    />
+                  </Carousel>
+                </div>
+
+                {/* Badge contador + Dots */}
+                <div className="flex items-center justify-between mt-4">
+                  <ProjectCounter
+                    current={currentIndex + 1}
+                    total={case_.projects.length}
+                    accentColor={case_.color}
+                  />
+
+                  {/* Dots indicadores */}
+                  <div className="flex gap-1.5">
+                    {case_.projects.map((_, dotIndex) => (
+                      <div
+                        key={dotIndex}
+                        className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                          dotIndex === currentIndex
+                            ? `${case_.color.replace('text-', 'bg-')} w-6`
+                            : 'bg-zinc-600'
+                        }`}
+                      />
+                    ))}
+                  </div>
                 </div>
 
               </div>
