@@ -137,7 +137,7 @@ export const ProjetistaSuccessCases = () => {
   };
 
   return (
-    <section className="px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+    <section className="px-4 py-16 sm:px-6 lg:px-8 lg:py-20 overflow-x-hidden">
       <div className="container mx-auto max-w-7xl">
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 mb-4 px-4 py-2 bg-purple-500/10 border border-purple-400/20 rounded-full text-sm font-medium text-purple-400">
@@ -165,7 +165,7 @@ export const ProjetistaSuccessCases = () => {
             return (
               <div
                 key={case_.id}
-                className="relative rounded-2xl bg-zinc-800/50 backdrop-blur p-6 border border-zinc-700/50 transition-all duration-300 hover:border-purple-500/50 hover:shadow-2xl hover:shadow-purple-500/10 group animate-fade-in flex flex-col"
+                className="relative rounded-2xl bg-zinc-800/50 backdrop-blur p-6 border border-zinc-700/50 transition-all duration-300 hover:border-purple-500/50 hover:shadow-2xl hover:shadow-purple-500/10 group animate-fade-in flex flex-col overflow-hidden"
                 style={{ animationDelay: `${index * 150}ms` }}
               >
                 {/* Header */}
@@ -188,10 +188,14 @@ export const ProjetistaSuccessCases = () => {
                 </div>
 
                 {/* Carousel de Projetos */}
-                <div className="mb-4 flex-1 relative">
+                <div className="mb-4 flex-1 relative overflow-hidden w-full max-w-full">
                   <Carousel
-                    className="w-full"
-                    opts={{ loop: true }}
+                    className="w-full max-w-full"
+                    opts={{
+                      loop: true,
+                      align: 'start',
+                      containScroll: 'trimSnaps'
+                    }}
                     setApi={(api) => {
                       if (api) {
                         api.on('select', () => {
@@ -203,15 +207,16 @@ export const ProjetistaSuccessCases = () => {
                       }
                     }}
                   >
-                    <CarouselContent>
+                    <CarouselContent className="!ml-0 w-full max-w-full">
                       {case_.projects.map((project, projectIndex) => (
-                        <CarouselItem key={projectIndex}>
-                          <div
-                            className="cursor-pointer group/item"
-                            onClick={() => handleMediaClick(case_.projects, projectIndex)}
-                          >
-                            {project.type === 'video' ? (
-                              <div className="relative aspect-video bg-zinc-900 rounded-lg overflow-hidden">
+                        <CarouselItem key={projectIndex} className="!pl-0 w-full max-w-full">
+                          <div className="w-full max-w-full px-0">
+                            <div
+                              className="w-full max-w-full cursor-pointer group/item"
+                              onClick={() => handleMediaClick(case_.projects, projectIndex)}
+                            >
+                              {project.type === 'video' ? (
+                                <div className="relative w-full aspect-video bg-zinc-900 rounded-lg overflow-hidden">
                                 <VideoPlayer
                                   src={project.src}
                                   poster={project.poster}
@@ -228,7 +233,7 @@ export const ProjetistaSuccessCases = () => {
                                 </div>
                               </div>
                             ) : (
-                              <div className="relative aspect-video bg-zinc-900 rounded-lg overflow-hidden">
+                              <div className="relative w-full aspect-video bg-zinc-900 rounded-lg overflow-hidden">
                                 <img
                                   src={project.src}
                                   alt={project.title}
@@ -246,6 +251,7 @@ export const ProjetistaSuccessCases = () => {
                               <p className="text-sm font-medium text-white line-clamp-1">
                                 {project.title}
                               </p>
+                            </div>
                             </div>
                           </div>
                         </CarouselItem>
