@@ -111,6 +111,11 @@ export const routes = [
           return { Component, loader };
         }
       },
+      // Página do evento DevStart
+      {
+        path: 'devstart',
+        lazy: () => import('./pages/DevStart')
+      },
       {
         path: 'contato',
         lazy: () => import('./pages/Contact')
