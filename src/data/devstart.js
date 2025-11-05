@@ -40,10 +40,6 @@ export const devstartData = {
       url: "https://www.instagram.com/habilidade.escola/",
       handle: "@habilidade.escola"
     },
-    facebook: {
-      url: "https://www.facebook.com/p/Habilidadeescola-61561880682538/",
-      name: "Habilidadeescola"
-    },
   },
 
   // Badges do Hero

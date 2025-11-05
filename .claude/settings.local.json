@@ -90,8 +90,18 @@
       "Bash(curl -s \"https://www.escolahabilidade.com/\")",
       "Bash(curl -s \"https://www.escolahabilidade.com/cursos/programacao\")",
       "Bash(cat:*)",
-      "Bash(curl -s \"https://www.escolahabilidade.com/cursos/excel-avancado-business-intelligence\")"
+      "Bash(curl -s \"https://www.escolahabilidade.com/cursos/excel-avancado-business-intelligence\")",
+      "Bash(npx shadcn@latest list:*)",
+      "mcp__shadcn__get_project_registries",
+      "mcp__shadcn__list_items_in_registries",
+      "mcp__shadcn__search_items_in_registries",
+      "mcp__shadcn__view_items_in_registries",
+      "mcp__serena__write_memory"
     ],
     "deny": []
-  }
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "shadcn"
+  ]
 }

@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Helmet } from '@dr.pogodin/react-helmet';
 import { Toaster } from '@/components/ui/sonner';
 import { motion } from 'framer-motion';
@@ -13,13 +12,12 @@ import MissionTimeline from '@/components/devstart/MissionTimeline';
 import CodeSimulator from '@/components/devstart/CodeSimulator';
 import DevStartFAQ from '@/components/devstart/DevStartFAQ';
 import CTAFinal from '@/components/devstart/CTAFinal';
-import InscriptionDialog from '@/components/devstart/InscriptionDialog';
+import TypeformInscription from '@/components/devstart/TypeformInscription';
 
 // Data
 import { devstartData } from '@/data/devstart';
 
 const DevStart = () => {
-  const [isInscriptionOpen, setIsInscriptionOpen] = useState(false);
   const { seo, afterDevStart } = devstartData;
 
   return (
@@ -87,7 +85,7 @@ const DevStart = () => {
       {/* Main Page Content */}
       <div className="min-h-screen bg-gray-950">
         {/* Hero Section */}
-        <HeroSection onOpenInscription={() => setIsInscriptionOpen(true)} />
+        <HeroSection />
 
         {/* Dual Audience Cards */}
         <DualAudienceCards />
@@ -171,13 +169,10 @@ const DevStart = () => {
         <DevStartFAQ />
 
         {/* Final CTA */}
-        <CTAFinal onOpenInscription={() => setIsInscriptionOpen(true)} />
+        <CTAFinal />
 
-        {/* Inscription Dialog */}
-        <InscriptionDialog
-          open={isInscriptionOpen}
-          onOpenChange={setIsInscriptionOpen}
-        />
+        {/* Typeform-style Inscription Form */}
+        <TypeformInscription />
       </div>
     </>
   );

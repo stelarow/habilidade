@@ -5,7 +5,14 @@ import { Button } from '@/components/ui/button';
 import { finalCTA } from '@/data/devstart';
 import { Warning, Siren, Sparkle, GameController, Trophy, Rocket, User } from '@phosphor-icons/react';
 
-const CTAFinal = ({ onOpenInscription }) => {
+const CTAFinal = () => {
+  // Função para scroll suave até o formulário
+  const scrollToInscription = () => {
+    const inscriptionElement = document.getElementById('inscricao');
+    if (inscriptionElement) {
+      inscriptionElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
   return (
     <section className="py-20 px-4 bg-gradient-to-br from-red-950 via-orange-950 to-red-900 relative overflow-hidden">
       {/* Animated Background Pattern */}
@@ -57,8 +64,8 @@ const CTAFinal = ({ onOpenInscription }) => {
               ease: "easeInOut",
             }}
           >
-            <Badge className="bg-yellow-500 text-black text-lg px-6 py-3 font-black shadow-2xl border-4 border-yellow-300 flex items-center gap-2">
-              <Warning size={24} weight="fill" />
+            <Badge className="bg-yellow-500 text-black text-sm md:text-lg px-4 md:px-6 py-2 md:py-3 font-black shadow-2xl border-2 md:border-4 border-yellow-300 flex items-center gap-1.5 md:gap-2">
+              <Warning size={20} weight="fill" className="md:w-6 md:h-6" />
               {finalCTA.urgency}
             </Badge>
           </motion.div>
@@ -108,8 +115,8 @@ const CTAFinal = ({ onOpenInscription }) => {
             >
               <Button
                 size="lg"
-                onClick={onOpenInscription}
-                className="text-xl md:text-2xl px-10 md:px-16 py-8 md:py-10 bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-black rounded-full shadow-2xl border-4 border-yellow-300 transform transition-all duration-300"
+                onClick={scrollToInscription}
+                className="text-base md:text-xl lg:text-2xl px-6 md:px-12 lg:px-16 py-4 md:py-6 lg:py-10 bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-black rounded-full shadow-2xl border-2 md:border-4 border-yellow-300 transform transition-all duration-300"
               >
                 {finalCTA.buttonText}
               </Button>

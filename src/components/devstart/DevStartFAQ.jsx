@@ -21,8 +21,7 @@ import {
   NotePencil,
   Phone,
   ChatCircle,
-  InstagramLogo,
-  FacebookLogo
+  InstagramLogo
 } from '@phosphor-icons/react';
 
 const DevStartFAQ = () => {
@@ -180,14 +179,6 @@ const DevStartFAQ = () => {
               >
                 <InstagramLogo size={20} weight="fill" />
                 Instagram
-              </Button>
-              <Button
-                variant="outline"
-                onClick={() => window.open(location.social.facebook.url, '_blank')}
-                className="border-blue-500 text-blue-300 hover:bg-blue-900/30 flex items-center gap-2"
-              >
-                <FacebookLogo size={20} weight="fill" />
-                Facebook
               </Button>
             </div>
           </div>
