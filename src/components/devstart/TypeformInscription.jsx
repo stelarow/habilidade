@@ -29,7 +29,7 @@ const inscriptionSchema = z.object({
   studentAge: z.coerce
     .number({ invalid_type_error: 'Idade deve ser um número' })
     .min(8, 'Idade mínima: 8 anos')
-    .max(17, 'Idade máxima: 17 anos'),
+    .max(21, 'Idade máxima: 21 anos'),
   guardianName: z.string().min(3, 'Nome do responsável deve ter no mínimo 3 caracteres'),
   whatsapp: z.string().regex(
     /^\(\d{2}\)\s\d{4,5}-\d{4}$/,
@@ -48,18 +48,18 @@ const STEPS = [
     subtitle: 'Digite o nome completo',
     icon: User,
     type: 'text',
-    placeholder: 'Ex: João Silva',
-    autoFocus: true
+    placeholder: 'Ex: João Silva'
   },
   {
     id: 'studentAge',
     title: 'Qual é a idade do aluno?',
-    subtitle: 'Idade entre 8 e 17 anos',
+    subtitle: 'Idade entre 8 e 21 anos',
     icon: Cake,
     type: 'number',
     placeholder: '12',
     min: 8,
-    max: 17
+    max: 21,
+    autoFocus: true
   },
   {
     id: 'guardianName',
@@ -67,7 +67,8 @@ const STEPS = [
     subtitle: 'Quem é o responsável pelo aluno?',
     icon: UserCircle,
     type: 'text',
-    placeholder: 'Ex: Maria Silva'
+    placeholder: 'Ex: Maria Silva',
+    autoFocus: true
   },
   {
     id: 'whatsapp',
@@ -75,7 +76,8 @@ const STEPS = [
     subtitle: 'Vamos enviar informações sobre o evento',
     icon: WhatsappLogo,
     type: 'tel',
-    placeholder: '(48) 98855-9491'
+    placeholder: '(48) 98855-9491',
+    autoFocus: true
   },
   {
     id: 'acceptTerms',
