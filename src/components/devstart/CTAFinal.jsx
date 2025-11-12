@@ -5,14 +5,7 @@ import { Button } from '@/components/ui/button';
 import { finalCTA } from '@/data/devstart';
 import { Warning, Siren, Sparkle, GameController, Trophy, Rocket, User } from '@phosphor-icons/react';
 
-const CTAFinal = () => {
-  // Função para scroll suave até o formulário
-  const scrollToInscription = () => {
-    const inscriptionElement = document.getElementById('inscricao');
-    if (inscriptionElement) {
-      inscriptionElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  };
+const CTAFinal = ({ scrollToNextSection }) => {
   return (
     <section className="py-20 px-4 bg-gradient-to-br from-red-950 via-orange-950 to-red-900 relative overflow-hidden">
       {/* Animated Background Pattern */}
@@ -115,7 +108,7 @@ const CTAFinal = () => {
             >
               <Button
                 size="lg"
-                onClick={scrollToInscription}
+                onClick={() => scrollToNextSection('cta-final')}
                 className="text-base md:text-xl lg:text-2xl px-6 md:px-12 lg:px-16 py-4 md:py-6 lg:py-10 bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-black rounded-full shadow-2xl border-2 md:border-4 border-yellow-300 transform transition-all duration-300"
               >
                 {finalCTA.buttonText}

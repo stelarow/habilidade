@@ -20,6 +20,30 @@ import { devstartData } from '@/data/devstart';
 const DevStart = () => {
   const { seo, afterDevStart } = devstartData;
 
+  // Função para scroll progressivo - leva à próxima seção
+  const scrollToNextSection = (currentSectionId) => {
+    const sectionOrder = [
+      'hero',
+      'audiencia',
+      'missoes',
+      'simulador',
+      'depois-devstart',
+      'faq',
+      'cta-final',
+      'inscricao',
+    ];
+
+    const currentIndex = sectionOrder.indexOf(currentSectionId);
+    const nextSectionId = sectionOrder[currentIndex + 1];
+
+    if (nextSectionId) {
+      const nextElement = document.getElementById(nextSectionId);
+      if (nextElement) {
+        nextElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  };
+
   return (
     <>
       {/* SEO Meta Tags */}
@@ -85,19 +109,27 @@ const DevStart = () => {
       {/* Main Page Content */}
       <div className="min-h-screen bg-gray-950">
         {/* Hero Section */}
-        <HeroSection />
+        <section id="hero">
+          <HeroSection scrollToNextSection={scrollToNextSection} />
+        </section>
 
         {/* Dual Audience Cards */}
-        <DualAudienceCards />
+        <section id="audiencia">
+          <DualAudienceCards />
+        </section>
 
         {/* Mission Timeline */}
-        <MissionTimeline />
+        <section id="missoes">
+          <MissionTimeline />
+        </section>
 
         {/* Code Simulator */}
-        <CodeSimulator />
+        <section id="simulador">
+          <CodeSimulator />
+        </section>
 
         {/* After DevStart Section (Inline) */}
-        <section className="py-20 px-4 bg-gradient-to-b from-gray-950 to-gray-900">
+        <section id="depois-devstart" className="py-20 px-4 bg-gradient-to-b from-gray-950 to-gray-900">
           <div className="container mx-auto max-w-5xl">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -166,13 +198,19 @@ const DevStart = () => {
         </section>
 
         {/* FAQ Section */}
-        <DevStartFAQ />
+        <section id="faq">
+          <DevStartFAQ />
+        </section>
 
         {/* Final CTA */}
-        <CTAFinal />
+        <section id="cta-final">
+          <CTAFinal scrollToNextSection={scrollToNextSection} />
+        </section>
 
         {/* Typeform-style Inscription Form */}
-        <TypeformInscription />
+        <section id="inscricao">
+          <TypeformInscription />
+        </section>
       </div>
     </>
   );

@@ -5,17 +5,9 @@ import { Button } from '@/components/ui/button';
 import { devstartData } from '@/data/devstart';
 import { GameController, Rocket, Calendar, Timer, Target, Sparkle } from '@phosphor-icons/react';
 
-const HeroSection = () => {
+const HeroSection = ({ scrollToNextSection }) => {
   const { event, badges } = devstartData;
   const [timeLeft, setTimeLeft] = useState(null);
-
-  // Função para scroll suave até o formulário
-  const scrollToInscription = () => {
-    const inscriptionElement = document.getElementById('inscricao');
-    if (inscriptionElement) {
-      inscriptionElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  };
 
   // Map icon names to actual Phosphor icon components
   const getIcon = (iconName) => {
@@ -200,7 +192,7 @@ const HeroSection = () => {
           >
             <Button
               size="lg"
-              onClick={scrollToInscription}
+              onClick={() => scrollToNextSection('hero')}
               className="text-xl px-10 py-8 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-black rounded-full shadow-2xl transform hover:scale-105 transition-all duration-300 border-4 border-red-400/50 animate-pulse hover:animate-none flex items-center gap-3"
             >
               ACEITAR MISSÃO
