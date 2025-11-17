@@ -132,7 +132,6 @@ export default function TypeformInscription({ id = 'inscricao' }) {
     resolver: zodResolver(inscriptionSchema),
     mode: 'onChange',
     defaultValues: {
-      preferredShift: '',
       acceptTerms: false
     }
   });
@@ -507,7 +506,7 @@ export default function TypeformInscription({ id = 'inscricao' }) {
                           setSubmittedData(null);
                           setValue('studentName', '');
                           setValue('studentAge', '');
-                          setValue('preferredShift', '');
+                          setValue('preferredShift', undefined);
                           setValue('guardianName', '');
                           setValue('whatsapp', '');
                           setValue('acceptTerms', false);
