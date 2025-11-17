@@ -573,16 +573,7 @@ export default function TypeformInscription({ id = 'inscricao' }) {
                       </Button>
                     )}
 
-                    {currentStep < STEPS.length - 1 ? (
-                      <Button
-                        type="button"
-                        onClick={handleNext}
-                        className="flex-1 h-12 sm:h-14 text-base sm:text-lg bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700"
-                      >
-                        {currentStepData.optional ? 'Pular' : 'Próximo'}
-                        <ArrowRight className="w-5 h-5 ml-2" />
-                      </Button>
-                    ) : (
+                    {currentStepData.type === 'terms' ? (
                       <Button
                         type="submit"
                         disabled={isSubmitting || !formValues.acceptTerms}
@@ -597,7 +588,16 @@ export default function TypeformInscription({ id = 'inscricao' }) {
                           </>
                         )}
                       </Button>
-                    )}
+                    ) : currentStep < STEPS.length - 1 ? (
+                      <Button
+                        type="button"
+                        onClick={handleNext}
+                        className="flex-1 h-12 sm:h-14 text-base sm:text-lg bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700"
+                      >
+                        {currentStepData.optional ? 'Pular' : 'Próximo'}
+                        <ArrowRight className="w-5 h-5 ml-2" />
+                      </Button>
+                    ) : null}
                   </div>
 
                   {/* Hint de navegação */}
