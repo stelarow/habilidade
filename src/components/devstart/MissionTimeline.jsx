@@ -58,7 +58,7 @@ const MissionTimeline = () => {
         >
           <h2 className="text-4xl md:text-5xl font-black text-white mb-4 flex items-center justify-center gap-3">
             <Calendar size={48} weight="bold" className="text-blue-400" />
-            Sua Jornada em 4 Sábados
+            Sua Jornada em 4 Semanas
           </h2>
           <p className="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto mb-8">
             Cada semana é uma nova missão! Veja o que você vai aprender:

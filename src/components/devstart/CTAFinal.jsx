@@ -88,7 +88,7 @@ const CTAFinal = ({ scrollToNextSection }) => {
                 whileHover={{ scale: 1.05 }}
               >
                 <div className="text-3xl md:text-4xl font-black text-yellow-300">4</div>
-                <div className="text-xs md:text-sm text-gray-300 font-semibold">Sábados Apenas</div>
+                <div className="text-xs md:text-sm text-gray-300 font-semibold">Encontros Semanais</div>
               </motion.div>
 
               <motion.div

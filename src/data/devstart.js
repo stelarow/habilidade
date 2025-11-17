@@ -11,8 +11,8 @@ export const devstartData = {
     tagline: "E aí! Bora criar seu PRÓPRIO JOGO?",
     description: "Imagina só: em vez de só jogar Roblox, você vai criar o seu próprio mapa, suas próprias regras e seus próprios desafios!",
     vagas: 30,
-    horario: "Sábados, 14h às 17h",
-    duracao: "4 sábados consecutivos",
+    horario: "14h às 17h",
+    duracao: "4 encontros semanais",
     startDate: null, // null = data a definir | ou new Date('2025-02-15') para definir
     gratuito: true,
     certificado: true,
@@ -45,7 +45,7 @@ export const devstartData = {
   // Badges do Hero
   badges: [
     { text: "GRATUITO", variant: "success", iconName: "Sparkle" },
-    { text: "4 SÁBADOS", variant: "primary", iconName: "Calendar" },
+    { text: "4 SEMANAS", variant: "primary", iconName: "Calendar" },
     { text: "30 VAGAS", variant: "warning", iconName: "Target" },
   ],
 
@@ -164,7 +164,7 @@ export const devstartData = {
     },
     {
       id: 5,
-      question: "E se meu filho faltar em um sábado?",
+      question: "E se meu filho faltar em um encontro?",
       answer: "Não tem problema! Podemos repassar o conteúdo perdido antes da próxima aula ou disponibilizar material de apoio. Mas recomendamos não faltar para aproveitar ao máximo a experiência!",
     },
     {
@@ -275,7 +275,7 @@ export const devstartData = {
   // SEO / Meta Tags
   seo: {
     title: "DevStart - Crie Seu Jogo no Roblox | Escola Habilidade",
-    description: "Curso gratuito de 4 sábados para criar seu próprio jogo de Obby no Roblox! Aprenda programação de forma lúdica. Para crianças a partir de 8 anos. Vagas limitadas!",
+    description: "Curso gratuito de 4 encontros para criar seu próprio jogo de Obby no Roblox! Aprenda programação de forma lúdica. Para crianças a partir de 8 anos. Vagas limitadas!",
     keywords: "roblox, programação infantil, curso gratuito, criar jogos, roblox studio, obby, são josé, escola habilidade",
     ogImage: "/images/devstart-og.jpg", // criar imagem OG
     url: "https://www.escolahabilidade.com/devstart",
