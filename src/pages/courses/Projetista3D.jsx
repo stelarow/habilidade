@@ -67,7 +67,7 @@ const Projetista3DNew = () => {
             },
             "offers": {
               "@type": "Offer",
-              "price": "2793.00",
+              "price": "3493.00",
               "priceCurrency": "BRL",
               "availability": "https://schema.org/InStock"
             },
@@ -296,7 +296,7 @@ const Projetista3DNew = () => {
                 "name": "Qual o valor de um curso de SketchUp?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "O curso de SketchUp na Escola Habilidade custa R$ 2.793,00 e pode ser parcelado em 7x de R$ 399 no boleto (tipo mensalidade). Se pagar à vista, fica R$ 2.625,42 (6% de desconto). O curso tem 56 horas de aula e inclui tudo: apostila de 360 páginas, certificado nacional, acesso aos programas e material completo."
+                  "text": "O curso de SketchUp na Escola Habilidade custa R$ 3.493,00 e pode ser parcelado em 7x de R$ 499 no boleto (tipo mensalidade). Se pagar à vista, fica R$ 3.143,70 (10% de desconto). O curso tem 56 horas de aula e inclui tudo: apostila de 360 páginas, certificado nacional, acesso aos programas e material completo."
                 }
               },
               {

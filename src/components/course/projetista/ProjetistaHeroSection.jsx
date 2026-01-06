@@ -76,8 +76,8 @@ export const ProjetistaHeroSection = () => {
               <div className="text-center sm:text-left">
                 <div className="flex items-center gap-2 mb-1">
                   <CurrencyCircleDollar className="w-5 h-5 text-cyan-400" />
-                  <span className="text-2xl font-bold text-cyan-400">7X R$ 399</span>
-                  <span className="text-sm text-zinc-400 line-through">DE 7X R$ 699</span>
+                  <span className="text-2xl font-bold text-cyan-400">7X R$ 499</span>
+                  <span className="text-sm text-zinc-400 line-through">DE 7X R$ 876</span>
                 </div>
                 <div className="text-sm text-zinc-400">
                   OU À VISTA COM 10% DE DESCONTO

@@ -9,17 +9,17 @@ const faqData = [
   {
     id: 1,
     question: "Qual o valor de um curso de SketchUp?",
-    answer: "O curso de SketchUp na Escola Habilidade custa R$ 2.793,00 e pode ser parcelado em 7x de R$ 399 no boleto (tipo mensalidade). Se pagar à vista, fica R$ 2.625,42 (6% de desconto). O curso tem 56 horas de aula e inclui tudo: apostila de 360 páginas, certificado nacional, acesso aos programas e material completo."
+    answer: "O curso de SketchUp na Escola Habilidade custa R$ 3.493,00 e pode ser parcelado em 7x de R$ 499 no boleto (tipo mensalidade). Se pagar à vista, fica R$ 3.143,70 (10% de desconto). O curso tem 56 horas de aula e inclui tudo: apostila de 360 páginas, certificado nacional, acesso aos programas e material completo."
   },
   {
     id: 2,
     question: "Quanto é a mensalidade do SketchUp?",
-    answer: "Você pode parcelar em 7 mensalidades de R$ 399 no boleto (total R$ 2.793). Também pode pagar à vista com desconto de 6% por R$ 2.625,42. Tá tudo incluído: aulas, apostila, certificado e acesso aos programas."
+    answer: "Você pode parcelar em 7 mensalidades de R$ 499 no boleto (total R$ 3.493). Também pode pagar à vista com desconto de 10% por R$ 3.143,70. Tá tudo incluído: aulas, apostila, certificado e acesso aos programas."
   },
   {
     id: 3,
     question: "Quanto custa um curso de SketchUp?",
-    answer: "Na Escola Habilidade o curso completo de SketchUp e Enscape custa R$ 2.793 parcelado (7x de R$ 399) ou R$ 2.625,42 à vista (com 6% OFF). São 56 horas de aula presencial com turmas pequenas de até 4 alunos. Outros cursos similares cobram entre R$ 3.500 e R$ 5.000."
+    answer: "Na Escola Habilidade o curso completo de SketchUp e Enscape custa R$ 3.493 parcelado (7x de R$ 499) ou R$ 3.143,70 à vista (com 10% OFF). São 56 horas de aula presencial com turmas pequenas de até 4 alunos. Outros cursos similares cobram entre R$ 3.500 e R$ 5.000."
   },
   {
     id: 4,
