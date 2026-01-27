@@ -1,5 +1,5 @@
 ﻿import { useState, useRef } from 'react';
-import { PaperPlaneTilt, User, Envelope, Phone, BookOpen, CheckCircle } from '@phosphor-icons/react';
+import { PaperPlaneTilt, User, Envelope, Phone, BookOpen, CheckCircle, WhatsappLogo } from '@phosphor-icons/react';
 import emailjs from '@emailjs/browser';
 import Loading from './Loading';
 import GradientButton from './GradientButton';
@@ -237,23 +237,43 @@ const ContactForm = () => {
               </div>
             )}
 
-            <GradientButton
-              type="submit"
-              disabled={isSubmitting}
-              className="w-full flex items-center justify-center gap-3 py-4 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {isSubmitting ? (
-                <>
-                  <Loading size="sm" />
-                  Enviando...
-                </>
-              ) : (
-                <>
-                  <PaperPlaneTilt size={20} />
-                  Enviar Mensagem
-                </>
-              )}
-            </GradientButton>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <GradientButton
+                type="submit"
+                disabled={isSubmitting}
+                className="flex-1 flex items-center justify-center gap-3 py-4 disabled:opacity-50 disabled:cursor-not-allowed min-h-[48px]"
+              >
+                {isSubmitting ? (
+                  <>
+                    <Loading size="sm" />
+                    Enviando...
+                  </>
+                ) : (
+                  <>
+                    <PaperPlaneTilt size={20} aria-hidden="true" />
+                    Enviar Mensagem
+                  </>
+                )}
+              </GradientButton>
+
+              <a
+                href="https://wa.me/5548988559491?text=Olá! Gostaria de saber mais sobre os cursos."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="
+                  flex items-center justify-center gap-2
+                  bg-green-500 hover:bg-green-600
+                  text-white font-semibold
+                  px-6 py-4 rounded-md
+                  transition-all duration-300
+                  min-h-[48px]
+                  sm:w-auto
+                "
+              >
+                <WhatsappLogo size={20} weight="fill" aria-hidden="true" />
+                <span>WhatsApp</span>
+              </a>
+            </div>
           </form>
 
           <div className="mt-6 text-center">

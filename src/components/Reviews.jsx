@@ -198,7 +198,7 @@ const Reviews = () => {
   }
 
   return (
-    <Section id="avaliacoes" className="px-4 py-8 bg-zinc-950 text-white items-start justify-start min-h-0">
+    <Section id="avaliacoes" className="px-4 py-16 bg-zinc-950 text-white items-start justify-start min-h-0">
       <Starfield className="opacity-10" />
       
       <div className="relative z-10 max-w-7xl mx-auto w-full">

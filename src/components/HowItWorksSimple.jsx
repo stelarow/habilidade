@@ -125,7 +125,7 @@ function SimpleCard({ step, index }) {
 
 function HowItWorksSimple() {
   return (
-    <Section id="como-funciona" className="px-4 py-8 bg-zinc-950 text-white items-start justify-start min-h-0">
+    <Section id="como-funciona" className="px-4 py-16 bg-zinc-950 text-white items-start justify-start min-h-0">
       <div className="relative z-10 max-w-6xl mx-auto w-full">
         {/* Header */}
         <div className="text-center mb-12">

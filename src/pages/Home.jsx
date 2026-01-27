@@ -9,6 +9,7 @@ import LocationSection from '../components/LocationSection';
 import ContactForm from '../components/ContactForm';
 import FAQ from '../components/FAQ';
 import SEOHead from '../components/shared/SEOHead';
+import StickyWhatsApp from '../components/StickyWhatsApp';
 
 function Home() {
   // Schema 1: EducationalOrganization (Atualizado com logo, email, sameAs)
@@ -364,6 +365,7 @@ function Home() {
       <ContactForm />
       <LocationSection />
       <FAQ />
+      <StickyWhatsApp />
     </>
   );
 }

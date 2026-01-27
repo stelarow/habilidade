@@ -2,7 +2,7 @@ import useTypewriter from '../hooks/useTypewriter';
 import Starfield from './Starfield';
 import GradientButton from './GradientButton';
 import Section from './Section';
-import { Lightbulb, CheckCircle, Clock, Users } from '@phosphor-icons/react';
+import { Lightbulb, CheckCircle, Clock, Users, Star } from '@phosphor-icons/react';
 import { analytics } from '../utils/analytics';
 import { useNavigate } from 'react-router-dom';
 
@@ -12,13 +12,13 @@ function Hero() {
   const navigate = useNavigate();
 
   return (
-    <Section fullHeight={false} className="flex flex-col items-center justify-center text-center bg-zinc-950 overflow-visible pt-20 sm:pt-24 md:pt-28 lg:pt-24 min-h-[75vh]">
+    <Section fullHeight={false} className="hero-section flex flex-col items-center justify-center text-center bg-zinc-950 overflow-visible pt-24 lg:pt-28 min-h-[75vh]">
       <Starfield />
       {/* Conteúdo */}
       <div className="flex flex-col items-center justify-center max-w-4xl mx-auto px-4">
         <h1 className="text-white font-bold text-3xl sm:text-5xl leading-relaxed tracking-tight mb-10">
           {/* Brand identity + SEO optimization */}
-          <span className="block text-5xl sm:text-7xl font-extrabold gradient-text animate-gradient mb-2">
+          <span className="block text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold gradient-text animate-gradient mb-2">
             Escola Habilidade
           </span>
           <span className="block text-lg sm:text-xl text-purple-400 font-medium mb-6 tracking-wide">
@@ -72,41 +72,35 @@ function Hero() {
           </GradientButton>
         </div>
         
-        <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4 text-xs sm:text-sm text-zinc-400">
+        {/* Social Proof Badge */}
+        <div className="mt-6 flex items-center justify-center gap-2 text-sm">
+          <div className="flex items-center gap-0.5">
+            {[...Array(5)].map((_, i) => (
+              <Star key={i} size={14} weight="fill" className="text-yellow-400" />
+            ))}
+          </div>
+          <span className="text-zinc-300">
+            <strong className="text-white">4.9</strong> no Google
+            <span className="mx-2 text-zinc-500">|</span>
+            <strong className="text-white">127+</strong> avaliações
+          </span>
+        </div>
+
+        <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-4 text-xs sm:text-sm text-zinc-400">
           <div className="flex items-center gap-1">
-            <CheckCircle size={14} className="text-green-400" />
+            <CheckCircle size={14} className="text-green-400" aria-hidden="true" />
             <span>Certificado Incluso</span>
           </div>
           <div className="flex items-center gap-1">
-            <Clock size={14} className="text-blue-400" />
+            <Clock size={14} className="text-blue-400" aria-hidden="true" />
             <span>Aulas Práticas</span>
           </div>
           <div className="flex items-center gap-1">
-            <Users size={14} className="text-purple-400" />
+            <Users size={14} className="text-purple-400" aria-hidden="true" />
             <span>Turmas Pequenas</span>
           </div>
         </div>
         
-        {/* Seta de scroll para seção de cursos */}
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            const element = document.getElementById('cursos');
-            if (element) {
-              element.scrollIntoView({ behavior: 'smooth' });
-            }
-          }}
-          aria-label="Ir para seção de cursos"
-          className="hidden sm:block absolute bottom-8 left-1/2 text-purple-500 hover:text-cyan-400 transition cursor-pointer p-2"
-          style={{ 
-            transform: 'translateX(-50%)', 
-            animation: 'bounce 2s infinite' 
-          }}
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" className="w-8 h-8">
-            <path d="M12 16.5a1 1 0 0 1-.707-.293l-6-6a1 1 0 1 1 1.414-1.414L12 14.086l5.293-5.293a1 1 0 0 1 1.414 1.414l-6 6A1 1 0 0 1 12 16.5z" />
-          </svg>
-        </button>
       </div>
     </Section>
   );

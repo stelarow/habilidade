@@ -73,24 +73,29 @@ const FAQItem = ({ question, answer, isOpen, onToggle }) => {
     >
       <button
         onClick={onToggle}
-        className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-zinc-700/30 transition-colors focus:outline-none focus:ring-2 focus:ring-fuchsia-500 focus:ring-inset"
+        className="w-full min-h-[48px] px-6 py-4 text-left flex items-center justify-between hover:bg-zinc-700/30 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-fuchsia-500 focus:ring-inset"
         aria-expanded={isOpen}
+        aria-controls={`faq-answer-${question.substring(0, 20).replace(/\s/g, '-')}`}
       >
         <span className="font-medium text-white pr-4">{question}</span>
-        <CaretDown 
-          size={20} 
+        <CaretDown
+          size={20}
+          aria-hidden="true"
           className={`text-fuchsia-400 transition-transform duration-300 flex-shrink-0 ${
             isOpen ? 'rotate-180' : ''
-          }`} 
+          }`}
         />
       </button>
       
-      <div 
+      <div
+        id={`faq-answer-${question.substring(0, 20).replace(/\s/g, '-')}`}
         className={`transition-all duration-300 ease-in-out ${
           isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
         } overflow-hidden`}
+        role="region"
+        aria-hidden={!isOpen}
       >
-        <div className="px-6 pb-4 text-zinc-300 leading-relaxed">
+        <div className="px-6 pb-4 text-zinc-400 leading-relaxed">
           {answer}
         </div>
       </div>
@@ -146,9 +151,9 @@ const FAQ = () => {
             href="https://wa.me/5548988559491?text=Olá! Ainda tenho uma dúvida a respeito dos cursos, pode me ajudar?"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 hover:scale-105"
+            className="inline-flex items-center gap-2 px-6 py-3 min-h-[48px] hover:scale-105 transition-transform duration-300"
           >
-            <Question size={20} />
+            <Question size={20} aria-hidden="true" />
             Fale Conosco
           </GradientButton>
         </div>

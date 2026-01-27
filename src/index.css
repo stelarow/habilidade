@@ -167,6 +167,35 @@ button, a, [role="button"] {
   --ring: 160 84% 39%;
   --radius: 0.5rem;
 
+  /* ===== DESIGN TOKENS ===== */
+
+  /* Spacing - Section padding */
+  --section-padding-sm: 2rem;
+  --section-padding: 4rem;
+  --section-padding-lg: 6rem;
+
+  /* Border Radius */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --shadow-card-hover: 0 10px 25px -5px rgba(0, 0, 0, 0.25);
+  --shadow-neon: 0 0 6px var(--color-primary), 0 0 12px var(--color-primary);
+  --shadow-neon-strong: 0 0 25px rgba(212, 0, 255, 0.4);
+  --shadow-glow: 0 0 25px rgba(212, 0, 255, 0.4);
+
+  /* Transitions */
+  --transition-fast: 150ms;
+  --transition-base: 300ms;
+  --transition-slow: 500ms;
+
+  /* Hover lift */
+  --hover-lift: -0.5rem;
+
   /* Cores primárias */
   --color-primary: #d400ff;
   --color-secondary: #00c4ff;
@@ -181,7 +210,7 @@ button, a, [role="button"] {
   --color-text-primary: #ffffff;
   --color-text-secondary: #d4d4d8;
   --color-text-muted: #a1a1aa;
-  
+
   /* Cores dos cursos */
   --color-course-3d: #f97316;
   --color-course-video: #f87171;
@@ -191,15 +220,11 @@ button, a, [role="button"] {
   --color-course-marketing: #a78bfa;
   --color-course-ai: #22d3ee;
   --color-course-bi: #818cf8;
-  
+
   /* Gradientes */
   --gradient-primary: linear-gradient(to right, var(--color-primary), var(--color-secondary));
   --gradient-text: linear-gradient(to right, var(--color-primary), var(--color-accent), var(--color-secondary));
   --gradient-bg: radial-gradient(ellipse at 60% 40%, var(--color-bg-secondary) 0%, var(--color-bg-primary) 100%);
-  
-  /* Sombras */
-  --shadow-neon: 0 0 6px var(--color-primary), 0 0 12px var(--color-primary);
-  --shadow-glow: 0 0 25px rgba(212, 0, 255, 0.4);
 }
 
 /* Reduzir animações em dispositivos com preferência - ENHANCED */
@@ -223,8 +248,19 @@ button, a, [role="button"] {
   }
 }
 
+/* ===== GLOBAL FOCUS STYLES (WCAG AA) ===== */
+*:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Improved text contrast for secondary text (WCAG AA) */
+.text-zinc-500 {
+  color: #a1a1aa; /* zinc-400 equivalent for better contrast */
+}
+
 @layer utilities {
-  
+
   .focus-visible:focus-visible {
     outline: 2px solid var(--color-primary);
     outline-offset: 2px;
@@ -1176,7 +1212,7 @@ button, a, [role="button"] {
 /* Mobile optimized version with fewer stars */
 @media (max-width: 768px) {
   .starfield-css::before {
-    background-image: 
+    background-image:
       radial-gradient(1px 1px at 20% 30%, #c084fc, transparent),
       radial-gradient(1px 1px at 60% 15%, #c084fc, transparent),
       radial-gradient(1px 1px at 80% 80%, #c084fc, transparent),
@@ -1186,9 +1222,9 @@ button, a, [role="button"] {
       radial-gradient(1px 1px at 85% 20%, #c084fc, transparent),
       radial-gradient(1px 1px at 50% 85%, #c084fc, transparent);
   }
-  
+
   .starfield-css::after {
-    background-image: 
+    background-image:
       radial-gradient(1px 1px at 45% 20%, #c084fc, transparent),
       radial-gradient(1px 1px at 25% 60%, #c084fc, transparent),
       radial-gradient(1px 1px at 75% 35%, #c084fc, transparent),
@@ -1198,4 +1234,76 @@ button, a, [role="button"] {
       radial-gradient(1px 1px at 80% 25%, #c084fc, transparent),
       radial-gradient(1px 1px at 40% 45%, #c084fc, transparent);
   }
+}
+
+/* ===== LANDSCAPE MOBILE OPTIMIZATION ===== */
+@media (max-width: 896px) and (orientation: landscape) {
+  .hero-section,
+  section:first-of-type {
+    min-height: auto;
+    padding-top: 4rem;
+    padding-bottom: 2rem;
+  }
+
+  /* Reduce vertical spacing in landscape */
+  .hero-section h1 {
+    margin-bottom: 1rem;
+  }
+}
+
+/* ===== CSS CAROUSEL ANIMATION (Performance) ===== */
+@keyframes carouselScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.carousel-track {
+  display: flex;
+  animation: carouselScroll 30s linear infinite;
+  will-change: transform;
+}
+
+.carousel-track:hover {
+  animation-play-state: paused;
+}
+
+/* ===== HOVER-ONLY ANIMATIONS (Performance) ===== */
+.tech-badge-hover-only {
+  animation: none;
+}
+
+.tech-badge-hover-only:hover {
+  animation: techPulse 0.5s ease-out;
+}
+
+/* ===== UNIFIED HOVER EFFECTS ===== */
+.hover-lift {
+  transition: transform var(--transition-base) ease, box-shadow var(--transition-base) ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(var(--hover-lift));
+  box-shadow: var(--shadow-card-hover);
+}
+
+/* ===== SKIP LINK ACCESSIBILITY ===== */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-primary);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-md);
+  z-index: 100;
+  transition: top var(--transition-fast) ease;
+}
+
+.skip-link:focus {
+  top: 1rem;
 }

@@ -34,6 +34,14 @@ function Header() {
 
   return (
     <>
+      {/* Skip Link for Accessibility */}
+      <a
+        href="#main-content"
+        className="skip-link sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:bg-fuchsia-600 focus:text-white focus:px-4 focus:py-2 focus:rounded-md focus:no-underline"
+      >
+        Pular para o conteudo
+      </a>
+
       <header className="fixed top-0 w-full bg-zinc-900/70 backdrop-blur-md z-50 border-b border-gray-800/50" role="banner">
         <div className="mx-auto max-w-7xl px-4">
           <div className="flex items-center justify-between h-16 min-h-[4rem] flex-nowrap">

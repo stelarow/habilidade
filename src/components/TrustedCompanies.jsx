@@ -1,6 +1,6 @@
 import React from 'react';
-import { motion } from '../utils/lazyMotion.jsx';
 import { getCompaniesByCategory, courseToCompanyMapping } from '../data/trustedCompanies';
+import useInView from '../hooks/useInView';
 
 const TrustedCompanies = ({ 
   variant = 'home',
@@ -39,91 +39,82 @@ const TrustedCompanies = ({
   const displayTitle = title || settings.defaultTitle;
   const displaySubtitle = subtitle || settings.defaultSubtitle;
 
+  // Company Card Component with CSS animation
+  const CompanyCard = ({ company, index }) => {
+    const [ref, visible] = useInView();
+
+    return (
+      <div
+        ref={ref}
+        className={`card-enter ${visible ? 'in-view' : ''} group rounded-xl p-4 hover:shadow-lg transition-all duration-300 flex flex-col items-center justify-center hover:-translate-y-1 hover:scale-[1.02] ${
+          theme === 'dark'
+            ? 'bg-gray-800 hover:bg-gray-700 hover:shadow-purple-500/15'
+            : 'bg-gray-50 hover:bg-white hover:shadow-lg'
+        }`}
+        style={{ animationDelay: `${index * 0.05}s` }}
+      >
+        <div className={`w-16 h-16 flex items-center justify-center mb-3 rounded-lg shadow-sm group-hover:shadow-md transition-shadow ${
+          theme === 'dark' ? 'bg-gray-700' : 'bg-white'
+        }`}>
+          <img
+            src={company.logo}
+            alt={company.name}
+            width="64"
+            height="64"
+            className="max-w-full max-h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300"
+            loading="lazy"
+          />
+        </div>
+        <div className="text-center">
+          <h3 className={`font-semibold text-sm mb-1 ${
+            theme === 'dark' ? 'text-white' : 'text-gray-900'
+          }`}>
+            {company.name}
+          </h3>
+          <p className={`text-xs ${
+            theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
+          }`}>
+            {company.description}
+          </p>
+        </div>
+      </div>
+    );
+  };
+
   // Layout Grid (para home)
   if (settings.layout === 'grid') {
     return (
       <section className={`py-16 ${theme === 'dark' ? 'bg-gray-900' : 'bg-white'} ${className}`}>
         <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-12"
-          >
+          <div className="text-center mb-12">
             <h2 className={`text-3xl md:text-4xl font-bold mb-4 ${
               theme === 'dark' ? 'text-white' : 'text-gray-900'
             }`}>
               {displayTitle}
             </h2>
             <p className={`text-lg max-w-3xl mx-auto ${
-              theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
+              theme === 'dark' ? 'text-gray-400' : 'text-gray-700'
             }`}>
               {displaySubtitle}
             </p>
-          </motion.div>
+          </div>
 
           {/* Grid de empresas - 2 linhas no desktop */}
           <div className="max-w-6xl mx-auto">
             <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
               {companies.map((company, index) => (
-                <motion.div
+                <CompanyCard
                   key={`${company.name}-${index}`}
-                  className={`group rounded-xl p-4 hover:shadow-lg transition-all duration-300 flex flex-col items-center justify-center ${
-                    theme === 'dark' 
-                      ? 'bg-gray-800 hover:bg-gray-700' 
-                      : 'bg-gray-50 hover:bg-white hover:shadow-lg'
-                  }`}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: index * 0.05 }}
-                  whileHover={{ 
-                    y: -3,
-                    boxShadow: theme === 'dark' 
-                      ? "0 10px 30px rgba(147, 51, 234, 0.15)" 
-                      : "0 10px 30px rgba(0, 0, 0, 0.1)",
-                    scale: 1.02
-                  }}
-                >
-                  <div className={`w-16 h-16 flex items-center justify-center mb-3 rounded-lg shadow-sm group-hover:shadow-md transition-shadow ${
-                    theme === 'dark' ? 'bg-gray-700' : 'bg-white'
-                  }`}>
-                    <img 
-                      src={company.logo}
-                      alt={company.name}
-                      width="64"
-                      height="64"
-                      className="max-w-full max-h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300"
-                      loading="lazy"
-                    />
-                  </div>
-                  <div className="text-center">
-                    <h3 className={`font-semibold text-sm mb-1 ${
-                      theme === 'dark' ? 'text-white' : 'text-gray-900'
-                    }`}>
-                      {company.name}
-                    </h3>
-                    <p className={`text-xs ${
-                      theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
-                    }`}>
-                      {company.description}
-                    </p>
-                  </div>
-                </motion.div>
+                  company={company}
+                  index={index}
+                />
               ))}
             </div>
           </div>
 
           {/* Estatísticas para variant home */}
           {settings.showStats && (
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto"
-            >
+            <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto">
               <div className="text-center">
                 <div className={`text-2xl font-bold mb-2 ${
                   theme === 'dark' ? 'text-purple-400' : 'text-purple-600'
@@ -172,185 +163,80 @@ const TrustedCompanies = ({
                   Avaliação Média
                 </div>
               </div>
-            </motion.div>
+            </div>
           )}
         </div>
       </section>
     );
   }
 
-  // Layout Carousel (para páginas de curso)
+  // Carousel Card Component
+  const CarouselCard = ({ company }) => (
+    <div
+      className={`group rounded-xl p-6 hover:shadow-lg transition-all duration-300 flex flex-col items-center justify-center min-w-[200px] flex-shrink-0 hover:-translate-y-1 hover:scale-105 ${
+        theme === 'dark'
+          ? 'bg-gray-800 hover:bg-gray-700 hover:shadow-purple-500/15'
+          : 'bg-gray-50 hover:bg-white hover:shadow-lg'
+      }`}
+    >
+      <div className={`w-20 h-20 flex items-center justify-center mb-4 rounded-lg shadow-sm group-hover:shadow-md transition-shadow ${
+        theme === 'dark' ? 'bg-gray-700' : 'bg-white'
+      }`}>
+        <img
+          src={company.logo}
+          alt={company.name}
+          width="80"
+          height="80"
+          className="max-w-full max-h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300"
+          loading="lazy"
+        />
+      </div>
+      <div className="text-center">
+        <h3 className={`font-semibold text-sm mb-1 ${
+          theme === 'dark' ? 'text-white' : 'text-gray-900'
+        }`}>
+          {company.name}
+        </h3>
+        <p className={`text-xs ${
+          theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
+        }`}>
+          {company.description}
+        </p>
+      </div>
+    </div>
+  );
+
+  // Layout Carousel (para páginas de curso) - CSS Animation
   return (
     <section className={`py-20 ${theme === 'dark' ? 'bg-gray-900' : 'bg-white'} ${className}`}>
       <div className="container mx-auto px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
+        <div className="text-center mb-16">
           <h2 className={`text-4xl md:text-5xl font-bold mb-6 ${
             theme === 'dark' ? 'text-white' : 'text-gray-900'
           }`}>
             {displayTitle}
           </h2>
           <p className={`text-xl max-w-3xl mx-auto ${
-            theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
+            theme === 'dark' ? 'text-gray-400' : 'text-gray-700'
           }`}>
             {displaySubtitle}
           </p>
-        </motion.div>
+        </div>
 
-        {/* Carrossel infinito de logos */}
+        {/* Carrossel infinito de logos - CSS Animation */}
         <div className="relative overflow-hidden max-w-7xl mx-auto">
-          <motion.div 
-            className="flex space-x-8"
-            animate={{
-              x: [0, -(208 * companies.length)]
-            }}
-            transition={{
-              x: {
-                repeat: Infinity,
-                repeatType: "loop",
-                duration: settings.animationDuration,
-                ease: "linear"
-              }
-            }}
-          >
+          <div className="carousel-track flex gap-8">
             {/* Primeira sequência de logos */}
             {companies.map((company, index) => (
-              <motion.div
-                key={`first-${index}`}
-                className={`group rounded-xl p-6 hover:shadow-lg transition-all duration-300 flex flex-col items-center justify-center min-w-[200px] flex-shrink-0 ${
-                  theme === 'dark' 
-                    ? 'bg-gray-800 hover:bg-gray-700' 
-                    : 'bg-gray-50 hover:bg-white hover:shadow-lg'
-                }`}
-                whileHover={{ 
-                  y: -5,
-                  boxShadow: theme === 'dark'
-                    ? "0 10px 30px rgba(147, 51, 234, 0.15)"
-                    : "0 10px 30px rgba(147, 51, 234, 0.15)",
-                  scale: 1.05
-                }}
-              >
-                <div className={`w-20 h-20 flex items-center justify-center mb-4 rounded-lg shadow-sm group-hover:shadow-md transition-shadow ${
-                  theme === 'dark' ? 'bg-gray-700' : 'bg-white'
-                }`}>
-                  <img 
-                    src={company.logo}
-                    alt={company.name}
-                    width="80"
-                    height="80"
-                    className="max-w-full max-h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300"
-                    loading="lazy"
-                  />
-                </div>
-                <div className="text-center">
-                  <h3 className={`font-semibold text-sm mb-1 ${
-                    theme === 'dark' ? 'text-white' : 'text-gray-900'
-                  }`}>
-                    {company.name}
-                  </h3>
-                  <p className={`text-xs ${
-                    theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
-                  }`}>
-                    {company.description}
-                  </p>
-                </div>
-              </motion.div>
+              <CarouselCard key={`first-${index}`} company={company} />
             ))}
-            
+
             {/* Segunda sequência de logos (para continuidade perfeita) */}
             {companies.map((company, index) => (
-              <motion.div
-                key={`second-${index}`}
-                className={`group rounded-xl p-6 hover:shadow-lg transition-all duration-300 flex flex-col items-center justify-center min-w-[200px] flex-shrink-0 ${
-                  theme === 'dark' 
-                    ? 'bg-gray-800 hover:bg-gray-700' 
-                    : 'bg-gray-50 hover:bg-white hover:shadow-lg'
-                }`}
-                whileHover={{ 
-                  y: -5,
-                  boxShadow: theme === 'dark'
-                    ? "0 10px 30px rgba(147, 51, 234, 0.15)"
-                    : "0 10px 30px rgba(147, 51, 234, 0.15)",
-                  scale: 1.05
-                }}
-              >
-                <div className={`w-20 h-20 flex items-center justify-center mb-4 rounded-lg shadow-sm group-hover:shadow-md transition-shadow ${
-                  theme === 'dark' ? 'bg-gray-700' : 'bg-white'
-                }`}>
-                  <img 
-                    src={company.logo}
-                    alt={company.name}
-                    width="80"
-                    height="80"
-                    className="max-w-full max-h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300"
-                    loading="lazy"
-                  />
-                </div>
-                <div className="text-center">
-                  <h3 className={`font-semibold text-sm mb-1 ${
-                    theme === 'dark' ? 'text-white' : 'text-gray-900'
-                  }`}>
-                    {company.name}
-                  </h3>
-                  <p className={`text-xs ${
-                    theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
-                  }`}>
-                    {company.description}
-                  </p>
-                </div>
-              </motion.div>
+              <CarouselCard key={`second-${index}`} company={company} />
             ))}
-            
-            {/* Terceira sequência para garantir continuidade */}
-            {companies.slice(0, 3).map((company, index) => (
-              <motion.div
-                key={`third-${index}`}
-                className={`group rounded-xl p-6 hover:shadow-lg transition-all duration-300 flex flex-col items-center justify-center min-w-[200px] flex-shrink-0 ${
-                  theme === 'dark' 
-                    ? 'bg-gray-800 hover:bg-gray-700' 
-                    : 'bg-gray-50 hover:bg-white hover:shadow-lg'
-                }`}
-                whileHover={{ 
-                  y: -5,
-                  boxShadow: theme === 'dark'
-                    ? "0 10px 30px rgba(147, 51, 234, 0.15)"
-                    : "0 10px 30px rgba(147, 51, 234, 0.15)",
-                  scale: 1.05
-                }}
-              >
-                <div className={`w-20 h-20 flex items-center justify-center mb-4 rounded-lg shadow-sm group-hover:shadow-md transition-shadow ${
-                  theme === 'dark' ? 'bg-gray-700' : 'bg-white'
-                }`}>
-                  <img 
-                    src={company.logo}
-                    alt={company.name}
-                    width="80"
-                    height="80"
-                    className="max-w-full max-h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300"
-                    loading="lazy"
-                  />
-                </div>
-                <div className="text-center">
-                  <h3 className={`font-semibold text-sm mb-1 ${
-                    theme === 'dark' ? 'text-white' : 'text-gray-900'
-                  }`}>
-                    {company.name}
-                  </h3>
-                  <p className={`text-xs ${
-                    theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
-                  }`}>
-                    {company.description}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-          
+          </div>
+
           {/* Gradientes nas bordas para efeito de fade */}
           <div className={`absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r to-transparent z-10 pointer-events-none ${
             theme === 'dark' ? 'from-gray-900' : 'from-white'
@@ -361,13 +247,7 @@ const TrustedCompanies = ({
         </div>
 
         {/* Estatísticas para variant course */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto"
-        >
+        <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
           <div className="text-center">
             <div className={`text-3xl font-bold mb-2 ${
               theme === 'dark' ? 'text-purple-400' : 'text-purple-600'
@@ -416,7 +296,7 @@ const TrustedCompanies = ({
               Avaliação Média
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

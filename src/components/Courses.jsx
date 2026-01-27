@@ -106,7 +106,7 @@ function CourseCard({ title, slug, icon: Icon, desc, textColor, borderClass, hov
   return (
     <div
       ref={ref}
-      className={`card-enter ${visible ? 'in-view' : ''} relative clip-card w-full max-w-full h-[120px] p-[3px] ${borderClass} transition-transform duration-200 hover:-translate-y-1.5 hover:scale-[1.02] ${hoverShadow}`}
+      className={`card-enter ${visible ? 'in-view' : ''} relative clip-card w-full max-w-full h-[120px] p-[3px] ${borderClass} transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02] ${hoverShadow}`}
     >
       <Button
         asChild
@@ -114,7 +114,7 @@ function CourseCard({ title, slug, icon: Icon, desc, textColor, borderClass, hov
         className="clip-card w-full h-full flex items-center gap-3 sm:gap-4 md:gap-6 px-4 sm:px-6 lg:px-8 bg-[radial-gradient(ellipse_at_60%_40%,#181a2a_0%,#0a0a0a_100%)] hover:bg-[radial-gradient(ellipse_at_60%_40%,#1a1c2e_0%,#0a0a0a_100%)] transition focus-visible:ring-2 ring-fuchsia-500 focus:outline-none justify-start"
       >
         <a href={`/cursos/${slug}`}>
-          <Icon size={24} weight="duotone" className={`${textColor} flex-shrink-0 sm:w-7 sm:h-7 lg:w-8 lg:h-8`} />
+          <Icon size={24} weight="duotone" aria-hidden="true" className={`${textColor} flex-shrink-0 sm:w-7 sm:h-7 lg:w-8 lg:h-8`} />
           <div className="flex flex-col gap-1 min-w-0 flex-1 text-left">
             <h3 className={`font-semibold text-base sm:text-lg leading-tight truncate ${textColor}`}>{title}</h3>
             <p className="text-xs sm:text-sm text-zinc-300 leading-snug line-clamp-2">{desc}</p>
@@ -130,7 +130,7 @@ function VocationalTestCard() {
   return (
     <div
       ref={ref}
-      className={`card-enter ${visible ? 'in-view' : ''} relative clip-card w-full h-auto min-h-[100px] p-[3px] course-border-purple transition-transform duration-200 hover:-translate-y-2 hover:scale-[1.02] hover:shadow-[0_0_30px_#a855f7aa]`}
+      className={`card-enter ${visible ? 'in-view' : ''} relative clip-card w-full h-auto min-h-[100px] p-[3px] course-border-purple transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02] hover:shadow-[0_0_30px_#a855f7aa]`}
     >
       <Card className="clip-card w-full h-full bg-[radial-gradient(ellipse_at_50%_50%,#1e1b2e_0%,#0a0a0a_100%)] hover:bg-[radial-gradient(ellipse_at_50%_50%,#2d1b38_0%,#0a0a0a_100%)] transition border-0">
         <Button
@@ -140,7 +140,7 @@ function VocationalTestCard() {
         >
           <a href="/teste-vocacional">
             <div className="flex flex-col md:flex-row items-center gap-3 md:gap-4 text-center md:text-left">
-              <Brain size={28} weight="duotone" className="text-purple-400 flex-shrink-0 sm:w-8 sm:h-8" />
+              <Brain size={28} weight="duotone" aria-hidden="true" className="text-purple-400 flex-shrink-0 sm:w-8 sm:h-8" />
               <div>
                 <h3 className="font-bold text-base sm:text-lg md:text-xl text-purple-400 leading-tight mb-1">
                   Descubra Seu Curso Ideal
@@ -176,7 +176,7 @@ function VocationalTestCard() {
 
 function Courses() {
   return (
-    <Section id="cursos" className="px-3 sm:px-4 lg:px-6 pt-4 pb-8 bg-zinc-950 text-white items-start justify-start min-h-0 overflow-x-hidden">
+    <Section id="cursos" className="px-3 sm:px-4 lg:px-6 py-16 bg-zinc-950 text-white items-start justify-start min-h-0 overflow-x-hidden">
       <Starfield className="opacity-20" />
 
       <div className="relative z-10 max-w-7xl mx-auto w-full">
