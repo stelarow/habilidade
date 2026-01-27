@@ -13,7 +13,7 @@ const distDir = join(rootDir, 'dist');
 const metaConfig = {
   // Página de Informática
   '/cursos/informatica': {
-    title: 'Curso de Informática Presencial São José SC | Excel Básico ao Avançado, Word, Canva e IA',
+    title: 'Curso de Informática Presencial São José SC | Excel Avançado e IA',
     description: 'Curso de informática presencial em São José SC. Excel, Word, PowerPoint, Canva e IA. Atendemos Florianópolis, Palhoça e Biguaçu. Certificado 170h.',
     keywords: 'curso informática presencial, curso informática são josé, curso informática florianópolis, curso informática palhoça, curso informática biguaçu, excel avançado, word, powerpoint, inteligência artificial, canva',
     canonical: 'https://www.escolahabilidade.com/cursos/informatica',

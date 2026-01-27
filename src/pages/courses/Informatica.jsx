@@ -36,7 +36,7 @@ const courseSchema = {
       "postalCode": "88103-265",
       "addressCountry": "BR"
     },
-    "url": "https://www.escolahabilidade.com.br",
+    "url": "https://www.escolahabilidade.com",
     "areaServed": [
       "São José, SC",
       "Florianópolis, SC",
@@ -176,12 +176,38 @@ const courseSchema = {
   }
 };
 
+// Schema BreadcrumbList para navegação
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://www.escolahabilidade.com"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Cursos",
+      "item": "https://www.escolahabilidade.com/cursos"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Informática",
+      "item": "https://www.escolahabilidade.com/cursos/informatica"
+    }
+  ]
+};
+
 // Schema para LocalBusiness
 const localBusinessSchema = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
   "name": "Escola Habilidade - Curso de Informática",
-  "image": "https://www.escolahabilidade.com.br/assets/informatica-nova/hero/1318912.png",
+  "image": "https://www.escolahabilidade.com/assets/informatica-nova/hero/1318912.png",
   "description": "Escola de informática em São José SC. Cursos presenciais de Excel, Word, PowerPoint, Canva e Inteligência Artificial. Atendemos Florianópolis, Palhoça e Biguaçu.",
   "address": {
     "@type": "PostalAddress",
@@ -219,8 +245,28 @@ const localBusinessSchema = {
     }
   ],
   "telephone": "+55-48-98855-9491",
-  "url": "https://www.escolahabilidade.com.br/cursos/informatica",
+  "url": "https://www.escolahabilidade.com/cursos/informatica",
   "priceRange": "R$ 299,90 - R$ 3.598,80",
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday"],
+      "opens": "08:00",
+      "closes": "20:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "Friday",
+      "opens": "08:00",
+      "closes": "17:30"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "Saturday",
+      "opens": "08:00",
+      "closes": "12:00"
+    }
+  ],
   "aggregateRating": {
     "@type": "AggregateRating",
     "ratingValue": "4.9",
@@ -279,7 +325,7 @@ const faqPageSchema = {
       "name": "Quanto tempo demora para concluir o curso?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "O curso tem 184,5 horas de conteúdo distribuídas em 8 módulos. O ritmo é flexível e depende da sua dedicação. Com estudo regular de 10-15 horas semanais, você pode concluir em aproximadamente 3-4 meses."
+        "text": "O curso tem 170 horas de conteúdo distribuídas em 8 módulos. O ritmo é flexível e depende da sua dedicação. Com estudo regular de 10-15 horas semanais, você pode concluir em aproximadamente 3-4 meses."
       }
     },
     {
@@ -287,7 +333,7 @@ const faqPageSchema = {
       "name": "Que tipo de certificado eu recebo?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Você recebe um Certificado Nacional de 184,5 horas reconhecido em todo território brasileiro. O certificado comprova suas competências em informática moderna e pode ser usado para comprovação profissional."
+        "text": "Você recebe um Certificado Nacional de 170 horas reconhecido em todo território brasileiro. O certificado comprova suas competências em informática moderna e pode ser usado para comprovação profissional."
       }
     },
     {
@@ -369,8 +415,8 @@ const Informatica = () => {
   return (
     <main className="min-h-screen bg-zinc-950 text-white">
       {/* SEO e Meta Tags */}
-      <Helmet>
-        <title>Curso de Informática Presencial São José SC | Excel Básico ao Avançado, Word, Canva e IA</title>
+      <Helmet prioritizeSeoTags>
+        <title>Curso de Informática Presencial São José SC | Excel Avançado e IA</title>
         <meta name="description" content="Curso de informática presencial em São José SC. Excel, Word, PowerPoint, Canva e IA. Atendemos Florianópolis, Palhoça e Biguaçu. Certificado 170h." />
         <meta name="keywords" content="curso informática presencial, curso informática são josé, curso informática florianópolis, curso informática palhoça, curso informática biguaçu, excel avançado, word, powerpoint, inteligência artificial, canva" />
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
@@ -380,13 +426,29 @@ const Informatica = () => {
         {/* Canonical URL */}
         <link rel="canonical" href="https://www.escolahabilidade.com/cursos/informatica" />
 
-        {/* Open Graph tags gerenciadas por transform-html-meta.js durante build */}
+        {/* Open Graph Tags */}
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Curso de Informática Presencial São José SC | Excel Avançado e IA" />
+        <meta property="og:description" content="Curso presencial de informática em São José SC. Excel, Word, PowerPoint, Canva e IA. Certificado 170h. Turmas de até 5 alunos." />
+        <meta property="og:url" content="https://www.escolahabilidade.com/cursos/informatica" />
+        <meta property="og:image" content="https://www.escolahabilidade.com/assets/informatica-nova/hero/1318912.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:site_name" content="Escola Habilidade" />
+        <meta property="og:locale" content="pt_BR" />
+
+        {/* Twitter Card Tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Curso de Informática Presencial São José SC | Excel Avançado e IA" />
+        <meta name="twitter:description" content="Curso presencial de informática em São José SC. Excel, Word, PowerPoint, Canva e IA. Certificado 170h." />
+        <meta name="twitter:image" content="https://www.escolahabilidade.com/assets/informatica-nova/hero/1318912.png" />
       </Helmet>
 
       {/* Schema.org JSON-LD - Renderizado fora do Helmet para compatibilidade com SSG */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify(courseSchema)}} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify(localBusinessSchema)}} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify(faqPageSchema)}} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify(breadcrumbSchema)}} />
 
       {/* Seções organizadas para conversão otimizada */}
       <InformaticaHeroSection />

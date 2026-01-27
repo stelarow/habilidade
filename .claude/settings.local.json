@@ -96,7 +96,11 @@
       "mcp__shadcn__list_items_in_registries",
       "mcp__shadcn__search_items_in_registries",
       "mcp__shadcn__view_items_in_registries",
-      "mcp__serena__write_memory"
+      "mcp__serena__write_memory",
+      "mcp__plugin_context7_context7__resolve-library-id",
+      "mcp__plugin_context7_context7__query-docs",
+      "Bash(npm run lint:*)",
+      "Bash(npx eslint:*)"
     ],
     "deny": []
   },
