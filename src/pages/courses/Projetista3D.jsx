@@ -11,9 +11,13 @@ import { ProjetistaFloatingCTA } from '../../components/course/projetista/Projet
 import { ProjetistaCurriculum } from '../../components/course/projetista/ProjetistaCurriculum';
 import TrustedCompanies from '../../components/TrustedCompanies';
 import { Helmet } from '@dr.pogodin/react-helmet';
-import { 
-  CheckCircle, 
-  Rocket
+import {
+  CheckCircle,
+  Rocket,
+  Users,
+  ShieldCheck,
+  Certificate,
+  TrendUp
 } from '@phosphor-icons/react';
 
 const Projetista3DNew = () => {
@@ -405,48 +409,94 @@ const Projetista3DNew = () => {
       <ProjetistaFloatingCTA />
 
       {/* Final CTA Section */}
-      <section className="px-4 py-16 sm:px-6 lg:px-8 lg:py-20 bg-gradient-to-br from-purple-500/20 via-zinc-950 to-cyan-400/20 relative overflow-hidden">
-        {/* Background Effects */}
+      <section className="px-4 py-20 sm:px-6 lg:px-8 lg:py-28 bg-zinc-950 relative overflow-hidden">
+        {/* Background Effects - Slower, more subtle */}
         <div className="absolute inset-0">
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-purple-500/30 rounded-full blur-3xl animate-pulse" />
+          <div
+            className="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-600/20 rounded-full blur-[120px]"
+            style={{ animation: 'pulse 10s ease-in-out infinite' }}
+          />
+          <div
+            className="absolute top-1/2 right-1/4 translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-cyan-500/15 rounded-full blur-[120px]"
+            style={{ animation: 'pulse 10s ease-in-out infinite 3s' }}
+          />
         </div>
 
-        <div className="container mx-auto max-w-7xl relative z-10 text-center">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl md:text-6xl font-bold mb-8">
-              <span className="bg-gradient-to-r from-purple-400 via-purple-600 to-cyan-400 bg-clip-text text-transparent">PRONTO PARA</span>
+        {/* Grid pattern */}
+        <div
+          className="absolute inset-0 opacity-[0.02]"
+          style={{
+            backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)',
+            backgroundSize: '80px 80px'
+          }}
+        />
+
+        <div className="container mx-auto max-w-7xl relative z-10">
+          <div className="max-w-4xl mx-auto text-center">
+            {/* Social Proof Badge */}
+            <div className="inline-flex items-center gap-2 px-5 py-2.5 mb-8 bg-green-500/10 border border-green-400/30 rounded-full">
+              <TrendUp className="w-5 h-5 text-green-400" weight="fill" />
+              <span className="text-sm font-semibold text-green-300">
+                +15 alunos matriculados esta semana
+              </span>
+            </div>
+
+            <h2 className="text-4xl md:text-5xl lg:text-7xl font-black mb-8 leading-[1.1]">
+              <span className="bg-gradient-to-r from-purple-400 via-fuchsia-400 to-cyan-400 bg-clip-text text-transparent">
+                PRONTO PARA
+              </span>
               <br />
               <span className="text-white">TRANSFORMAR SUA</span>
               <br />
-              <span className="bg-gradient-to-r from-purple-400 via-purple-600 to-cyan-400 bg-clip-text text-transparent">CARREIRA?</span>
+              <span className="bg-gradient-to-r from-cyan-400 via-purple-400 to-purple-600 bg-clip-text text-transparent">
+                CARREIRA?
+              </span>
             </h2>
-            
-            <p className="text-xl text-zinc-300 mb-12 max-w-2xl mx-auto">
-              Junte-se a mais de 200 profissionais que já mudaram de vida
-              com nosso método presencial comprovado.
+
+            <p className="text-xl md:text-2xl text-zinc-300 mb-10 max-w-2xl mx-auto leading-relaxed">
+              Junte-se a mais de <span className="text-white font-semibold">200 profissionais</span> que já
+              mudaram de vida com nosso método presencial comprovado.
             </p>
 
-            <div className="space-y-6">
-              <button className="group relative overflow-hidden rounded-xl px-12 py-6 text-xl font-bold text-white transition-all duration-300 bg-gradient-to-r from-purple-500 to-cyan-400 shadow-2xl shadow-purple-500/30 hover:shadow-purple-500/50 hover:-translate-y-1 animate-pulse flex items-center justify-center gap-3 mx-auto">
-                <Rocket className="w-6 h-6" />
-                QUERO ME TORNAR PROJETISTA 3D - ÚLTIMAS VAGAS
-              </button>
-              
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-zinc-400">
-                <div className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-green-400" />
-                  <span>Garantia de 7 dias</span>
+            {/* CTA Button */}
+            <div className="mb-10">
+              <a
+                href="https://wa.me/5548988559491?text=Ol%C3%A1%21%20Quero%20me%20tornar%20Projetista%203D%20-%20%C3%9Altimas%20Vagas"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative inline-flex items-center justify-center gap-3 px-10 sm:px-14 py-5 sm:py-6 text-lg sm:text-xl font-bold text-white rounded-2xl bg-gradient-to-r from-purple-600 via-fuchsia-500 to-cyan-500 shadow-2xl shadow-purple-500/30 hover:shadow-purple-500/50 transition-all duration-300 hover:-translate-y-1 hover:scale-[1.02]"
+              >
+                <Rocket className="w-6 h-6" weight="bold" />
+                <span className="hidden sm:inline">QUERO ME TORNAR PROJETISTA 3D</span>
+                <span className="sm:hidden">QUERO COMEÇAR AGORA</span>
+
+                {/* Shine effect */}
+                <div className="absolute inset-0 rounded-2xl overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
                 </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-green-400" />
-                  <span>Certificado Nacional</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-green-400" />
-                  <span>Suporte Vitalício</span>
-                </div>
+              </a>
+            </div>
+
+            {/* Trust badges */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-2xl mx-auto mb-10">
+              <div className="flex items-center justify-center gap-3 px-4 py-3 bg-zinc-900/60 backdrop-blur border border-zinc-700/50 rounded-xl">
+                <ShieldCheck className="w-5 h-5 text-green-400" weight="fill" />
+                <span className="text-sm text-zinc-300">Garantia de 7 dias</span>
+              </div>
+              <div className="flex items-center justify-center gap-3 px-4 py-3 bg-zinc-900/60 backdrop-blur border border-zinc-700/50 rounded-xl">
+                <Certificate className="w-5 h-5 text-purple-400" weight="fill" />
+                <span className="text-sm text-zinc-300">Certificado Nacional</span>
+              </div>
+              <div className="flex items-center justify-center gap-3 px-4 py-3 bg-zinc-900/60 backdrop-blur border border-zinc-700/50 rounded-xl">
+                <Users className="w-5 h-5 text-cyan-400" weight="fill" />
+                <span className="text-sm text-zinc-300">Suporte Vitalício</span>
               </div>
             </div>
+
+            {/* Final social proof */}
+            <p className="text-sm text-zinc-500">
+              Turmas limitadas a 4 alunos para garantir atenção individualizada
+            </p>
           </div>
         </div>
       </section>
