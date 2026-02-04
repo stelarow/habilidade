@@ -4,7 +4,7 @@ import LogoH from "./LogoH";
 
 const Footer = () => {
   return (
-    <Section className="bg-zinc-950 text-white py-16 min-h-0">
+    <Section as="footer" className="bg-zinc-950 text-white py-16 min-h-0">
       <div className="max-w-6xl mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-8">
           {/* Escola Info */}
