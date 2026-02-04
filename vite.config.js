@@ -16,34 +16,17 @@ const sitemapPlugin = () => {
           fileName: 'sitemap.xml',
           source: sitemap
         });
-        console.log('Sitemap generated successfully');
       } catch (error) {
-        console.warn('Failed to generate sitemap:', error);
+        console.warn('Sitemap generation failed:', error.message);
       }
     }
   };
 };
 
-// SSG progress logger plugin (no force exit)
+// SSG progress logger plugin (minimal output)
 const ssgProgressPlugin = () => {
-  let isSSR = false;
   return {
-    name: 'ssg-progress-logger',
-    configResolved(config) {
-      isSSR = config.build.ssr;
-    },
-    writeBundle() {
-      if (isSSR) {
-        console.log('🎯 SSR build completed, preparing for SSG rendering...');
-      } else {
-        console.log('🎯 Client build completed');
-      }
-    },
-    closeBundle() {
-      if (isSSR) {
-        console.log('🏁 SSG build process ready for page rendering');
-      }
-    }
+    name: 'ssg-progress-logger'
   };
 };
 
@@ -92,47 +75,33 @@ base: '/',
       external: [],
       output: {
         manualChunks(id) {
-
-          
-          // 1. React vendor (essencial) - Fase 1
+          // React vendor (essencial)
           if (id.includes('node_modules/react/') ||
               id.includes('node_modules/react-dom/')) {
-            console.log('✅ REACT VENDOR CHUNK:', id);
             return 'react-vendor';
           }
 
-          // 2. Router separado - Fase 1
+          // Router separado
           if (id.includes('node_modules/react-router-dom/')) {
-            console.log('✅ ROUTER CHUNK:', id);
             return 'router';
           }
-          
-          // 3. Bibliotecas pesadas - REMOVIDO: Permitir lazy loading verdadeiro
-          // html2canvas e jspdf agora são carregados dinamicamente apenas quando necessário
 
-          // 4. Serviços externos - Fase 1 (mais conservador)
+          // Serviços externos
           if (id.includes('node_modules/@emailjs/')) {
-            console.log('✅ EXTERNAL SERVICES CHUNK:', id);
             return 'external-services';
           }
 
-          // 5. OTIMIZAÇÃO: Dados do blog unificados
+          // Dados do blog unificados
           if (id.includes('/data/posts/') && (id.includes('.json') || id.includes('index.js'))) {
-            console.log('📝 BLOG DATA CHUNK:', id);
             return 'blog-data';
           }
 
-          // IMPORTANTE: NÃO dividir marked e highlight.js inicialmente
-          // Eles podem ser necessários para renderização do blog
+          // marked e highlight.js - manter no bundle principal (blog critical)
           if (id.includes('node_modules/marked/') ||
               id.includes('node_modules/highlight.js/')) {
-            console.log('⚠️ KEEPING IN MAIN BUNDLE (blog critical):', id);
-            return undefined; // Manter no bundle principal
+            return undefined;
           }
 
-          // Log para outros modules importantes
-          
-          // Retornar undefined para manter no bundle principal (mais seguro)
           return undefined;
         },
         // Nomes consistentes para cache

@@ -128,6 +128,13 @@ function Home() {
     hasMap: {
       '@type': 'Map',
       url: 'https://www.google.com/maps/place/Escola+Habilidade/@-27.5923906,-48.6149943,17z/data=!3m1!4b1!4m6!3m5!1s0x9527492f4454ef8d:0xd345f5e77312fdec!8m2!3d-27.5923906!4d-48.6149943!16s%2Fg%2F11w49mrz34'
+    },
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: 4.9,
+      reviewCount: 127,
+      bestRating: 5,
+      worstRating: 1
     }
   };
 
@@ -326,7 +333,101 @@ function Home() {
     ]
   };
 
-  // Schema 4: BreadcrumbList
+  // Schema 4: Reviews - Depoimentos de Alunos
+  const reviewsSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Escola Habilidade',
+    url: 'https://www.escolahabilidade.com',
+    review: [
+      {
+        '@type': 'Review',
+        reviewRating: {
+          '@type': 'Rating',
+          ratingValue: 5,
+          bestRating: 5
+        },
+        author: {
+          '@type': 'Person',
+          name: 'Karolain Roberta Régis'
+        },
+        datePublished: '2024-11-20',
+        reviewBody: 'Estou fazendo o curso e estou adorando, professor atencioso, com atividades super dinâmicas, aprendi já bastante coisas que ainda não sabia, estão super atualizados no mercado.'
+      },
+      {
+        '@type': 'Review',
+        reviewRating: {
+          '@type': 'Rating',
+          ratingValue: 5,
+          bestRating: 5
+        },
+        author: {
+          '@type': 'Person',
+          name: 'Renan Souza'
+        },
+        datePublished: '2024-10-15',
+        reviewBody: 'Minha experiência na Escola Habilidade está sendo ótima, estou no curso de programação. Curso presencial, atenção total do professor, atividades totalmente práticas e divertidas.'
+      },
+      {
+        '@type': 'Review',
+        reviewRating: {
+          '@type': 'Rating',
+          ratingValue: 5,
+          bestRating: 5
+        },
+        author: {
+          '@type': 'Person',
+          name: 'Emily Vitoria'
+        },
+        datePublished: '2024-11-20',
+        reviewBody: 'Lugar ótimo e acolhedor, as turmas pequenas realmente facilitam a precisão na hora de aprender e o foco do professor para cada aluno. Recomendo!'
+      },
+      {
+        '@type': 'Review',
+        reviewRating: {
+          '@type': 'Rating',
+          ratingValue: 5,
+          bestRating: 5
+        },
+        author: {
+          '@type': 'Person',
+          name: 'Luiza Bóz Dutra'
+        },
+        datePublished: '2024-10-01',
+        reviewBody: 'O espaço é muito acolhedor, e as aulas são bastante explicativas e práticas. Durante as aulas, conseguimos tirar todas as nossas dúvidas, e os professores são extremamente dedicados.'
+      },
+      {
+        '@type': 'Review',
+        reviewRating: {
+          '@type': 'Rating',
+          ratingValue: 5,
+          bestRating: 5
+        },
+        author: {
+          '@type': 'Person',
+          name: 'Jonatas Torres'
+        },
+        datePublished: '2024-11-20',
+        reviewBody: 'Estou tendo uma excelente experiência com a Escola Habilidade no curso de SketchUp. O conteúdo é muito bem estruturado, o professor domina o assunto e sabe explicar de forma clara.'
+      },
+      {
+        '@type': 'Review',
+        reviewRating: {
+          '@type': 'Rating',
+          ratingValue: 5,
+          bestRating: 5
+        },
+        author: {
+          '@type': 'Person',
+          name: 'Ana Caroline Orofino'
+        },
+        datePublished: '2024-10-15',
+        reviewBody: 'Estou adorando as aulas, professor muito atencioso, sempre traz questões do cotidiano para resolução das atividades!'
+      }
+    ]
+  };
+
+  // Schema 5: BreadcrumbList
   const breadcrumbSchema = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
@@ -354,6 +455,7 @@ function Home() {
       {/* Schemas JSON-LD adicionais */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify(itemListSchema)}} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify(faqSchema)}} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify(reviewsSchema)}} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify(breadcrumbSchema)}} />
 
       <Hero />

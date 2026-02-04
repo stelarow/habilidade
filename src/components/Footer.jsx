@@ -154,7 +154,7 @@ const Footer = () => {
         {/* Copyright */}
         <div className="border-t border-zinc-800 pt-8 text-center">
           <p className="text-zinc-400 text-sm flex items-center justify-center gap-2">
-            © 2024 Escola Habilidade. Feito com <Heart size={16} className="text-red-500" /> em São José/SC.
+            © 2026 Escola Habilidade. Feito com <Heart size={16} className="text-red-500" /> em São José/SC.
           </p>
         </div>
       </div>

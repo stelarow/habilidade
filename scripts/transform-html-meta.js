@@ -162,7 +162,6 @@ const metaConfig = {
 function transformHtml(htmlContent, pagePath) {
   const config = metaConfig[pagePath];
   if (!config) {
-    console.log(`⚠️ Nenhuma configuração encontrada para: ${pagePath}`);
     return htmlContent;
   }
 
@@ -178,20 +177,17 @@ function transformHtml(htmlContent, pagePath) {
   const titleRegex = /<title>([^<]*)<\/title>/;
   if (titleRegex.test(transformedHtml)) {
     transformedHtml = transformedHtml.replace(titleRegex, `<title>${config.title}</title>`);
-    console.log(`✅ Title atualizado para: ${pagePath}`);
   }
 
   // Substituir ou adicionar meta description
   const descriptionRegex = /<meta name="description" content="[^"]*"/;
   if (descriptionRegex.test(transformedHtml)) {
     transformedHtml = transformedHtml.replace(descriptionRegex, `<meta name="description" content="${config.description}"`);
-    console.log(`✅ Meta description atualizada para: ${pagePath}`);
   } else {
     // Adicionar meta description após viewport ou charset se não existir
     const addDescRegex = /(<meta name="viewport"[^>]*>|<meta charset="[^"]*">)/;
     if (addDescRegex.test(transformedHtml)) {
       transformedHtml = transformedHtml.replace(addDescRegex, `$1\n    <meta name="description" content="${config.description}" />`);
-      console.log(`✅ Meta description adicionada para: ${pagePath}`);
     }
   }
 
@@ -207,7 +203,6 @@ function transformHtml(htmlContent, pagePath) {
         transformedHtml = transformedHtml.replace(addKeywordsRegex, `$1\n    <meta name="keywords" content="${config.keywords}" />`);
       }
     }
-    console.log(`✅ Meta keywords atualizada para: ${pagePath}`);
   }
 
   // Adicionar ou atualizar Open Graph tags
@@ -290,15 +285,11 @@ function transformHtml(htmlContent, pagePath) {
   if (config.canonical) {
     const canonicalRegex = /<link rel="canonical" href="[^"]*"[^>]*>/;
     if (canonicalRegex.test(transformedHtml)) {
-      // Substituir canonical existente
       transformedHtml = transformedHtml.replace(canonicalRegex, `<link rel="canonical" href="${config.canonical}" />`);
-      console.log(`✅ Canonical atualizado para: ${pagePath} -> ${config.canonical}`);
     } else {
-      // Adicionar canonical após meta tags
       const addCanonicalRegex = /(<meta name="author" content="[^"]*"[^>]*>)/;
       if (addCanonicalRegex.test(transformedHtml)) {
         transformedHtml = transformedHtml.replace(addCanonicalRegex, `$1\n    <link rel="canonical" href="${config.canonical}" />`);
-        console.log(`✅ Canonical adicionado para: ${pagePath} -> ${config.canonical}`);
       }
     }
   }
@@ -344,53 +335,46 @@ function getPagePath(filePath) {
 function processHtmlFiles(dir) {
   const items = readdirSync(dir);
   let processedCount = 0;
+  let totalCount = 0;
 
   for (const item of items) {
     const fullPath = join(dir, item);
     const stat = statSync(fullPath);
 
     if (stat.isDirectory()) {
-      // Recursivo para subdiretórios
-      processedCount += processHtmlFiles(fullPath);
+      const result = processHtmlFiles(fullPath);
+      processedCount += result.processed;
+      totalCount += result.total;
     } else if (item.endsWith('.html')) {
+      totalCount++;
       try {
-        // Calcular path relativo para mapeamento
         const relativePath = fullPath.replace(distDir, '').replace(/\\/g, '/');
         const pagePath = getPagePath(relativePath);
 
-        console.log(`🔍 Processando: ${relativePath} -> ${pagePath}`);
-
-        // Ler, transformar e escrever
         const originalHtml = readFileSync(fullPath, 'utf-8');
         const transformedHtml = transformHtml(originalHtml, pagePath);
 
         if (originalHtml !== transformedHtml) {
           writeFileSync(fullPath, transformedHtml, 'utf-8');
           processedCount++;
-          console.log(`✅ Transformado: ${relativePath}`);
-        } else {
-          console.log(`⚪ Sem alterações: ${relativePath}`);
         }
       } catch (error) {
-        console.error(`❌ Erro ao processar ${fullPath}:`, error.message);
+        console.error(`❌ Erro: ${fullPath}:`, error.message);
       }
     }
   }
 
-  return processedCount;
+  return { processed: processedCount, total: totalCount };
 }
 
 // Função principal
 export function transformHtmlMeta() {
-  console.log('🎨 Iniciando transformação de meta tags HTML...');
-  console.log(`📁 Diretório: ${distDir}`);
-
   try {
-    const processedCount = processHtmlFiles(distDir);
-    console.log(`✅ Transformação concluída! ${processedCount} arquivos processados.`);
+    const result = processHtmlFiles(distDir);
+    console.log(`🏷️  Meta tags: ${result.processed}/${result.total} updated`);
     return true;
   } catch (error) {
-    console.error('❌ Erro durante transformação:', error.message);
+    console.error('❌ Meta tags error:', error.message);
     return false;
   }
 }

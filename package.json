@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite-react-ssg dev",
     "build": "npm run build:optimize",
-    "build:optimize": "node scripts/build-ssg.js && npm run inject:critical-css && npm run analyze:bundle",
+    "build:optimize": "node scripts/build-ssg.js && npm run analyze:bundle",
     "build:production": "npm run optimize:projetista:simple && node scripts/build-ssg.js",
     "lint": "eslint .",
     "preview": "vite preview",

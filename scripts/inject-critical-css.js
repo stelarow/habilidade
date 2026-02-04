@@ -307,27 +307,23 @@ async function injectCriticalCSS() {
 
   const htmlFiles = await glob(`${distDir}/**/*.html`);
   
-  console.log(`🎨 Post-SSG Critical CSS injection starting...`);
-  console.log(`📁 Processing ${htmlFiles.length} HTML files in ${distDir}`);
-  
+  console.log(`🎨 Critical CSS injection: ${htmlFiles.length} files`);
+
   let processedCount = 0;
   let skippedCount = 0;
-  
+
   for (const filePath of htmlFiles) {
     try {
       let html = fs.readFileSync(filePath, 'utf-8');
-      
+
       // Skip if already processed
       if (html.includes('data-critical-css-processed="true"')) {
-        console.log(`⏭️  Already processed: ${path.relative(distDir, filePath)}`);
         skippedCount++;
         continue;
       }
-      
+
       // Generate critical CSS components
       const criticalCSS = generateCriticalCSS();
-
-      console.log(`🔍 Injecting ${criticalCSS.length} chars of Critical CSS into ${path.relative(distDir, filePath)}`);
 
       // Inject critical CSS inline right after the opening <head> tag
       const criticalCSSTag = `<style data-critical>${criticalCSS}</style>`;
@@ -335,38 +331,30 @@ async function injectCriticalCSS() {
         /(<head[^>]*>)/i,
         `$1\n    ${criticalCSSTag}`
       );
-      
-      // Step 1: Remove ALL existing CSS links to prevent duplication
-      console.log(`🧹 Removing existing CSS links to prevent duplication...`);
-      
-      // Find all CSS links for logging
+
+      // Find all CSS links
       const existingCssLinks = html.match(/<link[^>]*(?:rel="stylesheet"|href="[^"]*\.css")[^>]*>/gi) || [];
-      console.log(`🔍 Found ${existingCssLinks.length} existing CSS links to process`);
-      
+
       // Remove ALL CSS stylesheet links (any order of attributes)
       html = html.replace(/<link[^>]*rel="stylesheet"[^>]*>/gi, '');
       html = html.replace(/<link[^>]*href="[^"]*\.css"[^>]*rel="[^"]*"[^>]*>/gi, '');
       html = html.replace(/<link[^>]*as="style"[^>]*href="[^"]*\.css"[^>]*>/gi, '');
-      
-      // Step 2: Extract unique CSS hrefs from removed links
+
+      // Extract unique CSS hrefs from removed links
       const uniqueCssFiles = new Set();
       existingCssLinks.forEach(link => {
         const hrefMatch = link.match(/href="([^"]*\.css[^"]*)"/i);
         if (hrefMatch &&
             !hrefMatch[1].includes('fonts.googleapis.com') &&
-            !hrefMatch[1].includes('/src/') && // Filter out development paths
-            !hrefMatch[1].includes('src/styles/fonts.css')) { // Specifically exclude fonts.css
+            !hrefMatch[1].includes('/src/') &&
+            !hrefMatch[1].includes('src/styles/fonts.css')) {
           uniqueCssFiles.add(hrefMatch[1]);
         }
       });
-      
-      console.log(`📁 Unique CSS files to make async: ${uniqueCssFiles.size}`);
-      
-      // Step 3: Add back as SYNCHRONOUS links to prevent FOUC
-      // CSS is now loaded blocking but AFTER critical inline CSS for immediate render
+
+      // Add back as SYNCHRONOUS links to prevent FOUC
       let cssLinks = '';
       uniqueCssFiles.forEach(href => {
-        // Load main app CSS synchronously to prevent FOUC
         cssLinks += `<link rel="stylesheet" href="${href}">\n    `;
       });
 
@@ -374,41 +362,27 @@ async function injectCriticalCSS() {
       if (cssLinks) {
         html = html.replace('</head>', `${cssLinks}</head>`);
       }
-      
-      // Step 4: Optimize Google Fonts loading
-      console.log(`🔤 Optimizing Google Fonts for non-blocking load...`);
-      
-      // Remove existing Google Fonts links
+
+      // Remove existing Google Fonts links (fonts are bundled in main CSS)
       html = html.replace(/<link[^>]*fonts\.googleapis\.com[^>]*>/gi, '');
       html = html.replace(/<link[^>]*fonts\.gstatic\.com[^>]*>/gi, '');
-      
-      // Self-hosted fonts are already bundled by Vite in the main CSS
-      // No need to add separate link that would cause 404 errors
-      console.log(`✅ Fonts are bundled in main CSS, skipping separate font CSS link`);
-      
-      // No noscript fallback needed since CSS loads synchronously now
-      // No async loader needed - CSS loads directly in <head>
 
       // Remove any existing async CSS loader script (from previous processing)
-      console.log(`🧹 Removing old async CSS loader script if present...`);
       html = html.replace(/<script>\s*\(function\(\)\s*\{\s*'use strict';[\s\S]*?loadNonCriticalCSS[\s\S]*?<\/script>/gi, '');
 
       // Mark as processed to avoid double-processing
       html = html.replace('<html', '<html data-critical-css-processed="true"');
-      
+
       // Write processed HTML
       fs.writeFileSync(filePath, html);
-      
-      console.log(`✅ Processed: ${path.relative(distDir, filePath)}`);
       processedCount++;
-      
+
     } catch (error) {
-      console.error(`❌ Failed to process ${filePath}:`, error);
+      console.error(`❌ Failed: ${path.relative(distDir, filePath)}:`, error.message);
     }
   }
-  
-  console.log(`🎨 Critical CSS injection completed!`);
-  console.log(`📊 Summary: ${processedCount} processed, ${skippedCount} skipped`);
+
+  console.log(`✅ Critical CSS: ${processedCount} processed, ${skippedCount} skipped`);
   
   if (processedCount === 0 && skippedCount === 0) {
     console.warn('⚠️  No files were processed. Check that HTML files exist in dist/');

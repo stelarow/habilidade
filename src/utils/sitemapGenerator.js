@@ -68,7 +68,8 @@ const COURSE_PAGES = [
   'edicao-video',
   'excel-avancado-business-intelligence',
   'inteligencia-artificial',
-  'sketchup-enscape'
+  'sketchup-enscape',
+  'administracao'
 ].map(slug => ({
   url: `/cursos/${slug}`,
   priority: 0.9,

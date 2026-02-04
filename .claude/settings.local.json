@@ -100,7 +100,19 @@
       "mcp__plugin_context7_context7__resolve-library-id",
       "mcp__plugin_context7_context7__query-docs",
       "Bash(npm run lint:*)",
-      "Bash(npx eslint:*)"
+      "Bash(npx eslint:*)",
+      "WebFetch(domain:www.reddit.com)",
+      "mcp__plugin_playwright_playwright__browser_navigate",
+      "mcp__plugin_playwright_playwright__browser_click",
+      "mcp__plugin_playwright_playwright__browser_snapshot",
+      "mcp__plugin_playwright_playwright__browser_evaluate",
+      "Bash(dir:*)",
+      "Bash(reg query:*)",
+      "mcp__plugin_playwright_playwright__browser_take_screenshot",
+      "mcp__plugin_playwright_playwright__browser_console_messages",
+      "mcp__plugin_playwright_playwright__browser_resize",
+      "Bash(timeout:*)",
+      "WebFetch(domain:www.escolahabilidade.com)"
     ],
     "deny": []
   },

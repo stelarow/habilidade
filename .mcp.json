@@ -1,11 +1,17 @@
 {
   "mcpServers": {
     "shadcn": {
-      "command": "npx",
+      "command": "cmd",
       "args": [
+        "/c",
+        "npx",
         "shadcn@latest",
         "mcp"
       ]
+    },
+    "playwright": {
+      "command": "cmd",
+      "args": ["/c", "npx", "@anthropic/mcp-playwright"]
     }
   }
 }
