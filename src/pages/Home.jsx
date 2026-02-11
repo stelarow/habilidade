@@ -129,6 +129,8 @@ function Home() {
       '@type': 'Map',
       url: 'https://www.google.com/maps/place/Escola+Habilidade/@-27.5923906,-48.6149943,17z/data=!3m1!4b1!4m6!3m5!1s0x9527492f4454ef8d:0xd345f5e77312fdec!8m2!3d-27.5923906!4d-48.6149943!16s%2Fg%2F11w49mrz34'
     },
+    educationalCredentialAwarded: 'Certificado Técnico Profissionalizante',
+    priceRange: '$$',
     aggregateRating: {
       '@type': 'AggregateRating',
       ratingValue: 4.9,
