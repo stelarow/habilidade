@@ -112,7 +112,8 @@
       "mcp__plugin_playwright_playwright__browser_console_messages",
       "mcp__plugin_playwright_playwright__browser_resize",
       "Bash(timeout:*)",
-      "WebFetch(domain:www.escolahabilidade.com)"
+      "WebFetch(domain:www.escolahabilidade.com)",
+      "Bash(git fetch:*)"
     ],
     "deny": []
   },

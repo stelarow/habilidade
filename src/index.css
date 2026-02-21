@@ -1307,3 +1307,16 @@ button, a, [role="button"] {
 .skip-link:focus {
   top: 1rem;
 }
+
+/* ===== GLOWING EFFECT - WebKit Mask Support ===== */
+.glow::after {
+  -webkit-mask-clip: padding-box, border-box;
+  -webkit-mask-composite: xor;
+  -webkit-mask-image: linear-gradient(#0000, #0000),
+    conic-gradient(
+      from calc((var(--start) - var(--spread)) * 1deg),
+      #00000000 0deg,
+      #fff,
+      #00000000 calc(var(--spread) * 2deg)
+    );
+}

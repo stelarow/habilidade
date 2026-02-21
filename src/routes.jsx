@@ -116,6 +116,11 @@ export const routes = [
         path: 'devstart',
         lazy: () => import('./pages/DevStart')
       },
+      // Página do Programa de Afiliados
+      {
+        path: 'afiliacao',
+        lazy: () => import('./pages/Afiliacao')
+      },
       {
         path: 'contato',
         lazy: () => import('./pages/Contact')
