@@ -2,9 +2,52 @@ import { MapPin, Phone, Heart, Clock, InstagramLogo, WhatsappLogo } from "@phosp
 import Section from "./Section";
 import LogoH from "./LogoH";
 
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Escola Habilidade",
+  "alternateName": "Escola Habilidade - Cursos Profissionalizantes",
+  "url": "https://www.escolahabilidade.com",
+  "logo": "https://www.escolahabilidade.com/logo-escola-habilidade.png",
+  "description": "Escola de cursos profissionalizantes em São José SC. Informática, AutoCAD, SketchUp, Design, Marketing Digital. Certificado reconhecido.",
+  "telephone": "+55-48-98855-9491",
+  "email": "contato@escolahabilidade.com",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Rua Caetano José Ferreira, 426 - Sala 5 - Kobrasol",
+    "addressLocality": "São José",
+    "addressRegion": "SC",
+    "postalCode": "88102-280",
+    "addressCountry": "BR"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "-27.5923906",
+    "longitude": "-48.6175692"
+  },
+  "sameAs": [
+    "https://www.instagram.com/habilidade.escola",
+    "https://www.facebook.com/escolahabilidade"
+  ],
+  "areaServed": [
+    { "@type": "State", "name": "Santa Catarina" },
+    { "@type": "City", "name": "São José" },
+    { "@type": "City", "name": "Florianópolis" },
+    { "@type": "City", "name": "Palhoça" },
+    { "@type": "City", "name": "Biguaçu" }
+  ],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "reviewCount": "127",
+    "bestRating": "5"
+  }
+};
+
 const Footer = () => {
   return (
     <Section as="footer" className="bg-zinc-950 text-white py-16 min-h-0">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify(organizationSchema)}} />
       <div className="max-w-6xl mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-8">
           {/* Escola Info */}
