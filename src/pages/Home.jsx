@@ -218,7 +218,6 @@ function Home() {
   const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    name: 'Perguntas Frequentes - Escola Habilidade',
     mainEntity: [
       {
         '@type': 'Question',
@@ -335,101 +334,7 @@ function Home() {
     ]
   };
 
-  // Schema 4: Reviews - Depoimentos de Alunos
-  const reviewsSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'Organization',
-    name: 'Escola Habilidade',
-    url: 'https://www.escolahabilidade.com',
-    review: [
-      {
-        '@type': 'Review',
-        reviewRating: {
-          '@type': 'Rating',
-          ratingValue: 5,
-          bestRating: 5
-        },
-        author: {
-          '@type': 'Person',
-          name: 'Karolain Roberta Régis'
-        },
-        datePublished: '2024-11-20',
-        reviewBody: 'Estou fazendo o curso e estou adorando, professor atencioso, com atividades super dinâmicas, aprendi já bastante coisas que ainda não sabia, estão super atualizados no mercado.'
-      },
-      {
-        '@type': 'Review',
-        reviewRating: {
-          '@type': 'Rating',
-          ratingValue: 5,
-          bestRating: 5
-        },
-        author: {
-          '@type': 'Person',
-          name: 'Renan Souza'
-        },
-        datePublished: '2024-10-15',
-        reviewBody: 'Minha experiência na Escola Habilidade está sendo ótima, estou no curso de programação. Curso presencial, atenção total do professor, atividades totalmente práticas e divertidas.'
-      },
-      {
-        '@type': 'Review',
-        reviewRating: {
-          '@type': 'Rating',
-          ratingValue: 5,
-          bestRating: 5
-        },
-        author: {
-          '@type': 'Person',
-          name: 'Emily Vitoria'
-        },
-        datePublished: '2024-11-20',
-        reviewBody: 'Lugar ótimo e acolhedor, as turmas pequenas realmente facilitam a precisão na hora de aprender e o foco do professor para cada aluno. Recomendo!'
-      },
-      {
-        '@type': 'Review',
-        reviewRating: {
-          '@type': 'Rating',
-          ratingValue: 5,
-          bestRating: 5
-        },
-        author: {
-          '@type': 'Person',
-          name: 'Luiza Bóz Dutra'
-        },
-        datePublished: '2024-10-01',
-        reviewBody: 'O espaço é muito acolhedor, e as aulas são bastante explicativas e práticas. Durante as aulas, conseguimos tirar todas as nossas dúvidas, e os professores são extremamente dedicados.'
-      },
-      {
-        '@type': 'Review',
-        reviewRating: {
-          '@type': 'Rating',
-          ratingValue: 5,
-          bestRating: 5
-        },
-        author: {
-          '@type': 'Person',
-          name: 'Jonatas Torres'
-        },
-        datePublished: '2024-11-20',
-        reviewBody: 'Estou tendo uma excelente experiência com a Escola Habilidade no curso de SketchUp. O conteúdo é muito bem estruturado, o professor domina o assunto e sabe explicar de forma clara.'
-      },
-      {
-        '@type': 'Review',
-        reviewRating: {
-          '@type': 'Rating',
-          ratingValue: 5,
-          bestRating: 5
-        },
-        author: {
-          '@type': 'Person',
-          name: 'Ana Caroline Orofino'
-        },
-        datePublished: '2024-10-15',
-        reviewBody: 'Estou adorando as aulas, professor muito atencioso, sempre traz questões do cotidiano para resolução das atividades!'
-      }
-    ]
-  };
-
-  // Schema 5: BreadcrumbList
+  // Schema 4: BreadcrumbList
   const breadcrumbSchema = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
@@ -451,13 +356,12 @@ function Home() {
         keywords="cursos são josé sc, escola técnica são josé, cursos profissionalizantes são josé, curso informática são josé, curso sketchup são josé, curso autocad são josé, curso revit são josé, marketing digital são josé, programação são josé, cursos técnicos grande florianópolis, escola habilidade kobrasol"
         path="/"
         type="website"
-        schemaData={schemaData}
       />
 
-      {/* Schemas JSON-LD adicionais */}
+      {/* Schemas JSON-LD renderizados fora do Helmet para compatibilidade com SSG */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify(schemaData)}} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify(itemListSchema)}} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify(faqSchema)}} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify(reviewsSchema)}} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify(breadcrumbSchema)}} />
 
       <Hero />

@@ -233,10 +233,9 @@ const SEOHead = ({
       <meta name="distribution" content="global" />
       
       {/* JSON-LD Structured Data */}
-      <script 
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(generateSchemaData()) }}
-      />
+      <script type="application/ld+json">
+        {JSON.stringify(generateSchemaData())}
+      </script>
     </Helmet>
   );
 };
