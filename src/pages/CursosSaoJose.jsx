@@ -90,7 +90,7 @@ const CursosSaoJose = () => {
           name: 'Qual o melhor curso em São José SC?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: 'A Escola Habilidade tem os melhores cursos profissionalizantes de São José! Oferecemos Informática, SketchUp, AutoCAD, Revit e Marketing Digital com turmas pequenas (até 4 alunos) e certificado nacional. Nota 4.9 estrelas e mais de 200 alunos formados.'
+            text: 'A Escola Habilidade tem os melhores cursos profissionalizantes de São José! Oferecemos Informática, SketchUp, AutoCAD, Revit e Marketing Digital com turmas pequenas (até 4 alunos) e certificado nacional. Nota 5 estrelas e mais de 200 alunos formados.'
           }
         },
         {

@@ -7,7 +7,7 @@ import useInView from '../hooks/useInView';
 const Reviews = () => {
   const stats = {
     totalReviews: 127,
-    googleRating: 4.9,
+    googleRating: 5,
     studentsGraduated: 1000,
     yearsExperience: 8
   };

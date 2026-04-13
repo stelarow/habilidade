@@ -54,7 +54,7 @@ export const InformaticaHeroSection = () => {
         <div className="flex items-center justify-center gap-3 text-sm md:text-base text-zinc-300 mb-8">
           <MapPin className="hidden sm:block w-5 h-5 text-cyan-400" />
           <span>
-            <strong className="text-white">170h de conteúdo</strong> • Certificado nacional • <strong className="text-cyan-400">Excel + IA</strong> • <strong className="text-yellow-400">4.9★</strong> avaliação
+            <strong className="text-white">170h de conteúdo</strong> • Certificado nacional • <strong className="text-cyan-400">Excel + IA</strong> • <strong className="text-yellow-400">5★</strong> avaliação
           </span>
         </div>
 
@@ -100,7 +100,7 @@ export const InformaticaHeroSection = () => {
               <div className="text-zinc-300">Anos</div>
             </div>
             <div className="text-xs text-center">
-              <div className="text-2xl font-bold text-yellow-400">4.9★</div>
+              <div className="text-2xl font-bold text-yellow-400">5★</div>
               <div className="text-zinc-300">Avaliação</div>
             </div>
           </div>

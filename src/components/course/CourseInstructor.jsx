@@ -42,7 +42,7 @@ function CourseInstructor({ course }) {
             <div className="text-center">
               <div className="flex items-center gap-1 justify-center mb-1">
                 <Star size={16} className="text-yellow-400" weight="fill" />
-                <span className="text-white font-semibold">4.9</span>
+                <span className="text-white font-semibold">5</span>
               </div>
               <div className="text-xs text-gray-400">Avaliação</div>
             </div>

@@ -80,7 +80,7 @@ function Hero() {
             ))}
           </div>
           <span className="text-zinc-300">
-            <strong className="text-white">4.9</strong> no Google
+            <strong className="text-white">5</strong> no Google
             <span className="mx-2 text-zinc-500">|</span>
             <strong className="text-white">127+</strong> avaliações
           </span>

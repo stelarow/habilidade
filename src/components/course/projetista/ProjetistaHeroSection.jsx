@@ -203,7 +203,7 @@ export const ProjetistaHeroSection = () => {
               />
               <TrustCard
                 icon={Star}
-                value="4.9★"
+                value="5★"
                 label="Avaliação"
                 color="from-amber-500 to-yellow-500"
               />

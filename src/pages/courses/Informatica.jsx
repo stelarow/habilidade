@@ -73,7 +73,7 @@ const courseSchema = {
   ],
   "aggregateRating": {
     "@type": "AggregateRating",
-    "ratingValue": "4.9",
+    "ratingValue": "5",
     "reviewCount": "150"
   },
   "review": [
@@ -269,7 +269,7 @@ const localBusinessSchema = {
   ],
   "aggregateRating": {
     "@type": "AggregateRating",
-    "ratingValue": "4.9",
+    "ratingValue": "5",
     "reviewCount": "150"
   }
 };

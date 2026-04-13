@@ -155,7 +155,7 @@ const TrustedCompanies = ({
                 <div className={`text-2xl font-bold mb-2 ${
                   theme === 'dark' ? 'text-purple-400' : 'text-purple-600'
                 }`}>
-                  4.9★
+                  5★
                 </div>
                 <div className={`text-sm ${
                   theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
@@ -288,7 +288,7 @@ const TrustedCompanies = ({
             <div className={`text-3xl font-bold mb-2 ${
               theme === 'dark' ? 'text-purple-400' : 'text-purple-600'
             }`}>
-              4.9★
+              5★
             </div>
             <div className={`${
               theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
