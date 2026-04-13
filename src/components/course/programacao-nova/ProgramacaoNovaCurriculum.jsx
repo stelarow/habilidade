@@ -274,11 +274,11 @@ export const ProgramacaoNovaCurriculum = () => {
     setOpenModule(openModule === moduleId ? null : moduleId);
   };
 
-  const totalHours = curriculum.reduce((acc, module) => {
-    return acc + parseFloat(module.duration.replace(' horas', '').replace(',', '.'));
+  const totalHours = curriculum.reduce((accumulator, module) => {
+    return accumulator + Number.parseFloat(module.duration.replace(' horas', '').replace(',', '.'));
   }, 0);
 
-  const totalLessons = curriculum.reduce((acc, module) => acc + module.lessons.length, 0);
+  const totalLessons = curriculum.reduce((accumulator, module) => accumulator + module.lessons.length, 0);
 
   return (
     <section id="curriculum" className="px-4 py-16 sm:px-6 lg:px-8 lg:py-20 bg-gradient-to-b from-zinc-900 to-zinc-950">
@@ -362,7 +362,7 @@ export const ProgramacaoNovaCurriculum = () => {
                           <div className="flex items-center gap-1 min-w-0 overflow-hidden text-ellipsis">
                             <span className="text-zinc-400 text-xs whitespace-nowrap">{module.lessons.length} aulas</span>
                             <span className="text-zinc-400 text-xs flex-shrink-0">•</span>
-                            <span className="text-zinc-400 text-xs whitespace-nowrap truncate">{module.id <= 2 ? 'Básico' : module.id <= 5 ? 'Intermediário' : 'Avançado'}</span>
+                            <span className="text-zinc-400 text-xs whitespace-nowrap truncate">{module.id <= 2 ? 'Básico' : (module.id <= 5 ? 'Intermediário' : 'Avançado')}</span>
                           </div>
                         </div>
                       </div>
@@ -382,7 +382,7 @@ export const ProgramacaoNovaCurriculum = () => {
                       <div className="flex items-center gap-4 mt-2 text-xs text-zinc-500">
                         <span>{module.lessons.length} aulas</span>
                         <span>•</span>
-                        <span>Nível: {module.id <= 2 ? 'Básico' : module.id <= 5 ? 'Intermediário' : 'Avançado'}</span>
+                        <span>Nível: {module.id <= 2 ? 'Básico' : (module.id <= 5 ? 'Intermediário' : 'Avançado')}</span>
                       </div>
                     </div>
                   </div>

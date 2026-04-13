@@ -51,7 +51,7 @@ const LoadingFallbacks = {
 /**
  * Create lazy component with caching
  */
-const createLazyComponent = (importFn, fallbackType = 'minimal', options = {}) => {
+const createLazyComponent = (importFunction, fallbackType = 'minimal', options = {}) => {
   const { 
     retries = 3, 
     retryDelay = 1000,
@@ -60,21 +60,21 @@ const createLazyComponent = (importFn, fallbackType = 'minimal', options = {}) =
   } = options;
 
   // Create cache key from import function
-  const cacheKey = importFn.toString();
+  const cacheKey = importFunction.toString();
   
   if (cacheable && componentCache.has(cacheKey)) {
     return componentCache.get(cacheKey);
   }
 
   // Retry logic for failed imports
-  const importWithRetries = async (importFn, retriesLeft = retries) => {
+  const importWithRetries = async (importFunction_, retriesLeft = retries) => {
     try {
-      return await importFn();
+      return await importFunction_();
     } catch (error) {
       if (retriesLeft > 0) {
         console.warn(`[BlogLazyLoading] Import failed, retrying... (${retriesLeft} attempts left)`);
         await new Promise(resolve => setTimeout(resolve, retryDelay));
-        return importWithRetries(importFn, retriesLeft - 1);
+        return importWithRetries(importFunction_, retriesLeft - 1);
       } else {
         console.error('[BlogLazyLoading] Import failed after all retries:', error);
         throw error;
@@ -82,21 +82,21 @@ const createLazyComponent = (importFn, fallbackType = 'minimal', options = {}) =
     }
   };
 
-  const LazyComponent = lazy(() => importWithRetries(importFn));
+  const LazyComponent = lazy(() => importWithRetries(importFunction));
   
-  const WrappedComponent = (props) => (
+  const WrappedComponent = (properties) => (
     <Suspense key={`blog-lazy-${cacheKey.slice(0, 15)}`} fallback={LoadingFallbacks[fallbackType]()}>
-      <LazyComponent {...props} />
+      <LazyComponent {...properties} />
     </Suspense>
   );
 
   // Preload if requested
   if (preload) {
     // Preload during idle time
-    if ('requestIdleCallback' in window) {
-      requestIdleCallback(() => importFn());
+    if ('requestIdleCallback' in globalThis) {
+      requestIdleCallback(() => importFunction());
     } else {
-      setTimeout(() => importFn(), 1000);
+      setTimeout(() => importFunction(), 1000);
     }
   }
 
@@ -159,8 +159,8 @@ export const LazyBlogComponents = {
 /**
  * Route-based lazy loading with preloading
  */
-export const lazyRoute = (importFn, options = {}) => {
-  return createLazyComponent(importFn, 'page', {
+export const lazyRoute = (importFunction, options = {}) => {
+  return createLazyComponent(importFunction, 'page', {
     preload: false,
     ...options
   });
@@ -176,13 +176,13 @@ export const preloadBlogRoutes = () => {
   };
 
   // Preload critical routes during idle time
-  Object.entries(routes).forEach(([path, importFn]) => {
-    if ('requestIdleCallback' in window) {
-      requestIdleCallback(() => importFn());
+  for (const [path, importFunction] of Object.entries(routes)) {
+    if ('requestIdleCallback' in globalThis) {
+      requestIdleCallback(() => importFunction());
     } else {
-      setTimeout(() => importFn(), Math.random() * 2000 + 1000);
+      setTimeout(() => importFunction(), Math.random() * 2000 + 1000);
     }
-  });
+  }
 };
 
 /**
@@ -323,7 +323,7 @@ class LazyLoadingMonitor {
 export const lazyLoadingMonitor = new LazyLoadingMonitor();
 
 // Auto-setup on module load
-if (typeof window !== 'undefined') {
+if (globalThis.window !== undefined) {
   // Setup hover preloading
   let cleanup = null;
   

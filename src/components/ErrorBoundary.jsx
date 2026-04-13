@@ -2,8 +2,8 @@ import { Component } from 'react';
 import PropTypes from 'prop-types';
 
 class ErrorBoundary extends Component {
-  constructor(props) {
-    super(props);
+  constructor(properties) {
+    super(properties);
     this.state = { hasError: false, error: null, errorInfo: null };
   }
 
@@ -91,7 +91,7 @@ class ErrorBoundary extends Component {
                 Tentar Novamente
               </button>
               <button
-                onClick={() => window.location.href = '/'}
+                onClick={() => globalThis.location.href = '/'}
                 className="inline-flex items-center justify-center px-8 py-3 border-2 border-blue-500 text-blue-400 font-semibold rounded-full hover:bg-blue-500 hover:text-white transition-all duration-300"
               >
                 Voltar ao Início

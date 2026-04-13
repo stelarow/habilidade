@@ -35,12 +35,12 @@ class ImageCache {
     const loadPromise = new Promise((resolve, reject) => {
       const img = new Image();
       
-      img.onload = () => {
+      img.addEventListener('load', () => {
         this.cache.set(url, img);
         this.preloadedImages.add(url);
         this.loadingPromises.delete(url);
         resolve(img);
-      };
+      });
       
       img.onerror = (error) => {
         this.loadingPromises.delete(url);

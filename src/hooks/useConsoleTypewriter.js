@@ -42,7 +42,7 @@ export function useConsoleTypewriter(lines, options = {}) {
     } else {
       // Linha completa, pausa e vai para próxima linha
       timeoutId = setTimeout(() => {
-        setCurrentLineIndex(prev => prev + 1)
+        setCurrentLineIndex(previous => previous + 1)
         setCurrentText('')
       }, pauseBetweenLines)
     }
@@ -54,8 +54,8 @@ export function useConsoleTypewriter(lines, options = {}) {
   const displayLines = []
 
   // Adiciona todas as linhas completas
-  for (let i = 0; i < currentLineIndex; i++) {
-    displayLines.push(lines[i])
+  for (let index = 0; index < currentLineIndex; index++) {
+    displayLines.push(lines[index])
   }
 
   // Adiciona a linha atual sendo digitada (se houver)

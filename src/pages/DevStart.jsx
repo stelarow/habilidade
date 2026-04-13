@@ -17,7 +17,7 @@ import TypeformInscription from '@/components/devstart/TypeformInscription';
 // Data
 import { devstartData } from '@/data/devstart';
 
-const DevStart = () => {
+const DevelopmentStart = () => {
   const { seo, afterDevStart } = devstartData;
 
   // Função para scroll progressivo - leva à próxima seção
@@ -179,7 +179,7 @@ const DevStart = () => {
                   >
                     <Button
                       size="lg"
-                      onClick={() => (window.location.href = afterDevStart.cta.link)}
+                      onClick={() => (globalThis.location.href = afterDevStart.cta.link)}
                       variant="outline"
                       className="text-lg px-8 py-6 border-2 border-purple-400 text-purple-300 hover:bg-purple-900/50 font-bold"
                     >
@@ -217,5 +217,5 @@ const DevStart = () => {
 };
 
 // Export para React Router lazy loading
-export { DevStart as Component };
-export default DevStart;
+export { DevelopmentStart as Component };
+export default DevelopmentStart;

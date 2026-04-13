@@ -102,10 +102,10 @@ const COURSES = [
 ];
 
 function CourseCard({ title, slug, icon: Icon, desc, textColor, borderClass, hoverShadow }) {
-  const [ref, visible] = useInView();
+  const [reference, visible] = useInView();
   return (
     <div
-      ref={ref}
+      ref={reference}
       className={`card-enter ${visible ? 'in-view' : ''} relative clip-card w-full max-w-full h-[120px] p-[3px] ${borderClass} transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02] ${hoverShadow}`}
     >
       <Button
@@ -126,10 +126,10 @@ function CourseCard({ title, slug, icon: Icon, desc, textColor, borderClass, hov
 }
 
 function VocationalTestCard() {
-  const [ref, visible] = useInView();
+  const [reference, visible] = useInView();
   return (
     <div
-      ref={ref}
+      ref={reference}
       className={`card-enter ${visible ? 'in-view' : ''} relative clip-card w-full h-auto min-h-[100px] p-[3px] course-border-purple transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02] hover:shadow-[0_0_30px_#a855f7aa]`}
     >
       <Card className="clip-card w-full h-full bg-[radial-gradient(ellipse_at_50%_50%,#1e1b2e_0%,#0a0a0a_100%)] hover:bg-[radial-gradient(ellipse_at_50%_50%,#2d1b38_0%,#0a0a0a_100%)] transition border-0">

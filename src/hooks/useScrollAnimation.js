@@ -17,17 +17,17 @@ export function useScrollAnimation(options = {}) {
 
   const [isVisible, setIsVisible] = useState(false);
   const [hasAnimated, setHasAnimated] = useState(false);
-  const elementRef = useRef(null);
-  const timeoutRef = useRef(null);
+  const elementReference = useRef(null);
+  const timeoutReference = useRef(null);
 
   useEffect(() => {
-    const element = elementRef.current;
+    const element = elementReference.current;
     if (!element) return;
 
     const handleIntersection = (entry) => {
       if (entry.isIntersecting) {
         if (delay > 0) {
-          timeoutRef.current = setTimeout(() => {
+          timeoutReference.current = setTimeout(() => {
             setIsVisible(true);
             if (once) setHasAnimated(true);
           }, delay);
@@ -44,14 +44,14 @@ export function useScrollAnimation(options = {}) {
     observerPool.observe(element, handleIntersection, { threshold });
 
     return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
+      if (timeoutReference.current) {
+        clearTimeout(timeoutReference.current);
       }
       observerPool.unobserve(element);
     };
   }, [threshold, once, delay, hasAnimated]);
 
-  return [elementRef, isVisible, hasAnimated];
+  return [elementReference, isVisible, hasAnimated];
 }
 
 /**
@@ -142,20 +142,20 @@ export function useStaggerAnimation(count, delay = 100, start = false) {
 
     const timers = [];
     
-    for (let i = 0; i < count; i++) {
+    for (let index = 0; index < count; index++) {
       const timer = setTimeout(() => {
-        setVisibleItems(prev => {
-          const newItems = [...prev];
-          newItems[i] = true;
+        setVisibleItems(previous => {
+          const newItems = [...previous];
+          newItems[index] = true;
           return newItems;
         });
-      }, i * delay);
+      }, index * delay);
       
       timers.push(timer);
     }
 
     return () => {
-      timers.forEach(timer => clearTimeout(timer));
+      for (const timer of timers) clearTimeout(timer);
     };
   }, [count, delay, start]);
 

@@ -49,7 +49,7 @@ class ImageOptimizer {
    * Detect browser format support
    */
   async detectFormatSupport() {
-    if (typeof window === 'undefined') {
+    if (globalThis.window === undefined) {
       this.config.supportedFormats = ['jpg', 'png']; // Server-side fallback
       return;
     }
@@ -67,7 +67,7 @@ class ImageOptimizer {
       avifCanvas.width = 1;
       avifCanvas.height = 1;
       supported.avif = avifCanvas.toDataURL('image/avif').indexOf('data:image/avif') === 0;
-    } catch (e) {
+    } catch {
       supported.avif = false;
     }
 
@@ -77,7 +77,7 @@ class ImageOptimizer {
       webpCanvas.width = 1;
       webpCanvas.height = 1;
       supported.webp = webpCanvas.toDataURL('image/webp').indexOf('data:image/webp') === 0;
-    } catch (e) {
+    } catch {
       supported.webp = false;
     }
 
@@ -90,8 +90,8 @@ class ImageOptimizer {
   /**
    * Generate optimized image URL with intelligent resizing
    */
-  async generateUrl(src, options = {}) {
-    if (!src) return '';
+  async generateUrl(source, options = {}) {
+    if (!source) return '';
 
     const {
       width,
@@ -115,7 +115,7 @@ class ImageOptimizer {
 
     // Use intelligent resizing system
     try {
-      const optimizedUrl = await this.buildServiceUrl(src, {
+      const optimizedUrl = await this.buildServiceUrl(source, {
         width: effectiveWidth,
         height,
         format: targetFormat,
@@ -127,7 +127,7 @@ class ImageOptimizer {
       return optimizedUrl;
     } catch (error) {
       console.warn('Image optimization failed, using original:', error);
-      return src;
+      return source;
     }
   }
 
@@ -162,16 +162,16 @@ class ImageOptimizer {
   /**
    * Build service-specific URL - simplified to avoid canvas issues
    */
-  buildServiceUrl(src, params) {
+  buildServiceUrl(source, parameters) {
     // For now, return original URL to avoid canvas rendering issues
     // This prevents the green blur problem while maintaining functionality
-    return Promise.resolve(src);
+    return Promise.resolve(source);
   }
 
   /**
    * Generate responsive image srcSet
    */
-  async generateSrcSet(src, options = {}) {
+  async generateSrcSet(source, options = {}) {
     const {
       breakpoints = this.config.breakpoints,
       format = 'auto',
@@ -180,7 +180,7 @@ class ImageOptimizer {
     } = options;
 
     const promises = breakpoints.map(async width => {
-      const url = await this.generateUrl(src, {
+      const url = await this.generateUrl(source, {
         width,
         format,
         quality,
@@ -196,7 +196,7 @@ class ImageOptimizer {
   /**
    * Generate multiple format sources for <picture> element
    */
-  async generateSources(src, options = {}) {
+  async generateSources(source, options = {}) {
     const {
       breakpoints = this.config.breakpoints,
       formats = this.config.formatPriority,
@@ -209,7 +209,7 @@ class ImageOptimizer {
       .filter(format => this.isFormatSupported(format))
       .map(async format => ({
         type: `image/${format === 'jpg' ? 'jpeg' : format}`,
-        srcSet: await this.generateSrcSet(src, {
+        srcSet: await this.generateSrcSet(source, {
           breakpoints,
           format,
           quality,
@@ -242,10 +242,10 @@ class ImageOptimizer {
 
     return new Promise((resolve, reject) => {
       const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
+      const context = canvas.getContext('2d');
       const img = new Image();
 
-      img.onload = () => {
+      img.addEventListener('load', () => {
         // Calculate new dimensions
         let { width, height } = img;
         
@@ -260,7 +260,7 @@ class ImageOptimizer {
         canvas.height = height;
 
         // Draw and compress
-        ctx.drawImage(img, 0, 0, width, height);
+        context.drawImage(img, 0, 0, width, height);
         
         canvas.toBlob(
           (blob) => {
@@ -273,7 +273,7 @@ class ImageOptimizer {
           `image/${format}`,
           quality
         );
-      };
+      });
 
       img.onerror = () => reject(new Error('Failed to load image'));
       img.src = URL.createObjectURL(file);
@@ -283,33 +283,33 @@ class ImageOptimizer {
   /**
    * Extract dominant colors from image
    */
-  async extractDominantColors(imageSrc, colorCount = 5) {
+  async extractDominantColors(imageSource, colorCount = 5) {
     return new Promise((resolve, reject) => {
       const img = new Image();
       img.crossOrigin = 'anonymous';
       
-      img.onload = () => {
+      img.addEventListener('load', () => {
         const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
+        const context = canvas.getContext('2d');
         
         // Use small canvas for performance
         const sampleSize = 100;
         canvas.width = sampleSize;
         canvas.height = sampleSize;
         
-        ctx.drawImage(img, 0, 0, sampleSize, sampleSize);
+        context.drawImage(img, 0, 0, sampleSize, sampleSize);
         
         try {
-          const imageData = ctx.getImageData(0, 0, sampleSize, sampleSize);
+          const imageData = context.getImageData(0, 0, sampleSize, sampleSize);
           const colors = this.analyzeColors(imageData.data, colorCount);
           resolve(colors);
         } catch (error) {
           reject(error);
         }
-      };
+      });
       
       img.onerror = () => reject(new Error('Failed to load image for color analysis'));
-      img.src = imageSrc;
+      img.src = imageSource;
     });
   }
 
@@ -320,11 +320,11 @@ class ImageOptimizer {
     const colorMap = new Map();
     
     // Sample every 4th pixel for performance
-    for (let i = 0; i < imageData.length; i += 16) {
-      const r = imageData[i];
-      const g = imageData[i + 1];
-      const b = imageData[i + 2];
-      const a = imageData[i + 3];
+    for (let index = 0; index < imageData.length; index += 16) {
+      const r = imageData[index];
+      const g = imageData[index + 1];
+      const b = imageData[index + 2];
+      const a = imageData[index + 3];
       
       // Skip transparent pixels
       if (a < 128) continue;
@@ -339,7 +339,7 @@ class ImageOptimizer {
     }
     
     // Sort by frequency and return top colors
-    return Array.from(colorMap.entries())
+    return [...colorMap.entries()]
       .sort(([, a], [, b]) => b - a)
       .slice(0, colorCount)
       .map(([color, count]) => {
@@ -355,28 +355,28 @@ class ImageOptimizer {
   /**
    * Generate blur placeholder from image
    */
-  async generateBlurPlaceholder(imageSrc, size = 4) {
+  async generateBlurPlaceholder(imageSource, size = 4) {
     return new Promise((resolve, reject) => {
       const img = new Image();
       img.crossOrigin = 'anonymous';
       
-      img.onload = () => {
+      img.addEventListener('load', () => {
         const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
+        const context = canvas.getContext('2d');
         
         canvas.width = size;
         canvas.height = size;
         
         // Draw very small version
-        ctx.drawImage(img, 0, 0, size, size);
+        context.drawImage(img, 0, 0, size, size);
         
         // Convert to low-quality data URL
         const dataURL = canvas.toDataURL('image/jpeg', 0.1);
         resolve(dataURL);
-      };
+      });
       
       img.onerror = () => reject(new Error('Failed to generate blur placeholder'));
-      img.src = imageSrc;
+      img.src = imageSource;
     });
   }
 
@@ -398,7 +398,7 @@ class ImageOptimizer {
         quality: 80
       });
       
-      document.head.appendChild(link);
+      document.head.append(link);
       return link;
     });
   }
@@ -406,21 +406,21 @@ class ImageOptimizer {
   /**
    * Get image metadata
    */
-  async getImageMetadata(imageSrc) {
+  async getImageMetadata(imageSource) {
     return new Promise((resolve, reject) => {
       const img = new Image();
       
-      img.onload = () => {
+      img.addEventListener('load', () => {
         resolve({
           width: img.naturalWidth,
           height: img.naturalHeight,
           aspectRatio: img.naturalWidth / img.naturalHeight,
-          src: imageSrc
+          src: imageSource
         });
-      };
+      });
       
       img.onerror = () => reject(new Error('Failed to load image metadata'));
-      img.src = imageSrc;
+      img.src = imageSource;
     });
   }
 
@@ -450,28 +450,28 @@ export const getImageOptimizer = () => {
 };
 
 // Convenience functions
-export const generateOptimizedUrl = (src, options) => {
-  return getImageOptimizer().generateUrl(src, options);
+export const generateOptimizedUrl = (source, options) => {
+  return getImageOptimizer().generateUrl(source, options);
 };
 
-export const generateSrcSet = (src, options) => {
-  return getImageOptimizer().generateSrcSet(src, options);
+export const generateSrcSet = (source, options) => {
+  return getImageOptimizer().generateSrcSet(source, options);
 };
 
-export const generateSources = (src, options) => {
-  return getImageOptimizer().generateSources(src, options);
+export const generateSources = (source, options) => {
+  return getImageOptimizer().generateSources(source, options);
 };
 
 export const compressImage = (file, options) => {
   return getImageOptimizer().compressImage(file, options);
 };
 
-export const extractDominantColors = (imageSrc, colorCount) => {
-  return getImageOptimizer().extractDominantColors(imageSrc, colorCount);
+export const extractDominantColors = (imageSource, colorCount) => {
+  return getImageOptimizer().extractDominantColors(imageSource, colorCount);
 };
 
-export const generateBlurPlaceholder = (imageSrc, size) => {
-  return getImageOptimizer().generateBlurPlaceholder(imageSrc, size);
+export const generateBlurPlaceholder = (imageSource, size) => {
+  return getImageOptimizer().generateBlurPlaceholder(imageSource, size);
 };
 
 export const preloadImages = (urls, options) => {

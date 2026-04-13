@@ -1,7 +1,7 @@
 import { Toaster as Sonner } from "sonner"
 
 const Toaster = ({
-  ...props
+  ...properties
 }) => {
   return (
     <Sonner
@@ -18,7 +18,7 @@ const Toaster = ({
             "group-[.toast]:bg-muted group-[.toast]:text-muted-foreground",
         },
       }}
-      {...props} />
+      {...properties} />
   );
 }
 

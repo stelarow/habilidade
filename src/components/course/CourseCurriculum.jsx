@@ -25,11 +25,16 @@ function CourseCurriculum({ course }) {
 
   const getLessonTypeColor = (type) => {
     switch (type) {
-      case 'video': return course.themeColors.primary;
-      case 'text': return course.themeColors.secondary;
-      case 'exercise': return course.themeColors.accent;
-      case 'project': return '#10B981'; // Green for projects
-      default: return course.themeColors.primary;
+      case 'video': { return course.themeColors.primary;
+      }
+      case 'text': { return course.themeColors.secondary;
+      }
+      case 'exercise': { return course.themeColors.accent;
+      }
+      case 'project': { return '#10B981';
+      } // Green for projects
+      default: { return course.themeColors.primary;
+      }
     }
   };
 
@@ -37,7 +42,7 @@ function CourseCurriculum({ course }) {
   const totalLessons = course.curriculum.reduce((total, module) => total + module.lessons.length, 0);
   const totalDuration = course.curriculum.reduce((total, module) => {
     return total + module.lessons.reduce((moduleTotal, lesson) => {
-      const minutes = parseInt(lesson.duration.match(/\d+/)?.[0] || '0');
+      const minutes = Number.parseInt(lesson.duration.match(/\d+/)?.[0] || '0');
       return moduleTotal + minutes;
     }, 0);
   }, 0);
@@ -82,7 +87,7 @@ function CourseCurriculum({ course }) {
         {course.curriculum.map((module, moduleIndex) => {
           const isExpanded = expandedModules.has(moduleIndex);
           const moduleDuration = module.lessons.reduce((total, lesson) => {
-            const minutes = parseInt(lesson.duration.match(/\d+/)?.[0] || '0');
+            const minutes = Number.parseInt(lesson.duration.match(/\d+/)?.[0] || '0');
             return total + minutes;
           }, 0);
 

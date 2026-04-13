@@ -18,7 +18,7 @@ const ShareButtons = ({ url, title, compact = false, variant = 'default' }) => {
   React.useEffect(() => {
     const checkMobile = () => {
       const mobile = window.innerWidth < 768 || 
-                   ('ontouchstart' in window) ||
+                   ('ontouchstart' in globalThis) ||
                    (navigator.maxTouchPoints > 0);
       setIsMobile(mobile);
     };
@@ -64,11 +64,11 @@ const ShareButtons = ({ url, title, compact = false, variant = 'default' }) => {
       await navigator.clipboard.writeText(url);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
-    } catch (error) {
+    } catch {
       // Fallback for older browsers
       const textArea = document.createElement('textarea');
       textArea.value = url;
-      document.body.appendChild(textArea);
+      document.body.append(textArea);
       textArea.focus();
       textArea.select();
       try {
@@ -76,9 +76,9 @@ const ShareButtons = ({ url, title, compact = false, variant = 'default' }) => {
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
       } catch (fallbackError) {
-        console.error('Failed to copy: ', fallbackError);
+        console.error('Failed to copy:', fallbackError);
       }
-      document.body.removeChild(textArea);
+      textArea.remove();
     }
   };
 

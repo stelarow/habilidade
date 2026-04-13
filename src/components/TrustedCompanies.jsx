@@ -41,11 +41,11 @@ const TrustedCompanies = ({
 
   // Company Card Component with CSS animation
   const CompanyCard = ({ company, index }) => {
-    const [ref, visible] = useInView();
+    const [reference, visible] = useInView();
 
     return (
       <div
-        ref={ref}
+        ref={reference}
         className={`card-enter ${visible ? 'in-view' : ''} group rounded-xl p-4 hover:shadow-lg transition-all duration-300 flex flex-col items-center justify-center hover:-translate-y-1 hover:scale-[1.02] ${
           theme === 'dark'
             ? 'bg-gray-800 hover:bg-gray-700 hover:shadow-purple-500/15'

@@ -49,11 +49,16 @@ export const getLessonLabel = (courseSlug, lessonType) => {
   if (!areaLabels) {
     // Fallback para labels genéricos
     switch (lessonType) {
-      case 'video': return 'Aula';
-      case 'text': return 'Teoria';
-      case 'exercise': return 'Exercício';
-      case 'project': return 'Projeto';
-      default: return 'Aula';
+      case 'video': { return 'Aula';
+      }
+      case 'text': { return 'Teoria';
+      }
+      case 'exercise': { return 'Exercício';
+      }
+      case 'project': { return 'Projeto';
+      }
+      default: { return 'Aula';
+      }
     }
   }
   

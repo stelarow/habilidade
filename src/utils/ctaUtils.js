@@ -54,21 +54,21 @@ export const trackCTAClick = (ctaType, action = 'click', section = 'informatica-
  * @param {string} url - URL para redirecionar após a conversão
  */
 export const trackGoogleAdsConversion = (url) => {
-  if (typeof gtag !== 'undefined') {
+  if (typeof gtag === 'undefined') {
+    // Fallback se gtag não estiver disponível
+    if ((url) !== undefined) {
+      window.open(url, '_blank');
+    }
+    return false;
+  } else {
     gtag('event', 'conversion', {
       'send_to': 'AW-16951445133/VUrgCKqOmaobEI2NipM_',
       'event_callback': function() {
-        if (typeof(url) !== 'undefined') {
+        if ((url) !== undefined) {
           window.open(url, '_blank');
         }
       }
     });
-    return false;
-  } else {
-    // Fallback se gtag não estiver disponível
-    if (typeof(url) !== 'undefined') {
-      window.open(url, '_blank');
-    }
     return false;
   }
 };

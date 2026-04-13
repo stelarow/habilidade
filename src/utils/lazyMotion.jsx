@@ -58,8 +58,8 @@ const FallbackDiv = forwardRef(({
   drag,
   layout,
   layoutId,
-  ...props
-}, ref) => {
+  ...properties
+}, reference) => {
   // Remove motion-specific props before passing to DOM
   const {
     initial: _,
@@ -76,8 +76,8 @@ const FallbackDiv = forwardRef(({
     drag: ____________,
     layout: _____________,
     layoutId: ______________,
-    ...domProps
-  } = props;
+    ...domProperties
+  } = properties;
 
   const fallbackStyle = {
     ...style,
@@ -98,19 +98,19 @@ const FallbackDiv = forwardRef(({
     if (whileHover) setIsHovered(false);
   };
 
-  const hoverStyle = typeof window !== 'undefined' && isHovered && whileHover ? {
-    transform: whileHover.scale ? `scale(${whileHover.scale})` : whileHover.y ? `translateY(${whileHover.y}px)` : 'none',
+  const hoverStyle = globalThis.window !== undefined && isHovered && whileHover ? {
+    transform: whileHover.scale ? `scale(${whileHover.scale})` : (whileHover.y ? `translateY(${whileHover.y}px)` : 'none'),
     boxShadow: whileHover.boxShadow || 'none'
   } : {};
 
   return (
     <div
-      ref={ref}
+      ref={reference}
       className={className}
       style={{ ...fallbackStyle, ...hoverStyle }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      {...domProps}
+      {...domProperties}
     >
       {children}
     </div>
@@ -124,12 +124,12 @@ FallbackDiv.displayName = 'FallbackDiv';
  * Creates motion components that load Framer Motion dynamically
  */
 const createLazyMotionComponent = (elementType = 'div') => {
-  const LazyMotionComponent = forwardRef((props, ref) => {
+  const LazyMotionComponent = forwardRef((properties, reference) => {
     const [motionModule, setMotionModule] = useState(motionCache.get('framer-motion'));
     const [isLoading, setIsLoading] = useState(!motionCache.has('framer-motion'));
 
     useEffect(() => {
-      if (typeof window === 'undefined') return; // Skip on server
+      if (globalThis.window === undefined) return; // Skip on server
       
       let mounted = true;
 
@@ -148,10 +148,10 @@ const createLazyMotionComponent = (elementType = 'div') => {
         }
       };
 
-      if (!motionModule) {
-        loadMotion();
-      } else {
+      if (motionModule) {
         setIsLoading(false);
+      } else {
+        loadMotion();
       }
 
       return () => {
@@ -160,7 +160,7 @@ const createLazyMotionComponent = (elementType = 'div') => {
     }, [motionModule]);
 
     // Return fallback while loading, on server, or if motion failed to load
-    if (typeof window === 'undefined' || isLoading || !motionModule?.motion) {
+    if (globalThis.window === undefined || isLoading || !motionModule?.motion) {
       // Remove motion-specific props for fallback
       const { 
         initial, 
@@ -178,111 +178,111 @@ const createLazyMotionComponent = (elementType = 'div') => {
         layout,
         layoutId,
         style,
-        ...fallbackProps 
-      } = props;
+        ...fallbackProperties 
+      } = properties;
 
       if (elementType === 'section') {
-        return <section ref={ref} {...fallbackProps} />;
+        return <section ref={reference} {...fallbackProperties} />;
       }
       if (elementType === 'span') {
-        return <span ref={ref} {...fallbackProps} />;
+        return <span ref={reference} {...fallbackProperties} />;
       }
       if (elementType === 'p') {
-        return <p ref={ref} {...fallbackProps} />;
+        return <p ref={reference} {...fallbackProperties} />;
       }
       if (elementType === 'h1') {
-        return <h1 ref={ref} {...fallbackProps} />;
+        return <h1 ref={reference} {...fallbackProperties} />;
       }
       if (elementType === 'h2') {
-        return <h2 ref={ref} {...fallbackProps} />;
+        return <h2 ref={reference} {...fallbackProperties} />;
       }
       if (elementType === 'h3') {
-        return <h3 ref={ref} {...fallbackProps} />;
+        return <h3 ref={reference} {...fallbackProperties} />;
       }
       if (elementType === 'button') {
-        return <button ref={ref} {...fallbackProps} />;
+        return <button ref={reference} {...fallbackProperties} />;
       }
       if (elementType === 'img') {
-        return <img ref={ref} {...fallbackProps} />;
+        return <img ref={reference} {...fallbackProperties} />;
       }
       if (elementType === 'ul') {
-        return <ul ref={ref} {...fallbackProps} />;
+        return <ul ref={reference} {...fallbackProperties} />;
       }
       if (elementType === 'li') {
-        return <li ref={ref} {...fallbackProps} />;
+        return <li ref={reference} {...fallbackProperties} />;
       }
       if (elementType === 'nav') {
-        return <nav ref={ref} {...fallbackProps} />;
+        return <nav ref={reference} {...fallbackProperties} />;
       }
       if (elementType === 'header') {
-        return <header ref={ref} {...fallbackProps} />;
+        return <header ref={reference} {...fallbackProperties} />;
       }
       if (elementType === 'main') {
-        return <main ref={ref} {...fallbackProps} />;
+        return <main ref={reference} {...fallbackProperties} />;
       }
       if (elementType === 'article') {
-        return <article ref={ref} {...fallbackProps} />;
+        return <article ref={reference} {...fallbackProperties} />;
       }
       if (elementType === 'aside') {
-        return <aside ref={ref} {...fallbackProps} />;
+        return <aside ref={reference} {...fallbackProperties} />;
       }
       if (elementType === 'footer') {
-        return <footer ref={ref} {...fallbackProps} />;
+        return <footer ref={reference} {...fallbackProperties} />;
       }
       if (elementType === 'a') {
-        return <a ref={ref} {...fallbackProps} />;
+        return <a ref={reference} {...fallbackProperties} />;
       }
       if (elementType === 'form') {
-        return <form ref={ref} {...fallbackProps} />;
+        return <form ref={reference} {...fallbackProperties} />;
       }
       if (elementType === 'input') {
-        return <input ref={ref} {...fallbackProps} />;
+        return <input ref={reference} {...fallbackProperties} />;
       }
       if (elementType === 'textarea') {
-        return <textarea ref={ref} {...fallbackProps} />;
+        return <textarea ref={reference} {...fallbackProperties} />;
       }
       if (elementType === 'label') {
-        return <label ref={ref} {...fallbackProps} />;
+        return <label ref={reference} {...fallbackProperties} />;
       }
       if (elementType === 'select') {
-        return <select ref={ref} {...fallbackProps} />;
+        return <select ref={reference} {...fallbackProperties} />;
       }
       if (elementType === 'option') {
-        return <option ref={ref} {...fallbackProps} />;
+        return <option ref={reference} {...fallbackProperties} />;
       }
       // SVG elements
       if (elementType === 'svg') {
-        return <svg ref={ref} {...fallbackProps} />;
+        return <svg ref={reference} {...fallbackProperties} />;
       }
       if (elementType === 'circle') {
-        return <circle ref={ref} {...fallbackProps} />;
+        return <circle ref={reference} {...fallbackProperties} />;
       }
       if (elementType === 'polygon') {
-        return <polygon ref={ref} {...fallbackProps} />;
+        return <polygon ref={reference} {...fallbackProperties} />;
       }
       if (elementType === 'line') {
-        return <line ref={ref} {...fallbackProps} />;
+        return <line ref={reference} {...fallbackProperties} />;
       }
       if (elementType === 'path') {
-        return <path ref={ref} {...fallbackProps} />;
+        return <path ref={reference} {...fallbackProperties} />;
       }
       if (elementType === 'g') {
-        return <g ref={ref} {...fallbackProps} />;
+        return <g ref={reference} {...fallbackProperties} />;
       }
       if (elementType === 'text') {
-        return <text ref={ref} {...fallbackProps} />;
+        return <text ref={reference} {...fallbackProperties} />;
       }
       if (elementType === 'rect') {
-        return <rect ref={ref} {...fallbackProps} />;
+        return <rect ref={reference} {...fallbackProperties} />;
       }
       
       // Default to div with enhanced behavior only on client
-      return <FallbackDiv ref={ref} {...props} />;
+      return <FallbackDiv ref={reference} {...properties} />;
     }
 
     // Return actual motion component
     const MotionElement = motionModule.motion[elementType];
-    return <MotionElement ref={ref} {...props} />;
+    return <MotionElement ref={reference} {...properties} />;
   });
 
   LazyMotionComponent.displayName = `LazyMotion${elementType.charAt(0).toUpperCase() + elementType.slice(1)}`;
@@ -292,12 +292,12 @@ const createLazyMotionComponent = (elementType = 'div') => {
 /**
  * Lazy AnimatePresence Component
  */
-const LazyAnimatePresence = ({ children, ...props }) => {
+const LazyAnimatePresence = ({ children, ...properties }) => {
   const [motionModule, setMotionModule] = useState(motionCache.get('framer-motion'));
   const [isLoading, setIsLoading] = useState(!motionCache.has('framer-motion'));
 
   useEffect(() => {
-    if (typeof window === 'undefined') return; // Skip on server
+    if (globalThis.window === undefined) return; // Skip on server
     
     let mounted = true;
 
@@ -316,10 +316,10 @@ const LazyAnimatePresence = ({ children, ...props }) => {
       }
     };
 
-    if (!motionModule) {
-      loadMotion();
-    } else {
+    if (motionModule) {
       setIsLoading(false);
+    } else {
+      loadMotion();
     }
 
     return () => {
@@ -328,13 +328,13 @@ const LazyAnimatePresence = ({ children, ...props }) => {
   }, [motionModule]);
 
   // Return children without animation wrapper while loading or on server
-  if (typeof window === 'undefined' || isLoading || !motionModule?.AnimatePresence) {
+  if (globalThis.window === undefined || isLoading || !motionModule?.AnimatePresence) {
     return <>{children}</>;
   }
 
   // Return actual AnimatePresence
   const { AnimatePresence } = motionModule;
-  return <AnimatePresence {...props}>{children}</AnimatePresence>;
+  return <AnimatePresence {...properties}>{children}</AnimatePresence>;
 };
 
 // Export lazy motion components
@@ -404,10 +404,10 @@ export const useReducedMotion = () => {
   const [prefersReduced, setPrefersReduced] = useState(false);
 
   useEffect(() => {
-    if (typeof window === 'undefined') return;
+    if (globalThis.window === undefined) return;
     
     // Fallback check using media query
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const mediaQuery = globalThis.matchMedia('(prefers-reduced-motion: reduce)');
     setPrefersReduced(mediaQuery.matches);
 
     const handleChange = (e) => setPrefersReduced(e.matches);
@@ -417,7 +417,7 @@ export const useReducedMotion = () => {
   }, []);
 
   useEffect(() => {
-    if (typeof window === 'undefined') return;
+    if (globalThis.window === undefined) return;
     
     if (!motionModule) {
       loadFramerMotion().then(module => {
@@ -429,7 +429,7 @@ export const useReducedMotion = () => {
   }, [motionModule]);
 
   // Use Framer Motion's hook if available, otherwise use fallback
-  if (motionModule?.useReducedMotion && typeof window !== 'undefined') {
+  if (motionModule?.useReducedMotion && globalThis.window !== undefined) {
     return motionModule.useReducedMotion();
   }
 

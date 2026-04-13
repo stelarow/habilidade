@@ -98,13 +98,9 @@ const getBusinessHoursNote = () => {
   const isBusinessHours = hour >= 8 && hour < 18;
   
   if (isWeekend) {
-    return '=Å Hoje é fim de semana, mas respondo assim que possível! Durante a semana atendo das 8h às 18h.';
+    return '=ï¿½ Hoje ï¿½ fim de semana, mas respondo assim que possï¿½vel! Durante a semana atendo das 8h ï¿½s 18h.';
   } else if (!isBusinessHours) {
-    if (hour < 8) {
-      return 'ð Ainda é cedo, mas já estou aqui! Horário de atendimento: 8h às 18h, segunda a sexta.';
-    } else {
-      return '< Já passou do horário comercial, mas vou responder o mais breve possível! Horário normal: 8h às 18h, segunda a sexta.';
-    }
+    return hour < 8 ? 'ï¿½ Ainda ï¿½ cedo, mas jï¿½ estou aqui! Horï¿½rio de atendimento: 8h ï¿½s 18h, segunda a sexta.' : '< Jï¿½ passou do horï¿½rio comercial, mas vou responder o mais breve possï¿½vel! Horï¿½rio normal: 8h ï¿½s 18h, segunda a sexta.';
   }
   
   return null;
@@ -116,19 +112,19 @@ const getBusinessHoursNote = () => {
  * @param {Object} utmParams - UTM parameters
  * @returns {string} URL with UTM parameters
  */
-const addUTMParameters = (url, utmParams) => {
+const addUTMParameters = (url, utmParameters) => {
   if (!url) return '';
   
   try {
-    const urlObj = new URL(url);
+    const urlObject = new URL(url);
     
-    Object.entries(utmParams).forEach(([key, value]) => {
+    for (const [key, value] of Object.entries(utmParameters)) {
       if (value) {
-        urlObj.searchParams.set(`utm_${key}`, value);
+        urlObject.searchParams.set(`utm_${key}`, value);
       }
-    });
+    }
     
-    return urlObj.toString();
+    return urlObject.toString();
   } catch (error) {
     console.warn('Error adding UTM parameters:', error);
     return url;
@@ -144,11 +140,11 @@ const addUTMParameters = (url, utmParams) => {
 export const generateContextualMessage = (context, data = {}) => {
   const contextMessages = {
     'consultation': 'Gostaria de agendar uma consulta gratuita de 15 minutos para conversar sobre os cursos.',
-    'course-info': `Tenho interesse em saber mais sobre o curso de ${data.course || 'um dos cursos disponíveis'}.`,
-    'quick-question': 'Tenho uma dúvida rápida sobre os cursos. Pode me ajudar?',
-    'enrollment': `Gostaria de me matricular no curso de ${data.course || 'um dos cursos'}. Como faço?`,
+    'course-info': `Tenho interesse em saber mais sobre o curso de ${data.course || 'um dos cursos disponï¿½veis'}.`,
+    'quick-question': 'Tenho uma dï¿½vida rï¿½pida sobre os cursos. Pode me ajudar?',
+    'enrollment': `Gostaria de me matricular no curso de ${data.course || 'um dos cursos'}. Como faï¿½o?`,
     'pricing': 'Gostaria de saber sobre valores e formas de pagamento dos cursos.',
-    'schedule': 'Quero informações sobre horários e cronograma das aulas.'
+    'schedule': 'Quero informaï¿½ï¿½es sobre horï¿½rios e cronograma das aulas.'
   };
 
   const baseMessage = contextMessages[context] || contextMessages['quick-question'];
@@ -169,8 +165,8 @@ export const generateContextualMessage = (context, data = {}) => {
 export const formatForMobile = (message) => {
   // Mobile messages should be shorter and more direct
   return message
-    .replace(/\n\n/g, '\n') // Reduce line breaks
-    .replace(/[=ç=ñ=Þ]/g, '') // Remove some emojis for cleaner look
+    .replaceAll('\n\n', '\n') // Reduce line breaks
+    .replaceAll(/[=ï¿½=ï¿½=ï¿½]/g, '') // Remove some emojis for cleaner look
     .trim();
 };
 
@@ -181,10 +177,10 @@ export const formatForMobile = (message) => {
  */
 export const getQuickActionMessage = (action) => {
   const quickActions = {
-    'schedule-call': 'Gostaria de agendar uma ligação para conversar sobre os cursos.',
-    'send-info': 'Pode me enviar mais informações sobre os cursos por favor?',
+    'schedule-call': 'Gostaria de agendar uma ligaï¿½ï¿½o para conversar sobre os cursos.',
+    'send-info': 'Pode me enviar mais informaï¿½ï¿½es sobre os cursos por favor?',
     'check-availability': 'Quero verificar disponibilidade de vagas nos cursos.',
-    'payment-options': 'Preciso saber sobre opções de pagamento e valores.',
+    'payment-options': 'Preciso saber sobre opï¿½ï¿½es de pagamento e valores.',
     'course-comparison': 'Gostaria de ajuda para escolher o melhor curso para meu perfil.'
   };
 

@@ -691,9 +691,9 @@ const FinalCTA = () => {
 
       {/* Elementos flutuantes sutis */}
       <div className="absolute inset-0">
-        {[...Array(15)].map((_, i) => (
+        {Array.from({length: 15}).map((_, index) => (
           <motion.div
-            key={i}
+            key={index}
             className="absolute w-1 h-1 bg-purple-400 rounded-full"
             style={{
               left: `${Math.random() * 100}%`,

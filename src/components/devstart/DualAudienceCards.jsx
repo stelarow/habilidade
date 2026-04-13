@@ -67,14 +67,14 @@ const DualAudienceCards = () => {
         </CardHeader>
         <CardContent>
           <ul className="space-y-4">
-            {audience.benefits.map((benefit, idx) => (
+            {audience.benefits.map((benefit, index_) => (
               <motion.li
-                key={idx}
+                key={index_}
                 className="flex items-start gap-3 text-gray-100"
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: idx * 0.1, duration: 0.4 }}
+                transition={{ delay: index_ * 0.1, duration: 0.4 }}
               >
                 <span className="flex-shrink-0">{getIcon(benefit.iconName, 24)}</span>
                 <span className="text-lg font-medium leading-relaxed">{benefit.text}</span>

@@ -1,7 +1,7 @@
 import { useScrollAnimation, useStaggerAnimation } from "@/hooks/useScrollAnimation"
 
 export function PlatformSection() {
-  const [titleRef, titleVisible] = useScrollAnimation({ threshold: 0.3, once: true })
+  const [titleReference, titleVisible] = useScrollAnimation({ threshold: 0.3, once: true })
   const features = [
     {
       title: "Aprenda & Pratique",
@@ -25,7 +25,7 @@ export function PlatformSection() {
   return (
     <section className="py-20 bg-background">
       <div className="container mx-auto px-4">
-        <div ref={titleRef} className={`max-w-3xl mx-auto text-center mb-16 transition-all duration-700 ${
+        <div ref={titleReference} className={`max-w-3xl mx-auto text-center mb-16 transition-all duration-700 ${
           titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         }`}>
           <h2 className="text-3xl lg:text-4xl font-bold mb-6">

@@ -57,7 +57,7 @@ export function HeroSection() {
                 variant="outline"
                 size="lg"
                 className="flex items-center gap-2 w-full sm:w-auto justify-center border-white text-white hover:bg-white hover:text-navy"
-                onClick={() => document.getElementById('grade-curricular')?.scrollIntoView({ behavior: 'smooth' })}
+                onClick={() => document.querySelector('#grade-curricular')?.scrollIntoView({ behavior: 'smooth' })}
               >
                 <div className="w-4 h-4 border-l-[6px] border-l-current border-y-[4px] border-y-transparent flex-shrink-0"></div>
                 Ver Grade Curricular

@@ -77,8 +77,8 @@ function CoursePage({ slug }) {
       if (loaderData?.course) {
         const validatedCourse = validateAndSanitizeCourse(loaderData.course);
         setCourse(validatedCourse);
-        setFormData(prev => ({
-          ...prev,
+        setFormData(previous => ({
+          ...previous,
           course: validatedCourse.basicInfo.title
         }));
         return;
@@ -100,13 +100,13 @@ function CoursePage({ slug }) {
         setCourse(validatedCourse);
 
         // Pré-seleciona o curso no formulário
-        setFormData(prev => ({
-          ...prev,
+        setFormData(previous => ({
+          ...previous,
           course: validatedCourse.basicInfo.title
         }));
 
-      } catch (err) {
-        console.error('Erro ao carregar curso:', err);
+      } catch (error_) {
+        console.error('Erro ao carregar curso:', error_);
         setError('Erro ao carregar dados do curso');
       }
     };
@@ -119,7 +119,7 @@ function CoursePage({ slug }) {
   // Handler para botão de matrícula
   const handleEnrollClick = () => {
     // Scroll para formulário de contato
-    const contactSection = document.getElementById('contato');
+    const contactSection = document.querySelector('#contato');
     if (contactSection) {
       contactSection.scrollIntoView({ behavior: 'smooth' });
     }
@@ -148,7 +148,7 @@ function CoursePage({ slug }) {
         return { success: false, error: 'EmailJS não configurado' };
       }
 
-      const templateParams = {
+      const templateParameters = {
         from_name: formData.name,
         from_email: formData.email,
         phone: formData.phone,
@@ -161,7 +161,7 @@ function CoursePage({ slug }) {
       const result = await emailjs.send(
         EMAIL_CONFIG.SERVICE_ID,
         EMAIL_CONFIG.TEMPLATE_ID,
-        templateParams,
+        templateParameters,
         EMAIL_CONFIG.PUBLIC_KEY
       );
 
@@ -593,4 +593,5 @@ export function getStaticPaths() {
 // Export both default and Component for vite-react-ssg compatibility
 export default CoursePage;
 export { CoursePage as Component };
-export { getCourseBySlug, validateAndSanitizeCourse };
+
+export {getCourseBySlug, validateAndSanitizeCourse} from '../utils/courseHelpers';

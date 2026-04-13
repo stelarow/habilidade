@@ -4,13 +4,13 @@ import { CountdownTimer } from "@/components/shared/CountdownTimer"
 import { useScrollAnimation } from "@/hooks/useScrollAnimation"
 
 export function InvestmentSection() {
-  const [titleRef, titleVisible] = useScrollAnimation({ threshold: 0.3, once: true })
-  const [cardRef, cardVisible] = useScrollAnimation({ threshold: 0.2, once: true })
+  const [titleReference, titleVisible] = useScrollAnimation({ threshold: 0.3, once: true })
+  const [cardReference, cardVisible] = useScrollAnimation({ threshold: 0.2, once: true })
 
   return (
     <section className="py-20 bg-background">
       <div className="container mx-auto px-4">
-        <div ref={titleRef} className={`text-center mb-12 transition-all duration-700 ${
+        <div ref={titleReference} className={`text-center mb-12 transition-all duration-700 ${
           titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         }`}>
           <div className="text-teal font-semibold mb-4">INVESTIMENTO</div>
@@ -23,7 +23,7 @@ export function InvestmentSection() {
         </div>
 
         <div className="max-w-lg mx-auto">
-          <div ref={cardRef} className={`bg-card border rounded-xl p-8 text-center relative overflow-hidden transition-all duration-700 ${
+          <div ref={cardReference} className={`bg-card border rounded-xl p-8 text-center relative overflow-hidden transition-all duration-700 ${
             cardVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-95'
           }`}>
             {/* Badge de desconto */}

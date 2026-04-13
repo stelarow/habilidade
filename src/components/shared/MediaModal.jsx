@@ -30,11 +30,7 @@ const MediaModal = ({
 
   // Prevenir scroll do body quando modal está aberto
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
+    document.body.style.overflow = isOpen ? 'hidden' : 'unset';
 
     return () => {
       document.body.style.overflow = 'unset';

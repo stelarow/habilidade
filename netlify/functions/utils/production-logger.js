@@ -21,7 +21,7 @@ class ProductionLogger extends Logger {
    */
   setUserContext(userAgent, ip, referer, sessionData = {}) {
     this.userContext = {
-      userAgent: userAgent?.substring(0, 100) || 'unknown',
+      userAgent: userAgent?.slice(0, 100) || 'unknown',
       ip: ip || 'unknown', 
       referer: referer || 'direct',
       timestamp: new Date().toISOString(),
@@ -54,7 +54,7 @@ class ProductionLogger extends Logger {
       errorName: error?.name || 'UnknownError',
       errorMessage: error?.message || message,
       errorCode: error?.code,
-      errorStack: error?.stack?.split('\n').slice(0, 5).join('\\n'), // Primeiras 5 linhas
+      errorStack: error?.stack?.split('\n').slice(0, 5).join(String.raw`\n`), // Primeiras 5 linhas
       
       // Request context
       httpMethod: event?.httpMethod,
@@ -230,13 +230,9 @@ class ProductionLogger extends Logger {
     const sensitiveHeaders = ['authorization', 'cookie', 'x-api-key', 'x-auth-token'];
     const sanitized = {};
     
-    Object.keys(headers).forEach(key => {
-      if (sensitiveHeaders.some(sensitive => key.toLowerCase().includes(sensitive))) {
-        sanitized[key] = '[REDACTED]';
-      } else {
-        sanitized[key] = headers[key];
-      }
-    });
+    for (const key of Object.keys(headers)) {
+      sanitized[key] = sensitiveHeaders.some(sensitive => key.toLowerCase().includes(sensitive)) ? '[REDACTED]' : headers[key];
+    }
     
     return sanitized;
   }

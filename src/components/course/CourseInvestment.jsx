@@ -181,7 +181,7 @@ function CourseInvestment({ course, onEnrollClick }) {
               <div className="flex justify-between items-center">
                 <span className="text-gray-300 text-sm">Valor por hora/aula</span>
                 <span className="text-white font-semibold text-sm">
-                  {formatPrice(course.investment.currentPrice / parseInt(course.basicInfo.duration))}
+                  {formatPrice(course.investment.currentPrice / Number.parseInt(course.basicInfo.duration))}
                 </span>
               </div>
               <div className="flex justify-between items-center">

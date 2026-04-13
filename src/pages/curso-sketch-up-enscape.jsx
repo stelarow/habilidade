@@ -331,7 +331,7 @@ CourseHero.displayName = 'CourseHero';
 const AboutCourse = memo(() => {
   const prefersReducedMotion = useReducedMotion();
   const [isInView, setIsInView] = useState(false);
-  const sectionRef = useRef(null);
+  const sectionReference = useRef(null);
 
   // Optimized intersection observer
   useEffect(() => {
@@ -345,15 +345,15 @@ const AboutCourse = memo(() => {
       { rootMargin: '50px', threshold: 0.1 }
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+    if (sectionReference.current) {
+      observer.observe(sectionReference.current);
     }
 
     return () => observer.disconnect();
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-20 bg-gray-50">
+    <section ref={sectionReference} className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <motion.div
@@ -427,7 +427,7 @@ const ModuleSection = memo(({ title, lessons, icon: IconComponent }) => {
   const prefersReducedMotion = useReducedMotion();
 
   const toggleExpanded = useCallback(() => {
-    setIsExpanded(prev => !prev);
+    setIsExpanded(previous => !previous);
   }, []);
 
   return (
@@ -641,7 +641,7 @@ CompanyCard.displayName = 'CompanyCard';
 const CompaniesSection = memo(() => {
   const prefersReducedMotion = useReducedMotion();
   const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef(null);
+  const sectionReference = useRef(null);
   
   // Optimized intersection observer
   useEffect(() => {
@@ -656,8 +656,8 @@ const CompaniesSection = memo(() => {
       { rootMargin: '100px', threshold: 0.1 }
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+    if (sectionReference.current) {
+      observer.observe(sectionReference.current);
     }
 
     return () => observer.disconnect();
@@ -679,7 +679,7 @@ const CompaniesSection = memo(() => {
   }, [prefersReducedMotion, isVisible]);
 
   return (
-    <section ref={sectionRef} className="py-20 bg-white">
+    <section ref={sectionReference} className="py-20 bg-white">
       <div className="container mx-auto px-4">
         <motion.div
           initial={prefersReducedMotion ? {} : { opacity: 0, y: 30 }}
@@ -790,7 +790,7 @@ TestimonialCard.displayName = 'TestimonialCard';
 const CourseTestimonials = memo(() => {
   const prefersReducedMotion = useReducedMotion();
   const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef(null);
+  const sectionReference = useRef(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -803,15 +803,15 @@ const CourseTestimonials = memo(() => {
       { rootMargin: '50px', threshold: 0.1 }
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+    if (sectionReference.current) {
+      observer.observe(sectionReference.current);
     }
 
     return () => observer.disconnect();
   }, []);
 
   return (
-    <section id="depoimentos" ref={sectionRef} className="py-20 bg-gradient-radial from-[#110011] to-black">
+    <section id="depoimentos" ref={sectionReference} className="py-20 bg-gradient-radial from-[#110011] to-black">
       <div className="container mx-auto px-4">
         <motion.div
           initial={prefersReducedMotion ? {} : { opacity: 0, y: 30 }}
@@ -1189,7 +1189,7 @@ FAQ.displayName = 'FAQ';
 const FinalCTA = memo(() => {
   const prefersReducedMotion = useReducedMotion();
   const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef(null);
+  const sectionReference = useRef(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -1201,15 +1201,15 @@ const FinalCTA = memo(() => {
       { rootMargin: '100px', threshold: 0.1 }
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+    if (sectionReference.current) {
+      observer.observe(sectionReference.current);
     }
 
     return () => observer.disconnect();
   }, []);
   
   return (
-    <section id="contato" ref={sectionRef} className="relative py-20 overflow-hidden">
+    <section id="contato" ref={sectionReference} className="relative py-20 overflow-hidden">
       {/* Background com foto de projeto - Optimized */}
       <div className="absolute inset-0">
         <img 

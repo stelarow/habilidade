@@ -18,35 +18,35 @@ const OptimizedVideo = ({
   const [hasError, setHasError] = useState(false);
   const [isVisible, setIsVisible] = useState(!lazy);
   const [isPlaying, setIsPlaying] = useState(autoplay);
-  const videoRef = useRef(null);
-  const observerRef = useRef(null);
+  const videoReference = useRef(null);
+  const observerReference = useRef(null);
 
   // Lazy loading com Intersection Observer
   useEffect(() => {
     if (!lazy) return;
 
-    observerRef.current = new IntersectionObserver(
+    observerReference.current = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
+        for (const entry of entries) {
           if (entry.isIntersecting) {
             setIsVisible(true);
-            observerRef.current?.unobserve(entry.target);
+            observerReference.current?.unobserve(entry.target);
           }
-        });
+        }
       },
       { threshold: 0.1, rootMargin: '50px' }
     );
 
-    if (videoRef.current) {
-      observerRef.current.observe(videoRef.current);
+    if (videoReference.current) {
+      observerReference.current.observe(videoReference.current);
     }
 
-    return () => observerRef.current?.disconnect();
+    return () => observerReference.current?.disconnect();
   }, [lazy]);
 
   // Determinar fontes de vídeo baseadas no src
-  const getVideoSources = (baseSrc) => {
-    const baseName = baseSrc.replace(/\.[^/.]+$/, ''); // Remove extensão
+  const getVideoSources = (baseSource) => {
+    const baseName = baseSource.replace(/\.[^/.]+$/, ''); // Remove extensão
     return [
       { src: `${baseName}.webm`, type: 'video/webm' },
       { src: `${baseName}.mp4`, type: 'video/mp4' }
@@ -70,11 +70,11 @@ const OptimizedVideo = ({
   };
 
   const togglePlay = () => {
-    if (videoRef.current) {
+    if (videoReference.current) {
       if (isPlaying) {
-        videoRef.current.pause();
+        videoReference.current.pause();
       } else {
-        videoRef.current.play();
+        videoReference.current.play();
       }
       setIsPlaying(!isPlaying);
     }
@@ -93,7 +93,7 @@ const OptimizedVideo = ({
   }
 
   return (
-    <div className={`relative ${className}`} ref={videoRef}>
+    <div className={`relative ${className}`} ref={videoReference}>
       {/* Loading placeholder */}
       {isLoading && (
         <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 to-blue-900/20 flex items-center justify-center">
@@ -104,7 +104,7 @@ const OptimizedVideo = ({
       {/* Vídeo principal - só carrega quando visível */}
       {isVisible && (
         <video
-          ref={videoRef}
+          ref={videoReference}
           poster={poster}
           autoPlay={autoplay}
           muted={muted}

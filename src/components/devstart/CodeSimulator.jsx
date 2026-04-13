@@ -27,7 +27,7 @@ const CodeSimulator = () => {
   const [containerSize, setContainerSize] = useState({ width: 800, height: 500 });
 
   // Ref para o container do jogo
-  const gameContainerRef = useRef(null);
+  const gameContainerReference = useRef(null);
 
   // Posições e tamanhos em percentuais para responsividade
   const blockPosPercent = { x: 65, y: 40, w: 18, h: 18 }; // Percentuais da tela
@@ -36,11 +36,11 @@ const CodeSimulator = () => {
   // Detectar tamanho do container e se é mobile
   useEffect(() => {
     const updateContainerSize = () => {
-      if (gameContainerRef.current) {
-        const rect = gameContainerRef.current.getBoundingClientRect();
+      if (gameContainerReference.current) {
+        const rect = gameContainerReference.current.getBoundingClientRect();
         setContainerSize({ width: rect.width, height: rect.height });
       }
-      setIsMobile('ontouchstart' in window || navigator.maxTouchPoints > 0);
+      setIsMobile('ontouchstart' in globalThis || navigator.maxTouchPoints > 0);
     };
 
     // Atualizar no mount
@@ -99,25 +99,29 @@ const CodeSimulator = () => {
   const move = (direction) => {
     if (!isGameActive || gameOver) return;
 
-    setPlayerPos((prev) => {
-      let newX = prev.x;
-      let newY = prev.y;
+    setPlayerPos((previous) => {
+      let newX = previous.x;
+      let newY = previous.y;
       // Step em percentual (2.5% do container por movimento)
       const stepPercent = 2.5;
 
       switch (direction) {
-        case 'up':
+        case 'up': {
           newY -= stepPercent;
           break;
-        case 'down':
+        }
+        case 'down': {
           newY += stepPercent;
           break;
-        case 'left':
+        }
+        case 'left': {
           newX -= stepPercent;
           break;
-        case 'right':
+        }
+        case 'right': {
           newX += stepPercent;
           break;
+        }
       }
 
       // Limites da área de jogo (0-100% menos o tamanho do player)
@@ -146,33 +150,37 @@ const CodeSimulator = () => {
       switch (e.key) {
         case 'ArrowUp':
         case 'w':
-        case 'W':
+        case 'W': {
           e.preventDefault();
           move('up');
           break;
+        }
         case 'ArrowDown':
         case 's':
-        case 'S':
+        case 'S': {
           e.preventDefault();
           move('down');
           break;
+        }
         case 'ArrowLeft':
         case 'a':
-        case 'A':
+        case 'A': {
           e.preventDefault();
           move('left');
           break;
+        }
         case 'ArrowRight':
         case 'd':
-        case 'D':
+        case 'D': {
           e.preventDefault();
           move('right');
           break;
+        }
       }
     };
 
-    window.addEventListener('keydown', handleKeyPress);
-    return () => window.removeEventListener('keydown', handleKeyPress);
+    globalThis.addEventListener('keydown', handleKeyPress);
+    return () => globalThis.removeEventListener('keydown', handleKeyPress);
   }, [isGameActive, gameOver, isMobile, blockState.scripted]);
 
   const handleStepClick = (step) => {
@@ -190,31 +198,35 @@ const CodeSimulator = () => {
     }
 
     // Adicionar código
-    setCurrentCode((prev) => [...prev, step.code]);
+    setCurrentCode((previous) => [...previous, step.code]);
 
     // Atualizar estado do bloco
     switch (step.action) {
-      case 'createBlock':
-        setBlockState((prev) => ({ ...prev, created: true }));
+      case 'createBlock': {
+        setBlockState((previous) => ({ ...previous, created: true }));
         break;
-      case 'paintRed':
-        setBlockState((prev) => ({ ...prev, colored: true }));
+      }
+      case 'paintRed': {
+        setBlockState((previous) => ({ ...previous, colored: true }));
         break;
-      case 'addScript':
-        setBlockState((prev) => ({ ...prev, scripted: true }));
+      }
+      case 'addScript': {
+        setBlockState((previous) => ({ ...previous, scripted: true }));
         break;
-      case 'test':
-        setBlockState((prev) => ({ ...prev, tested: true }));
+      }
+      case 'test': {
+        setBlockState((previous) => ({ ...previous, tested: true }));
         setIsGameActive(true);
         setGameOver(false);
         setPlayerDead(false);
         setPlayerPos({ x: 15, y: 30 }); // Valores em percentual
         toast.success('Jogo iniciado! ' + (isMobile ? 'Toque nas setas para mover! 📱' : 'Use as setas do teclado! ⌨️'));
         break;
+      }
     }
 
     // Marcar como completado
-    setCompletedSteps((prev) => [...prev, step.id]);
+    setCompletedSteps((previous) => [...previous, step.id]);
 
     // Mostrar toast de feedback
     toast.success(step.feedback);
@@ -372,7 +384,7 @@ const CodeSimulator = () => {
 
                 {/* Game Area - Responsivo */}
                 <div
-                  ref={gameContainerRef}
+                  ref={gameContainerReference}
                   className="bg-gradient-to-b from-sky-300 to-sky-500 rounded-lg p-4 md:p-8 relative overflow-hidden w-full"
                   style={{
                     aspectRatio: isMobile ? '4/3' : '16/9',

@@ -13,7 +13,7 @@ class MemoryManager {
     this.memoryThreshold = 100 * 1024 * 1024; // 100MB
     
     // Only setup browser APIs if we're in a browser environment
-    if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+    if (globalThis.window !== undefined && typeof document !== 'undefined') {
       this.setupVisibilityAPI();
       this.setupMemoryMonitoring();
     }
@@ -30,12 +30,12 @@ class MemoryManager {
     const handleVisibilityChange = () => {
       this.isTabActive = !document.hidden;
       
-      if (!this.isTabActive) {
-        this.pauseAllAnimations();
-        console.log('[MemoryManager] Tab inactive - animations paused');
-      } else {
+      if (this.isTabActive) {
         this.resumeAllAnimations();
         console.log('[MemoryManager] Tab active - animations resumed');
+      } else {
+        this.pauseAllAnimations();
+        console.log('[MemoryManager] Tab inactive - animations paused');
       }
     };
 
@@ -59,17 +59,17 @@ class MemoryManager {
     };
 
     // Verificar memória a cada 30 segundos
-    const intervalId = setInterval(checkMemory, 30000);
+    const intervalId = setInterval(checkMemory, 30_000);
     this.timers.add(intervalId);
   }
 
   // Registrar animação
-  registerAnimation(id, pauseFn, resumeFn, cleanupFn) {
+  registerAnimation(id, pauseFunction, resumeFunction, cleanupFunction) {
     const animation = {
       id,
-      pauseFn: pauseFn || (() => {}),
-      resumeFn: resumeFn || (() => {}),
-      cleanupFn: cleanupFn || (() => {}),
+      pauseFn: pauseFunction || (() => {}),
+      resumeFn: resumeFunction || (() => {}),
+      cleanupFn: cleanupFunction || (() => {}),
       isPaused: false
     };
     
@@ -79,24 +79,24 @@ class MemoryManager {
 
   // Pausar todas as animações
   pauseAllAnimations() {
-    this.activeAnimations.forEach(animation => {
+    for (const animation of this.activeAnimations) {
       if (!animation.isPaused) {
         animation.pauseFn();
         animation.isPaused = true;
       }
-    });
+    }
   }
 
   // Retomar todas as animações
   resumeAllAnimations() {
     if (!this.isTabActive) return;
     
-    this.activeAnimations.forEach(animation => {
+    for (const animation of this.activeAnimations) {
       if (animation.isPaused) {
         animation.resumeFn();
         animation.isPaused = false;
       }
-    });
+    }
   }
 
   // Remover animação
@@ -132,16 +132,16 @@ class MemoryManager {
     this.pauseAllAnimations();
     
     // Forçar garbage collection se disponível
-    if (window.gc) {
-      window.gc();
+    if (globalThis.gc) {
+      globalThis.gc();
     }
     
     // Limpar canvas contexts
-    this.canvasContexts.forEach(ctx => {
-      if (ctx && ctx.canvas) {
-        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    for (const context of this.canvasContexts) {
+      if (context && context.canvas) {
+        context.clearRect(0, 0, context.canvas.width, context.canvas.height);
       }
-    });
+    }
     
     // Aguardar um pouco antes de retomar
     setTimeout(() => {
@@ -155,23 +155,23 @@ class MemoryManager {
   // Limpeza completa
   destroy() {
     // Parar todas as animações
-    this.activeAnimations.forEach(animation => {
+    for (const animation of this.activeAnimations) {
       this.unregisterAnimation(animation);
-    });
+    }
     this.activeAnimations.clear();
 
     // Remover event listeners
-    this.eventListeners.forEach((listeners, key) => {
-      listeners.forEach(({ element, handler, options }) => {
+    for (const [key, listeners] of this.eventListeners.entries()) {
+      for (const { element, handler, options } of listeners) {
         element.removeEventListener(key.split(':')[1], handler, options);
-      });
-    });
+      }
+    }
     this.eventListeners.clear();
 
     // Limpar timers
-    this.timers.forEach(timerId => {
+    for (const timerId of this.timers) {
       clearInterval(timerId);
-    });
+    }
     this.timers.clear();
 
     // Limpar canvas contexts

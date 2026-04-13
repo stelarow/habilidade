@@ -16,7 +16,7 @@ function Starfield({ count = 50, className = '', useCSSOnly = false }) {
     };
     
     // Detectar preferência de movimento reduzido
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const mediaQuery = globalThis.matchMedia('(prefers-reduced-motion: reduce)');
     setPrefersReducedMotion(mediaQuery.matches);
     
     checkMobile();
@@ -24,8 +24,8 @@ function Starfield({ count = 50, className = '', useCSSOnly = false }) {
     
     // Defer star rendering to reduce TBT
     const deferRender = () => {
-      if (window.requestIdleCallback) {
-        window.requestIdleCallback(() => setRenderStars(true), { timeout: 2000 });
+      if (globalThis.requestIdleCallback) {
+        globalThis.requestIdleCallback(() => setRenderStars(true), { timeout: 2000 });
       } else {
         setTimeout(() => setRenderStars(true), 100);
       }
@@ -47,16 +47,16 @@ function Starfield({ count = 50, className = '', useCSSOnly = false }) {
     const maxStars = isMobile ? 6 : 10; // Reduced further
     const starCount = Math.min(count / 5, maxStars);
     
-    const arr = [];
-    for (let i = 0; i < starCount; i++) {
+    const array = [];
+    for (let index = 0; index < starCount; index++) {
       const left = Math.random() * 100;
       const top = Math.random() * 100;
       const size = Math.random() * 1.5 + 1; // Smaller: 1–2.5px
       const delay = Math.random() * 3;
       const duration = Math.random() * 2 + 3; // Slower: 3–5s
-      arr.push({ left, top, size, delay, duration });
+      array.push({ left, top, size, delay, duration });
     }
-    return arr;
+    return array;
   }, [count, isMobile, prefersReducedMotion, isHydrated, renderStars]);
 
   // Não renderizar nada se preferência de movimento reduzido, não hidratado, ou ainda não é hora de renderizar
@@ -65,9 +65,9 @@ function Starfield({ count = 50, className = '', useCSSOnly = false }) {
   // Always use DOM approach but with optimized star count for consistent layout
   return (
     <div className={`absolute inset-0 pointer-events-none ${className}`} aria-hidden="true">
-      {stars.map((s, idx) => (
+      {stars.map((s, index) => (
         <span
-          key={idx}
+          key={index}
           className="star block absolute rounded-full bg-fuchsia-500/80"
           style={{
             left: `${s.left}%`,

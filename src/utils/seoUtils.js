@@ -74,9 +74,9 @@ export const generateMetaTags = ({
     if (author) metaTags['article:author'] = author;
     if (section) metaTags['article:section'] = section;
     if (tags.length > 0) {
-      tags.forEach((tag, index) => {
+      for (const [index, tag] of tags.entries()) {
         metaTags[`article:tag:${index}`] = tag;
-      });
+      }
     }
   }
   
@@ -160,7 +160,7 @@ export const generateStructuredData = ({
  */
 export const generateCanonicalUrl = (path = '', options = {}) => {
   const { 
-    removeParams = false,
+    removeParams: removeParameters = false,
     forceDomain = null 
   } = options;
   
@@ -170,7 +170,7 @@ export const generateCanonicalUrl = (path = '', options = {}) => {
   let canonicalUrl = `${baseDomain}${cleanPath}`;
   
   // Remove query parameters if requested
-  if (removeParams) {
+  if (removeParameters) {
     canonicalUrl = canonicalUrl.split('?')[0];
   }
   
@@ -199,9 +199,9 @@ export const sanitizeTitle = (title, options = {}) => {
   
   // Clean title
   let cleanTitle = title
-    .replace(/\s+/g, ' ')
+    .replaceAll(/\s+/g, ' ')
     .trim()
-    .replace(/[^\w\s\-\u00C0-\u017F]/g, ''); // Allow accented characters
+    .replaceAll(/[^\w\s\-\u00C0-\u017F]/g, ''); // Allow accented characters
   
   // Add suffix if not present and not removing
   if (!removeSuffix && !cleanTitle.includes(suffix.replace(' - ', ''))) {
@@ -214,7 +214,7 @@ export const sanitizeTitle = (title, options = {}) => {
     const maxContentLength = maxLength - suffix.length;
     
     if (withoutSuffix.length > maxContentLength) {
-      cleanTitle = withoutSuffix.substring(0, maxContentLength).trim() + '...' + suffix;
+      cleanTitle = withoutSuffix.slice(0, Math.max(0, maxContentLength)).trim() + '...' + suffix;
     }
   }
   
@@ -237,9 +237,9 @@ export const truncateDescription = (description, options = {}) => {
   
   // Clean description
   let cleanDesc = description
-    .replace(/\s+/g, ' ')
+    .replaceAll(/\s+/g, ' ')
     .trim()
-    .replace(/<[^>]*>/g, ''); // Remove HTML tags
+    .replaceAll(/<[^>]*>/g, ''); // Remove HTML tags
   
   if (cleanDesc.length <= maxLength) {
     return cleanDesc;
@@ -247,15 +247,15 @@ export const truncateDescription = (description, options = {}) => {
   
   if (preserveWords) {
     // Find last complete word within limit
-    const truncated = cleanDesc.substring(0, maxLength);
+    const truncated = cleanDesc.slice(0, Math.max(0, maxLength));
     const lastSpace = truncated.lastIndexOf(' ');
     
     if (lastSpace > maxLength * 0.8) { // Only if we don't lose too much
-      return truncated.substring(0, lastSpace) + '...';
+      return truncated.slice(0, Math.max(0, lastSpace)) + '...';
     }
   }
   
-  return cleanDesc.substring(0, maxLength - 3) + '...';
+  return cleanDesc.slice(0, Math.max(0, maxLength - 3)) + '...';
 };
 
 /**
@@ -264,7 +264,7 @@ export const truncateDescription = (description, options = {}) => {
  * @returns {Object} Breadcrumb JSON-LD
  */
 export const generateBreadcrumbStructuredData = (breadcrumbs = []) => {
-  if (!breadcrumbs.length) return null;
+  if (breadcrumbs.length === 0) return null;
   
   const itemListElement = breadcrumbs.map((crumb, index) => ({
     '@type': 'ListItem',
@@ -307,8 +307,8 @@ export const extractKeywords = (content, options = {}) => {
   // Extract words
   const words = content
     .toLowerCase()
-    .replace(/<[^>]*>/g, '') // Remove HTML
-    .replace(/[^\w\s�-�]/g, ' ') // Keep only letters and accented chars
+    .replaceAll(/<[^>]*>/g, '') // Remove HTML
+    .replaceAll(/[^\w\s�-�]/g, ' ') // Keep only letters and accented chars
     .split(/\s+/)
     .filter(word => 
       word.length >= minLength && 
@@ -318,9 +318,9 @@ export const extractKeywords = (content, options = {}) => {
   
   // Count frequency
   const frequency = {};
-  words.forEach(word => {
+  for (const word of words) {
     frequency[word] = (frequency[word] || 0) + 1;
-  });
+  }
   
   // Sort by frequency and return top keywords
   return Object.entries(frequency)
@@ -346,7 +346,7 @@ export const generateSitemapEntry = ({
     loc: fullUrl,
     lastmod: lastmod.split('T')[0], // YYYY-MM-DD format
     changefreq,
-    priority: Math.min(Math.max(priority, 0.0), 1.0) // Clamp between 0-1
+    priority: Math.min(Math.max(priority, 0), 1) // Clamp between 0-1
   };
 };
 
@@ -361,19 +361,19 @@ export const validateSEO = (pageData) => {
   const warnings = [];
   
   // Title validation
-  if (!title) {
-    issues.push('Title is required');
-  } else {
+  if (title) {
     if (title.length < 30) warnings.push('Title is quite short (recommended: 30-60 chars)');
     if (title.length > 60) warnings.push('Title is too long (recommended: 30-60 chars)');
+  } else {
+    issues.push('Title is required');
   }
   
   // Description validation
-  if (!description) {
-    issues.push('Description is required');
-  } else {
+  if (description) {
     if (description.length < 120) warnings.push('Description is short (recommended: 120-160 chars)');
     if (description.length > 160) warnings.push('Description is too long (recommended: 120-160 chars)');
+  } else {
+    issues.push('Description is required');
   }
   
   // URL validation
@@ -412,8 +412,7 @@ export const generateRobotsMeta = (options = {}) => {
   
   const directives = [];
   
-  directives.push(index ? 'index' : 'noindex');
-  directives.push(follow ? 'follow' : 'nofollow');
+  directives.push(index ? 'index' : 'noindex', follow ? 'follow' : 'nofollow');
   
   if (noarchive) directives.push('noarchive');
   if (nosnippet) directives.push('nosnippet');

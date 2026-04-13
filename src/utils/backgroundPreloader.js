@@ -31,9 +31,9 @@ class BackgroundPreloader {
   }
 
   setPriorities(courseOrder) {
-    courseOrder.forEach((courseSlug, index) => {
+    for (const [index, courseSlug] of courseOrder.entries()) {
       this.priorities.set(courseSlug, index);
-    });
+    }
   }
 
   async preloadBackground(courseSlug, options = {}) {
@@ -91,7 +91,7 @@ class BackgroundPreloader {
 
     // Carregar com timeout para evitar travamentos
     const timeoutPromise = new Promise((_, reject) => {
-      setTimeout(() => reject(new Error('Background load timeout')), 10000);
+      setTimeout(() => reject(new Error('Background load timeout')), 10_000);
     });
 
     const loadedModule = await Promise.race([loader(), timeoutPromise]);
@@ -111,13 +111,13 @@ class BackgroundPreloader {
     const toPreload = [];
     
     // Adicionar backgrounds adjacentes
-    for (let i = 1; i <= preloadCount; i++) {
-      const nextIndex = (currentIndex + i) % allCourses.length;
-      const prevIndex = (currentIndex - i + allCourses.length) % allCourses.length;
+    for (let index = 1; index <= preloadCount; index++) {
+      const nextIndex = (currentIndex + index) % allCourses.length;
+      const previousIndex = (currentIndex - index + allCourses.length) % allCourses.length;
       
       toPreload.push(allCourses[nextIndex]);
-      if (i <= 1) { // Só precarregar 1 anterior para economizar recursos
-        toPreload.push(allCourses[prevIndex]);
+      if (index <= 1) { // Só precarregar 1 anterior para economizar recursos
+        toPreload.push(allCourses[previousIndex]);
       }
     }
 
@@ -202,12 +202,12 @@ class BackgroundPreloader {
       
       // Outros em background se o device suportar
       if (this.shouldPreloadMore(deviceCapabilities)) {
-        critical.slice(1).forEach((slug, index) => {
+        for (const [index, slug] of critical.slice(1).entries()) {
           this.schedulePreload(slug, { 
             priority: index + 1, 
             deviceCapabilities 
           });
-        });
+        }
       }
     } catch (error) {
       console.warn('[BackgroundPreloader] Critical preload failed:', error);
@@ -219,13 +219,13 @@ class BackgroundPreloader {
     if (this.cache.size <= keepRecent) return;
 
     // Manter apenas os mais recentes (algoritmo FIFO simples)
-    const entries = Array.from(this.cache.entries());
+    const entries = [...this.cache.entries()];
     const toKeep = entries.slice(-keepRecent);
     
     this.cache.clear();
-    toKeep.forEach(([key, value]) => {
+    for (const [key, value] of toKeep) {
       this.cache.set(key, value);
-    });
+    }
 
     console.log(`[BackgroundPreloader] Cache cleared, kept ${toKeep.length} recent items`);
   }
@@ -248,7 +248,7 @@ class BackgroundPreloader {
       loading: this.loadingPromises.size,
       queueLength: this.loadQueue.length,
       currentLoads: this.currentLoads,
-      cachedBackgrounds: Array.from(this.cache.keys())
+      cachedBackgrounds: [...this.cache.keys()]
     };
   }
 

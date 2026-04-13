@@ -14,9 +14,9 @@ export const ScrollReveal = ({
   triggerOnce = true,
   className = '',
   style = {},
-  ...props
+  ...properties
 }) => {
-  const [ref, isVisible, hasAnimated] = useScrollAnimation({
+  const [reference, isVisible, hasAnimated] = useScrollAnimation({
     threshold,
     once: triggerOnce,
     delay: delay * 1000 // Converter para ms
@@ -39,13 +39,13 @@ export const ScrollReveal = ({
 
   return (
     <div
-      ref={ref}
+      ref={reference}
       className={finalClasses}
       style={{
         transitionDuration: `${duration}s`,
         ...style
       }}
-      {...props}
+      {...properties}
     >
       {children}
     </div>
@@ -55,8 +55,8 @@ export const ScrollReveal = ({
 /**
  * Component especializado para hero sections
  */
-export const HeroReveal = ({ children, type = 'title', className = '', ...props }) => {
-  const [ref, isVisible, hasAnimated] = useScrollAnimation({
+export const HeroReveal = ({ children, type = 'title', className = '', ...properties }) => {
+  const [reference, isVisible, hasAnimated] = useScrollAnimation({
     threshold: 0.1,
     once: true
   });
@@ -72,7 +72,7 @@ export const HeroReveal = ({ children, type = 'title', className = '', ...props 
   const finalClasses = `${baseClass} ${visibleClass} ${className}`.trim();
 
   return (
-    <div ref={ref} className={finalClasses} {...props}>
+    <div ref={reference} className={finalClasses} {...properties}>
       {children}
     </div>
   );
@@ -86,15 +86,15 @@ export const CardGridReveal = ({
   staggerDelay = 0.1,
   className = '',
   itemClassName = '',
-  ...props
+  ...properties
 }) => {
-  const [containerRef, isVisible, hasAnimated] = useScrollAnimation({
+  const [containerReference, isVisible, hasAnimated] = useScrollAnimation({
     threshold: 0.1,
     once: true
   });
 
   return (
-    <div ref={containerRef} className={className} {...props}>
+    <div ref={containerReference} className={className} {...properties}>
       {React.Children.map(children, (child, index) => (
         <div
           key={index}
@@ -114,7 +114,7 @@ export const CardGridReveal = ({
  * HOC para adicionar animação de scroll a qualquer componente
  */
 export const withScrollReveal = (WrappedComponent, animationConfig = {}) => {
-  return React.forwardRef((props, ref) => {
+  return React.forwardRef((properties, reference) => {
     const {
       animation = 'fade-up',
       delay = 0,
@@ -131,7 +131,7 @@ export const withScrollReveal = (WrappedComponent, animationConfig = {}) => {
         triggerOnce={triggerOnce}
         {...restConfig}
       >
-        <WrappedComponent ref={ref} {...props} />
+        <WrappedComponent ref={reference} {...properties} />
       </ScrollReveal>
     );
   });

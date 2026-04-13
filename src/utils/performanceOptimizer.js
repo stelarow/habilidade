@@ -5,12 +5,12 @@
 import React from 'react';
 
 // Lazy loading utilities
-export const createLazyComponent = (importFn, fallback = null) => {
-  const LazyComponent = React.lazy(importFn);
+export const createLazyComponent = (importFunction, fallback = null) => {
+  const LazyComponent = React.lazy(importFunction);
   
-  return React.forwardRef((props, ref) => (
-    <React.Suspense key={`lazy-${importFn.toString().slice(0, 20)}`} fallback={fallback}>
-      <LazyComponent ref={ref} {...props} />
+  return React.forwardRef((properties, reference) => (
+    <React.Suspense key={`lazy-${importFunction.toString().slice(0, 20)}`} fallback={fallback}>
+      <LazyComponent ref={reference} {...properties} />
     </React.Suspense>
   ));
 };
@@ -19,19 +19,19 @@ export const createLazyComponent = (importFn, fallback = null) => {
 export const cleanupAnimations = () => {
   // Remove will-change from all elements after animations complete
   const elements = document.querySelectorAll('[style*="will-change"]');
-  elements.forEach(el => {
-    if (!el.style.willChange || el.style.willChange === 'auto') return;
+  for (const element of elements) {
+    if (!element.style.willChange || element.style.willChange === 'auto') continue;
     
     // Check if element is currently animating
-    const computedStyle = window.getComputedStyle(el);
+    const computedStyle = globalThis.getComputedStyle(element);
     const isAnimating = computedStyle.animationName !== 'none' || 
                        computedStyle.transitionProperty !== 'none';
     
     if (!isAnimating) {
-      el.style.willChange = 'auto';
-      el.classList.add('animation-complete');
+      element.style.willChange = 'auto';
+      element.classList.add('animation-complete');
     }
-  });
+  }
 };
 
 // Intersection Observer singleton
@@ -47,10 +47,10 @@ class IntersectionObserverManager {
       this.observers.set(key, {
         observer: new IntersectionObserver(
           (entries) => {
-            entries.forEach(entry => {
+            for (const entry of entries) {
               const callback = entry.target._intersectionCallback;
               if (callback) callback(entry);
-            });
+            }
           },
           options
         ),
@@ -65,19 +65,19 @@ class IntersectionObserverManager {
   }
 
   unobserve(element) {
-    this.observers.forEach(({ observer, elements }) => {
+    for (const { observer, elements } of this.observers) {
       if (elements.has(element)) {
         observer.unobserve(element);
         elements.delete(element);
         delete element._intersectionCallback;
       }
-    });
+    }
   }
 
   cleanup() {
-    this.observers.forEach(({ observer }) => {
+    for (const { observer } of this.observers) {
       observer.disconnect();
-    });
+    }
     this.observers.clear();
   }
 }
@@ -98,8 +98,8 @@ export const measurePerformance = {
         performance.measure(name, startMark, endMark);
         const measure = performance.getEntriesByName(name)[0];
         return measure ? measure.duration : 0;
-      } catch (e) {
-        console.warn('Performance measurement failed:', e);
+      } catch (error) {
+        console.warn('Performance measurement failed:', error);
         return 0;
       }
     }
@@ -118,9 +118,9 @@ export const measurePerformance = {
       firstPaint: paint.find(p => p.name === 'first-paint')?.startTime,
       firstContentfulPaint: paint.find(p => p.name === 'first-contentful-paint')?.startTime,
       memoryUsage: performance.memory ? {
-        used: Math.round(performance.memory.usedJSHeapSize / 1048576),
-        total: Math.round(performance.memory.totalJSHeapSize / 1048576),
-        limit: Math.round(performance.memory.jsHeapSizeLimit / 1048576)
+        used: Math.round(performance.memory.usedJSHeapSize / 1_048_576),
+        total: Math.round(performance.memory.totalJSHeapSize / 1_048_576),
+        limit: Math.round(performance.memory.jsHeapSizeLimit / 1_048_576)
       } : null
     };
   }
@@ -131,13 +131,13 @@ export const imageOptimization = {
   preloadCritical(urls) {
     if (!Array.isArray(urls)) return;
     
-    urls.forEach(url => {
+    for (const url of urls) {
       const link = document.createElement('link');
       link.rel = 'preload';
       link.as = 'image';
       link.href = url;
-      document.head.appendChild(link);
-    });
+      document.head.append(link);
+    }
   },
 
   generateSrcSet(baseUrl, sizes = [400, 800, 1200, 1600]) {
@@ -148,7 +148,7 @@ export const imageOptimization = {
   },
 
   supportsWebP() {
-    if (typeof window === 'undefined') return false;
+    if (globalThis.window === undefined) return false;
     const canvas = document.createElement('canvas');
     canvas.width = 1;
     canvas.height = 1;
@@ -194,8 +194,7 @@ export const animationOptimization = {
 
     // Add will-change only during animation
     element.style.willChange = 'opacity, transform';
-    element.classList.add('animating');
-    element.classList.add(animationClass);
+    element.classList.add('animating', animationClass);
 
     // Remove will-change after animation
     const cleanup = () => {
@@ -218,19 +217,19 @@ export const animationOptimization = {
 
     // Use requestAnimationFrame to batch updates
     requestAnimationFrame(() => {
-      updates.forEach(update => {
+      for (const update of updates) {
         try {
           update();
         } catch (error) {
           console.warn('DOM update failed:', error);
         }
-      });
+      }
     });
   },
 
   // Reduce motion for accessibility
   shouldReduceMotion() {
-    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    return globalThis.matchMedia('(prefers-reduced-motion: reduce)').matches;
   }
 };
 

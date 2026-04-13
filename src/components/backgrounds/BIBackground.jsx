@@ -9,10 +9,10 @@ const BIBackground = ({
   deviceCapabilities, 
   courseSlug 
 }) => {
-  const canvasRef = useRef(null);
-  const animationRef = useRef(null);
-  const dataStreamsRef = useRef([]);
-  const kpiCardsRef = useRef([]);
+  const canvasReference = useRef(null);
+  const animationReference = useRef(null);
+  const dataStreamsReference = useRef([]);
+  const kpiCardsReference = useRef([]);
   // dashboardRef removido - dashboard removido conforme solicitação
 
   // Configurações baseadas na performance
@@ -90,32 +90,32 @@ const BIBackground = ({
       }
       
       // Update particles
-      this.particles.forEach((particle, index) => {
+      for (const [index, particle] of this.particles.entries()) {
         particle.progress += particle.speed;
         particle.life -= particle.decay;
         
         if (particle.progress >= 1 || particle.life <= 0) {
           this.particles.splice(index, 1);
         }
-      });
+      }
     }
 
-    draw(ctx) {
-      ctx.save();
-      ctx.globalAlpha = this.opacity;
+    draw(context) {
+      context.save();
+      context.globalAlpha = this.opacity;
       
       // Desenhar path do stream (opcional, para debug)
       if (false) { // Desabilitado para performance
-        ctx.strokeStyle = config.colors.stream + '20';
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.moveTo(this.startX, this.startY);
-        ctx.quadraticCurveTo(this.controlX, this.controlY, this.endX, this.endY);
-        ctx.stroke();
+        context.strokeStyle = config.colors.stream + '20';
+        context.lineWidth = 1;
+        context.beginPath();
+        context.moveTo(this.startX, this.startY);
+        context.quadraticCurveTo(this.controlX, this.controlY, this.endX, this.endY);
+        context.stroke();
       }
       
       // Desenhar partículas
-      this.particles.forEach(particle => {
+      for (const particle of this.particles) {
         const t = particle.progress;
         
         // Posição ao longo da curva Bézier quadrática
@@ -126,25 +126,25 @@ const BIBackground = ({
                   2 * (1-t) * t * this.controlY + 
                   Math.pow(t, 2) * this.endY;
         
-        ctx.save();
-        ctx.globalAlpha = particle.opacity * particle.life;
+        context.save();
+        context.globalAlpha = particle.opacity * particle.life;
         
         // Cor baseada no progresso
         const hue = (this.hue + t * 30) % 360;
-        ctx.fillStyle = `hsl(${hue}, 70%, 60%)`;
+        context.fillStyle = `hsl(${hue}, 70%, 60%)`;
         
         // Glow effect
-        ctx.shadowColor = ctx.fillStyle;
-        ctx.shadowBlur = particle.size * 2;
+        context.shadowColor = context.fillStyle;
+        context.shadowBlur = particle.size * 2;
         
-        ctx.beginPath();
-        ctx.arc(x, y, particle.size, 0, Math.PI * 2);
-        ctx.fill();
+        context.beginPath();
+        context.arc(x, y, particle.size, 0, Math.PI * 2);
+        context.fill();
         
-        ctx.restore();
-      });
+        context.restore();
+      }
       
-      ctx.restore();
+      context.restore();
     }
   }
 
@@ -167,7 +167,7 @@ const BIBackground = ({
       // Animação de valor
       this.valueAnimation = 0;
       this.animationSpeed = 0.02 + Math.random() * 0.02;
-      this.targetValue = parseFloat(this.kpi.value.replace(/[$,%]/g, ''));
+      this.targetValue = Number.parseFloat(this.kpi.value.replaceAll(/[$,%]/g, ''));
       this.currentValue = this.targetValue * (0.7 + Math.random() * 0.3);
     }
 
@@ -194,80 +194,80 @@ const BIBackground = ({
       }
     }
 
-    draw(ctx) {
-      ctx.save();
-      ctx.translate(this.x, this.y);
-      ctx.rotate(this.rotation);
-      ctx.scale(this.scale, this.scale);
-      ctx.globalAlpha = this.opacity * (0.8 + Math.sin(this.pulse) * 0.2);
+    draw(context) {
+      context.save();
+      context.translate(this.x, this.y);
+      context.rotate(this.rotation);
+      context.scale(this.scale, this.scale);
+      context.globalAlpha = this.opacity * (0.8 + Math.sin(this.pulse) * 0.2);
 
       // Card do KPI - REDUZIDO
       const cardWidth = 100; // Era 140 → 100 (29% redução)
       const cardHeight = 60; // Era 80 → 60 (25% redução)
       
       // Fundo do card com glow
-      ctx.shadowColor = this.kpi.trend === 'up' ? config.colors.success : config.colors.warning;
-      ctx.shadowBlur = 12;
-      ctx.fillStyle = config.colors.background + 'CC';
-      ctx.fillRect(-cardWidth/2, -cardHeight/2, cardWidth, cardHeight);
+      context.shadowColor = this.kpi.trend === 'up' ? config.colors.success : config.colors.warning;
+      context.shadowBlur = 12;
+      context.fillStyle = config.colors.background + 'CC';
+      context.fillRect(-cardWidth/2, -cardHeight/2, cardWidth, cardHeight);
       
       // Borda do card
-      ctx.strokeStyle = this.kpi.trend === 'up' ? config.colors.success : config.colors.warning;
-      ctx.lineWidth = 2;
-      ctx.strokeRect(-cardWidth/2, -cardHeight/2, cardWidth, cardHeight);
+      context.strokeStyle = this.kpi.trend === 'up' ? config.colors.success : config.colors.warning;
+      context.lineWidth = 2;
+      context.strokeRect(-cardWidth/2, -cardHeight/2, cardWidth, cardHeight);
       
       // Label do KPI
-      ctx.font = '12px Arial';
-      ctx.fillStyle = config.colors.kpi;
-      ctx.textAlign = 'center';
-      ctx.fillText(this.kpi.label, 0, -20);
+      context.font = '12px Arial';
+      context.fillStyle = config.colors.kpi;
+      context.textAlign = 'center';
+      context.fillText(this.kpi.label, 0, -20);
       
       // Valor animado do KPI
       let displayValue = '';
       if (this.kpi.format === 'currency') {
-        displayValue = '$' + (this.currentValue / 1000000).toFixed(1) + 'M';
+        displayValue = '$' + (this.currentValue / 1_000_000).toFixed(1) + 'M';
       } else if (this.kpi.format === 'percentage') {
         displayValue = this.currentValue.toFixed(1) + '%';
       } else {
         displayValue = Math.floor(this.currentValue).toLocaleString();
       }
       
-      ctx.font = 'bold 16px Arial';
-      ctx.fillStyle = this.kpi.trend === 'up' ? config.colors.success : config.colors.warning;
-      ctx.fillText(displayValue, 0, 0);
+      context.font = 'bold 16px Arial';
+      context.fillStyle = this.kpi.trend === 'up' ? config.colors.success : config.colors.warning;
+      context.fillText(displayValue, 0, 0);
       
       // Indicador de tendência
       const arrowSize = 10;
-      ctx.fillStyle = this.kpi.trend === 'up' ? config.colors.success : config.colors.warning;
-      ctx.beginPath();
+      context.fillStyle = this.kpi.trend === 'up' ? config.colors.success : config.colors.warning;
+      context.beginPath();
       if (this.kpi.trend === 'up') {
-        ctx.moveTo(-arrowSize/2, 20);
-        ctx.lineTo(0, 10);
-        ctx.lineTo(arrowSize/2, 20);
+        context.moveTo(-arrowSize/2, 20);
+        context.lineTo(0, 10);
+        context.lineTo(arrowSize/2, 20);
       } else {
-        ctx.moveTo(-arrowSize/2, 10);
-        ctx.lineTo(0, 20);
-        ctx.lineTo(arrowSize/2, 10);
+        context.moveTo(-arrowSize/2, 10);
+        context.lineTo(0, 20);
+        context.lineTo(arrowSize/2, 10);
       }
-      ctx.closePath();
-      ctx.fill();
+      context.closePath();
+      context.fill();
       
       // Mini sparkline
-      ctx.strokeStyle = this.kpi.trend === 'up' ? config.colors.success : config.colors.warning;
-      ctx.lineWidth = 1;
-      ctx.beginPath();
+      context.strokeStyle = this.kpi.trend === 'up' ? config.colors.success : config.colors.warning;
+      context.lineWidth = 1;
+      context.beginPath();
       
-      for (let i = 0; i < 10; i++) {
-        const x = -cardWidth/2 + 20 + (i / 9) * (cardWidth - 40);
-        const variance = Math.sin((i + this.valueAnimation) * 0.5) * 5;
-        const y = 25 + variance + (this.kpi.trend === 'up' ? -i * 0.5 : i * 0.5);
+      for (let index = 0; index < 10; index++) {
+        const x = -cardWidth/2 + 20 + (index / 9) * (cardWidth - 40);
+        const variance = Math.sin((index + this.valueAnimation) * 0.5) * 5;
+        const y = 25 + variance + (this.kpi.trend === 'up' ? -index * 0.5 : index * 0.5);
         
-        if (i === 0) ctx.moveTo(x, y);
-        else ctx.lineTo(x, y);
+        if (index === 0) context.moveTo(x, y);
+        else context.lineTo(x, y);
       }
-      ctx.stroke();
+      context.stroke();
       
-      ctx.restore();
+      context.restore();
     }
   }
 
@@ -275,49 +275,49 @@ const BIBackground = ({
 
   // Inicializar elementos
   const initializeElements = (canvas) => {
-    dataStreamsRef.current = [];
-    kpiCardsRef.current = [];
+    dataStreamsReference.current = [];
+    kpiCardsReference.current = [];
     
     // Criar streams de dados
-    for (let i = 0; i < config.streamCount; i++) {
-      dataStreamsRef.current.push(new DataStream(canvas));
+    for (let index = 0; index < config.streamCount; index++) {
+      dataStreamsReference.current.push(new DataStream(canvas));
     }
     
     // Criar KPI cards
-    config.kpis.slice(0, config.kpiCount).forEach(kpi => {
-      kpiCardsRef.current.push(new FloatingKPI(canvas, kpi));
-    });
+    for (const kpi of config.kpis.slice(0, config.kpiCount)) {
+      kpiCardsReference.current.push(new FloatingKPI(canvas, kpi));
+    }
   };
 
   // Loop de animação
   const animate = () => {
-    const canvas = canvasRef.current;
+    const canvas = canvasReference.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext('2d');
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const context = canvas.getContext('2d');
+    context.clearRect(0, 0, canvas.width, canvas.height);
 
     // Desenhar elementos na ordem correta
-    dataStreamsRef.current.forEach(stream => {
+    for (const stream of dataStreamsReference.current) {
       stream.update();
-      stream.draw(ctx);
-    });
+      stream.draw(context);
+    }
     
-    kpiCardsRef.current.forEach(kpi => {
+    for (const kpi of kpiCardsReference.current) {
       kpi.update();
-      kpi.draw(ctx);
-    });
+      kpi.draw(context);
+    }
     
     // drawMainDashboard removido conforme solicitação
 
     if (config.streamSpeed > 0 || config.kpiSpeed > 0) {
-      animationRef.current = requestAnimationFrame(animate);
+      animationReference.current = requestAnimationFrame(animate);
     }
   };
 
   // Configurar canvas e inicializar
   useEffect(() => {
-    const canvas = canvasRef.current;
+    const canvas = canvasReference.current;
     if (!canvas) return;
 
     const handleResize = () => {
@@ -325,8 +325,8 @@ const BIBackground = ({
       canvas.width = rect.width * (deviceCapabilities?.pixelRatio || 1);
       canvas.height = rect.height * (deviceCapabilities?.pixelRatio || 1);
       
-      const ctx = canvas.getContext('2d');
-      ctx.scale(deviceCapabilities?.pixelRatio || 1, deviceCapabilities?.pixelRatio || 1);
+      const context = canvas.getContext('2d');
+      context.scale(deviceCapabilities?.pixelRatio || 1, deviceCapabilities?.pixelRatio || 1);
       
       // Reinicializar elementos com novo tamanho
       initializeElements(canvas);
@@ -340,8 +340,8 @@ const BIBackground = ({
 
     return () => {
       window.removeEventListener('resize', handleResize);
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
+      if (animationReference.current) {
+        cancelAnimationFrame(animationReference.current);
       }
     };
   }, [config, deviceCapabilities]);
@@ -360,7 +360,7 @@ const BIBackground = ({
 
   return (
     <canvas
-      ref={canvasRef}
+      ref={canvasReference}
       className="absolute inset-0 w-full h-full pointer-events-none"
       style={{ 
         background: 'transparent',

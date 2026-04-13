@@ -1,6 +1,6 @@
 import { WhatsappLogo } from '@phosphor-icons/react';
 
-function WhatsAppButton({ className = '', size = 'medium', ...props }) {
+function WhatsAppButton({ className = '', size = 'medium', ...properties }) {
   const sizeClasses = {
     small: 'w-8 h-8',
     medium: 'w-10 h-10', 
@@ -33,7 +33,7 @@ function WhatsAppButton({ className = '', size = 'medium', ...props }) {
       `}
       title="WhatsApp - Contato Direto"
       aria-label="Entrar em contato via WhatsApp"
-      {...props}
+      {...properties}
     >
       <WhatsappLogo 
         size={iconSizes[size]} 

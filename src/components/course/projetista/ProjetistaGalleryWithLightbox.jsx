@@ -36,19 +36,19 @@ const ProjetistaGalleryWithLightbox = ({
     setIsVideoPlaying(nextItem?.type === 'video');
   };
 
-  const navigateToPrev = () => {
-    const prevIndex = (selectedIndex - 1 + items.length) % items.length;
-    setSelectedIndex(prevIndex);
+  const navigateToPrevious = () => {
+    const previousIndex = (selectedIndex - 1 + items.length) % items.length;
+    setSelectedIndex(previousIndex);
     // Auto-reproduzir se o item anterior for vídeo
-    const prevItem = items[prevIndex];
-    setIsVideoPlaying(prevItem?.type === 'video');
+    const previousItem = items[previousIndex];
+    setIsVideoPlaying(previousItem?.type === 'video');
   };
 
   const toggleVideo = () => {
     setIsVideoPlaying(!isVideoPlaying);
   };
 
-  const currentItem = selectedIndex !== null ? items[selectedIndex] : null;
+  const currentItem = selectedIndex === null ? null : items[selectedIndex];
   const featuredItem = items[featuredIndex] || items[0];
   const otherItems = items.filter((_, index) => index !== featuredIndex);
 
@@ -113,7 +113,7 @@ const ProjetistaGalleryWithLightbox = ({
       {/* Grid de Itens Menores - 1 coluna */}
       <div className="space-y-4">
         {otherItems.slice(0, 4).map((item, index) => {
-          const originalIndex = items.findIndex(originalItem => originalItem === item);
+          const originalIndex = items.indexOf(item);
           return (
             <Card key={originalIndex} className="group relative overflow-hidden bg-zinc-800/50 border-zinc-700/50 hover:border-purple-400/50 transition-all duration-300 cursor-pointer">
               <CardContent className="p-0">
@@ -176,8 +176,8 @@ const ProjetistaGalleryWithLightbox = ({
     <div 
       className={`grid gap-4 ${
         columns === 2 ? 'grid-cols-1 md:grid-cols-2' :
-        columns === 3 ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3' :
-        'grid-cols-1 md:grid-cols-2 lg:grid-cols-4'
+        (columns === 3 ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3' :
+        'grid-cols-1 md:grid-cols-2 lg:grid-cols-4')
       } ${className}`}
     >
       {items.map((item, index) => (
@@ -267,7 +267,7 @@ const ProjetistaGalleryWithLightbox = ({
                   className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors"
                   onClick={(e) => {
                     e.stopPropagation();
-                    navigateToPrev();
+                    navigateToPrevious();
                   }}
                 >
                   <CaretLeft className="w-6 h-6" />

@@ -35,13 +35,13 @@ function useScrollToHash() {
 
     // Listener para mudanças de hash (navegação interna)
     const handleHashChange = () => {
-      scrollToElement(window.location.hash);
+      scrollToElement(globalThis.location.hash);
     };
 
-    window.addEventListener('hashchange', handleHashChange);
+    globalThis.addEventListener('hashchange', handleHashChange);
     
     return () => {
-      window.removeEventListener('hashchange', handleHashChange);
+      globalThis.removeEventListener('hashchange', handleHashChange);
     };
   }, [location]);
 }

@@ -60,7 +60,7 @@ class CTAAnalyticsStorage {
 
   // Gera ID �nico para evento
   generateEventId() {
-    return `cta_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    return `cta_${Date.now()}_${Math.random().toString(36).slice(2, 11)}`;
   }
 
   // Obt�m estat�sticas dos eventos armazenados
@@ -78,22 +78,22 @@ class CTAAnalyticsStorage {
     };
 
     // Agrupa por tipo de CTA
-    events.forEach(event => {
+    for (const event of events) {
       const ctaType = event.ctaType || 'unknown';
       if (!stats.byCtaType[ctaType]) {
         stats.byCtaType[ctaType] = { impressions: 0, clicks: 0, conversions: 0 };
       }
       stats.byCtaType[ctaType][event.type]++;
-    });
+    }
 
     // Agrupa por post
-    events.forEach(event => {
+    for (const event of events) {
       const postSlug = event.postSlug || 'unknown';
       if (!stats.byPost[postSlug]) {
         stats.byPost[postSlug] = { impressions: 0, clicks: 0, conversions: 0 };
       }
       stats.byPost[postSlug][event.type]++;
-    });
+    }
 
     return stats;
   }
@@ -224,7 +224,7 @@ class CTAAnalytics {
 
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach(entry => {
+        for (const entry of entries) {
           if (entry.isIntersecting && entry.intersectionRatio >= this.impressionThreshold) {
             // Aguarda dura��o m�nima antes de registrar impress�o
             setTimeout(() => {
@@ -234,7 +234,7 @@ class CTAAnalytics {
               }
             }, this.impressionDuration);
           }
-        });
+        }
       },
       {
         threshold: this.impressionThreshold,
@@ -252,7 +252,7 @@ class CTAAnalytics {
   getSessionId() {
     let sessionId = sessionStorage.getItem('cta_session_id');
     if (!sessionId) {
-      sessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      sessionId = `session_${Date.now()}_${Math.random().toString(36).slice(2, 11)}`;
       sessionStorage.setItem('cta_session_id', sessionId);
     }
     return sessionId;
@@ -263,7 +263,7 @@ class CTAAnalytics {
    */
   getSessionImpressions(postSlug) {
     const key = `impressions_${postSlug}`;
-    return parseInt(sessionStorage.getItem(key) || '0');
+    return Number.parseInt(sessionStorage.getItem(key) || '0');
   }
 
   /**
@@ -279,7 +279,7 @@ class CTAAnalytics {
    * Calcula tempo na p�gina
    */
   getTimeOnPage() {
-    const startTime = parseInt(sessionStorage.getItem('page_start_time') || Date.now().toString());
+    const startTime = Number.parseInt(sessionStorage.getItem('page_start_time') || Date.now().toString());
     return Date.now() - startTime;
   }
 
@@ -325,20 +325,20 @@ class CTAAnalytics {
     }
 
     // Agrupa dados por tipo de CTA
-    filteredEvents.forEach(event => {
+    for (const event of filteredEvents) {
       const type = event.ctaType || 'unknown';
       if (!report.byCtaType[type]) {
         report.byCtaType[type] = { impressions: 0, clicks: 0, conversions: 0, ctr: 0, conversionRate: 0 };
       }
       report.byCtaType[type][event.type]++;
-    });
+    }
 
     // Calcula m�tricas por tipo
-    Object.keys(report.byCtaType).forEach(type => {
+    for (const type of Object.keys(report.byCtaType)) {
       const data = report.byCtaType[type];
       data.ctr = data.impressions > 0 ? (data.clicks / data.impressions * 100).toFixed(2) : 0;
       data.conversionRate = data.clicks > 0 ? (data.conversions / data.clicks * 100).toFixed(2) : 0;
-    });
+    }
 
     return report;
   }
@@ -348,7 +348,7 @@ class CTAAnalytics {
 const ctaAnalytics = new CTAAnalytics();
 
 // Inicializa��o quando o DOM estiver pronto
-if (typeof window !== 'undefined') {
+if (globalThis.window !== undefined) {
   // Registra timestamp de in�cio da p�gina
   sessionStorage.setItem('page_start_time', Date.now().toString());
 

@@ -14,7 +14,7 @@ import { BlogTitle, BlogSubtitle } from '../components/blog/BlogTypography';
 import useInView from '../hooks/useInView';
 
 const BlogIndex = ({ initialPosts = [], initialCategories = [], totalPosts = 0, hasMore = false }) => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParameters, setSearchParameters] = useSearchParams();
   const [showFilters, setShowFilters] = useState(false);
   
   // Cleanup on unmount to ensure proper navigation
@@ -45,8 +45,8 @@ const BlogIndex = ({ initialPosts = [], initialCategories = [], totalPosts = 0, 
     clearFilters: clearFiltersInternal,
     fetchNextPage,
   } = useOptimizedBlogSearch(
-    searchParams.get('search') || '',
-    searchParams.get('category') || ''
+    searchParameters.get('search') || '',
+    searchParameters.get('category') || ''
   );
 
   const { data: categoriesData } = useCategories();
@@ -56,7 +56,7 @@ const BlogIndex = ({ initialPosts = [], initialCategories = [], totalPosts = 0, 
   const displayCategories = categoriesData?.categories || initialCategories;
 
   // Infinite scroll implementation
-  const [loadMoreRef, inView] = useInView({
+  const [loadMoreReference, inView] = useInView({
     threshold: 0.1,
     rootMargin: '100px',
   });
@@ -72,19 +72,19 @@ const BlogIndex = ({ initialPosts = [], initialCategories = [], totalPosts = 0, 
 
   // Update URL params when filters change (optimized)
   useEffect(() => {
-    const newParams = new URLSearchParams();
+    const newParameters = new URLSearchParams();
     
     if (debouncedSearchQuery) {
-      newParams.set('search', debouncedSearchQuery);
+      newParameters.set('search', debouncedSearchQuery);
     }
     
     if (selectedCategory) {
-      newParams.set('category', selectedCategory);
+      newParameters.set('category', selectedCategory);
     }
 
     // Use replace: true to avoid creating history entries
-    setSearchParams(newParams, { replace: true });
-  }, [debouncedSearchQuery, selectedCategory, setSearchParams]);
+    setSearchParameters(newParameters, { replace: true });
+  }, [debouncedSearchQuery, selectedCategory, setSearchParameters]);
 
   // Enhanced handlers
   const handleSearchInputChange = useCallback((e) => {
@@ -98,8 +98,8 @@ const BlogIndex = ({ initialPosts = [], initialCategories = [], totalPosts = 0, 
 
   const clearFilters = useCallback(() => {
     clearFiltersInternal();
-    setSearchParams({}, { replace: true });
-  }, [clearFiltersInternal, setSearchParams]);
+    setSearchParameters({}, { replace: true });
+  }, [clearFiltersInternal, setSearchParameters]);
 
   // Loading state - only show if no initial data from SSG
   if (isLoading && initialPosts.length === 0) {
@@ -121,7 +121,7 @@ const BlogIndex = ({ initialPosts = [], initialCategories = [], totalPosts = 0, 
         title="Blog - Escola Habilidade"
         description="Artigos sobre tecnologia, educação e carreira."
       >
-        <BlogError error={error} onRetry={() => window.location.reload()} />
+        <BlogError error={error} onRetry={() => globalThis.location.reload()} />
       </BlogLayout>
     );
   }
@@ -162,9 +162,9 @@ const BlogIndex = ({ initialPosts = [], initialCategories = [], totalPosts = 0, 
                 className={`absolute left-3 top-1/2 transform -translate-y-1/2 transition-all duration-300 ${
                   isSearching 
                     ? 'text-purple-300 animate-pulse' 
-                    : searchQuery 
+                    : (searchQuery 
                       ? 'text-purple-400' 
-                      : 'text-zinc-400'
+                      : 'text-zinc-400')
                 }`} 
                 size={20} 
               />
@@ -176,17 +176,17 @@ const BlogIndex = ({ initialPosts = [], initialCategories = [], totalPosts = 0, 
                 className={`w-full pl-10 pr-12 py-3 rounded-lg text-zinc-100 placeholder-zinc-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent ${
                   isSearching 
                     ? 'bg-purple-500/15 border border-purple-400/60 shadow-lg' 
-                    : searchQuery 
+                    : (searchQuery 
                       ? 'bg-purple-500/10 border border-purple-500/50 shadow-lg' 
-                      : 'bg-zinc-800 border border-zinc-700 hover:border-zinc-600'
+                      : 'bg-zinc-800 border border-zinc-700 hover:border-zinc-600')
                 }`}
               />
               <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
                 {isSearching ? (
                   <div className="w-4 h-4 border-2 border-purple-400 border-t-transparent rounded-full animate-spin"></div>
-                ) : searchQuery ? (
+                ) : (searchQuery ? (
                   <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
-                ) : null}
+                ) : null)}
               </div>
             </div>
 
@@ -222,7 +222,7 @@ const BlogIndex = ({ initialPosts = [], initialCategories = [], totalPosts = 0, 
                   <button
                     onClick={() => handleCategoryChangeWrapper('')}
                     className={`w-full text-left px-4 py-2 hover:bg-zinc-700 transition-colors ${
-                      !selectedCategory ? 'bg-purple-500/20 text-purple-300' : 'text-zinc-300'
+                      selectedCategory ? 'text-zinc-300' : 'bg-purple-500/20 text-purple-300'
                     }`}
                   >
                     Todas as categorias
@@ -287,7 +287,7 @@ const BlogIndex = ({ initialPosts = [], initialCategories = [], totalPosts = 0, 
         {/* Load More / Loading */}
         {hasNextPage && (
           <div
-            ref={loadMoreRef}
+            ref={loadMoreReference}
             className="flex justify-center py-8"
           >
             {isFetchingNextPage ? (
@@ -326,7 +326,7 @@ const BlogIndex = ({ initialPosts = [], initialCategories = [], totalPosts = 0, 
 // Loader function for SSG
 export async function loader() {
   // Only fetch data during SSG build
-  if (typeof window === 'undefined') {
+  if (globalThis.window === undefined) {
     try {
       // Import Supabase client and API
       const { createClient } = await import('@supabase/supabase-js');

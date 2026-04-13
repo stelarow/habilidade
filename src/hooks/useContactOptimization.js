@@ -30,7 +30,7 @@ export const useContactOptimization = () => {
       const userAgent = navigator.userAgent;
       const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|Opera Mini|IEMobile|WPDesktop/i.test(userAgent);
       const isTablet = /iPad|Android(?!.*Mobile)/i.test(userAgent);
-      const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+      const isTouch = 'ontouchstart' in globalThis || navigator.maxTouchPoints > 0;
       
       // Platform detection
       let platform = 'unknown';
@@ -96,23 +96,23 @@ export const useContactOptimization = () => {
     const { phone = '5548988559491', email = 'alessandrobatisp@gmail.com' } = options;
 
     switch (method) {
-      case 'whatsapp':
+      case 'whatsapp': {
         // Use app if available, otherwise web
-        if (deviceInfo.supportsApp) {
-          return `whatsapp://send?phone=${phone}&text=${encodeURIComponent(message)}`;
-        } else {
-          return `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
-        }
+        return deviceInfo.supportsApp ? `whatsapp://send?phone=${phone}&text=${encodeURIComponent(message)}` : `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+      }
       
-      case 'phone':
+      case 'phone': {
         return `tel:+${phone}`;
+      }
       
-      case 'email':
+      case 'email': {
         const subject = options.subject || 'Contato via Site';
         return `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
+      }
       
-      default:
+      default: {
         return '#';
+      }
     }
   }, [deviceInfo]);
 
@@ -152,7 +152,7 @@ export const useContactOptimization = () => {
    */
   const getUIConfig = useCallback((component) => {
     const baseConfig = {
-      animations: !window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+      animations: !globalThis.matchMedia('(prefers-reduced-motion: reduce)').matches,
       compactMode: contactPreferences.useCompactUI,
       touchOptimized: contactPreferences.optimizeForTouch,
       hapticFeedback: contactPreferences.enableHaptics
@@ -218,18 +218,22 @@ export const useContactOptimization = () => {
    */
   const isMethodAvailable = useCallback((method) => {
     switch (method) {
-      case 'whatsapp':
-        return true; // Always available via web
+      case 'whatsapp': {
+        return true;
+      } // Always available via web
       
-      case 'phone':
+      case 'phone': {
         // Check if device supports tel: links
         return deviceInfo.isMobile || deviceInfo.platform !== 'unknown';
+      }
       
-      case 'email':
-        return true; // Always available
+      case 'email': {
+        return true;
+      } // Always available
       
-      default:
+      default: {
         return false;
+      }
     }
   }, [deviceInfo]);
 
@@ -239,7 +243,7 @@ export const useContactOptimization = () => {
    */
   const getAnalyticsData = useCallback(() => {
     return {
-      deviceType: deviceInfo.isMobile ? 'mobile' : deviceInfo.isTablet ? 'tablet' : 'desktop',
+      deviceType: deviceInfo.isMobile ? 'mobile' : (deviceInfo.isTablet ? 'tablet' : 'desktop'),
       platform: deviceInfo.platform,
       browser: deviceInfo.browser,
       touchCapable: deviceInfo.isTouch,
@@ -260,13 +264,13 @@ export const useContactOptimization = () => {
     const baseBottom = deviceInfo.hasNotch ? 'env(safe-area-inset-bottom, 16px)' : '16px';
     const baseRight = deviceInfo.hasNotch ? 'env(safe-area-inset-right, 16px)' : '16px';
 
-    elements.forEach((element, index) => {
+    for (const [index, element] of elements.entries()) {
       const offset = index * (deviceInfo.isMobile ? 70 : 60);
       positions[element] = {
         bottom: `calc(${baseBottom} + ${offset}px)`,
         right: baseRight
       };
-    });
+    }
 
     return positions;
   }, [deviceInfo]);

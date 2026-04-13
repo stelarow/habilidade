@@ -1,10 +1,10 @@
 import { useState, useRef, useEffect } from 'react';
 
-const LazyImage = ({ src, alt, className = '', onLoad, fallbackSrc, ...props }) => {
+const LazyImage = ({ src, alt, className = '', onLoad, fallbackSrc, ...properties }) => {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
   const [isIntersecting, setIsIntersecting] = useState(false);
-  const imgRef = useRef();
+  const imgReference = useRef();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -20,8 +20,8 @@ const LazyImage = ({ src, alt, className = '', onLoad, fallbackSrc, ...props }) 
       }
     );
 
-    if (imgRef.current) {
-      observer.observe(imgRef.current);
+    if (imgReference.current) {
+      observer.observe(imgReference.current);
     }
 
     return () => observer.disconnect();
@@ -41,7 +41,7 @@ const LazyImage = ({ src, alt, className = '', onLoad, fallbackSrc, ...props }) 
   };
 
   return (
-    <div ref={imgRef} className={`lazy-image-container ${className}`}>
+    <div ref={imgReference} className={`lazy-image-container ${className}`}>
       {isIntersecting ? (
         <>
           {!loaded && !error && (
@@ -58,7 +58,7 @@ const LazyImage = ({ src, alt, className = '', onLoad, fallbackSrc, ...props }) 
             onError={handleError}
             className={`${loaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300 ${className}`}
             style={{ display: loaded ? 'block' : 'none' }}
-            {...props}
+            {...properties}
           />
           {error && !fallbackSrc && (
             <div 

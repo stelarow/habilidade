@@ -15,24 +15,29 @@ async function handler(event, context) {
     
     // Log personalizado baseado no tipo de request
     switch (logData.logType) {
-      case 'debug':
+      case 'debug': {
         await handleDebugLog(logData, logger);
         break;
+      }
         
-      case 'error':
+      case 'error': {
         await handleErrorLog(logData, logger);
         break;
+      }
         
-      case 'performance':
+      case 'performance': {
         await handlePerformanceLog(logData, logger);
         break;
+      }
         
-      case 'test':
+      case 'test': {
         await handleTestLog(logData, logger);
         break;
+      }
         
-      default:
+      default: {
         await handleGenericLog(logData, logger);
+      }
     }
     
     logger.info('Dev log processed successfully', { 
@@ -74,7 +79,7 @@ async function handler(event, context) {
  * Parse dos dados da requisição
  */
 function parseRequestData(event, logger) {
-  const queryParams = event.queryStringParameters || {};
+  const queryParameters = event.queryStringParameters || {};
   let bodyData = {};
   
   // Parse do body se existir
@@ -88,10 +93,10 @@ function parseRequestData(event, logger) {
   }
   
   return {
-    logType: queryParams.type || bodyData.type || 'generic',
-    source: queryParams.source || bodyData.source || 'unknown',
-    message: queryParams.message || bodyData.message || 'No message provided',
-    data: bodyData.data || queryParams,
+    logType: queryParameters.type || bodyData.type || 'generic',
+    source: queryParameters.source || bodyData.source || 'unknown',
+    message: queryParameters.message || bodyData.message || 'No message provided',
+    data: bodyData.data || queryParameters,
     timestamp: Date.now()
   };
 }

@@ -127,42 +127,38 @@ export function validateCourseData(courseData) {
       'themeColors', 'seoMeta'
     ];
 
-    requiredFields.forEach(field => {
+    for (const field of requiredFields) {
       if (!courseData[field]) {
         errors.push(`Campo obrigatório ausente: ${field}`);
       }
-    });
+    }
 
     // Validar basicInfo
-    if (courseData.basicInfo) {
-      if (!courseData.basicInfo.slug?.match(/^[a-z0-9-]+$/)) {
+    if (courseData.basicInfo && !courseData.basicInfo.slug?.match(/^[a-z0-9-]+$/)) {
         errors.push('Slug deve conter apenas letras minúsculas, números e hífens');
       }
-    }
 
     // Validar investment
-    if (courseData.investment) {
-      if (courseData.investment.currentPrice > courseData.investment.originalPrice) {
+    if (courseData.investment && courseData.investment.currentPrice > courseData.investment.originalPrice) {
         errors.push('Preço atual não pode ser maior que o preço original');
       }
-    }
 
     // Validar curriculum
     if (Array.isArray(courseData.curriculum)) {
-      courseData.curriculum.forEach((module, index) => {
+      for (const [index, module] of courseData.curriculum.entries()) {
         if (!Array.isArray(module.lessons) || module.lessons.length === 0) {
           errors.push(`Módulo ${index + 1} deve ter pelo menos uma aula`);
         }
-      });
+      }
     }
 
     // Validar testimonials ratings
     if (Array.isArray(courseData.testimonials)) {
-      courseData.testimonials.forEach((testimonial, index) => {
+      for (const [index, testimonial] of courseData.testimonials.entries()) {
         if (testimonial.rating < 1 || testimonial.rating > 5) {
           errors.push(`Rating do depoimento ${index + 1} deve estar entre 1 e 5`);
         }
-      });
+      }
     }
 
     return {

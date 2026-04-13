@@ -2,10 +2,10 @@
  * A/B Testing Infrastructure for Blog Components
  * 
  * Sistema para testar diferentes layouts e componentes do blog
- * com feature flags e análise de significância estatística
+ * com feature flags e anï¿½lise de significï¿½ncia estatï¿½stica
  */
 
-// Configurações de experimentos disponíveis
+// Configuraï¿½ï¿½es de experimentos disponï¿½veis
 const EXPERIMENT_CONFIGS = {
   blogCardLayout: {
     name: 'Blog Card Layout Test',
@@ -34,7 +34,7 @@ const EXPERIMENT_CONFIGS = {
 
   ctaPlacement: {
     name: 'CTA Placement Test',
-    description: 'Testa diferentes posições para CTAs nos artigos',
+    description: 'Testa diferentes posiï¿½ï¿½es para CTAs nos artigos',
     variants: {
       control: { 
         name: 'CTA no Final (Controle)', 
@@ -64,7 +64,7 @@ const EXPERIMENT_CONFIGS = {
 
   searchBarPosition: {
     name: 'Search Bar Position Test',
-    description: 'Testa diferentes posições da barra de pesquisa',
+    description: 'Testa diferentes posiï¿½ï¿½es da barra de pesquisa',
     variants: {
       control: { 
         name: 'Sidebar (Controle)', 
@@ -89,7 +89,7 @@ const EXPERIMENT_CONFIGS = {
 
   categoryNavigation: {
     name: 'Category Navigation Style Test',
-    description: 'Testa diferentes estilos de navegação por categorias',
+    description: 'Testa diferentes estilos de navegaï¿½ï¿½o por categorias',
     variants: {
       control: { 
         name: 'Lista Vertical (Controle)', 
@@ -137,19 +137,19 @@ class ABTestingManager {
   }
 
   /**
-   * Gera um ID único para a sessão
+   * Gera um ID ï¿½nico para a sessï¿½o
    */
   generateSessionId() {
-    return `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    return `session_${Date.now()}_${Math.random().toString(36).slice(2, 11)}`;
   }
 
   /**
-   * Obtém ou gera um ID único para o usuário (LGPD compliant)
+   * Obtï¿½m ou gera um ID ï¿½nico para o usuï¿½rio (LGPD compliant)
    */
   getUserId() {
     let userId = localStorage.getItem('blog_user_id');
     if (!userId) {
-      userId = `user_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      userId = `user_${Date.now()}_${Math.random().toString(36).slice(2, 11)}`;
       localStorage.setItem('blog_user_id', userId);
     }
     return userId;
@@ -169,14 +169,14 @@ class ABTestingManager {
   }
 
   /**
-   * Carrega atribuições de variantes do localStorage
+   * Carrega atribuiï¿½ï¿½es de variantes do localStorage
    */
   loadAssignments() {
     try {
       const stored = localStorage.getItem(STORAGE_KEYS.assignments);
       return stored ? JSON.parse(stored) : {};
     } catch (error) {
-      console.warn('Erro ao carregar atribuições A/B:', error);
+      console.warn('Erro ao carregar atribuiï¿½ï¿½es A/B:', error);
       return {};
     }
   }
@@ -193,13 +193,13 @@ class ABTestingManager {
   }
 
   /**
-   * Salva atribuições no localStorage
+   * Salva atribuiï¿½ï¿½es no localStorage
    */
   saveAssignments() {
     try {
       localStorage.setItem(STORAGE_KEYS.assignments, JSON.stringify(this.assignments));
     } catch (error) {
-      console.warn('Erro ao salvar atribuições A/B:', error);
+      console.warn('Erro ao salvar atribuiï¿½ï¿½es A/B:', error);
     }
   }
 
@@ -208,7 +208,7 @@ class ABTestingManager {
    */
   startExperiment(experimentKey, config = {}) {
     if (!EXPERIMENT_CONFIGS[experimentKey]) {
-      console.warn(`Experimento não configurado: ${experimentKey}`);
+      console.warn(`Experimento nï¿½o configurado: ${experimentKey}`);
       return false;
     }
 
@@ -233,7 +233,7 @@ class ABTestingManager {
    */
   stopExperiment(experimentKey) {
     if (!this.experiments[experimentKey]) {
-      console.warn(`Experimento não encontrado: ${experimentKey}`);
+      console.warn(`Experimento nï¿½o encontrado: ${experimentKey}`);
       return false;
     }
 
@@ -246,24 +246,24 @@ class ABTestingManager {
   }
 
   /**
-   * Obtém a variante para um usuário em um experimento específico
+   * Obtï¿½m a variante para um usuï¿½rio em um experimento especï¿½fico
    */
   getVariant(experimentKey) {
-    // Verifica se o experimento existe e está ativo
+    // Verifica se o experimento existe e estï¿½ ativo
     if (!this.experiments[experimentKey] || this.experiments[experimentKey].status !== 'active') {
-      // Retorna variante de controle por padrão
+      // Retorna variante de controle por padrï¿½o
       const config = EXPERIMENT_CONFIGS[experimentKey];
       return config ? config.variants.control : null;
     }
 
-    // Verifica se o usuário já tem uma atribuição
+    // Verifica se o usuï¿½rio jï¿½ tem uma atribuiï¿½ï¿½o
     if (this.assignments[experimentKey]) {
       const assignment = this.assignments[experimentKey];
       const config = EXPERIMENT_CONFIGS[experimentKey];
       return config.variants[assignment.variant];
     }
 
-    // Atribui uma nova variante usando hash do userId para consistência
+    // Atribui uma nova variante usando hash do userId para consistï¿½ncia
     const variant = this.assignVariant(experimentKey);
     return variant;
   }
@@ -281,7 +281,7 @@ class ABTestingManager {
     const variantIndex = hash % variants.length;
     const selectedVariant = variants[variantIndex];
 
-    // Salva a atribuição
+    // Salva a atribuiï¿½ï¿½o
     this.assignments[experimentKey] = {
       variant: selectedVariant,
       assignedAt: new Date().toISOString(),
@@ -297,12 +297,12 @@ class ABTestingManager {
   }
 
   /**
-   * Hash simples para distribuição consistente
+   * Hash simples para distribuiï¿½ï¿½o consistente
    */
-  simpleHash(str) {
+  simpleHash(string_) {
     let hash = 0;
-    for (let i = 0; i < str.length; i++) {
-      const char = str.charCodeAt(i);
+    for (let index = 0; index < string_.length; index++) {
+      const char = string_.charCodeAt(index);
       hash = ((hash << 5) - hash) + char;
       hash = hash & hash; // Convert to 32-bit integer
     }
@@ -310,7 +310,7 @@ class ABTestingManager {
   }
 
   /**
-   * Registra uma métrica para um experimento
+   * Registra uma mï¿½trica para um experimento
    */
   trackMetric(experimentKey, metricName, value, metadata = {}) {
     if (!this.experiments[experimentKey] || !this.assignments[experimentKey]) {
@@ -320,7 +320,7 @@ class ABTestingManager {
     const assignment = this.assignments[experimentKey];
     const timestamp = new Date().toISOString();
 
-    // Estrutura da métrica
+    // Estrutura da mï¿½trica
     const metricData = {
       experimentKey,
       variant: assignment.variant,
@@ -332,7 +332,7 @@ class ABTestingManager {
       metadata
     };
 
-    // Salva no localStorage (em produção, enviaria para analytics)
+    // Salva no localStorage (em produï¿½ï¿½o, enviaria para analytics)
     this.saveMetric(metricData);
 
     // Atualiza resultados do experimento
@@ -340,21 +340,21 @@ class ABTestingManager {
   }
 
   /**
-   * Salva métrica no localStorage
+   * Salva mï¿½trica no localStorage
    */
   saveMetric(metricData) {
     try {
       const metrics = JSON.parse(localStorage.getItem(STORAGE_KEYS.metrics) || '[]');
       metrics.push(metricData);
       
-      // Mantém apenas as últimas 1000 métricas para evitar excesso de dados
+      // Mantï¿½m apenas as ï¿½ltimas 1000 mï¿½tricas para evitar excesso de dados
       if (metrics.length > 1000) {
         metrics.splice(0, metrics.length - 1000);
       }
       
       localStorage.setItem(STORAGE_KEYS.metrics, JSON.stringify(metrics));
     } catch (error) {
-      console.warn('Erro ao salvar métrica A/B:', error);
+      console.warn('Erro ao salvar mï¿½trica A/B:', error);
     }
   }
 
@@ -381,7 +381,7 @@ class ABTestingManager {
     metric.average = metric.sum / metric.count;
     metric.values.push(value);
 
-    // Mantém apenas as últimas 100 medições para calcular estatísticas
+    // Mantï¿½m apenas as ï¿½ltimas 100 mediï¿½ï¿½es para calcular estatï¿½sticas
     if (metric.values.length > 100) {
       metric.values.shift();
     }
@@ -390,7 +390,7 @@ class ABTestingManager {
   }
 
   /**
-   * Calcula significância estatística entre variantes
+   * Calcula significï¿½ncia estatï¿½stica entre variantes
    */
   calculateSignificance(experimentKey, metricName) {
     const experiment = this.experiments[experimentKey];
@@ -438,7 +438,7 @@ class ABTestingManager {
   }
 
   /**
-   * Calcula variância amostral
+   * Calcula variï¿½ncia amostral
    */
   calculateVariance(values, mean) {
     if (values.length <= 1) return 0;
@@ -451,7 +451,7 @@ class ABTestingManager {
   }
 
   /**
-   * Calcula estatística t para teste t de duas amostras
+   * Calcula estatï¿½stica t para teste t de duas amostras
    */
   calculateTStatistic(sample1, sample2) {
     const pooledVariance = ((sample1.count - 1) * sample1.variance + 
@@ -464,21 +464,21 @@ class ABTestingManager {
   }
 
   /**
-   * Aproximação simples do p-value para teste t bicaudal
+   * Aproximaï¿½ï¿½o simples do p-value para teste t bicaudal
    */
   calculatePValue(tStat, degreesOfFreedom) {
-    // Aproximação simples - em produção usaria biblioteca estatística mais robusta
+    // Aproximaï¿½ï¿½o simples - em produï¿½ï¿½o usaria biblioteca estatï¿½stica mais robusta
     const absTStat = Math.abs(tStat);
     
-    if (absTStat > 2.576) return 0.01;   // 99% confiança
-    if (absTStat > 1.96) return 0.05;    // 95% confiança
-    if (absTStat > 1.645) return 0.10;   // 90% confiança
+    if (absTStat > 2.576) return 0.01;   // 99% confianï¿½a
+    if (absTStat > 1.96) return 0.05;    // 95% confianï¿½a
+    if (absTStat > 1.645) return 0.1;   // 90% confianï¿½a
     
-    return 0.20; // Não significativo
+    return 0.2; // Nï¿½o significativo
   }
 
   /**
-   * Obtém relatório completo de um experimento
+   * Obtï¿½m relatï¿½rio completo de um experimento
    */
   getExperimentReport(experimentKey) {
     const experiment = this.experiments[experimentKey];
@@ -488,12 +488,12 @@ class ABTestingManager {
       ...experiment,
       duration: experiment.endDate 
         ? new Date(experiment.endDate) - new Date(experiment.startDate)
-        : new Date() - new Date(experiment.startDate),
+        : Date.now() - new Date(experiment.startDate),
       status: experiment.status,
       significance: {}
     };
 
-    // Calcula significância para cada métrica
+    // Calcula significï¿½ncia para cada mï¿½trica
     for (const metric of experiment.metrics) {
       report.significance[metric] = this.calculateSignificance(experimentKey, metric);
     }
@@ -518,7 +518,7 @@ class ABTestingManager {
     cutoffDate.setDate(cutoffDate.getDate() - daysToKeep);
 
     try {
-      // Limpa métricas antigas
+      // Limpa mï¿½tricas antigas
       const metrics = JSON.parse(localStorage.getItem(STORAGE_KEYS.metrics) || '[]');
       const recentMetrics = metrics.filter(metric => 
         new Date(metric.timestamp) > cutoffDate
@@ -543,10 +543,10 @@ class ABTestingManager {
   }
 }
 
-// Instância singleton
+// Instï¿½ncia singleton
 const abTesting = new ABTestingManager();
 
-// Funções de conveniência para uso nos componentes
+// Funï¿½ï¿½es de conveniï¿½ncia para uso nos componentes
 export const useABTest = (experimentKey) => {
   const variant = abTesting.getVariant(experimentKey);
   const trackMetric = (metricName, value, metadata) => 
@@ -567,8 +567,8 @@ export const getExperimentReport = (experimentKey) =>
 export const getActiveExperiments = () => 
   abTesting.getActiveExperiments();
 
-// Auto-limpeza de dados antigos na inicialização
-if (typeof window !== 'undefined') {
+// Auto-limpeza de dados antigos na inicializaï¿½ï¿½o
+if (globalThis.window !== undefined) {
   // Executa limpeza uma vez por dia
   const lastCleanup = localStorage.getItem('ab_last_cleanup');
   const today = new Date().toDateString();

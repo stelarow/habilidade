@@ -114,9 +114,9 @@ export const ProjetistaSuccessCases = () => {
 
   // Estado para rastrear índice atual de cada carousel
   const [carouselIndexes, setCarouselIndexes] = useState(
-    successCases.reduce((acc, case_) => {
-      acc[case_.id] = 0;
-      return acc;
+    successCases.reduce((accumulator, case_) => {
+      accumulator[case_.id] = 0;
+      return accumulator;
     }, {})
   );
 
@@ -129,11 +129,11 @@ export const ProjetistaSuccessCases = () => {
   };
 
   const handleCloseModal = () => {
-    setModalState(prev => ({ ...prev, isOpen: false }));
+    setModalState(previous => ({ ...previous, isOpen: false }));
   };
 
   const handleNavigateModal = (newIndex) => {
-    setModalState(prev => ({ ...prev, currentIndex: newIndex }));
+    setModalState(previous => ({ ...previous, currentIndex: newIndex }));
   };
 
   return (
@@ -199,8 +199,8 @@ export const ProjetistaSuccessCases = () => {
                     setApi={(api) => {
                       if (api) {
                         api.on('select', () => {
-                          setCarouselIndexes(prev => ({
-                            ...prev,
+                          setCarouselIndexes(previous => ({
+                            ...previous,
                             [case_.id]: api.selectedScrollSnap()
                           }));
                         });

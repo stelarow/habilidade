@@ -31,28 +31,28 @@ class BlogImageMigration {
       
       this.optimizationStats.totalImages += images.length;
 
-      images.forEach((img, index) => {
-        const src = img.getAttribute('src');
+      for (const [index, img] of images.entries()) {
+        const source = img.getAttribute('src');
         const alt = img.getAttribute('alt') || '';
         const className = img.getAttribute('class') || '';
         
-        if (!src) {
+        if (!source) {
           this.optimizationStats.skipped++;
-          return;
+          continue;
         }
 
         // Check if this is a local blog image that might need optimization
-        const isLocalBlogImage = src.includes('/images/blog/') || src.startsWith('/images/');
+        const isLocalBlogImage = source.includes('/images/blog/') || source.startsWith('/images/');
         
         if (isLocalBlogImage) {
           // Replace with SmartBlogImage wrapper
-          const smartImageHtml = this.generateSmartImageHtml(src, alt, className, index);
+          const smartImageHtml = this.generateSmartImageHtml(source, alt, className, index);
           img.replaceWith(parse(smartImageHtml));
           this.optimizationStats.optimizedImages++;
         } else {
           this.optimizationStats.skipped++;
         }
-      });
+      }
 
       return root.toString();
 
@@ -66,14 +66,14 @@ class BlogImageMigration {
   /**
    * Generate SmartBlogImage HTML wrapper
    */
-  generateSmartImageHtml(src, alt, className = '', index = 0) {
+  generateSmartImageHtml(source, alt, className = '', index = 0) {
     // Generate unique ID for React component
     const imageId = `smart-blog-img-${Date.now()}-${index}`;
     
     return `
       <div class="smart-blog-image-container" data-image-id="${imageId}">
         <img 
-          src="${src}" 
+          src="${source}" 
           alt="${alt}" 
           class="smart-blog-image ${className}"
           data-smart-optimization="true"
@@ -82,7 +82,7 @@ class BlogImageMigration {
         />
         <script type="application/json" class="smart-image-config">
           {
-            "src": "${src}",
+            "src": "${source}",
             "alt": "${alt}",
             "originalClass": "${className}",
             "optimizationEnabled": true
@@ -133,11 +133,11 @@ class BlogImageMigration {
         return;
       }
 
-      const tempImg = new Image();
-      tempImg.crossOrigin = 'anonymous';
+      const temporaryImg = new Image();
+      temporaryImg.crossOrigin = 'anonymous';
 
-      tempImg.onload = () => {
-        const { naturalWidth, naturalHeight } = tempImg;
+      temporaryImg.addEventListener('load', () => {
+        const { naturalWidth, naturalHeight } = temporaryImg;
         const isSmall = naturalWidth < 600;
         
         let result = {
@@ -149,10 +149,10 @@ class BlogImageMigration {
 
         if (isSmall) {
           // Apply optimization
-          const optimizedSrc = this.createOptimizedVersion(tempImg);
+          const optimizedSource = this.createOptimizedVersion(temporaryImg);
           
-          if (optimizedSrc) {
-            imgElement.src = optimizedSrc;
+          if (optimizedSource) {
+            imgElement.src = optimizedSource;
             imgElement.classList.add('blog-image-optimized');
             
             // Add size limitation
@@ -163,7 +163,7 @@ class BlogImageMigration {
             result = {
               ...result,
               optimized: true,
-              optimizedSrc,
+              optimizedSrc: optimizedSource,
               message: `Imagem otimizada de ${naturalWidth}x${naturalHeight} para melhor qualidade`
             };
             
@@ -173,16 +173,16 @@ class BlogImageMigration {
               indicator.className = 'absolute top-2 left-2 bg-blue-500 text-white text-xs px-2 py-1 rounded opacity-75';
               indicator.textContent = `Otimizada ${naturalWidth}x${naturalHeight}`;
               imgElement.parentElement.style.position = 'relative';
-              imgElement.parentElement.appendChild(indicator);
+              imgElement.parentElement.append(indicator);
             }
           }
         }
 
         this.processedImages.set(imgElement.src, result);
         resolve(result);
-      };
+      });
 
-      tempImg.onerror = () => {
+      temporaryImg.onerror = () => {
         const result = {
           src: imgElement.src,
           error: 'Falha ao carregar imagem',
@@ -193,7 +193,7 @@ class BlogImageMigration {
         resolve(result);
       };
 
-      tempImg.src = imgElement.src;
+      temporaryImg.src = imgElement.src;
     });
   }
 
@@ -209,7 +209,7 @@ class BlogImageMigration {
       }
       
       const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
+      const context = canvas.getContext('2d');
       
       const { naturalWidth, naturalHeight } = imgElement;
       
@@ -222,14 +222,14 @@ class BlogImageMigration {
       canvas.height = targetHeight;
       
       // Apply high-quality scaling
-      ctx.imageSmoothingEnabled = true;
-      ctx.imageSmoothingQuality = 'high';
+      context.imageSmoothingEnabled = true;
+      context.imageSmoothingQuality = 'high';
       
       // Apply subtle enhancements
-      ctx.filter = 'contrast(1.05) brightness(1.01)';
+      context.filter = 'contrast(1.05) brightness(1.01)';
       
       // Draw optimized image
-      ctx.drawImage(imgElement, 0, 0, targetWidth, targetHeight);
+      context.drawImage(imgElement, 0, 0, targetWidth, targetHeight);
       
       return canvas.toDataURL('image/jpeg', 0.9);
       
@@ -260,18 +260,18 @@ class BlogImageMigration {
 
     // Also handle dynamically loaded images
     const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        mutation.addedNodes.forEach((node) => {
+      for (const mutation of mutations) {
+        for (const node of mutation.addedNodes) {
           if (node.nodeType === 1) { // Element node
             const images = node.querySelectorAll ? 
               node.querySelectorAll('[data-smart-optimization="true"]') : [];
             
-            images.forEach((img) => {
+            for (const img of images) {
               this.optimizeImage(img);
-            });
+            }
           }
-        });
-      });
+        }
+      }
     });
 
     observer.observe(document.body, {
@@ -310,7 +310,7 @@ class BlogImageMigration {
 const blogImageMigration = new BlogImageMigration();
 
 // Auto-initialize if in browser environment
-if (typeof window !== 'undefined') {
+if (globalThis.window !== undefined) {
   blogImageMigration.initializePageOptimization();
 }
 

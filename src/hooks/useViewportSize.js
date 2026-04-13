@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react';
 
 export const useViewportSize = () => {
   const [viewport, setViewport] = useState({
-    width: typeof window !== 'undefined' ? window.innerWidth : 0,
-    height: typeof window !== 'undefined' ? window.innerHeight : 0,
-    isMobile: typeof window !== 'undefined' ? window.innerWidth < 768 : false,
-    isTablet: typeof window !== 'undefined' ? window.innerWidth >= 768 && window.innerWidth < 1024 : false,
-    isDesktop: typeof window !== 'undefined' ? window.innerWidth >= 1024 : false,
+    width: globalThis.window === undefined ? 0 : window.innerWidth,
+    height: globalThis.window === undefined ? 0 : window.innerHeight,
+    isMobile: globalThis.window === undefined ? false : window.innerWidth < 768,
+    isTablet: globalThis.window === undefined ? false : window.innerWidth >= 768 && window.innerWidth < 1024,
+    isDesktop: globalThis.window === undefined ? false : window.innerWidth >= 1024,
   });
 
   useEffect(() => {

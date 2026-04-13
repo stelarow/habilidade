@@ -128,10 +128,10 @@ class BackgroundTester {
       // Verificar se CSS de acessibilidade está carregado
       const testElement = document.createElement('div');
       testElement.className = 'accessibility-test';
-      document.body.appendChild(testElement);
+      document.body.append(testElement);
       
       // Testar prefers-reduced-motion
-      const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const mediaQuery = globalThis.matchMedia('(prefers-reduced-motion: reduce)');
       this.assert(typeof mediaQuery.matches === 'boolean', 'prefers-reduced-motion deve estar disponível');
       
       // Verificar se classes de acessibilidade existem
@@ -142,7 +142,7 @@ class BackgroundTester {
       
       this.assert(hasHighContrast, 'Classes de acessibilidade devem funcionar');
       
-      document.body.removeChild(testElement);
+      testElement.remove();
       
       this.recordTestResult('testAccessibilityCompliance', true, 'Acessibilidade em conformidade');
     } catch (error) {
@@ -227,11 +227,11 @@ class BackgroundTester {
     
     if (this.failedTests > 0) {
       console.log('\n🔍 DETALHES DOS TESTES FALHADOS:');
-      this.testResults.forEach((result, testName) => {
+      for (const [testName, result] of this.testResults.entries()) {
         if (!result.passed) {
           console.log(`- ${testName}: ${result.message}`);
         }
-      });
+      }
     }
     
     console.log('\n💡 RECOMENDAÇÕES:');
@@ -272,8 +272,8 @@ export const runBackgroundTests = async () => {
 };
 
 // Para debug no console
-if (typeof window !== 'undefined') {
-  window.testBackgrounds = runBackgroundTests;
+if (globalThis.window !== undefined) {
+  globalThis.testBackgrounds = runBackgroundTests;
 }
 
 export default BackgroundTester;

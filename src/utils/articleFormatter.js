@@ -3,22 +3,22 @@
 export const formatArticleContent = (content) => {
   // Remove extra whitespace and format properly
   let formatted = content
-    .replace(/^\s+|\s+$/g, '') // Remove leading/trailing whitespace
-    .replace(/\n\s*\n\s*\n/g, '\n\n') // Normalize multiple line breaks
-    .replace(/<h2>/g, '<div class="article-section"><h2 class="text-2xl font-bold text-white mb-4 mt-8">')
-    .replace(/<\/h2>/g, '</h2>')
-    .replace(/<h3>/g, '<h3 class="text-xl font-semibold text-white mb-3 mt-6">')
-    .replace(/<\/h3>/g, '</h3>')
-    .replace(/<h4>/g, '<h4 class="text-lg font-medium text-white mb-2 mt-4">')
-    .replace(/<\/h4>/g, '</h4>')
-    .replace(/<p>/g, '<p class="text-zinc-300 leading-relaxed mb-4">')
-    .replace(/<ul>/g, '<ul class="space-y-3 mb-6">')
-    .replace(/<ol>/g, '<ol class="space-y-3 mb-6 list-decimal list-inside">')
-    .replace(/<li>/g, '<li class="text-zinc-300 leading-relaxed flex items-start">')
-    .replace(/<strong>/g, '<strong class="text-white font-semibold">')
-    .replace(/<code>/g, '<code class="bg-zinc-800 text-blue-300 px-2 py-1 rounded text-sm font-mono">')
-    .replace(/<pre>/g, '<pre class="bg-zinc-900 border border-zinc-700 rounded-lg p-4 my-6 overflow-x-auto">')
-    .replace(/<blockquote>/g, '<blockquote class="border-l-4 border-blue-500 pl-4 py-2 my-6 bg-zinc-800/50 rounded-r-lg text-zinc-200 italic">');
+    .replaceAll(/^\s+|\s+$/g, '') // Remove leading/trailing whitespace
+    .replaceAll(/\n\s*\n\s*\n/g, '\n\n') // Normalize multiple line breaks
+    .replaceAll('<h2>', '<div class="article-section"><h2 class="text-2xl font-bold text-white mb-4 mt-8">')
+    .replaceAll('</h2>', '</h2>')
+    .replaceAll('<h3>', '<h3 class="text-xl font-semibold text-white mb-3 mt-6">')
+    .replaceAll('</h3>', '</h3>')
+    .replaceAll('<h4>', '<h4 class="text-lg font-medium text-white mb-2 mt-4">')
+    .replaceAll('</h4>', '</h4>')
+    .replaceAll('<p>', '<p class="text-zinc-300 leading-relaxed mb-4">')
+    .replaceAll('<ul>', '<ul class="space-y-3 mb-6">')
+    .replaceAll('<ol>', '<ol class="space-y-3 mb-6 list-decimal list-inside">')
+    .replaceAll('<li>', '<li class="text-zinc-300 leading-relaxed flex items-start">')
+    .replaceAll('<strong>', '<strong class="text-white font-semibold">')
+    .replaceAll('<code>', '<code class="bg-zinc-800 text-blue-300 px-2 py-1 rounded text-sm font-mono">')
+    .replaceAll('<pre>', '<pre class="bg-zinc-900 border border-zinc-700 rounded-lg p-4 my-6 overflow-x-auto">')
+    .replaceAll('<blockquote>', '<blockquote class="border-l-4 border-blue-500 pl-4 py-2 my-6 bg-zinc-800/50 rounded-r-lg text-zinc-200 italic">');
 
   // Wrap the entire content in a properly structured container
   return `
@@ -31,9 +31,9 @@ export const formatArticleContent = (content) => {
 export const createArticleSection = (title, content, level = 3) => {
   const headingClass = level === 2 
     ? 'text-2xl font-bold text-white mb-4 mt-8'
-    : level === 3 
+    : (level === 3 
     ? 'text-xl font-semibold text-white mb-3 mt-6'
-    : 'text-lg font-medium text-white mb-2 mt-4';
+    : 'text-lg font-medium text-white mb-2 mt-4');
     
   return `
     <div class="article-section">
@@ -46,20 +46,16 @@ export const createArticleSection = (title, content, level = 3) => {
 };
 
 export const createListItem = (content, type = 'bullet') => {
-  if (type === 'bullet') {
-    return `
+  return type === 'bullet' ? `
       <li class="flex items-start">
         <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
         <span class="text-zinc-300 leading-relaxed">${content}</span>
       </li>
-    `;
-  } else {
-    return `
+    ` : `
       <li class="flex items-start">
         <span class="text-zinc-300 leading-relaxed">${content}</span>
       </li>
     `;
-  }
 };
 
 export const createHighlightBox = (title, content) => {

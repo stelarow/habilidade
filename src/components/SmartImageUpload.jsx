@@ -14,13 +14,13 @@ const SmartImageUpload = ({
   const [processing, setProcessing] = useState(false);
   const [dragActive, setDragActive] = useState(false);
   const [previewImage, setPreviewImage] = useState(null);
-  const fileInputRef = useRef(null);
+  const fileInputReference = useRef(null);
 
   const handleFiles = useCallback(async (selectedFiles) => {
     if (!selectedFiles?.length) return;
 
     setProcessing(true);
-    const fileArray = Array.from(selectedFiles);
+    const fileArray = [...selectedFiles];
 
     try {
       const results = await imageUploadProcessor.processBatch(fileArray, context, {
@@ -54,7 +54,7 @@ const SmartImageUpload = ({
       const allFiles = [...processedFiles, ...errorFiles];
       
       if (multiple) {
-        setFiles(prev => [...prev, ...allFiles].slice(0, maxFiles));
+        setFiles(previous => [...previous, ...allFiles].slice(0, maxFiles));
       } else {
         setFiles(allFiles.slice(0, 1));
       }
@@ -66,7 +66,7 @@ const SmartImageUpload = ({
 
     } catch (error) {
       console.error('Erro no processamento de imagens:', error);
-      setFiles(prev => [...prev, {
+      setFiles(previous => [...previous, {
         id: Date.now(),
         fileName: 'Erro geral',
         error: error.message,
@@ -98,11 +98,11 @@ const SmartImageUpload = ({
   }, [handleFiles]);
 
   const removeFile = useCallback((id) => {
-    setFiles(prev => prev.filter(file => file.id !== id));
+    setFiles(previous => previous.filter(file => file.id !== id));
   }, []);
 
   const openFileDialog = useCallback(() => {
-    fileInputRef.current?.click();
+    fileInputReference.current?.click();
   }, []);
 
   const showPreviewModal = useCallback((file) => {
@@ -139,7 +139,7 @@ const SmartImageUpload = ({
         onClick={openFileDialog}
       >
         <input
-          ref={fileInputRef}
+          ref={fileInputReference}
           type="file"
           accept="image/*"
           multiple={multiple}

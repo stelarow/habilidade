@@ -14,22 +14,22 @@ const CTAFinal = ({ scrollToNextSection }) => {
       </div>
 
       {/* Animated Alert Circles */}
-      {[...Array(5)].map((_, i) => (
+      {Array.from({length: 5}).map((_, index) => (
         <motion.div
-          key={i}
+          key={index}
           className="absolute rounded-full bg-red-500/20 blur-xl"
           style={{
-            width: 100 + i * 50,
-            height: 100 + i * 50,
-            left: `${20 + i * 15}%`,
-            top: `${10 + i * 10}%`,
+            width: 100 + index * 50,
+            height: 100 + index * 50,
+            left: `${20 + index * 15}%`,
+            top: `${10 + index * 10}%`,
           }}
           animate={{
             scale: [1, 1.2, 1],
             opacity: [0.3, 0.5, 0.3],
           }}
           transition={{
-            duration: 3 + i,
+            duration: 3 + index,
             repeat: Infinity,
             ease: "easeInOut",
           }}
@@ -159,9 +159,9 @@ const CTAFinal = ({ scrollToNextSection }) => {
             transition={{ delay: 0.5, duration: 0.6 }}
           >
             <div className="flex -space-x-2">
-              {[0, 1, 2, 3].map((i) => (
+              {[0, 1, 2, 3].map((index) => (
                 <div
-                  key={i}
+                  key={index}
                   className="w-10 h-10 rounded-full bg-blue-600 border-2 border-white flex items-center justify-center"
                 >
                   <User size={24} weight="fill" className="text-white" />

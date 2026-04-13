@@ -13,9 +13,9 @@ export const contactFormSchema = z.object({
     .string()
     .min(1, "Telefone é obrigatório")
     .regex(/^\(\d{2}\) 9 \d{4}-\d{4}$/, "Telefone deve estar no formato (XX) 9 XXXX-XXXX")
-    .refine((val) => {
+    .refine((value) => {
       // Remove formatação e verifica se tem exatamente 11 dígitos
-      const numbers = val.replace(/[^\d]/g, '');
+      const numbers = value.replaceAll(/[^\d]/g, '');
       return numbers.length === 11 && numbers.charAt(2) === '9';
     }, {
       message: "Telefone deve incluir o 9º dígito e ter 11 números"
@@ -24,7 +24,7 @@ export const contactFormSchema = z.object({
   email: z
     .string()
     .optional()
-    .refine((val) => !val || z.string().email().safeParse(val).success, {
+    .refine((value) => !value || z.string().email().safeParse(value).success, {
       message: "E-mail inválido"
     }),
 
@@ -49,14 +49,18 @@ export const stepSchemas = {
 // Função para validar etapa específica
 export const validateStep = (step, data) => {
   switch (step) {
-    case 1:
+    case 1: {
       return stepSchemas.step1.safeParse(data);
-    case 2:
+    }
+    case 2: {
       return stepSchemas.step2.safeParse(data);
-    case 3:
+    }
+    case 3: {
       return stepSchemas.step3.safeParse(data);
-    default:
+    }
+    default: {
       return contactFormSchema.safeParse(data);
+    }
   }
 };
 

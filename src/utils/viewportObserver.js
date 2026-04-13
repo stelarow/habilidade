@@ -20,10 +20,10 @@ class ViewportObserver {
     const finalOptions = { ...defaultOptions, ...options };
     
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
+      for (const entry of entries) {
         const isVisible = entry.isIntersecting;
         onVisibilityChange(isVisible, entry);
-      });
+      }
     }, finalOptions);
 
     observer.observe(element);
@@ -45,7 +45,7 @@ class ViewportObserver {
 
   // Limpar todos os observadores
   disconnect() {
-    this.observers.forEach(observer => observer.disconnect());
+    for (const observer of this.observers) observer.disconnect();
     this.observers.clear();
     this.callbacks.clear();
   }

@@ -16,7 +16,7 @@ import { Alert, AlertDescription } from "../../ui/alert";
 import { Progress } from "../../ui/progress";
 
 const InformaticaWhyLearn2025 = () => {
-  const sectionRef = useRef(null);
+  const sectionReference = useRef(null);
   const [statsVisible, setStatsVisible] = useState(false);
   const [jobProgress, setJobProgress] = useState(0);
   const [salaryProgress, setSalaryProgress] = useState(0);
@@ -28,7 +28,7 @@ const InformaticaWhyLearn2025 = () => {
     };
 
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
+      for (const entry of entries) {
         if (entry.isIntersecting) {
           entry.target.classList.add('animate-in');
 
@@ -44,12 +44,12 @@ const InformaticaWhyLearn2025 = () => {
             }, 800);
           }
         }
-      });
+      }
     }, observerOptions);
 
     // Observar todos os elementos com data-scroll-reveal
-    const revealElements = sectionRef.current?.querySelectorAll('[data-scroll-reveal]');
-    revealElements?.forEach((el) => observer.observe(el));
+    const revealElements = sectionReference.current?.querySelectorAll('[data-scroll-reveal]');
+    if (revealElements) for (const element of revealElements) observer.observe(element);
 
     return () => observer.disconnect();
   }, [statsVisible]);
@@ -57,7 +57,7 @@ const InformaticaWhyLearn2025 = () => {
   return (
     <section
       id="diferenciais"
-      ref={sectionRef}
+      ref={sectionReference}
       className="px-4 py-16 sm:px-6 lg:px-8 lg:py-20 bg-zinc-950"
     >
       <div className="container mx-auto max-w-7xl">

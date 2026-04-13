@@ -52,7 +52,7 @@ function Hero() {
             className="px-6 text-sm"
             onClick={(e) => {
               e.preventDefault();
-              const element = document.getElementById('cursos');
+              const element = document.querySelector('#cursos');
               if (element) {
                 element.scrollIntoView({ behavior: 'smooth' });
               }
@@ -75,8 +75,8 @@ function Hero() {
         {/* Social Proof Badge */}
         <div className="mt-6 flex items-center justify-center gap-2 text-sm">
           <div className="flex items-center gap-0.5">
-            {[...Array(5)].map((_, i) => (
-              <Star key={i} size={14} weight="fill" className="text-yellow-400" />
+            {Array.from({length: 5}).map((_, index) => (
+              <Star key={index} size={14} weight="fill" className="text-yellow-400" />
             ))}
           </div>
           <span className="text-zinc-300">

@@ -50,7 +50,7 @@ const getQueryClient = () => {
 };
 
 // Client-only DevTools component to prevent hydration mismatch
-const ClientOnlyDevTools = () => {
+const ClientOnlyDevelopmentTools = () => {
   const [isClient, setIsClient] = React.useState(false);
   
   React.useEffect(() => {
@@ -86,7 +86,7 @@ const QueryProvider = ({ children }) => {
   return (
     <QueryClientProvider client={client}>
       {children}
-      <ClientOnlyDevTools />
+      <ClientOnlyDevelopmentTools />
     </QueryClientProvider>
   );
 };

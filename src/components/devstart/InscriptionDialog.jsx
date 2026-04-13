@@ -45,7 +45,7 @@ const inscriptionSchema = z.object({
     .regex(/^\(\d{2}\)\s\d{4,5}-\d{4}$/, 'Formato: (XX) XXXXX-XXXX'),
   email: z.string().email('E-mail inválido'),
   message: z.string().optional(),
-  acceptTerms: z.boolean().refine((val) => val === true, {
+  acceptTerms: z.boolean().refine((value) => value === true, {
     message: 'Você precisa aceitar os termos',
   }),
 });
@@ -72,7 +72,7 @@ const InscriptionDialog = ({ open, onOpenChange }) => {
 
   // Format WhatsApp number
   const formatWhatsApp = (value) => {
-    const cleaned = value.replace(/\D/g, '');
+    const cleaned = value.replaceAll(/\D/g, '');
     if (cleaned.length <= 2) return `(${cleaned}`;
     if (cleaned.length <= 7) return `(${cleaned.slice(0, 2)}) ${cleaned.slice(2)}`;
     return `(${cleaned.slice(0, 2)}) ${cleaned.slice(2, 7)}-${cleaned.slice(7, 11)}`;
@@ -99,7 +99,7 @@ ${data.message ? `\n💬 Mensagem: ${data.message}` : ''}`;
 
     try {
       // Prepare EmailJS template params
-      const templateParams = {
+      const templateParameters = {
         to_email: 'alessandro.ferreira@escolahabilidade.com',
         event_name: event.title,
         student_name: data.studentName,
@@ -115,7 +115,7 @@ ${data.message ? `\n💬 Mensagem: ${data.message}` : ''}`;
       await emailjs.send(
         import.meta.env.VITE_EMAILJS_SERVICE_ID || 'service_escolahabilidade',
         import.meta.env.VITE_EMAILJS_DEVSTART_TEMPLATE_ID || 'template_devstart',
-        templateParams,
+        templateParameters,
         import.meta.env.VITE_EMAILJS_PUBLIC_KEY
       );
 
@@ -136,7 +136,7 @@ ${data.message ? `\n💬 Mensagem: ${data.message}` : ''}`;
             label: 'Abrir WhatsApp',
             onClick: () => handleWhatsAppFallback(data),
           },
-          duration: 10000,
+          duration: 10_000,
         });
       }, 1000);
     } catch (error) {
@@ -149,7 +149,7 @@ ${data.message ? `\n💬 Mensagem: ${data.message}` : ''}`;
           label: 'Abrir WhatsApp',
           onClick: () => handleWhatsAppFallback(data),
         },
-        duration: 10000,
+        duration: 10_000,
       });
     } finally {
       setIsSubmitting(false);

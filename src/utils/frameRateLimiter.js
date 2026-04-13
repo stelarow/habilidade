@@ -44,10 +44,14 @@ class FrameRateLimiter {
     if (!isTabActive) return 1;
     
     switch (performanceLevel) {
-      case 'low': return 0; // Estático
-      case 'medium': return 15; // FPS mais reduzido (era 20)
-      case 'high': return 24; // FPS moderado (era 30)
-      default: return 15;
+      case 'low': { return 0;
+      } // Estático
+      case 'medium': { return 15;
+      } // FPS mais reduzido (era 20)
+      case 'high': { return 24;
+      } // FPS moderado (era 30)
+      default: { return 15;
+      }
     }
   }
 

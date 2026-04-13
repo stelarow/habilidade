@@ -5,7 +5,7 @@
 
 // Verificar se gtag está disponível
 const isGtagAvailable = () => {
-  return typeof window !== 'undefined' && typeof window.gtag === 'function';
+  return globalThis.window !== undefined && typeof globalThis.gtag === 'function';
 };
 
 // Enviar evento para Google Analytics
@@ -15,7 +15,7 @@ export const trackEvent = (eventName, parameters = {}) => {
     return;
   }
 
-  window.gtag('event', eventName, {
+  globalThis.gtag('event', eventName, {
     ...parameters,
     timestamp: new Date().toISOString(),
   });
@@ -99,7 +99,7 @@ export const analytics = {
 
   // Novo: Rastreamento de compatibilidade de cursos
   trackCourseCompatibility: (recommendedCourses, userProfile) => {
-    recommendedCourses.forEach((course, index) => {
+    for (const [index, course] of recommendedCourses.entries()) {
       trackEvent('curso_compatibilidade_calculada', {
         event_category: 'Teste Vocacional',
         event_label: 'Compatibilidade de Curso',
@@ -111,7 +111,7 @@ export const analytics = {
         user_primary_area: userProfile.primaryArea,
         user_secondary_area: userProfile.secondaryArea,
       });
-    });
+    }
   },
 
   trackResultShared: (platform) => {
@@ -179,20 +179,20 @@ export const analytics = {
   // User Timing API para medir tempo
   measureTestDuration: {
     start: () => {
-      if (typeof window !== 'undefined' && window.performance) {
-        window.performance.mark('teste_vocacional_start');
+      if (globalThis.window !== undefined && globalThis.performance) {
+        globalThis.performance.mark('teste_vocacional_start');
       }
     },
     end: () => {
-      if (typeof window !== 'undefined' && window.performance) {
-        window.performance.mark('teste_vocacional_end');
-        window.performance.measure(
+      if (globalThis.window !== undefined && globalThis.performance) {
+        globalThis.performance.mark('teste_vocacional_end');
+        globalThis.performance.measure(
           'teste_vocacional_duration',
           'teste_vocacional_start',
           'teste_vocacional_end'
         );
         
-        const measure = window.performance.getEntriesByName('teste_vocacional_duration')[0];
+        const measure = globalThis.performance.getEntriesByName('teste_vocacional_duration')[0];
         if (measure) {
           const durationInSeconds = Math.round(measure.duration / 1000);
           return durationInSeconds;
@@ -217,9 +217,9 @@ export const getAnalyticsData = () => {
 };
 
 // Auto-track page views
-if (typeof window !== 'undefined') {
+if (globalThis.window !== undefined) {
   window.addEventListener('load', () => {
-    const path = window.location.pathname;
+    const path = globalThis.location.pathname;
     if (path === '/teste-vocacional') {
       analytics.trackTestPageView();
     }

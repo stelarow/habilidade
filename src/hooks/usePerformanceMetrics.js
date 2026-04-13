@@ -34,7 +34,7 @@ export const usePerformanceMetrics = (options = {}) => {
   const [isMonitoring, setIsMonitoring] = useState(false);
   const performanceMonitor = useRef(null);
   const intervalId = useRef(null);
-  const alertsRef = useRef([]);
+  const alertsReference = useRef([]);
 
   // Initialize performance monitoring
   useEffect(() => {
@@ -46,8 +46,8 @@ export const usePerformanceMetrics = (options = {}) => {
       });
 
       performanceMonitor.current.start((latestMetrics) => {
-        setMetrics(prevMetrics => ({
-          ...prevMetrics,
+        setMetrics(previousMetrics => ({
+          ...previousMetrics,
           webVitals: latestMetrics
         }));
 
@@ -162,13 +162,13 @@ export const usePerformanceMetrics = (options = {}) => {
     }
 
     // Update alerts (keep only recent ones)
-    alertsRef.current = [...alertsRef.current, ...newAlerts]
-      .filter(alert => Date.now() - alert.timestamp < 300000) // Keep alerts for 5 minutes
+    alertsReference.current = [...alertsReference.current, ...newAlerts]
+      .filter(alert => Date.now() - alert.timestamp < 300_000) // Keep alerts for 5 minutes
       .slice(-10); // Keep max 10 alerts
 
-    setMetrics(prevMetrics => ({
-      ...prevMetrics,
-      alerts: alertsRef.current
+    setMetrics(previousMetrics => ({
+      ...previousMetrics,
+      alerts: alertsReference.current
     }));
   }, [alertThresholds, metrics.cache]);
 
@@ -181,7 +181,7 @@ export const usePerformanceMetrics = (options = {}) => {
       cache: {},
       bundle: {},
       lazyLoading: {},
-      alerts: alertsRef.current
+      alerts: alertsReference.current
     };
 
     // Web Vitals
@@ -232,19 +232,19 @@ export const usePerformanceMetrics = (options = {}) => {
     // Web Vitals score (0-100)
     if (metrics.webVitals.LCP) {
       const lcpScore = metrics.webVitals.LCP.value <= 2500 ? 100 : 
-                      metrics.webVitals.LCP.value <= 4000 ? 50 : 0;
+                      (metrics.webVitals.LCP.value <= 4000 ? 50 : 0);
       scoreFactors.push(lcpScore);
     }
 
     if (metrics.webVitals.FID) {
       const fidScore = metrics.webVitals.FID.value <= 100 ? 100 : 
-                      metrics.webVitals.FID.value <= 300 ? 50 : 0;
+                      (metrics.webVitals.FID.value <= 300 ? 50 : 0);
       scoreFactors.push(fidScore);
     }
 
     if (metrics.webVitals.CLS) {
       const clsScore = metrics.webVitals.CLS.value <= 0.1 ? 100 : 
-                      metrics.webVitals.CLS.value <= 0.25 ? 50 : 0;
+                      (metrics.webVitals.CLS.value <= 0.25 ? 50 : 0);
       scoreFactors.push(clsScore);
     }
 
@@ -300,9 +300,9 @@ export const usePerformanceMetrics = (options = {}) => {
 
   // Clear alerts
   const clearAlerts = useCallback(() => {
-    alertsRef.current = [];
-    setMetrics(prevMetrics => ({
-      ...prevMetrics,
+    alertsReference.current = [];
+    setMetrics(previousMetrics => ({
+      ...previousMetrics,
       alerts: []
     }));
   }, []);
@@ -326,8 +326,8 @@ export const useBasicPerformance = () => {
 
   useEffect(() => {
     initWebVitals((metric) => {
-      setWebVitals(prev => ({
-        ...prev,
+      setWebVitals(previous => ({
+        ...previous,
         [metric.name]: metric
       }));
     });
@@ -345,8 +345,8 @@ export const useMetricMonitor = (metricNames = ['LCP', 'FID', 'CLS']) => {
   useEffect(() => {
     initWebVitals((metric) => {
       if (metricNames.includes(metric.name)) {
-        setMetrics(prev => ({
-          ...prev,
+        setMetrics(previous => ({
+          ...previous,
           [metric.name]: metric
         }));
       }

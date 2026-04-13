@@ -87,11 +87,11 @@ export const InformaticaTestimonials = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const nextTestimonial = () => {
-    setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+    setCurrentIndex((previous) => (previous + 1) % testimonials.length);
   };
 
-  const prevTestimonial = () => {
-    setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+  const previousTestimonial = () => {
+    setCurrentIndex((previous) => (previous - 1 + testimonials.length) % testimonials.length);
   };
 
   const goToTestimonial = (index) => {
@@ -99,11 +99,11 @@ export const InformaticaTestimonials = () => {
   };
 
   const renderStars = (rating) => {
-    return Array.from({ length: 5 }, (_, i) => (
+    return Array.from({ length: 5 }, (_, index) => (
       <Star
-        key={i}
-        className={`w-5 h-5 ${i < rating ? 'text-yellow-400' : 'text-gray-400'}`}
-        weight={i < rating ? "fill" : "regular"}
+        key={index}
+        className={`w-5 h-5 ${index < rating ? 'text-yellow-400' : 'text-gray-400'}`}
+        weight={index < rating ? "fill" : "regular"}
       />
     ));
   };
@@ -197,7 +197,7 @@ export const InformaticaTestimonials = () => {
 
           {/* Navigation Arrows */}
           <button
-            onClick={prevTestimonial}
+            onClick={previousTestimonial}
             className="absolute left-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-colors"
           >
             <CaretLeft className="w-6 h-6" />

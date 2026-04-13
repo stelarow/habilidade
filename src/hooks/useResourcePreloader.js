@@ -54,7 +54,7 @@ export default function useResourcePreloader() {
         const link = document.createElement('link');
         link.rel = 'modulepreload';
         link.href = resourcePath;
-        document.head.appendChild(link);
+        document.head.append(link);
       } else if (resourcePath.endsWith('.css')) {
         // Preload de CSS
         const link = document.createElement('link');
@@ -62,7 +62,7 @@ export default function useResourcePreloader() {
         link.href = resourcePath;
         link.as = 'style';
         link.crossOrigin = 'anonymous';
-        document.head.appendChild(link);
+        document.head.append(link);
       } else if (resourcePath.includes('background')) {
         // Preload de background (lazy import)
         const backgroundName = resourcePath.replace('-background', '');
@@ -86,24 +86,24 @@ export default function useResourcePreloader() {
 
     // Preload de alta prioridade
     if (resources.priority) {
-      resources.priority.forEach(resource => {
+      for (const resource of resources.priority) {
         preloadResource(resource, 'high');
-      });
+      }
     }
 
     // Preload de chunks
     if (resources.chunks) {
-      resources.chunks.forEach(chunk => {
+      for (const chunk of resources.chunks) {
         preloadResource(chunk, 'medium');
-      });
+      }
     }
 
     // Preload relacionados (baixa prioridade)
     if (resources.related) {
       setTimeout(() => {
-        resources.related.forEach(related => {
+        for (const related of resources.related) {
           preloadResource(`${related}-background`, 'low');
-        });
+        }
       }, 2000);
     }
   }, [preloadResource]);
@@ -142,7 +142,7 @@ export default function useResourcePreloader() {
    */
   const observeLinksInViewport = useCallback(() => {
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
+      for (const entry of entries) {
         if (entry.isIntersecting) {
           const link = entry.target;
           const href = new URL(link.href).pathname;
@@ -154,15 +154,15 @@ export default function useResourcePreloader() {
           
           observer.unobserve(link);
         }
-      });
+      }
     }, {
       rootMargin: '100px'
     });
 
     // Observar links de cursos
-    document.querySelectorAll('a[href*="/cursos/"]').forEach(link => {
+    for (const link of document.querySelectorAll('a[href*="/cursos/"]')) {
       observer.observe(link);
-    });
+    }
 
     return () => observer.disconnect();
   }, [preloadForRoute]);
@@ -184,7 +184,7 @@ export default function useResourcePreloader() {
       document.removeEventListener('mouseleave', handleLinkLeave);
       
       // Limpar timeouts
-      hoverTimeouts.current.forEach(timeoutId => clearTimeout(timeoutId));
+      for (const timeoutId of hoverTimeouts.current) clearTimeout(timeoutId);
       hoverTimeouts.current.clear();
       
       cleanupObserver();

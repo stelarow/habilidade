@@ -20,7 +20,7 @@ const BlogContactSection = ({
     // Update status every minute
     const interval = setInterval(() => {
       setBusinessStatus(getBusinessHoursStatus());
-    }, 60000);
+    }, 60_000);
 
     return () => clearInterval(interval);
   }, []);
@@ -29,7 +29,7 @@ const BlogContactSection = ({
     const message = generateWhatsAppMessage({
       article: article?.title || null,
       category: category?.name || category || null,
-      url: window.location.href,
+      url: globalThis.location.href,
       context: 'contact-section'
     });
 
@@ -58,12 +58,12 @@ const BlogContactSection = ({
       position: 'article-end'
     });
 
-    window.location.href = phoneNumber;
+    globalThis.location.href = phoneNumber;
   };
 
   const handleEmailClick = () => {
     const subject = article 
-      ? `Interesse após ler: ${article.title}`
+      ? `Interesse apï¿½s ler: ${article.title}`
       : 'Interesse nos cursos da Escola Habilidade';
     
     const body = generateContextualMessage('course-info', { 
@@ -82,7 +82,7 @@ const BlogContactSection = ({
       subject: subject
     });
 
-    window.location.href = emailUrl;
+    globalThis.location.href = emailUrl;
   };
 
   if (variant === 'minimal') {
@@ -90,7 +90,7 @@ const BlogContactSection = ({
       <div className={`bg-gradient-to-r from-purple-900/20 to-cyan-900/20 rounded-lg p-6 border border-purple-500/20 ${className}`}>
         <div className="text-center">
           <h3 className="text-lg font-semibold text-white mb-2">
-            Gostou do conteúdo?
+            Gostou do conteï¿½do?
           </h3>
           <p className="text-zinc-300 text-sm mb-4">
             Fale conosco para saber mais sobre nossos cursos!
@@ -136,8 +136,8 @@ const BlogContactSection = ({
         
         <p className="text-zinc-300 text-lg max-w-2xl mx-auto">
           {article 
-            ? `Que tal dar o próximo passo? Converse conosco sobre como nossos cursos podem ajudar você a se especializar em ${category?.name || 'sua área de interesse'}.`
-            : 'Nossa equipe está pronta para ajudar você a escolher o melhor curso para sua carreira!'
+            ? `Que tal dar o prï¿½ximo passo? Converse conosco sobre como nossos cursos podem ajudar vocï¿½ a se especializar em ${category?.name || 'sua ï¿½rea de interesse'}.`
+            : 'Nossa equipe estï¿½ pronta para ajudar vocï¿½ a escolher o melhor curso para sua carreira!'
           }
         </p>
 
@@ -167,7 +167,7 @@ const BlogContactSection = ({
             </div>
           </div>
           <p className="text-zinc-400 text-sm">
-            Converse diretamente conosco pelo WhatsApp. Resposta rápida e personalizada!
+            Converse diretamente conosco pelo WhatsApp. Resposta rï¿½pida e personalizada!
           </p>
         </button>
 
@@ -186,7 +186,7 @@ const BlogContactSection = ({
             </div>
           </div>
           <p className="text-zinc-400 text-sm">
-            Ligue diretamente para esclarecer dúvidas e receber orientações personalizadas.
+            Ligue diretamente para esclarecer dï¿½vidas e receber orientaï¿½ï¿½es personalizadas.
           </p>
         </button>
 
@@ -205,7 +205,7 @@ const BlogContactSection = ({
             </div>
           </div>
           <p className="text-zinc-400 text-sm">
-            Envie um email com suas dúvidas e receba informações detalhadas sobre os cursos.
+            Envie um email com suas dï¿½vidas e receba informaï¿½ï¿½es detalhadas sobre os cursos.
           </p>
         </button>
       </div>
@@ -223,9 +223,9 @@ const BlogContactSection = ({
       {/* Additional Info */}
       <div className="text-center text-sm text-zinc-400 border-t border-zinc-700 pt-4">
         <p>
-          =Þ Atendimento: Segunda a sexta, 8h às 18h
+          =ï¿½ Atendimento: Segunda a sexta, 8h ï¿½s 18h
           <br />
-          =ç Email: {EMAIL_CONFIG.CONTACT_EMAIL}
+          =ï¿½ Email: {EMAIL_CONFIG.CONTACT_EMAIL}
           <br />
           ( Primeira consulta sempre gratuita
         </p>

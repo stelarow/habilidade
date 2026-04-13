@@ -51,44 +51,52 @@ const InlineCTA = ({
   // Get icon based on CTA type
   const getIcon = () => {
     switch (type) {
-      case 'leadmagnet':
+      case 'leadmagnet': {
         return <Download size={20} className="text-blue-400" />;
-      case 'webinar':
+      }
+      case 'webinar': {
         return <PlayCircle size={20} className="text-green-400" />;
-      case 'newsletter':
+      }
+      case 'newsletter': {
         return <BookOpen size={20} className="text-purple-400" />;
-      default:
+      }
+      default: {
         return <BookOpen size={20} className="text-purple-400" />;
+      }
     }
   };
 
   // Get color scheme based on type
   const getColorScheme = () => {
     switch (type) {
-      case 'leadmagnet':
+      case 'leadmagnet': {
         return {
           border: 'border-blue-500/20',
           bg: 'from-blue-900/10 to-blue-800/10',
           button: 'from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800'
         };
-      case 'webinar':
+      }
+      case 'webinar': {
         return {
           border: 'border-green-500/20',
           bg: 'from-green-900/10 to-green-800/10',
           button: 'from-green-600 to-green-700 hover:from-green-700 hover:to-green-800'
         };
-      case 'newsletter':
+      }
+      case 'newsletter': {
         return {
           border: 'border-orange-500/20',
           bg: 'from-orange-900/10 to-orange-800/10',
           button: 'from-orange-600 to-orange-700 hover:from-orange-700 hover:to-orange-800'
         };
-      default:
+      }
+      default: {
         return {
           border: 'border-purple-500/20',
           bg: 'from-purple-900/10 to-purple-800/10',
           button: 'from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800'
         };
+      }
     }
   };
 

@@ -3,7 +3,7 @@ import { useLocation, useParams } from 'react-router-dom';
 
 const RouteDebug = () => {
   const location = useLocation();
-  const params = useParams();
+  const parameters = useParams();
   
   return (
     <div style={{
@@ -21,7 +21,7 @@ const RouteDebug = () => {
     }}>
       <div><strong>Route Debug:</strong></div>
       <div>Path: {location.pathname}</div>
-      <div>Params: {JSON.stringify(params)}</div>
+      <div>Params: {JSON.stringify(parameters)}</div>
       <div>Search: {location.search}</div>
     </div>
   );

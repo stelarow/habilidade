@@ -17,7 +17,7 @@ function Layout() {
   // Defer non-critical effects para após LCP render
   useEffect(() => {
     // Usa requestIdleCallback para máxima performance
-    if ('requestIdleCallback' in window) {
+    if ('requestIdleCallback' in globalThis) {
       requestIdleCallback(() => {
         setNonCriticalLoaded(true);
       }, { timeout: 2000 });
@@ -31,13 +31,11 @@ function Layout() {
 
   // Aplicar otimizações de performance
   useEffect(() => {
-    if (typeof window !== 'undefined' && typeof document !== 'undefined') {
-      if (performanceLevel === 'LOW') {
+    if (globalThis.window !== undefined && typeof document !== 'undefined' && performanceLevel === 'LOW') {
         // Reduzir animações para dispositivos baixa performance
         document.documentElement.style.setProperty('--animation-duration', '0.1s');
         document.documentElement.style.setProperty('--transition-duration', '0.1s');
       }
-    }
   }, [performanceLevel]);
 
   return (

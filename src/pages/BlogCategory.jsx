@@ -27,8 +27,8 @@ const getCategoryColor = (categorySlug) => {
 
 const BlogCategory = () => {
   const { categorySlug } = useParams();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [searchQuery, setSearchQuery] = useState(searchParams.get('search') || '');
+  const [searchParameters, setSearchParameters] = useSearchParams();
+  const [searchQuery, setSearchQuery] = useState(searchParameters.get('search') || '');
   const [debouncedSearchQuery, setDebouncedSearchQuery] = useState(searchQuery);
 
   // Debounce search input
@@ -42,14 +42,14 @@ const BlogCategory = () => {
 
   // Update URL params when search changes
   useEffect(() => {
-    const newParams = new URLSearchParams();
+    const newParameters = new URLSearchParams();
     
     if (debouncedSearchQuery) {
-      newParams.set('search', debouncedSearchQuery);
+      newParameters.set('search', debouncedSearchQuery);
     }
 
-    setSearchParams(newParams, { replace: true });
-  }, [debouncedSearchQuery, setSearchParams]);
+    setSearchParameters(newParameters, { replace: true });
+  }, [debouncedSearchQuery, setSearchParameters]);
 
   // Fetch data
   const {
@@ -65,7 +65,7 @@ const BlogCategory = () => {
   const { data: categoriesData } = useCategories();
 
   // Infinite scroll implementation
-  const [loadMoreRef, inView] = useInView({
+  const [loadMoreReference, inView] = useInView({
     threshold: 0.1,
     rootMargin: '100px',
   });
@@ -145,7 +145,7 @@ const BlogCategory = () => {
   // Clear search
   const clearSearch = () => {
     setSearchQuery('');
-    setSearchParams({}, { replace: true });
+    setSearchParameters({}, { replace: true });
   };
 
   // Loading state
@@ -171,7 +171,7 @@ const BlogCategory = () => {
           description={`Artigos sobre ${String(currentCategory.name || '').toLowerCase()}.`}
           path={`/blog/categoria/${categorySlug}`}
         />
-        <BlogError error={error} onRetry={() => window.location.reload()} />
+        <BlogError error={error} onRetry={() => globalThis.location.reload()} />
       </div>
     );
   }
@@ -320,7 +320,7 @@ const BlogCategory = () => {
             {/* Load More / Loading - only show if no search filter */}
             {!debouncedSearchQuery && hasNextPage && (
               <div
-                ref={loadMoreRef}
+                ref={loadMoreReference}
                 className="flex justify-center py-8"
               >
                 {isFetchingNextPage ? (

@@ -46,9 +46,9 @@ function MegaMenu({ isOpen, onClose }) {
               <button
                 onClick={() => setSelectedCategory(null)}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
-                  !selectedCategory 
-                    ? 'bg-fuchsia-500 text-white' 
-                    : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+                  selectedCategory 
+                    ? 'bg-gray-800 text-gray-300 hover:bg-gray-700' 
+                    : 'bg-fuchsia-500 text-white'
                 }`}
               >
                 Todos
@@ -115,7 +115,7 @@ function MegaMenu({ isOpen, onClose }) {
               onClick={(e) => {
                 e.preventDefault();
                 onClose();
-                const element = document.getElementById('cursos');
+                const element = document.querySelector('#cursos');
                 if (element) {
                   element.scrollIntoView({ behavior: 'smooth' });
                 }

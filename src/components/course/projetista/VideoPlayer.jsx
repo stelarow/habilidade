@@ -15,22 +15,22 @@ const VideoPlayer = ({
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(muted);
   const [showControls, setShowControls] = useState(false);
-  const videoRef = useRef(null);
+  const videoReference = useRef(null);
 
   const togglePlay = () => {
-    if (videoRef.current) {
+    if (videoReference.current) {
       if (isPlaying) {
-        videoRef.current.pause();
+        videoReference.current.pause();
       } else {
-        videoRef.current.play();
+        videoReference.current.play();
       }
       setIsPlaying(!isPlaying);
     }
   };
 
   const toggleMute = () => {
-    if (videoRef.current) {
-      videoRef.current.muted = !isMuted;
+    if (videoReference.current) {
+      videoReference.current.muted = !isMuted;
       setIsMuted(!isMuted);
     }
   };
@@ -48,7 +48,7 @@ const VideoPlayer = ({
       onClick={handleVideoClick}
     >
       <video
-        ref={videoRef}
+        ref={videoReference}
         src={src}
         poster={poster}
         className="w-full h-full object-cover"
@@ -58,8 +58,8 @@ const VideoPlayer = ({
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
         onLoadedData={() => {
-          if (autoPlay && videoRef.current) {
-            videoRef.current.play();
+          if (autoPlay && videoReference.current) {
+            videoReference.current.play();
           }
         }}
       >

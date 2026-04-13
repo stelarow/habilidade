@@ -15,24 +15,29 @@ async function handler(event, context) {
     
     // Processar diferentes tipos de eventos de analytics
     switch (analyticsData.eventType) {
-      case 'page_view':
+      case 'page_view': {
         await trackPageView(analyticsData, logger);
         break;
+      }
         
-      case 'blog_read':
+      case 'blog_read': {
         await trackBlogRead(analyticsData, logger);
         break;
+      }
         
-      case 'engagement':
+      case 'engagement': {
         await trackUserEngagement(analyticsData, logger);
         break;
+      }
         
-      case 'performance':
+      case 'performance': {
         await trackPerformanceMetrics(analyticsData, logger);
         break;
+      }
         
-      default:
+      default: {
         await trackGenericEvent(analyticsData, logger);
+      }
     }
     
     // Gerar insights básicos
@@ -78,7 +83,7 @@ async function handler(event, context) {
  * Parse dos dados de analytics
  */
 function parseAnalyticsData(event, logger) {
-  const queryParams = event.queryStringParameters || {};
+  const queryParameters = event.queryStringParameters || {};
   let bodyData = {};
   
   if (event.body) {
@@ -90,7 +95,7 @@ function parseAnalyticsData(event, logger) {
   }
   
   const data = {
-    eventType: queryParams.event || bodyData.event || 'page_view',
+    eventType: queryParameters.event || bodyData.event || 'page_view',
     timestamp: Date.now(),
     userAgent: event.headers['user-agent'],
     referer: event.headers['referer'],
@@ -114,7 +119,7 @@ async function trackPageView(data, logger) {
   logger.info('Tracking page view', {
     page: data.page || data.path,
     referer: data.referer,
-    userAgent: data.userAgent?.substring(0, 50) + '...',
+    userAgent: data.userAgent?.slice(0, 50) + '...',
     trackingType: 'page_view'
   });
   
@@ -327,7 +332,7 @@ async function generateInsights(data, logger) {
     
     // Insight sobre horário
     const hour = new Date().getHours();
-    insights.timeSegment = hour < 12 ? 'morning' : hour < 18 ? 'afternoon' : 'evening';
+    insights.timeSegment = hour < 12 ? 'morning' : (hour < 18 ? 'afternoon' : 'evening');
     
     logger.debug('Insights generated', { 
       insightCount: Object.keys(insights).length,

@@ -69,11 +69,7 @@ const QuickContactModal = ({
 
   // Prevent body scroll when modal is open
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
+    document.body.style.overflow = isOpen ? 'hidden' : 'unset';
 
     return () => {
       document.body.style.overflow = 'unset';
@@ -96,7 +92,7 @@ const QuickContactModal = ({
     const message = generateWhatsAppMessage({
       article: article?.title || null,
       category: category?.name || category || null,
-      url: window.location.href,
+      url: globalThis.location.href,
       context: 'quick-contact'
     });
 
@@ -126,7 +122,7 @@ const QuickContactModal = ({
       position: triggerSource
     });
 
-    window.location.href = phoneNumber;
+    globalThis.location.href = phoneNumber;
     onClose();
   };
 
@@ -139,15 +135,15 @@ const QuickContactModal = ({
 
       if (selectedMethod === 'email' || selectedMethod === 'consultation') {
         // Send email via EmailJS
-        const templateParams = {
+        const templateParameters = {
           from_name: formData.name,
           from_email: formData.email,
           phone: formData.phone,
           preferred_time: formData.preferredTime,
           interest: formData.interest,
           message: formData.message,
-          article: article?.title || 'Não especificado',
-          category: category?.name || category || 'Não especificado',
+          article: article?.title || 'Nï¿½o especificado',
+          category: category?.name || category || 'Nï¿½o especificado',
           form_type: selectedMethod === 'consultation' ? 'Agendamento de Consulta' : 'Contato por Email',
           to_email: EMAIL_CONFIG.CONTACT_EMAIL,
           reply_to: formData.email
@@ -156,7 +152,7 @@ const QuickContactModal = ({
         const result = await emailjs.send(
           EMAIL_CONFIG.SERVICE_ID,
           EMAIL_CONFIG.TEMPLATE_ID,
-          templateParams,
+          templateParameters,
           EMAIL_CONFIG.PUBLIC_KEY
         );
 
@@ -166,16 +162,16 @@ const QuickContactModal = ({
         const message = `${generateWhatsAppMessage({
           article: article?.title || null,
           category: category?.name || category || null,
-          url: window.location.href,
+          url: globalThis.location.href,
           context: 'quick-contact'
         })}
 
-*Dados do formulário:*
+*Dados do formulï¿½rio:*
 Nome: ${formData.name}
 Email: ${formData.email}
 Telefone: ${formData.phone}
-${formData.preferredTime ? `Horário preferido: ${formData.preferredTime}` : ''}
-${formData.interest ? `Interesse específico: ${formData.interest}` : ''}
+${formData.preferredTime ? `Horï¿½rio preferido: ${formData.preferredTime}` : ''}
+${formData.interest ? `Interesse especï¿½fico: ${formData.interest}` : ''}
 ${formData.message ? `Mensagem: ${formData.message}` : ''}`;
 
         const whatsappUrl = `https://wa.me/${EMAIL_CONFIG.WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
@@ -299,7 +295,7 @@ ${formData.message ? `Mensagem: ${formData.message}` : ''}`;
               {/* Form Options */}
               <div className="border-t border-zinc-700 pt-3 mt-4">
                 <p className="text-zinc-400 text-sm text-center mb-3">
-                  Ou preencha um formulário rápido:
+                  Ou preencha um formulï¿½rio rï¿½pido:
                 </p>
 
                 <div className="grid grid-cols-2 gap-3">
@@ -343,7 +339,7 @@ ${formData.message ? `Mensagem: ${formData.message}` : ''}`;
           <div className="p-6">
             <div className="text-center mb-6">
               <h3 className="text-xl font-bold text-white mb-2">
-                {selectedMethod === 'consultation' ? 'Agendar Consulta' : 'Formulário de Contato'}
+                {selectedMethod === 'consultation' ? 'Agendar Consulta' : 'Formulï¿½rio de Contato'}
               </h3>
               <p className="text-zinc-300 text-sm">
                 Preencha os dados para um atendimento personalizado
@@ -409,7 +405,7 @@ ${formData.message ? `Mensagem: ${formData.message}` : ''}`;
                 <div>
                   <label htmlFor="preferredTime" className="block text-sm font-medium text-zinc-300 mb-1">
                     <Clock size={16} className="inline mr-1" />
-                    Horário preferido
+                    Horï¿½rio preferido
                   </label>
                   <select
                     id="preferredTime"
@@ -418,10 +414,10 @@ ${formData.message ? `Mensagem: ${formData.message}` : ''}`;
                     onChange={handleInputChange}
                     className="w-full px-3 py-2 bg-zinc-800 border border-zinc-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm"
                   >
-                    <option value="">Selecione um horário</option>
-                    <option value="Manhã (8h-12h)">Manhã (8h-12h)</option>
+                    <option value="">Selecione um horï¿½rio</option>
+                    <option value="Manhï¿½ (8h-12h)">Manhï¿½ (8h-12h)</option>
                     <option value="Tarde (12h-18h)">Tarde (12h-18h)</option>
-                    <option value="Flexível">Flexível</option>
+                    <option value="Flexï¿½vel">Flexï¿½vel</option>
                   </select>
                 </div>
               )}
@@ -429,7 +425,7 @@ ${formData.message ? `Mensagem: ${formData.message}` : ''}`;
               {/* Interest */}
               <div>
                 <label htmlFor="interest" className="block text-sm font-medium text-zinc-300 mb-1">
-                  Interesse específico
+                  Interesse especï¿½fico
                 </label>
                 <input
                   type="text"
@@ -438,7 +434,7 @@ ${formData.message ? `Mensagem: ${formData.message}` : ''}`;
                   value={formData.interest}
                   onChange={handleInputChange}
                   className="w-full px-3 py-2 bg-zinc-800 border border-zinc-600 rounded-lg text-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm"
-                  placeholder="Ex: Design Gráfico, Programação..."
+                  placeholder="Ex: Design Grï¿½fico, Programaï¿½ï¿½o..."
                 />
               </div>
 
@@ -492,10 +488,10 @@ ${formData.message ? `Mensagem: ${formData.message}` : ''}`;
               </h3>
               <p className="text-zinc-300">
                 {selectedMethod === 'consultation' 
-                  ? 'Sua solicitação de consulta foi enviada. Entraremos em contato em breve para confirmar o horário.'
-                  : selectedMethod === 'whatsapp'
-                  ? 'Você será redirecionado para o WhatsApp com sua mensagem preparada.'
-                  : 'Sua mensagem foi enviada! Responderemos em até 24 horas.'
+                  ? 'Sua solicitaï¿½ï¿½o de consulta foi enviada. Entraremos em contato em breve para confirmar o horï¿½rio.'
+                  : (selectedMethod === 'whatsapp'
+                  ? 'Vocï¿½ serï¿½ redirecionado para o WhatsApp com sua mensagem preparada.'
+                  : 'Sua mensagem foi enviada! Responderemos em atï¿½ 24 horas.')
                 }
               </p>
             </div>

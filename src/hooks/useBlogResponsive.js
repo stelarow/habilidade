@@ -14,8 +14,8 @@ const BREAKPOINTS = {
  */
 export const useBlogResponsive = () => {
   const [screenData, setScreenData] = useState({
-    width: typeof window !== 'undefined' ? window.innerWidth : 1024,
-    height: typeof window !== 'undefined' ? window.innerHeight : 768,
+    width: globalThis.window === undefined ? 1024 : window.innerWidth,
+    height: globalThis.window === undefined ? 768 : window.innerHeight,
     isMobile: false,
     isTablet: false,
     isDesktop: false,
@@ -33,21 +33,21 @@ export const useBlogResponsive = () => {
     const gridColumns = isMobile ? 1 : isTablet ? 2 : isDesktop ? 3 : 4;
 
     // Typography scale factors
-    const typographyScale = isMobile ? 0.875 : isTablet ? 0.95 : 1;
+    const typographyScale = isMobile ? 0.875 : (isTablet ? 0.95 : 1);
 
     // Image sizes for responsive images
     const imageSizes = {
-      thumbnail: isMobile ? 150 : isTablet ? 200 : 250,
-      card: isMobile ? 300 : isTablet ? 400 : 500,
-      hero: isMobile ? 600 : isTablet ? 800 : 1200,
+      thumbnail: isMobile ? 150 : (isTablet ? 200 : 250),
+      card: isMobile ? 300 : (isTablet ? 400 : 500),
+      hero: isMobile ? 600 : (isTablet ? 800 : 1200),
       full: width
     };
 
     // Reading width optimization (ch units equivalent in px)
-    const readingWidth = Math.min(width * 0.9, isMobile ? 300 : isTablet ? 500 : 650);
+    const readingWidth = Math.min(width * 0.9, isMobile ? 300 : (isTablet ? 500 : 650));
 
     // Performance level based on screen size (for animations/effects)
-    const performanceLevel = isMobile ? 'low' : isTablet ? 'medium' : 'high';
+    const performanceLevel = isMobile ? 'low' : (isTablet ? 'medium' : 'high');
 
     return {
       width,
@@ -62,7 +62,7 @@ export const useBlogResponsive = () => {
       readingWidth,
       performanceLevel,
       // Device type detection
-      deviceType: isMobile ? 'mobile' : isTablet ? 'tablet' : 'desktop',
+      deviceType: isMobile ? 'mobile' : (isTablet ? 'tablet' : 'desktop'),
       // Orientation
       isLandscape: width > height,
       isPortrait: height > width,
@@ -87,7 +87,7 @@ export const useBlogResponsive = () => {
 
   // Initialize and set up event listeners
   useEffect(() => {
-    if (typeof window === 'undefined') return;
+    if (globalThis.window === undefined) return;
 
     // Set initial values
     handleResize();
@@ -122,7 +122,7 @@ export const useBlogResponsive = () => {
   }, [screenData]);
 
   // Get responsive image props
-  const getResponsiveImageProps = useCallback((baseUrl, alt, sizes = 'card') => {
+  const getResponsiveImageProperties = useCallback((baseUrl, alt, sizes = 'card') => {
     const { imageSizes } = screenData;
     const targetSize = imageSizes[sizes] || imageSizes.card;
 
@@ -168,8 +168,8 @@ export const useBlogResponsive = () => {
     const { isMobile, isTablet } = screenData;
     
     const variants = {
-      title: isMobile ? 'text-xl' : isTablet ? 'text-2xl' : 'text-3xl',
-      subtitle: isMobile ? 'text-lg' : isTablet ? 'text-xl' : 'text-2xl',
+      title: isMobile ? 'text-xl' : (isTablet ? 'text-2xl' : 'text-3xl'),
+      subtitle: isMobile ? 'text-lg' : (isTablet ? 'text-xl' : 'text-2xl'),
       body: isMobile ? 'text-sm' : 'text-base',
       caption: isMobile ? 'text-xs' : 'text-sm'
     };
@@ -183,8 +183,8 @@ export const useBlogResponsive = () => {
     if (screenData.isMobile) return false;
     
     // Check user preference
-    if (typeof window !== 'undefined') {
-      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (globalThis.window !== undefined) {
+      const prefersReduced = globalThis.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (prefersReduced) return false;
     }
     
@@ -197,7 +197,7 @@ export const useBlogResponsive = () => {
     
     // Utility functions
     getResponsiveValue,
-    getResponsiveImageProps,
+    getResponsiveImageProps: getResponsiveImageProperties,
     getGridClasses,
     getGapClasses,
     getTypographyClasses,
@@ -221,7 +221,7 @@ export const useBlogResponsive = () => {
     useCompactLayout: screenData.isMobile,
     
     // Content optimization
-    maxItemsPerPage: screenData.isMobile ? 6 : screenData.isTablet ? 9 : 12,
+    maxItemsPerPage: screenData.isMobile ? 6 : (screenData.isTablet ? 9 : 12),
     imageQuality: screenData.isMobile ? 75 : 85,
     prefetchCount: screenData.isMobile ? 2 : 4
   };

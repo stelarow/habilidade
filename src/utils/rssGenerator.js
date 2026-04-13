@@ -1,18 +1,18 @@
 /**
  * RSS Feed Generator for Blog
  * 
- * Geração automática de RSS feed RSS 2.0 compliant
- * para integração com o processo de build do Vite
+ * Geraï¿½ï¿½o automï¿½tica de RSS feed RSS 2.0 compliant
+ * para integraï¿½ï¿½o com o processo de build do Vite
  */
 
-// Configurações do RSS
+// Configuraï¿½ï¿½es do RSS
 const RSS_CONFIG = {
   title: 'Escola Habilidade - Blog',
-  description: 'Artigos sobre tecnologia, educação, carreira e desenvolvimento profissional',
+  description: 'Artigos sobre tecnologia, educaï¿½ï¿½o, carreira e desenvolvimento profissional',
   link: 'https://www.escolahabilidade.com.br',
   feedUrl: 'https://www.escolahabilidade.com.br/rss.xml',
   language: 'pt-BR',
-  copyright: `© ${new Date().getFullYear()} Escola Habilidade. Todos os direitos reservados.`,
+  copyright: `ï¿½ ${new Date().getFullYear()} Escola Habilidade. Todos os direitos reservados.`,
   managingEditor: 'blog@escolahabilidade.com.br (Escola Habilidade)',
   webMaster: 'contato@escolahabilidade.com.br (Escola Habilidade)',
   category: 'Education/Technology',
@@ -29,11 +29,11 @@ const escapeXml = (text) => {
   if (!text) return '';
   
   return text
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll('\'', '&#39;');
 };
 
 /**
@@ -52,29 +52,29 @@ const stripHtml = (html) => {
   
   // Remove tags HTML mas preserva quebras de linha
   return html
-    .replace(/<br\s*\/?>/gi, '\n')
-    .replace(/<\/p>/gi, '\n\n')
-    .replace(/<[^>]*>/g, '')
-    .replace(/\s+/g, ' ')
+    .replaceAll(/<br\s*\/?>/gi, '\n')
+    .replaceAll(/<\/p>/gi, '\n\n')
+    .replaceAll(/<[^>]*>/g, '')
+    .replaceAll(/\s+/g, ' ')
     .trim();
 };
 
 /**
- * Gera descrição/excerpt para o item RSS
+ * Gera descriï¿½ï¿½o/excerpt para o item RSS
  */
 const generateDescription = (post, includeFullContent = false) => {
   if (includeFullContent && post.content) {
     return escapeXml(post.content);
   }
   
-  // Usa excerpt se disponível, senão cria um do conteúdo
+  // Usa excerpt se disponï¿½vel, senï¿½o cria um do conteï¿½do
   let description = post.excerpt || post.content || '';
   
   if (!post.excerpt && post.content) {
     // Extrai primeiros 300 caracteres como excerpt
     const cleanText = stripHtml(post.content);
     description = cleanText.length > 300 
-      ? cleanText.substring(0, 300) + '...'
+      ? cleanText.slice(0, 300) + '...'
       : cleanText;
   }
   
@@ -87,7 +87,7 @@ const generateDescription = (post, includeFullContent = false) => {
 const generateEnclosure = (imageUrl) => {
   if (!imageUrl) return '';
   
-  // Determina tipo MIME baseado na extensão
+  // Determina tipo MIME baseado na extensï¿½o
   const extension = imageUrl.split('.').pop().toLowerCase();
   const mimeTypes = {
     jpg: 'image/jpeg',
@@ -115,17 +115,17 @@ const generateRSSItem = (post, config) => {
   // Categorias/tags
   const categories = [];
   if (post.categories) {
-    post.categories.forEach(cat => {
+    for (const cat of post.categories) {
       categories.push(`<category>${escapeXml(cat.name || cat)}</category>`);
-    });
+    }
   }
   if (post.tags) {
-    post.tags.forEach(tag => {
+    for (const tag of post.tags) {
       categories.push(`<category>${escapeXml(tag)}</category>`);
-    });
+    }
   }
   
-  // GUID único para o post
+  // GUID ï¿½nico para o post
   const guid = post.id ? `${config.link}/blog/post/${post.id}` : postUrl;
   
   return `
@@ -197,49 +197,49 @@ const generateRSSFeed = (posts, config = RSS_CONFIG) => {
 };
 
 /**
- * Valida feed RSS contra especificação RSS 2.0
+ * Valida feed RSS contra especificaï¿½ï¿½o RSS 2.0
  */
 const validateRSSFeed = (rssXml) => {
   const errors = [];
   const warnings = [];
   
-  // Verificações básicas de estrutura
+  // Verificaï¿½ï¿½es bï¿½sicas de estrutura
   if (!rssXml.includes('<rss version="2.0"')) {
-    errors.push('RSS version 2.0 não especificada');
+    errors.push('RSS version 2.0 nï¿½o especificada');
   }
   
   if (!rssXml.includes('<channel>')) {
-    errors.push('Elemento <channel> obrigatório não encontrado');
+    errors.push('Elemento <channel> obrigatï¿½rio nï¿½o encontrado');
   }
   
   if (!rssXml.includes('<title>')) {
-    errors.push('Elemento <title> obrigatório não encontrado');
+    errors.push('Elemento <title> obrigatï¿½rio nï¿½o encontrado');
   }
   
   if (!rssXml.includes('<link>')) {
-    errors.push('Elemento <link> obrigatório não encontrado');
+    errors.push('Elemento <link> obrigatï¿½rio nï¿½o encontrado');
   }
   
   if (!rssXml.includes('<description>')) {
-    errors.push('Elemento <description> obrigatório não encontrado');
+    errors.push('Elemento <description> obrigatï¿½rio nï¿½o encontrado');
   }
   
-  // Verificações de qualidade
+  // Verificaï¿½ï¿½es de qualidade
   const itemCount = (rssXml.match(/<item>/g) || []).length;
   if (itemCount === 0) {
     warnings.push('Nenhum item encontrado no feed');
   } else if (itemCount > 50) {
-    warnings.push(`Muitos itens no feed (${itemCount}). Recomendado: máximo 20-30`);
+    warnings.push(`Muitos itens no feed (${itemCount}). Recomendado: mï¿½ximo 20-30`);
   }
   
   // Verifica se tem imagem do feed
   if (!rssXml.includes('<image>')) {
-    warnings.push('Imagem do feed não especificada (recomendado para melhor apresentação)');
+    warnings.push('Imagem do feed nï¿½o especificada (recomendado para melhor apresentaï¿½ï¿½o)');
   }
   
   // Verifica atom:link para autodiscovery
   if (!rssXml.includes('atom:link')) {
-    warnings.push('Link atom:link não especificado (recomendado para autodiscovery)');
+    warnings.push('Link atom:link nï¿½o especificado (recomendado para autodiscovery)');
   }
   
   return {
@@ -251,7 +251,7 @@ const validateRSSFeed = (rssXml) => {
 };
 
 /**
- * Gera estatísticas do feed RSS
+ * Gera estatï¿½sticas do feed RSS
  */
 const generateFeedStats = (posts, rssXml) => {
   const validation = validateRSSFeed(rssXml);
@@ -259,20 +259,20 @@ const generateFeedStats = (posts, rssXml) => {
   const categoryCount = {};
   const authorCount = {};
   
-  posts.forEach(post => {
+  for (const post of posts) {
     // Conta categorias
     if (post.categories) {
-      post.categories.forEach(cat => {
+      for (const cat of post.categories) {
         const catName = cat.name || cat;
         categoryCount[catName] = (categoryCount[catName] || 0) + 1;
-      });
+      }
     }
     
     // Conta autores
     if (post.author_name) {
       authorCount[post.author_name] = (authorCount[post.author_name] || 0) + 1;
     }
-  });
+  }
   
   return {
     totalPosts: posts.length,
@@ -298,11 +298,11 @@ const generateFeedStats = (posts, rssXml) => {
 const saveRSSFeed = async (rssXml, outputPath = './public/rss.xml') => {
   try {
     // Em ambiente Node.js
-    if (typeof window === 'undefined') {
-      const fs = require('fs').promises;
-      const path = require('path');
+    if (globalThis.window === undefined) {
+      const fs = require('node:fs').promises;
+      const path = require('node:path');
       
-      // Garante que o diretório existe
+      // Garante que o diretï¿½rio existe
       const dir = path.dirname(outputPath);
       await fs.mkdir(dir, { recursive: true });
       
@@ -314,7 +314,7 @@ const saveRSSFeed = async (rssXml, outputPath = './public/rss.xml') => {
     }
     
     // Em ambiente browser, retorna o XML para download manual
-    console.warn('  Ambiente browser: RSS feed gerado em memória apenas');
+    console.warn('ï¿½ Ambiente browser: RSS feed gerado em memï¿½ria apenas');
     return rssXml;
     
   } catch (error) {
@@ -339,17 +339,17 @@ const generateBlogRSS = async (posts, options = {}) => {
     const validation = validateRSSFeed(rssXml);
     
     if (!validation.valid) {
-      console.error('L RSS feed inválido:', validation.errors);
+      console.error('L RSS feed invï¿½lido:', validation.errors);
       return null;
     }
     
     if (validation.warnings.length > 0) {
-      console.warn('  Avisos RSS:', validation.warnings);
+      console.warn('ï¿½ Avisos RSS:', validation.warnings);
     }
     
-    // Gera estatísticas
+    // Gera estatï¿½sticas
     const stats = generateFeedStats(posts, rssXml);
-    console.log('=Ê Estatísticas do RSS:', stats);
+    console.log('=ï¿½ Estatï¿½sticas do RSS:', stats);
     
     // Salva o arquivo se especificado
     if (options.outputPath) {
@@ -372,19 +372,19 @@ const generateBlogRSS = async (posts, options = {}) => {
 };
 
 /**
- * Plugin Vite para geração automática do RSS
+ * Plugin Vite para geraï¿½ï¿½o automï¿½tica do RSS
  */
 const viteRSSPlugin = (options = {}) => {
   return {
     name: 'rss-generator',
     
     async buildStart() {
-      console.log('=€ Plugin RSS iniciado');
+      console.log('=ï¿½ Plugin RSS iniciado');
     },
     
     async generateBundle() {
       try {
-        // Em produção, carregaria posts de uma API ou arquivo
+        // Em produï¿½ï¿½o, carregaria posts de uma API ou arquivo
         // Para demo, usar posts mock ou carregar de src/data
         const { getBlogPosts } = await import('../data/blogPosts.js').catch(() => ({
           getBlogPosts: () => []
@@ -393,7 +393,7 @@ const viteRSSPlugin = (options = {}) => {
         const posts = getBlogPosts();
         
         if (posts.length === 0) {
-          console.warn('  Nenhum post encontrado para RSS');
+          console.warn('ï¿½ Nenhum post encontrado para RSS');
           return;
         }
         
@@ -419,7 +419,7 @@ const viteRSSPlugin = (options = {}) => {
 };
 
 /**
- * Hook React para integração com componentes
+ * Hook React para integraï¿½ï¿½o com componentes
  */
 const useRSSFeed = () => {
   const generateFeed = async (posts, options = {}) => {
@@ -432,9 +432,9 @@ const useRSSFeed = () => {
     const a = document.createElement('a');
     a.href = url;
     a.download = filename;
-    document.body.appendChild(a);
+    document.body.append(a);
     a.click();
-    document.body.removeChild(a);
+    a.remove();
     URL.revokeObjectURL(url);
   };
   
@@ -446,7 +446,7 @@ const useRSSFeed = () => {
   };
 };
 
-// Exportações
+// Exportaï¿½ï¿½es
 export {
   generateBlogRSS,
   generateRSSFeed,

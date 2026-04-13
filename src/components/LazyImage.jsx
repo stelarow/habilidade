@@ -5,12 +5,12 @@ const LazyImage = ({
   alt, 
   className = '', 
   placeholder = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzMzMzMzMyIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTk5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5DYXJyZWdhbmRvLi4uPC90ZXh0Pjwvc3ZnPg==',
-  ...props 
+  ...properties 
 }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isInView, setIsInView] = useState(false);
   const [hasError, setHasError] = useState(false);
-  const imgRef = useRef(null);
+  const imgReference = useRef(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -26,8 +26,8 @@ const LazyImage = ({
       }
     );
 
-    if (imgRef.current) {
-      observer.observe(imgRef.current);
+    if (imgReference.current) {
+      observer.observe(imgReference.current);
     }
 
     return () => observer.disconnect();
@@ -44,9 +44,9 @@ const LazyImage = ({
 
   return (
     <div 
-      ref={imgRef}
+      ref={imgReference}
       className={`relative overflow-hidden ${className}`}
-      {...props}
+      {...properties}
     >
       {/* Placeholder */}
       <img

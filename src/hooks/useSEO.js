@@ -43,7 +43,7 @@ export const useSEO = (seoData = {}, options = {}) => {
   } = options;
 
   const cacheKey = useRef(null);
-  const metricsRef = useRef({
+  const metricsReference = useRef({
     renderCount: 0,
     lastUpdate: null,
     cacheHits: 0,
@@ -53,8 +53,8 @@ export const useSEO = (seoData = {}, options = {}) => {
   // Increment render count for metrics
   useEffect(() => {
     if (enableMetrics) {
-      metricsRef.current.renderCount++;
-      metricsRef.current.lastUpdate = new Date().toISOString();
+      metricsReference.current.renderCount++;
+      metricsReference.current.lastUpdate = new Date().toISOString();
     }
   });
 
@@ -87,7 +87,7 @@ export const useSEO = (seoData = {}, options = {}) => {
     }
     
     if (enableMetrics) {
-      metricsRef.current.cacheHits++;
+      metricsReference.current.cacheHits++;
     }
     
     return cached.data;
@@ -189,8 +189,8 @@ export const useSEO = (seoData = {}, options = {}) => {
     }
     
     // Update meta tags
-    Object.entries(metaTags).forEach(([name, content]) => {
-      if (!content) return;
+    for (const [name, content] of Object.entries(metaTags)) {
+      if (!content) continue;
       
       let selector, attribute;
       if (name.startsWith('og:') || name.startsWith('article:')) {
@@ -208,17 +208,17 @@ export const useSEO = (seoData = {}, options = {}) => {
       if (!metaTag) {
         metaTag = document.createElement('meta');
         metaTag.setAttribute(attribute, name);
-        document.head.appendChild(metaTag);
+        document.head.append(metaTag);
       }
       metaTag.content = content;
-    });
+    }
     
     // Update canonical link
     let canonicalLink = document.querySelector('link[rel="canonical"]');
     if (!canonicalLink) {
       canonicalLink = document.createElement('link');
       canonicalLink.rel = 'canonical';
-      document.head.appendChild(canonicalLink);
+      document.head.append(canonicalLink);
     }
     canonicalLink.href = canonicalUrl;
     
@@ -230,8 +230,8 @@ export const useSEO = (seoData = {}, options = {}) => {
       if (!scriptTag) {
         scriptTag = document.createElement('script');
         scriptTag.type = 'application/ld+json';
-        scriptTag.setAttribute('data-seo', id);
-        document.head.appendChild(scriptTag);
+        scriptTag.dataset.seo = id;
+        document.head.append(scriptTag);
       }
       scriptTag.textContent = JSON.stringify(data);
     };
@@ -260,7 +260,7 @@ export const useSEO = (seoData = {}, options = {}) => {
     
     // Generate new SEO package
     if (enableMetrics) {
-      metricsRef.current.cacheMisses++;
+      metricsReference.current.cacheMisses++;
     }
     
     const seoPackage = generateSEOPackage(seoData);
@@ -294,8 +294,8 @@ export const useSEO = (seoData = {}, options = {}) => {
   const clearCache = useCallback(() => {
     seoCache.clear();
     if (enableMetrics) {
-      metricsRef.current.cacheHits = 0;
-      metricsRef.current.cacheMisses = 0;
+      metricsReference.current.cacheHits = 0;
+      metricsReference.current.cacheMisses = 0;
     }
   }, [enableMetrics]);
 
@@ -306,10 +306,10 @@ export const useSEO = (seoData = {}, options = {}) => {
     if (!enableMetrics) return null;
     
     return {
-      ...metricsRef.current,
+      ...metricsReference.current,
       cacheSize: seoCache.size,
-      hitRate: metricsRef.current.cacheHits / 
-        (metricsRef.current.cacheHits + metricsRef.current.cacheMisses) || 0
+      hitRate: metricsReference.current.cacheHits / 
+        (metricsReference.current.cacheHits + metricsReference.current.cacheMisses) || 0
     };
   }, [enableMetrics]);
 

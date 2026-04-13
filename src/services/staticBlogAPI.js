@@ -7,9 +7,9 @@
 import { BLOG_POSTS, getAllPosts as getUnifiedPosts, getPostsByCategory as getUnifiedPostsByCategory } from '../data/posts/index.js';
 
 // Debug logging para desenvolvimento
-const logStaticQuery = (operation, params = {}) => {
+const logStaticQuery = (operation, parameters = {}) => {
   if (import.meta.env.DEV) {
-    console.log(`[Static Blog API] ${operation}:`, params);
+    console.log(`[Static Blog API] ${operation}:`, parameters);
   }
 };
 
@@ -110,8 +110,8 @@ const loadPosts = () => {
   lastCacheUpdate = now;
 
   // Processa categorias únicas
-  const uniqueCategories = Array.from(categoriesSet)
-    .map(catStr => JSON.parse(catStr))
+  const uniqueCategories = [...categoriesSet]
+    .map(catString => JSON.parse(catString))
     .sort((a, b) => a.name.localeCompare(b.name));
 
   categoriesCache = uniqueCategories;
@@ -163,14 +163,14 @@ const extractCategoryFromContent = (content) => {
  * Gera ID único para categoria baseado no nome
  */
 const generateCategoryId = (name) => {
-  return name.toLowerCase().replace(/[^a-z0-9]/g, '').substring(0, 10) + Math.random().toString(36).substring(2, 7);
+  return name.toLowerCase().replaceAll(/[^a-z0-9]/g, '').slice(0, 10) + Math.random().toString(36).slice(2, 7);
 };
 
 /**
  * Gera ID único para tag
  */
 const generateTagId = (name) => {
-  return name.toLowerCase().replace(/[^a-z0-9]/g, '').substring(0, 8) + Math.random().toString(36).substring(2, 5);
+  return name.toLowerCase().replaceAll(/[^a-z0-9]/g, '').slice(0, 8) + Math.random().toString(36).slice(2, 5);
 };
 
 /**
@@ -180,9 +180,9 @@ const slugify = (text) => {
   return text
     .toLowerCase()
     .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '') // Remove acentos
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/(^-|-$)/g, '');
+    .replaceAll(/[\u0300-\u036F]/g, '') // Remove acentos
+    .replaceAll(/[^a-z0-9]+/g, '-')
+    .replaceAll(/(^-|-$)/g, '');
 };
 
 /**
@@ -190,7 +190,7 @@ const slugify = (text) => {
  */
 const generateCategoryColor = (name) => {
   const colors = ['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6', '#f97316', '#06b6d4', '#84cc16'];
-  const hash = name.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  const hash = name.split('').reduce((accumulator, char) => accumulator + char.charCodeAt(0), 0);
   return colors[hash % colors.length];
 };
 

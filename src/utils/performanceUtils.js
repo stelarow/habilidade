@@ -22,7 +22,7 @@ let isMonitoring = false;
  * @param {Function} onMetric - Callback for metric updates
  */
 export const initWebVitals = (onMetric) => {
-  if (!('PerformanceObserver' in window)) {
+  if (!('PerformanceObserver' in globalThis)) {
     console.warn('[Performance] PerformanceObserver not supported');
     return;
   }
@@ -30,7 +30,7 @@ export const initWebVitals = (onMetric) => {
   // Largest Contentful Paint (LCP)
   const lcpObserver = new PerformanceObserver((list) => {
     const entries = list.getEntries();
-    const lastEntry = entries[entries.length - 1];
+    const lastEntry = entries.at(-1);
     
     const metric = {
       name: 'LCP',
@@ -47,7 +47,7 @@ export const initWebVitals = (onMetric) => {
   // First Input Delay (FID)
   const fidObserver = new PerformanceObserver((list) => {
     const entries = list.getEntries();
-    entries.forEach((entry) => {
+    for (const entry of entries) {
       const metric = {
         name: 'FID',
         value: entry.processingStart - entry.startTime,
@@ -58,7 +58,7 @@ export const initWebVitals = (onMetric) => {
       
       onMetric(metric);
       metricsBuffer.push(metric);
-    });
+    }
   });
 
   // Cumulative Layout Shift (CLS)
@@ -66,18 +66,18 @@ export const initWebVitals = (onMetric) => {
   let clsEntries = [];
   const clsObserver = new PerformanceObserver((list) => {
     const entries = list.getEntries();
-    entries.forEach((entry) => {
+    for (const entry of entries) {
       if (!entry.hadRecentInput) {
         clsValue += entry.value;
         clsEntries.push(entry);
       }
-    });
+    }
 
     const metric = {
       name: 'CLS',
       value: clsValue,
       rating: getRating('CLS', clsValue),
-      entries: clsEntries.slice(),
+      entries: [...clsEntries],
       timestamp: Date.now()
     };
     
@@ -127,10 +127,14 @@ export const getRating = (metricName, value) => {
  */
 export const getRatingColor = (rating) => {
   switch (rating) {
-    case 'good': return 'text-green-400';
-    case 'needs-improvement': return 'text-yellow-400';
-    case 'poor': return 'text-red-400';
-    default: return 'text-zinc-400';
+    case 'good': { return 'text-green-400';
+    }
+    case 'needs-improvement': { return 'text-yellow-400';
+    }
+    case 'poor': { return 'text-red-400';
+    }
+    default: { return 'text-zinc-400';
+    }
   }
 };
 
@@ -140,7 +144,7 @@ export const getRatingColor = (rating) => {
  */
 export const measureFCP = () => {
   return new Promise((resolve) => {
-    if ('PerformanceObserver' in window) {
+    if ('PerformanceObserver' in globalThis) {
       const observer = new PerformanceObserver((list) => {
         const entries = list.getEntries();
         const fcpEntry = entries.find(entry => entry.name === 'first-contentful-paint');
@@ -177,7 +181,7 @@ export const measureFCP = () => {
  * @returns {Object} TTFB metric
  */
 export const measureTTFB = () => {
-  if ('PerformanceObserver' in window) {
+  if ('PerformanceObserver' in globalThis) {
     const [navigationEntry] = performance.getEntriesByType('navigation');
     if (navigationEntry) {
       const ttfb = navigationEntry.responseStart - navigationEntry.requestStart;
@@ -261,9 +265,9 @@ export const measureWebVitalsCompliance = async () => {
   const metrics = {};
   
   // Get current metrics from buffer
-  metricsBuffer.forEach(metric => {
+  for (const metric of metricsBuffer) {
     metrics[metric.name] = metric;
-  });
+  }
   
   // Add FCP and TTFB if not present
   if (!metrics.FCP) {
@@ -278,11 +282,11 @@ export const measureWebVitalsCompliance = async () => {
   let score = 0;
   let totalMetrics = 0;
   
-  Object.values(metrics).forEach(metric => {
+  for (const metric of Object.values(metrics)) {
     if (metric.rating === 'good') score += 100;
     else if (metric.rating === 'needs-improvement') score += 50;
     totalMetrics++;
-  });
+  }
   
   const complianceScore = totalMetrics > 0 ? Math.round(score / totalMetrics) : 0;
   
@@ -345,9 +349,9 @@ export class PerformanceMonitor {
     
     // Disconnect observers
     if (performanceObserver) {
-      Object.values(performanceObserver).forEach(observer => {
-        try { observer.disconnect(); } catch (e) { /* ignore */ }
-      });
+      for (const observer of Object.values(performanceObserver)) {
+        try { observer.disconnect(); } catch { /* ignore */ }
+      }
       performanceObserver = null;
     }
   }
@@ -383,11 +387,11 @@ export class PerformanceMonitor {
   
   getLatestMetrics() {
     const latest = {};
-    this.metrics.forEach(metric => {
+    for (const metric of this.metrics) {
       if (!latest[metric.name] || metric.timestamp > latest[metric.name].timestamp) {
         latest[metric.name] = metric;
       }
-    });
+    }
     return latest;
   }
   
@@ -415,13 +419,13 @@ export class PerformanceMonitor {
     let vitalsScore = 0;
     let vitalsCount = 0;
     
-    vitalsMetrics.forEach(name => {
+    for (const name of vitalsMetrics) {
       if (latest[name]) {
         if (latest[name].rating === 'good') vitalsScore += 100;
         else if (latest[name].rating === 'needs-improvement') vitalsScore += 50;
         vitalsCount++;
       }
-    });
+    }
     
     if (vitalsCount > 0) {
       report.summary.webVitalsScore = Math.round(vitalsScore / vitalsCount);
@@ -529,9 +533,9 @@ export const cleanup = () => {
   metricsBuffer = [];
   
   if (performanceObserver) {
-    Object.values(performanceObserver).forEach(observer => {
-      try { observer.disconnect(); } catch (e) { /* ignore */ }
-    });
+    for (const observer of Object.values(performanceObserver)) {
+      try { observer.disconnect(); } catch { /* ignore */ }
+    }
     performanceObserver = null;
   }
 };
@@ -540,6 +544,6 @@ export const cleanup = () => {
 export { WEB_VITALS_THRESHOLDS };
 
 // Auto-cleanup on page unload
-if (typeof window !== 'undefined') {
+if (globalThis.window !== undefined) {
   window.addEventListener('beforeunload', cleanup);
 }

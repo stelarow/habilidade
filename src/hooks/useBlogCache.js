@@ -17,7 +17,7 @@ export const useBlogCache = (options = {}) => {
   const cache = useRef(getBlogCache());
   const [cacheStats, setCacheStats] = useState(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const refreshIntervalRef = useRef(null);
+  const refreshIntervalReference = useRef(null);
 
   // Initialize cache stats
   useEffect(() => {
@@ -29,13 +29,13 @@ export const useBlogCache = (options = {}) => {
   // Auto-refresh stats
   useEffect(() => {
     if (enableAutoRefresh && enableMetricsTracking) {
-      refreshIntervalRef.current = setInterval(() => {
+      refreshIntervalReference.current = setInterval(() => {
         setCacheStats(cache.current.getStats());
       }, refreshInterval);
 
       return () => {
-        if (refreshIntervalRef.current) {
-          clearInterval(refreshIntervalRef.current);
+        if (refreshIntervalReference.current) {
+          clearInterval(refreshIntervalReference.current);
         }
       };
     }
@@ -225,9 +225,9 @@ export const useBlogCache = (options = {}) => {
 
       // Prefetch popular posts
       if (prefetchPopularPosts && popularSlugs.length > 0) {
-        popularSlugs.slice(0, 5).forEach(slug => {
+        for (const slug of popularSlugs.slice(0, 5)) {
           prefetchPromises.push(getCachedPost(slug));
-        });
+        }
       }
 
       await Promise.allSettled(prefetchPromises);
@@ -247,9 +247,9 @@ export const useBlogCache = (options = {}) => {
       cache.current.cleanupExpired();
     } else {
       // Remove specific keys
-      keys.forEach(key => {
+      for (const key of keys) {
         cache.current.remove(key);
-      });
+      }
     }
 
     // Update stats
@@ -334,9 +334,9 @@ export const useCachedPost = (slug, options = {}) => {
         if (isMounted) {
           setPost(postData);
         }
-      } catch (err) {
+      } catch (error_) {
         if (isMounted) {
-          setError(err);
+          setError(error_);
           setPost(null);
         }
       } finally {
@@ -380,9 +380,9 @@ export const useCachedPosts = (page = 1, limit = 10, category = null, search = n
           setPosts(data.posts || []);
           setPagination(data.pagination || null);
         }
-      } catch (err) {
+      } catch (error_) {
         if (isMounted) {
-          setError(err);
+          setError(error_);
           setPosts([]);
           setPagination(null);
         }

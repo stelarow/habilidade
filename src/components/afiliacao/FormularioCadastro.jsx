@@ -53,7 +53,7 @@ const gerarCupom = (nome) => {
     .split(/\s+/)[0]
     .toUpperCase()
     .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
+    .replaceAll(/[\u0300-\u036F]/g, '')
     .slice(0, 6);
 
   const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
@@ -63,7 +63,7 @@ const gerarCupom = (nome) => {
 
   do {
     let sufixo = '';
-    for (let i = 0; i < 4; i++) {
+    for (let index = 0; index < 4; index++) {
       sufixo += chars[Math.floor(Math.random() * chars.length)];
     }
     codigo = `${primeiro}-${sufixo}`;
@@ -131,7 +131,7 @@ const FormularioCadastro = () => {
     } catch {
       toast.error('Erro ao enviar cadastro', {
         description: 'Clique para tentar via WhatsApp',
-        duration: 10000,
+        duration: 10_000,
         action: {
           label: 'Abrir WhatsApp',
           onClick: () => openWhatsApp(data),

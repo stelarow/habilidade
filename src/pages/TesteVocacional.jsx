@@ -33,12 +33,12 @@ import {
 } from '@phosphor-icons/react';
 
 // Hook seguro para operações DOM que funciona tanto no cliente quanto servidor
-const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
+const useIsomorphicLayoutEffect = globalThis.window === undefined ? useEffect : useLayoutEffect;
 
 // Error Boundary para capturar erros de DOM Manipulation
 class DOMErrorBoundary extends ReactComponent {
-  constructor(props) {
-    super(props);
+  constructor(properties) {
+    super(properties);
     this.state = { hasError: false, error: null };
   }
 
@@ -148,9 +148,9 @@ const RadarChart = ({ data, size = 200 }) => {
     <div className="relative">
       <svg width={size} height={size} className="drop-shadow-lg">
         {/* Grid circles */}
-        {[0.2, 0.4, 0.6, 0.8, 1].map((scale, i) => (
+        {[0.2, 0.4, 0.6, 0.8, 1].map((scale, index) => (
           <circle
-            key={i}
+            key={index}
             cx={center}
             cy={center}
             r={radius * scale}
@@ -529,22 +529,22 @@ const Hero = () => {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 pt-16">
       {/* Fundo com partículas */}
       <div className="absolute inset-0">
-        {[...Array(30)].map((_, i) => (
+        {Array.from({length: 30}).map((_, index) => (
           <motion.div
-            key={i}
+            key={index}
             className="absolute w-2 h-2 bg-white rounded-full opacity-20"
             style={{
-              left: `${(i * 37 + 13) % 100}%`,
-              top: `${(i * 23 + 7) % 100}%`,
+              left: `${(index * 37 + 13) % 100}%`,
+              top: `${(index * 23 + 7) % 100}%`,
             }}
             animate={{
               y: [0, -20, 0],
               opacity: [0.2, 0.8, 0.2],
             }}
             transition={{
-              duration: 3 + (i % 5) * 0.4,
+              duration: 3 + (index % 5) * 0.4,
               repeat: Infinity,
-              delay: i * 0.1,
+              delay: index * 0.1,
             }}
           />
         ))}
@@ -624,7 +624,7 @@ const Hero = () => {
             onClick={() => {
               // Iniciar teste diretamente
               const event = new CustomEvent('startVocationalTest');
-              window.dispatchEvent(event);
+              globalThis.dispatchEvent(event);
             }}
             className="bg-gradient-to-r from-[#ff00ff] to-[#d400ff] text-white px-12 py-6 rounded-full font-bold text-xl hover:from-purple-600 hover:to-[#d400ff] transition-all duration-300 inline-flex items-center gap-3 shadow-lg"
             whileHover={{ 
@@ -713,20 +713,20 @@ const VocationalTest = ({ onComplete }) => {
       logica: 0
     };
 
-    Object.values(allAnswers).forEach(answer => {
-      Object.entries(answer.scores).forEach(([area, score]) => {
+    for (const answer of Object.values(allAnswers)) {
+      for (const [area, score] of Object.entries(answer.scores)) {
         totals[area] += score;
-      });
-    });
+      }
+    }
 
     // Ajustar scores negativos para valores mínimos de 0
     const adjustedTotals = {};
     const minScore = Math.min(...Object.values(totals));
     const adjustment = minScore < 0 ? Math.abs(minScore) : 0;
     
-    Object.entries(totals).forEach(([area, score]) => {
+    for (const [area, score] of Object.entries(totals)) {
       adjustedTotals[area] = score + adjustment;
-    });
+    }
 
     // Normalizar para porcentagem
     const maxScore = Math.max(...Object.values(adjustedTotals));
@@ -844,8 +844,8 @@ const ResultsDashboard = ({ results, onRestart }) => {
   const [showCourses, setShowCourses] = useState(false);
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
   const [pdfProgress, setPdfProgress] = useState({ phase: '', progress: 0, message: '' });
-  const resultsRef = useRef(null);
-  const pdfContentRef = useRef(null);
+  const resultsReference = useRef(null);
+  const pdfContentReference = useRef(null);
 
   // Setup PDF progress callback
   useEffect(() => {
@@ -866,8 +866,8 @@ const ResultsDashboard = ({ results, onRestart }) => {
   ];
 
   // Encontrar área dominante
-  const dominantArea = results.reduce((prev, current) => 
-    (prev.score > current.score) ? prev : current
+  const dominantArea = results.reduce((previous, current) => 
+    (previous.score > current.score) ? previous : current
   );
 
   // Recomendar cursos baseado no perfil
@@ -879,12 +879,12 @@ const ResultsDashboard = ({ results, onRestart }) => {
     let compatibilityScore = 0;
     
     // Atribuir pesos: 1ª área (3 pontos), 2ª área (2 pontos), 3ª área (1 ponto)
-    topAreas.forEach((userArea, index) => {
+    for (const [index, userArea] of topAreas.entries()) {
       if (course.areas.includes(userArea.area)) {
         const weight = 3 - index; // 3, 2, 1
         compatibilityScore += weight;
       }
-    });
+    }
     
     return {
       ...course,
@@ -956,7 +956,7 @@ const ResultsDashboard = ({ results, onRestart }) => {
   // Função para gerar PDF usando o novo PDF Worker
   const generatePDF = async () => {
     console.log('📄 TESTE VOCACIONAL: Starting PDF generation with PDF Worker');
-    if (!pdfContentRef.current) {
+    if (!pdfContentReference.current) {
       console.error('❌ PDF: pdfContentRef not found');
       return;
     }
@@ -969,10 +969,10 @@ const ResultsDashboard = ({ results, onRestart }) => {
     
     try {
       // Usar o PDF Worker para geração
-      const hoje = new Date().toLocaleDateString('pt-BR').replace(/\//g, '-');
+      const hoje = new Date().toLocaleDateString('pt-BR').replaceAll('/', '-');
       const filename = `Teste-Vocacional-Escola-Habilidade-${hoje}.pdf`;
       
-      await generatePDFWorker(pdfContentRef.current, filename);
+      await generatePDFWorker(pdfContentReference.current, filename);
       
       console.log('✅ PDF: Generated successfully using PDF Worker');
       
@@ -1091,7 +1091,7 @@ Faça seu teste gratuito: https://escolahabilidade.com/teste-vocacional
 
   return (
     <motion.div
-      ref={resultsRef}
+      ref={resultsReference}
       key="vocational-results-dashboard"
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
@@ -1099,7 +1099,7 @@ Faça seu teste gratuito: https://escolahabilidade.com/teste-vocacional
       className="max-w-6xl mx-auto"
     >
       {/* Container específico para PDF (exclui botões de ação) */}
-      <div ref={pdfContentRef}>
+      <div ref={pdfContentReference}>
       {/* Header dos Resultados */}
       <div className="text-center mb-12">
         <motion.div
@@ -1302,8 +1302,8 @@ Faça seu teste gratuito: https://escolahabilidade.com/teste-vocacional
                 dominantArea.area === 'logica' ? 'Lógica' : 
                 dominantArea.area.charAt(0).toUpperCase() + dominantArea.area.slice(1)} (${dominantArea.score}%)\n\n` +
               `📊 Top 3 Áreas:\n` +
-              results.sort((a, b) => b.score - a.score).slice(0, 3).map((r, i) => 
-                `${i + 1}. ${r.area === 'gestao' ? 'Gestão' : 
+              results.sort((a, b) => b.score - a.score).slice(0, 3).map((r, index) => 
+                `${index + 1}. ${r.area === 'gestao' ? 'Gestão' : 
                   r.area === 'educacao' ? 'Educação' : 
                   r.area === 'comunicacao' ? 'Comunicação' :
                   r.area === 'logica' ? 'Lógica' : 
@@ -1394,7 +1394,7 @@ const TesteVocacional = () => {
       
       // Scroll automático para o início do teste com delay mínimo
       setTimeout(() => {
-        const testSection = document.getElementById('teste-section');
+        const testSection = document.querySelector('#teste-section');
         if (testSection) {
           testSection.scrollIntoView({ 
             behavior: 'smooth', 
@@ -1404,10 +1404,10 @@ const TesteVocacional = () => {
       }, 100);
     };
 
-    window.addEventListener('startVocationalTest', handleStartTest);
+    globalThis.addEventListener('startVocationalTest', handleStartTest);
     
     return () => {
-      window.removeEventListener('startVocationalTest', handleStartTest);
+      globalThis.removeEventListener('startVocationalTest', handleStartTest);
     };
   }, []);
 
@@ -1475,7 +1475,7 @@ const TesteVocacional = () => {
                       Recarregue a página para continuar com o teste.
                     </p>
                     <button
-                      onClick={() => window.location.reload()}
+                      onClick={() => globalThis.location.reload()}
                       className="bg-[#d400ff] text-white px-8 py-3 rounded-full font-bold hover:bg-purple-600 transition-all duration-300"
                     >
                       Recarregar Página
@@ -1513,7 +1513,7 @@ const TesteVocacional = () => {
                     </p>
                     <div className="flex gap-4 justify-center">
                       <button
-                        onClick={() => window.location.reload()}
+                        onClick={() => globalThis.location.reload()}
                         className="bg-[#d400ff] text-white px-8 py-3 rounded-full font-bold hover:bg-purple-600 transition-all duration-300"
                       >
                         Recarregar Página

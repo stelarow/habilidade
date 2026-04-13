@@ -20,12 +20,12 @@ class IntersectionObserverPool {
     if (!this.observers.has(key)) {
       const observer = new IntersectionObserver(
         (entries) => {
-          entries.forEach((entry) => {
+          for (const entry of entries) {
             const callback = this.callbacks.get(entry.target);
             if (callback) {
               callback(entry);
             }
-          });
+          }
         },
         {
           threshold,
@@ -60,9 +60,9 @@ class IntersectionObserverPool {
     if (!element || !this.elements.has(element)) return;
 
     // Encontra o observer correto e desconecta
-    this.observers.forEach((observer) => {
+    for (const observer of this.observers) {
       observer.unobserve(element);
-    });
+    }
 
     this.callbacks.delete(element);
     this.elements.delete(element);
@@ -72,9 +72,9 @@ class IntersectionObserverPool {
    * Limpa todos os observers (útil para cleanup)
    */
   disconnect() {
-    this.observers.forEach((observer) => {
+    for (const observer of this.observers) {
       observer.disconnect();
-    });
+    }
 
     this.observers.clear();
     this.callbacks.clear();
@@ -97,7 +97,7 @@ class IntersectionObserverPool {
 const observerPool = new IntersectionObserverPool();
 
 // Cleanup on page unload
-if (typeof window !== 'undefined') {
+if (globalThis.window !== undefined) {
   window.addEventListener('beforeunload', () => {
     observerPool.disconnect();
   });

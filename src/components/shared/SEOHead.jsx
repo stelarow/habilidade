@@ -175,8 +175,7 @@ const SEOHead = ({
     if (modifiedDate) {
       articleMetas.push(<meta key="modified" property="article:modified_time" content={modifiedDate} />);
     }
-    articleMetas.push(<meta key="author" property="article:author" content={safeAuthor} />);
-    articleMetas.push(<meta key="section" property="article:section" content="Blog" />);
+    articleMetas.push(<meta key="author" property="article:author" content={safeAuthor} />, <meta key="section" property="article:section" content="Blog" />);
   }
 
   return (

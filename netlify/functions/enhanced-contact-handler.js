@@ -50,7 +50,7 @@ async function handler(event, context) {
         parseError, 
         event,
         {
-          bodyPreview: event.body?.substring(0, 100),
+          bodyPreview: event.body?.slice(0, 100),
           contentType: event.headers['content-type'],
           parseAttempt: 'json'
         }
@@ -95,7 +95,7 @@ async function handler(event, context) {
         {
           submissionId: processResult.submissionId,
           failureReason: processResult.error,
-          userEmail: formData.email?.substring(0, 3) + '***'
+          userEmail: formData.email?.slice(0, 3) + '***'
         },
         'high'
       );
@@ -156,7 +156,7 @@ async function validateContactFormEnhanced(data, logger) {
   });
   
   // Validação de campos obrigatórios
-  requiredFields.forEach(field => {
+  for (const field of requiredFields) {
     if (!data[field] || data[field].trim() === '') {
       logger.validationErrorDetailed(
         field, 
@@ -166,7 +166,7 @@ async function validateContactFormEnhanced(data, logger) {
       );
       errors.push(`Campo ${field} é obrigatório`);
     }
-  });
+  }
   
   // Validação de email com context
   if (data.email && !isValidEmail(data.email)) {
@@ -196,7 +196,7 @@ async function validateContactFormEnhanced(data, logger) {
     logger.securityEvent('potential_spam_detected', {
       spamScore: spamIndicators.score,
       indicators: spamIndicators.indicators,
-      userEmail: data.email?.substring(0, 3) + '***'
+      userEmail: data.email?.slice(0, 3) + '***'
     }, 'medium');
     
     errors.push('Mensagem detectada como potencial spam');
@@ -419,7 +419,7 @@ async function trackContactAnalytics(formData, submissionId, logger) {
  * Outras funções auxiliares
  */
 function generateSubmissionId() {
-  return `contact_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+  return `contact_${Date.now()}_${Math.random().toString(36).slice(2, 11)}`;
 }
 
 function isValidEmail(email) {

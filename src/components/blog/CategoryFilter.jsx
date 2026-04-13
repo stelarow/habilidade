@@ -15,9 +15,9 @@ const CategoryFilter = ({
       <button
         onClick={() => onCategoryChange(null)}
         className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-          !selectedCategory 
-            ? 'bg-purple-600 text-white' 
-            : 'bg-zinc-700 text-zinc-300 hover:bg-zinc-600'
+          selectedCategory 
+            ? 'bg-zinc-700 text-zinc-300 hover:bg-zinc-600' 
+            : 'bg-purple-600 text-white'
         }`}
       >
         <Filter size={16} />

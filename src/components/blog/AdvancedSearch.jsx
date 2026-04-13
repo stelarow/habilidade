@@ -48,7 +48,7 @@ const AdvancedSearch = ({
   const [dateRange, setDateRange] = useState(initialFilters.dateRange || { start: '', end: '' });
   const [readingTimeRange, setReadingTimeRange] = useState(initialFilters.readingTime || { min: 0, max: 0 });
   
-  const searchInputRef = useRef(null);
+  const searchInputReference = useRef(null);
   const location = useLocation();
   // Navigation handled via native browser for SSG
   
@@ -85,11 +85,11 @@ const AdvancedSearch = ({
   useEffect(() => {
     const newFilters = {
       query: searchQuery,
-      categories: Array.from(selectedCategories),
-      authors: Array.from(selectedAuthors),
+      categories: [...selectedCategories],
+      authors: [...selectedAuthors],
       dateRange,
       readingTime: readingTimeRange,
-      tags: Array.from(selectedTags)
+      tags: [...selectedTags]
     };
     
     setFilters(newFilters);
@@ -98,53 +98,53 @@ const AdvancedSearch = ({
 
   // Handle URL synchronization
   useEffect(() => {
-    const searchParams = new URLSearchParams(location.search);
+    const searchParameters = new URLSearchParams(location.search);
     
     // Update URL with current filters
     if (searchQuery.trim()) {
-      searchParams.set('search', searchQuery.trim());
+      searchParameters.set('search', searchQuery.trim());
     } else {
-      searchParams.delete('search');
+      searchParameters.delete('search');
     }
     
     if (selectedCategories.size > 0) {
-      searchParams.set('categories', Array.from(selectedCategories).join(','));
+      searchParameters.set('categories', [...selectedCategories].join(','));
     } else {
-      searchParams.delete('categories');
+      searchParameters.delete('categories');
     }
     
     if (selectedAuthors.size > 0) {
-      searchParams.set('authors', Array.from(selectedAuthors).join(','));
+      searchParameters.set('authors', [...selectedAuthors].join(','));
     } else {
-      searchParams.delete('authors');
+      searchParameters.delete('authors');
     }
     
     if (selectedTags.size > 0) {
-      searchParams.set('tags', Array.from(selectedTags).join(','));
+      searchParameters.set('tags', [...selectedTags].join(','));
     } else {
-      searchParams.delete('tags');
+      searchParameters.delete('tags');
     }
     
     if (dateRange.start || dateRange.end) {
-      searchParams.set('dateStart', dateRange.start);
-      searchParams.set('dateEnd', dateRange.end);
+      searchParameters.set('dateStart', dateRange.start);
+      searchParameters.set('dateEnd', dateRange.end);
     } else {
-      searchParams.delete('dateStart');
-      searchParams.delete('dateEnd');
+      searchParameters.delete('dateStart');
+      searchParameters.delete('dateEnd');
     }
     
     if (readingTimeRange.min > 0 || readingTimeRange.max > 0) {
-      searchParams.set('readingMin', readingTimeRange.min.toString());
-      searchParams.set('readingMax', readingTimeRange.max.toString());
+      searchParameters.set('readingMin', readingTimeRange.min.toString());
+      searchParameters.set('readingMax', readingTimeRange.max.toString());
     } else {
-      searchParams.delete('readingMin');
-      searchParams.delete('readingMax');
+      searchParameters.delete('readingMin');
+      searchParameters.delete('readingMax');
     }
     
-    const newUrl = `${location.pathname}?${searchParams.toString()}`;
+    const newUrl = `${location.pathname}?${searchParameters.toString()}`;
     if (newUrl !== `${location.pathname}${location.search}`) {
       // For SSG, use native browser navigation with replace
-      window.history.replaceState(null, '', newUrl);
+      globalThis.history.replaceState(null, '', newUrl);
     }
   }, [filters, location.pathname]);
 
@@ -155,7 +155,7 @@ const AdvancedSearch = ({
     
     // Track search events
     if (value.trim() && value.length >= 3) {
-      trackSearch(value.trim(), 0, selectedCategories.size > 0 ? Array.from(selectedCategories)[0] : null);
+      trackSearch(value.trim(), 0, selectedCategories.size > 0 ? [...selectedCategories][0] : null);
     }
   };
 
@@ -194,8 +194,8 @@ const AdvancedSearch = ({
 
   // Handle date range change
   const handleDateRangeChange = (field, value) => {
-    setDateRange(prev => ({
-      ...prev,
+    setDateRange(previous => ({
+      ...previous,
       [field]: value
     }));
   };
@@ -217,12 +217,12 @@ const AdvancedSearch = ({
     setDateRange({ start: '', end: '' });
     setReadingTimeRange({ min: 0, max: 0 });
     
-    if (searchInputRef.current) {
-      searchInputRef.current.value = '';
+    if (searchInputReference.current) {
+      searchInputReference.current.value = '';
     }
     
     // For SSG, reset URL to pathname only
-    window.history.replaceState(null, '', location.pathname);
+    globalThis.history.replaceState(null, '', location.pathname);
   };
 
   // Get active filters count
@@ -245,7 +245,7 @@ const AdvancedSearch = ({
       // Ctrl/Cmd + K to focus search
       if ((event.ctrlKey || event.metaKey) && event.key === 'k') {
         event.preventDefault();
-        searchInputRef.current?.focus();
+        searchInputReference.current?.focus();
       }
       
       // Ctrl/Cmd + Shift + F to toggle advanced filters
@@ -263,11 +263,11 @@ const AdvancedSearch = ({
   // Multi-select component
   const MultiSelect = ({ options, selected, onToggle, placeholder, icon: Icon, loading = false }) => {
     const [isOpen, setIsOpen] = useState(false);
-    const containerRef = useRef(null);
+    const containerReference = useRef(null);
 
     useEffect(() => {
       const handleClickOutside = (event) => {
-        if (containerRef.current && !containerRef.current.contains(event.target)) {
+        if (containerReference.current && !containerReference.current.contains(event.target)) {
           setIsOpen(false);
         }
       };
@@ -277,7 +277,7 @@ const AdvancedSearch = ({
     }, []);
 
     return (
-      <div ref={containerRef} className="relative">
+      <div ref={containerReference} className="relative">
         <button
           type="button"
           onClick={() => setIsOpen(!isOpen)}
@@ -287,7 +287,7 @@ const AdvancedSearch = ({
             <Icon size={16} className="text-zinc-500" />
             <span className="text-sm">
               {selected.size > 0 
-                ? `${selected.size} selecionado${selected.size !== 1 ? 's' : ''}`
+                ? `${selected.size} selecionado${selected.size === 1 ? '' : 's'}`
                 : placeholder
               }
             </span>
@@ -348,7 +348,7 @@ const AdvancedSearch = ({
             <MagnifyingGlass size={20} className="text-zinc-500" />
           </div>
           <input
-            ref={searchInputRef}
+            ref={searchInputReference}
             type="text"
             placeholder="Pesquisar artigos... (Ctrl+K)"
             value={searchQuery}
@@ -445,11 +445,11 @@ const AdvancedSearch = ({
                   value={readingTimeRange.min === 0 && readingTimeRange.max === 0 ? '' : `${readingTimeRange.min}-${readingTimeRange.max}`}
                   onChange={(e) => {
                     const value = e.target.value;
-                    if (!value) {
-                      handleReadingTimeChange({ min: 0, max: 0 });
-                    } else {
+                    if (value) {
                       const [min, max] = value.split('-').map(Number);
                       handleReadingTimeChange({ min, max });
+                    } else {
+                      handleReadingTimeChange({ min: 0, max: 0 });
                     }
                   }}
                   className="w-full pl-10 pr-3 py-2 bg-zinc-800/50 border border-zinc-700/50 rounded-lg text-zinc-300 focus:border-purple-500/50 focus:outline-none transition-colors"
@@ -522,7 +522,7 @@ const AdvancedSearch = ({
             <div className="flex items-center gap-2 p-3 bg-purple-500/10 border border-purple-500/20 rounded-lg">
               <Funnel size={16} className="text-purple-400" />
               <span className="text-sm text-purple-300">
-                {activeFiltersCount} filtro{activeFiltersCount !== 1 ? 's' : ''} ativo{activeFiltersCount !== 1 ? 's' : ''}
+                {activeFiltersCount} filtro{activeFiltersCount === 1 ? '' : 's'} ativo{activeFiltersCount === 1 ? '' : 's'}
               </span>
             </div>
           )}

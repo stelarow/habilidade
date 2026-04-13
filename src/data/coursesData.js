@@ -303,15 +303,15 @@ const informatica = {
     // Opções de pagamento
     paymentOptions: {
       boleto: {
-        totalPrice: 3598.80,
+        totalPrice: 3598.8,
         installments: {
           max: 12,
-          value: 299.90
+          value: 299.9
         },
         description: 'Boleto bancário'
       },
       creditCard: {
-        totalPrice: 3598.80,
+        totalPrice: 3598.8,
         installments: {
           max: 10,
           value: 359.88
@@ -319,7 +319,7 @@ const informatica = {
         description: 'Cartão de crédito sem juros'
       },
       cash: {
-        originalPrice: 3598.80,
+        originalPrice: 3598.8,
         discountPercent: 6,
         finalPrice: 3382.87,
         description: 'Pagamento à vista com 6% de desconto'
@@ -331,7 +331,7 @@ const informatica = {
     discount: 40,
     installments: {
       max: 12,
-      value: 59.70,
+      value: 59.7,
     },
     paymentMethods: ['Cartão de crédito', 'PIX', 'Boleto bancário'],
   },
@@ -696,7 +696,7 @@ const designGrafico = {
     discount: 33,
     installments: {
       max: 12,
-      value: 79.70,
+      value: 79.7,
     },
     paymentMethods: ['Cartão de crédito', 'PIX', 'Boleto bancário'],
   },
@@ -1085,7 +1085,7 @@ const programacao = {
     discount: 40,
     installments: {
       max: 12,
-      value: 89.70,
+      value: 89.7,
     },
     paymentMethods: ['Cartão de crédito', 'PIX', 'Boleto bancário'],
   },
@@ -1426,15 +1426,15 @@ const marketingDigital = {
     // Opções de pagamento
     paymentOptions: {
       boleto: {
-        totalPrice: 3598.80,
+        totalPrice: 3598.8,
         installments: {
           max: 12,
-          value: 299.90
+          value: 299.9
         },
         description: 'Boleto bancário'
       },
       creditCard: {
-        totalPrice: 3598.80,
+        totalPrice: 3598.8,
         installments: {
           max: 10,
           value: 359.88
@@ -1442,7 +1442,7 @@ const marketingDigital = {
         description: 'Cartão de crédito sem juros'
       },
       cash: {
-        originalPrice: 3598.80,
+        originalPrice: 3598.8,
         discountPercent: 6,
         finalPrice: 3382.87,
         description: 'Pagamento à vista com 6% de desconto'
@@ -1454,7 +1454,7 @@ const marketingDigital = {
     discount: 33,
     installments: {
       max: 12,
-      value: 59.70,
+      value: 59.7,
     },
     paymentMethods: ['Cartão de crédito', 'PIX', 'Boleto bancário'],
   },
@@ -1811,7 +1811,7 @@ const inteligenciaArtificial = {
     discount: 38,
     installments: {
       max: 12,
-      value: 49.70,
+      value: 49.7,
     },
     paymentMethods: ['Cartão de crédito', 'PIX', 'Boleto bancário'],
   },
@@ -2150,7 +2150,7 @@ const businessIntelligence = {
     discount: 22,
     installments: {
       max: 12,
-      value: 69.70,
+      value: 69.7,
     },
     paymentMethods: ['Cartão de crédito', 'PIX', 'Boleto bancário'],
   },
@@ -2590,7 +2590,7 @@ const projetista = {
     discount: 21,
     installments: {
       max: 12,
-      value: 149.70,
+      value: 149.7,
     },
     paymentMethods: ['Cartão de crédito', 'PIX', 'Boleto bancário'],
   },
@@ -3186,7 +3186,7 @@ const edicaoVideo = {
     discount: 44,
     installments: {
       max: 12,
-      value: 44.70,
+      value: 44.7,
     },
     paymentMethods: ['Cartão de crédito', 'PIX', 'Boleto bancário'],
   },
@@ -3631,7 +3631,7 @@ const administracao = {
     discount: 33,
     installments: {
       max: 12,
-      value: 79.70,
+      value: 79.7,
     },
     paymentMethods: ['Cartão de crédito', 'PIX', 'Boleto bancário'],
   },

@@ -5,21 +5,21 @@ import { useEffect, useRef, useCallback } from 'react';
  * Remove will-change automaticamente quando animações terminam
  */
 export default function useAnimationLifecycle({
-  willChangeProps = 'opacity, transform',
+  willChangeProps: willChangeProperties = 'opacity, transform',
   removeDelay = 100,
   onComplete = null
 } = {}) {
-  const elementRef = useRef(null);
-  const timeoutRef = useRef(null);
+  const elementReference = useRef(null);
+  const timeoutReference = useRef(null);
   const isAnimating = useRef(false);
 
   // Aplicar will-change no início da animação
   const startAnimation = useCallback(() => {
-    const element = elementRef.current;
+    const element = elementReference.current;
     if (!element || isAnimating.current) return;
     
     isAnimating.current = true;
-    element.style.willChange = willChangeProps;
+    element.style.willChange = willChangeProperties;
     
     // Adicionar contain para melhor performance
     element.style.contain = 'layout style paint';
@@ -28,16 +28,16 @@ export default function useAnimationLifecycle({
     if (!element.style.transform.includes('translateZ')) {
       element.style.transform += ' translateZ(0)';
     }
-  }, [willChangeProps]);
+  }, [willChangeProperties]);
 
   // Remover will-change ao final da animação
   const endAnimation = useCallback(() => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
+    if (timeoutReference.current) {
+      clearTimeout(timeoutReference.current);
     }
     
-    timeoutRef.current = setTimeout(() => {
-      const element = elementRef.current;
+    timeoutReference.current = setTimeout(() => {
+      const element = elementReference.current;
       if (element && isAnimating.current) {
         element.style.willChange = 'auto';
         element.style.contain = '';
@@ -52,7 +52,7 @@ export default function useAnimationLifecycle({
 
   // Detectar fim de animação automaticamente
   useEffect(() => {
-    const element = elementRef.current;
+    const element = elementReference.current;
     if (!element) return;
 
     const handleAnimationEnd = () => {
@@ -69,8 +69,8 @@ export default function useAnimationLifecycle({
     return () => {
       element.removeEventListener('animationend', handleAnimationEnd);
       element.removeEventListener('transitionend', handleTransitionEnd);
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
+      if (timeoutReference.current) {
+        clearTimeout(timeoutReference.current);
       }
     };
   }, [endAnimation]);
@@ -78,10 +78,10 @@ export default function useAnimationLifecycle({
   // Cleanup no unmount
   useEffect(() => {
     return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
+      if (timeoutReference.current) {
+        clearTimeout(timeoutReference.current);
       }
-      const element = elementRef.current;
+      const element = elementReference.current;
       if (element) {
         element.style.willChange = 'auto';
         element.style.contain = '';
@@ -90,7 +90,7 @@ export default function useAnimationLifecycle({
   }, []);
 
   return {
-    ref: elementRef,
+    ref: elementReference,
     startAnimation,
     endAnimation,
     isAnimating: isAnimating.current

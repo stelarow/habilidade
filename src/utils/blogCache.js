@@ -212,7 +212,7 @@ class BlogCache {
    * Evict least recently used items from memory cache
    */
   evictLRU(priorityToKeep = 'normal') {
-    const entries = Array.from(this.memoryCache.entries());
+    const entries = [...this.memoryCache.entries()];
     
     // Sort by priority and last access time
     entries.sort(([, a], [, b]) => {
@@ -226,8 +226,8 @@ class BlogCache {
 
     // Remove oldest 25% of entries
     const toRemove = Math.ceil(entries.length * 0.25);
-    for (let i = 0; i < toRemove; i++) {
-      this.memoryCache.delete(entries[i][0]);
+    for (let index = 0; index < toRemove; index++) {
+      this.memoryCache.delete(entries[index][0]);
     }
   }
 
@@ -259,7 +259,7 @@ class BlogCache {
         entries.sort((a, b) => a.timestamp - b.timestamp);
         const toRemove = entries.slice(0, keys.length - this.config.STORAGE_CACHE_SIZE);
         
-        toRemove.forEach(({ key }) => storage.removeItem(key));
+        for (const { key } of toRemove) storage.removeItem(key);
       }
     } catch (error) {
       console.warn(`[BlogCache] Failed to manage ${storageType} size:`, error);
@@ -270,8 +270,8 @@ class BlogCache {
    * Generate cache key for posts list
    */
   getPostsKey(page = 1, limit = 10, category = null, search = null) {
-    const params = [page, limit, category || '', search || ''].join('_');
-    return `${this.config.PREFIX_POSTS}${params}`;
+    const parameters = [page, limit, category || '', search || ''].join('_');
+    return `${this.config.PREFIX_POSTS}${parameters}`;
   }
 
   /**
@@ -309,7 +309,7 @@ class BlogCache {
    */
   getStats() {
     const memorySize = this.memoryCache.size;
-    const memoryEntries = Array.from(this.memoryCache.values());
+    const memoryEntries = [...this.memoryCache.values()];
     
     const stats = {
       memory: {
@@ -424,7 +424,7 @@ class BlogCache {
         key.startsWith(this.config.PREFIX_SEARCH)
       );
 
-      keys.forEach(key => {
+      for (const key of keys) {
         try {
           const item = storage.getItem(key);
           if (item) {
@@ -433,11 +433,11 @@ class BlogCache {
               storage.removeItem(key);
             }
           }
-        } catch (error) {
+        } catch {
           // Remove corrupted entries
           storage.removeItem(key);
         }
-      });
+      }
     } catch (error) {
       console.warn(`[BlogCache] Failed to cleanup ${storageType}:`, error);
     }

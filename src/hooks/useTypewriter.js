@@ -10,21 +10,17 @@ export default function useTypewriter(words, typingSpeed = 120, pause = 2000) {
 
     let timer;
 
-    if (isDeleting) {
-      timer = setTimeout(() => {
-        setText(currentWord.substring(0, text.length - 1));
-      }, typingSpeed / 2);
-    } else {
-      timer = setTimeout(() => {
-        setText(currentWord.substring(0, text.length + 1));
+    timer = isDeleting ? setTimeout(() => {
+        setText(currentWord.slice(0, Math.max(0, text.length - 1)));
+      }, typingSpeed / 2) : setTimeout(() => {
+        setText(currentWord.slice(0, Math.max(0, text.length + 1)));
       }, typingSpeed);
-    }
 
     if (!isDeleting && text === currentWord) {
       timer = setTimeout(() => setIsDeleting(true), pause);
     } else if (isDeleting && text === '') {
       setIsDeleting(false);
-      setIndex((prev) => prev + 1);
+      setIndex((previous) => previous + 1);
     }
 
     return () => clearTimeout(timer);

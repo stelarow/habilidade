@@ -6,38 +6,38 @@ const DEFAULT_SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3Mi
 
 // Lazy loading para evitar problemas no build
 let supabaseInstance = null;
-let envChecked = false;
+let environmentChecked = false;
 let supabaseUrl = DEFAULT_SUPABASE_URL;
 let supabaseKey = DEFAULT_SUPABASE_ANON_KEY;
 
 // Função para verificar variáveis de ambiente apenas em runtime
-const checkEnvVars = () => {
-  if (!envChecked && typeof window !== 'undefined') {
+const checkEnvironmentVariables = () => {
+  if (!environmentChecked && globalThis.window !== undefined) {
     try {
       // Apenas tenta acessar import.meta.env em runtime
-      if (window.__VITE_SUPABASE_URL__) {
-        supabaseUrl = window.__VITE_SUPABASE_URL__;
+      if (globalThis.__VITE_SUPABASE_URL__) {
+        supabaseUrl = globalThis.__VITE_SUPABASE_URL__;
       }
-      if (window.__VITE_SUPABASE_ANON_KEY__) {
-        supabaseKey = window.__VITE_SUPABASE_ANON_KEY__;
+      if (globalThis.__VITE_SUPABASE_ANON_KEY__) {
+        supabaseKey = globalThis.__VITE_SUPABASE_ANON_KEY__;
       }
       // Fallback para import.meta.env se disponível
-      if (typeof import.meta !== 'undefined' && import.meta.env) {
+      if (import.meta !== undefined && import.meta.env) {
         supabaseUrl = import.meta.env.VITE_SUPABASE_URL || supabaseUrl;
         supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY || supabaseKey;
       }
-    } catch (e) {
+    } catch {
       // Em caso de erro, usa valores padrão
       console.log('Using default Supabase configuration');
     }
-    envChecked = true;
+    environmentChecked = true;
   }
 };
 
 // Criar cliente Supabase com lazy loading
 const getSupabaseClient = () => {
   if (!supabaseInstance) {
-    checkEnvVars();
+    checkEnvironmentVariables();
     
     supabaseInstance = createClient(supabaseUrl, supabaseKey, {
       auth: {
@@ -63,9 +63,9 @@ const getSupabaseClient = () => {
 
 // Export proxy para garantir lazy loading
 export const supabase = new Proxy({}, {
-  get(target, prop) {
+  get(target, property) {
     const client = getSupabaseClient();
-    return client[prop];
+    return client[property];
   }
 });
 
@@ -95,9 +95,9 @@ export const checkSupabaseConnection = async () => {
 };
 
 // Helper para logs de debug
-export const logSupabaseQuery = (table, operation, params = {}) => {
-  if (typeof window !== 'undefined' && window.__VITE_DEBUG_MODE__) {
-    console.log(`[Supabase] ${operation} on ${table}:`, params);
+export const logSupabaseQuery = (table, operation, parameters = {}) => {
+  if (globalThis.window !== undefined && globalThis.__VITE_DEBUG_MODE__) {
+    console.log(`[Supabase] ${operation} on ${table}:`, parameters);
   }
 };
 

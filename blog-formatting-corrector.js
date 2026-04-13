@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/* eslint-disable sonarjs/slow-regex, unicorn/prefer-top-level-await, unicorn/no-null, sonarjs/no-nested-template-literals */
 
 /**
  * COMPREHENSIVE BLOG ARTICLE FORMATTING CORRECTOR
@@ -9,7 +10,7 @@
  */
 
 import { createClient } from '@supabase/supabase-js';
-import fs from 'fs/promises';
+import fs from 'node:fs/promises';
 
 const SUPABASE_URL = 'https://vfpdyllwquaturpcifpl.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZmcGR5bGx3cXVhdHVycGNpZnBsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE5MDkwMDEsImV4cCI6MjA2NzQ4NTAwMX0.m7zLlemqt6oYt55OFZK_xyEBWoxC23uiFL2EmCiaLqw';
@@ -22,54 +23,57 @@ const CORRECTION_FUNCTIONS = {
   // HIGH PRIORITY: Fix compressed lists (numbered)
   COMPRESSED_LISTS: (content) => {
     console.log('    🔧 Fixing compressed lists...');
-    return content.replace(/(\d+\.\s*[^\n]+)\n(\d+\.\s*)/g, '$1\n\n$2');
+    // eslint-disable-next-line sonarjs/slow-regex -- Intentional pattern for text processing
+    return content.replaceAll(/(\d+\.\s*[^\n]+)\n(\d+\.\s*)/g, '$1\n\n$2');
   },
   
   // HIGH PRIORITY: Fix text walls (long paragraphs)
   TEXT_WALLS: (content) => {
     console.log('    🔧 Breaking up text walls...');
     // Insert paragraph breaks in very long sentences
-    return content.replace(/([.!?])\s+([A-Z][^.!?]{150,}[.!?])\s+([A-Z])/g, '$1\n\n$2\n\n$3');
+    // eslint-disable-next-line sonarjs/slow-regex -- Intentional pattern for text processing
+    return content.replaceAll(/([.!?])\s+([A-Z][^.!?]{150,}[.!?])\s+([A-Z])/g, '$1\n\n$2\n\n$3');
   },
   
   // MEDIUM PRIORITY: Fix punctuation spacing
   PUNCTUATION_SPACING: (content) => {
     console.log('    🔧 Fixing punctuation spacing...');
     // Add space after punctuation when missing (but not before line breaks or other punctuation)
-    return content.replace(/([.!?;,])(?![.!?;,\s\n])/g, '$1 ');
+    return content.replaceAll(/([.!?;,])(?![.!?;,\s\n])/g, '$1 ');
   },
   
   // MEDIUM PRIORITY: Fix bullet list spacing  
   BULLET_LIST_ISSUES: (content) => {
     console.log('    🔧 Fixing bullet list spacing...');
     // Add spacing between bullet list items
-    return content.replace(/(\n-\s*[^\n]+)(\n-\s*)/g, '$1\n$2');
+    return content.replaceAll(/(\n-\s*[^\n]+)(\n-\s*)/g, '$1\n$2');
   },
   
   // LOW PRIORITY: Fix colon formatting
   COLON_FORMATTING: (content) => {
     console.log('    🔧 Fixing colon formatting...');
     // Ensure space after colons before capital letters
-    return content.replace(/([a-zA-Z]):([A-Z])/g, '$1: $2');
+    return content.replaceAll(/([a-zA-Z]):([A-Z])/g, '$1: $2');
   },
   
   // LOW PRIORITY: Fix excessive line breaks
   EXCESSIVE_BREAKS: (content) => {
     console.log('    🔧 Removing excessive line breaks...');
-    return content.replace(/\n{4,}/g, '\n\n\n');
+    return content.replaceAll(/\n{4,}/g, '\n\n\n');
   },
   
   // HIGH PRIORITY: Fix compressed steps
   COMPRESSED_STEPS: (content) => {
     console.log('    🔧 Fixing compressed step instructions...');
-    return content.replace(/([0-9]+\.\s*[^.]+\.)([0-9]+\.\s*)/g, '$1\n\n$2');
+    // eslint-disable-next-line sonarjs/slow-regex -- Intentional pattern for text processing
+    return content.replaceAll(/([0-9]+\.\s*[^.]+\.)([0-9]+\.\s*)/g, '$1\n\n$2');
   },
   
   // LOW PRIORITY: Fix markdown spacing
   MARKDOWN_SPACING: (content) => {
     console.log('    🔧 Fixing markdown formatting spacing...');
     // Add spaces around bold/italic markdown (careful not to break existing formatting)
-    return content.replace(/(\w)(\*\*?[^*]+\*\*?)(\w)/g, '$1 $2 $3');
+    return content.replaceAll(/(\w)(\*\*?[^*]+\*\*?)(\w)/g, '$1 $2 $3');
   }
 };
 
@@ -78,7 +82,7 @@ async function loadDiagnosis() {
   try {
     const diagnosisData = await fs.readFile('blog-formatting-diagnosis.json', 'utf8');
     return JSON.parse(diagnosisData);
-  } catch (error) {
+  } catch {
     throw new Error('Could not load diagnosis file. Please run diagnosis first.');
   }
 }
@@ -112,7 +116,7 @@ function applyCorrectionPipeline(content, articleSlug) {
     'COLON_FORMATTING', 'EXCESSIVE_BREAKS', 'MARKDOWN_SPACING'  // LOW
   ];
   
-  priorityOrder.forEach(correctionType => {
+  for (const correctionType of priorityOrder) {
     if (CORRECTION_FUNCTIONS[correctionType]) {
       const beforeLength = correctedContent.length;
       correctedContent = CORRECTION_FUNCTIONS[correctionType](correctedContent);
@@ -122,7 +126,7 @@ function applyCorrectionPipeline(content, articleSlug) {
         totalChanges++;
       }
     }
-  });
+  }
   
   console.log(`    ✅ Applied ${totalChanges} correction types`);
   return correctedContent;
@@ -271,12 +275,12 @@ async function validateCorrections() {
       const content = article.content || '';
       let articleIssues = 0;
       
-      Object.values(issuePatterns).forEach(pattern => {
+      for (const pattern of Object.values(issuePatterns)) {
         const matches = content.match(pattern);
         if (matches) {
           articleIssues += matches.length;
         }
-      });
+      }
       
       if (articleIssues > 0) {
         articlesWithIssues++;
@@ -294,7 +298,7 @@ async function validateCorrections() {
     
   } catch (error) {
     console.log(`❌ Validation failed: ${error.message}`);
-    return null;
+    return undefined;
   }
 }
 
@@ -351,7 +355,7 @@ async function generateFinalReport(correctionResults, validationResults, diagnos
 
 ${correctionResults.errors.length > 0 ? `## Errors Encountered
 
-${correctionResults.errors.map(err => `- **${err.slug}**: ${err.error}`).join('\n')}` : '## ✅ No Errors Encountered'}
+${correctionResults.errors.map(error => `- **${error.slug}**: ${error.error}`).join('\n')}` : '## ✅ No Errors Encountered'}
 
 ## Next Steps
 
@@ -372,6 +376,7 @@ ${validationResults?.totalIssuesRemaining === 0 ?
   return report;
 }
 
+// eslint-disable-next-line unicorn/prefer-top-level-await -- CLI script uses main()
 async function main() {
   try {
     console.log('🚀 COMPREHENSIVE BLOG ARTICLE FORMATTING CORRECTOR');

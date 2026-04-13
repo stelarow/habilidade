@@ -62,13 +62,13 @@ class ImageUploadProcessor {
       const img = new Image();
       const url = URL.createObjectURL(file);
 
-      img.onload = () => {
+      img.addEventListener('load', () => {
         URL.revokeObjectURL(url);
         resolve({
           width: img.naturalWidth,
           height: img.naturalHeight
         });
-      };
+      });
 
       img.onerror = () => {
         URL.revokeObjectURL(url);
@@ -136,11 +136,11 @@ class ImageUploadProcessor {
 
     return new Promise((resolve, reject) => {
       const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
+      const context = canvas.getContext('2d');
       const img = new Image();
       const url = URL.createObjectURL(file);
 
-      img.onload = () => {
+      img.addEventListener('load', () => {
         URL.revokeObjectURL(url);
 
         const originalWidth = img.naturalWidth;
@@ -176,17 +176,17 @@ class ImageUploadProcessor {
         canvas.height = newHeight;
 
         // Enable high-quality image smoothing
-        ctx.imageSmoothingEnabled = true;
-        ctx.imageSmoothingQuality = 'high';
+        context.imageSmoothingEnabled = true;
+        context.imageSmoothingQuality = 'high';
 
         // Use advanced upscaling techniques for small images
         if (useAIUpscaling && (originalWidth < newWidth || originalHeight < newHeight)) {
           // Apply sharpening filter for upscaled images
-          ctx.filter = 'contrast(1.1) brightness(1.02)';
+          context.filter = 'contrast(1.1) brightness(1.02)';
         }
 
         // Draw the resized image
-        ctx.drawImage(img, 0, 0, newWidth, newHeight);
+        context.drawImage(img, 0, 0, newWidth, newHeight);
 
         // Convert back to blob
         canvas.toBlob((blob) => {
@@ -209,7 +209,7 @@ class ImageUploadProcessor {
             message: `Imagem redimensionada de ${originalWidth}x${originalHeight} para ${Math.round(newWidth)}x${Math.round(newHeight)}`
           });
         }, 'image/jpeg', quality);
-      };
+      });
 
       img.onerror = () => {
         URL.revokeObjectURL(url);
@@ -228,19 +228,19 @@ class ImageUploadProcessor {
 
     return new Promise((resolve, reject) => {
       const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
+      const context = canvas.getContext('2d');
       const img = new Image();
       const url = URL.createObjectURL(file);
 
-      img.onload = () => {
+      img.addEventListener('load', () => {
         URL.revokeObjectURL(url);
 
         canvas.width = img.naturalWidth;
         canvas.height = img.naturalHeight;
 
-        ctx.imageSmoothingEnabled = true;
-        ctx.imageSmoothingQuality = 'high';
-        ctx.drawImage(img, 0, 0);
+        context.imageSmoothingEnabled = true;
+        context.imageSmoothingQuality = 'high';
+        context.drawImage(img, 0, 0);
 
         canvas.toBlob((blob) => {
           if (!blob) {
@@ -261,7 +261,7 @@ class ImageUploadProcessor {
             message: `Imagem comprimida de ${(file.size / 1024 / 1024).toFixed(2)}MB para ${(compressedFile.size / 1024 / 1024).toFixed(2)}MB`
           });
         }, 'image/jpeg', quality);
-      };
+      });
 
       img.onerror = () => {
         URL.revokeObjectURL(url);
@@ -279,13 +279,13 @@ class ImageUploadProcessor {
     const results = [];
     const errors = [];
 
-    for (let i = 0; i < files.length; i++) {
+    for (const file of files) {
       try {
-        const result = await this.processImage(files[i], context, options);
+        const result = await this.processImage(file, context, options);
         results.push(result);
       } catch (error) {
         errors.push({
-          file: files[i].name,
+          file: file.name,
           error: error.message
         });
       }
@@ -305,11 +305,11 @@ class ImageUploadProcessor {
   generatePreview(file, maxWidth = 300, maxHeight = 200) {
     return new Promise((resolve) => {
       const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
+      const context = canvas.getContext('2d');
       const img = new Image();
       const url = URL.createObjectURL(file);
 
-      img.onload = () => {
+      img.addEventListener('load', () => {
         URL.revokeObjectURL(url);
 
         const { width, height } = img;
@@ -318,12 +318,12 @@ class ImageUploadProcessor {
         canvas.width = width * ratio;
         canvas.height = height * ratio;
 
-        ctx.imageSmoothingEnabled = true;
-        ctx.imageSmoothingQuality = 'high';
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        context.imageSmoothingEnabled = true;
+        context.imageSmoothingQuality = 'high';
+        context.drawImage(img, 0, 0, canvas.width, canvas.height);
 
         resolve(canvas.toDataURL('image/jpeg', 0.8));
-      };
+      });
 
       img.onerror = () => {
         URL.revokeObjectURL(url);

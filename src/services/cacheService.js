@@ -215,14 +215,14 @@ class CacheService {
     }
 
     // Remove specific keys
-    keys.forEach(key => {
+    for (const key of keys) {
       this.blogCache.remove(key);
       
       // Cascade invalidation for related content
       if (cascade) {
         this.cascadeInvalidation(key);
       }
-    });
+    }
 
     // Notify subscribers
     this.notifySubscribers('invalidation', { keys, cascade });
@@ -317,13 +317,13 @@ class CacheService {
   notifySubscribers(eventType, data) {
     const subscribers = this.subscriptions.get(eventType);
     if (subscribers) {
-      subscribers.forEach(callback => {
+      for (const callback of subscribers) {
         try {
           callback(data);
         } catch (error) {
           console.error('[CacheService] Subscriber callback failed:', error);
         }
-      });
+      }
     }
   }
 
@@ -340,9 +340,9 @@ class CacheService {
         processing: this.processingInvalidation
       },
       subscribers: {
-        total: Array.from(this.subscriptions.values()).reduce((sum, set) => sum + set.size, 0),
+        total: [...this.subscriptions.values()].reduce((sum, set) => sum + set.size, 0),
         byEvent: Object.fromEntries(
-          Array.from(this.subscriptions.entries()).map(([event, subs]) => [event, subs.size])
+          [...this.subscriptions.entries()].map(([event, subs]) => [event, subs.size])
         )
       },
       isInitialized: this.isInitialized
@@ -371,9 +371,9 @@ class CacheService {
     }
 
     if (popularPosts.length > 0) {
-      popularPosts.slice(0, 5).forEach(slug => {
+      for (const slug of popularPosts.slice(0, 5)) {
         prefetchTasks.push(this.cachePost(slug));
-      });
+      }
     }
 
     try {
@@ -401,7 +401,7 @@ class CacheService {
     
     return {
       stats,
-      memoryKeys: Array.from(this.blogCache.memoryCache.keys()),
+      memoryKeys: [...this.blogCache.memoryCache.keys()],
       config: this.blogCache.config,
       metrics: this.blogCache.metrics
     };

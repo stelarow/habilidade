@@ -13,8 +13,8 @@ export const createRoot = ViteReactSSG(
     // Inicializa error logger apenas no client e em produção
     if (isClient) {
       const isDevelopment = import.meta.env.DEV;
-      const isProduction = window.location.hostname === 'escolahabilidade.com' ||
-                          window.location.hostname === 'www.escolahabilidade.com';
+      const isProduction = globalThis.location.hostname === 'escolahabilidade.com' ||
+                          globalThis.location.hostname === 'www.escolahabilidade.com';
 
       initializeErrorLogger({
         enabled: !isDevelopment && isProduction,
@@ -24,7 +24,7 @@ export const createRoot = ViteReactSSG(
       // Defer lazy analytics loader para após first paint (otimização LCP)
       if (!isDevelopment && isProduction) {
         // Usa requestIdleCallback para carregar apenas quando browser está idle
-        if ('requestIdleCallback' in window) {
+        if ('requestIdleCallback' in globalThis) {
           requestIdleCallback(() => {
             import('./services/LazyAnalyticsLoader.js')
               .then(({ default: lazyAnalyticsLoader }) => {

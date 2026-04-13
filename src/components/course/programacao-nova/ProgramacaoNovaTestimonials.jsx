@@ -42,8 +42,8 @@ export const ProgramacaoNovaTestimonials = () => {
           {testimonials.map((testimonial, index) => (
             <div key={index} className="bg-zinc-800 rounded-xl p-6 border border-zinc-700">
               <div className="flex gap-1 mb-4">
-                {[...Array(testimonial.rating)].map((_, i) => (
-                  <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
+                {[...new Array(testimonial.rating)].map((_, index_) => (
+                  <Star key={index_} className="w-5 h-5 text-yellow-400 fill-current" />
                 ))}
               </div>
 

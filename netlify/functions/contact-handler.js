@@ -55,7 +55,7 @@ async function handler(event, context) {
     
     logger.info('Form validation passed', {
       name: formData.name,
-      email: formData.email?.substring(0, 3) + '***', // Log parcial do email por segurança
+      email: formData.email?.slice(0, 3) + '***', // Log parcial do email por segurança
       subject: formData.subject
     });
     
@@ -101,12 +101,12 @@ function validateContactForm(data, logger) {
   const requiredFields = ['name', 'email', 'subject', 'message'];
   
   // Verifica campos obrigatórios
-  requiredFields.forEach(field => {
+  for (const field of requiredFields) {
     if (!data[field] || data[field].trim() === '') {
       logger.validationError(field, data[field], 'required');
       errors.push(`Campo ${field} é obrigatório`);
     }
-  });
+  }
   
   // Validação de email
   if (data.email && !isValidEmail(data.email)) {
@@ -240,7 +240,7 @@ async function saveContactSubmission(formData, submissionId, logger) {
  * Gera ID único para a submissão
  */
 function generateSubmissionId() {
-  return `contact_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+  return `contact_${Date.now()}_${Math.random().toString(36).slice(2, 11)}`;
 }
 
 /**

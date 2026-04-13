@@ -12,30 +12,30 @@ export const useOptimizedBlogSearch = (initialSearch = '', initialCategory = '')
   const [debouncedSearchQuery, setDebouncedSearchQuery] = useState(initialSearch);
   
   // Refs para performance
-  const debounceTimeoutRef = useRef(null);
-  const searchCountRef = useRef(0);
+  const debounceTimeoutReference = useRef(null);
+  const searchCountReference = useRef(0);
 
   // Debounce otimizado da pesquisa
   useEffect(() => {
     setIsSearching(true);
-    searchCountRef.current += 1;
-    const currentSearchCount = searchCountRef.current;
+    searchCountReference.current += 1;
+    const currentSearchCount = searchCountReference.current;
     
-    if (debounceTimeoutRef.current) {
-      clearTimeout(debounceTimeoutRef.current);
+    if (debounceTimeoutReference.current) {
+      clearTimeout(debounceTimeoutReference.current);
     }
 
-    debounceTimeoutRef.current = setTimeout(() => {
+    debounceTimeoutReference.current = setTimeout(() => {
       // Só atualiza se for a pesquisa mais recente
-      if (currentSearchCount === searchCountRef.current) {
+      if (currentSearchCount === searchCountReference.current) {
         setDebouncedSearchQuery(searchQuery);
         setIsSearching(false);
       }
     }, 300);
 
     return () => {
-      if (debounceTimeoutRef.current) {
-        clearTimeout(debounceTimeoutRef.current);
+      if (debounceTimeoutReference.current) {
+        clearTimeout(debounceTimeoutReference.current);
       }
     };
   }, [searchQuery]);
@@ -103,7 +103,7 @@ export const useOptimizedBlogSearch = (initialSearch = '', initialCategory = '')
     
     // Computed
     hasActiveFilters: !!(debouncedSearchQuery || selectedCategory),
-    isLoadingWithTransition: isLoading || (isSearching && !posts.length),
+    isLoadingWithTransition: isLoading || (isSearching && posts.length === 0),
   };
 };
 

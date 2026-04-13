@@ -7,7 +7,7 @@ const BlogBadge = ({
   categorySlug,
   className = '',
   icon: Icon,
-  ...props
+  ...properties
 }) => {
   // Base classes following site's design system
   const baseClasses = "inline-flex items-center gap-1 font-medium rounded-full border transition-all duration-300";
@@ -50,8 +50,8 @@ const BlogBadge = ({
   `.trim();
 
   return (
-    <span className={classes} {...props}>
-      {Icon && <Icon size={size === 'small' ? 12 : size === 'large' ? 16 : 14} />}
+    <span className={classes} {...properties}>
+      {Icon && <Icon size={size === 'small' ? 12 : (size === 'large' ? 16 : 14)} />}
       {children}
     </span>
   );

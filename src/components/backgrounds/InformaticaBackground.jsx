@@ -9,11 +9,11 @@ const InformaticaBackground = ({
   deviceCapabilities, 
   courseSlug 
 }) => {
-  const canvasRef = useRef(null);
-  const animationRef = useRef(null);
-  const particlesRef = useRef([]);
-  const matrixRef = useRef({ drops: [] });
-  const gridRef = useRef({ offset: 0 });
+  const canvasReference = useRef(null);
+  const animationReference = useRef(null);
+  const particlesReference = useRef([]);
+  const matrixReference = useRef({ drops: [] });
+  const gridReference = useRef({ offset: 0 });
 
   // Configurações baseadas na performance
   const config = useMemo(() => ({
@@ -98,40 +98,40 @@ const InformaticaBackground = ({
       }
     }
 
-    draw(ctx) {
+    draw(context) {
       // Desenhar trail
-      this.trail.forEach((point, index) => {
+      for (const [index, point] of this.trail.entries()) {
         const alpha = (index / this.trail.length) * this.life * 0.3;
-        ctx.save();
-        ctx.globalAlpha = alpha;
-        ctx.fillStyle = config.colors.glow;
-        ctx.beginPath();
-        ctx.arc(point.x, point.y, 1, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
-      });
+        context.save();
+        context.globalAlpha = alpha;
+        context.fillStyle = config.colors.glow;
+        context.beginPath();
+        context.arc(point.x, point.y, 1, 0, Math.PI * 2);
+        context.fill();
+        context.restore();
+      }
 
       // Desenhar partícula principal com glow
-      ctx.save();
-      ctx.globalAlpha = this.life * 0.5; // Era this.life → this.life * 0.5 (50% redução na opacidade)
+      context.save();
+      context.globalAlpha = this.life * 0.5; // Era this.life → this.life * 0.5 (50% redução na opacidade)
       
       // Glow effect
       const glowIntensity = 0.5 + Math.sin(this.glow) * 0.3;
-      ctx.shadowColor = config.colors.glow;
-      ctx.shadowBlur = this.size * 1.5 * glowIntensity; // Era *3 → *1.5 (50% redução no glow)
+      context.shadowColor = config.colors.glow;
+      context.shadowBlur = this.size * 1.5 * glowIntensity; // Era *3 → *1.5 (50% redução no glow)
       
-      ctx.fillStyle = config.colors.particle;
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-      ctx.fill();
+      context.fillStyle = config.colors.particle;
+      context.beginPath();
+      context.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      context.fill();
       
-      ctx.restore();
+      context.restore();
     }
 
     distanceTo(other) {
       const dx = this.x - other.x;
       const dy = this.y - other.y;
-      return Math.sqrt(dx * dx + dy * dy);
+      return Math.hypot(dx, dy);
     }
   }
 
@@ -147,7 +147,7 @@ const InformaticaBackground = ({
       
       // Gerar string de caracteres - REDUZIDA
       const length = 2 + Math.floor(Math.random() * 4); // Era 5-15 → 2-6 caracteres (60% redução)
-      for (let i = 0; i < length; i++) {
+      for (let index = 0; index < length; index++) {
         this.chars.push(config.matrixChars[Math.floor(Math.random() * config.matrixChars.length)]);
       }
     }
@@ -169,155 +169,155 @@ const InformaticaBackground = ({
       }
     }
 
-    draw(ctx) {
+    draw(context) {
       if (config.matrixOpacity === 0) return;
       
-      ctx.save();
-      ctx.font = `${this.fontSize}px monospace`;
-      ctx.globalAlpha = config.matrixOpacity * this.opacity;
+      context.save();
+      context.font = `${this.fontSize}px monospace`;
+      context.globalAlpha = config.matrixOpacity * this.opacity;
       
-      this.chars.forEach((char, index) => {
+      for (const [index, char] of this.chars.entries()) {
         const y = this.y + index * this.fontSize;
         const alpha = Math.max(0, 1 - (index / this.chars.length));
         
-        ctx.globalAlpha = config.matrixOpacity * this.opacity * alpha;
-        ctx.fillStyle = index === 0 ? config.colors.glow : config.colors.matrix;
-        ctx.fillText(char, this.x, y);
-      });
+        context.globalAlpha = config.matrixOpacity * this.opacity * alpha;
+        context.fillStyle = index === 0 ? config.colors.glow : config.colors.matrix;
+        context.fillText(char, this.x, y);
+      }
       
-      ctx.restore();
+      context.restore();
     }
   }
 
   // Desenhar grid digital pixelizado
-  const drawDigitalGrid = (ctx) => {
+  const drawDigitalGrid = (context) => {
     if (config.gridOpacity === 0) return;
     
-    const { width, height } = ctx.canvas;
+    const { width, height } = context.canvas;
     
-    ctx.save();
-    ctx.globalAlpha = config.gridOpacity;
-    ctx.strokeStyle = config.colors.grid;
-    ctx.lineWidth = 1;
+    context.save();
+    context.globalAlpha = config.gridOpacity;
+    context.strokeStyle = config.colors.grid;
+    context.lineWidth = 1;
     
     // Atualizar offset para movimento
-    gridRef.current.offset += config.gridSpeed;
-    if (gridRef.current.offset >= config.gridSize) {
-      gridRef.current.offset = 0;
+    gridReference.current.offset += config.gridSpeed;
+    if (gridReference.current.offset >= config.gridSize) {
+      gridReference.current.offset = 0;
     }
     
     // Linhas verticais
-    for (let x = -gridRef.current.offset; x < width + config.gridSize; x += config.gridSize) {
-      ctx.beginPath();
-      ctx.moveTo(x, 0);
-      ctx.lineTo(x, height);
-      ctx.stroke();
+    for (let x = -gridReference.current.offset; x < width + config.gridSize; x += config.gridSize) {
+      context.beginPath();
+      context.moveTo(x, 0);
+      context.lineTo(x, height);
+      context.stroke();
     }
     
     // Linhas horizontais
-    for (let y = -gridRef.current.offset; y < height + config.gridSize; y += config.gridSize) {
-      ctx.beginPath();
-      ctx.moveTo(0, y);
-      ctx.lineTo(width, y);
-      ctx.stroke();
+    for (let y = -gridReference.current.offset; y < height + config.gridSize; y += config.gridSize) {
+      context.beginPath();
+      context.moveTo(0, y);
+      context.lineTo(width, y);
+      context.stroke();
     }
     
     // Pontos de intersecção com glow
-    ctx.fillStyle = config.colors.particle;
-    for (let x = -gridRef.current.offset; x < width + config.gridSize; x += config.gridSize) {
-      for (let y = -gridRef.current.offset; y < height + config.gridSize; y += config.gridSize) {
+    context.fillStyle = config.colors.particle;
+    for (let x = -gridReference.current.offset; x < width + config.gridSize; x += config.gridSize) {
+      for (let y = -gridReference.current.offset; y < height + config.gridSize; y += config.gridSize) {
         if (Math.random() < 0.1) { // 10% dos pontos
-          ctx.shadowColor = config.colors.glow;
-          ctx.shadowBlur = 4;
-          ctx.beginPath();
-          ctx.arc(x, y, 1, 0, Math.PI * 2);
-          ctx.fill();
+          context.shadowColor = config.colors.glow;
+          context.shadowBlur = 4;
+          context.beginPath();
+          context.arc(x, y, 1, 0, Math.PI * 2);
+          context.fill();
         }
       }
     }
     
-    ctx.restore();
+    context.restore();
   };
 
   // Desenhar conexões entre partículas
-  const drawConnections = (ctx) => {
-    ctx.save();
-    ctx.strokeStyle = config.colors.connection;
-    ctx.lineWidth = 1;
+  const drawConnections = (context) => {
+    context.save();
+    context.strokeStyle = config.colors.connection;
+    context.lineWidth = 1;
     
-    const particles = particlesRef.current.filter(p => p instanceof DigitalParticle);
+    const particles = particlesReference.current.filter(p => p instanceof DigitalParticle);
     
-    for (let i = 0; i < particles.length; i++) {
-      for (let j = i + 1; j < particles.length; j++) {
-        const distance = particles[i].distanceTo(particles[j]);
+    for (let index = 0; index < particles.length; index++) {
+      for (let index_ = index + 1; index_ < particles.length; index_++) {
+        const distance = particles[index].distanceTo(particles[index_]);
         
         if (distance < config.connectionDistance) {
           const alpha = 1 - (distance / config.connectionDistance);
-          ctx.globalAlpha = alpha * 0.2; // Era * 0.5 → * 0.2 (60% redução na opacidade das conexões)
+          context.globalAlpha = alpha * 0.2; // Era * 0.5 → * 0.2 (60% redução na opacidade das conexões)
           
-          ctx.beginPath();
-          ctx.moveTo(particles[i].x, particles[i].y);
-          ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.stroke();
+          context.beginPath();
+          context.moveTo(particles[index].x, particles[index].y);
+          context.lineTo(particles[index_].x, particles[index_].y);
+          context.stroke();
         }
       }
     }
     
-    ctx.restore();
+    context.restore();
   };
 
   // Inicializar elementos
   const initializeElements = (canvas) => {
-    particlesRef.current = [];
+    particlesReference.current = [];
     
     // Criar partículas
-    for (let i = 0; i < config.particleCount; i++) {
-      particlesRef.current.push(new DigitalParticle(canvas));
+    for (let index = 0; index < config.particleCount; index++) {
+      particlesReference.current.push(new DigitalParticle(canvas));
     }
     
     // Criar matrix drops
-    matrixRef.current.drops = [];
+    matrixReference.current.drops = [];
     const fontSize = 14;
-    for (let i = 0; i < config.matrixColumns; i++) {
-      const x = i * 20;
-      matrixRef.current.drops.push(new MatrixDrop(x, fontSize));
+    for (let index = 0; index < config.matrixColumns; index++) {
+      const x = index * 20;
+      matrixReference.current.drops.push(new MatrixDrop(x, fontSize));
     }
   };
 
   // Loop de animação  
   const animate = () => {
-    const canvas = canvasRef.current;
+    const canvas = canvasReference.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext('2d');
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const context = canvas.getContext('2d');
+    context.clearRect(0, 0, canvas.width, canvas.height);
 
     // Desenhar elementos na ordem correta
-    drawDigitalGrid(ctx);
+    drawDigitalGrid(context);
     
     // Atualizar e desenhar matrix rain
-    matrixRef.current.drops.forEach(drop => {
+    for (const drop of matrixReference.current.drops) {
       drop.update(canvas.height);
-      drop.draw(ctx);
-    });
+      drop.draw(context);
+    }
     
     // Desenhar conexões primeiro
-    drawConnections(ctx);
+    drawConnections(context);
     
     // Atualizar e desenhar partículas
-    particlesRef.current.forEach(particle => {
+    for (const particle of particlesReference.current) {
       particle.update();
-      particle.draw(ctx);
-    });
+      particle.draw(context);
+    }
 
     if (config.particleSpeed > 0 || config.gridSpeed > 0 || config.matrixSpeed > 0) {
-      animationRef.current = requestAnimationFrame(animate);
+      animationReference.current = requestAnimationFrame(animate);
     }
   };
 
   // Configurar canvas e inicializar
   useEffect(() => {
-    const canvas = canvasRef.current;
+    const canvas = canvasReference.current;
     if (!canvas) return;
 
     const handleResize = () => {
@@ -325,8 +325,8 @@ const InformaticaBackground = ({
       canvas.width = rect.width * (deviceCapabilities?.pixelRatio || 1);
       canvas.height = rect.height * (deviceCapabilities?.pixelRatio || 1);
       
-      const ctx = canvas.getContext('2d');
-      ctx.scale(deviceCapabilities?.pixelRatio || 1, deviceCapabilities?.pixelRatio || 1);
+      const context = canvas.getContext('2d');
+      context.scale(deviceCapabilities?.pixelRatio || 1, deviceCapabilities?.pixelRatio || 1);
       
       // Reinicializar elementos com novo tamanho
       initializeElements(canvas);
@@ -340,8 +340,8 @@ const InformaticaBackground = ({
 
     return () => {
       window.removeEventListener('resize', handleResize);
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
+      if (animationReference.current) {
+        cancelAnimationFrame(animationReference.current);
       }
     };
   }, [config, deviceCapabilities]);
@@ -360,7 +360,7 @@ const InformaticaBackground = ({
 
   return (
     <canvas
-      ref={canvasRef}
+      ref={canvasReference}
       className="absolute inset-0 w-full h-full pointer-events-none"
       style={{ 
         background: 'transparent',

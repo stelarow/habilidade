@@ -79,20 +79,20 @@ function IconWrapper({
   size = null, 
   weight = null, 
   className = '', 
-  ...props 
+  ...properties 
 }) {
   const IconComponent = ICON_MAP[name] || BookOpen;
   const config = ICON_CONFIGS[context] || ICON_CONFIGS.benefits;
   
-  const finalProps = {
+  const finalProperties = {
     size: size || config.size,
     weight: weight || config.weight,
     className: `${config.className} ${className}`.trim(),
     ...(color && { style: { color } }),
-    ...props
+    ...properties
   };
   
-  return <IconComponent {...finalProps} />;
+  return <IconComponent {...finalProperties} />;
 }
 
 /**

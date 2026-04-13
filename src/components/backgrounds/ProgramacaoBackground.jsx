@@ -10,32 +10,32 @@ const ProgramacaoBackground = ({
   deviceCapabilities, 
   courseSlug 
 }) => {
-  const canvasRef = useRef(null);
-  const animationRef = useRef(null);
-  const codeSnippetsRef = useRef([]);
-  const terminalRef = useRef({ lines: [], cursor: 0 });
+  const canvasReference = useRef(null);
+  const animationReference = useRef(null);
+  const codeSnippetsReference = useRef([]);
+  const terminalReference = useRef({ lines: [], cursor: 0 });
   
   // Controle de animação para canvas
-  const animationIdRef = useRef(null);
-  const isAnimatingRef = useRef(false);
+  const animationIdReference = useRef(null);
+  const isAnimatingReference = useRef(false);
 
-  const startAnimation = useCallback((animationFn) => {
-    if (isAnimatingRef.current) return;
+  const startAnimation = useCallback((animationFunction) => {
+    if (isAnimatingReference.current) return;
     
-    isAnimatingRef.current = true;
+    isAnimatingReference.current = true;
     const animate = () => {
-      if (!isAnimatingRef.current) return;
-      animationFn();
-      animationIdRef.current = requestAnimationFrame(animate);
+      if (!isAnimatingReference.current) return;
+      animationFunction();
+      animationIdReference.current = requestAnimationFrame(animate);
     };
     animate();
   }, []);
 
   const stopAnimation = useCallback(() => {
-    isAnimatingRef.current = false;
-    if (animationIdRef.current) {
-      cancelAnimationFrame(animationIdRef.current);
-      animationIdRef.current = null;
+    isAnimatingReference.current = false;
+    if (animationIdReference.current) {
+      cancelAnimationFrame(animationIdReference.current);
+      animationIdReference.current = null;
     }
   }, []);
 
@@ -165,14 +165,14 @@ const ProgramacaoBackground = ({
       return this.lines.join('').length;
     }
 
-    draw(ctx) {
-      ctx.save();
-      ctx.globalAlpha = this.opacity;
-      ctx.font = `${this.fontSize}px 'Courier New', monospace`;
+    draw(context) {
+      context.save();
+      context.globalAlpha = this.opacity;
+      context.font = `${this.fontSize}px 'Courier New', monospace`;
       
       let currentCharCount = 0;
       
-      this.lines.forEach((line, lineIndex) => {
+      for (const [lineIndex, line] of this.lines.entries()) {
         const y = this.y + lineIndex * this.lineHeight;
         
         // Determinar quantos caracteres desta linha desenhar
@@ -184,38 +184,38 @@ const ProgramacaoBackground = ({
           visibleChars = Math.min(line.length, remainingChars);
         }
         
-        const visibleText = line.substring(0, visibleChars);
+        const visibleText = line.slice(0, Math.max(0, visibleChars));
         
         // Colorir baseado no tipo de linha
         if (line.startsWith('//') || line.startsWith('/*')) {
-          ctx.fillStyle = config.colors.comment;
+          context.fillStyle = config.colors.comment;
         } else if (line.includes('function') || line.includes('class') || line.includes('const') || line.includes('let')) {
-          ctx.fillStyle = config.colors.primary;
+          context.fillStyle = config.colors.primary;
         } else if (line.includes('await') || line.includes('async') || line.includes('return')) {
-          ctx.fillStyle = config.colors.secondary;
+          context.fillStyle = config.colors.secondary;
         } else {
-          ctx.fillStyle = config.colors.code;
+          context.fillStyle = config.colors.code;
         }
         
-        ctx.fillText(visibleText, this.x, y);
+        context.fillText(visibleText, this.x, y);
         
         // Cursor piscando na linha atual
         if (!this.fullyTyped && currentCharCount <= this.typingProgress && 
             this.typingProgress < currentCharCount + line.length) {
-          const cursorX = this.x + ctx.measureText(visibleText).width;
+          const cursorX = this.x + context.measureText(visibleText).width;
           const cursorOpacity = Math.sin(Date.now() * 0.008) * 0.5 + 0.5;
           
-          ctx.save();
-          ctx.globalAlpha = cursorOpacity;
-          ctx.fillStyle = config.colors.cursor;
-          ctx.fillRect(cursorX, y - this.fontSize, 2, this.fontSize);
-          ctx.restore();
+          context.save();
+          context.globalAlpha = cursorOpacity;
+          context.fillStyle = config.colors.cursor;
+          context.fillRect(cursorX, y - this.fontSize, 2, this.fontSize);
+          context.restore();
         }
         
         currentCharCount += line.length;
-      });
+      }
       
-      ctx.restore();
+      context.restore();
     }
   }
 
@@ -223,36 +223,36 @@ const ProgramacaoBackground = ({
 
   // Inicializar elementos
   const initializeElements = (canvas) => {
-    codeSnippetsRef.current = [];
+    codeSnippetsReference.current = [];
     
     // Criar snippets de código
-    for (let i = 0; i < config.snippetCount; i++) {
-      codeSnippetsRef.current.push(new FloatingCodeSnippet(canvas));
+    for (let index = 0; index < config.snippetCount; index++) {
+      codeSnippetsReference.current.push(new FloatingCodeSnippet(canvas));
     }
   };
 
   // Loop de animação com memory management
   const animate = () => {
-    const canvas = canvasRef.current;
+    const canvas = canvasReference.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext('2d');
+    const context = canvas.getContext('2d');
     
     // Registrar contexto para memory management
-    memoryManager.registerCanvasContext(ctx);
+    memoryManager.registerCanvasContext(context);
     
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    context.clearRect(0, 0, canvas.width, canvas.height);
 
     // Atualizar e desenhar snippets de código
-    codeSnippetsRef.current.forEach(snippet => {
+    for (const snippet of codeSnippetsReference.current) {
       snippet.update();
-      snippet.draw(ctx);
-    });
+      snippet.draw(context);
+    }
   };
 
   // Configurar canvas e inicializar
   useEffect(() => {
-    const canvas = canvasRef.current;
+    const canvas = canvasReference.current;
     if (!canvas) return;
 
     const handleResize = () => {
@@ -260,8 +260,8 @@ const ProgramacaoBackground = ({
       canvas.width = rect.width * (deviceCapabilities?.pixelRatio || 1);
       canvas.height = rect.height * (deviceCapabilities?.pixelRatio || 1);
       
-      const ctx = canvas.getContext('2d');
-      ctx.scale(deviceCapabilities?.pixelRatio || 1, deviceCapabilities?.pixelRatio || 1);
+      const context = canvas.getContext('2d');
+      context.scale(deviceCapabilities?.pixelRatio || 1, deviceCapabilities?.pixelRatio || 1);
       
       // Reinicializar elementos com novo tamanho
       initializeElements(canvas);
@@ -270,7 +270,7 @@ const ProgramacaoBackground = ({
     handleResize();
     
     // Usar memory manager para event listeners
-    memoryManager.registerEventListener(window, 'resize', handleResize);
+    memoryManager.registerEventListener(globalThis, 'resize', handleResize);
 
     // Iniciar animação apenas se não for versão estática
     if (config.codeSpeed > 0 || config.terminalSpeed > 0) {
@@ -296,7 +296,7 @@ const ProgramacaoBackground = ({
 
   return (
     <canvas
-      ref={canvasRef}
+      ref={canvasReference}
       className="absolute inset-0 w-full h-full pointer-events-none"
       style={{ 
         background: 'transparent',

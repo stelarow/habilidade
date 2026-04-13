@@ -16,7 +16,7 @@ export const useMobilePerformanceOptimizer = () => {
   useEffect(() => {
     // Detect mobile device
     const checkMobile = () => {
-      const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+      const userAgent = navigator.userAgent || navigator.vendor || globalThis.opera;
       const isMobileDevice = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent.toLowerCase()) ||
                             window.innerWidth <= 768;
       setIsMobile(isMobileDevice);
@@ -123,14 +123,14 @@ export const CriticalCssLoader = ({ children }) => {
       }
       
       // Method 2: Check for data attribute
-      const criticalLoaded = document.documentElement.getAttribute('data-critical-loaded');
+      const criticalLoaded = document.documentElement.dataset.criticalLoaded;
       if (criticalLoaded === 'true') {
         console.log('[Mobile Performance] Critical CSS detected via data attribute');
         return true;
       }
       
       // Method 3: Check computed styles (basic check)
-      const bodyStyles = window.getComputedStyle(document.body);
+      const bodyStyles = globalThis.getComputedStyle(document.body);
       if (bodyStyles.backgroundColor && bodyStyles.backgroundColor !== 'rgba(0, 0, 0, 0)') {
         console.log('[Mobile Performance] Critical CSS detected via computed styles');
         return true;
@@ -194,7 +194,7 @@ export const MobileOptimizedImage = ({
   alt, 
   className = '', 
   loading = 'lazy',
-  ...props 
+  ...properties 
 }) => {
   const { isMobile } = useMobilePerformanceOptimizer();
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -204,14 +204,14 @@ export const MobileOptimizedImage = ({
   };
 
   // Use smaller images for mobile if available
-  const optimizedSrc = isMobile && src.includes('.')
+  const optimizedSource = isMobile && src.includes('.')
     ? src.replace(/(\.[^.]+)$/, '-mobile$1')
     : src;
 
   return (
     <div className={`relative ${className}`}>
       <img
-        src={optimizedSrc}
+        src={optimizedSource}
         alt={alt}
         loading={loading}
         onLoad={handleLoad}
@@ -219,7 +219,7 @@ export const MobileOptimizedImage = ({
           transition-opacity duration-300
           ${imageLoaded ? 'opacity-100' : 'opacity-0'}
         `}
-        {...props}
+        {...properties}
         onError={(e) => {
           // Fallback to original image if mobile version fails
           if (e.target.src !== src) {
@@ -248,7 +248,7 @@ export const PerformanceMonitor = () => {
       
       // Monitor FCP, LCP, CLS
       const observer = new PerformanceObserver((list) => {
-        list.getEntries().forEach((entry) => {
+        for (const entry of list.getEntries()) {
           if (entry.entryType === 'paint') {
             console.log(`[Mobile Performance] ${entry.name}:`, entry.startTime + 'ms');
           }
@@ -271,7 +271,7 @@ export const PerformanceMonitor = () => {
               lastLogTime = now;
             }
           }
-        });
+        }
       });
 
       observer.observe({ entryTypes: ['paint', 'largest-contentful-paint', 'layout-shift'] });

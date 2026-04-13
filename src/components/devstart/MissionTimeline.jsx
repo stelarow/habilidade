@@ -39,7 +39,7 @@ const MissionTimeline = () => {
   // Calcular progresso baseado no item aberto
   useEffect(() => {
     if (openItem) {
-      const missionNumber = parseInt(openItem.split('-')[1]);
+      const missionNumber = Number.parseInt(openItem.split('-')[1]);
       const progress = (missionNumber / missions.length) * 100;
       setProgressValue(progress);
     }
@@ -162,13 +162,13 @@ const MissionTimeline = () => {
                         O que você vai aprender:
                       </h4>
                       <ul className="space-y-2">
-                        {mission.learnings.map((learning, idx) => (
+                        {mission.learnings.map((learning, index_) => (
                           <motion.li
-                            key={idx}
+                            key={index_}
                             className="flex items-start gap-3 text-gray-200"
                             initial={{ opacity: 0, x: -10 }}
                             animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: idx * 0.1 }}
+                            transition={{ delay: index_ * 0.1 }}
                           >
                             <span className="text-green-400 text-xl flex-shrink-0">•</span>
                             <span>{learning}</span>

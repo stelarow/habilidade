@@ -15,8 +15,8 @@ const WhatsAppFloat = ({
   const [isExpanded, setIsExpanded] = useState(false);
   const [isDismissed, setIsDismissed] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const timeoutRef = useRef(null);
-  const startTimeRef = useRef(Date.now());
+  const timeoutReference = useRef(null);
+  const startTimeReference = useRef(Date.now());
 
   const { trackContactClick } = useContactAnalytics();
 
@@ -33,9 +33,9 @@ const WhatsAppFloat = ({
     
     const updateScrollProgress = () => {
       const winHeight = window.innerHeight;
-      const docHeight = document.documentElement.scrollHeight;
+      const documentHeight = document.documentElement.scrollHeight;
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      const trackHeight = docHeight - winHeight;
+      const trackHeight = documentHeight - winHeight;
       const progress = Math.min(scrollTop / trackHeight, 1);
       
       setScrollProgress(progress);
@@ -63,7 +63,7 @@ const WhatsAppFloat = ({
     if (isDismissed) return;
 
     const checkVisibility = () => {
-      const timeElapsed = (Date.now() - startTimeRef.current) / 1000;
+      const timeElapsed = (Date.now() - startTimeReference.current) / 1000;
       const shouldShowByTime = timeElapsed >= delaySeconds;
       const shouldShowByScroll = scrollProgress >= scrollThreshold;
       
@@ -85,7 +85,7 @@ const WhatsAppFloat = ({
     const message = generateWhatsAppMessage({
       article: article?.title || null,
       category: category?.name || category || null,
-      url: window.location.href,
+      url: globalThis.location.href,
       context: 'floating-button'
     });
 

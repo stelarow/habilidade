@@ -43,7 +43,7 @@ const inscriptionSchema = z.object({
     /^\(\d{2}\)\s\d{4,5}-\d{4}$/,
     'WhatsApp inválido. Use o formato: (48) 98855-9491'
   ),
-  acceptTerms: z.boolean().refine(val => val === true, {
+  acceptTerms: z.boolean().refine(value => value === true, {
     message: 'Você deve aceitar os termos para continuar'
   })
 });
@@ -138,7 +138,7 @@ export default function TypeformInscription({ id = 'inscricao' }) {
 
   // Formatar WhatsApp automaticamente
   const formatWhatsApp = (value) => {
-    const numbers = value.replace(/\D/g, '');
+    const numbers = value.replaceAll(/\D/g, '');
     if (numbers.length <= 2) return `(${numbers}`;
     if (numbers.length <= 7) return `(${numbers.slice(0, 2)}) ${numbers.slice(2)}`;
     if (numbers.length <= 11) {
@@ -154,14 +154,14 @@ export default function TypeformInscription({ id = 'inscricao' }) {
 
     if (isValid) {
       setDirection('forward');
-      setCurrentStep(prev => Math.min(prev + 1, STEPS.length - 1));
+      setCurrentStep(previous => Math.min(previous + 1, STEPS.length - 1));
     }
   };
 
   // Voltar etapa
   const handleBack = () => {
     setDirection('backward');
-    setCurrentStep(prev => Math.max(prev - 1, 0));
+    setCurrentStep(previous => Math.max(previous - 1, 0));
   };
 
   // Enviar formulário
@@ -171,7 +171,7 @@ export default function TypeformInscription({ id = 'inscricao' }) {
 
     try {
       // Mapear campos para o template existente (compatível com página inicial)
-      const templateParams = {
+      const templateParameters = {
         from_name: data.guardianName, // Nome do responsável
         from_email: 'inscricao@escolahabilidade.com', // Email padrão (não coletamos mais)
         phone: data.whatsapp,
@@ -181,14 +181,14 @@ export default function TypeformInscription({ id = 'inscricao' }) {
         reply_to: 'inscricao@escolahabilidade.com'
       };
 
-      console.log('📧 Enviando email com parâmetros:', templateParams);
+      console.log('📧 Enviando email com parâmetros:', templateParameters);
       console.log('🔑 Service ID:', EMAIL_CONFIG.SERVICE_ID);
       console.log('📋 Template ID:', EMAIL_CONFIG.TEMPLATE_ID);
 
       const result = await emailjs.send(
         EMAIL_CONFIG.SERVICE_ID,
         EMAIL_CONFIG.TEMPLATE_ID, // Usar o template padrão
-        templateParams,
+        templateParameters,
         EMAIL_CONFIG.PUBLIC_KEY
       );
 
@@ -226,7 +226,7 @@ export default function TypeformInscription({ id = 'inscricao' }) {
 
       toast.error('❌ Erro ao enviar inscrição', {
         description: errorDescription,
-        duration: 10000,
+        duration: 10_000,
         action: {
           label: 'Abrir WhatsApp',
           onClick: () => openWhatsApp(data)
@@ -588,7 +588,7 @@ export default function TypeformInscription({ id = 'inscricao' }) {
                           </>
                         )}
                       </Button>
-                    ) : currentStep < STEPS.length - 1 ? (
+                    ) : (currentStep < STEPS.length - 1 ? (
                       <Button
                         type="button"
                         onClick={handleNext}
@@ -597,7 +597,7 @@ export default function TypeformInscription({ id = 'inscricao' }) {
                         {currentStepData.optional ? 'Pular' : 'Próximo'}
                         <ArrowRight className="w-5 h-5 ml-2" />
                       </Button>
-                    ) : null}
+                    ) : null)}
                   </div>
 
                   {/* Hint de navegação */}

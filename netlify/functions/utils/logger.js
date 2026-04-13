@@ -14,20 +14,20 @@ const LOG_LEVELS = {
 
 // Mapeamento de níveis para cores (para desenvolvimento local)
 const LOG_COLORS = {
-  DEBUG: '\x1b[36m', // Cyan
-  INFO: '\x1b[32m',  // Green
-  WARN: '\x1b[33m',  // Yellow
-  ERROR: '\x1b[31m', // Red
-  FATAL: '\x1b[35m'  // Magenta
+  DEBUG: '\u001B[36m', // Cyan
+  INFO: '\u001B[32m',  // Green
+  WARN: '\u001B[33m',  // Yellow
+  ERROR: '\u001B[31m', // Red
+  FATAL: '\u001B[35m'  // Magenta
 };
 
-const RESET_COLOR = '\x1b[0m';
+const RESET_COLOR = '\u001B[0m';
 
 /**
  * Gera um ID único para rastreamento de requests
  */
 function generateRequestId() {
-  return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+  return `${Date.now()}-${Math.random().toString(36).slice(2, 11)}`;
 }
 
 /**
@@ -39,11 +39,11 @@ function sanitizeData(data) {
   const sensitiveKeys = ['password', 'token', 'secret', 'key', 'authorization', 'cookie'];
   const sanitized = { ...data };
   
-  Object.keys(sanitized).forEach(key => {
+  for (const key of Object.keys(sanitized)) {
     if (sensitiveKeys.some(sensitive => key.toLowerCase().includes(sensitive))) {
       sanitized[key] = '[REDACTED]';
     }
-  });
+  }
   
   return sanitized;
 }
@@ -70,12 +70,12 @@ function formatLog(level, message, context = {}, requestId = null) {
     // Em desenvolvimento, use formato colorido para melhor legibilidade
     const color = LOG_COLORS[level] || '';
     const levelPadded = level.padEnd(5);
-    const contextStr = Object.keys(context).length > 0 
+    const contextString = Object.keys(context).length > 0 
       ? ` | ${JSON.stringify(sanitizeData(context))}` 
       : '';
-    const requestIdStr = requestId ? ` [${requestId}]` : '';
+    const requestIdString = requestId ? ` [${requestId}]` : '';
     
-    return `${color}${timestamp} [${levelPadded}]${RESET_COLOR}${requestIdStr} ${message}${contextStr}`;
+    return `${color}${timestamp} [${levelPadded}]${RESET_COLOR}${requestIdString} ${message}${contextString}`;
   }
 }
 

@@ -136,7 +136,7 @@ const BlogPost = () => {
   // Generate structured data for the article
   const generateArticleStructuredData = () => {
     const baseUrl = 'https://www.escolahabilidade.com';
-    const wordCount = post.content ? post.content.replace(/<[^>]*?>/g, '').split(' ').length : 0;
+    const wordCount = post.content ? post.content.replaceAll(/<[^>]*?>/g, '').split(' ').length : 0;
     
     return {
       '@context': 'https://schema.org',

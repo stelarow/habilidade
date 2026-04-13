@@ -17,13 +17,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Criação do campo de estrelas (apenas para Hero)
 function initializeStarfield() {
-    const starfield = document.getElementById('starfield-hero');
+    const starfield = document.querySelector('#starfield-hero');
     starfield.innerHTML = '';
     let starCount = STAR_COUNT;
     if (window.innerWidth <= 480) {
         starCount = 25;
     }
-    for (let i = 0; i < starCount; i++) {
+    for (let index = 0; index < starCount; index++) {
         const star = document.createElement('div');
         star.className = 'star';
         star.style.left = Math.random() * 100 + '%';
@@ -33,13 +33,13 @@ function initializeStarfield() {
         star.style.height = size + 'px';
         star.style.animationDelay = Math.random() * 3 + 's';
         star.style.animationDuration = (Math.random() * 2 + 2) + 's';
-        starfield.appendChild(star);
+        starfield.append(star);
     }
 }
 
 // Efeitos de scroll
 function initializeScrollEffects() {
-    const header = document.getElementById('header');
+    const header = document.querySelector('#header');
     
     window.addEventListener('scroll', function() {
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
@@ -59,7 +59,7 @@ function initializeScrollEffects() {
 // Animações de entrada
 function initializeAnimations() {
     // Animação de entrada do header
-    const header = document.getElementById('header');
+    const header = document.querySelector('#header');
     header.style.transform = 'translateY(-100%)';
     header.style.transition = 'transform 0.8s ease';
     
@@ -87,12 +87,12 @@ function initializeIntersectionObserver() {
     };
     
     const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
+        for (const entry of entries) {
             if (entry.isIntersecting) {
                 entry.target.style.opacity = '1';
                 entry.target.style.transform = 'translateY(0)';
             }
-        });
+        }
     }, observerOptions);
     
     // Elementos para animar
@@ -104,33 +104,33 @@ function initializeIntersectionObserver() {
         .hero-content
     `);
     
-    animatedElements.forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(50px)';
-        el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-        observer.observe(el);
-    });
+    for (const element of animatedElements) {
+        element.style.opacity = '0';
+        element.style.transform = 'translateY(50px)';
+        element.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+        observer.observe(element);
+    }
 }
 
 // Animação de scroll suave
 function animateOnScroll() {
     const elements = document.querySelectorAll('.problem-card, .testimonial-card, .etapa-item');
     
-    elements.forEach(element => {
+    for (const element of elements) {
         const elementTop = element.getBoundingClientRect().top;
         const elementVisible = 150;
         
         if (elementTop < window.innerHeight - elementVisible) {
             element.classList.add('animate-in');
         }
-    });
+    }
 }
 
 // Efeitos de hover para botões
 document.addEventListener('DOMContentLoaded', function() {
     const buttons = document.querySelectorAll('.btn');
     
-    buttons.forEach(button => {
+    for (const button of buttons) {
         button.addEventListener('mouseenter', function() {
             this.style.transform = 'scale(1.02)';
             this.style.boxShadow = '0 0 20px rgba(212, 0, 255, 0.5)';
@@ -140,14 +140,14 @@ document.addEventListener('DOMContentLoaded', function() {
             this.style.transform = 'scale(1)';
             this.style.boxShadow = 'none';
         });
-    });
+    }
 });
 
 // Efeitos de hover para cards
 document.addEventListener('DOMContentLoaded', function() {
     const cards = document.querySelectorAll('.problem-card, .testimonial-card');
     
-    cards.forEach(card => {
+    for (const card of cards) {
         card.addEventListener('mouseenter', function() {
             this.style.transform = 'translateY(-8px)';
             this.style.boxShadow = '0 8px 30px rgba(212, 0, 255, 0.2)';
@@ -157,14 +157,14 @@ document.addEventListener('DOMContentLoaded', function() {
             this.style.transform = 'translateY(0)';
             this.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.1)';
         });
-    });
+    }
 });
 
 // Scroll suave para links internos
 document.addEventListener('DOMContentLoaded', function() {
     const internalLinks = document.querySelectorAll('a[href^="#"]');
     
-    internalLinks.forEach(link => {
+    for (const link of internalLinks) {
         link.addEventListener('click', function(e) {
             e.preventDefault();
             
@@ -172,7 +172,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const targetElement = document.querySelector(targetId);
             
             if (targetElement) {
-                const headerHeight = document.getElementById('header').offsetHeight;
+                const headerHeight = document.querySelector('#header').offsetHeight;
                 const targetPosition = targetElement.offsetTop - headerHeight;
                 
                 window.scrollTo({
@@ -181,19 +181,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             }
         });
-    });
+    }
 });
 
 // Animação das orbs
 function animateOrbs() {
     const orbs = document.querySelectorAll('.orb');
     
-    orbs.forEach((orb, index) => {
+    for (const [index, orb] of orbs.entries()) {
         const duration = 6 + (index * 2); // 6s e 8s
         const delay = index * 2; // Delay diferente para cada orb
         
         orb.style.animation = `float ${duration}s ease-in-out ${delay}s infinite`;
-    });
+    }
 }
 
 // Inicializar animação das orbs
@@ -206,21 +206,21 @@ window.addEventListener('scroll', function() {
     const scrolled = window.pageYOffset;
     const orbs = document.querySelectorAll('.orb');
     
-    orbs.forEach((orb, index) => {
+    for (const [index, orb] of orbs.entries()) {
         const speed = 0.5 + (index * 0.2);
         const yPos = -(scrolled * speed);
         orb.style.transform = `translateY(${yPos}px)`;
-    });
+    }
 });
 
 // Otimização de performance - throttling para eventos de scroll
-function throttle(func, limit) {
+function throttle(function_, limit) {
     let inThrottle;
     return function() {
-        const args = arguments;
+        const arguments_ = arguments;
         const context = this;
         if (!inThrottle) {
-            func.apply(context, args);
+            function_.apply(context, arguments_);
             inThrottle = true;
             setTimeout(() => inThrottle = false, limit);
         }
@@ -230,7 +230,7 @@ function throttle(func, limit) {
 // Aplicar throttling aos eventos de scroll
 window.addEventListener('scroll', throttle(function() {
     // Efeitos de scroll existentes
-    const header = document.getElementById('header');
+    const header = document.querySelector('#header');
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
     
     if (scrollTop > 50) {
@@ -254,7 +254,7 @@ window.addEventListener('load', function() {
 function highlightImportantElements() {
     const importantElements = document.querySelectorAll('.btn-primary, .hero-title, .cta-title');
     
-    importantElements.forEach(element => {
+    for (const element of importantElements) {
         element.addEventListener('mouseenter', function() {
             this.style.textShadow = '0 0 10px rgba(212, 0, 255, 0.5)';
         });
@@ -262,7 +262,7 @@ function highlightImportantElements() {
         element.addEventListener('mouseleave', function() {
             this.style.textShadow = 'none';
         });
-    });
+    }
 }
 
 // Inicializar efeitos de destaque
@@ -274,8 +274,8 @@ document.addEventListener('DOMContentLoaded', function() {
 function animateCounters() {
     const counters = document.querySelectorAll('.counter');
     
-    counters.forEach(counter => {
-        const target = parseInt(counter.getAttribute('data-target'));
+    for (const counter of counters) {
+        const target = Number.parseInt(counter.dataset.target);
         const duration = 2000; // 2 segundos
         const increment = target / (duration / 16); // 60fps
         let current = 0;
@@ -291,7 +291,7 @@ function animateCounters() {
         };
         
         updateCounter();
-    });
+    }
 }
 
 // Verificar se há contadores na página
@@ -300,17 +300,17 @@ document.addEventListener('DOMContentLoaded', function() {
     if (counters.length > 0) {
         // Observer para animar contadores quando entrarem no viewport
         const counterObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
+            for (const entry of entries) {
                 if (entry.isIntersecting) {
                     animateCounters();
                     counterObserver.unobserve(entry.target);
                 }
-            });
+            }
         }, { threshold: 0.5 });
         
-        counters.forEach(counter => {
+        for (const counter of counters) {
             counterObserver.observe(counter);
-        });
+        }
     }
 });
 
@@ -327,7 +327,7 @@ const typewriterWords = [
     'Enscape'
 ];
 
-const typewriterElement = document.getElementById('typewriter');
+const typewriterElement = document.querySelector('#typewriter');
 let typewriterIndex = 0;
 let typewriterChar = 0;
 let typewriterDeleting = false;
@@ -335,21 +335,13 @@ let typewriterTimeout;
 
 function typewriterLoop() {
     const word = typewriterWords[typewriterIndex];
-    let display = word.substring(0, typewriterChar);
+    let display = word.slice(0, Math.max(0, typewriterChar));
     typewriterElement.textContent = display;
     typewriterElement.setAttribute('aria-label', 'Habilidade em ' + display);
     if (display.length === 0) {
         typewriterElement.innerHTML = '&nbsp;';
     }
-    if (!typewriterDeleting) {
-        if (typewriterChar < word.length) {
-            typewriterChar++;
-            typewriterTimeout = setTimeout(typewriterLoop, 80);
-        } else {
-            typewriterDeleting = true;
-            typewriterTimeout = setTimeout(typewriterLoop, 2000);
-        }
-    } else {
+    if (typewriterDeleting) {
         if (typewriterChar > 0) {
             typewriterChar--;
             typewriterTimeout = setTimeout(typewriterLoop, 40);
@@ -357,6 +349,14 @@ function typewriterLoop() {
             typewriterDeleting = false;
             typewriterIndex = (typewriterIndex + 1) % typewriterWords.length;
             typewriterTimeout = setTimeout(typewriterLoop, 300);
+        }
+    } else {
+        if (typewriterChar < word.length) {
+            typewriterChar++;
+            typewriterTimeout = setTimeout(typewriterLoop, 80);
+        } else {
+            typewriterDeleting = true;
+            typewriterTimeout = setTimeout(typewriterLoop, 2000);
         }
     }
 }
@@ -390,7 +390,7 @@ function showPreloader() {
         transition: opacity 0.5s ease;
     `;
     
-    document.body.appendChild(preloader);
+    document.body.append(preloader);
     
     // Remover preloader após carregamento
     window.addEventListener('load', function() {
@@ -409,8 +409,8 @@ if (document.readyState === 'loading') {
 }
 
 // Mobile Hamburger Menu
-const hamburger = document.getElementById('hamburger');
-const mobileMenu = document.getElementById('mobile-menu');
+const hamburger = document.querySelector('#hamburger');
+const mobileMenu = document.querySelector('#mobile-menu');
 
 if (hamburger && mobileMenu) {
     hamburger.addEventListener('click', function() {
@@ -421,14 +421,14 @@ if (hamburger && mobileMenu) {
         setTimeout(updateHeroPaddingAndScrollMargin, 350); // após animação do menu
     });
     // Fechar menu ao clicar em um link
-    mobileMenu.querySelectorAll('a').forEach(link => {
+    for (const link of mobileMenu.querySelectorAll('a')) {
         link.addEventListener('click', () => {
             mobileMenu.classList.remove('open');
             hamburger.setAttribute('aria-expanded', false);
             mobileMenu.setAttribute('aria-hidden', true);
             document.body.style.overflow = '';
         });
-    });
+    }
 }
 
 // Ajustar orbs para mobile
@@ -467,7 +467,7 @@ window.addEventListener('resize', function() {
 // Ajuste dinâmico de padding-top do Hero e scroll-margin-top das seções no mobile
 function updateHeroPaddingAndScrollMargin() {
     if (window.innerWidth <= 480) {
-        const header = document.getElementById('header');
+        const header = document.querySelector('#header');
         const hero = document.querySelector('.hero');
         if (header && hero) {
             const headerHeight = header.offsetHeight;
@@ -476,17 +476,17 @@ function updateHeroPaddingAndScrollMargin() {
         }
         // Ajustar scroll-margin-top para todas as seções âncora
         const sections = document.querySelectorAll('section[id]');
-        sections.forEach(section => {
+        for (const section of sections) {
             section.style.scrollMarginTop = `calc(var(--header-h, 0px) + 16px)`;
-        });
+        }
     } else {
         // Remover padding extra no desktop
         const hero = document.querySelector('.hero');
         if (hero) hero.style.paddingTop = '';
         const sections = document.querySelectorAll('section[id]');
-        sections.forEach(section => {
+        for (const section of sections) {
             section.style.scrollMarginTop = '';
-        });
+        }
     }
 }
 
@@ -495,7 +495,7 @@ function initializeSectionStarfield(starfieldId, count) {
     const starfield = document.getElementById(starfieldId);
     if (!starfield) return;
     starfield.innerHTML = '';
-    for (let i = 0; i < count; i++) {
+    for (let index = 0; index < count; index++) {
         const star = document.createElement('div');
         star.className = 'star';
         star.style.left = Math.random() * 100 + '%';
@@ -505,6 +505,6 @@ function initializeSectionStarfield(starfieldId, count) {
         star.style.height = size + 'px';
         star.style.animationDelay = Math.random() * 3 + 's';
         star.style.animationDuration = (Math.random() * 2 + 2) + 's';
-        starfield.appendChild(star);
+        starfield.append(star);
     }
 } 

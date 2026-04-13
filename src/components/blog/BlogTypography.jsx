@@ -8,7 +8,7 @@ const BlogTypography = ({
   variant = 'article', 
   className = '',
   maxWidth = 'reading',
-  ...props 
+  ...properties 
 }) => {
   const { getTypographyClasses, readingWidth, isMobile } = useBlogResponsive();
 
@@ -49,7 +49,7 @@ const BlogTypography = ({
         // Custom CSS properties for optimal reading
         '--reading-width': `${readingWidth}px`
       }}
-      {...props}
+      {...properties}
     >
       {children}
     </div>
@@ -62,7 +62,7 @@ export const BlogTitle = ({
   level = 1, 
   className = '',
   gradient = false,
-  ...props 
+  ...properties 
 }) => {
   const { getTypographyClasses } = useBlogResponsive();
   
@@ -76,7 +76,7 @@ export const BlogTitle = ({
   );
 
   return (
-    <Tag className={baseClasses} {...props}>
+    <Tag className={baseClasses} {...properties}>
       {children}
     </Tag>
   );
@@ -85,7 +85,7 @@ export const BlogTitle = ({
 export const BlogSubtitle = ({ 
   children, 
   className = '',
-  ...props 
+  ...properties 
 }) => {
   const { getTypographyClasses } = useBlogResponsive();
   
@@ -96,7 +96,7 @@ export const BlogSubtitle = ({
         getTypographyClasses('subtitle'),
         className
       )}
-      {...props}
+      {...properties}
     >
       {children}
     </h2>
@@ -106,7 +106,7 @@ export const BlogSubtitle = ({
 export const BlogExcerpt = ({ 
   children, 
   className = '',
-  ...props 
+  ...properties 
 }) => {
   const { getTypographyClasses } = useBlogResponsive();
   
@@ -117,7 +117,7 @@ export const BlogExcerpt = ({
         getTypographyClasses('body'),
         className
       )}
-      {...props}
+      {...properties}
     >
       {children}
     </p>
@@ -129,7 +129,7 @@ export const BlogMeta = ({
   className = '',
   separator = '"',
   items = [],
-  ...props 
+  ...properties 
 }) => {
   const { getTypographyClasses } = useBlogResponsive();
   
@@ -141,7 +141,7 @@ export const BlogMeta = ({
 
   if (items.length > 0) {
     return (
-      <div className={metaClasses} {...props}>
+      <div className={metaClasses} {...properties}>
         {items.map((item, index) => (
           <React.Fragment key={index}>
             {index > 0 && (
@@ -157,7 +157,7 @@ export const BlogMeta = ({
   }
 
   return (
-    <div className={metaClasses} {...props}>
+    <div className={metaClasses} {...properties}>
       {children}
     </div>
   );
@@ -167,7 +167,7 @@ export const BlogQuote = ({
   children, 
   author, 
   className = '',
-  ...props 
+  ...properties 
 }) => {
   const { getTypographyClasses } = useBlogResponsive();
   
@@ -178,7 +178,7 @@ export const BlogQuote = ({
         getTypographyClasses('body'),
         className
       )}
-      {...props}
+      {...properties}
     >
       <p className="text-zinc-200 italic mb-2">
         "{children}"
@@ -197,7 +197,7 @@ export const BlogCode = ({
   inline = false, 
   language, 
   className = '',
-  ...props 
+  ...properties 
 }) => {
   const baseClasses = 'blog-code font-mono';
   
@@ -209,7 +209,7 @@ export const BlogCode = ({
           'px-1.5 py-0.5 text-sm bg-zinc-800 text-zinc-200 rounded',
           className
         )}
-        {...props}
+        {...properties}
       >
         {children}
       </code>
@@ -222,7 +222,7 @@ export const BlogCode = ({
         'overflow-x-auto p-4 bg-zinc-900 rounded-lg my-6',
         className
       )}
-      {...props}
+      {...properties}
     >
       <code 
         className={combineClasses(
@@ -241,7 +241,7 @@ export const BlogHighlight = ({
   children, 
   color = 'primary', 
   className = '',
-  ...props 
+  ...properties 
 }) => {
   const colorMap = {
     primary: 'bg-fuchsia-500/20 text-fuchsia-300',
@@ -258,7 +258,7 @@ export const BlogHighlight = ({
         colorMap[color] || colorMap.primary,
         className
       )}
-      {...props}
+      {...properties}
     >
       {children}
     </mark>
@@ -269,7 +269,7 @@ export const BlogList = ({
   children, 
   ordered = false, 
   className = '',
-  ...props 
+  ...properties 
 }) => {
   const Tag = ordered ? 'ol' : 'ul';
   const { getTypographyClasses } = useBlogResponsive();
@@ -282,7 +282,7 @@ export const BlogList = ({
   );
 
   return (
-    <Tag className={listClasses} {...props}>
+    <Tag className={listClasses} {...properties}>
       {children}
     </Tag>
   );
@@ -291,7 +291,7 @@ export const BlogList = ({
 export const BlogListItem = ({ 
   children, 
   className = '',
-  ...props 
+  ...properties 
 }) => {
   return (
     <li 
@@ -299,7 +299,7 @@ export const BlogListItem = ({
         'text-zinc-300 leading-relaxed',
         className
       )}
-      {...props}
+      {...properties}
     >
       {children}
     </li>
@@ -310,7 +310,7 @@ export const BlogListItem = ({
 export const BlogReadingContainer = ({ 
   children, 
   className = '',
-  ...props 
+  ...properties 
 }) => {
   const { readingWidth, isMobile } = useBlogResponsive();
   
@@ -326,7 +326,7 @@ export const BlogReadingContainer = ({
         // Custom reading width based on screen size
         maxWidth: isMobile ? '100%' : `${readingWidth}px`
       }}
-      {...props}
+      {...properties}
     >
       {children}
     </div>
@@ -339,7 +339,7 @@ export const BlogLink = ({
   href, 
   external = false, 
   className = '',
-  ...props 
+  ...properties 
 }) => {
   const linkClasses = combineClasses(
     'text-fuchsia-400 hover:text-fuchsia-300 underline underline-offset-2',
@@ -355,7 +355,7 @@ export const BlogLink = ({
         className={linkClasses}
         target="_blank"
         rel="noopener noreferrer"
-        {...props}
+        {...properties}
       >
         {children}
         <span className="sr-only"> (abre em nova aba)</span>
@@ -364,7 +364,7 @@ export const BlogLink = ({
   }
 
   return (
-    <a href={href} className={linkClasses} {...props}>
+    <a href={href} className={linkClasses} {...properties}>
       {children}
     </a>
   );

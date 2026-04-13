@@ -1,4 +1,4 @@
-const fs = require('fs');
+const fs = require('node:fs');
 const pdf = require('pdf-parse');
 
 async function extractPdfText() {

@@ -36,26 +36,26 @@ const loadFramerMotion = () => {
 export const motion = new Proxy(
   {},
   {
-    get: (target, prop) => {
+    get: (target, property) => {
       // Retorna componente que carrega motion dinamicamente
-      return (props) => {
+      return (properties) => {
         const [MotionComponent, setMotionComponent] = React.useState(null);
 
         React.useEffect(() => {
           loadFramerMotion().then(module => {
-            if (module && module.motion && module.motion[prop]) {
-              setMotionComponent(() => module.motion[prop]);
+            if (module && module.motion && module.motion[property]) {
+              setMotionComponent(() => module.motion[property]);
             }
           });
         }, []);
 
         // Fallback para elemento estático enquanto carrega
         if (!MotionComponent) {
-          const { initial, animate, exit, variants, transition, whileHover, whileInView, ...restProps } = props;
-          return React.createElement(prop, restProps);
+          const { initial, animate, exit, variants, transition, whileHover, whileInView, ...restProperties } = properties;
+          return React.createElement(property, restProperties);
         }
 
-        return React.createElement(MotionComponent, props);
+        return React.createElement(MotionComponent, properties);
       };
     }
   }
@@ -64,7 +64,7 @@ export const motion = new Proxy(
 /**
  * AnimatePresence wrapper
  */
-export const AnimatePresence = ({ children, ...props }) => {
+export const AnimatePresence = ({ children, ...properties }) => {
   const [Component, setComponent] = React.useState(null);
 
   React.useEffect(() => {
@@ -80,11 +80,12 @@ export const AnimatePresence = ({ children, ...props }) => {
     return children;
   }
 
-  return React.createElement(Component, props, children);
+  return React.createElement(Component, properties, children);
 };
 
 // Para compatibilidade com código existente
-export { motion as default };
+export default motion;
+
 
 // Hook para pré-carregar framer motion
 export const usePreloadMotion = () => {

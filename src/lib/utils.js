@@ -10,7 +10,7 @@ export function formatPhoneNumber(value) {
   if (!value) return '';
 
   // Remove todos os caracteres que não são números
-  const phoneNumber = value.replace(/[^\d]/g, '');
+  const phoneNumber = value.replaceAll(/[^\d]/g, '');
 
   // Limita a 11 dígitos (2 do DDD + 9 do celular)
   const limitedPhone = phoneNumber.slice(0, 11);

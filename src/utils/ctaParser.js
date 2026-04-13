@@ -18,7 +18,7 @@ export const countWords = (htmlContent) => {
   if (!htmlContent) return 0;
   
   // Remove tags HTML e conta palavras
-  const textContent = htmlContent.replace(/<[^>]*>/g, ' ');
+  const textContent = htmlContent.replaceAll(/<[^>]*>/g, ' ');
   const words = textContent.trim().split(/\s+/);
   return words.filter(word => word.length > 0).length;
 };
@@ -54,7 +54,7 @@ export const calculateOptimalPositions = (paragraphs, config = DEFAULT_CONFIG) =
   const totalParagraphs = paragraphs.length;
 
   // Calcula posi��es baseadas nas prefer�ncias
-  config.preferredPositions.forEach(ratio => {
+  for (const ratio of config.preferredPositions) {
     const targetIndex = Math.floor(totalParagraphs * ratio);
     
     // Garante que n�o seja muito pr�ximo do in�cio ou fim
@@ -66,7 +66,7 @@ export const calculateOptimalPositions = (paragraphs, config = DEFAULT_CONFIG) =
     if (adjustedIndex >= 0 && adjustedIndex < totalParagraphs) {
       positions.push(adjustedIndex);
     }
-  });
+  }
 
   // Remove duplicatas e ordena
   return [...new Set(positions)].sort((a, b) => a - b).slice(0, config.maxInlineCTAs);
@@ -166,7 +166,7 @@ export const generateContextualCTAs = (post) => {
   let bestMatch = null;
   let bestScore = 0;
 
-  Object.entries(ctaTemplates).forEach(([key, template]) => {
+  for (const [key, template] of Object.entries(ctaTemplates)) {
     const matchingKeywords = template.keywords.filter(keyword => 
       allText.includes(keyword)
     );
@@ -176,7 +176,7 @@ export const generateContextualCTAs = (post) => {
       bestScore = score;
       bestMatch = template.cta;
     }
-  });
+  }
 
   // Se encontrou uma correspond�ncia, adiciona o CTA
   if (bestMatch && bestScore > 0) {
@@ -212,7 +212,7 @@ export const generateContextualCTAs = (post) => {
  * Insere CTAs inline no conte�do HTML
  */
 export const insertInlineCTAs = (htmlContent, ctas, config = DEFAULT_CONFIG) => {
-  if (!shouldShowInlineCTAs(htmlContent, config) || !ctas.length) {
+  if (!shouldShowInlineCTAs(htmlContent, config) || ctas.length === 0) {
     return htmlContent;
   }
 
@@ -227,7 +227,7 @@ export const insertInlineCTAs = (htmlContent, ctas, config = DEFAULT_CONFIG) => 
   let insertionOffset = 0;
 
   // Insere CTAs nas posi��es calculadas
-  positions.forEach((position, index) => {
+  for (const [index, position] of positions.entries()) {
     if (index < ctas.length) {
       const cta = ctas[index];
       const ctaId = `inline-cta-${index}`;
@@ -252,7 +252,7 @@ export const insertInlineCTAs = (htmlContent, ctas, config = DEFAULT_CONFIG) => 
         }
       }
     }
-  });
+  }
 
   return modifiedContent;
 };
@@ -265,7 +265,7 @@ export const processCtaPlaceholders = (containerElement, onCtaRender) => {
 
   const placeholders = containerElement.querySelectorAll('.inline-cta-placeholder');
   
-  placeholders.forEach((placeholder, index) => {
+  for (const [index, placeholder] of placeholders.entries()) {
     const ctaData = {
       id: placeholder.dataset.ctaId || `cta-${index}`,
       type: placeholder.dataset.ctaType || 'course',
@@ -276,7 +276,7 @@ export const processCtaPlaceholders = (containerElement, onCtaRender) => {
     };
 
     onCtaRender(placeholder, ctaData);
-  });
+  }
 };
 
 export default {

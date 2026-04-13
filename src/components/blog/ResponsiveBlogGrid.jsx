@@ -9,7 +9,7 @@ const ResponsiveBlogGrid = ({
   gap = 'medium', // small, medium, large
   animation = 'fade', // fade, slide, none
   className = '',
-  ...props
+  ...properties
 }) => {
   const { isMobile, isTablet, isDesktop, gridColumns } = useBlogResponsive();
 
@@ -25,12 +25,15 @@ const ResponsiveBlogGrid = ({
     if (columns === 'auto') {
       // Responsive auto columns based on content
       switch (variant) {
-        case 'masonry':
+        case 'masonry': {
           return 'columns-1 md:columns-2 lg:columns-3';
-        case 'featured':
+        }
+        case 'featured': {
           return 'grid grid-cols-1 lg:grid-cols-3';
-        default:
+        }
+        default: {
           return 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3';
+        }
       }
     }
     
@@ -63,7 +66,7 @@ const ResponsiveBlogGrid = ({
   // Handle masonry layout
   if (variant === 'masonry') {
     return (
-      <div className={gridClasses} {...props}>
+      <div className={gridClasses} {...properties}>
         {React.Children.map(children, (child, index) => (
           <div 
             key={index}
@@ -87,7 +90,7 @@ const ResponsiveBlogGrid = ({
     const remainingPosts = childrenArray.slice(1);
 
     return (
-      <div className={combineClasses('space-y-8', className)} {...props}>
+      <div className={combineClasses('space-y-8', className)} {...properties}>
         {/* Featured post - full width */}
         <div className={combineClasses(
           'featured-post',
@@ -122,7 +125,7 @@ const ResponsiveBlogGrid = ({
 
   // Standard grid layout
   return (
-    <div className={gridClasses} {...props}>
+    <div className={gridClasses} {...properties}>
       {React.Children.map(children, (child, index) => (
         <div 
           key={index}
@@ -139,27 +142,27 @@ const ResponsiveBlogGrid = ({
 };
 
 // Specialized grid components
-export const BlogPostGrid = (props) => (
-  <ResponsiveBlogGrid variant="standard" {...props} />
+export const BlogPostGrid = (properties) => (
+  <ResponsiveBlogGrid variant="standard" {...properties} />
 );
 
-export const BlogMasonryGrid = (props) => (
-  <ResponsiveBlogGrid variant="masonry" {...props} />
+export const BlogMasonryGrid = (properties) => (
+  <ResponsiveBlogGrid variant="masonry" {...properties} />
 );
 
-export const BlogFeaturedGrid = (props) => (
-  <ResponsiveBlogGrid variant="featured" {...props} />
+export const BlogFeaturedGrid = (properties) => (
+  <ResponsiveBlogGrid variant="featured" {...properties} />
 );
 
 // Grid container with consistent spacing
-export const BlogGridContainer = ({ children, className = '', ...props }) => {
+export const BlogGridContainer = ({ children, className = '', ...properties }) => {
   return (
     <div 
       className={combineClasses(
         'w-full max-w-7xl mx-auto px-4',
         className
       )}
-      {...props}
+      {...properties}
     >
       {children}
     </div>
@@ -173,14 +176,14 @@ export const BlogGridSection = ({
   children, 
   sidebar,
   className = '',
-  ...props 
+  ...properties 
 }) => {
   const { isMobile } = useBlogResponsive();
 
   return (
     <section 
       className={combineClasses('space-y-6', className)}
-      {...props}
+      {...properties}
     >
       {/* Section header */}
       {(title || subtitle) && (

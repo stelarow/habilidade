@@ -34,13 +34,13 @@ export const onLoadProgress = (callback) => {
  * Notifica progresso para todos os callbacks
  */
 const notifyProgress = (progress) => {
-  progressCallbacks.forEach(callback => {
+  for (const callback of progressCallbacks) {
     try {
       callback(progress);
     } catch (error) {
       console.warn('PDF Worker: Callback error:', error);
     }
-  });
+  }
 };
 
 /**

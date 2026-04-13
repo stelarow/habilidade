@@ -108,7 +108,7 @@ class ImageService {
       // Clean up processing queue after delay
       setTimeout(() => {
         this.processingQueue.delete(processingId);
-      }, 60000); // Keep for 1 minute for status checking
+      }, 60_000); // Keep for 1 minute for status checking
     }
   }
 
@@ -120,8 +120,8 @@ class ImageService {
     const results = [];
     
     // Process in batches to avoid overwhelming the system
-    for (let i = 0; i < files.length; i += batchSize) {
-      const batch = files.slice(i, i + batchSize);
+    for (let index = 0; index < files.length; index += batchSize) {
+      const batch = files.slice(index, index + batchSize);
       
       const batchPromises = batch.map(file => 
         this.processImage(file, options).catch(error => ({
@@ -134,7 +134,7 @@ class ImageService {
       results.push(...batchResults);
 
       // Delay between batches
-      if (i + batchSize < files.length) {
+      if (index + batchSize < files.length) {
         await this.delay(this.config.processingDelay);
       }
     }
@@ -175,9 +175,9 @@ class ImageService {
       metadata.lastModified = file.lastModified;
       
       // Calculate additional metrics
-      metadata.megapixels = Math.round((metadata.width * metadata.height) / 1000000 * 10) / 10;
+      metadata.megapixels = Math.round((metadata.width * metadata.height) / 1_000_000 * 10) / 10;
       metadata.orientation = metadata.width > metadata.height ? 'landscape' : 
-                           metadata.height > metadata.width ? 'portrait' : 'square';
+                           (metadata.height > metadata.width ? 'portrait' : 'square');
       
       return metadata;
     } finally {
@@ -312,19 +312,19 @@ class ImageService {
 
     if (processedResults.thumbnails) {
       uploadResults.urls.thumbnails = {};
-      Object.keys(processedResults.thumbnails).forEach(size => {
+      for (const size of Object.keys(processedResults.thumbnails)) {
         uploadResults.urls.thumbnails[size] = `https://example.com/thumb-${size}.webp`;
-      });
+      }
     }
 
     if (processedResults.responsive) {
       uploadResults.urls.responsive = {};
-      Object.entries(processedResults.responsive).forEach(([format, variants]) => {
+      for (const [format, variants] of Object.entries(processedResults.responsive)) {
         uploadResults.urls.responsive[format] = {};
-        Object.keys(variants).forEach(size => {
+        for (const size of Object.keys(variants)) {
           uploadResults.urls.responsive[format][size] = `https://example.com/${format}-${size}.${format}`;
-        });
-      });
+        }
+      }
     }
 
     return uploadResults;
@@ -341,7 +341,7 @@ class ImageService {
    * Get all processing statuses
    */
   getAllProcessingStatuses() {
-    return Array.from(this.processingQueue.values());
+    return [...this.processingQueue.values()];
   }
 
   /**
@@ -426,7 +426,7 @@ class ImageService {
    * Utility methods
    */
   generateProcessingId() {
-    return `proc_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    return `proc_${Date.now()}_${Math.random().toString(36).slice(2, 11)}`;
   }
 
   delay(ms) {
@@ -444,7 +444,7 @@ class ImageService {
    * Get service statistics
    */
   getStats() {
-    const processingStatuses = Array.from(this.processingQueue.values());
+    const processingStatuses = [...this.processingQueue.values()];
     
     return {
       processing: {

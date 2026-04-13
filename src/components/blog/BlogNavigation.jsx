@@ -33,7 +33,7 @@ const BlogNavigation = ({
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [popularPosts] = useState([]); // This would come from API in real implementation
   
-  const searchInputRef = useRef(null);
+  const searchInputReference = useRef(null);
   const location = useLocation();
   const navigate = useNavigate();
   
@@ -47,14 +47,14 @@ const BlogNavigation = ({
     onSearchChange?.(value);
     
     // Update URL with search query
-    const searchParams = new URLSearchParams(location.search);
+    const searchParameters = new URLSearchParams(location.search);
     if (value.trim()) {
-      searchParams.set('search', value.trim());
+      searchParameters.set('search', value.trim());
     } else {
-      searchParams.delete('search');
+      searchParameters.delete('search');
     }
     
-    const newUrl = `${location.pathname}?${searchParams.toString()}`;
+    const newUrl = `${location.pathname}?${searchParameters.toString()}`;
     navigate(newUrl, { replace: true });
   };
   
@@ -73,8 +73,8 @@ const BlogNavigation = ({
   
   // Clear all filters
   const clearFilters = () => {
-    if (searchInputRef.current) {
-      searchInputRef.current.value = '';
+    if (searchInputReference.current) {
+      searchInputReference.current.value = '';
     }
     onSearchChange?.('');
     onCategoryChange?.(null);
@@ -93,12 +93,12 @@ const BlogNavigation = ({
       // Ctrl/Cmd + K to focus search
       if ((event.ctrlKey || event.metaKey) && event.key === 'k') {
         event.preventDefault();
-        searchInputRef.current?.focus();
+        searchInputReference.current?.focus();
       }
       
       // Escape to clear search when focused
       if (event.key === 'Escape' && isSearchFocused) {
-        searchInputRef.current?.blur();
+        searchInputReference.current?.blur();
         if (searchQuery) {
           onSearchChange?.('');
         }
@@ -121,7 +121,7 @@ const BlogNavigation = ({
             />
           </div>
           <input
-            ref={searchInputRef}
+            ref={searchInputReference}
             type="text"
             placeholder="Pesquisar artigos... (Ctrl+K)"
             defaultValue={searchQuery}
@@ -133,8 +133,8 @@ const BlogNavigation = ({
           {searchQuery && (
             <button
               onClick={() => {
-                if (searchInputRef.current) {
-                  searchInputRef.current.value = '';
+                if (searchInputReference.current) {
+                  searchInputReference.current.value = '';
                   onSearchChange?.('');
                 }
               }}
@@ -179,8 +179,8 @@ const BlogNavigation = ({
         
         {categoriesLoading ? (
           <div className="space-y-2">
-            {[...Array(5)].map((_, i) => (
-              <div key={i} className="h-8 bg-zinc-700/30 rounded animate-pulse" />
+            {Array.from({length: 5}).map((_, index) => (
+              <div key={index} className="h-8 bg-zinc-700/30 rounded animate-pulse" />
             ))}
           </div>
         ) : (
@@ -214,7 +214,7 @@ const BlogNavigation = ({
             {categories.length === 0 && (
               <div className="text-center py-6 text-zinc-500">
                 <Tag size={24} className="mx-auto mb-2 opacity-30" />
-                <p className="text-sm">Nenhuma categoria disponível</p>
+                <p className="text-sm">Nenhuma categoria disponï¿½vel</p>
               </div>
             )}
           </div>
@@ -266,7 +266,7 @@ const BlogNavigation = ({
       <div className="flex items-center gap-2 p-3 bg-purple-500/10 border border-purple-500/20 rounded-lg">
         <Funnel size={16} className="text-purple-400" />
         <span className="text-sm text-purple-300">
-          {activeFiltersCount} filtro{activeFiltersCount !== 1 ? 's' : ''} ativo{activeFiltersCount !== 1 ? 's' : ''}
+          {activeFiltersCount} filtro{activeFiltersCount === 1 ? '' : 's'} ativo{activeFiltersCount === 1 ? '' : 's'}
         </span>
         <button
           onClick={clearFilters}

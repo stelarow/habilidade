@@ -139,7 +139,7 @@ const CourseWorkflowSection = ({ workflowExamples, toolComparisons, themeColors 
             </p>
             <button
               onClick={() => {
-                const contactSection = document.getElementById('contato');
+                const contactSection = document.querySelector('#contato');
                 if (contactSection) {
                   contactSection.scrollIntoView({ behavior: 'smooth' });
                 }

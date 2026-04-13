@@ -7,14 +7,14 @@
 
 class GoogleAnalyticsService {
   constructor() {
-    this.isEnabled = typeof window !== 'undefined';
+    this.isEnabled = globalThis.window !== undefined;
   }
 
   /**
    * Check if analytics is ready, fallback to lazy loader
    */
   isAnalyticsReady() {
-    return typeof window !== 'undefined' && typeof window.gtag !== 'undefined';
+    return globalThis.window !== undefined && globalThis.gtag !== undefined;
   }
 
   /**
@@ -26,10 +26,10 @@ class GoogleAnalyticsService {
 
     try {
       if (this.isAnalyticsReady()) {
-        window.gtag('event', eventName, parameters);
+        globalThis.gtag('event', eventName, parameters);
       } else {
         // Queue event through lazy loader if available
-        const lazyLoader = window.lazyAnalyticsLoader;
+        const lazyLoader = globalThis.lazyAnalyticsLoader;
         if (lazyLoader && typeof lazyLoader.queueEvent === 'function') {
           lazyLoader.queueEvent(eventName, parameters);
         }
@@ -37,7 +37,7 @@ class GoogleAnalyticsService {
     } catch (error) {
       console.warn('[GA] Error sending event:', error);
       // Fallback to lazy loader queue if available
-      const lazyLoader = window.lazyAnalyticsLoader;
+      const lazyLoader = globalThis.lazyAnalyticsLoader;
       if (lazyLoader && typeof lazyLoader.queueEvent === 'function') {
         lazyLoader.queueEvent(eventName, parameters);
       }
@@ -166,10 +166,10 @@ class GoogleAnalyticsService {
 
     try {
       if (this.isAnalyticsReady()) {
-        window.gtag('set', 'user_properties', properties);
+        globalThis.gtag('set', 'user_properties', properties);
       } else {
         // Queue as custom event through lazy loader if available
-        const lazyLoader = window.lazyAnalyticsLoader;
+        const lazyLoader = globalThis.lazyAnalyticsLoader;
         if (lazyLoader && typeof lazyLoader.queueEvent === 'function') {
           lazyLoader.queueEvent('set_user_properties', properties);
         }
@@ -185,7 +185,7 @@ class GoogleAnalyticsService {
    */
   ensureAnalyticsLoaded() {
     if (!this.isAnalyticsReady()) {
-      const lazyLoader = window.lazyAnalyticsLoader;
+      const lazyLoader = globalThis.lazyAnalyticsLoader;
       if (lazyLoader && typeof lazyLoader.forceLoad === 'function') {
         lazyLoader.forceLoad();
       }
@@ -196,7 +196,7 @@ class GoogleAnalyticsService {
    * Check if lazy analytics is ready
    */
   isLazyAnalyticsReady() {
-    const lazyLoader = window.lazyAnalyticsLoader;
+    const lazyLoader = globalThis.lazyAnalyticsLoader;
     return lazyLoader && typeof lazyLoader.isReady === 'function' ? lazyLoader.isReady() : false;
   }
 

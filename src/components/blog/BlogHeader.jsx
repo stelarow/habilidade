@@ -39,7 +39,7 @@ const BlogHeader = ({ breadcrumbs = [] }) => {
                   ) : (
                     <Link 
                       to={crumb.href} 
-                      onClick={crumb.href === '/' ? (e) => { e.preventDefault(); window.location.href = '/'; } : undefined}
+                      onClick={crumb.href === '/' ? (e) => { e.preventDefault(); globalThis.location.href = '/'; } : undefined}
                       className="flex items-center gap-1 text-zinc-300 hover:text-fuchsia-300 transition-colors focus:outline-none focus:ring-2 focus:ring-fuchsia-400 focus:ring-offset-2 focus:ring-offset-zinc-900 rounded-sm px-1 py-0.5"
                     >
                       {Icon && <Icon size={16} />}

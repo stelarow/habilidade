@@ -9,9 +9,9 @@ const MarketingDigitalBackground = ({
   deviceCapabilities, 
   courseSlug 
 }) => {
-  const canvasRef = useRef(null);
-  const animationRef = useRef(null);
-  const metricsRef = useRef([]);
+  const canvasReference = useRef(null);
+  const animationReference = useRef(null);
+  const metricsReference = useRef([]);
   // chartsRef removido - gráficos removidos conforme solicitação
   // dashboardRef removido - Analytics Dashboard removido conforme solicitação
 
@@ -92,56 +92,56 @@ const MarketingDigitalBackground = ({
       this.y = Math.max(0, Math.min(this.canvas.height, this.y));
     }
 
-    draw(ctx) {
-      ctx.save();
-      ctx.translate(this.x, this.y);
-      ctx.rotate(this.rotation);
-      ctx.scale(this.scale, this.scale);
-      ctx.globalAlpha = this.opacity * (0.8 + Math.sin(this.pulse) * 0.2);
+    draw(context) {
+      context.save();
+      context.translate(this.x, this.y);
+      context.rotate(this.rotation);
+      context.scale(this.scale, this.scale);
+      context.globalAlpha = this.opacity * (0.8 + Math.sin(this.pulse) * 0.2);
 
       // Card da métrica - REDUZIDO
       const cardWidth = 90; // Era 120 → 90 (25% redução)
       const cardHeight = 45; // Era 60 → 45 (25% redução)
       
       // Fundo do card com glow
-      ctx.shadowColor = this.metric.trend === 'up' ? config.colors.success : config.colors.warning;
-      ctx.shadowBlur = 15;
-      ctx.fillStyle = config.colors.background + 'CC';
-      ctx.fillRect(-cardWidth/2, -cardHeight/2, cardWidth, cardHeight);
+      context.shadowColor = this.metric.trend === 'up' ? config.colors.success : config.colors.warning;
+      context.shadowBlur = 15;
+      context.fillStyle = config.colors.background + 'CC';
+      context.fillRect(-cardWidth/2, -cardHeight/2, cardWidth, cardHeight);
       
       // Borda do card
-      ctx.strokeStyle = this.metric.trend === 'up' ? config.colors.success : config.colors.warning;
-      ctx.lineWidth = 2;
-      ctx.strokeRect(-cardWidth/2, -cardHeight/2, cardWidth, cardHeight);
+      context.strokeStyle = this.metric.trend === 'up' ? config.colors.success : config.colors.warning;
+      context.lineWidth = 2;
+      context.strokeRect(-cardWidth/2, -cardHeight/2, cardWidth, cardHeight);
       
       // Label da métrica
-      ctx.font = '12px Arial';
-      ctx.fillStyle = config.colors.metric;
-      ctx.textAlign = 'center';
-      ctx.fillText(this.metric.label, 0, -15);
+      context.font = '12px Arial';
+      context.fillStyle = config.colors.metric;
+      context.textAlign = 'center';
+      context.fillText(this.metric.label, 0, -15);
       
       // Valor da métrica
-      ctx.font = 'bold 16px Arial';
-      ctx.fillStyle = this.metric.trend === 'up' ? config.colors.success : config.colors.warning;
-      ctx.fillText(this.metric.value, 0, 5);
+      context.font = 'bold 16px Arial';
+      context.fillStyle = this.metric.trend === 'up' ? config.colors.success : config.colors.warning;
+      context.fillText(this.metric.value, 0, 5);
       
       // Seta de tendência
       const arrowSize = 8;
-      ctx.fillStyle = this.metric.trend === 'up' ? config.colors.success : config.colors.warning;
-      ctx.beginPath();
+      context.fillStyle = this.metric.trend === 'up' ? config.colors.success : config.colors.warning;
+      context.beginPath();
       if (this.metric.trend === 'up') {
-        ctx.moveTo(-arrowSize/2, 15);
-        ctx.lineTo(0, 8);
-        ctx.lineTo(arrowSize/2, 15);
+        context.moveTo(-arrowSize/2, 15);
+        context.lineTo(0, 8);
+        context.lineTo(arrowSize/2, 15);
       } else {
-        ctx.moveTo(-arrowSize/2, 8);
-        ctx.lineTo(0, 15);
-        ctx.lineTo(arrowSize/2, 8);
+        context.moveTo(-arrowSize/2, 8);
+        context.lineTo(0, 15);
+        context.lineTo(arrowSize/2, 8);
       }
-      ctx.closePath();
-      ctx.fill();
+      context.closePath();
+      context.fill();
       
-      ctx.restore();
+      context.restore();
     }
   }
 
@@ -151,11 +151,11 @@ const MarketingDigitalBackground = ({
 
   // Inicializar elementos
   const initializeElements = (canvas) => {
-    metricsRef.current = [];
+    metricsReference.current = [];
     
     // Criar métricas flutuantes
-    for (let i = 0; i < config.metricCount; i++) {
-      metricsRef.current.push(new FloatingMetric(canvas));
+    for (let index = 0; index < config.metricCount; index++) {
+      metricsReference.current.push(new FloatingMetric(canvas));
     }
     
     // Gráficos removidos conforme solicitação
@@ -163,28 +163,28 @@ const MarketingDigitalBackground = ({
 
   // Loop de animação
   const animate = () => {
-    const canvas = canvasRef.current;
+    const canvas = canvasReference.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext('2d');
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const context = canvas.getContext('2d');
+    context.clearRect(0, 0, canvas.width, canvas.height);
 
     // Desenhar elementos na ordem correta
-    metricsRef.current.forEach(metric => {
+    for (const metric of metricsReference.current) {
       metric.update();
-      metric.draw(ctx);
-    });
+      metric.draw(context);
+    }
     
     // drawDashboard removido conforme solicitação
 
     if (config.metricSpeed > 0) {
-      animationRef.current = requestAnimationFrame(animate);
+      animationReference.current = requestAnimationFrame(animate);
     }
   };
 
   // Configurar canvas e inicializar
   useEffect(() => {
-    const canvas = canvasRef.current;
+    const canvas = canvasReference.current;
     if (!canvas) return;
 
     const handleResize = () => {
@@ -192,8 +192,8 @@ const MarketingDigitalBackground = ({
       canvas.width = rect.width * (deviceCapabilities?.pixelRatio || 1);
       canvas.height = rect.height * (deviceCapabilities?.pixelRatio || 1);
       
-      const ctx = canvas.getContext('2d');
-      ctx.scale(deviceCapabilities?.pixelRatio || 1, deviceCapabilities?.pixelRatio || 1);
+      const context = canvas.getContext('2d');
+      context.scale(deviceCapabilities?.pixelRatio || 1, deviceCapabilities?.pixelRatio || 1);
       
       // Reinicializar elementos com novo tamanho
       initializeElements(canvas);
@@ -207,8 +207,8 @@ const MarketingDigitalBackground = ({
 
     return () => {
       window.removeEventListener('resize', handleResize);
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
+      if (animationReference.current) {
+        cancelAnimationFrame(animationReference.current);
       }
     };
   }, [config, deviceCapabilities]);
@@ -227,7 +227,7 @@ const MarketingDigitalBackground = ({
 
   return (
     <canvas
-      ref={canvasRef}
+      ref={canvasReference}
       className="absolute inset-0 w-full h-full pointer-events-none"
       style={{ 
         background: 'transparent',

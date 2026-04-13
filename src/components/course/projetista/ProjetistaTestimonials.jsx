@@ -2215,7 +2215,7 @@ export const ProjetistaTestimonials = () => {
   const remainingReviews = reviews.length - visibleCount;
 
   const loadMoreReviews = () => {
-    setVisibleCount(prev => Math.min(prev + REVIEWS_PER_PAGE, reviews.length));
+    setVisibleCount(previous => Math.min(previous + REVIEWS_PER_PAGE, reviews.length));
   };
 
   const renderStars = (rating) => {
@@ -2248,7 +2248,7 @@ export const ProjetistaTestimonials = () => {
 
   function ReviewCard({ review, index, isVisible }) {
     return (
-      <div className={`break-inside-avoid group ${!isVisible ? 'hidden' : ''}`}>
+      <div className={`break-inside-avoid group ${isVisible ? '' : 'hidden'}`}>
         <div className={`bg-gradient-to-r ${review.gradient} rounded-2xl p-[2px] transition-all duration-300 group-hover:shadow-lg group-hover:-translate-y-2 group-hover:shadow-${review.shadowColor} tech-card`}>
           <div className="w-full bg-zinc-900 rounded-2xl p-6 relative overflow-hidden transition-colors duration-300 group-hover:bg-zinc-800">
             <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-pulse"></div>

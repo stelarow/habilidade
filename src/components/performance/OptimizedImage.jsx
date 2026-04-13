@@ -19,40 +19,40 @@ const OptimizedImage = memo(({
   onLoad,
   onError,
   lazy = true,
-  ...props
+  ...properties
 }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isError, setIsError] = useState(false);
   const [isInView, setIsInView] = useState(!lazy || priority);
-  const [currentSrc, setCurrentSrc] = useState(priority ? src : null);
+  const [currentSource, setCurrentSource] = useState(priority ? src : null);
   
-  const imgRef = useRef(null);
-  const observerRef = useRef(null);
+  const imgReference = useRef(null);
+  const observerReference = useRef(null);
 
   // Generate responsive image URLs
-  const generateSrcSet = useCallback((baseSrc) => {
-    if (!baseSrc) return '';
+  const generateSourceSet = useCallback((baseSource) => {
+    if (!baseSource) return '';
     
     const breakpoints = [400, 800, 1200, 1600];
     const urls = breakpoints.map(bp => {
       // Simple query parameter approach - works with most CDNs
-      const separator = baseSrc.includes('?') ? '&' : '?';
-      return `${baseSrc}${separator}w=${bp}&q=${quality} ${bp}w`;
+      const separator = baseSource.includes('?') ? '&' : '?';
+      return `${baseSource}${separator}w=${bp}&q=${quality} ${bp}w`;
     });
     
     return urls.join(', ');
   }, [quality]);
 
   // Generate WebP source if supported
-  const generateWebPSrc = useCallback((baseSrc) => {
-    if (!baseSrc || !supportsWebP()) return null;
-    const separator = baseSrc.includes('?') ? '&' : '?';
-    return `${baseSrc}${separator}format=webp&q=${quality}`;
+  const generateWebPSource = useCallback((baseSource) => {
+    if (!baseSource || !supportsWebP()) return null;
+    const separator = baseSource.includes('?') ? '&' : '?';
+    return `${baseSource}${separator}format=webp&q=${quality}`;
   }, [quality]);
 
   // Simple WebP support detection
   const supportsWebP = useCallback(() => {
-    if (typeof window === 'undefined') return false;
+    if (globalThis.window === undefined) return false;
     const canvas = document.createElement('canvas');
     canvas.width = 1;
     canvas.height = 1;
@@ -63,18 +63,18 @@ const OptimizedImage = memo(({
   useEffect(() => {
     if (!lazy || priority || isInView) return;
 
-    const currentImg = imgRef.current;
+    const currentImg = imgReference.current;
     if (!currentImg) return;
 
-    observerRef.current = new IntersectionObserver(
+    observerReference.current = new IntersectionObserver(
       (entries) => {
-        entries.forEach(entry => {
+        for (const entry of entries) {
           if (entry.isIntersecting) {
             setIsInView(true);
-            setCurrentSrc(src);
-            observerRef.current?.unobserve(entry.target);
+            setCurrentSource(src);
+            observerReference.current?.unobserve(entry.target);
           }
-        });
+        }
       },
       {
         rootMargin: '50px',
@@ -82,10 +82,10 @@ const OptimizedImage = memo(({
       }
     );
 
-    observerRef.current.observe(currentImg);
+    observerReference.current.observe(currentImg);
 
     return () => {
-      observerRef.current?.disconnect();
+      observerReference.current?.disconnect();
     };
   }, [lazy, priority, isInView, src]);
 
@@ -135,13 +135,13 @@ const OptimizedImage = memo(({
   if (!isInView && lazy && !priority) {
     return (
       <div 
-        ref={imgRef}
+        ref={imgReference}
         className={`optimized-image-placeholder ${className}`}
         style={{
           ...containerStyles,
           ...placeholderStyles
         }}
-        {...props}
+        {...properties}
       >
         {placeholder === 'blur' && (
           <div className="absolute inset-0 animate-pulse bg-gray-200 dark:bg-gray-700" />
@@ -152,10 +152,10 @@ const OptimizedImage = memo(({
 
   return (
     <div 
-      ref={imgRef}
+      ref={imgReference}
       className={`optimized-image-container ${className}`}
       style={containerStyles}
-      {...props}
+      {...properties}
     >
       {/* Placeholder */}
       <div 
@@ -168,25 +168,25 @@ const OptimizedImage = memo(({
       />
 
       {/* Main Image */}
-      {currentSrc && (
+      {currentSource && (
         <picture>
           {/* WebP source if supported */}
-          {generateWebPSrc(currentSrc) && (
+          {generateWebPSource(currentSource) && (
             <source
               type="image/webp"
-              srcSet={generateSrcSet(generateWebPSrc(currentSrc))}
+              srcSet={generateSourceSet(generateWebPSource(currentSource))}
               sizes={sizes}
             />
           )}
           
           {/* Fallback source */}
           <source
-            srcSet={generateSrcSet(currentSrc)}
+            srcSet={generateSourceSet(currentSource)}
             sizes={sizes}
           />
           
           <img
-            src={currentSrc}
+            src={currentSource}
             alt={alt}
             style={imageStyles}
             loading={lazy && !priority ? 'lazy' : 'eager'}
@@ -227,31 +227,31 @@ const OptimizedImage = memo(({
 OptimizedImage.displayName = 'OptimizedImage';
 
 // Preload critical images
-export const preloadImage = (src, options = {}) => {
+export const preloadImage = (source, options = {}) => {
   const { formats = ['webp'], priority = true } = options;
   
-  if (!priority || typeof window === 'undefined') return;
+  if (!priority || globalThis.window === undefined) return;
 
   const link = document.createElement('link');
   link.rel = 'preload';
   link.as = 'image';
-  link.href = src;
+  link.href = source;
   
   // Add to head if not already present
-  const existing = document.head.querySelector(`link[href="${src}"]`);
+  const existing = document.head.querySelector(`link[href="${source}"]`);
   if (!existing) {
-    document.head.appendChild(link);
+    document.head.append(link);
   }
 };
 
 // HOC for automatic optimization
 export const withImageOptimization = (Component) => {
-  const OptimizedComponent = React.forwardRef((props, ref) => {
+  const OptimizedComponent = React.forwardRef((properties, reference) => {
     // Replace img tags with OptimizedImage
-    const optimizedProps = { ...props };
+    const optimizedProperties = { ...properties };
     
-    if (props.children) {
-      optimizedProps.children = React.Children.map(props.children, child => {
+    if (properties.children) {
+      optimizedProperties.children = React.Children.map(properties.children, child => {
         if (React.isValidElement(child) && child.type === 'img') {
           return <OptimizedImage {...child.props} />;
         }
@@ -259,7 +259,7 @@ export const withImageOptimization = (Component) => {
       });
     }
 
-    return <Component ref={ref} {...optimizedProps} />;
+    return <Component ref={reference} {...optimizedProperties} />;
   });
 
   OptimizedComponent.displayName = `withImageOptimization(${Component.displayName || Component.name})`;

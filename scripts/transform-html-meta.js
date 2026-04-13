@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
-import { readFileSync, writeFileSync, readdirSync, statSync } from 'fs';
-import { join, dirname } from 'path';
-import { fileURLToPath } from 'url';
+import { readFileSync, writeFileSync, readdirSync, statSync } from 'node:fs';
+import { join, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -211,11 +211,7 @@ function transformHtml(htmlContent, pagePath) {
 
   // Open Graph title
   const ogTitleRegex = /<meta property="og:title" content="[^"]*"/;
-  if (ogTitleRegex.test(transformedHtml)) {
-    transformedHtml = transformedHtml.replace(ogTitleRegex, `<meta property="og:title" content="${config.title}"`);
-  } else {
-    transformedHtml = transformedHtml.replace(insertionPoint, `$&\n    <meta property="og:title" content="${config.title}" />`);
-  }
+  transformedHtml = ogTitleRegex.test(transformedHtml) ? transformedHtml.replace(ogTitleRegex, `<meta property="og:title" content="${config.title}"`) : transformedHtml.replace(insertionPoint, `$&\n    <meta property="og:title" content="${config.title}" />`);
 
   // Open Graph description
   const ogDescRegex = /<meta property="og:description" content="[^"]*"/;
@@ -348,7 +344,7 @@ function processHtmlFiles(dir) {
     } else if (item.endsWith('.html')) {
       totalCount++;
       try {
-        const relativePath = fullPath.replace(distDir, '').replace(/\\/g, '/');
+        const relativePath = fullPath.replace(distDir, '').replaceAll('\\', '/');
         const pagePath = getPagePath(relativePath);
 
         const originalHtml = readFileSync(fullPath, 'utf-8');

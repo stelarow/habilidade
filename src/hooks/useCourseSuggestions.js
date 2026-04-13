@@ -1,13 +1,13 @@
 /**
- * useCourseSuggestions Hook - Hook personalizado para sugestões de cursos
- * Integra com o sistema de matching e gerencia estado das sugestões
+ * useCourseSuggestions Hook - Hook personalizado para sugestï¿½es de cursos
+ * Integra com o sistema de matching e gerencia estado das sugestï¿½es
  */
 
 import { useState, useEffect, useMemo } from 'react';
 import { suggestCourses, filterSuggestions } from '../utils/courseMatchingService';
 
 /**
- * Hook para obter sugestões de cursos baseadas em post de blog
+ * Hook para obter sugestï¿½es de cursos baseadas em post de blog
  */
 export const useCourseSuggestions = (post, options = {}) => {
   const {
@@ -24,7 +24,7 @@ export const useCourseSuggestions = (post, options = {}) => {
   const [error, setError] = useState(null);
   const [lastUpdated, setLastUpdated] = useState(null);
 
-  // Função para buscar sugestões
+  // Funï¿½ï¿½o para buscar sugestï¿½es
   const fetchSuggestions = useMemo(() => {
     return async (forceRefresh = false) => {
       if (!post) {
@@ -37,7 +37,7 @@ export const useCourseSuggestions = (post, options = {}) => {
         setIsLoading(true);
         setError(null);
 
-        // Busca sugestões
+        // Busca sugestï¿½es
         const rawSuggestions = suggestCourses(post, {
           maxSuggestions,
           minScore,
@@ -53,9 +53,9 @@ export const useCourseSuggestions = (post, options = {}) => {
         setSuggestions(filteredSuggestions);
         setLastUpdated(new Date());
         setError(null);
-      } catch (err) {
-        console.error('Error fetching course suggestions:', err);
-        setError(err.message || 'Erro ao buscar sugestões de cursos');
+      } catch (error_) {
+        console.error('Error fetching course suggestions:', error_);
+        setError(error_.message || 'Erro ao buscar sugestï¿½es de cursos');
         setSuggestions([]);
       } finally {
         setIsLoading(false);
@@ -79,14 +79,14 @@ export const useCourseSuggestions = (post, options = {}) => {
     return () => clearInterval(interval);
   }, [autoRefresh, refreshInterval, fetchSuggestions]);
 
-  // Função para forçar refresh
+  // Funï¿½ï¿½o para forï¿½ar refresh
   const refresh = () => {
     fetchSuggestions(true);
   };
 
-  // Métricas das sugestões
+  // Mï¿½tricas das sugestï¿½es
   const metrics = useMemo(() => {
-    if (!suggestions.length) return null;
+    if (suggestions.length === 0) return null;
 
     const totalScore = suggestions.reduce((sum, item) => sum + item.score, 0);
     const averageScore = totalScore / suggestions.length;
@@ -116,7 +116,7 @@ export const useCourseSuggestions = (post, options = {}) => {
 };
 
 /**
- * Hook para sugestões em tempo real durante digitação (para admin)
+ * Hook para sugestï¿½es em tempo real durante digitaï¿½ï¿½o (para admin)
  */
 export const useRealtimeCourseSuggestions = (content, options = {}) => {
   const {
@@ -136,7 +136,7 @@ export const useRealtimeCourseSuggestions = (content, options = {}) => {
     const timer = setTimeout(() => {
       setIsAnalyzing(true);
       
-      // Simula post para análise
+      // Simula post para anï¿½lise
       const mockPost = {
         title: '',
         content: content,
@@ -171,14 +171,14 @@ export const useRealtimeCourseSuggestions = (content, options = {}) => {
 };
 
 /**
- * Hook para comparar mudanças em sugestões
+ * Hook para comparar mudanï¿½as em sugestï¿½es
  */
 export const useCourseSuggestionsComparison = (post, previousPost) => {
   const currentSuggestions = useCourseSuggestions(post);
   const previousSuggestions = useCourseSuggestions(previousPost);
 
   const comparison = useMemo(() => {
-    if (!currentSuggestions.suggestions.length && !previousSuggestions.suggestions.length) {
+    if (currentSuggestions.suggestions.length === 0 && previousSuggestions.suggestions.length === 0) {
       return null;
     }
 
@@ -206,7 +206,7 @@ export const useCourseSuggestionsComparison = (post, previousPost) => {
 };
 
 /**
- * Hook para cache local de sugestões
+ * Hook para cache local de sugestï¿½es
  */
 export const useCachedCourseSuggestions = (post, options = {}) => {
   const {
@@ -234,7 +234,7 @@ export const useCachedCourseSuggestions = (post, options = {}) => {
 
   const suggestions = useCourseSuggestions(post, otherOptions);
 
-  // Atualiza cache quando há novas sugestões
+  // Atualiza cache quando hï¿½ novas sugestï¿½es
   useEffect(() => {
     if (suggestions.suggestions.length > 0 && !suggestions.isLoading) {
       try {

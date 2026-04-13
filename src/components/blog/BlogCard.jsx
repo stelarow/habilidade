@@ -57,9 +57,9 @@ const BlogCard = ({ post, variant = 'standard', index = 0 }) => {
     isInView: false
   });
   const [isPrefetched, setIsPrefetched] = useState(false);
-  const cardRef = useRef(null);
-  const prefetchTimeoutRef = useRef(null);
-  const imageRef = useRef(null);
+  const cardReference = useRef(null);
+  const prefetchTimeoutReference = useRef(null);
+  const imageReference = useRef(null);
   
   // Navigation handled via native browser for SSG
 
@@ -68,7 +68,7 @@ const BlogCard = ({ post, variant = 'standard', index = 0 }) => {
   const { getTypographyClasses, shouldUseAnimations } = useBlogResponsive();
 
   // Enhanced image handling with multiple fallbacks
-  const getImageSrc = () => {
+  const getImageSource = () => {
     // Priority order: featured_image_url > featuredImage.url > featuredImage > imageUrl
     if (post.featured_image_url && post.featured_image_url !== null) return post.featured_image_url;
     if (post.featuredImage && typeof post.featuredImage === 'object' && post.featuredImage.url) return post.featuredImage.url;
@@ -82,7 +82,7 @@ const BlogCard = ({ post, variant = 'standard', index = 0 }) => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setImageState(prev => ({ ...prev, isInView: true }));
+          setImageState(previous => ({ ...previous, isInView: true }));
           observer.disconnect();
         }
       },
@@ -92,8 +92,8 @@ const BlogCard = ({ post, variant = 'standard', index = 0 }) => {
       }
     );
 
-    if (cardRef.current) {
-      observer.observe(cardRef.current);
+    if (cardReference.current) {
+      observer.observe(cardReference.current);
     }
 
     return () => observer.disconnect();
@@ -101,11 +101,11 @@ const BlogCard = ({ post, variant = 'standard', index = 0 }) => {
 
   // Enhanced image loading handlers
   const handleImageLoad = () => {
-    setImageState(prev => ({ ...prev, loaded: true, error: false }));
+    setImageState(previous => ({ ...previous, loaded: true, error: false }));
   };
 
   const handleImageError = () => {
-    setImageState(prev => ({ ...prev, error: true, loaded: true }));
+    setImageState(previous => ({ ...previous, error: true, loaded: true }));
   };
 
   // Computed values
@@ -115,7 +115,7 @@ const BlogCard = ({ post, variant = 'standard', index = 0 }) => {
   const primaryCategory = post.categories?.[0] || post.category;
   const categorySlug = primaryCategory?.slug || 'tecnologia';
   const categoryName = primaryCategory?.name || 'Tecnologia';
-  const imageSrc = getImageSrc();
+  const imageSource = getImageSource();
 
   // Enhanced placeholder component
   const EnhancedPlaceholder = () => {
@@ -159,7 +159,7 @@ const BlogCard = ({ post, variant = 'standard', index = 0 }) => {
   // Enhanced prefetch handlers
   const handleMouseEnter = () => {
     if (!isPrefetched && post.slug) {
-      prefetchTimeoutRef.current = setTimeout(() => {
+      prefetchTimeoutReference.current = setTimeout(() => {
         prefetchPost(post.slug);
         setIsPrefetched(true);
       }, 200);
@@ -167,23 +167,23 @@ const BlogCard = ({ post, variant = 'standard', index = 0 }) => {
   };
 
   const handleMouseLeave = () => {
-    if (prefetchTimeoutRef.current) {
-      clearTimeout(prefetchTimeoutRef.current);
-      prefetchTimeoutRef.current = null;
+    if (prefetchTimeoutReference.current) {
+      clearTimeout(prefetchTimeoutReference.current);
+      prefetchTimeoutReference.current = null;
     }
   };
 
   // Cleanup
   React.useEffect(() => {
     return () => {
-      if (prefetchTimeoutRef.current) {
-        clearTimeout(prefetchTimeoutRef.current);
+      if (prefetchTimeoutReference.current) {
+        clearTimeout(prefetchTimeoutReference.current);
       }
     };
   }, []);
 
   // Enhanced styling
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const isMobile = globalThis.window !== undefined && window.innerWidth < 768;
   const animationClasses = shouldUseAnimations() ? getAnimationClasses('fade') : '';
   
   const variantStyles = {
@@ -211,13 +211,13 @@ const BlogCard = ({ post, variant = 'standard', index = 0 }) => {
     
     // For non-link clicks, navigate using window.location
     if (post.slug) {
-      window.location.href = `/blog/${post.slug}`;
+      globalThis.location.href = `/blog/${post.slug}`;
     }
   };
 
   return (
     <article 
-      ref={cardRef}
+      ref={cardReference}
       className={cardClasses}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -227,11 +227,11 @@ const BlogCard = ({ post, variant = 'standard', index = 0 }) => {
       <div className="block w-full h-full">
         {/* Enhanced Featured Image Section */}
         <div className={`relative bg-zinc-700/50 overflow-hidden ${isMobile ? 'h-40' : 'h-48'} pointer-events-none`}>
-          {imageSrc ? (
+          {imageSource ? (
             <>
               <img
-                ref={imageRef}
-                src={imageSrc}
+                ref={imageReference}
+                src={imageSource}
                 alt={post.title}
                 className={`w-full h-full object-cover transition-all duration-500 group-hover:scale-110 ${
                   imageState.loaded ? 'opacity-100' : 'opacity-0'

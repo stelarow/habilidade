@@ -39,18 +39,14 @@ export const getBusinessHoursStatus = () => {
       const closingTime = BUSINESS_HOURS.endHour;
       const hoursUntilClose = closingTime - currentTime;
       
-      if (hoursUntilClose <= 1) {
-        message = `=Í Online agora (fecha em ${Math.round(hoursUntilClose * 60)} minutos)`;
-      } else {
-        message = `=Í Online agora - Resposta imediata`;
-      }
+      message = hoursUntilClose <= 1 ? `=ï¿½ Online agora (fecha em ${Math.round(hoursUntilClose * 60)} minutos)` : `=ï¿½ Online agora - Resposta imediata`;
       estimatedResponseTime = 'Imediata';
     } else {
       // Currently closed
       if (!isWeekday) {
         // Weekend
         const nextMonday = getNextWeekday(brTime, 1);
-        message = `ð Fechado (fim de semana) - Reabrimos na segunda às 8h`;
+        message = `ï¿½ Fechado (fim de semana) - Reabrimos na segunda ï¿½s 8h`;
         nextOpenTime = nextMonday.toLocaleDateString('pt-BR', { 
           weekday: 'long', 
           day: 'numeric', 
@@ -58,30 +54,30 @@ export const getBusinessHoursStatus = () => {
           hour: '2-digit',
           minute: '2-digit'
         });
-        estimatedResponseTime = 'Até 2 horas úteis';
+        estimatedResponseTime = 'Atï¿½ 2 horas ï¿½teis';
       } else if (currentTime < BUSINESS_HOURS.startHour) {
         // Before business hours (same day)
         const hoursUntilOpen = BUSINESS_HOURS.startHour - currentTime;
-        message = `ð Abrimos às 8h (em ${Math.round(hoursUntilOpen * 60)} minutos)`;
-        estimatedResponseTime = 'Até 1 hora';
+        message = `ï¿½ Abrimos ï¿½s 8h (em ${Math.round(hoursUntilOpen * 60)} minutos)`;
+        estimatedResponseTime = 'Atï¿½ 1 hora';
       } else {
         // After business hours
         const tomorrow = new Date(brTime);
         tomorrow.setDate(tomorrow.getDate() + 1);
         
         if (BUSINESS_HOURS.weekdays.includes(tomorrow.getDay())) {
-          message = `ð Fechado - Reabrimos amanhã às 8h`;
-          estimatedResponseTime = 'Até 2 horas úteis';
+          message = `ï¿½ Fechado - Reabrimos amanhï¿½ ï¿½s 8h`;
+          estimatedResponseTime = 'Atï¿½ 2 horas ï¿½teis';
         } else {
           // Tomorrow is weekend, find next weekday
           const nextWeekday = getNextWeekday(brTime, 1);
-          message = `ð Fechado - Reabrimos na segunda às 8h`;
+          message = `ï¿½ Fechado - Reabrimos na segunda ï¿½s 8h`;
           nextOpenTime = nextWeekday.toLocaleDateString('pt-BR', { 
             weekday: 'long',
             day: 'numeric',
             month: 'short'
           });
-          estimatedResponseTime = 'Até 2 horas úteis';
+          estimatedResponseTime = 'Atï¿½ 2 horas ï¿½teis';
         }
       }
     }
@@ -107,8 +103,8 @@ export const getBusinessHoursStatus = () => {
     console.error('Error getting business hours status:', error);
     return {
       isOpen: false,
-      message: 'Horário de atendimento: Segunda a sexta, 8h às 18h',
-      estimatedResponseTime: 'Até 24 horas'
+      message: 'Horï¿½rio de atendimento: Segunda a sexta, 8h ï¿½s 18h',
+      estimatedResponseTime: 'Atï¿½ 24 horas'
     };
   }
 };
@@ -153,7 +149,7 @@ export const getEstimatedResponseTime = () => {
  * @returns {string} Formatted business hours string
  */
 export const getBusinessHoursString = () => {
-  return 'Segunda a sexta, das 8h às 18h';
+  return 'Segunda a sexta, das 8h ï¿½s 18h';
 };
 
 /**
@@ -245,9 +241,9 @@ export const getContactPriority = () => {
   
   if (status.isOpen) {
     return 3; // High priority - immediate response expected
-  } else if (!status.isWeekday) {
-    return 1; // Low priority - weekend, response within business days
-  } else {
+  } else if (status.isWeekday) {
     return 2; // Medium priority - outside hours but weekday
+  } else {
+    return 1; // Low priority - weekend, response within business days
   }
 };

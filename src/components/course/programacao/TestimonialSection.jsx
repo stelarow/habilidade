@@ -38,7 +38,7 @@ export function TestimonialSection() {
 
   React.useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentTestimonial((prev) => (prev + 1) % testimonials.length)
+      setCurrentTestimonial((previous) => (previous + 1) % testimonials.length)
     }, 5000)
     return () => clearInterval(interval)
   }, [testimonials.length])
@@ -68,8 +68,8 @@ export function TestimonialSection() {
             </p>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-1 text-yellow-500">
-                {Array.from({ length: current.rating }, (_, i) => (
-                  <span key={i}>★</span>
+                {Array.from({ length: current.rating }, (_, index) => (
+                  <span key={index}>★</span>
                 ))}
               </div>
               <div className="text-sm text-gray-500">

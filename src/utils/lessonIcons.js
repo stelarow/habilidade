@@ -49,18 +49,27 @@ export const getLessonIconByArea = (courseSlug, lessonType) => {
   if (!areaIcons) {
     // Fallback para ícones genéricos atuais
     switch (lessonType) {
-      case 'text': return Article;
-      case 'exercise': return PuzzlePiece;
-      case 'project': return RocketLaunch;
-      default: return Monitor; // Fallback melhor que Play
+      case 'text': { return Article;
+      }
+      case 'exercise': { return PuzzlePiece;
+      }
+      case 'project': { return RocketLaunch;
+      }
+      default: { return Monitor;
+      } // Fallback melhor que Play
     }
   }
 
   switch (lessonType) {
-    case 'video': return areaIcons.normal;
-    case 'text': return Article;
-    case 'exercise': return areaIcons.special;
-    case 'project': return areaIcons.special;
-    default: return areaIcons.normal;
+    case 'video': { return areaIcons.normal;
+    }
+    case 'text': { return Article;
+    }
+    case 'exercise': { return areaIcons.special;
+    }
+    case 'project': { return areaIcons.special;
+    }
+    default: { return areaIcons.normal;
+    }
   }
 }; 

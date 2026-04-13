@@ -14,20 +14,25 @@ async function handler(event, context) {
   const operation = extractOperation(path);
   
   switch (operation) {
-    case 'health':
+    case 'health': {
       return handleHealthCheck(event, context);
+    }
     
-    case 'log-error':
+    case 'log-error': {
       return handleErrorLogging(event, context);
+    }
     
-    case 'metrics':
+    case 'metrics': {
       return handleMetricsCollection(event, context);
+    }
     
-    case 'debug-request':
+    case 'debug-request': {
       return handleDebugRequest(event, context);
+    }
     
-    default:
+    default: {
       return handleInvalidOperation(event, context);
+    }
   }
 }
 
@@ -58,7 +63,7 @@ async function handleHealthCheck(event, context) {
     
     // Request info
     requestId: logger.requestId,
-    userAgent: event.headers['user-agent']?.substring(0, 50),
+    userAgent: event.headers['user-agent']?.slice(0, 50),
     
     // Performance markers
     responseTime: null // Will be calculated
@@ -127,7 +132,7 @@ async function handleErrorLogging(event, context) {
     
     logger.userAction('error_reported', {
       errorType: errorData.type,
-      errorMessage: errorData.message?.substring(0, 100),
+      errorMessage: errorData.message?.slice(0, 100),
       url: errorData.url
     }, 'error');
     
@@ -198,7 +203,7 @@ async function handleMetricsCollection(event, context) {
     // Request metrics
     request: {
       method: event.httpMethod,
-      userAgent: event.headers['user-agent']?.substring(0, 100),
+      userAgent: event.headers['user-agent']?.slice(0, 100),
       contentLength: event.headers['content-length'],
       referer: event.headers['referer']
     }
@@ -237,7 +242,7 @@ async function handleDebugRequest(event, context) {
       path: event.path,
       queryStringParameters: event.queryStringParameters,
       headers: sanitizeHeaders(event.headers),
-      body: event.body?.substring(0, 500), // First 500 chars
+      body: event.body?.slice(0, 500), // First 500 chars
       isBase64Encoded: event.isBase64Encoded
     },
     
@@ -282,7 +287,7 @@ async function handleInvalidOperation(event, context) {
   logger.securityEvent('invalid_operation_attempt', {
     path: event.path,
     method: event.httpMethod,
-    userAgent: event.headers['user-agent']?.substring(0, 50)
+    userAgent: event.headers['user-agent']?.slice(0, 50)
   }, 'low');
   
   return {
@@ -304,7 +309,7 @@ function extractOperation(path) {
   
   // Extract last segment from path
   const segments = path.split('/').filter(Boolean);
-  return segments[segments.length - 1] || null;
+  return segments.at(-1) || null;
 }
 
 /**
@@ -314,13 +319,9 @@ function sanitizeHeaders(headers) {
   const sensitive = ['authorization', 'cookie', 'x-api-key'];
   const sanitized = {};
   
-  Object.keys(headers || {}).forEach(key => {
-    if (sensitive.some(s => key.toLowerCase().includes(s))) {
-      sanitized[key] = '[REDACTED]';
-    } else {
-      sanitized[key] = headers[key];
-    }
-  });
+  for (const key of Object.keys(headers || {})) {
+    sanitized[key] = sensitive.some(s => key.toLowerCase().includes(s)) ? '[REDACTED]' : headers[key];
+  }
   
   return sanitized;
 }

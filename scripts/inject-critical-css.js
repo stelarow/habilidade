@@ -5,10 +5,10 @@
  * This solves the timing issue where SSG overwrites the critical CSS injection
  */
 
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 import { glob } from 'glob';
-import { fileURLToPath } from 'url';
+import { fileURLToPath } from 'node:url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -314,7 +314,7 @@ async function injectCriticalCSS() {
 
   for (const filePath of htmlFiles) {
     try {
-      let html = fs.readFileSync(filePath, 'utf-8');
+      let html = fs.readFileSync(filePath, 'utf8');
 
       // Skip if already processed
       if (html.includes('data-critical-css-processed="true"')) {
@@ -336,13 +336,13 @@ async function injectCriticalCSS() {
       const existingCssLinks = html.match(/<link[^>]*(?:rel="stylesheet"|href="[^"]*\.css")[^>]*>/gi) || [];
 
       // Remove ALL CSS stylesheet links (any order of attributes)
-      html = html.replace(/<link[^>]*rel="stylesheet"[^>]*>/gi, '');
-      html = html.replace(/<link[^>]*href="[^"]*\.css"[^>]*rel="[^"]*"[^>]*>/gi, '');
-      html = html.replace(/<link[^>]*as="style"[^>]*href="[^"]*\.css"[^>]*>/gi, '');
+      html = html.replaceAll(/<link[^>]*rel="stylesheet"[^>]*>/gi, '');
+      html = html.replaceAll(/<link[^>]*href="[^"]*\.css"[^>]*rel="[^"]*"[^>]*>/gi, '');
+      html = html.replaceAll(/<link[^>]*as="style"[^>]*href="[^"]*\.css"[^>]*>/gi, '');
 
       // Extract unique CSS hrefs from removed links
       const uniqueCssFiles = new Set();
-      existingCssLinks.forEach(link => {
+      for (const link of existingCssLinks) {
         const hrefMatch = link.match(/href="([^"]*\.css[^"]*)"/i);
         if (hrefMatch &&
             !hrefMatch[1].includes('fonts.googleapis.com') &&
@@ -350,13 +350,13 @@ async function injectCriticalCSS() {
             !hrefMatch[1].includes('src/styles/fonts.css')) {
           uniqueCssFiles.add(hrefMatch[1]);
         }
-      });
+      }
 
       // Add back as SYNCHRONOUS links to prevent FOUC
       let cssLinks = '';
-      uniqueCssFiles.forEach(href => {
+      for (const href of uniqueCssFiles) {
         cssLinks += `<link rel="stylesheet" href="${href}">\n    `;
-      });
+      }
 
       // Insert CSS links before closing head (after critical inline CSS)
       if (cssLinks) {
@@ -364,11 +364,11 @@ async function injectCriticalCSS() {
       }
 
       // Remove existing Google Fonts links (fonts are bundled in main CSS)
-      html = html.replace(/<link[^>]*fonts\.googleapis\.com[^>]*>/gi, '');
-      html = html.replace(/<link[^>]*fonts\.gstatic\.com[^>]*>/gi, '');
+      html = html.replaceAll(/<link[^>]*fonts\.googleapis\.com[^>]*>/gi, '');
+      html = html.replaceAll(/<link[^>]*fonts\.gstatic\.com[^>]*>/gi, '');
 
       // Remove any existing async CSS loader script (from previous processing)
-      html = html.replace(/<script>\s*\(function\(\)\s*\{\s*'use strict';[\s\S]*?loadNonCriticalCSS[\s\S]*?<\/script>/gi, '');
+      html = html.replaceAll(/<script>\s*\(function\(\)\s*\{\s*'use strict';[\s\S]*?loadNonCriticalCSS[\s\S]*?<\/script>/gi, '');
 
       // Mark as processed to avoid double-processing
       html = html.replace('<html', '<html data-critical-css-processed="true"');

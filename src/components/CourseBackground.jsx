@@ -110,8 +110,8 @@ const CourseBackground = ({ courseSlug, className = '', priority = false }) => {
   }, [performanceLevel]);
 
   // Verificar se deve usar fallback estático apenas em casos extremos
-  const prefersReducedMotion = typeof window !== 'undefined' && 
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const prefersReducedMotion = globalThis.window !== undefined && 
+    globalThis.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // Usar fallback estático apenas se usuário explicitamente prefere movimento reduzido
   if (prefersReducedMotion) {
@@ -146,14 +146,12 @@ const CourseBackground = ({ courseSlug, className = '', priority = false }) => {
 
 // Preload do background baseado na rota
 export const preloadBackground = (courseSlug) => {
-  if (backgrounds[courseSlug] && typeof window !== 'undefined') {
-    // Preload apenas se connection for boa
-    if (navigator.connection?.effectiveType === '4g' || !navigator.connection) {
+  if (backgrounds[courseSlug] && globalThis.window !== undefined && // Preload apenas se connection for boa
+    (navigator.connection?.effectiveType === '4g' || !navigator.connection)) {
       import(`./backgrounds/${courseSlug}Background.jsx`).catch(() => {
         // Silently fail - fallback será usado
       });
     }
-  }
 };
 
 export default React.memo(CourseBackground); 

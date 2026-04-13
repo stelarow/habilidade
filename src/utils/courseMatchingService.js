@@ -1,6 +1,6 @@
 /**
- * Course Matching Service - Sistema inteligente de sugestão de cursos
- * Analisa conteúdo de artigos e sugere cursos relevantes automaticamente
+ * Course Matching Service - Sistema inteligente de sugestï¿½o de cursos
+ * Analisa conteï¿½do de artigos e sugere cursos relevantes automaticamente
  */
 
 import { coursesData } from '../data/coursesData';
@@ -10,67 +10,67 @@ const matchingCache = new Map();
 const CACHE_EXPIRY = 5 * 60 * 1000; // 5 minutos
 
 /**
- * Configuração de matching de cursos
+ * Configuraï¿½ï¿½o de matching de cursos
  */
 const COURSE_KEYWORDS = {
   'informatica-001': {
-    primary: ['informática', 'office', 'windows', 'excel', 'word', 'powerpoint', 'canva'],
-    secondary: ['computador', 'microsoft', 'planilha', 'documento', 'apresentação'],
-    weight: 1.0
+    primary: ['informï¿½tica', 'office', 'windows', 'excel', 'word', 'powerpoint', 'canva'],
+    secondary: ['computador', 'microsoft', 'planilha', 'documento', 'apresentaï¿½ï¿½o'],
+    weight: 1
   },
   'design-grafico-002': {
-    primary: ['design', 'gráfico', 'photoshop', 'illustrator', 'indesign', 'criação', 'visual'],
+    primary: ['design', 'grï¿½fico', 'photoshop', 'illustrator', 'indesign', 'criaï¿½ï¿½o', 'visual'],
     secondary: ['adobe', 'arte', 'criativo', 'layout', 'imagem', 'logotipo'],
-    weight: 1.0
+    weight: 1
   },
   'programacao-web-003': {
-    primary: ['programação', 'web', 'html', 'css', 'javascript', 'desenvolvimento', 'site'],
-    secondary: ['código', 'frontend', 'backend', 'framework', 'api', 'database'],
-    weight: 1.2 // Maior peso por ser área em alta demanda
+    primary: ['programaï¿½ï¿½o', 'web', 'html', 'css', 'javascript', 'desenvolvimento', 'site'],
+    secondary: ['cï¿½digo', 'frontend', 'backend', 'framework', 'api', 'database'],
+    weight: 1.2 // Maior peso por ser ï¿½rea em alta demanda
   },
   'marketing-digital-004': {
     primary: ['marketing', 'digital', 'redes sociais', 'facebook', 'instagram', 'publicidade'],
-    secondary: ['campanha', 'anúncio', 'vendas', 'cliente', 'conversão', 'roi'],
+    secondary: ['campanha', 'anï¿½ncio', 'vendas', 'cliente', 'conversï¿½o', 'roi'],
     weight: 1.1
   },
   'excel-avancado-005': {
-    primary: ['excel', 'planilha', 'fórmulas', 'gráficos', 'macros', 'vba'],
-    secondary: ['dados', 'análise', 'relatório', 'dashboard', 'pivot'],
+    primary: ['excel', 'planilha', 'fï¿½rmulas', 'grï¿½ficos', 'macros', 'vba'],
+    secondary: ['dados', 'anï¿½lise', 'relatï¿½rio', 'dashboard', 'pivot'],
     weight: 0.9
   },
   'autocad-006': {
-    primary: ['autocad', 'desenho', 'técnico', 'cad', 'projeto', 'arquitetura'],
+    primary: ['autocad', 'desenho', 'tï¿½cnico', 'cad', 'projeto', 'arquitetura'],
     secondary: ['planta', 'engenharia', '2d', '3d', 'modelagem'],
     weight: 0.8
   },
   'ingles-007': {
-    primary: ['inglês', 'english', 'idioma', 'conversação', 'business english'],
+    primary: ['inglï¿½s', 'english', 'idioma', 'conversaï¿½ï¿½o', 'business english'],
     secondary: ['language', 'speaking', 'writing', 'listening', 'grammar'],
     weight: 0.7
   },
   'montagem-manutencao-008': {
-    primary: ['montagem', 'manutenção', 'hardware', 'computador', 'técnico'],
-    secondary: ['peças', 'reparo', 'processador', 'memória', 'placa'],
+    primary: ['montagem', 'manutenï¿½ï¿½o', 'hardware', 'computador', 'tï¿½cnico'],
+    secondary: ['peï¿½as', 'reparo', 'processador', 'memï¿½ria', 'placa'],
     weight: 0.8
   }
 };
 
 /**
- * Extrai e normaliza texto para análise
+ * Extrai e normaliza texto para anï¿½lise
  */
 const normalizeText = (text) => {
   if (!text) return '';
   return text
     .toLowerCase()
     .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '') // Remove acentos
-    .replace(/[^\w\s]/g, ' ') // Remove pontuação
-    .replace(/\s+/g, ' ') // Normaliza espaços
+    .replaceAll(/[\u0300-\u036F]/g, '') // Remove acentos
+    .replaceAll(/[^\w\s]/g, ' ') // Remove pontuaï¿½ï¿½o
+    .replaceAll(/\s+/g, ' ') // Normaliza espaï¿½os
     .trim();
 };
 
 /**
- * Calcula score de relevância entre texto e curso
+ * Calcula score de relevï¿½ncia entre texto e curso
  */
 const calculateRelevanceScore = (text, courseId) => {
   const keywords = COURSE_KEYWORDS[courseId];
@@ -79,19 +79,19 @@ const calculateRelevanceScore = (text, courseId) => {
   const normalizedText = normalizeText(text);
   let score = 0;
 
-  // Pontuação para palavras-chave primárias
-  keywords.primary.forEach(keyword => {
+  // Pontuaï¿½ï¿½o para palavras-chave primï¿½rias
+  for (const keyword of keywords.primary) {
     const normalizedKeyword = normalizeText(keyword);
     const occurrences = (normalizedText.match(new RegExp(normalizedKeyword, 'g')) || []).length;
-    score += occurrences * 3; // Peso 3 para palavras primárias
-  });
+    score += occurrences * 3; // Peso 3 para palavras primï¿½rias
+  }
 
-  // Pontuação para palavras-chave secundárias
-  keywords.secondary.forEach(keyword => {
+  // Pontuaï¿½ï¿½o para palavras-chave secundï¿½rias
+  for (const keyword of keywords.secondary) {
     const normalizedKeyword = normalizeText(keyword);
     const occurrences = (normalizedText.match(new RegExp(normalizedKeyword, 'g')) || []).length;
-    score += occurrences * 1; // Peso 1 para palavras secundárias
-  });
+    score += occurrences * 1; // Peso 1 para palavras secundï¿½rias
+  }
 
   // Aplica peso do curso
   score *= keywords.weight;
@@ -100,7 +100,7 @@ const calculateRelevanceScore = (text, courseId) => {
 };
 
 /**
- * Analisa conteúdo e sugere cursos relevantes
+ * Analisa conteï¿½do e sugere cursos relevantes
  */
 export const suggestCourses = (post, options = {}) => {
   const {
@@ -124,7 +124,7 @@ export const suggestCourses = (post, options = {}) => {
 
   if (!post) return [];
 
-  // Constrói texto para análise
+  // Constrï¿½i texto para anï¿½lise
   const analysisText = [
     post.title || '',
     post.content || '',
@@ -136,7 +136,7 @@ export const suggestCourses = (post, options = {}) => {
   // Calcula scores para todos os cursos
   const courseScores = [];
 
-  Object.keys(COURSE_KEYWORDS).forEach(courseId => {
+  for (const courseId of Object.keys(COURSE_KEYWORDS)) {
     const score = calculateRelevanceScore(analysisText, courseId);
     
     if (score >= minScore) {
@@ -149,20 +149,20 @@ export const suggestCourses = (post, options = {}) => {
         });
       }
     }
-  });
+  }
 
   // Ordena por score e pega os melhores
   courseScores.sort((a, b) => b.score - a.score);
   let suggestions = courseScores.slice(0, maxSuggestions);
 
-  // Se não há sugestões e includeGeneric é true, adiciona curso genérico
+  // Se nï¿½o hï¿½ sugestï¿½es e includeGeneric ï¿½ true, adiciona curso genï¿½rico
   if (suggestions.length === 0 && includeGeneric) {
-    const genericCourse = coursesData?.[0]; // Primeiro curso como padrão
+    const genericCourse = coursesData?.[0]; // Primeiro curso como padrï¿½o
     if (genericCourse) {
       suggestions.push({
         course: genericCourse,
         score: 0.5,
-        relevanceReason: 'Recomendação baseada no perfil geral do conteúdo',
+        relevanceReason: 'Recomendaï¿½ï¿½o baseada no perfil geral do conteï¿½do',
         isGeneric: true
       });
     }
@@ -180,28 +180,28 @@ export const suggestCourses = (post, options = {}) => {
 };
 
 /**
- * Gera explicação da relevância do curso
+ * Gera explicaï¿½ï¿½o da relevï¿½ncia do curso
  */
 const generateRelevanceReason = (text, courseId) => {
   const keywords = COURSE_KEYWORDS[courseId];
-  if (!keywords) return 'Curso relacionado ao conteúdo';
+  if (!keywords) return 'Curso relacionado ao conteï¿½do';
 
   const normalizedText = normalizeText(text);
   const matchedKeywords = [];
 
   // Encontra palavras-chave que deram match
-  keywords.primary.forEach(keyword => {
+  for (const keyword of keywords.primary) {
     if (normalizedText.includes(normalizeText(keyword))) {
       matchedKeywords.push(keyword);
     }
-  });
+  }
 
   if (matchedKeywords.length === 0) {
-    keywords.secondary.forEach(keyword => {
+    for (const keyword of keywords.secondary) {
       if (normalizedText.includes(normalizeText(keyword))) {
         matchedKeywords.push(keyword);
       }
-    });
+    }
   }
 
   if (matchedKeywords.length > 0) {
@@ -209,11 +209,11 @@ const generateRelevanceReason = (text, courseId) => {
     return `Relacionado a: ${keywordList}`;
   }
 
-  return 'Curso complementar ao conteúdo';
+  return 'Curso complementar ao conteï¿½do';
 };
 
 /**
- * Busca curso específico por ID
+ * Busca curso especï¿½fico por ID
  */
 export const getCourseById = (courseId) => {
   return coursesData?.find(course => course.basicInfo.id === courseId) || null;
@@ -239,10 +239,10 @@ export const getCoursesByCategory = (category) => {
 };
 
 /**
- * Analisa popularidade de cursos (simulado - em produção viria do backend)
+ * Analisa popularidade de cursos (simulado - em produï¿½ï¿½o viria do backend)
  */
 export const getCoursePopularity = () => {
-  // Simula dados de popularidade baseado em características dos cursos
+  // Simula dados de popularidade baseado em caracterï¿½sticas dos cursos
   return {
     'informatica-001': { views: 1500, conversions: 180, trending: true },
     'design-grafico-002': { views: 1200, conversions: 150, trending: false },
@@ -256,11 +256,11 @@ export const getCoursePopularity = () => {
 };
 
 /**
- * Aplica filtros avançados às sugestões
+ * Aplica filtros avanï¿½ados ï¿½s sugestï¿½es
  */
 export const filterSuggestions = (suggestions, filters = {}) => {
   const {
-    minLevel = null, // 'Iniciante', 'Intermediário', 'Avançado'
+    minLevel = null, // 'Iniciante', 'Intermediï¿½rio', 'Avanï¿½ado'
     maxDuration = null, // em horas
     requireCertificate = false,
     trending = false
@@ -269,12 +269,12 @@ export const filterSuggestions = (suggestions, filters = {}) => {
   let filtered = [...suggestions];
 
   if (minLevel) {
-    const levelOrder = { 'Iniciante': 1, 'Intermediário': 2, 'Avançado': 3 };
-    const minLevelNum = levelOrder[minLevel] || 1;
+    const levelOrder = { 'Iniciante': 1, 'Intermediï¿½rio': 2, 'Avanï¿½ado': 3 };
+    const minLevelNumber = levelOrder[minLevel] || 1;
     
     filtered = filtered.filter(item => {
       const courseLevel = levelOrder[item.course.basicInfo.level] || 1;
-      return courseLevel >= minLevelNum;
+      return courseLevel >= minLevelNumber;
     });
   }
 
@@ -300,33 +300,33 @@ export const filterSuggestions = (suggestions, filters = {}) => {
 };
 
 /**
- * Converte string de duração para horas
+ * Converte string de duraï¿½ï¿½o para horas
  */
-const parseDuration = (durationStr) => {
-  if (!durationStr) return 0;
+const parseDuration = (durationString) => {
+  if (!durationString) return 0;
   
-  const match = durationStr.match(/(\d+(?:,\d+)?)/);
+  const match = durationString.match(/(\d+(?:,\d+)?)/);
   if (match) {
-    return parseFloat(match[1].replace(',', '.'));
+    return Number.parseFloat(match[1].replace(',', '.'));
   }
   
   return 0;
 };
 
 /**
- * Limpa cache (útil para testes ou reset)
+ * Limpa cache (ï¿½til para testes ou reset)
  */
 export const clearCache = () => {
   matchingCache.clear();
 };
 
 /**
- * Obtém estatísticas do cache
+ * Obtï¿½m estatï¿½sticas do cache
  */
 export const getCacheStats = () => {
   return {
     size: matchingCache.size,
-    keys: Array.from(matchingCache.keys())
+    keys: [...matchingCache.keys()]
   };
 };
 

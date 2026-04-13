@@ -8,7 +8,7 @@ class GlobalMemoryManager {
     this.isActive = true;
     
     // Only setup browser APIs if we're in a browser environment
-    if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+    if (globalThis.window !== undefined && typeof document !== 'undefined') {
       this.setupVisibilityAPI();
       this.setupGlobalCleanup();
       
@@ -45,13 +45,13 @@ class GlobalMemoryManager {
 
   // Patch global do requestAnimationFrame
   patchRequestAnimationFrame() {
-    const originalRAF = window.requestAnimationFrame;
-    const originalCAF = window.cancelAnimationFrame;
+    const originalRAF = globalThis.requestAnimationFrame;
+    const originalCAF = globalThis.cancelAnimationFrame;
     
     // Armazenar animações ativas
     this.activeAnimations = new Set();
     
-    window.requestAnimationFrame = (callback) => {
+    globalThis.requestAnimationFrame = (callback) => {
       // Se aba não está ativa, reduzir drasticamente a frequência
       if (!this.isActive) {
         // Executar apenas 1 frame por segundo quando inativo
@@ -62,7 +62,7 @@ class GlobalMemoryManager {
         }, 1000);
       }
       
-      const id = originalRAF.call(window, (timestamp) => {
+      const id = originalRAF.call(globalThis, (timestamp) => {
         this.activeAnimations.delete(id);
         callback(timestamp);
       });
@@ -71,9 +71,9 @@ class GlobalMemoryManager {
       return id;
     };
     
-    window.cancelAnimationFrame = (id) => {
+    globalThis.cancelAnimationFrame = (id) => {
       this.activeAnimations.delete(id);
-      return originalCAF.call(window, id);
+      return originalCAF.call(globalThis, id);
     };
   }
 
@@ -88,8 +88,8 @@ class GlobalMemoryManager {
   // Executar limpeza de emergência
   performCleanup() {
     // Forçar garbage collection se disponível
-    if (window.gc) {
-      window.gc();
+    if (globalThis.gc) {
+      globalThis.gc();
     }
 
     // Limpar contextos de canvas órfãos
@@ -101,27 +101,25 @@ class GlobalMemoryManager {
   // Limpar contextos de canvas que podem estar órfãos
   cleanupCanvasContexts() {
     const canvases = document.querySelectorAll('canvas');
-    canvases.forEach(canvas => {
+    for (const canvas of canvases) {
       try {
-        const ctx = canvas.getContext('2d');
-        if (ctx && canvas.width > 0 && canvas.height > 0) {
-          // Verificar se o canvas ainda está na DOM
-          if (!document.body.contains(canvas)) {
+        const context = canvas.getContext('2d');
+        if (context && canvas.width > 0 && canvas.height > 0 && // Verificar se o canvas ainda está na DOM
+          !document.body.contains(canvas)) {
             // Canvas órfão - limpar
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            context.clearRect(0, 0, canvas.width, canvas.height);
           }
-        }
-      } catch (e) {
+      } catch {
         // Ignorar erros de contexto
       }
-    });
+    }
   }
 
   // Pausar todas as animações ativas
   pauseAllAnimations() {
-    this.activeAnimations.forEach(id => {
-      window.cancelAnimationFrame(id);
-    });
+    for (const id of this.activeAnimations) {
+      globalThis.cancelAnimationFrame(id);
+    }
     this.activeAnimations.clear();
   }
 
@@ -146,7 +144,7 @@ class GlobalMemoryManager {
 let globalMemoryManager;
 
 // Only initialize in browser environment
-if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+if (globalThis.window !== undefined && typeof document !== 'undefined') {
   // Aguardar DOM estar pronto
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
@@ -157,7 +155,7 @@ if (typeof window !== 'undefined' && typeof document !== 'undefined') {
   }
 
   // Expor globalmente para debug
-  window.globalMemoryManager = globalMemoryManager;
+  globalThis.globalMemoryManager = globalMemoryManager;
 } else {
   // Create a minimal instance for SSR environments
   globalMemoryManager = {

@@ -55,7 +55,7 @@ class AnalyticsService {
    * Generate anonymous session ID
    */
   generateSessionId() {
-    return 'sess_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    return 'sess_' + Date.now() + '_' + Math.random().toString(36).slice(2, 11);
   }
 
   /**
@@ -79,7 +79,7 @@ class AnalyticsService {
         ...properties,
         timestamp: Date.now(),
         sessionId: this.sessionId,
-        url: window.location.pathname,
+        url: globalThis.location.pathname,
         referrer: document.referrer || 'direct',
         userAgent: this.sanitizeUserAgent(navigator.userAgent),
         viewport: {
@@ -190,9 +190,9 @@ class AnalyticsService {
       }
     };
 
-    ['click', 'scroll', 'keydown', 'mousemove'].forEach(event => {
+    for (const event of ['click', 'scroll', 'keydown', 'mousemove']) {
       document.addEventListener(event, updateActiveTime, { passive: true });
-    });
+    }
   }
 
   /**
@@ -204,8 +204,8 @@ class AnalyticsService {
       if (!ticking && this.currentPost) {
         requestAnimationFrame(() => {
           const scrollTop = window.pageYOffset;
-          const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-          const scrollPercent = Math.round((scrollTop / docHeight) * 100);
+          const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
+          const scrollPercent = Math.round((scrollTop / documentHeight) * 100);
           
           if (scrollPercent >= 0 && scrollPercent <= 100) {
             this.trackReadingProgress(this.currentPost.slug, scrollPercent);
@@ -254,7 +254,7 @@ class AnalyticsService {
     const timeSpent = this.currentPost.lastActiveTime - this.currentPost.startTime;
     
     // Only track if user was active for at least 10 seconds
-    if (timeSpent >= 10000) {
+    if (timeSpent >= 10_000) {
       const engagementLevel = this.calculateEngagementLevel(timeSpent);
       
       this.track('time_on_page', {
@@ -375,7 +375,7 @@ class AnalyticsService {
         topCategories: {}
       };
 
-      events.forEach(event => {
+      for (const event of events) {
         // Count event types
         summary.eventTypes[event.event] = (summary.eventTypes[event.event] || 0) + 1;
 
@@ -396,7 +396,7 @@ class AnalyticsService {
           const category = event.properties.categorySlug;
           summary.topCategories[category] = (summary.topCategories[category] || 0) + 1;
         }
-      });
+      }
 
       return summary;
     } catch (error) {
@@ -429,9 +429,9 @@ class AnalyticsService {
     
     // Remove emails, phone numbers, and other PII patterns
     return text
-      .replace(/[\w.-]+@[\w.-]+\.\w+/g, '[email]')
-      .replace(/\b\d{4,}\b/g, '[number]')
-      .substring(0, 200); // Limit length
+      .replaceAll(/[\w.-]+@[\w.-]+\.\w+/g, '[email]')
+      .replaceAll(/\b\d{4,}\b/g, '[number]')
+      .slice(0, 200); // Limit length
   }
 
   /**

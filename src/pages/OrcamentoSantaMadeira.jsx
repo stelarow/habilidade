@@ -35,12 +35,12 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 
 // Componente de animação de scroll reveal
 const ScrollReveal = ({ children, delay = 0 }) => {
-  const ref = React.useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const reference = React.useRef(null);
+  const isInView = useInView(reference, { once: true, margin: "-100px" });
 
   return (
     <motion.div
-      ref={ref}
+      ref={reference}
       initial={{ opacity: 0, y: 50 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
       transition={{ duration: 0.6, delay }}
@@ -53,8 +53,8 @@ const ScrollReveal = ({ children, delay = 0 }) => {
 // Componente de contador animado
 const AnimatedCounter = ({ end, duration = 2 }) => {
   const [count, setCount] = useState(0);
-  const ref = React.useRef(null);
-  const isInView = useInView(ref, { once: true });
+  const reference = React.useRef(null);
+  const isInView = useInView(reference, { once: true });
 
   useEffect(() => {
     if (!isInView) return;
@@ -79,7 +79,7 @@ const AnimatedCounter = ({ end, duration = 2 }) => {
     return () => cancelAnimationFrame(animationFrame);
   }, [isInView, end, duration]);
 
-  return <span ref={ref}>{count}</span>;
+  return <span ref={reference}>{count}</span>;
 };
 
 // Componente de countdown
@@ -93,7 +93,7 @@ const Countdown = ({ targetDate }) => {
 
   useEffect(() => {
     const calculateTimeLeft = () => {
-      const difference = new Date(targetDate) - new Date();
+      const difference = new Date(targetDate) - Date.now();
 
       if (difference > 0) {
         setTimeLeft({

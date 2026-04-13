@@ -33,7 +33,7 @@ export function validateAndSanitizeCourse(courseData) {
   if (!validation.isValid) {
     console.warn('🔧 Dados do curso inválidos:', courseData?.basicInfo?.slug || 'unknown');
     console.warn('📋 Erros encontrados:', validation.errors);
-    console.warn('⚠️ Campos obrigatórios faltando:', validation.errors?.filter(err => err.includes('required')) || []);
+    console.warn('⚠️ Campos obrigatórios faltando:', validation.errors?.filter(error => error.includes('required')) || []);
     return {
       ...DEFAULT_COURSE_DATA,
       ...courseData,
@@ -146,7 +146,7 @@ export function generateCourseMetadata(courseData) {
   const defaultInvestment = {
     currentPrice: 597,
     originalPrice: 997,
-    installments: { max: 12, value: 59.70 }
+    installments: { max: 12, value: 59.7 }
   };
   
   const defaultInstructor = {
@@ -306,7 +306,7 @@ export function generateCourseUrl(slug, absolute = false) {
   const relativePath = `/cursos/${slug}`;
   
   if (absolute) {
-    return `${window.location.origin}/habilidade${relativePath}`;
+    return `${globalThis.location.origin}/habilidade${relativePath}`;
   }
   
   return relativePath;
@@ -496,11 +496,11 @@ export function validateStructuredData(structuredData) {
       'name', 'description', 'provider', 'offers', 'hasCourseInstance'
     ];
 
-    requiredCourseFields.forEach(field => {
+    for (const field of requiredCourseFields) {
       if (!structuredData[field]) {
         errors.push(`Campo obrigatório ausente: ${field}`);
       }
-    });
+    }
 
     // Validar provider
     if (structuredData.provider) {
@@ -514,26 +514,26 @@ export function validateStructuredData(structuredData) {
 
     // Validar offers
     if (structuredData.offers && Array.isArray(structuredData.offers)) {
-      structuredData.offers.forEach((offer, index) => {
+      for (const [index, offer] of structuredData.offers.entries()) {
         if (!offer.category) {
           errors.push(`offers[${index}].category é obrigatório`);
         }
         if (!['Free', 'Paid', 'Subscription', 'Partially Free'].includes(offer.category)) {
           errors.push(`offers[${index}].category deve ser Free, Paid, Subscription ou Partially Free`);
         }
-      });
+      }
     }
 
     // Validar hasCourseInstance
     if (structuredData.hasCourseInstance && Array.isArray(structuredData.hasCourseInstance)) {
-      structuredData.hasCourseInstance.forEach((instance, index) => {
+      for (const [index, instance] of structuredData.hasCourseInstance.entries()) {
         const requiredInstanceFields = ['courseMode'];
         
-        requiredInstanceFields.forEach(field => {
+        for (const field of requiredInstanceFields) {
           if (!instance[field]) {
             errors.push(`hasCourseInstance[${index}].${field} é obrigatório`);
           }
-        });
+        }
 
         // Validar courseMode
         if (instance.courseMode && !['Online', 'Onsite', 'Blended'].includes(instance.courseMode)) {
@@ -558,7 +558,7 @@ export function validateStructuredData(structuredData) {
         if (instance.courseMode === 'Blended' && !instance.location) {
           warnings.push(`hasCourseInstance[${index}] com courseMode "Blended" deveria ter location`);
         }
-      });
+      }
     }
 
     // Validar educationalLevel
@@ -567,7 +567,7 @@ export function validateStructuredData(structuredData) {
     }
 
     // Validar format de duração ISO 8601
-    if (structuredData.timeRequired && !structuredData.timeRequired.match(/^PT\d+H$/)) {
+    if (structuredData.timeRequired && !/^PT\d+H$/.test(structuredData.timeRequired)) {
       warnings.push('timeRequired deve estar no formato ISO 8601 (ex: PT40H)');
     }
 

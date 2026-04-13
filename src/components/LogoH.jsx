@@ -22,7 +22,7 @@ function LogoH({
   showFullText = true,
   textColor = 'text-white',
   className = '',
-  ...props 
+  ...properties 
 }) {
   const { pageType } = usePageContext();
 
@@ -36,11 +36,11 @@ function LogoH({
 
   const textClasses = `
     ${textColor} font-semibold
-    ${size === 'small' ? 'text-sm' : size === 'medium' ? 'text-base sm:text-lg' : 'text-lg sm:text-xl'}
+    ${size === 'small' ? 'text-sm' : (size === 'medium' ? 'text-base sm:text-lg' : 'text-lg sm:text-xl')}
   `.trim();
 
   return (
-    <div className="flex items-center gap-2 sm:gap-3" {...props}>
+    <div className="flex items-center gap-2 sm:gap-3" {...properties}>
       {/* "H" Estilizada - Sempre visível */}
       <span className={logoClasses}>
         H

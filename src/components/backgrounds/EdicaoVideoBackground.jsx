@@ -10,11 +10,11 @@ const EdicaoVideoBackground = ({
   deviceCapabilities, 
   courseSlug 
 }) => {
-  const canvasRef = useRef(null);
-  const animationRef = useRef(null);
-  const filmFramesRef = useRef([]);
-  const timelineRef = useRef({ position: 0 });
-  const cameraRef = useRef(null);
+  const canvasReference = useRef(null);
+  const animationReference = useRef(null);
+  const filmFramesReference = useRef([]);
+  const timelineReference = useRef({ position: 0 });
+  const cameraReference = useRef(null);
 
   // Configurações baseadas na performance - REDUZIDAS v1.2
   const config = useMemo(() => ({
@@ -80,85 +80,88 @@ const EdicaoVideoBackground = ({
       }
     }
 
-    draw(ctx) {
-      ctx.save();
-      ctx.translate(this.x + this.width/2, this.y + this.height/2);
-      ctx.rotate(this.rotation);
-      ctx.scale(this.scale, this.scale);
-      ctx.globalAlpha = this.opacity;
+    draw(context) {
+      context.save();
+      context.translate(this.x + this.width/2, this.y + this.height/2);
+      context.rotate(this.rotation);
+      context.scale(this.scale, this.scale);
+      context.globalAlpha = this.opacity;
 
       // Desenhar frame baseado no tipo
       switch (this.type) {
-        case 'scene':
-          this.drawScene(ctx);
+        case 'scene': {
+          this.drawScene(context);
           break;
-        case 'transition':
-          this.drawTransition(ctx);
+        }
+        case 'transition': {
+          this.drawTransition(context);
           break;
-        case 'effect':
-          this.drawEffect(ctx);
+        }
+        case 'effect': {
+          this.drawEffect(context);
           break;
+        }
       }
 
-      ctx.restore();
+      context.restore();
     }
 
-    drawScene(ctx) {
+    drawScene(context) {
       // Frame principal
-      ctx.strokeStyle = config.colors.frame;
-      ctx.lineWidth = 2;
-      ctx.strokeRect(-this.width/2, -this.height/2, this.width, this.height);
+      context.strokeStyle = config.colors.frame;
+      context.lineWidth = 2;
+      context.strokeRect(-this.width/2, -this.height/2, this.width, this.height);
       
       // Buracos de filme nas laterais
-      for (let i = 0; i < 4; i++) {
-        const y = -this.height/2 + (i + 0.5) * (this.height / 4);
+      for (let index = 0; index < 4; index++) {
+        const y = -this.height/2 + (index + 0.5) * (this.height / 4);
         
         // Lado esquerdo
-        ctx.fillStyle = config.colors.frame;
-        ctx.fillRect(-this.width/2 - 5, y - 3, 5, 6);
+        context.fillStyle = config.colors.frame;
+        context.fillRect(-this.width/2 - 5, y - 3, 5, 6);
         
         // Lado direito  
-        ctx.fillRect(this.width/2, y - 3, 5, 6);
+        context.fillRect(this.width/2, y - 3, 5, 6);
       }
 
       // Conteúdo do frame (simulação)
-      ctx.fillStyle = config.colors.primary + '30';
-      ctx.fillRect(-this.width/2 + 4, -this.height/2 + 4, this.width - 8, this.height - 8);
+      context.fillStyle = config.colors.primary + '30';
+      context.fillRect(-this.width/2 + 4, -this.height/2 + 4, this.width - 8, this.height - 8);
     }
 
-    drawTransition(ctx) {
+    drawTransition(context) {
       // Frame com efeito de transição
-      ctx.strokeStyle = config.colors.accent;
-      ctx.lineWidth = 1.5;
-      ctx.setLineDash([4, 2]);
-      ctx.strokeRect(-this.width/2, -this.height/2, this.width, this.height);
-      ctx.setLineDash([]);
+      context.strokeStyle = config.colors.accent;
+      context.lineWidth = 1.5;
+      context.setLineDash([4, 2]);
+      context.strokeRect(-this.width/2, -this.height/2, this.width, this.height);
+      context.setLineDash([]);
       
       // Efeito de fade
-      const gradient = ctx.createLinearGradient(-this.width/2, 0, this.width/2, 0);
+      const gradient = context.createLinearGradient(-this.width/2, 0, this.width/2, 0);
       gradient.addColorStop(0, config.colors.primary + '00');
       gradient.addColorStop(0.5, config.colors.accent + '60');
       gradient.addColorStop(1, config.colors.secondary + '00');
       
-      ctx.fillStyle = gradient;
-      ctx.fillRect(-this.width/2, -this.height/2, this.width, this.height);
+      context.fillStyle = gradient;
+      context.fillRect(-this.width/2, -this.height/2, this.width, this.height);
     }
 
-    drawEffect(ctx) {
+    drawEffect(context) {
       // Frame com efeito especial
-      ctx.strokeStyle = config.colors.sparkle;
-      ctx.lineWidth = 1;
-      ctx.strokeRect(-this.width/2, -this.height/2, this.width, this.height);
+      context.strokeStyle = config.colors.sparkle;
+      context.lineWidth = 1;
+      context.strokeRect(-this.width/2, -this.height/2, this.width, this.height);
       
       // Sparkles internos
-      for (let i = 0; i < 3; i++) {
+      for (let index = 0; index < 3; index++) {
         const x = (Math.random() - 0.5) * (this.width - 10);
         const y = (Math.random() - 0.5) * (this.height - 10);
         
-        ctx.fillStyle = config.colors.flare;
-        ctx.beginPath();
-        ctx.arc(x, y, 1, 0, Math.PI * 2);
-        ctx.fill();
+        context.fillStyle = config.colors.flare;
+        context.beginPath();
+        context.arc(x, y, 1, 0, Math.PI * 2);
+        context.fill();
       }
     }
   }
@@ -194,36 +197,36 @@ const EdicaoVideoBackground = ({
       }
     }
 
-    draw(ctx) {
+    draw(context) {
       if (this.life <= 0) return;
       
-      ctx.save();
-      ctx.translate(this.x, this.y);
+      context.save();
+      context.translate(this.x, this.y);
       
       const alpha = this.life * Math.sin(this.twinkle) * config.flareIntensity;
-      ctx.globalAlpha = Math.max(0, alpha);
+      context.globalAlpha = Math.max(0, alpha);
       
       // Sparkle em formato de estrela
-      ctx.fillStyle = config.colors.flare;
-      ctx.beginPath();
+      context.fillStyle = config.colors.flare;
+      context.beginPath();
       
       const spikes = 4;
       const outerRadius = this.size;
       const innerRadius = this.size * 0.5;
       
-      for (let i = 0; i < spikes * 2; i++) {
-        const radius = i % 2 === 0 ? outerRadius : innerRadius;
-        const angle = (i * Math.PI) / spikes;
+      for (let index = 0; index < spikes * 2; index++) {
+        const radius = index % 2 === 0 ? outerRadius : innerRadius;
+        const angle = (index * Math.PI) / spikes;
         const x = Math.cos(angle) * radius;
         const y = Math.sin(angle) * radius;
         
-        if (i === 0) ctx.moveTo(x, y);
-        else ctx.lineTo(x, y);
+        if (index === 0) context.moveTo(x, y);
+        else context.lineTo(x, y);
       }
       
-      ctx.closePath();
-      ctx.fill();
-      ctx.restore();
+      context.closePath();
+      context.fill();
+      context.restore();
     }
   }
 
@@ -253,158 +256,158 @@ const EdicaoVideoBackground = ({
       this.recordingBlink += this.recordingSpeed;
     }
 
-    draw(ctx) {
+    draw(context) {
       if (!config.cameraEnabled) return;
       
-      ctx.save();
-      ctx.translate(this.x, this.y + Math.sin(this.bobOffset) * 3);
-      ctx.rotate(this.rotation);
-      ctx.scale(this.scale, this.scale);
-      ctx.globalAlpha = this.opacity;
+      context.save();
+      context.translate(this.x, this.y + Math.sin(this.bobOffset) * 3);
+      context.rotate(this.rotation);
+      context.scale(this.scale, this.scale);
+      context.globalAlpha = this.opacity;
 
       // Corpo da câmera
-      ctx.fillStyle = config.colors.secondary;
-      ctx.fillRect(-30, -20, 60, 40);
+      context.fillStyle = config.colors.secondary;
+      context.fillRect(-30, -20, 60, 40);
       
       // Borda do corpo
-      ctx.strokeStyle = config.colors.frame;
-      ctx.lineWidth = 2;
-      ctx.strokeRect(-30, -20, 60, 40);
+      context.strokeStyle = config.colors.frame;
+      context.lineWidth = 2;
+      context.strokeRect(-30, -20, 60, 40);
       
       // Lente principal
-      ctx.save();
-      ctx.translate(20, 0);
-      ctx.rotate(this.lensRotation);
+      context.save();
+      context.translate(20, 0);
+      context.rotate(this.lensRotation);
       
       // Círculo externo da lente
-      ctx.strokeStyle = config.colors.accent;
-      ctx.lineWidth = 3;
-      ctx.beginPath();
-      ctx.arc(0, 0, 15, 0, Math.PI * 2);
-      ctx.stroke();
+      context.strokeStyle = config.colors.accent;
+      context.lineWidth = 3;
+      context.beginPath();
+      context.arc(0, 0, 15, 0, Math.PI * 2);
+      context.stroke();
       
       // Círculo interno da lente
-      ctx.fillStyle = config.colors.primary + '40';
-      ctx.beginPath();
-      ctx.arc(0, 0, 10, 0, Math.PI * 2);
-      ctx.fill();
+      context.fillStyle = config.colors.primary + '40';
+      context.beginPath();
+      context.arc(0, 0, 10, 0, Math.PI * 2);
+      context.fill();
       
       // Reflexo da lente
-      ctx.fillStyle = config.colors.flare + '80';
-      ctx.beginPath();
-      ctx.arc(-3, -3, 4, 0, Math.PI * 2);
-      ctx.fill();
+      context.fillStyle = config.colors.flare + '80';
+      context.beginPath();
+      context.arc(-3, -3, 4, 0, Math.PI * 2);
+      context.fill();
       
-      ctx.restore();
+      context.restore();
       
       // Suporte superior
-      ctx.fillStyle = config.colors.frame;
-      ctx.fillRect(-5, -30, 10, 15);
+      context.fillStyle = config.colors.frame;
+      context.fillRect(-5, -30, 10, 15);
       
       // Visor
-      ctx.fillStyle = config.colors.primary + '60';
-      ctx.fillRect(-25, -15, 20, 12);
+      context.fillStyle = config.colors.primary + '60';
+      context.fillRect(-25, -15, 20, 12);
       
       // Botão de gravação (piscando)
       const recordingAlpha = 0.5 + Math.sin(this.recordingBlink) * 0.5;
-      ctx.globalAlpha = this.opacity * recordingAlpha;
-      ctx.fillStyle = '#FF0000';
-      ctx.beginPath();
-      ctx.arc(-20, -25, 3, 0, Math.PI * 2);
-      ctx.fill();
+      context.globalAlpha = this.opacity * recordingAlpha;
+      context.fillStyle = '#FF0000';
+      context.beginPath();
+      context.arc(-20, -25, 3, 0, Math.PI * 2);
+      context.fill();
       
       // Texto "REC"
-      ctx.globalAlpha = this.opacity;
-      ctx.font = '8px Arial';
-      ctx.fillStyle = config.colors.flare;
-      ctx.fillText('REC', -15, -22);
+      context.globalAlpha = this.opacity;
+      context.font = '8px Arial';
+      context.fillStyle = config.colors.flare;
+      context.fillText('REC', -15, -22);
       
       // Tripé (três pernas simples)
-      ctx.strokeStyle = config.colors.secondary;
-      ctx.lineWidth = 2;
-      for (let i = 0; i < 3; i++) {
-        const angle = (i * Math.PI * 2) / 3;
+      context.strokeStyle = config.colors.secondary;
+      context.lineWidth = 2;
+      for (let index = 0; index < 3; index++) {
+        const angle = (index * Math.PI * 2) / 3;
         const legX = Math.cos(angle) * 25;
         const legY = Math.sin(angle) * 25;
         
-        ctx.beginPath();
-        ctx.moveTo(0, 20);
-        ctx.lineTo(legX, 20 + legY);
-        ctx.stroke();
+        context.beginPath();
+        context.moveTo(0, 20);
+        context.lineTo(legX, 20 + legY);
+        context.stroke();
       }
 
-      ctx.restore();
+      context.restore();
     }
   }
 
   // Desenhar timeline cinematográfica
-  const drawTimeline = (ctx) => {
+  const drawTimeline = (context) => {
     if (config.timelineHeight === 0 || config.timelineSpeed === 0) return; // Não desenhar se removida
     
-    const { width, height } = ctx.canvas;
+    const { width, height } = context.canvas;
     const timelineY = height - config.timelineHeight - 20;
     
-    ctx.save();
-    ctx.globalAlpha = 0.8;
+    context.save();
+    context.globalAlpha = 0.8;
     
     // Fundo da timeline
-    ctx.fillStyle = config.colors.timeline + '20';
-    ctx.fillRect(0, timelineY, width, config.timelineHeight);
+    context.fillStyle = config.colors.timeline + '20';
+    context.fillRect(0, timelineY, width, config.timelineHeight);
     
     // Borda da timeline
-    ctx.strokeStyle = config.colors.timeline;
-    ctx.lineWidth = 2;
-    ctx.strokeRect(0, timelineY, width, config.timelineHeight);
+    context.strokeStyle = config.colors.timeline;
+    context.lineWidth = 2;
+    context.strokeRect(0, timelineY, width, config.timelineHeight);
     
     // Keyframes na timeline
     const keyframeY = timelineY + config.timelineHeight / 2;
-    timelineRef.current.position += config.timelineSpeed;
+    timelineReference.current.position += config.timelineSpeed;
     
-    for (let x = (timelineRef.current.position % config.keyframeSpacing) - config.keyframeSpacing; 
+    for (let x = (timelineReference.current.position % config.keyframeSpacing) - config.keyframeSpacing; 
          x < width + config.keyframeSpacing; 
          x += config.keyframeSpacing) {
       
       // Keyframe marker
-      ctx.fillStyle = config.colors.accent;
-      ctx.fillRect(x - 2, keyframeY - 15, 4, 30);
+      context.fillStyle = config.colors.accent;
+      context.fillRect(x - 2, keyframeY - 15, 4, 30);
       
       // Keyframe diamond
-      ctx.beginPath();
-      ctx.moveTo(x, keyframeY - 8);
-      ctx.lineTo(x + 6, keyframeY);
-      ctx.lineTo(x, keyframeY + 8);
-      ctx.lineTo(x - 6, keyframeY);
-      ctx.closePath();
-      ctx.fill();
+      context.beginPath();
+      context.moveTo(x, keyframeY - 8);
+      context.lineTo(x + 6, keyframeY);
+      context.lineTo(x, keyframeY + 8);
+      context.lineTo(x - 6, keyframeY);
+      context.closePath();
+      context.fill();
     }
     
     // Playhead
     const playheadX = width * 0.3;
-    ctx.fillStyle = config.colors.flare;
-    ctx.fillRect(playheadX - 1, timelineY - 10, 2, config.timelineHeight + 20);
+    context.fillStyle = config.colors.flare;
+    context.fillRect(playheadX - 1, timelineY - 10, 2, config.timelineHeight + 20);
     
     // Playhead triangle
-    ctx.beginPath();
-    ctx.moveTo(playheadX, timelineY - 10);
-    ctx.lineTo(playheadX - 8, timelineY - 20);
-    ctx.lineTo(playheadX + 8, timelineY - 20);
-    ctx.closePath();
-    ctx.fill();
+    context.beginPath();
+    context.moveTo(playheadX, timelineY - 10);
+    context.lineTo(playheadX - 8, timelineY - 20);
+    context.lineTo(playheadX + 8, timelineY - 20);
+    context.closePath();
+    context.fill();
     
-    ctx.restore();
+    context.restore();
   };
 
   // Inicializar elementos - AUMENTADOS + CÂMERA
   const initializeElements = (canvas) => {
     // Film frames - AUMENTADOS
-    filmFramesRef.current = [];
-    for (let i = 0; i < config.frameCount; i++) {
-      filmFramesRef.current.push(new FilmFrame(canvas));
+    filmFramesReference.current = [];
+    for (let index = 0; index < config.frameCount; index++) {
+      filmFramesReference.current.push(new FilmFrame(canvas));
     }
     
     // Câmera de cinema - NOVA
     if (config.cameraEnabled) {
-      cameraRef.current = new CinemaCamera(canvas);
+      cameraReference.current = new CinemaCamera(canvas);
     }
     
     // Sparkles removidos para simplicidade
@@ -415,35 +418,35 @@ const EdicaoVideoBackground = ({
 
   // Loop de animação
   const animate = () => {
-    const canvas = canvasRef.current;
+    const canvas = canvasReference.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext('2d');
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const context = canvas.getContext('2d');
+    context.clearRect(0, 0, canvas.width, canvas.height);
 
     // Desenhar timeline (se ativa)
-    drawTimeline(ctx);
+    drawTimeline(context);
 
     // Desenhar e atualizar film frames
-    filmFramesRef.current.forEach(element => {
+    for (const element of filmFramesReference.current) {
       element.update();
-      element.draw(ctx);
-    });
+      element.draw(context);
+    }
 
     // Desenhar e atualizar câmera
-    if (cameraRef.current) {
-      cameraRef.current.update();
-      cameraRef.current.draw(ctx);
+    if (cameraReference.current) {
+      cameraReference.current.update();
+      cameraReference.current.draw(context);
     }
 
     if (config.frameSpeed > 0 || config.cameraSpeed > 0) {
-      animationRef.current = requestAnimationFrame(animate);
+      animationReference.current = requestAnimationFrame(animate);
     }
   };
 
   // Configurar canvas e inicializar
   useEffect(() => {
-    const canvas = canvasRef.current;
+    const canvas = canvasReference.current;
     if (!canvas) return;
 
     const handleResize = () => {
@@ -451,8 +454,8 @@ const EdicaoVideoBackground = ({
       canvas.width = rect.width * (deviceCapabilities?.pixelRatio || 1);
       canvas.height = rect.height * (deviceCapabilities?.pixelRatio || 1);
       
-      const ctx = canvas.getContext('2d');
-      ctx.scale(deviceCapabilities?.pixelRatio || 1, deviceCapabilities?.pixelRatio || 1);
+      const context = canvas.getContext('2d');
+      context.scale(deviceCapabilities?.pixelRatio || 1, deviceCapabilities?.pixelRatio || 1);
       
       // Reinicializar elementos com novo tamanho
       initializeElements(canvas);
@@ -466,8 +469,8 @@ const EdicaoVideoBackground = ({
 
     return () => {
       window.removeEventListener('resize', handleResize);
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
+      if (animationReference.current) {
+        cancelAnimationFrame(animationReference.current);
       }
     };
   }, [config, deviceCapabilities]);
@@ -486,7 +489,7 @@ const EdicaoVideoBackground = ({
 
   return (
     <canvas
-      ref={canvasRef}
+      ref={canvasReference}
       className="absolute inset-0 w-full h-full pointer-events-none"
       style={{ 
         background: 'transparent',

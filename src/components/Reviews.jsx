@@ -111,11 +111,11 @@ const Reviews = () => {
   };
 
   function ReviewCard({ review, index }) {
-    const [ref, visible] = useInView();
+    const [reference, visible] = useInView();
     
     return (
       <div
-        ref={ref}
+        ref={reference}
         className={`card-enter ${visible ? 'in-view' : ''} break-inside-avoid group`}
         style={{ animationDelay: `${index * 0.1}s` }}
       >
@@ -176,11 +176,11 @@ const Reviews = () => {
   }
 
   function StatCard({ stat, index }) {
-    const [ref, visible] = useInView();
+    const [reference, visible] = useInView();
     
     return (
       <div
-        ref={ref}
+        ref={reference}
         className={`card-enter ${visible ? 'in-view' : ''} text-center group`}
         style={{ animationDelay: `${index * 0.1}s` }}
       >
@@ -283,7 +283,7 @@ const Reviews = () => {
                   className="px-8 py-3"
                   onClick={(e) => {
                     e.preventDefault();
-                    const element = document.getElementById('cursos');
+                    const element = document.querySelector('#cursos');
                     if (element) {
                       element.scrollIntoView({ behavior: 'smooth' });
                     }

@@ -23,25 +23,25 @@ const OptimizedImage = ({
   objectFit = 'cover',
   onLoad,
   onError,
-  ...props
+  ...properties
 }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [currentSrc, setCurrentSrc] = useState(null);
+  const [currentSource, setCurrentSource] = useState(null);
   const [isInView, setIsInView] = useState(priority); // If priority, load immediately
-  const imgRef = useRef(null);
-  const observerRef = useRef(null);
+  const imgReference = useRef(null);
+  const observerReference = useRef(null);
   const imageOptimizer = useRef(getImageOptimizer());
 
   // State for async-generated sources
   const [sources, setSources] = useState([]);
-  const [fallbackSrc, setFallbackSrc] = useState('');
+  const [fallbackSource, setFallbackSource] = useState('');
 
   // Generate optimized image sources asynchronously
   useEffect(() => {
     if (!src) {
       setSources([]);
-      setFallbackSrc('');
+      setFallbackSource('');
       return;
     }
 
@@ -63,11 +63,11 @@ const OptimizedImage = ({
           format: 'jpg',
           quality
         });
-        setFallbackSrc(fallback);
+        setFallbackSource(fallback);
       } catch (error) {
         console.warn('Failed to generate optimized sources, using original:', error);
         setSources([]);
-        setFallbackSrc(src);
+        setFallbackSource(src);
       }
     };
 
@@ -78,16 +78,16 @@ const OptimizedImage = ({
 
   // Intersection Observer setup for lazy loading
   useEffect(() => {
-    if (priority || !imgRef.current) return;
+    if (priority || !imgReference.current) return;
 
-    observerRef.current = new IntersectionObserver(
+    observerReference.current = new IntersectionObserver(
       (entries) => {
-        entries.forEach(entry => {
+        for (const entry of entries) {
           if (entry.isIntersecting) {
             setIsInView(true);
-            observerRef.current?.unobserve(entry.target);
+            observerReference.current?.unobserve(entry.target);
           }
-        });
+        }
       },
       {
         rootMargin: '50px', // Start loading 50px before the image enters viewport
@@ -95,11 +95,11 @@ const OptimizedImage = ({
       }
     );
 
-    observerRef.current.observe(imgRef.current);
+    observerReference.current.observe(imgReference.current);
 
     return () => {
-      if (observerRef.current) {
-        observerRef.current.disconnect();
+      if (observerReference.current) {
+        observerReference.current.disconnect();
       }
     };
   }, [priority]);
@@ -117,17 +117,17 @@ const OptimizedImage = ({
     onError?.(event);
 
     // Try fallback to JPEG if other formats fail
-    if (currentSrc && !currentSrc.includes('.jpg') && fallbackSrc) {
-      setCurrentSrc(fallbackSrc);
+    if (currentSource && !currentSource.includes('.jpg') && fallbackSource) {
+      setCurrentSource(fallbackSource);
     }
-  }, [onError, currentSrc, fallbackSrc]);
+  }, [onError, currentSource, fallbackSource]);
 
   // Update current src when in view
   useEffect(() => {
-    if (isInView && !currentSrc && fallbackSrc) {
-      setCurrentSrc(fallbackSrc);
+    if (isInView && !currentSource && fallbackSource) {
+      setCurrentSource(fallbackSource);
     }
-  }, [isInView, currentSrc, fallbackSrc]);
+  }, [isInView, currentSource, fallbackSource]);
 
   // Generate placeholder styles
   const getPlaceholderStyles = () => {
@@ -200,10 +200,10 @@ const OptimizedImage = ({
 
   return (
     <div 
-      ref={imgRef}
+      ref={imgReference}
       className={`optimized-image-container ${className}`}
       style={containerStyles}
-      {...props}
+      {...properties}
     >
       {/* Placeholder */}
       <div 
@@ -224,7 +224,7 @@ const OptimizedImage = ({
             />
           ))}
           <img
-            src={currentSrc}
+            src={currentSource}
             alt={alt}
             style={imageStyles}
             loading={loading}
@@ -275,42 +275,42 @@ const OptimizedImage = ({
 };
 
 // Preload function for critical images
-export const preloadImage = (src, options = {}) => {
+export const preloadImage = (source, options = {}) => {
   const { formats = ['webp'], priority = true } = options;
   
   if (!priority) return;
 
   const imageOptimizer = getImageOptimizer();
   
-  formats.forEach(format => {
+  for (const format of formats) {
     const link = document.createElement('link');
     link.rel = 'preload';
     link.as = 'image';
-    link.href = imageOptimizer.generateUrl(src, {
+    link.href = imageOptimizer.generateUrl(source, {
       width: 1024, // Reasonable default for preload
       format,
       quality: 80
     });
     
     // Add to document head
-    document.head.appendChild(link);
-  });
+    document.head.append(link);
+  }
 };
 
 // HOC for automatic image optimization
 export const withImageOptimization = (WrappedComponent) => {
-  return React.forwardRef((props, ref) => {
+  return React.forwardRef((properties, reference) => {
     // Transform image props automatically
-    const optimizedProps = { ...props };
+    const optimizedProperties = { ...properties };
     
-    if (props.images) {
-      optimizedProps.images = props.images.map(img => ({
+    if (properties.images) {
+      optimizedProperties.images = properties.images.map(img => ({
         ...img,
         component: OptimizedImage
       }));
     }
 
-    return <WrappedComponent ref={ref} {...optimizedProps} />;
+    return <WrappedComponent ref={reference} {...optimizedProperties} />;
   });
 };
 
@@ -320,15 +320,15 @@ export const generateBlurDataURL = (width = 10, height = 10) => {
   canvas.width = width;
   canvas.height = height;
   
-  const ctx = canvas.getContext('2d');
+  const context = canvas.getContext('2d');
   
   // Create a simple gradient
-  const gradient = ctx.createLinearGradient(0, 0, width, height);
+  const gradient = context.createLinearGradient(0, 0, width, height);
   gradient.addColorStop(0, '#f3f4f6');
   gradient.addColorStop(1, '#e5e7eb');
   
-  ctx.fillStyle = gradient;
-  ctx.fillRect(0, 0, width, height);
+  context.fillStyle = gradient;
+  context.fillRect(0, 0, width, height);
   
   return canvas.toDataURL('image/jpeg', 0.1); // Very low quality for small size
 };

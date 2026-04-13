@@ -15,7 +15,7 @@ function useUrlCleanup() {
     // Check if URL contains ~and~ encoding
     if (currentUrl.includes('~and~')) {
       // Clean the URL by replacing ~and~ with &
-      const cleanUrl = currentUrl.replace(/~and~/g, '&');
+      const cleanUrl = currentUrl.replaceAll('~and~', '&');
       
       // Navigate to the clean URL, replacing the current history entry
       navigate(cleanUrl, { replace: true });

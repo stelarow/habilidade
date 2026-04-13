@@ -15,7 +15,7 @@ const usePerformanceLevel = () => {
 
   useEffect(() => {
     // Detectar preferência de movimento reduzido apenas uma vez
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const mediaQuery = globalThis.matchMedia('(prefers-reduced-motion: reduce)');
     const initialPrefersReduced = mediaQuery.matches;
     setPrefersReducedMotion(initialPrefersReduced);
 

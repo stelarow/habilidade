@@ -45,12 +45,12 @@ const STEPS = [
 ];
 
 function StepCard({ step, index, isLast }) {
-  const [ref, visible] = useInView();
+  const [reference, visible] = useInView();
   const { number, title, description, icon: Icon, color, borderGradient, isSpecial } = step;
 
   return (
     <div
-      ref={ref}
+      ref={reference}
       className={`step-card ${visible ? 'in-view' : ''} relative flex flex-col items-center text-center group`}
       style={{ animationDelay: `${index * 0.3}s` }}
     >
@@ -110,7 +110,7 @@ function HowItWorks() {
             className="px-8 py-3"
             onClick={(e) => {
               e.preventDefault();
-              const element = document.getElementById('cursos');
+              const element = document.querySelector('#cursos');
               if (element) {
                 element.scrollIntoView({ behavior: 'smooth' });
               }

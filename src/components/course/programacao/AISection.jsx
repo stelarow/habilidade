@@ -2,14 +2,14 @@ import { Button } from "@/components/ui/button"
 import { useScrollAnimation, useCounterAnimation, useStaggerAnimation } from "@/hooks/useScrollAnimation"
 
 export function AISection() {
-  const [statsRef, statsVisible] = useScrollAnimation({ threshold: 0.3, once: true })
-  const [codeRef, codeVisible] = useScrollAnimation({ threshold: 0.2, once: true })
+  const [statsReference, statsVisible] = useScrollAnimation({ threshold: 0.3, once: true })
+  const [codeReference, codeVisible] = useScrollAnimation({ threshold: 0.2, once: true })
 
   // Number counters para estatísticas
   const hoursCount = useCounterAnimation(133, 2000, statsVisible)
   const modulesCount = useCounterAnimation(6, 1800, statsVisible)
   const lessonsCount = useCounterAnimation(92, 2200, statsVisible)
-  const priceCount = useCounterAnimation(399.90, 2000, statsVisible)
+  const priceCount = useCounterAnimation(399.9, 2000, statsVisible)
 
   // Código com efeito typewriter
   const codeLines = [
@@ -61,7 +61,7 @@ export function AISection() {
             </div>
           </div>
 
-          <div ref={codeRef} className="bg-gray-900 rounded-lg p-4 sm:p-6 font-mono text-xs sm:text-sm overflow-x-auto min-w-0">
+          <div ref={codeReference} className="bg-gray-900 rounded-lg p-4 sm:p-6 font-mono text-xs sm:text-sm overflow-x-auto min-w-0">
             <div className="flex items-center gap-2 mb-4 min-w-0">
               <div className="w-3 h-3 bg-red-500 rounded-full flex-shrink-0"></div>
               <div className="w-3 h-3 bg-yellow-500 rounded-full flex-shrink-0"></div>
@@ -98,7 +98,7 @@ export function AISection() {
           </div>
         </div>
 
-        <div ref={statsRef} className="mt-16 grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 text-center">
+        <div ref={statsReference} className="mt-16 grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 text-center">
           <div className={`transition-all duration-700 delay-100 ${
             statsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}>

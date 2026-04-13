@@ -45,16 +45,16 @@ const STEPS = [
 ];
 
 function SimpleCard({ step, index }) {
-  const [ref, visible] = useInView();
+  const [reference, visible] = useInView();
   const { number, title, description, icon: Icon, color, borderGradient, isSpecial } = step;
 
   // Se for o card "Escolha seu Curso", torna clicável
   const isChooseCard = number === '01';
   const CardWrapper = isChooseCard ? 'button' : 'div';
-  const cardProps = isChooseCard ? {
+  const cardProperties = isChooseCard ? {
     onClick: (e) => {
       e.preventDefault();
-      const element = document.getElementById('cursos');
+      const element = document.querySelector('#cursos');
       if (element) {
         element.scrollIntoView({ behavior: 'smooth' });
       }
@@ -63,11 +63,11 @@ function SimpleCard({ step, index }) {
 
   return (
     <CardWrapper 
-      {...cardProps}
+      {...cardProperties}
       className={`${isChooseCard ? 'cursor-pointer' : ''} block`}
     >
       <div 
-        ref={ref}
+        ref={reference}
         className={`step-card ${visible ? 'in-view' : ''} flex flex-col items-center text-center max-w-xs group`}
         style={{ animationDelay: `${index * 0.2}s` }}
       >

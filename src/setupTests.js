@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 
 // Mock IntersectionObserver
-global.IntersectionObserver = class IntersectionObserver {
+globalThis.IntersectionObserver = class IntersectionObserver {
   constructor() {}
   observe() { return null; }
   disconnect() { return null; }
@@ -9,7 +9,7 @@ global.IntersectionObserver = class IntersectionObserver {
 };
 
 // Mock ResizeObserver
-global.ResizeObserver = class ResizeObserver {
+globalThis.ResizeObserver = class ResizeObserver {
   constructor() {}
   observe() { return null; }
   disconnect() { return null; }
@@ -17,7 +17,7 @@ global.ResizeObserver = class ResizeObserver {
 };
 
 // Mock matchMedia
-Object.defineProperty(window, 'matchMedia', {
+Object.defineProperty(globalThis, 'matchMedia', {
   writable: true,
   value: jest.fn().mockImplementation(query => ({
     matches: false,
@@ -32,7 +32,7 @@ Object.defineProperty(window, 'matchMedia', {
 });
 
 // Mock scrollTo
-Object.defineProperty(window, 'scrollTo', {
+Object.defineProperty(globalThis, 'scrollTo', {
   writable: true,
   value: jest.fn(),
 });
@@ -44,7 +44,7 @@ const localStorageMock = {
   removeItem: jest.fn(),
   clear: jest.fn(),
 };
-global.localStorage = localStorageMock;
+globalThis.localStorage = localStorageMock;
 
 // Mock clipboard API
 Object.assign(navigator, {

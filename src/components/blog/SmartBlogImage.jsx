@@ -14,7 +14,7 @@ const SmartBlogImage = ({
   priority = false,
   onLoad,
   onError,
-  ...props 
+  ...properties 
 }) => {
   const [imageState, setImageState] = useState({
     loaded: false,
@@ -24,16 +24,16 @@ const SmartBlogImage = ({
     optimizedSrc: null
   });
   
-  const imgRef = useRef(null);
-  const canvasRef = useRef(null);
+  const imgReference = useRef(null);
+  const canvasReference = useRef(null);
 
   // Check image dimensions and optimize if needed
   const analyzeAndOptimizeImage = (imgElement) => {
     const { naturalWidth, naturalHeight } = imgElement;
     
     // Store original dimensions
-    setImageState(prev => ({
-      ...prev,
+    setImageState(previous => ({
+      ...previous,
       originalDimensions: { width: naturalWidth, height: naturalHeight }
     }));
 
@@ -45,7 +45,7 @@ const SmartBlogImage = ({
       
       // Create optimized version using canvas
       const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
+      const context = canvas.getContext('2d');
       
       // Calculate better dimensions (max 2x upscale for quality)
       const maxUpscale = 2;
@@ -56,20 +56,20 @@ const SmartBlogImage = ({
       canvas.height = targetHeight;
       
       // Apply high-quality scaling
-      ctx.imageSmoothingEnabled = true;
-      ctx.imageSmoothingQuality = 'high';
+      context.imageSmoothingEnabled = true;
+      context.imageSmoothingQuality = 'high';
       
       // Apply subtle sharpening for upscaled images
-      ctx.filter = 'contrast(1.05) brightness(1.01)';
+      context.filter = 'contrast(1.05) brightness(1.01)';
       
       // Draw upscaled image
-      ctx.drawImage(imgElement, 0, 0, targetWidth, targetHeight);
+      context.drawImage(imgElement, 0, 0, targetWidth, targetHeight);
       
       // Get optimized data URL
       const optimizedDataUrl = canvas.toDataURL('image/jpeg', 0.9);
       
-      setImageState(prev => ({
-        ...prev,
+      setImageState(previous => ({
+        ...previous,
         isSmall: true,
         optimizedSrc: optimizedDataUrl,
         loaded: true
@@ -79,8 +79,8 @@ const SmartBlogImage = ({
     }
     
     // Image is adequate size
-    setImageState(prev => ({
-      ...prev,
+    setImageState(previous => ({
+      ...previous,
       isSmall: false,
       loaded: true
     }));
@@ -106,8 +106,8 @@ const SmartBlogImage = ({
 
   // Handle image error
   const handleImageError = (event) => {
-    setImageState(prev => ({
-      ...prev,
+    setImageState(previous => ({
+      ...previous,
       error: true,
       loaded: false
     }));
@@ -174,7 +174,7 @@ const SmartBlogImage = ({
   };
 
   // Determine which src to use
-  const getEffectiveSrc = () => {
+  const getEffectiveSource = () => {
     return imageState.optimizedSrc || src;
   };
 
@@ -182,8 +182,8 @@ const SmartBlogImage = ({
     <div className="smart-blog-image-container relative">
       {/* Main Image */}
       <img
-        ref={imgRef}
-        src={getEffectiveSrc()}
+        ref={imgReference}
+        src={getEffectiveSource()}
         alt={alt}
         className={getSmartClasses()}
         style={getSmartStyles()}
@@ -192,7 +192,7 @@ const SmartBlogImage = ({
         decoding="async"
         onLoad={handleImageLoad}
         onError={handleImageError}
-        {...props}
+        {...properties}
       />
       
       {/* Optimization Indicator (Development Only) */}

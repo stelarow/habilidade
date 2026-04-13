@@ -5,7 +5,7 @@ import { BookOpen, Code, PencilSimple, Rocket, Book, Brain, Coffee, Database, De
 import { useScrollAnimation } from "@/hooks/useScrollAnimation"
 
 export function FrameworksSection() {
-  const [titleRef, titleVisible] = useScrollAnimation({ threshold: 0.3, once: true })
+  const [titleReference, titleVisible] = useScrollAnimation({ threshold: 0.3, once: true })
   const curriculum = [
     {
       id: 1,
@@ -175,38 +175,53 @@ export function FrameworksSection() {
 
   const getTypeIcon = (type) => {
     switch (type) {
-      case 'theory': return <BookOpen className="w-4 h-4" />
-      case 'practice': return <Code className="w-4 h-4" />
-      case 'exercise': return <PencilSimple className="w-4 h-4" />
-      case 'project': return <Rocket className="w-4 h-4" />
-      default: return <Book className="w-4 h-4" />
+      case 'theory': { return <BookOpen className="w-4 h-4" />
+      }
+      case 'practice': { return <Code className="w-4 h-4" />
+      }
+      case 'exercise': { return <PencilSimple className="w-4 h-4" />
+      }
+      case 'project': { return <Rocket className="w-4 h-4" />
+      }
+      default: { return <Book className="w-4 h-4" />
+      }
     }
   }
 
   const getTypeBadgeVariant = (type) => {
     switch (type) {
-      case 'theory': return 'secondary'
-      case 'practice': return 'default'
-      case 'exercise': return 'outline'
-      case 'project': return 'destructive'
-      default: return 'secondary'
+      case 'theory': { return 'secondary'
+      }
+      case 'practice': { return 'default'
+      }
+      case 'exercise': { return 'outline'
+      }
+      case 'project': { return 'destructive'
+      }
+      default: { return 'secondary'
+      }
     }
   }
 
   const getTypeLabel = (type) => {
     switch (type) {
-      case 'theory': return 'Teórica'
-      case 'practice': return 'Prática'
-      case 'exercise': return 'Exercício'
-      case 'project': return 'Projeto'
-      default: return 'Aula'
+      case 'theory': { return 'Teórica'
+      }
+      case 'practice': { return 'Prática'
+      }
+      case 'exercise': { return 'Exercício'
+      }
+      case 'project': { return 'Projeto'
+      }
+      default: { return 'Aula'
+      }
     }
   }
 
   return (
     <section id="grade-curricular" className="py-12 sm:py-16 lg:py-20 bg-background">
       <div className="container mx-auto px-4">
-        <div ref={titleRef} className={`text-center mb-8 sm:mb-12 transition-all duration-700 ${
+        <div ref={titleReference} className={`text-center mb-8 sm:mb-12 transition-all duration-700 ${
           titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         }`}>
           <div className="text-teal font-semibold mb-3 sm:mb-4 text-sm sm:text-base">GRADE CURRICULAR</div>

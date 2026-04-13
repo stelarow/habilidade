@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/* eslint-disable sonarjs/slow-regex, unicorn/prefer-top-level-await, unicorn/no-null, sonarjs/no-nested-template-literals, unicorn/prevent-abbreviations */
 
 /**
  * COMPREHENSIVE BLOG ARTICLE FORMATTING DIAGNOSIS
@@ -6,7 +7,7 @@
  */
 
 import { createClient } from '@supabase/supabase-js';
-import fs from 'fs/promises';
+import fs from 'node:fs/promises';
 
 const SUPABASE_URL = 'https://vfpdyllwquaturpcifpl.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZmcGR5bGx3cXVhdHVycGNpZnBsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE5MDkwMDEsImV4cCI6MjA2NzQ4NTAwMX0.m7zLlemqt6oYt55OFZK_xyEBWoxC23uiFL2EmCiaLqw';
@@ -47,7 +48,7 @@ const FORMATTING_ISSUES = {
     pattern: /\n{4,}/g,
     description: 'Excessive line breaks (4+ consecutive)',
     severity: 'LOW',
-    example: '\\n\\n\\n\\n'
+    example: String.raw`\n\n\n\n`
   },
   
   COMPRESSED_STEPS: {
@@ -112,7 +113,7 @@ function analyzeArticleIssues(article) {
     }];
   }
   
-  Object.entries(FORMATTING_ISSUES).forEach(([issueType, config]) => {
+  for (const [issueType, config] of Object.entries(FORMATTING_ISSUES)) {
     const matches = content.match(config.pattern);
     
     if (matches && matches.length > 0) {
@@ -122,11 +123,11 @@ function analyzeArticleIssues(article) {
         severity: config.severity,
         matches: matches.length,
         examples: matches.slice(0, 2).map(match => 
-          match.length > 100 ? match.substring(0, 100) + '...' : match
+          match.length > 100 ? match.slice(0, 100) + '...' : match
         )
       });
     }
-  });
+  }
   
   return issues;
 }
@@ -161,7 +162,7 @@ async function performDiagnosis() {
     diagnosis.totalIssuesFound += issues.reduce((sum, issue) => sum + issue.matches, 0);
     
     // Count severity levels
-    issues.forEach(issue => {
+    for (const issue of issues) {
       diagnosis.severityBreakdown[issue.severity] = 
         (diagnosis.severityBreakdown[issue.severity] || 0) + issue.matches;
       
@@ -176,7 +177,7 @@ async function performDiagnosis() {
       
       diagnosis.issueTypeBreakdown[issue.type].articlesAffected++;
       diagnosis.issueTypeBreakdown[issue.type].totalOccurrences += issue.matches;
-    });
+    }
     
     diagnosis.articleDetails.push({
       id: article.id,

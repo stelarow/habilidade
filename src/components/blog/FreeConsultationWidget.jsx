@@ -100,7 +100,7 @@ Estou interessado(a) em ${String(offer.title || '').toLowerCase()} para entender
         position: variant
       });
 
-      window.location.href = 'tel:+5548988559491';
+      globalThis.location.href = 'tel:+5548988559491';
     }
   };
 
@@ -256,8 +256,8 @@ Estou interessado(a) em ${String(offer.title || '').toLowerCase()} para entender
           <div className="mt-6 pt-6 border-t border-zinc-700">
             <div className="text-center mb-4">
               <div className="flex items-center justify-center gap-1 mb-2">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} size={16} className="text-yellow-400" weight="fill" />
+                {Array.from({length: 5}).map((_, index) => (
+                  <Star key={index} size={16} className="text-yellow-400" weight="fill" />
                 ))}
               </div>
               <p className="text-zinc-400 text-sm">Mais de 500 consultas realizadas</p>

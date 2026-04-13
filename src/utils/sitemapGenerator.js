@@ -12,7 +12,7 @@
 const STATIC_PAGES = [
   {
     url: '/',
-    priority: 1.0,
+    priority: 1,
     changefreq: 'weekly',
     lastmod: new Date().toISOString().split('T')[0]
   },
@@ -86,7 +86,7 @@ const formatSitemapDate = (dateString) => {
   try {
     const date = new Date(dateString);
     return date.toISOString().split('T')[0];
-  } catch (error) {
+  } catch {
     console.warn('Invalid date format:', dateString);
     return new Date().toISOString().split('T')[0];
   }
@@ -243,7 +243,7 @@ const fetchCategories = async () => {
       }
     }
     
-    const categories = Array.from(categoriesMap.values());
+    const categories = [...categoriesMap.values()];
     return categories;
     
   } catch (error) {
@@ -333,10 +333,10 @@ export const saveSitemap = async (outputPath = '/public/sitemap.xml') => {
     
     // In a Vite environment, we need to write to the public directory
     // This would typically be done during build process
-    if (typeof window === 'undefined') {
+    if (globalThis.window === undefined) {
       // Server-side or build-time execution
-      const fs = await import('fs');
-      const path = await import('path');
+      const fs = await import('node:fs');
+      const path = await import('node:path');
       
       const fullPath = path.resolve(process.cwd(), outputPath.replace('/public/', 'public/'));
       await fs.promises.writeFile(fullPath, sitemapContent, 'utf8');

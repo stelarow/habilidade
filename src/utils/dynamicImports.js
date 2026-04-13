@@ -10,13 +10,13 @@ const importCache = new Map();
 /**
  * Importação condicional com cache
  */
-const cachedImport = async (importFn, cacheKey) => {
+const cachedImport = async (importFunction, cacheKey) => {
   if (importCache.has(cacheKey)) {
     return importCache.get(cacheKey);
   }
   
   try {
-    const module = await importFn();
+    const module = await importFunction();
     importCache.set(cacheKey, module);
     return module;
   } catch (error) {
@@ -79,12 +79,12 @@ export const preloadByRoute = {
  * Sistema de preload inteligente
  */
 export const intelligentPreload = (currentPath) => {
-  Object.entries(preloadByRoute).forEach(([route, preloadFn]) => {
+  for (const [route, preloadFunction] of Object.entries(preloadByRoute)) {
     if (currentPath.startsWith(route)) {
       // Preload com delay para não atrasar o render inicial
-      setTimeout(preloadFn, 1000);
+      setTimeout(preloadFunction, 1000);
     }
-  });
+  }
 };
 
 /**
@@ -107,6 +107,6 @@ export const clearImportCache = () => {
 export const getCacheStats = () => {
   return {
     size: importCache.size,
-    modules: Array.from(importCache.keys())
+    modules: [...importCache.keys()]
   };
 };

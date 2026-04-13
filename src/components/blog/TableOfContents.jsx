@@ -16,9 +16,9 @@ const extractHeaders = (content) => {
   let element;
   
   if (typeof content === 'string') {
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = content;
-    element = tempDiv;
+    const temporaryDiv = document.createElement('div');
+    temporaryDiv.innerHTML = content;
+    element = temporaryDiv;
   } else if (content instanceof HTMLElement) {
     element = content;
   } else {
@@ -27,8 +27,8 @@ const extractHeaders = (content) => {
   
   const headers = element.querySelectorAll('h1, h2, h3, h4, h5, h6');
   
-  return Array.from(headers).map((header, index) => {
-    const level = parseInt(header.tagName.charAt(1));
+  return [...headers].map((header, index) => {
+    const level = Number.parseInt(header.tagName.charAt(1));
     const text = header.textContent?.trim() || '';
     const slug = generateSlug(text, index);
     
@@ -59,10 +59,10 @@ const generateSlug = (text, index) => {
   return text
     .toLowerCase()
     .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '') // Remove accents
-    .replace(/[^\w\s-]/g, '') // Remove special chars
-    .replace(/\s+/g, '-') // Replace spaces with hyphens
-    .replace(/-+/g, '-') // Remove duplicate hyphens
+    .replaceAll(/[\u0300-\u036F]/g, '') // Remove accents
+    .replaceAll(/[^\w\s-]/g, '') // Remove special chars
+    .replaceAll(/\s+/g, '-') // Replace spaces with hyphens
+    .replaceAll(/-+/g, '-') // Remove duplicate hyphens
     .trim('-') || `header-${index}`;
 };
 
@@ -131,9 +131,9 @@ const TableOfContents = ({
   const [isMobile, setIsMobile] = useState(false);
   const [readingProgress, setReadingProgress] = useState(0);
   
-  const observerRef = useRef(null);
-  const headersRef = useRef([]);
-  const tocRef = useRef(null);
+  const observerReference = useRef(null);
+  const headersReference = useRef([]);
+  const tocReference = useRef(null);
 
   /**
    * Check if device is mobile
@@ -178,10 +178,10 @@ const TableOfContents = ({
     
     if (filteredHeaders.length >= minHeaders) {
       setHeaders(filteredHeaders);
-      headersRef.current = filteredHeaders;
+      headersReference.current = filteredHeaders;
     } else {
       setHeaders([]);
-      headersRef.current = [];
+      headersReference.current = [];
     }
   }, [content, containerSelector, maxLevel, minHeaders]);
 
@@ -196,39 +196,39 @@ const TableOfContents = ({
       threshold: 0
     };
 
-    observerRef.current = new IntersectionObserver((entries) => {
+    observerReference.current = new IntersectionObserver((entries) => {
       const visibleHeaders = entries
         .filter(entry => entry.isIntersecting)
         .map(entry => {
-          const header = headersRef.current.find(h => h.element === entry.target);
+          const header = headersReference.current.find(h => h.element === entry.target);
           return { header, ratio: entry.intersectionRatio };
         })
         .filter(item => item.header);
 
       if (visibleHeaders.length > 0) {
         // Get the header with the highest intersection ratio
-        const mostVisible = visibleHeaders.reduce((prev, current) => 
-          prev.ratio > current.ratio ? prev : current
+        const mostVisible = visibleHeaders.reduce((previous, current) => 
+          previous.ratio > current.ratio ? previous : current
         );
         setActiveHeader(mostVisible.header.slug);
         
         if (updateUrlHash && mostVisible.header.slug) {
-          const newUrl = `${window.location.pathname}${window.location.search}#${mostVisible.header.slug}`;
-          window.history.replaceState(null, '', newUrl);
+          const newUrl = `${globalThis.location.pathname}${globalThis.location.search}#${mostVisible.header.slug}`;
+          globalThis.history.replaceState(null, '', newUrl);
         }
       }
     }, observerOptions);
 
     // Observe all headers
-    headers.forEach(header => {
+    for (const header of headers) {
       if (header.element) {
-        observerRef.current.observe(header.element);
+        observerReference.current.observe(header.element);
       }
-    });
+    }
 
     return () => {
-      if (observerRef.current) {
-        observerRef.current.disconnect();
+      if (observerReference.current) {
+        observerReference.current.disconnect();
       }
     };
   }, [headers, offsetTop, updateUrlHash]);
@@ -304,8 +304,8 @@ const TableOfContents = ({
 
     // Update URL hash immediately
     if (updateUrlHash) {
-      const newUrl = `${window.location.pathname}${window.location.search}#${header.slug}`;
-      window.history.pushState(null, '', newUrl);
+      const newUrl = `${globalThis.location.pathname}${globalThis.location.search}#${header.slug}`;
+      globalThis.history.pushState(null, '', newUrl);
     }
 
     // Close TOC on mobile after clicking
@@ -318,7 +318,7 @@ const TableOfContents = ({
    * Toggle collapse state
    */
   const toggleCollapse = useCallback(() => {
-    setIsCollapsed(prev => !prev);
+    setIsCollapsed(previous => !previous);
   }, []);
 
   // Don't render if no headers
@@ -429,7 +429,7 @@ const TableOfContents = ({
   // Desktop rendering (sticky sidebar)
   return (
     <div 
-      ref={tocRef}
+      ref={tocReference}
       className={combineClasses(
         'toc-desktop sticky top-24 max-h-[calc(100vh-6rem)]',
         className

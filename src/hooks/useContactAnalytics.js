@@ -41,11 +41,11 @@ export const useContactAnalytics = () => {
       article,
       category,
       position,
-      url: window.location.href,
+      url: globalThis.location.href,
       referrer: document.referrer,
       userAgent: navigator.userAgent,
       sessionId: getSessionId(),
-      message: message.substring(0, 100) // First 100 chars for privacy
+      message: message.slice(0, 100) // First 100 chars for privacy
     };
 
     // Send to analytics endpoint (if available)
@@ -86,7 +86,7 @@ export const useContactAnalytics = () => {
       source,
       article,
       success,
-      url: window.location.href,
+      url: globalThis.location.href,
       sessionId: getSessionId()
     };
 
@@ -116,7 +116,7 @@ export const useContactAnalytics = () => {
       scrollDepth,
       interactions: interactions.length,
       engagementScore,
-      url: window.location.href,
+      url: globalThis.location.href,
       sessionId: getSessionId()
     };
 
@@ -140,9 +140,9 @@ export const useContactAnalytics = () => {
 
       const metrics = {
         totalInteractions: last30Days.length,
-        whatsappClicks: last30Days.filter(i => i.channel === 'whatsapp').length,
-        emailClicks: last30Days.filter(i => i.channel === 'email').length,
-        phoneClicks: last30Days.filter(i => i.channel === 'phone').length,
+        whatsappClicks: last30Days.filter(index => index.channel === 'whatsapp').length,
+        emailClicks: last30Days.filter(index => index.channel === 'email').length,
+        phoneClicks: last30Days.filter(index => index.channel === 'phone').length,
         topSources: getTopSources(last30Days),
         topArticles: getTopArticles(last30Days),
         conversionByHour: getConversionByHour(last30Days)
@@ -170,7 +170,7 @@ export const useContactAnalytics = () => {
 const getSessionId = () => {
   let sessionId = sessionStorage.getItem('contactSessionId');
   if (!sessionId) {
-    sessionId = 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    sessionId = 'session_' + Date.now() + '_' + Math.random().toString(36).slice(2, 11);
     sessionStorage.setItem('contactSessionId', sessionId);
   }
   return sessionId;
@@ -246,10 +246,10 @@ const calculateEngagementScore = (timeOnPage, scrollDepth, interactions) => {
  */
 const getTopSources = (interactions) => {
   const sources = {};
-  interactions.forEach(interaction => {
+  for (const interaction of interactions) {
     const source = interaction.source || 'unknown';
     sources[source] = (sources[source] || 0) + 1;
-  });
+  }
   
   return Object.entries(sources)
     .sort(([,a], [,b]) => b - a)
@@ -264,12 +264,12 @@ const getTopSources = (interactions) => {
  */
 const getTopArticles = (interactions) => {
   const articles = {};
-  interactions.forEach(interaction => {
+  for (const interaction of interactions) {
     const article = interaction.article || 'unknown';
     if (article !== 'unknown') {
       articles[article] = (articles[article] || 0) + 1;
     }
-  });
+  }
   
   return Object.entries(articles)
     .sort(([,a], [,b]) => b - a)
@@ -285,10 +285,10 @@ const getTopArticles = (interactions) => {
 const getConversionByHour = (interactions) => {
   const hourly = {};
   
-  interactions.forEach(interaction => {
+  for (const interaction of interactions) {
     const hour = new Date(interaction.timestamp).getHours();
     hourly[hour] = (hourly[hour] || 0) + 1;
-  });
+  }
   
   return Array.from({ length: 24 }, (_, hour) => ({
     hour,

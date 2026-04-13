@@ -12,7 +12,7 @@ const BlogButton = ({
   className = '',
   icon: Icon,
   iconPosition = 'left',
-  ...props
+  ...properties
 }) => {
   // Base classes following site's design system
   const baseClasses = "inline-flex items-center justify-center gap-2 font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-zinc-900 rounded-lg";
@@ -50,9 +50,9 @@ const BlogButton = ({
   // Content with icon
   const content = (
     <>
-      {Icon && iconPosition === 'left' && <Icon size={size === 'small' ? 16 : size === 'large' ? 20 : 18} />}
+      {Icon && iconPosition === 'left' && <Icon size={size === 'small' ? 16 : (size === 'large' ? 20 : 18)} />}
       {children}
-      {Icon && iconPosition === 'right' && <Icon size={size === 'small' ? 16 : size === 'large' ? 20 : 18} />}
+      {Icon && iconPosition === 'right' && <Icon size={size === 'small' ? 16 : (size === 'large' ? 20 : 18)} />}
     </>
   );
 
@@ -61,7 +61,7 @@ const BlogButton = ({
   if (to || href) {
     const url = to || href;
     return (
-      <a href={url} className={classes} {...props}>
+      <a href={url} className={classes} {...properties}>
         {content}
       </a>
     );
@@ -72,7 +72,7 @@ const BlogButton = ({
       className={classes} 
       onClick={onClick} 
       disabled={disabled}
-      {...props}
+      {...properties}
     >
       {content}
     </button>

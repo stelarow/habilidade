@@ -24,7 +24,7 @@ const HeroSection = ({ scrollToNextSection }) => {
     if (!event.startDate) return;
 
     const calculateTimeLeft = () => {
-      const difference = new Date(event.startDate) - new Date();
+      const difference = new Date(event.startDate) - Date.now();
 
       if (difference > 0) {
         return {
@@ -105,13 +105,13 @@ const HeroSection = ({ scrollToNextSection }) => {
                 transition={{ delay: 0.2 + index * 0.1, duration: 0.5 }}
               >
                 <Badge
-                  variant={badge.variant === 'success' ? 'default' : badge.variant === 'warning' ? 'destructive' : 'secondary'}
+                  variant={badge.variant === 'success' ? 'default' : (badge.variant === 'warning' ? 'destructive' : 'secondary')}
                   className={`text-sm px-4 py-2 font-bold flex items-center gap-2 ${
                     badge.variant === 'success'
                       ? 'bg-green-500 hover:bg-green-600 text-white'
-                      : badge.variant === 'warning'
+                      : (badge.variant === 'warning'
                       ? 'bg-yellow-500 hover:bg-yellow-600 text-black'
-                      : 'bg-blue-500 hover:bg-blue-600 text-white'
+                      : 'bg-blue-500 hover:bg-blue-600 text-white')
                   }`}
                 >
                   {getIcon(badge.iconName)}

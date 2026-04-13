@@ -23,8 +23,8 @@ export const usePosts = (page = 1, limit = 10, category = null, search = null) =
 export const useInfinitePosts = (limit = 10, category = null, search = null) => {
   return useInfiniteQuery({
     queryKey: ['infinitePosts', limit, category, search],
-    queryFn: ({ pageParam = 1 }) => 
-      blogAPI.getAllPosts(pageParam, limit, category, search),
+    queryFn: ({ pageParam: pageParameter = 1 }) => 
+      blogAPI.getAllPosts(pageParameter, limit, category, search),
     getNextPageParam: (lastPage) => {
       const { pagination } = lastPage;
       return pagination.page < pagination.totalPages 
@@ -65,8 +65,8 @@ export const usePostsByCategory = (categorySlug, page = 1, limit = 10) => {
 export const useInfinitePostsByCategory = (categorySlug, limit = 10) => {
   return useInfiniteQuery({
     queryKey: ['infinitePostsByCategory', categorySlug, limit],
-    queryFn: ({ pageParam = 1 }) => 
-      blogAPI.getPostsByCategory(categorySlug, pageParam, limit),
+    queryFn: ({ pageParam: pageParameter = 1 }) => 
+      blogAPI.getPostsByCategory(categorySlug, pageParameter, limit),
     getNextPageParam: (lastPage) => {
       const { pagination } = lastPage;
       return pagination.page < pagination.totalPages 
@@ -107,8 +107,8 @@ export const useSearchPosts = (query, page = 1, limit = 10, enabled = true) => {
 export const useInfiniteSearchPosts = (query, limit = 10) => {
   return useInfiniteQuery({
     queryKey: ['infiniteSearchPosts', query, limit],
-    queryFn: ({ pageParam = 1 }) => 
-      blogAPI.searchPosts(query, pageParam, limit),
+    queryFn: ({ pageParam: pageParameter = 1 }) => 
+      blogAPI.searchPosts(query, pageParameter, limit),
     getNextPageParam: (lastPage) => {
       const { pagination } = lastPage;
       return pagination.page < pagination.totalPages 

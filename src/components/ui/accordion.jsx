@@ -5,20 +5,20 @@ import { ChevronDownIcon } from "@radix-ui/react-icons"
 
 const Accordion = AccordionPrimitive.Root
 
-const AccordionItem = React.forwardRef(({ className, ...props }, ref) => (
-  <AccordionPrimitive.Item ref={ref} className={cn("border-b", className)} {...props} />
+const AccordionItem = React.forwardRef(({ className, ...properties }, reference) => (
+  <AccordionPrimitive.Item ref={reference} className={cn("border-b", className)} {...properties} />
 ))
 AccordionItem.displayName = "AccordionItem"
 
-const AccordionTrigger = React.forwardRef(({ className, children, ...props }, ref) => (
+const AccordionTrigger = React.forwardRef(({ className, children, ...properties }, reference) => (
   <AccordionPrimitive.Header className="flex">
     <AccordionPrimitive.Trigger
-      ref={ref}
+      ref={reference}
       className={cn(
         "flex flex-1 items-center justify-between py-4 text-sm font-medium transition-all hover:underline text-left [&[data-state=open]>svg]:rotate-180",
         className
       )}
-      {...props}>
+      {...properties}>
       {children}
       <ChevronDownIcon
         className="h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200" />
@@ -27,11 +27,11 @@ const AccordionTrigger = React.forwardRef(({ className, children, ...props }, re
 ))
 AccordionTrigger.displayName = AccordionPrimitive.Trigger.displayName
 
-const AccordionContent = React.forwardRef(({ className, children, ...props }, ref) => (
+const AccordionContent = React.forwardRef(({ className, children, ...properties }, reference) => (
   <AccordionPrimitive.Content
-    ref={ref}
+    ref={reference}
     className="overflow-hidden text-sm data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
-    {...props}>
+    {...properties}>
     <div className={cn("pb-4 pt-0", className)}>{children}</div>
   </AccordionPrimitive.Content>
 ))

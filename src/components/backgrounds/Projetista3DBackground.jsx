@@ -9,9 +9,9 @@ const Projetista3DBackground = ({
   deviceCapabilities, 
   courseSlug 
 }) => {
-  const canvasRef = useRef(null);
-  const animationRef = useRef(null);
-  const wireframesRef = useRef([]);
+  const canvasReference = useRef(null);
+  const animationReference = useRef(null);
+  const wireframesReference = useRef([]);
 
   // Configurações baseadas na performance - OTIMIZADAS v1.1
   const config = useMemo(() => ({
@@ -82,157 +82,160 @@ const Projetista3DBackground = ({
       if (this.y > this.canvas.height + 50) this.y = -50;
     }
 
-    draw(ctx) {
-      ctx.save();
-      ctx.translate(this.x, this.y);
-      ctx.globalAlpha = this.opacity;
-      ctx.strokeStyle = config.colors.wireframe;
-      ctx.lineWidth = 1;
+    draw(context) {
+      context.save();
+      context.translate(this.x, this.y);
+      context.globalAlpha = this.opacity;
+      context.strokeStyle = config.colors.wireframe;
+      context.lineWidth = 1;
 
       // Aplicar perspectiva simples baseada em Z
       const scale = 1 + this.z / 500;
-      ctx.scale(scale, scale);
+      context.scale(scale, scale);
 
       // Desenhar baseado no tipo
       switch (this.type) {
-        case 'cube':
-          this.drawCube(ctx);
+        case 'cube': {
+          this.drawCube(context);
           break;
-        case 'pyramid':
-          this.drawPyramid(ctx);
+        }
+        case 'pyramid': {
+          this.drawPyramid(context);
           break;
-        case 'sphere':
-          this.drawSphere(ctx);
+        }
+        case 'sphere': {
+          this.drawSphere(context);
           break;
+        }
       }
 
-      ctx.restore();
+      context.restore();
     }
 
-    drawCube(ctx) {
+    drawCube(context) {
       const s = this.size;
       // Face frontal
-      ctx.strokeRect(-s/2, -s/2, s, s);
+      context.strokeRect(-s/2, -s/2, s, s);
       
       // Linhas de profundidade (isométricas)
       const offset = s * 0.3;
-      ctx.beginPath();
+      context.beginPath();
       // Arestas de profundidade
-      ctx.moveTo(-s/2, -s/2);
-      ctx.lineTo(-s/2 + offset, -s/2 - offset);
-      ctx.moveTo(s/2, -s/2);
-      ctx.lineTo(s/2 + offset, -s/2 - offset);
-      ctx.moveTo(-s/2, s/2);
-      ctx.lineTo(-s/2 + offset, s/2 - offset);
-      ctx.moveTo(s/2, s/2);
-      ctx.lineTo(s/2 + offset, s/2 - offset);
+      context.moveTo(-s/2, -s/2);
+      context.lineTo(-s/2 + offset, -s/2 - offset);
+      context.moveTo(s/2, -s/2);
+      context.lineTo(s/2 + offset, -s/2 - offset);
+      context.moveTo(-s/2, s/2);
+      context.lineTo(-s/2 + offset, s/2 - offset);
+      context.moveTo(s/2, s/2);
+      context.lineTo(s/2 + offset, s/2 - offset);
       
       // Face superior
-      ctx.moveTo(-s/2 + offset, -s/2 - offset);
-      ctx.lineTo(s/2 + offset, -s/2 - offset);
-      ctx.lineTo(s/2 + offset, s/2 - offset);
-      ctx.lineTo(-s/2 + offset, s/2 - offset);
-      ctx.closePath();
-      ctx.stroke();
+      context.moveTo(-s/2 + offset, -s/2 - offset);
+      context.lineTo(s/2 + offset, -s/2 - offset);
+      context.lineTo(s/2 + offset, s/2 - offset);
+      context.lineTo(-s/2 + offset, s/2 - offset);
+      context.closePath();
+      context.stroke();
     }
 
-    drawPyramid(ctx) {
+    drawPyramid(context) {
       const s = this.size;
       const h = s * 0.8;
       
       // Base
-      ctx.strokeRect(-s/2, s/2 - h, s, h);
+      context.strokeRect(-s/2, s/2 - h, s, h);
       
       // Linhas para o topo
-      ctx.beginPath();
-      ctx.moveTo(-s/2, s/2 - h);
-      ctx.lineTo(0, -s/2);
-      ctx.moveTo(s/2, s/2 - h);
-      ctx.lineTo(0, -s/2);
-      ctx.moveTo(-s/2, s/2);
-      ctx.lineTo(0, -s/2);
-      ctx.moveTo(s/2, s/2);
-      ctx.lineTo(0, -s/2);
-      ctx.stroke();
+      context.beginPath();
+      context.moveTo(-s/2, s/2 - h);
+      context.lineTo(0, -s/2);
+      context.moveTo(s/2, s/2 - h);
+      context.lineTo(0, -s/2);
+      context.moveTo(-s/2, s/2);
+      context.lineTo(0, -s/2);
+      context.moveTo(s/2, s/2);
+      context.lineTo(0, -s/2);
+      context.stroke();
     }
 
-    drawSphere(ctx) {
+    drawSphere(context) {
       const r = this.size / 2;
       
       // Círculo principal
-      ctx.beginPath();
-      ctx.arc(0, 0, r, 0, Math.PI * 2);
-      ctx.stroke();
+      context.beginPath();
+      context.arc(0, 0, r, 0, Math.PI * 2);
+      context.stroke();
       
       // Linhas de latitude
-      for (let i = 1; i < 3; i++) {
-        const y = (r * 2 / 3) * (i - 1.5);
+      for (let index = 1; index < 3; index++) {
+        const y = (r * 2 / 3) * (index - 1.5);
         const ellipseWidth = Math.sqrt(r * r - y * y) * 2;
         
-        ctx.beginPath();
-        ctx.ellipse(0, y, ellipseWidth / 2, ellipseWidth / 8, 0, 0, Math.PI * 2);
-        ctx.stroke();
+        context.beginPath();
+        context.ellipse(0, y, ellipseWidth / 2, ellipseWidth / 8, 0, 0, Math.PI * 2);
+        context.stroke();
       }
       
       // Linha de longitude
-      ctx.beginPath();
-      ctx.ellipse(0, 0, r / 4, r, 0, 0, Math.PI * 2);
-      ctx.stroke();
+      context.beginPath();
+      context.ellipse(0, 0, r / 4, r, 0, 0, Math.PI * 2);
+      context.stroke();
     }
   }
 
   // Grade isométrica removida por solicitação do usuário
-  const drawIsometricGrid = (ctx) => {
+  const drawIsometricGrid = (context) => {
     // Grid removido - apenas wireframes 3D agora
     return;
   };
 
   // Inicializar wireframes
   const initializeWireframes = (canvas) => {
-    wireframesRef.current = [];
-    for (let i = 0; i < config.wireframeCount; i++) {
-      wireframesRef.current.push(new Wireframe3D(canvas));
+    wireframesReference.current = [];
+    for (let index = 0; index < config.wireframeCount; index++) {
+      wireframesReference.current.push(new Wireframe3D(canvas));
     }
   };
 
   // Loop de animação com FPS limitado
   const animate = () => {
-    const canvas = canvasRef.current;
+    const canvas = canvasReference.current;
     if (!canvas) return;
 
     const currentTime = performance.now();
-    const deltaTime = currentTime - (animationRef.lastTime || 0);
+    const deltaTime = currentTime - (animationReference.lastTime || 0);
     
     // Limitar FPS para 30fps (33.33ms por frame)
     if (deltaTime < 33.33) {
       if (config.animationSpeed > 0) {
-        animationRef.current = requestAnimationFrame(animate);
+        animationReference.current = requestAnimationFrame(animate);
       }
       return;
     }
     
-    animationRef.lastTime = currentTime;
+    animationReference.lastTime = currentTime;
 
-    const ctx = canvas.getContext('2d');
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const context = canvas.getContext('2d');
+    context.clearRect(0, 0, canvas.width, canvas.height);
 
     // Desenhar grade isométrica
-    drawIsometricGrid(ctx);
+    drawIsometricGrid(context);
 
     // Desenhar e atualizar wireframes
-    wireframesRef.current.forEach(wireframe => {
+    for (const wireframe of wireframesReference.current) {
       wireframe.update();
-      wireframe.draw(ctx);
-    });
+      wireframe.draw(context);
+    }
 
     if (config.animationSpeed > 0) {
-      animationRef.current = requestAnimationFrame(animate);
+      animationReference.current = requestAnimationFrame(animate);
     }
   };
 
   // Configurar canvas e inicializar
   useEffect(() => {
-    const canvas = canvasRef.current;
+    const canvas = canvasReference.current;
     if (!canvas) return;
 
     const handleResize = () => {
@@ -240,8 +243,8 @@ const Projetista3DBackground = ({
       canvas.width = rect.width * (deviceCapabilities?.pixelRatio || 1);
       canvas.height = rect.height * (deviceCapabilities?.pixelRatio || 1);
       
-      const ctx = canvas.getContext('2d');
-      ctx.scale(deviceCapabilities?.pixelRatio || 1, deviceCapabilities?.pixelRatio || 1);
+      const context = canvas.getContext('2d');
+      context.scale(deviceCapabilities?.pixelRatio || 1, deviceCapabilities?.pixelRatio || 1);
       
       // Reinicializar wireframes com novo tamanho
       initializeWireframes(canvas);
@@ -255,8 +258,8 @@ const Projetista3DBackground = ({
 
     return () => {
       window.removeEventListener('resize', handleResize);
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
+      if (animationReference.current) {
+        cancelAnimationFrame(animationReference.current);
       }
     };
   }, [config, deviceCapabilities]);
@@ -275,7 +278,7 @@ const Projetista3DBackground = ({
 
   return (
     <canvas
-      ref={canvasRef}
+      ref={canvasReference}
       className="absolute inset-0 w-full h-full pointer-events-none"
       style={{ 
         background: 'transparent',

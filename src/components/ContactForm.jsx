@@ -48,7 +48,7 @@ const ContactForm = () => {
       console.log('Template ID:', EMAIL_CONFIG.TEMPLATE_ID);
 
       // Preparar dados para EmailJS
-      const templateParams = {
+      const templateParameters = {
         from_name: formData.name,
         from_email: formData.email,
         phone: formData.phone,
@@ -58,12 +58,12 @@ const ContactForm = () => {
         reply_to: formData.email
       };
 
-      console.log('Parâmetros do template:', templateParams);
+      console.log('Parâmetros do template:', templateParameters);
 
       const result = await emailjs.send(
         EMAIL_CONFIG.SERVICE_ID,
         EMAIL_CONFIG.TEMPLATE_ID,
-        templateParams,
+        templateParameters,
         EMAIL_CONFIG.PUBLIC_KEY
       );
 

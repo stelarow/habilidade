@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 
 export default function useInView(options = { threshold: 0.2 }) {
-  const ref = useRef(null);
+  const reference = useRef(null);
   const [visible, setVisible] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
 
@@ -11,7 +11,7 @@ export default function useInView(options = { threshold: 0.2 }) {
   }, []);
 
   useEffect(() => {
-    const element = ref.current;
+    const element = reference.current;
     if (!element || !hasMounted) return;
 
     const observer = new IntersectionObserver(([entry]) => {
@@ -27,5 +27,5 @@ export default function useInView(options = { threshold: 0.2 }) {
   }, [options, hasMounted]);
 
   // Return false during SSR to ensure consistent hydration
-  return [ref, hasMounted ? visible : false];
+  return [reference, hasMounted ? visible : false];
 } 

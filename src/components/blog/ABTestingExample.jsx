@@ -20,7 +20,7 @@ export const ABTestBlogLayout = ({ posts }) => {
   const { variant, trackMetric } = useABTest('blogCardLayout');
 
   useEffect(() => {
-    // Track que o usuário viu esta variante
+    // Track que o usuï¿½rio viu esta variante
     trackMetric('pageView', 1, {
       variant: variant?.name,
       postCount: posts.length
@@ -56,7 +56,7 @@ export const ABTestBlogLayout = ({ posts }) => {
   if (!variant) return null;
 
   switch (variant.layout) {
-    case 'grid':
+    case 'grid': {
       return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {posts.map((post) => (
@@ -69,8 +69,9 @@ export const ABTestBlogLayout = ({ posts }) => {
           ))}
         </div>
       );
+    }
 
-    case 'list':
+    case 'list': {
       return (
         <div className="space-y-6">
           {posts.map((post) => (
@@ -83,8 +84,9 @@ export const ABTestBlogLayout = ({ posts }) => {
           ))}
         </div>
       );
+    }
 
-    case 'masonry':
+    case 'masonry': {
       return (
         <ResponsiveBlogGrid variant="masonry">
           {posts.map((post) => (
@@ -97,8 +99,9 @@ export const ABTestBlogLayout = ({ posts }) => {
           ))}
         </ResponsiveBlogGrid>
       );
+    }
 
-    default:
+    default: {
       return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {posts.map((post) => (
@@ -108,6 +111,7 @@ export const ABTestBlogLayout = ({ posts }) => {
           ))}
         </div>
       );
+    }
   }
 };
 
@@ -134,29 +138,30 @@ export const ABTestCTAPlacement = ({ content, postSlug }) => {
   };
 
   useEffect(() => {
-    // Track impressão do CTA
+    // Track impressï¿½o do CTA
     handleCTAImpression();
   }, [variant]);
 
   if (!variant) return <div dangerouslySetInnerHTML={{ __html: content }} />;
 
-  const ctaProps = {
+  const ctaProperties = {
     onClick: handleCTAClick,
     style: variant.style,
     className: `cta-${variant.placement}`
   };
 
   switch (variant.placement) {
-    case 'bottom':
+    case 'bottom': {
       return (
         <div>
           <div dangerouslySetInnerHTML={{ __html: content }} />
-          <BlogCTA {...ctaProps} />
+          <BlogCTA {...ctaProperties} />
         </div>
       );
+    }
 
-    case 'inline':
-      // Insere CTA no meio do conteúdo
+    case 'inline': {
+      // Insere CTA no meio do conteï¿½do
       const contentParts = content.split('</p>');
       const midPoint = Math.floor(contentParts.length / 2);
       
@@ -165,47 +170,51 @@ export const ABTestCTAPlacement = ({ content, postSlug }) => {
           <div dangerouslySetInnerHTML={{ 
             __html: contentParts.slice(0, midPoint).join('</p>') + '</p>' 
           }} />
-          <InlineCTA {...ctaProps} />
+          <InlineCTA {...ctaProperties} />
           <div dangerouslySetInnerHTML={{ 
             __html: contentParts.slice(midPoint).join('</p>') 
           }} />
         </div>
       );
+    }
 
-    case 'sidebar':
+    case 'sidebar': {
       return (
         <div className="flex flex-col lg:flex-row gap-8">
           <div className="flex-1" dangerouslySetInnerHTML={{ __html: content }} />
           <div className="lg:w-80">
             <div className="sticky top-24">
-              <BlogCTA {...ctaProps} />
+              <BlogCTA {...ctaProperties} />
             </div>
           </div>
         </div>
       );
+    }
 
-    case 'floating':
+    case 'floating': {
       return (
         <div className="relative">
           <div dangerouslySetInnerHTML={{ __html: content }} />
           <div className="fixed bottom-6 right-6 z-50">
-            <BlogCTA {...ctaProps} />
+            <BlogCTA {...ctaProperties} />
           </div>
         </div>
       );
+    }
 
-    default:
+    default: {
       return (
         <div>
           <div dangerouslySetInnerHTML={{ __html: content }} />
-          <BlogCTA {...ctaProps} />
+          <BlogCTA {...ctaProperties} />
         </div>
       );
+    }
   }
 };
 
 /**
- * Exemplo de uso do A/B testing para posição da barra de pesquisa
+ * Exemplo de uso do A/B testing para posiï¿½ï¿½o da barra de pesquisa
  */
 export const ABTestSearchPosition = ({ 
   searchQuery, 
@@ -242,7 +251,7 @@ export const ABTestSearchPosition = ({
     );
   }
 
-  const searchProps = {
+  const searchProperties = {
     searchQuery,
     onSearchChange: handleSearchUse,
     selectedCategory,
@@ -252,35 +261,38 @@ export const ABTestSearchPosition = ({
   };
 
   switch (variant.position) {
-    case 'header':
+    case 'header': {
       return (
         <div className="sticky top-0 z-40 bg-zinc-900/95 backdrop-blur-sm border-b border-zinc-800">
           <div className="container mx-auto px-4 py-4">
-            <BlogNavigation {...searchProps} variant="horizontal" />
+            <BlogNavigation {...searchProperties} variant="horizontal" />
           </div>
         </div>
       );
+    }
 
-    case 'floating':
+    case 'floating': {
       return (
         <>
           <div className="fixed top-20 right-6 z-50 w-80">
-            <BlogNavigation {...searchProps} variant="compact" />
+            <BlogNavigation {...searchProperties} variant="compact" />
           </div>
           <div className="lg:mr-96"> {/* Offset content */}
-            <BlogNavigation {...searchProps} showSearch={false} />
+            <BlogNavigation {...searchProperties} showSearch={false} />
           </div>
         </>
       );
+    }
 
     case 'sidebar':
-    default:
-      return <BlogNavigation {...searchProps} />;
+    default: {
+      return <BlogNavigation {...searchProperties} />;
+    }
   }
 };
 
 /**
- * Exemplo de uso do A/B testing para navegação de categorias
+ * Exemplo de uso do A/B testing para navegaï¿½ï¿½o de categorias
  */
 export const ABTestCategoryNavigation = ({ 
   categories, 
@@ -304,7 +316,7 @@ export const ABTestCategoryNavigation = ({
     onCategoryChange(categorySlug);
   };
 
-  if (!variant || !categories.length) return null;
+  if (!variant || categories.length === 0) return null;
 
   const categoryElements = categories.map((category) => (
     <button
@@ -322,7 +334,7 @@ export const ABTestCategoryNavigation = ({
   ));
 
   switch (variant.style) {
-    case 'horizontal-tabs':
+    case 'horizontal-tabs': {
       return (
         <div className="border-b border-zinc-700">
           <div className="flex overflow-x-auto gap-1 px-4">
@@ -330,8 +342,9 @@ export const ABTestCategoryNavigation = ({
           </div>
         </div>
       );
+    }
 
-    case 'dropdown':
+    case 'dropdown': {
       return (
         <div className="relative">
           <select 
@@ -348,26 +361,29 @@ export const ABTestCategoryNavigation = ({
           </select>
         </div>
       );
+    }
 
-    case 'pills':
+    case 'pills': {
       return (
         <div className="flex flex-wrap gap-2 p-4">
           {categoryElements}
         </div>
       );
+    }
 
     case 'vertical-list':
-    default:
+    default: {
       return (
         <div className="space-y-1 p-4">
           {categoryElements}
         </div>
       );
+    }
   }
 };
 
 /**
- * Hook para facilitar tracking de métricas personalizadas
+ * Hook para facilitar tracking de mï¿½tricas personalizadas
  */
 export const useBlogAnalytics = (experimentKey) => {
   const { variant, trackMetric } = useABTest(experimentKey);
@@ -404,7 +420,7 @@ export const useBlogAnalytics = (experimentKey) => {
   };
 };
 
-// Exemplo de uso completo em uma página de blog
+// Exemplo de uso completo em uma pï¿½gina de blog
 export const ABTestBlogPage = ({ posts, content, postSlug }) => {
   return (
     <div className="container mx-auto px-4 py-8">

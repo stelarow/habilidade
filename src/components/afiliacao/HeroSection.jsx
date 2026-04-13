@@ -5,8 +5,8 @@ import { hero } from '@/data/afiliacao';
 
 const HeroSection = () => {
   const scrollToForm = () => {
-    const el = document.getElementById('formulario');
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const element = document.querySelector('#formulario');
+    if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   return (

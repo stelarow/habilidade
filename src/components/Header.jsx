@@ -74,7 +74,7 @@ function Header() {
                     // Handle smooth scrolling for anchor links
                     if (href.startsWith('#')) {
                       e.preventDefault();
-                      const element = document.getElementById(href.substring(1));
+                      const element = document.getElementById(href.slice(1));
                       if (element) {
                         element.scrollIntoView({ behavior: 'smooth' });
                       }

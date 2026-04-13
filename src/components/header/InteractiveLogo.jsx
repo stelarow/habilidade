@@ -12,7 +12,7 @@ function InteractiveLogo() {
     if (location.pathname.startsWith('/blog')) {
       e.preventDefault();
       // Usar window.location para forçar recarregamento completo
-      window.location.href = '/';
+      globalThis.location.href = '/';
     } else if (location.pathname === '/') {
       // Se já estamos na homepage, fazer scroll para o topo
       e.preventDefault();

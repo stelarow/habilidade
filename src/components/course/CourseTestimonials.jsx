@@ -3,7 +3,7 @@ import { Star, Quotes, Target } from '@phosphor-icons/react';
 import { useLayoutEffect, useRef, useState, useDeferredValue } from 'react';
 
 function CourseTestimonials({ course }) {
-  const containerRef = useRef(null);
+  const containerReference = useRef(null);
   const [containerHeight, setContainerHeight] = useState(0);
   const [expandedCards, setExpandedCards] = useState(new Set());
   
@@ -12,8 +12,8 @@ function CourseTestimonials({ course }) {
 
   // Measure container height with useLayoutEffect (Context 7 best practice)
   useLayoutEffect(() => {
-    if (containerRef.current) {
-      const { height } = containerRef.current.getBoundingClientRect();
+    if (containerReference.current) {
+      const { height } = containerReference.current.getBoundingClientRect();
       setContainerHeight(height);
     }
   }, [course.testimonials]);
@@ -57,7 +57,7 @@ function CourseTestimonials({ course }) {
       </div>
 
       {/* Container Query Approach - Context 7 */}
-      <div ref={containerRef} className="@container">
+      <div ref={containerReference} className="@container">
         
         {/* Mobile-first Grid - Context 7 best practice */}
         <div className="grid grid-cols-1 @lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">

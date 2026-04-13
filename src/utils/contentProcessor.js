@@ -40,8 +40,8 @@ function extractText(textOrTokens, parser) {
   }
   
   // Fallback to string conversion, but avoid [object Object]
-  const str = String(textOrTokens);
-  return str === '[object Object]' ? '' : str;
+  const string_ = String(textOrTokens);
+  return string_ === '[object Object]' ? '' : string_;
 }
 
 // Configure marked with custom renderer for v16 - consolidated configuration
@@ -62,7 +62,7 @@ marked.use({
       };
       
       const className = classes[depth] || classes[6];
-      const id = text.toLowerCase().replace(/[^\w]+/g, '-');
+      const id = text.toLowerCase().replaceAll(/[^\w]+/g, '-');
       
       return `<h${depth} id="${id}" class="${className}">${text}</h${depth}>`;
     },
@@ -83,9 +83,9 @@ marked.use({
       
       let body = '';
       if (token.items && Array.isArray(token.items)) {
-        token.items.forEach(item => {
+        for (const item of token.items) {
           body += this.listitem(item);
-        });
+        }
       }
       
       return `<${tag} class="${className}">${body}</${tag}>`;
@@ -97,17 +97,17 @@ marked.use({
       // Enhanced cleaning for various line break and whitespace issues
       const cleanText = text
         // Handle standard newlines between word and colon/word
-        .replace(/(\w)\n+(\:|\w)/g, '$1 $2')
+        .replaceAll(/(\w)\n+(\:|\w)/g, '$1 $2')
         // Handle various Unicode line break characters
-        .replace(/(\w)[\u2028\u2029\r\n]+(\:|\w)/g, '$1 $2')
+        .replaceAll(/(\w)[\u2028\u2029\r\n]+(\:|\w)/g, '$1 $2')
         // Handle multiple whitespace chars between word and colon
-        .replace(/(\w)\s*\n\s*(\:)/g, '$1$2')
+        .replaceAll(/(\w)\s*\n\s*(\:)/g, '$1$2')
         // Handle invisible characters that might cause breaks
-        .replace(/(\w)[\u200B\u200C\u200D\uFEFF]+(\:|\w)/g, '$1 $2')
+        .replaceAll(/(\w)[\u200B\u200C\u200D\uFEFF]+(\:|\w)/g, '$1 $2')
         // Clean any remaining problematic whitespace around colons
-        .replace(/(\w)\s+(\:)/g, '$1$2')
+        .replaceAll(/(\w)\s+(\:)/g, '$1$2')
         // Normalize any multiple spaces to single space
-        .replace(/\s+/g, ' ')
+        .replaceAll(/\s+/g, ' ')
         .trim();
       return `<li class="mb-1">${cleanText}</li>`;
     },
@@ -139,11 +139,11 @@ marked.use({
       const href = token.href || '';
       const title = token.title || '';
       const text = token.text || '';
-      const titleAttr = title ? ` title="${title}"` : '';
-      const altAttr = text ? ` alt="${text}"` : '';
+      const titleAttribute = title ? ` title="${title}"` : '';
+      const altAttribute = text ? ` alt="${text}"` : '';
       
       return `<div class="mb-6">
-        <img src="${href}" class="w-full rounded-lg shadow-lg"${altAttr}${titleAttr} 
+        <img src="${href}" class="w-full rounded-lg shadow-lg"${altAttribute}${titleAttribute} 
              onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
         <div class="hidden bg-zinc-800 rounded-lg p-4 text-center">
           <div class="text-gray-400 text-sm">Imagem não encontrada: ${text || 'Sem descrição'}</div>
@@ -169,10 +169,10 @@ marked.use({
       const href = token.href || '';
       const title = token.title || '';
       const text = extractText(token, this.parser);
-      const titleAttr = title ? ` title="${title}"` : '';
+      const titleAttribute = title ? ` title="${title}"` : '';
       const target = href.startsWith('http') ? ' target="_blank" rel="noopener noreferrer"' : '';
       
-      return `<a href="${href}" class="text-blue-400 hover:text-blue-300 underline transition-colors duration-200"${titleAttr}${target}>${text}</a>`;
+      return `<a href="${href}" class="text-blue-400 hover:text-blue-300 underline transition-colors duration-200"${titleAttribute}${target}>${text}</a>`;
     },
 
     // Override horizontal rule rendering
@@ -190,9 +190,9 @@ marked.use({
       }
       
       if (token.rows && Array.isArray(token.rows)) {
-        token.rows.forEach(row => {
+        for (const row of token.rows) {
           bodyHtml += this.tablerow({ cells: row });
-        });
+        }
       }
       
       return `<div class="overflow-x-auto mb-6">
@@ -206,12 +206,12 @@ marked.use({
     tablerow(token) {
       let content = '';
       if (token.cells && Array.isArray(token.cells)) {
-        token.cells.forEach(cell => {
+        for (const cell of token.cells) {
           content += this.tablecell({ 
             ...cell, 
             header: token.header || false 
           });
-        });
+        }
       }
       return `<tr class="border-b border-zinc-700">${content}</tr>`;
     },
@@ -308,22 +308,22 @@ export function fixImagePaths(content, slug) {
   
   // Fix markdown image syntax: ![alt](/images/blog/filename.jpg)
   const markdownImgRegex = /!\[([^\]]*)\]\(([^)]+)\)/g;
-  fixedContent = fixedContent.replace(markdownImgRegex, (match, alt, src) => {
-    if (src.startsWith('/images/blog/') && !src.includes(`/images/blog/${slug}/`)) {
-      const filename = src.split('/').pop();
-      const newSrc = `/images/blog/${slug}/${filename}`;
-      return `![${alt}](${newSrc})`;
+  fixedContent = fixedContent.replaceAll(markdownImgRegex, (match, alt, source) => {
+    if (source.startsWith('/images/blog/') && !source.includes(`/images/blog/${slug}/`)) {
+      const filename = source.split('/').pop();
+      const newSource = `/images/blog/${slug}/${filename}`;
+      return `![${alt}](${newSource})`;
     }
     return match;
   });
   
   // Fix HTML image tags: <img src="/images/blog/filename.jpg" />
   const htmlImgRegex = /<img([^>]+)src=["']([^"']+)["']([^>]*)>/g;
-  fixedContent = fixedContent.replace(htmlImgRegex, (match, before, src, after) => {
-    if (src.startsWith('/images/blog/') && !src.includes(`/images/blog/${slug}/`)) {
-      const filename = src.split('/').pop();
-      const newSrc = `/images/blog/${slug}/${filename}`;
-      return `<img${before}src="${newSrc}"${after}>`;
+  fixedContent = fixedContent.replaceAll(htmlImgRegex, (match, before, source, after) => {
+    if (source.startsWith('/images/blog/') && !source.includes(`/images/blog/${slug}/`)) {
+      const filename = source.split('/').pop();
+      const newSource = `/images/blog/${slug}/${filename}`;
+      return `<img${before}src="${newSource}"${after}>`;
     }
     return match;
   });
@@ -343,7 +343,7 @@ function removeDuplicateContent(content, postTitle) {
   let processedContent = content;
   
   // Remove the first H1 tag that matches the post title (case-insensitive)
-  const titleRegex = new RegExp(`<h1[^>]*>[^<]*${postTitle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}[^<]*</h1>`, 'i');
+  const titleRegex = new RegExp(`<h1[^>]*>[^<]*${postTitle.replaceAll(/[.*+?^${}()|[\]\\]/g, String.raw`\$&`)}[^<]*</h1>`, 'i');
   processedContent = processedContent.replace(titleRegex, '');
   
   // Remove the first image from the content (hero image duplicate)
@@ -363,7 +363,7 @@ function removeDuplicateContent(content, postTitle) {
   }
   
   // Clean up any empty article-content div wrappers that might be left
-  processedContent = processedContent.replace(/<div[^>]*class="[^"]*article-content[^"]*"[^>]*>\s*<\/div>/gi, '');
+  processedContent = processedContent.replaceAll(/<div[^>]*class="[^"]*article-content[^"]*"[^>]*>\s*<\/div>/gi, '');
   
   // Clean up any double line breaks or empty paragraphs at the start
   processedContent = processedContent.replace(/^(\s*<p[^>]*>\s*<\/p>\s*)*/, '');
@@ -386,13 +386,13 @@ export function processContent(content, slug, postTitle) {
   
   try {
     // Apply smart image optimization to existing content
-    if (typeof window !== 'undefined') {
+    if (globalThis.window !== undefined) {
       // Client-side: use dynamic import to avoid SSR issues
       import('../utils/blogImageMigration.js').then(({ default: blogImageMigration }) => {
         processedContent = blogImageMigration.migrateBlogContent(processedContent);
       }).catch(console.error);
     }
-  } catch (error) {
+  } catch {
     // Image migration failed, continuing with original content
   }
   
@@ -420,7 +420,7 @@ export function processContent(content, slug, postTitle) {
   }
   
   // Apply client-side image optimization after content is processed
-  if (typeof window !== 'undefined') {
+  if (globalThis.window !== undefined) {
     // Schedule image optimization for next tick to ensure DOM is ready
     setTimeout(() => {
       import('../utils/blogImageMigration.js').then(({ default: blogImageMigration }) => {
@@ -444,19 +444,19 @@ export function processContent(content, slug, postTitle) {
 function basicMarkdownToHtml(markdown) {
   return markdown
     // Headers
-    .replace(/^### (.*$)/gim, '<h3 class="text-2xl md:text-3xl font-semibold text-white mb-4 mt-6">$1</h3>')
-    .replace(/^## (.*$)/gim, '<h2 class="text-3xl md:text-4xl font-bold text-white mb-4 mt-8">$1</h2>')
-    .replace(/^# (.*$)/gim, '<h1 class="text-4xl md:text-5xl font-bold text-white mb-6 mt-8">$1</h1>')
+    .replaceAll(/^### (.*$)/gim, '<h3 class="text-2xl md:text-3xl font-semibold text-white mb-4 mt-6">$1</h3>')
+    .replaceAll(/^## (.*$)/gim, '<h2 class="text-3xl md:text-4xl font-bold text-white mb-4 mt-8">$1</h2>')
+    .replaceAll(/^# (.*$)/gim, '<h1 class="text-4xl md:text-5xl font-bold text-white mb-6 mt-8">$1</h1>')
     // Bold
-    .replace(/\*\*(.*)\*\*/gim, '<strong class="font-bold text-white">$1</strong>')
+    .replaceAll(/\*\*(.*)\*\*/gim, '<strong class="font-bold text-white">$1</strong>')
     // Italic
-    .replace(/\*(.*)\*/gim, '<em class="italic text-gray-200">$1</em>')
+    .replaceAll(/\*(.*)\*/gim, '<em class="italic text-gray-200">$1</em>')
     // Images
-    .replace(/!\[([^\]]*)\]\(([^)]+)\)/gim, '<div class="mb-6"><img src="$2" alt="$1" class="w-full rounded-lg shadow-lg" /><p class="text-gray-500 text-sm text-center mt-2 italic">$1</p></div>')
+    .replaceAll(/!\[([^\]]*)\]\(([^)]+)\)/gim, '<div class="mb-6"><img src="$2" alt="$1" class="w-full rounded-lg shadow-lg" /><p class="text-gray-500 text-sm text-center mt-2 italic">$1</p></div>')
     // Links
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/gim, '<a href="$2" class="text-blue-400 hover:text-blue-300 underline transition-colors duration-200">$1</a>')
+    .replaceAll(/\[([^\]]+)\]\(([^)]+)\)/gim, '<a href="$2" class="text-blue-400 hover:text-blue-300 underline transition-colors duration-200">$1</a>')
     // Paragraphs (convert double newlines to paragraph tags)
-    .replace(/\n\n/gim, '</p><p class="text-gray-300 mb-4 leading-relaxed">')
+    .replaceAll(/\n\n/gim, '</p><p class="text-gray-300 mb-4 leading-relaxed">')
     // Wrap in initial paragraph tag
     .replace(/^(.*)/, '<p class="text-gray-300 mb-4 leading-relaxed">$1</p>');
 }
@@ -473,30 +473,30 @@ export function extractPlainText(content) {
   if (isMarkdown(content)) {
     return content
       // Remove markdown syntax
-      .replace(/^#{1,6}\s+/gm, '') // Headers
-      .replace(/\*\*(.*?)\*\*/g, '$1') // Bold
-      .replace(/\*(.*?)\*/g, '$1') // Italic
-      .replace(/!\[([^\]]*)\]\([^)]+\)/g, '$1') // Images
-      .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // Links
-      .replace(/`([^`]+)`/g, '$1') // Inline code
-      .replace(/```[\s\S]*?```/g, '') // Code blocks
-      .replace(/>\s+(.*)/g, '$1') // Blockquotes
-      .replace(/^\s*[\*\-\+]\s+/gm, '') // Lists
-      .replace(/^\s*\d+\.\s+/gm, '') // Numbered lists
-      .replace(/\s+/g, ' ')
+      .replaceAll(/^#{1,6}\s+/gm, '') // Headers
+      .replaceAll(/\*\*(.*?)\*\*/g, '$1') // Bold
+      .replaceAll(/\*(.*?)\*/g, '$1') // Italic
+      .replaceAll(/!\[([^\]]*)\]\([^)]+\)/g, '$1') // Images
+      .replaceAll(/\[([^\]]+)\]\([^)]+\)/g, '$1') // Links
+      .replaceAll(/`([^`]+)`/g, '$1') // Inline code
+      .replaceAll(/```[\s\S]*?```/g, '') // Code blocks
+      .replaceAll(/>\s+(.*)/g, '$1') // Blockquotes
+      .replaceAll(/^\s*[\*\-\+]\s+/gm, '') // Lists
+      .replaceAll(/^\s*\d+\.\s+/gm, '') // Numbered lists
+      .replaceAll(/\s+/g, ' ')
       .trim();
   }
   
   // For HTML content, remove tags and decode entities
   return content
-    .replace(/<[^>]*>/g, ' ')
-    .replace(/&nbsp;/g, ' ')
-    .replace(/&amp;/g, '&')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'")
-    .replace(/\s+/g, ' ')
+    .replaceAll(/<[^>]*>/g, ' ')
+    .replaceAll('&nbsp;', ' ')
+    .replaceAll('&amp;', '&')
+    .replaceAll('&lt;', '<')
+    .replaceAll('&gt;', '>')
+    .replaceAll('&quot;', '"')
+    .replaceAll('&#39;', "'")
+    .replaceAll(/\s+/g, ' ')
     .trim();
 }
 

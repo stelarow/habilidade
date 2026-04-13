@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
-import fs from 'fs';
-import path from 'path';
-import { exec } from 'child_process';
-import { promisify } from 'util';
-import { fileURLToPath } from 'url';
+import fs from 'node:fs';
+import path from 'node:path';
+import { exec } from 'node:child_process';
+import { promisify } from 'node:util';
+import { fileURLToPath } from 'node:url';
 
 const execAsync = promisify(exec);
 
@@ -40,7 +40,7 @@ async function checkFFmpeg() {
   try {
     await execAsync('ffmpeg -version');
     return true;
-  } catch (error) {
+  } catch {
     return false;
   }
 }
@@ -50,8 +50,8 @@ async function getVideoDuration(videoPath) {
   try {
     const command = `ffprobe -v quiet -show_entries format=duration -of csv=p=0 "${videoPath}"`;
     const { stdout } = await execAsync(command);
-    return parseFloat(stdout.trim());
-  } catch (error) {
+    return Number.parseFloat(stdout.trim());
+  } catch {
     console.warn(`⚠ Não foi possível obter duração de ${path.basename(videoPath)}, usando fallback`);
     return null;
   }
@@ -78,7 +78,7 @@ async function extractFrameWithFFmpeg(videoPath, posterPath) {
     await execAsync(command);
     console.log(`✓ Poster criado (${duration ? `${timestamp}, duração: ${duration.toFixed(1)}s` : 'tempo padrão'}): ${path.basename(posterPath)}`);
     return true;
-  } catch (error) {
+  } catch {
     // Fallback: tenta extrair frame no meio do vídeo
     try {
       const fallbackCommand = `ffmpeg -i "${videoPath}" -ss 00:00:01 -vframes 1 -q:v 2 "${posterPath}" -y`;
@@ -136,11 +136,7 @@ async function main() {
     
     // Extrai o frame ou cria placeholder
     let success;
-    if (hasFFmpeg) {
-      success = await extractFrameWithFFmpeg(videoPath, posterPath);
-    } else {
-      success = await createPlaceholderPoster(videoPath, posterPath);
-    }
+    success = await (hasFFmpeg ? extractFrameWithFFmpeg(videoPath, posterPath) : createPlaceholderPoster(videoPath, posterPath));
     
     if (success) {
       successCount++;

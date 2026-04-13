@@ -24,7 +24,7 @@ import {
   InstagramLogo
 } from '@phosphor-icons/react';
 
-const DevStartFAQ = () => {
+const DevelopmentStartFAQ = () => {
   // Map FAQ icon by index
   const getFaqIcon = (index) => {
     const icons = [
@@ -188,4 +188,4 @@ const DevStartFAQ = () => {
   );
 };
 
-export default DevStartFAQ;
+export default DevelopmentStartFAQ;

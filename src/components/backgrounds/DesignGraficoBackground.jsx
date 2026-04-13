@@ -9,11 +9,11 @@ const DesignGraficoBackground = ({
   deviceCapabilities, 
   courseSlug 
 }) => {
-  const canvasRef = useRef(null);
-  const animationRef = useRef(null);
-  const shapesRef = useRef([]);
-  const brushStrokesRef = useRef([]);
-  const gradientRef = useRef({ phase: 0 });
+  const canvasReference = useRef(null);
+  const animationReference = useRef(null);
+  const shapesReference = useRef([]);
+  const brushStrokesReference = useRef([]);
+  const gradientReference = useRef({ phase: 0 });
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   // Configurações baseadas na performance
@@ -91,94 +91,99 @@ const DesignGraficoBackground = ({
       this.scale = 0.5 + Math.sin(this.pulse) * 0.2;
     }
 
-    draw(ctx) {
-      ctx.save();
-      ctx.translate(this.x, this.y);
-      ctx.rotate(this.rotation);
-      ctx.scale(this.scale, this.scale);
-      ctx.globalAlpha = this.opacity;
+    draw(context) {
+      context.save();
+      context.translate(this.x, this.y);
+      context.rotate(this.rotation);
+      context.scale(this.scale, this.scale);
+      context.globalAlpha = this.opacity;
 
       // Escolher cor baseada no índice
       const colors = [config.colors.gradient1, config.colors.gradient2, config.colors.gradient3];
       const color = colors[this.colorIndex];
       
       // Glow effect
-      ctx.shadowColor = color;
-      ctx.shadowBlur = 20;
-      ctx.fillStyle = color;
+      context.shadowColor = color;
+      context.shadowBlur = 20;
+      context.fillStyle = color;
 
       switch (this.type) {
-        case 'circle':
-          this.drawCircle(ctx);
+        case 'circle': {
+          this.drawCircle(context);
           break;
-        case 'triangle':
-          this.drawTriangle(ctx);
+        }
+        case 'triangle': {
+          this.drawTriangle(context);
           break;
-        case 'square':
-          this.drawSquare(ctx);
+        }
+        case 'square': {
+          this.drawSquare(context);
           break;
-        case 'hexagon':
-          this.drawHexagon(ctx);
+        }
+        case 'hexagon': {
+          this.drawHexagon(context);
           break;
-        case 'star':
-          this.drawStar(ctx);
+        }
+        case 'star': {
+          this.drawStar(context);
           break;
+        }
       }
 
-      ctx.restore();
+      context.restore();
     }
 
-    drawCircle(ctx) {
-      ctx.beginPath();
-      ctx.arc(0, 0, this.size / 2, 0, Math.PI * 2);
-      ctx.fill();
+    drawCircle(context) {
+      context.beginPath();
+      context.arc(0, 0, this.size / 2, 0, Math.PI * 2);
+      context.fill();
     }
 
-    drawTriangle(ctx) {
-      ctx.beginPath();
+    drawTriangle(context) {
+      context.beginPath();
       const height = this.size * 0.866; // altura de triângulo equilátero
-      ctx.moveTo(0, -height / 2);
-      ctx.lineTo(-this.size / 2, height / 2);
-      ctx.lineTo(this.size / 2, height / 2);
-      ctx.closePath();
-      ctx.fill();
+      context.moveTo(0, -height / 2);
+      context.lineTo(-this.size / 2, height / 2);
+      context.lineTo(this.size / 2, height / 2);
+      context.closePath();
+      context.fill();
     }
 
-    drawSquare(ctx) {
-      ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
+    drawSquare(context) {
+      context.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
     }
 
-    drawHexagon(ctx) {
-      ctx.beginPath();
-      for (let i = 0; i < 6; i++) {
-        const angle = (i * Math.PI) / 3;
+    drawHexagon(context) {
+      context.beginPath();
+      for (let index = 0; index < 6; index++) {
+        const angle = (index * Math.PI) / 3;
         const x = Math.cos(angle) * this.size / 2;
         const y = Math.sin(angle) * this.size / 2;
         
-        if (i === 0) ctx.moveTo(x, y);
-        else ctx.lineTo(x, y);
+        if (index === 0) context.moveTo(x, y);
+        else context.lineTo(x, y);
       }
-      ctx.closePath();
-      ctx.fill();
+      context.closePath();
+      context.fill();
     }
 
-    drawStar(ctx) {
-      ctx.beginPath();
+    drawStar(context) {
+      context.beginPath();
       const spikes = 5;
       const outerRadius = this.size / 2;
       const innerRadius = outerRadius * 0.5;
       
-      for (let i = 0; i < spikes * 2; i++) {
-        const radius = i % 2 === 0 ? outerRadius : innerRadius;
-        const angle = (i * Math.PI) / spikes;
+      for (let index = 0; index < spikes * 2; index++) {
+        const radius = index % 2 === 0 ? outerRadius : innerRadius;
+        const angle = (index * Math.PI) / spikes;
         const x = Math.cos(angle) * radius;
         const y = Math.sin(angle) * radius;
         
-        if (i === 0) ctx.moveTo(x, y);
-        else ctx.lineTo(x, y);
+        if (index === 0) context.moveTo(x, y);
+        else context.lineTo(x, y);
       }
-      ctx.closePath();  
-      ctx.fill();
+      context.closePath();  
+      context.fill();
     }
   }
 
@@ -199,7 +204,7 @@ const DesignGraficoBackground = ({
       this.decay = 0.002 + Math.random() * 0.003;
       
       // Inicializar com alguns pontos
-      for (let i = 0; i < 3; i++) {
+      for (let index = 0; index < 3; index++) {
         this.points.push({
           x: this.x + (Math.random() - 0.5) * 20,
           y: this.y + (Math.random() - 0.5) * 20
@@ -237,60 +242,60 @@ const DesignGraficoBackground = ({
       if (this.y <= 0 || this.y >= this.canvas.height) this.vy *= -1;
     }
 
-    draw(ctx) {
+    draw(context) {
       if (this.points.length < 2) return;
       
-      ctx.save();
-      ctx.globalAlpha = this.opacity * this.life;
-      ctx.strokeStyle = this.color;
-      ctx.lineWidth = this.width;
-      ctx.lineCap = 'round';
-      ctx.lineJoin = 'round';
+      context.save();
+      context.globalAlpha = this.opacity * this.life;
+      context.strokeStyle = this.color;
+      context.lineWidth = this.width;
+      context.lineCap = 'round';
+      context.lineJoin = 'round';
       
       // Desenhar pincelada com gradiente de opacidade
-      ctx.beginPath();
+      context.beginPath();
       
-      for (let i = 0; i < this.points.length - 1; i++) {
-        const current = this.points[i];
-        const next = this.points[i + 1];
-        const alpha = (i / this.points.length) * this.life;
+      for (let index = 0; index < this.points.length - 1; index++) {
+        const current = this.points[index];
+        const next = this.points[index + 1];
+        const alpha = (index / this.points.length) * this.life;
         
-        ctx.globalAlpha = this.opacity * alpha;
+        context.globalAlpha = this.opacity * alpha;
         
-        if (i === 0) {
-          ctx.moveTo(current.x, current.y);
+        if (index === 0) {
+          context.moveTo(current.x, current.y);
         } else {
           // Curva suave entre pontos
           const xc = (current.x + next.x) / 2;
           const yc = (current.y + next.y) / 2;
-          ctx.quadraticCurveTo(current.x, current.y, xc, yc);
+          context.quadraticCurveTo(current.x, current.y, xc, yc);
         }
       }
       
-      ctx.stroke();
-      ctx.restore();
+      context.stroke();
+      context.restore();
     }
   }
 
   // Desenhar gradiente dinâmico de fundo
-  const drawDynamicGradient = (ctx) => {
-    const { width, height } = ctx.canvas;
+  const drawDynamicGradient = (context) => {
+    const { width, height } = context.canvas;
     
-    gradientRef.current.phase += config.gradientSpeed;
+    gradientReference.current.phase += config.gradientSpeed;
     
     // Criar gradiente radial que se move
-    const centerX = width / 2 + Math.sin(gradientRef.current.phase) * 100;
-    const centerY = height / 2 + Math.cos(gradientRef.current.phase * 0.7) * 80;
+    const centerX = width / 2 + Math.sin(gradientReference.current.phase) * 100;
+    const centerY = height / 2 + Math.cos(gradientReference.current.phase * 0.7) * 80;
     
-    const gradient = ctx.createRadialGradient(
+    const gradient = context.createRadialGradient(
       centerX, centerY, 0,
       centerX, centerY, Math.max(width, height) * 0.8
     );
     
     // Cores que mudam com o tempo
-    const phase1 = gradientRef.current.phase;
-    const phase2 = gradientRef.current.phase + Math.PI * 0.5;
-    const phase3 = gradientRef.current.phase + Math.PI;
+    const phase1 = gradientReference.current.phase;
+    const phase2 = gradientReference.current.phase + Math.PI * 0.5;
+    const phase3 = gradientReference.current.phase + Math.PI;
     
     const alpha1 = (Math.sin(phase1) + 1) * 0.5 * config.gradientIntensity;
     const alpha2 = (Math.sin(phase2) + 1) * 0.5 * config.gradientIntensity;
@@ -300,33 +305,33 @@ const DesignGraficoBackground = ({
     gradient.addColorStop(0.5, `${config.colors.gradient2}${Math.floor(alpha2 * 255).toString(16).padStart(2, '0')}`);
     gradient.addColorStop(1, `${config.colors.gradient3}${Math.floor(alpha3 * 255).toString(16).padStart(2, '0')}`);
     
-    ctx.save();
-    ctx.globalAlpha = 0.1;
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, width, height);
-    ctx.restore();
+    context.save();
+    context.globalAlpha = 0.1;
+    context.fillStyle = gradient;
+    context.fillRect(0, 0, width, height);
+    context.restore();
   };
 
   // Efeito do cursor (interatividade)
-  const drawCursorEffect = (ctx) => {
+  const drawCursorEffect = (context) => {
     if (config.cursorInfluence === 0) return;
     
     const { x, y } = mousePosition;
     
-    ctx.save();
-    const gradient = ctx.createRadialGradient(x, y, 0, x, y, config.cursorInfluence);
+    context.save();
+    const gradient = context.createRadialGradient(x, y, 0, x, y, config.cursorInfluence);
     gradient.addColorStop(0, `${config.colors.glow}40`);
     gradient.addColorStop(1, `${config.colors.glow}00`);
     
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-    ctx.restore();
+    context.fillStyle = gradient;
+    context.fillRect(0, 0, context.canvas.width, context.canvas.height);
+    context.restore();
   };
 
   // Track mouse position para interatividade
   useEffect(() => {
     const handleMouseMove = (e) => {
-      const canvas = canvasRef.current;
+      const canvas = canvasReference.current;
       if (!canvas) return;
       
       const rect = canvas.getBoundingClientRect();
@@ -337,59 +342,59 @@ const DesignGraficoBackground = ({
     };
 
     if (config.cursorInfluence > 0) {
-      window.addEventListener('mousemove', handleMouseMove);
-      return () => window.removeEventListener('mousemove', handleMouseMove);
+      globalThis.addEventListener('mousemove', handleMouseMove);
+      return () => globalThis.removeEventListener('mousemove', handleMouseMove);
     }
   }, [config.cursorInfluence]);
 
   // Inicializar elementos
   const initializeElements = (canvas) => {
-    shapesRef.current = [];
-    brushStrokesRef.current = [];
+    shapesReference.current = [];
+    brushStrokesReference.current = [];
     
     // Criar formas geométricas
-    for (let i = 0; i < config.shapeCount; i++) {
-      shapesRef.current.push(new GeometricShape(canvas));
+    for (let index = 0; index < config.shapeCount; index++) {
+      shapesReference.current.push(new GeometricShape(canvas));
     }
     
     // Criar pinceladas
-    for (let i = 0; i < config.brushCount; i++) {
-      brushStrokesRef.current.push(new BrushStroke(canvas));
+    for (let index = 0; index < config.brushCount; index++) {
+      brushStrokesReference.current.push(new BrushStroke(canvas));
     }
   };
 
   // Loop de animação
   const animate = () => {
-    const canvas = canvasRef.current;
+    const canvas = canvasReference.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext('2d');
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const context = canvas.getContext('2d');
+    context.clearRect(0, 0, canvas.width, canvas.height);
 
     // Desenhar elementos na ordem correta
-    drawDynamicGradient(ctx);
-    drawCursorEffect(ctx);
+    drawDynamicGradient(context);
+    drawCursorEffect(context);
     
     // Atualizar e desenhar pinceladas
-    brushStrokesRef.current.forEach(brush => {
+    for (const brush of brushStrokesReference.current) {
       brush.update();
-      brush.draw(ctx);
-    });
+      brush.draw(context);
+    }
     
     // Atualizar e desenhar formas
-    shapesRef.current.forEach(shape => {
+    for (const shape of shapesReference.current) {
       shape.update();
-      shape.draw(ctx);
-    });
+      shape.draw(context);
+    }
 
     if (config.shapeSpeed > 0 || config.brushSpeed > 0 || config.gradientSpeed > 0) {
-      animationRef.current = requestAnimationFrame(animate);
+      animationReference.current = requestAnimationFrame(animate);
     }
   };
 
   // Configurar canvas e inicializar
   useEffect(() => {
-    const canvas = canvasRef.current;
+    const canvas = canvasReference.current;
     if (!canvas) return;
 
     const handleResize = () => {
@@ -397,8 +402,8 @@ const DesignGraficoBackground = ({
       canvas.width = rect.width * (deviceCapabilities?.pixelRatio || 1);
       canvas.height = rect.height * (deviceCapabilities?.pixelRatio || 1);
       
-      const ctx = canvas.getContext('2d');
-      ctx.scale(deviceCapabilities?.pixelRatio || 1, deviceCapabilities?.pixelRatio || 1);
+      const context = canvas.getContext('2d');
+      context.scale(deviceCapabilities?.pixelRatio || 1, deviceCapabilities?.pixelRatio || 1);
       
       // Reinicializar elementos com novo tamanho
       initializeElements(canvas);
@@ -412,8 +417,8 @@ const DesignGraficoBackground = ({
 
     return () => {
       window.removeEventListener('resize', handleResize);
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
+      if (animationReference.current) {
+        cancelAnimationFrame(animationReference.current);
       }
     };
   }, [config, deviceCapabilities]);
@@ -432,7 +437,7 @@ const DesignGraficoBackground = ({
 
   return (
     <canvas
-      ref={canvasRef}
+      ref={canvasReference}
       className="absolute inset-0 w-full h-full pointer-events-none"
       style={{ 
         background: 'transparent',

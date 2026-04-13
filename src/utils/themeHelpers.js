@@ -62,10 +62,10 @@ export function adjustColorBrightness(color, amount) {
   const usePound = color[0] === "#";
   const col = usePound ? color.slice(1) : color;
   
-  const num = parseInt(col, 16);
-  const r = Math.max(0, Math.min(255, (num >> 16) + amount));
-  const g = Math.max(0, Math.min(255, (num >> 8 & 0x00FF) + amount));
-  const b = Math.max(0, Math.min(255, (num & 0x0000FF) + amount));
+  const number_ = Number.parseInt(col, 16);
+  const r = Math.max(0, Math.min(255, (number_ >> 16) + amount));
+  const g = Math.max(0, Math.min(255, (number_ >> 8 & 0x00_FF) + amount));
+  const b = Math.max(0, Math.min(255, (number_ & 0x00_00_FF) + amount));
   
   return (usePound ? "#" : "") + (g | (b << 8) | (r << 16)).toString(16).padStart(6, '0');
 }
@@ -78,9 +78,9 @@ export function adjustColorBrightness(color, amount) {
 export function hexToRgb(hex) {
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result ? {
-    r: parseInt(result[1], 16),
-    g: parseInt(result[2], 16),
-    b: parseInt(result[3], 16)
+    r: Number.parseInt(result[1], 16),
+    g: Number.parseInt(result[2], 16),
+    b: Number.parseInt(result[3], 16)
   } : null;
 }
 
@@ -126,9 +126,9 @@ export function applyDynamicTheme(course) {
   const root = document.documentElement;
   
   // Aplica CSS custom properties
-  Object.entries(theme.cssVars).forEach(([property, value]) => {
+  for (const [property, value] of Object.entries(theme.cssVars)) {
     root.style.setProperty(property, value);
-  });
+  }
   
   // Adiciona classes dinâmicas
   const body = document.body;
@@ -140,7 +140,7 @@ export function applyDynamicTheme(course) {
   if (!metaThemeColor) {
     metaThemeColor = document.createElement('meta');
     metaThemeColor.name = 'theme-color';
-    document.head.appendChild(metaThemeColor);
+    document.head.append(metaThemeColor);
   }
   metaThemeColor.content = theme.primary;
 }
@@ -150,7 +150,7 @@ export function applyDynamicTheme(course) {
  */
 export function removeDynamicTheme() {
   const root = document.documentElement;
-  const themeVars = [
+  const themeVariables = [
     '--course-primary',
     '--course-secondary', 
     '--course-accent',
@@ -158,9 +158,9 @@ export function removeDynamicTheme() {
     '--course-gradient-to'
   ];
   
-  themeVars.forEach(varName => {
-    root.style.removeProperty(varName);
-  });
+  for (const variableName of themeVariables) {
+    root.style.removeProperty(variableName);
+  }
   
   document.body.classList.remove('theme-applied');
 }

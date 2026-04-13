@@ -42,7 +42,7 @@ class CacheManager {
    * Initialize Service Worker for background cache management
    */
   async initializeServiceWorker() {
-    if ('serviceWorker' in navigator && 'caches' in window) {
+    if ('serviceWorker' in navigator && 'caches' in globalThis) {
       try {
         const registration = await navigator.serviceWorker.register('/sw-cache.js');
         console.log('[CacheManager] Service Worker registered:', registration);
@@ -62,14 +62,17 @@ class CacheManager {
     const { type, data } = event.data;
     
     switch (type) {
-      case 'CACHE_UPDATED':
+      case 'CACHE_UPDATED': {
         this.handleCacheUpdate(data);
         break;
-      case 'CACHE_ERROR':
+      }
+      case 'CACHE_ERROR': {
         this.handleCacheError(data);
         break;
-      default:
+      }
+      default: {
         console.log('[CacheManager] Unknown SW message:', type, data);
+      }
     }
   }
 
@@ -95,7 +98,7 @@ class CacheManager {
    */
   markAsPopular(postSlugs) {
     if (Array.isArray(postSlugs)) {
-      postSlugs.forEach(slug => this.popularPosts.add(slug));
+      for (const slug of postSlugs) this.popularPosts.add(slug);
     } else {
       this.popularPosts.add(postSlugs);
     }
@@ -108,7 +111,7 @@ class CacheManager {
    * Background refresh for popular content
    */
   async refreshPopularContent() {
-    const popularPostsArray = Array.from(this.popularPosts);
+    const popularPostsArray = [...this.popularPosts];
     
     // Batch prefetch popular posts
     const prefetchPromises = popularPostsArray.slice(0, 10).map(slug => 
@@ -134,16 +137,21 @@ class CacheManager {
     const { force = false, tags = [] } = options;
     
     switch (contentType) {
-      case 'posts':
+      case 'posts': {
         return this.invalidatePostsCache(force, tags);
-      case 'categories':
+      }
+      case 'categories': {
         return this.invalidateCategoriesCache(force);
-      case 'search':
+      }
+      case 'search': {
         return this.invalidateSearchCache(force);
-      case 'all':
+      }
+      case 'all': {
         return this.invalidateAllCache(force);
-      default:
+      }
+      default: {
         console.warn('[CacheManager] Unknown content type:', contentType);
+      }
     }
   }
 
@@ -166,7 +174,7 @@ class CacheManager {
       stale: [] // Mark as stale
     };
 
-    postsQueries.forEach(query => {
+    for (const query of postsQueries) {
       const age = Date.now() - query.state.dataUpdatedAt;
       const queryTags = this.extractQueryTags(query.queryKey);
       
@@ -174,7 +182,7 @@ class CacheManager {
       const hasMatchingTags = tags.length === 0 || 
         tags.some(tag => queryTags.includes(tag));
       
-      if (!hasMatchingTags && !force) return;
+      if (!hasMatchingTags && !force) continue;
       
       if (force || age > this.config.POSTS_LIST_TTL) {
         strategies.immediate.push(query.queryKey);
@@ -183,7 +191,7 @@ class CacheManager {
       } else {
         strategies.stale.push(query.queryKey);
       }
-    });
+    }
 
     // Execute invalidation strategies
     await this.executeInvalidationStrategies(strategies);
@@ -256,17 +264,13 @@ class CacheManager {
     const searchQueries = ['searchPosts', 'infiniteSearchPosts'];
     
     for (const queryType of searchQueries) {
-      if (force) {
-        await this.queryClient.invalidateQueries({
+      await (force ? this.queryClient.invalidateQueries({
           queryKey: [queryType],
           type: 'all'
-        });
-      } else {
-        await this.queryClient.invalidateQueries({
+        }) : this.queryClient.invalidateQueries({
           queryKey: [queryType],
           type: 'inactive'
-        });
-      }
+        }));
     }
     
     console.log('[CacheManager] Search cache invalidated');
@@ -290,7 +294,7 @@ class CacheManager {
     }
     
     // Clear browser cache as well
-    if ('caches' in window) {
+    if ('caches' in globalThis) {
       try {
         const cacheNames = await caches.keys();
         const blogCaches = cacheNames.filter(name => name.includes('blog'));
@@ -326,24 +330,24 @@ class CacheManager {
     // Background refresh
     if (strategies.background.length > 0) {
       // Use requestIdleCallback for background work
-      if ('requestIdleCallback' in window) {
+      if ('requestIdleCallback' in globalThis) {
         requestIdleCallback(() => {
-          strategies.background.forEach(queryKey => {
+          for (const queryKey of strategies.background) {
             this.queryClient.refetchQueries({ queryKey, type: 'active' });
-          });
+          }
         });
       } else {
         // Fallback to setTimeout
         setTimeout(() => {
-          strategies.background.forEach(queryKey => {
+          for (const queryKey of strategies.background) {
             this.queryClient.refetchQueries({ queryKey, type: 'active' });
-          });
+          }
         }, 100);
       }
     }
 
     // Mark as stale
-    strategies.stale.forEach(queryKey => {
+    for (const queryKey of strategies.stale) {
       const query = this.queryClient.getQueryCache().find({ queryKey, exact: true });
       if (query) {
         query.setState(oldState => ({
@@ -351,7 +355,7 @@ class CacheManager {
           isStale: true
         }));
       }
-    });
+    }
   }
 
   /**
@@ -380,8 +384,8 @@ class CacheManager {
 
     // Warm popular posts
     if (popularPosts && this.popularPosts.size > 0) {
-      const popular = Array.from(this.popularPosts).slice(0, 5);
-      popular.forEach(slug => {
+      const popular = [...this.popularPosts].slice(0, 5);
+      for (const slug of popular) {
         warmingPromises.push(
           this.queryClient.prefetchQuery({
             queryKey: ['post', slug],
@@ -389,7 +393,7 @@ class CacheManager {
             staleTime: this.config.POST_DETAIL_TTL,
           })
         );
-      });
+      }
     }
 
     // Warm recent posts
@@ -434,7 +438,7 @@ class CacheManager {
     let blogQueriesCount = 0;
     let hitCount = 0;
 
-    queries.forEach(query => {
+    for (const query of queries) {
       const isBlogQuery = this.isBlogQuery(query.queryKey);
       if (isBlogQuery) {
         blogQueriesCount++;
@@ -449,7 +453,7 @@ class CacheManager {
         // Estimate memory usage (rough calculation)
         stats.memoryUsage += this.estimateQuerySize(query);
       }
-    });
+    }
 
     stats.blogQueries = blogQueriesCount;
     stats.cacheHitRate = blogQueriesCount > 0 ? (hitCount / blogQueriesCount) * 100 : 0;
@@ -522,8 +526,8 @@ class CacheManager {
 
   createBatches(array, batchSize) {
     const batches = [];
-    for (let i = 0; i < array.length; i += batchSize) {
-      batches.push(array.slice(i, i + batchSize));
+    for (let index = 0; index < array.length; index += batchSize) {
+      batches.push(array.slice(index, index + batchSize));
     }
     return batches;
   }

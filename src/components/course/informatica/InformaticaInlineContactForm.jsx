@@ -48,7 +48,7 @@ const StepContent = React.memo(({ step, submitStatus, formData, onInputChange, p
   }
 
   switch (step) {
-    case 1:
+    case 1: {
       return (
         <div className="space-y-6">
           <div className="text-center mb-8">
@@ -72,8 +72,9 @@ const StepContent = React.memo(({ step, submitStatus, formData, onInputChange, p
           </div>
         </div>
       );
+    }
 
-    case 2:
+    case 2: {
       return (
         <div className="space-y-6">
           <div className="text-center mb-8">
@@ -123,8 +124,9 @@ const StepContent = React.memo(({ step, submitStatus, formData, onInputChange, p
           </div>
         </div>
       );
+    }
 
-    case 3:
+    case 3: {
       return (
         <div className="space-y-6">
           <div className="text-center mb-8">
@@ -163,24 +165,26 @@ const StepContent = React.memo(({ step, submitStatus, formData, onInputChange, p
           </div>
         </div>
       );
+    }
 
-    default:
+    default: {
       return null;
+    }
   }
-}, (prevProps, nextProps) => {
+}, (previousProperties, nextProperties) => {
   // Custom comparison function para evitar re-renders desnecessários
   const shouldRerender = (
-    prevProps.step !== nextProps.step ||
-    prevProps.submitStatus !== nextProps.submitStatus ||
-    prevProps.phoneInputRef !== nextProps.phoneInputRef ||
-    prevProps.messageInputRef !== nextProps.messageInputRef ||
-    (nextProps.step === 1 && prevProps.formData.name !== nextProps.formData.name) ||
-    (nextProps.step === 2 && prevProps.formData.phone !== nextProps.formData.phone) ||
-    (nextProps.step === 3 && (
-      prevProps.formData.name !== nextProps.formData.name ||
-      prevProps.formData.phone !== nextProps.formData.phone ||
-      prevProps.formData.course !== nextProps.formData.course ||
-      prevProps.formData.message !== nextProps.formData.message
+    previousProperties.step !== nextProperties.step ||
+    previousProperties.submitStatus !== nextProperties.submitStatus ||
+    previousProperties.phoneInputRef !== nextProperties.phoneInputRef ||
+    previousProperties.messageInputRef !== nextProperties.messageInputRef ||
+    (nextProperties.step === 1 && previousProperties.formData.name !== nextProperties.formData.name) ||
+    (nextProperties.step === 2 && previousProperties.formData.phone !== nextProperties.formData.phone) ||
+    (nextProperties.step === 3 && (
+      previousProperties.formData.name !== nextProperties.formData.name ||
+      previousProperties.formData.phone !== nextProperties.formData.phone ||
+      previousProperties.formData.course !== nextProperties.formData.course ||
+      previousProperties.formData.message !== nextProperties.formData.message
     ))
   );
 
@@ -204,13 +208,13 @@ const InformaticaInlineContactForm = () => {
   const totalSteps = 3;
 
   // Refs para autofocus
-  const phoneInputRef = useRef(null);
-  const messageInputRef = useRef(null);
+  const phoneInputReference = useRef(null);
+  const messageInputReference = useRef(null);
 
 
   // Usar useCallback para evitar re-criação da função
   const handleInputChange = useCallback((field, value) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    setFormData(previous => ({ ...previous, [field]: value }));
   }, []);
 
   const nextStep = useCallback(() => {
@@ -219,7 +223,7 @@ const InformaticaInlineContactForm = () => {
     }
   }, [step, totalSteps]);
 
-  const prevStep = useCallback(() => {
+  const previousStep = useCallback(() => {
     if (step > 1) {
       setStep(step - 1);
     }
@@ -232,7 +236,7 @@ const InformaticaInlineContactForm = () => {
         return { success: false, error: 'EmailJS não configurado' };
       }
 
-      const templateParams = {
+      const templateParameters = {
         from_name: formData.name,
         from_email: 'nao-informado@email.com',
         phone: formData.phone,
@@ -245,7 +249,7 @@ const InformaticaInlineContactForm = () => {
       const result = await emailjs.send(
         EMAIL_CONFIG.SERVICE_ID,
         EMAIL_CONFIG.TEMPLATE_ID,
-        templateParams,
+        templateParameters,
         EMAIL_CONFIG.PUBLIC_KEY
       );
 
@@ -288,7 +292,7 @@ const InformaticaInlineContactForm = () => {
           setSubmitStatus(null);
         }, 1500);
       }
-    } catch (error) {
+    } catch {
       setSubmitStatus('whatsapp_fallback');
       setTimeout(() => {
         sendWhatsApp();
@@ -302,14 +306,18 @@ const InformaticaInlineContactForm = () => {
 
   const isStepValid = () => {
     switch (step) {
-      case 1:
+      case 1: {
         return formData.name.trim().length > 0;
-      case 2:
+      }
+      case 2: {
         return formData.phone.trim().length > 0;
-      case 3:
+      }
+      case 3: {
         return true;
-      default:
+      }
+      default: {
         return false;
+      }
     }
   };
 
@@ -336,8 +344,8 @@ const InformaticaInlineContactForm = () => {
             submitStatus={submitStatus}
             formData={formData}
             onInputChange={handleInputChange}
-            phoneInputRef={phoneInputRef}
-            messageInputRef={messageInputRef}
+            phoneInputRef={phoneInputReference}
+            messageInputRef={messageInputReference}
           />
         </div>
 
@@ -345,7 +353,7 @@ const InformaticaInlineContactForm = () => {
           <div className="flex justify-between mt-8 space-x-4">
             {step > 1 && (
               <Button
-                onClick={prevStep}
+                onClick={previousStep}
                 variant="outline"
                 className="flex-1 h-12 text-lg border-zinc-600 text-zinc-300 hover:bg-zinc-800"
               >

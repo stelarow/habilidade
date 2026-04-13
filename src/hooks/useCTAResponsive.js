@@ -25,13 +25,13 @@ export const useCTAResponsive = (options = {}) => {
   const [showSticky, setShowSticky] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [viewport, setViewport] = useState({
-    width: typeof window !== 'undefined' ? window.innerWidth : 1920,
-    height: typeof window !== 'undefined' ? window.innerHeight : 1080
+    width: globalThis.window === undefined ? 1920 : window.innerWidth,
+    height: globalThis.window === undefined ? 1080 : window.innerHeight
   });
 
   // Detecta tipo de dispositivo
   const detectDeviceType = useCallback(() => {
-    if (typeof window === 'undefined') return 'desktop';
+    if (globalThis.window === undefined) return 'desktop';
     const width = window.innerWidth;
     
     if (width < breakpoints.mobile) {
@@ -45,9 +45,9 @@ export const useCTAResponsive = (options = {}) => {
 
   // Detecta capacidade de touch
   const detectTouch = useCallback(() => {
-    if (typeof window === 'undefined' || typeof navigator === 'undefined') return false;
+    if (globalThis.window === undefined || typeof navigator === 'undefined') return false;
     return (
-      'ontouchstart' in window ||
+      'ontouchstart' in globalThis ||
       navigator.maxTouchPoints > 0 ||
       navigator.msMaxTouchPoints > 0
     );
@@ -63,7 +63,7 @@ export const useCTAResponsive = (options = {}) => {
 
   // Handler de resize
   const handleResize = useCallback(() => {
-    if (typeof window === 'undefined') return;
+    if (globalThis.window === undefined) return;
     setViewport({
       width: window.innerWidth,
       height: window.innerHeight
@@ -100,12 +100,12 @@ export const useCTAResponsive = (options = {}) => {
     
     const throttledScrollHandler = handleScroll();
     
-    if (typeof window !== "undefined") window.addEventListener('resize', handleResize);
-    if (typeof window !== "undefined") window.addEventListener('scroll', throttledScrollHandler, { passive: true });
+    if (globalThis.window !== undefined) window.addEventListener('resize', handleResize);
+    if (globalThis.window !== undefined) window.addEventListener('scroll', throttledScrollHandler, { passive: true });
     
     return () => {
-      if (typeof window !== "undefined") window.removeEventListener('resize', handleResize);
-      if (typeof window !== "undefined") window.removeEventListener('scroll', throttledScrollHandler);
+      if (globalThis.window !== undefined) window.removeEventListener('resize', handleResize);
+      if (globalThis.window !== undefined) window.removeEventListener('scroll', throttledScrollHandler);
     };
   }, [handleResize, handleScroll, detectDeviceType, detectTouch]);
 
@@ -119,7 +119,7 @@ export const useCTAResponsive = (options = {}) => {
     };
 
     switch (deviceType) {
-      case 'mobile':
+      case 'mobile': {
         return {
           ...baseConfig,
           buttonSize: 'large',
@@ -129,8 +129,9 @@ export const useCTAResponsive = (options = {}) => {
           minTouchTarget: 48,
           stackContent: true
         };
+      }
       
-      case 'tablet':
+      case 'tablet': {
         return {
           ...baseConfig,
           buttonSize: 'medium',
@@ -138,8 +139,9 @@ export const useCTAResponsive = (options = {}) => {
           minTouchTarget: 44,
           stackContent: viewport.width < 900
         };
+      }
       
-      default:
+      default: {
         return {
           ...baseConfig,
           buttonSize: 'medium',
@@ -147,6 +149,7 @@ export const useCTAResponsive = (options = {}) => {
           minTouchTarget: 40,
           stackContent: false
         };
+      }
     }
   }, [deviceType, isTouch, viewport.width]);
 
@@ -216,7 +219,7 @@ export const useCTAResponsive = (options = {}) => {
       viewportRatio: viewport.width / viewport.height,
       isLandscape: viewport.width > viewport.height,
       isPortrait: viewport.height > viewport.width,
-      pixelDensity: typeof window !== 'undefined' ? (window.devicePixelRatio || 1) : 1
+      pixelDensity: globalThis.window === undefined ? 1 : (window.devicePixelRatio || 1)
     }
   };
 };
@@ -275,7 +278,7 @@ export const useCTAImages = (images = {}) => {
     if (typeof imageSet === 'string') return imageSet;
 
     // Seleciona baseado no dispositivo e densidade de pixels
-    const pixelRatio = typeof window !== 'undefined' ? (window.devicePixelRatio || 1) : 1;
+    const pixelRatio = globalThis.window === undefined ? 1 : (window.devicePixelRatio || 1);
     const isHighDPI = pixelRatio >= 2;
 
     if (deviceType === 'mobile') {
@@ -289,33 +292,33 @@ export const useCTAImages = (images = {}) => {
   }, [deviceType]);
 
   // Pr�-carrega imagem
-  const preloadImage = useCallback((src) => {
-    if (!src || loadedImages.has(src)) return Promise.resolve();
+  const preloadImage = useCallback((source) => {
+    if (!source || loadedImages.has(source)) return Promise.resolve();
 
     return new Promise((resolve, reject) => {
       const img = new Image();
       
-      img.onload = () => {
-        setLoadedImages(prev => new Set([...prev, src]));
-        resolve(src);
-      };
+      img.addEventListener('load', () => {
+        setLoadedImages(previous => new Set([...previous, source]));
+        resolve(source);
+      });
       
       img.onerror = () => {
-        setImageErrors(prev => new Set([...prev, src]));
-        reject(new Error(`Failed to load image: ${src}`));
+        setImageErrors(previous => new Set([...previous, source]));
+        reject(new Error(`Failed to load image: ${source}`));
       };
       
-      img.src = src;
+      img.src = source;
     });
   }, [loadedImages]);
 
   return {
     getOptimalImage,
     preloadImage,
-    isImageLoaded: (src) => loadedImages.has(src),
-    hasImageError: (src) => imageErrors.has(src),
-    loadedImages: Array.from(loadedImages),
-    imageErrors: Array.from(imageErrors)
+    isImageLoaded: (source) => loadedImages.has(source),
+    hasImageError: (source) => imageErrors.has(source),
+    loadedImages: [...loadedImages],
+    imageErrors: [...imageErrors]
   };
 };
 
@@ -350,10 +353,10 @@ export const useCTAVariant = (testConfig = {}) => {
     const random = Math.random();
     let cumulative = 0;
     
-    for (let i = 0; i < variants.length; i++) {
-      cumulative += distribution[i] || (1 / variants.length);
+    for (let index = 0; index < variants.length; index++) {
+      cumulative += distribution[index] || (1 / variants.length);
       if (random <= cumulative) {
-        const selectedVariant = variants[i];
+        const selectedVariant = variants[index];
         
         // Persiste a escolha
         try {

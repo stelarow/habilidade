@@ -15,7 +15,7 @@ const OptimizedImage = ({
   placeholderColor = 'rgb(39, 39, 42)', // zinc-800
   aspectRatio,
   showPlaceholder = true,
-  ...props
+  ...properties
 }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
@@ -61,7 +61,7 @@ const OptimizedImage = ({
           fetchPriority={priority ? 'high' : 'auto'}
           onLoad={handleLoad}
           onError={handleError}
-          {...props}
+          {...properties}
         />
       )}
 

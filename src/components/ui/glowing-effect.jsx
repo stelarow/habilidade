@@ -15,20 +15,20 @@ const GlowingEffect = memo(
     borderWidth = 1,
     disabled = true,
   }) => {
-    const containerRef = useRef(null);
+    const containerReference = useRef(null);
     const lastPosition = useRef({ x: 0, y: 0 });
-    const animationFrameRef = useRef(0);
+    const animationFrameReference = useRef(0);
 
     const handleMove = useCallback(
       (e) => {
-        if (!containerRef.current) return;
+        if (!containerReference.current) return;
 
-        if (animationFrameRef.current) {
-          cancelAnimationFrame(animationFrameRef.current);
+        if (animationFrameReference.current) {
+          cancelAnimationFrame(animationFrameReference.current);
         }
 
-        animationFrameRef.current = requestAnimationFrame(() => {
-          const element = containerRef.current;
+        animationFrameReference.current = requestAnimationFrame(() => {
+          const element = containerReference.current;
           if (!element) return;
 
           const { left, top, width, height } = element.getBoundingClientRect();
@@ -62,7 +62,7 @@ const GlowingEffect = memo(
           if (!isActive) return;
 
           const currentAngle =
-            parseFloat(element.style.getPropertyValue("--start")) || 0;
+            Number.parseFloat(element.style.getPropertyValue("--start")) || 0;
           let targetAngle =
             (180 * Math.atan2(mouseY - center[1], mouseX - center[0])) /
               Math.PI +
@@ -95,8 +95,8 @@ const GlowingEffect = memo(
       });
 
       return () => {
-        if (animationFrameRef.current) {
-          cancelAnimationFrame(animationFrameRef.current);
+        if (animationFrameReference.current) {
+          cancelAnimationFrame(animationFrameReference.current);
         }
         window.removeEventListener("scroll", handleScroll);
         document.body.removeEventListener("pointermove", handlePointerMove);
@@ -114,7 +114,7 @@ const GlowingEffect = memo(
           )}
         />
         <div
-          ref={containerRef}
+          ref={containerReference}
           style={{
             "--blur": `${blur}px`,
             "--spread": spread,

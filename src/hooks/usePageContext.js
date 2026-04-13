@@ -3,7 +3,7 @@ import { useLocation, useParams } from 'react-router-dom';
 
 export const usePageContext = () => {
   const location = useLocation();
-  const params = useParams();
+  const parameters = useParams();
   const [context, setContext] = useState({
     pageType: 'home',
     currentCourse: null,
@@ -13,7 +13,7 @@ export const usePageContext = () => {
 
   useEffect(() => {
     const currentPath = location.pathname;
-    const courseSlug = params.courseSlug || params.slug;
+    const courseSlug = parameters.courseSlug || parameters.slug;
     
     let newContext = {
       pageType: 'home',
@@ -36,7 +36,7 @@ export const usePageContext = () => {
     }
 
     setContext(newContext);
-  }, [location.pathname, params.courseSlug, params.slug]);
+  }, [location.pathname, parameters.courseSlug, parameters.slug]);
 
   return context;
 }; 

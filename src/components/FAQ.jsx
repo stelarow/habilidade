@@ -64,18 +64,18 @@ const FAQ_DATA = [
 ];
 
 const FAQItem = ({ question, answer, isOpen, onToggle }) => {
-  const [ref, visible] = useInView();
+  const [reference, visible] = useInView();
   
   return (
     <div 
-      ref={ref}
+      ref={reference}
       className={`card-enter ${visible ? 'in-view' : ''} bg-zinc-800/50 backdrop-blur-sm rounded-xl border border-zinc-700/50 overflow-hidden transition-all duration-300 hover:border-zinc-600/50`}
     >
       <button
         onClick={onToggle}
         className="w-full min-h-[48px] px-6 py-4 text-left flex items-center justify-between hover:bg-zinc-700/30 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-fuchsia-500 focus:ring-inset"
         aria-expanded={isOpen}
-        aria-controls={`faq-answer-${question.substring(0, 20).replace(/\s/g, '-')}`}
+        aria-controls={`faq-answer-${question.slice(0, 20).replaceAll(/\s/g, '-')}`}
       >
         <span className="font-medium text-white pr-4">{question}</span>
         <CaretDown
@@ -88,7 +88,7 @@ const FAQItem = ({ question, answer, isOpen, onToggle }) => {
       </button>
       
       <div
-        id={`faq-answer-${question.substring(0, 20).replace(/\s/g, '-')}`}
+        id={`faq-answer-${question.slice(0, 20).replaceAll(/\s/g, '-')}`}
         className={`transition-all duration-300 ease-in-out ${
           isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
         } overflow-hidden`}

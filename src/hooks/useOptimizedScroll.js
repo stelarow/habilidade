@@ -69,25 +69,25 @@ class ScrollManager {
       this.isScrolling = true;
 
       // Notify all listeners
-      this.listeners.forEach(callback => {
+      for (const callback of this.listeners) {
         try {
           callback(scrollData);
         } catch (error) {
           console.warn('Error in scroll listener:', error);
         }
-      });
+      }
 
       // Clear isScrolling flag after a delay
       clearTimeout(this.scrollEndTimer);
       this.scrollEndTimer = setTimeout(() => {
         this.isScrolling = false;
-        this.listeners.forEach(callback => {
+        for (const callback of this.listeners) {
           try {
             callback({ ...scrollData, isScrolling: false });
           } catch (error) {
             console.warn('Error in scroll end listener:', error);
           }
-        });
+        }
       }, 150);
     });
   }
@@ -117,13 +117,13 @@ export const useOptimizedScroll = (options = {}) => {
     isScrolled: false
   });
 
-  const onScrollRef = useRef(onScroll);
-  const onScrollEndRef = useRef(onScrollEnd);
+  const onScrollReference = useRef(onScroll);
+  const onScrollEndReference = useRef(onScrollEnd);
 
   // Update refs without causing re-renders
   useEffect(() => {
-    onScrollRef.current = onScroll;
-    onScrollEndRef.current = onScrollEnd;
+    onScrollReference.current = onScroll;
+    onScrollEndReference.current = onScrollEnd;
   }, [onScroll, onScrollEnd]);
 
   const handleScrollData = useCallback((scrollData) => {
@@ -148,10 +148,10 @@ export const useOptimizedScroll = (options = {}) => {
     setScrollState(newState);
 
     // Call callbacks if they exist
-    if (isScrolling && onScrollRef.current) {
-      onScrollRef.current(newState);
-    } else if (!isScrolling && onScrollEndRef.current) {
-      onScrollEndRef.current(newState);
+    if (isScrolling && onScrollReference.current) {
+      onScrollReference.current(newState);
+    } else if (!isScrolling && onScrollEndReference.current) {
+      onScrollEndReference.current(newState);
     }
   }, [threshold, trackDirection, trackProgress]);
 
@@ -164,8 +164,8 @@ export const useOptimizedScroll = (options = {}) => {
         const maxScroll = element.scrollHeight - element.clientHeight;
         const progress = maxScroll > 0 ? Math.min(elementScrollY / maxScroll, 1) : 0;
         
-        setScrollState(prev => ({
-          ...prev,
+        setScrollState(previous => ({
+          ...previous,
           scrollY: elementScrollY,
           progress,
           isScrolled: elementScrollY > threshold
@@ -236,14 +236,14 @@ export const useScrollVisibility = (options = {}) => {
 
   const [isVisible, setIsVisible] = useState(false);
   const [hasBeenVisible, setHasBeenVisible] = useState(false);
-  const elementRef = useRef(null);
-  const observerRef = useRef(null);
+  const elementReference = useRef(null);
+  const observerReference = useRef(null);
 
   useEffect(() => {
-    const element = elementRef.current;
+    const element = elementReference.current;
     if (!element) return;
 
-    observerRef.current = new IntersectionObserver(
+    observerReference.current = new IntersectionObserver(
       ([entry]) => {
         const isIntersecting = entry.isIntersecting;
         
@@ -253,7 +253,7 @@ export const useScrollVisibility = (options = {}) => {
           
           // Stop observing if triggerOnce is true
           if (triggerOnce) {
-            observerRef.current?.unobserve(element);
+            observerReference.current?.unobserve(element);
           }
         } else if (!triggerOnce) {
           setIsVisible(false);
@@ -265,15 +265,15 @@ export const useScrollVisibility = (options = {}) => {
       }
     );
 
-    observerRef.current.observe(element);
+    observerReference.current.observe(element);
 
     return () => {
-      observerRef.current?.disconnect();
+      observerReference.current?.disconnect();
     };
   }, [threshold, rootMargin, triggerOnce]);
 
   return {
-    elementRef,
+    elementRef: elementReference,
     isVisible: triggerOnce ? hasBeenVisible : isVisible,
     hasBeenVisible
   };
@@ -283,20 +283,20 @@ export const useScrollVisibility = (options = {}) => {
  * Debounced scroll hook for expensive operations
  */
 export const useDebouncedScroll = (callback, delay = 300) => {
-  const timeoutRef = useRef(null);
-  const callbackRef = useRef(callback);
+  const timeoutReference = useRef(null);
+  const callbackReference = useRef(callback);
 
   useEffect(() => {
-    callbackRef.current = callback;
+    callbackReference.current = callback;
   }, [callback]);
 
   const debouncedCallback = useCallback((scrollData) => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
+    if (timeoutReference.current) {
+      clearTimeout(timeoutReference.current);
     }
 
-    timeoutRef.current = setTimeout(() => {
-      callbackRef.current(scrollData);
+    timeoutReference.current = setTimeout(() => {
+      callbackReference.current(scrollData);
     }, delay);
   }, [delay]);
 
@@ -306,8 +306,8 @@ export const useDebouncedScroll = (callback, delay = 300) => {
 
   useEffect(() => {
     return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
+      if (timeoutReference.current) {
+        clearTimeout(timeoutReference.current);
       }
     };
   }, []);

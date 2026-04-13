@@ -134,16 +134,21 @@ export const getCategoryInlineStyles = (categorySlug, type = 'background') => {
   const colors = getCategoryColors(categorySlug);
   
   switch (type) {
-    case 'background':
+    case 'background': {
       return { backgroundColor: colors.background };
-    case 'text':
+    }
+    case 'text': {
       return { color: colors.text };
-    case 'border':
+    }
+    case 'border': {
       return { borderColor: colors.border };
-    case 'hover-background':
+    }
+    case 'hover-background': {
       return { backgroundColor: colors.hover };
-    default:
+    }
+    default: {
       return {};
+    }
   }
 };
 
@@ -152,7 +157,7 @@ export const getCategoryInlineStyles = (categorySlug, type = 'background') => {
  * @returns {boolean} True if dark mode is preferred
  */
 export const isDarkModePreferred = () => {
-  return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  return globalThis.matchMedia && globalThis.matchMedia('(prefers-color-scheme: dark)').matches;
 };
 
 /**
@@ -160,7 +165,7 @@ export const isDarkModePreferred = () => {
  * @returns {boolean} True if reduced motion is preferred
  */
 export const isReducedMotionPreferred = () => {
-  return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  return globalThis.matchMedia && globalThis.matchMedia('(prefers-reduced-motion: reduce)').matches;
 };
 
 /**
@@ -168,7 +173,7 @@ export const isReducedMotionPreferred = () => {
  * @returns {boolean} True if high contrast is preferred
  */
 export const isHighContrastPreferred = () => {
-  return window.matchMedia && window.matchMedia('(prefers-contrast: high)').matches;
+  return globalThis.matchMedia && globalThis.matchMedia('(prefers-contrast: high)').matches;
 };
 
 /**
@@ -182,14 +187,18 @@ export const getAnimationClasses = (animationType = 'fade') => {
   }
   
   switch (animationType) {
-    case 'fade':
+    case 'fade': {
       return 'blog-fade-in';
-    case 'slide':
+    }
+    case 'slide': {
       return 'blog-slide-in';
-    case 'lift':
+    }
+    case 'lift': {
       return 'blog-hover-lift';
-    default:
+    }
+    default: {
       return '';
+    }
   }
 };
 
