@@ -38,10 +38,54 @@ const organizationSchema = {
   ],
   "aggregateRating": {
     "@type": "AggregateRating",
-    "ratingValue": "4.9",
+    "ratingValue": "5",
     "reviewCount": "127",
     "bestRating": "5"
-  }
+  },
+  "review": [
+    {
+      "@type": "Review",
+      "author": { "@type": "Person", "name": "Karolain Roberta Régis" },
+      "datePublished": "2024-11-20",
+      "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+      "reviewBody": "Estou fazendo o curso e estou adorando, professor atencioso, com atividades super dinâmicas, aprendi já bastante coisas que ainda não sabia, estão super atualizados no mercado, eles têm deles mesmo até IA ajudando o pessoal nas medições e até em render rápidos, fora a apostila bem completa."
+    },
+    {
+      "@type": "Review",
+      "author": { "@type": "Person", "name": "Renan Souza" },
+      "datePublished": "2024-10-15",
+      "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+      "reviewBody": "Minha experiência na Escola Habilidade está sendo ótima, estou no curso de programação. Curso presencial, atenção total do professor, atividades totalmente práticas e divertidas que chamam totalmente minha atenção."
+    },
+    {
+      "@type": "Review",
+      "author": { "@type": "Person", "name": "Emily Vitoria" },
+      "datePublished": "2024-11-20",
+      "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+      "reviewBody": "Lugar ótimo e acolhedor, as turmas pequenas realmente facilitam a precisão na hora de aprender e o foco do professor para cada aluno. Recomendo!"
+    },
+    {
+      "@type": "Review",
+      "author": { "@type": "Person", "name": "Luiza Bóz Dutra" },
+      "datePublished": "2024-10-01",
+      "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+      "reviewBody": "O espaço é muito acolhedor, e as aulas são bastante explicativas e práticas. Durante as aulas, conseguimos tirar todas as nossas dúvidas, e os professores são extremamente dedicados."
+    },
+    {
+      "@type": "Review",
+      "author": { "@type": "Person", "name": "Jonatas Torres" },
+      "datePublished": "2024-11-20",
+      "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+      "reviewBody": "Estou tendo uma excelente experiência com a Escola Habilidade no curso de SketchUp. O conteúdo é muito bem estruturado, o professor domina o assunto e sabe explicar de forma clara, mesmo para quem está começando."
+    },
+    {
+      "@type": "Review",
+      "author": { "@type": "Person", "name": "Ana Caroline Orofino" },
+      "datePublished": "2024-10-15",
+      "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+      "reviewBody": "Estou adorando as aulas, professor muito atencioso, sempre traz questões do cotidiano para resolução das atividades!"
+    }
+  ]
 };
 
 const Footer = () => {
