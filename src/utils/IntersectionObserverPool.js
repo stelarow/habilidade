@@ -59,8 +59,7 @@ class IntersectionObserverPool {
   unobserve(element) {
     if (!element || !this.elements.has(element)) return;
 
-    // Encontra o observer correto e desconecta
-    for (const observer of this.observers) {
+    for (const observer of this.observers.values()) {
       observer.unobserve(element);
     }
 
@@ -72,7 +71,7 @@ class IntersectionObserverPool {
    * Limpa todos os observers (útil para cleanup)
    */
   disconnect() {
-    for (const observer of this.observers) {
+    for (const observer of this.observers.values()) {
       observer.disconnect();
     }
 
