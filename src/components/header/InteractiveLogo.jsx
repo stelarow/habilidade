@@ -1,27 +1,20 @@
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { usePageContext } from '../../hooks/usePageContext';
+import { Link, useLocation } from 'react-router-dom';
 import LogoH from '../LogoH';
 
 function InteractiveLogo() {
-  const { pageType } = usePageContext();
   const location = useLocation();
-  const navigate = useNavigate();
 
   const handleLogoClick = (e) => {
-    // Se estamos em uma página do blog, forçar navegação completa
-    if (location.pathname.startsWith('/blog')) {
+    if (location.pathname === '/') {
       e.preventDefault();
-      // Usar window.location para forçar recarregamento completo
-      globalThis.location.href = '/';
-    } else if (location.pathname === '/') {
-      // Se já estamos na homepage, fazer scroll para o topo
-      e.preventDefault();
-      window.scrollTo({ 
-        top: 0, 
-        behavior: 'smooth' 
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
       });
+    } else {
+      e.preventDefault();
+      globalThis.location.href = '/';
     }
-    // Para outras páginas, o Link do React Router fará a navegação normalmente
   };
 
   return (
