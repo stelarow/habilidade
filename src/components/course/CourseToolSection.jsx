@@ -78,30 +78,30 @@ const CourseToolSection = ({ tool, toolData, themeColors }) => {
               >
                 <button
                   onClick={() => toggleSection(section.id)}
-                  className="w-full flex items-center justify-between p-6 text-left hover:bg-gray-700/30 transition-colors"
+                  className="w-full flex items-center justify-between p-6 text-left hover:bg-gray-700/30 transition-colors min-w-0"
                 >
-                  <div className="flex items-center gap-3">
-                    <div 
-                      className="p-2 rounded-lg"
+                  <div className="flex items-center gap-3 min-w-0">
+                    <div
+                      className="p-2 rounded-lg flex-shrink-0"
                       style={{ backgroundColor: `${section.color}20` }}
                     >
-                      <Icon 
-                        size={20} 
+                      <Icon
+                        size={20}
                         weight="duotone"
                         style={{ color: section.color }}
                       />
                     </div>
-                    <h3 className="text-lg font-semibold text-white">
+                    <h3 className="text-lg font-semibold text-white truncate">
                       {section.title}
                     </h3>
-                    <span className="text-sm text-gray-400 bg-gray-700/50 px-2 py-1 rounded">
+                    <span className="text-sm text-gray-400 bg-gray-700/50 px-2 py-1 rounded flex-shrink-0">
                       {section.items.length} itens
                     </span>
                   </div>
                   {isExpanded ? (
-                    <CaretUp size={20} className="text-gray-400" />
+                    <CaretUp size={20} className="text-gray-400 flex-shrink-0" />
                   ) : (
-                    <CaretDown size={20} className="text-gray-400" />
+                    <CaretDown size={20} className="text-gray-400 flex-shrink-0" />
                   )}
                 </button>
 

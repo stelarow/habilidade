@@ -327,15 +327,15 @@ export const InformaticaCurriculum = () => {
 
                     {/* Layout Desktop - Layout original */}
                     <div className="hidden sm:block">
-                      <div className="flex items-center gap-3 mb-2">
-                        <h3 className="text-xl font-bold text-white">
+                      <div className="flex items-center gap-3 mb-2 min-w-0">
+                        <h3 className="text-xl font-bold text-white truncate">
                           Módulo {module.id}: {module.title}
                         </h3>
-                        <div className="bg-blue-500/20 backdrop-blur-sm border border-blue-500/30 rounded-full px-3 py-1">
+                        <div className="bg-blue-500/20 backdrop-blur-sm border border-blue-500/30 rounded-full px-3 py-1 flex-shrink-0">
                           <span className="text-blue-300 text-sm font-medium">{module.duration}</span>
                         </div>
                       </div>
-                      <p className="text-zinc-400 text-sm">{module.description}</p>
+                      <p className="text-zinc-400 text-sm truncate">{module.description}</p>
                       <div className="flex items-center gap-4 mt-2 text-xs text-zinc-500">
                         <span>{module.lessons.length} aulas</span>
                         <span>•</span>

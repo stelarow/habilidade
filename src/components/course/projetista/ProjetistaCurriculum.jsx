@@ -23,13 +23,13 @@ const ModuleSection = ({ title, icon: Icon, lessons, color }) => {
         onClick={() => setIsExpanded(!isExpanded)}
       >
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <div className={`w-12 h-12 bg-gradient-to-r from-purple-500 to-cyan-400 rounded-lg flex items-center justify-center shadow-lg`}>
+          <div className="flex items-center gap-4 min-w-0">
+            <div className={`w-12 h-12 bg-gradient-to-r from-purple-500 to-cyan-400 rounded-lg flex items-center justify-center shadow-lg flex-shrink-0`}>
               <Icon className="text-white" size={24} />
             </div>
-            <div>
-              <h3 className="text-xl font-bold text-white">{title}</h3>
-              <p className="text-zinc-300">{lessons.length} aulas • {lessons.length * 2}h total</p>
+            <div className="min-w-0">
+              <h3 className="text-xl font-bold text-white truncate">{title}</h3>
+              <p className="text-zinc-300 truncate">{lessons.length} aulas • {lessons.length * 2}h total</p>
             </div>
           </div>
           <motion.div
