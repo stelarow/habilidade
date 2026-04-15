@@ -539,6 +539,4 @@ const Informatica = () => {
 };
 
 export default Informatica;
-
-// Required for React Router v6 lazy loading
 export const Component = Informatica;

@@ -60,25 +60,6 @@ const FallbackDiv = forwardRef(({
   layoutId,
   ...properties
 }, reference) => {
-  // Remove motion-specific props before passing to DOM
-  const {
-    initial: _,
-    animate: __,
-    whileHover: ___,
-    whileInView: ____,
-    viewport: _____,
-    transition: ______,
-    variants: _______,
-    whileTap: ________,
-    whileDrag: _________,
-    whileFocus: __________,
-    exit: ___________,
-    drag: ____________,
-    layout: _____________,
-    layoutId: ______________,
-    ...domProperties
-  } = properties;
-
   const fallbackStyle = {
     ...style,
     transition: 'all 0.3s ease-in-out',
@@ -87,7 +68,6 @@ const FallbackDiv = forwardRef(({
     })
   };
 
-  // Only use state on client side
   const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseEnter = () => {
@@ -110,7 +90,7 @@ const FallbackDiv = forwardRef(({
       style={{ ...fallbackStyle, ...hoverStyle }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      {...domProperties}
+      {...properties}
     >
       {children}
     </div>
@@ -129,8 +109,8 @@ const createLazyMotionComponent = (elementType = 'div') => {
     const [isLoading, setIsLoading] = useState(!motionCache.has('framer-motion'));
 
     useEffect(() => {
-      if (globalThis.window === undefined) return; // Skip on server
-      
+      if (globalThis.window === undefined) return;
+
       let mounted = true;
 
       const loadMotion = async () => {
@@ -161,126 +141,119 @@ const createLazyMotionComponent = (elementType = 'div') => {
 
     // Return fallback while loading, on server, or if motion failed to load
     if (globalThis.window === undefined || isLoading || !motionModule?.motion) {
-      // Remove motion-specific props for fallback
-      const { 
-        initial, 
-        animate, 
-        whileHover, 
-        whileInView, 
-        viewport, 
-        transition,
-        variants,
-        whileTap,
-        whileDrag,
-        whileFocus,
-        exit,
-        drag,
-        layout,
-        layoutId,
-        style,
-        ...fallbackProperties 
-      } = properties;
+      const fallbackProps = { ...properties };
+      delete fallbackProps.initial;
+      delete fallbackProps.animate;
+      delete fallbackProps.whileHover;
+      delete fallbackProps.whileInView;
+      delete fallbackProps.viewport;
+      delete fallbackProps.transition;
+      delete fallbackProps.variants;
+      delete fallbackProps.whileTap;
+      delete fallbackProps.whileDrag;
+      delete fallbackProps.whileFocus;
+      delete fallbackProps.exit;
+      delete fallbackProps.drag;
+      delete fallbackProps.layout;
+      delete fallbackProps.layoutId;
 
       if (elementType === 'section') {
-        return <section ref={reference} {...fallbackProperties} />;
+        return <section ref={reference} {...fallbackProps} />;
       }
       if (elementType === 'span') {
-        return <span ref={reference} {...fallbackProperties} />;
+        return <span ref={reference} {...fallbackProps} />;
       }
       if (elementType === 'p') {
-        return <p ref={reference} {...fallbackProperties} />;
+        return <p ref={reference} {...fallbackProps} />;
       }
       if (elementType === 'h1') {
-        return <h1 ref={reference} {...fallbackProperties} />;
+        return <h1 ref={reference} {...fallbackProps} />;
       }
       if (elementType === 'h2') {
-        return <h2 ref={reference} {...fallbackProperties} />;
+        return <h2 ref={reference} {...fallbackProps} />;
       }
       if (elementType === 'h3') {
-        return <h3 ref={reference} {...fallbackProperties} />;
+        return <h3 ref={reference} {...fallbackProps} />;
       }
       if (elementType === 'button') {
-        return <button ref={reference} {...fallbackProperties} />;
+        return <button ref={reference} {...fallbackProps} />;
       }
       if (elementType === 'img') {
-        return <img ref={reference} {...fallbackProperties} />;
+        return <img ref={reference} {...fallbackProps} />;
       }
       if (elementType === 'ul') {
-        return <ul ref={reference} {...fallbackProperties} />;
+        return <ul ref={reference} {...fallbackProps} />;
       }
       if (elementType === 'li') {
-        return <li ref={reference} {...fallbackProperties} />;
+        return <li ref={reference} {...fallbackProps} />;
       }
       if (elementType === 'nav') {
-        return <nav ref={reference} {...fallbackProperties} />;
+        return <nav ref={reference} {...fallbackProps} />;
       }
       if (elementType === 'header') {
-        return <header ref={reference} {...fallbackProperties} />;
+        return <header ref={reference} {...fallbackProps} />;
       }
       if (elementType === 'main') {
-        return <main ref={reference} {...fallbackProperties} />;
+        return <main ref={reference} {...fallbackProps} />;
       }
       if (elementType === 'article') {
-        return <article ref={reference} {...fallbackProperties} />;
+        return <article ref={reference} {...fallbackProps} />;
       }
       if (elementType === 'aside') {
-        return <aside ref={reference} {...fallbackProperties} />;
+        return <aside ref={reference} {...fallbackProps} />;
       }
       if (elementType === 'footer') {
-        return <footer ref={reference} {...fallbackProperties} />;
+        return <footer ref={reference} {...fallbackProps} />;
       }
       if (elementType === 'a') {
-        return <a ref={reference} {...fallbackProperties} />;
+        return <a ref={reference} {...fallbackProps} />;
       }
       if (elementType === 'form') {
-        return <form ref={reference} {...fallbackProperties} />;
+        return <form ref={reference} {...fallbackProps} />;
       }
       if (elementType === 'input') {
-        return <input ref={reference} {...fallbackProperties} />;
+        return <input ref={reference} {...fallbackProps} />;
       }
       if (elementType === 'textarea') {
-        return <textarea ref={reference} {...fallbackProperties} />;
+        return <textarea ref={reference} {...fallbackProps} />;
       }
       if (elementType === 'label') {
-        return <label ref={reference} {...fallbackProperties} />;
+        return <label ref={reference} {...fallbackProps} />;
       }
       if (elementType === 'select') {
-        return <select ref={reference} {...fallbackProperties} />;
+        return <select ref={reference} {...fallbackProps} />;
       }
       if (elementType === 'option') {
-        return <option ref={reference} {...fallbackProperties} />;
+        return <option ref={reference} {...fallbackProps} />;
       }
-      // SVG elements
       if (elementType === 'svg') {
-        return <svg ref={reference} {...fallbackProperties} />;
+        return <svg ref={reference} {...fallbackProps} />;
       }
       if (elementType === 'circle') {
-        return <circle ref={reference} {...fallbackProperties} />;
+        return <circle ref={reference} {...fallbackProps} />;
       }
       if (elementType === 'polygon') {
-        return <polygon ref={reference} {...fallbackProperties} />;
+        return <polygon ref={reference} {...fallbackProps} />;
       }
       if (elementType === 'line') {
-        return <line ref={reference} {...fallbackProperties} />;
+        return <line ref={reference} {...fallbackProps} />;
       }
       if (elementType === 'path') {
-        return <path ref={reference} {...fallbackProperties} />;
+        return <path ref={reference} {...fallbackProps} />;
       }
       if (elementType === 'g') {
-        return <g ref={reference} {...fallbackProperties} />;
+        return <g ref={reference} {...fallbackProps} />;
       }
       if (elementType === 'text') {
-        return <text ref={reference} {...fallbackProperties} />;
+        return <text ref={reference} {...fallbackProps} />;
       }
       if (elementType === 'rect') {
-        return <rect ref={reference} {...fallbackProperties} />;
+        return <rect ref={reference} {...fallbackProps} />;
       }
-      
-      // Default to div with enhanced behavior only on client
-      return <FallbackDiv ref={reference} {...properties} />;
+
+      return <FallbackDiv ref={reference} {...fallbackProps} />;
     }
 
-    // Return actual motion component
     const MotionElement = motionModule.motion[elementType];
     return <MotionElement ref={reference} {...properties} />;
   });
@@ -297,8 +270,8 @@ const LazyAnimatePresence = ({ children, ...properties }) => {
   const [isLoading, setIsLoading] = useState(!motionCache.has('framer-motion'));
 
   useEffect(() => {
-    if (globalThis.window === undefined) return; // Skip on server
-    
+    if (globalThis.window === undefined) return;
+
     let mounted = true;
 
     const loadMotion = async () => {
@@ -327,12 +300,10 @@ const LazyAnimatePresence = ({ children, ...properties }) => {
     };
   }, [motionModule]);
 
-  // Return children without animation wrapper while loading or on server
   if (globalThis.window === undefined || isLoading || !motionModule?.AnimatePresence) {
     return <>{children}</>;
   }
 
-  // Return actual AnimatePresence
   const { AnimatePresence } = motionModule;
   return <AnimatePresence {...properties}>{children}</AnimatePresence>;
 };
@@ -363,7 +334,6 @@ export const motion = {
   label: createLazyMotionComponent('label'),
   select: createLazyMotionComponent('select'),
   option: createLazyMotionComponent('option'),
-  // SVG elements
   svg: createLazyMotionComponent('svg'),
   circle: createLazyMotionComponent('circle'),
   polygon: createLazyMotionComponent('polygon'),
@@ -376,9 +346,6 @@ export const motion = {
 
 export const AnimatePresence = LazyAnimatePresence;
 
-/**
- * Hook to check if Framer Motion is loaded
- */
 export const useMotionReady = () => {
   const [isReady, setIsReady] = useState(motionCache.has('framer-motion'));
 
@@ -395,18 +362,13 @@ export const useMotionReady = () => {
   return isReady;
 };
 
-/**
- * Lazy useReducedMotion hook
- * Falls back to media query check if Framer Motion isn't loaded
- */
 export const useReducedMotion = () => {
   const [motionModule, setMotionModule] = useState(motionCache.get('framer-motion'));
   const [prefersReduced, setPrefersReduced] = useState(false);
 
   useEffect(() => {
     if (globalThis.window === undefined) return;
-    
-    // Fallback check using media query
+
     const mediaQuery = globalThis.matchMedia('(prefers-reduced-motion: reduce)');
     setPrefersReduced(mediaQuery.matches);
 
@@ -418,7 +380,7 @@ export const useReducedMotion = () => {
 
   useEffect(() => {
     if (globalThis.window === undefined) return;
-    
+
     if (!motionModule) {
       loadFramerMotion().then(module => {
         if (module?.useReducedMotion) {
@@ -428,7 +390,6 @@ export const useReducedMotion = () => {
     }
   }, [motionModule]);
 
-  // Use Framer Motion's hook if available, otherwise use fallback
   if (motionModule?.useReducedMotion && globalThis.window !== undefined) {
     return motionModule.useReducedMotion();
   }
@@ -436,16 +397,10 @@ export const useReducedMotion = () => {
   return prefersReduced;
 };
 
-/**
- * Preload Framer Motion (for strategic preloading)
- */
 export const preloadFramerMotion = () => {
   return loadFramerMotion();
 };
 
-/**
- * Get motion loading stats (for debugging)
- */
 export const getMotionStats = () => {
   return {
     cached: motionCache.has('framer-motion'),

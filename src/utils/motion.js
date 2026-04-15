@@ -51,7 +51,7 @@ export const motion = new Proxy(
 
         // Fallback para elemento estático enquanto carrega
         if (!MotionComponent) {
-          const { initial, animate, exit, variants, transition, whileHover, whileInView, ...restProperties } = properties;
+          const { initial, animate, exit, variants, transition, whileHover, whileInView, whileTap, whileDrag, whileFocus, ...restProperties } = properties;
           return React.createElement(property, restProperties);
         }
 

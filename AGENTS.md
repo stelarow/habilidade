@@ -32,6 +32,8 @@ ssr: {
 }
 ```
 
+## Debugging: Botões não funcionam → Verificar console por erro "does not provide export named 'Loading'" (ícone não existe)
+
 ## Architecture
 
 - **Routes**: `src/routes.jsx` (lazy loaded)

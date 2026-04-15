@@ -20,7 +20,6 @@ import emailjs from '@emailjs/browser';
 import ErrorBoundary from '../components/ErrorBoundary';
 import CourseBackground from '../components/CourseBackground';
 import CourseHero from '../components/course/CourseHero';
-import CourseBreadcrumb from '../components/course/CourseBreadcrumb';
 import CourseCurriculum from '../components/course/CourseCurriculum';
 import CourseTestimonials from '../components/course/CourseTestimonials';
 import CourseWhyStudy from '../components/course/CourseWhyStudy';
@@ -243,9 +242,6 @@ function CoursePage({ slug }) {
           background: `linear-gradient(135deg, ${course.themeColors.gradient.from}08 0%, ${course.themeColors.gradient.to}08 100%), radial-gradient(circle at top, #1a1a1a 0%, #000000 100%)`
         }}
       >
-        
-        {/* Breadcrumb Navigation */}
-        <CourseBreadcrumb course={course} />
         
         {/* Hero Section com Background */}
         <div className="relative min-h-screen">

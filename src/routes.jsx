@@ -62,10 +62,7 @@ export const routes = [
       },
       {
         path: 'cursos/design-grafico',
-        lazy: async () => {
-          const { default: Component, loader } = await import('./pages/courses/DesignGrafico');
-          return { Component, loader };
-        }
+        lazy: () => import('./components/course/DesignGraficoPage')
       },
       {
         path: 'cursos/programacao',

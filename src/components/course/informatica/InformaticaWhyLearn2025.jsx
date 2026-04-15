@@ -264,46 +264,6 @@ const InformaticaWhyLearn2025 = () => {
         </div>
       </div>
 
-      {/* CSS para animações */}
-      <style jsx>{`
-        [data-scroll-reveal].animate-in {
-          opacity: 1 !important;
-          transform: translateY(0) translateX(0) scale(1) !important;
-        }
-
-        mark {
-          background: linear-gradient(120deg, transparent 0%, transparent 40%, rgba(59, 130, 246, 0.3) 40%, rgba(59, 130, 246, 0.3) 60%, transparent 60%);
-          background-size: 200% 100%;
-          animation: highlight 2s ease-in-out;
-        }
-
-        @keyframes highlight {
-          0% { background-position: 200% 0; }
-          100% { background-position: 0 0; }
-        }
-
-        .prose mark {
-          text-decoration: none;
-          padding: 2px 4px;
-          border-radius: 4px;
-        }
-
-        .prose em {
-          font-style: italic;
-          font-weight: 500;
-        }
-
-        .prose strong {
-          font-weight: 600;
-        }
-
-        .prose blockquote {
-          border: none;
-          padding: 0;
-          margin: 0;
-          font-style: italic;
-        }
-      `}</style>
     </section>
   );
 };

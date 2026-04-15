@@ -14,6 +14,18 @@ function Layout() {
   const { performanceLevel } = usePerformanceLevel();
   const [nonCriticalLoaded, setNonCriticalLoaded] = useState(false);
 
+  // Global click diagnostic
+  useEffect(() => {
+    console.log('[Layout] Adding global click listener');
+    const handleGlobalClick = (e) => {
+      console.log('[Layout] Global click detected on:', e.target.tagName, e.target.className.slice(0, 50));
+    };
+    document.addEventListener('click', handleGlobalClick, true); // capture phase
+    return () => {
+      document.removeEventListener('click', handleGlobalClick, true);
+    };
+  }, []);
+
   // Defer non-critical effects para após LCP render
   useEffect(() => {
     // Usa requestIdleCallback para máxima performance

@@ -1,22 +1,23 @@
 import { getIconForContext } from '../IconWrapper';
-import { useDeferredValue, useLayoutEffect, useState } from 'react';
+import { EMAIL_CONFIG } from '../../utils/emailConfig';
 
 function CourseEnrollCTA({ course, onEnrollClick }) {
-  const [isInteractive, setIsInteractive] = useState(false);
-  const deferredInteractive = useDeferredValue(isInteractive);
-
-  // Context 7: Performance hook para interaction state
-  useLayoutEffect(() => {
-    setIsInteractive(true);
-  }, []);
+  console.log('[CourseEnrollCTA] Component rendered');
+  console.log('[CourseEnrollCTA] Props received - course:', course?.basicInfo?.title, 'onEnrollClick:', typeof onEnrollClick);
 
   const handleEnrollClick = () => {
-    // Chama a função passada como prop para scroll para formulário
-    if (onEnrollClick) {
+    console.log('[CourseEnrollCTA] Button clicked');
+    if (typeof onEnrollClick === 'function') {
+      console.log('[CourseEnrollCTA] Calling onEnrollClick prop');
       onEnrollClick();
+    } else {
+      console.log('[CourseEnrollCTA] onEnrollClick is NOT a function, using WhatsApp fallback');
+      const courseName = course?.basicInfo?.title || 'Design Gráfico';
+      const message = `Olá! Tenho interesse no curso de ${courseName} e gostaria de mais informações sobre como me matricular.`;
+      const whatsappUrl = `https://wa.me/${EMAIL_CONFIG.WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, '_blank');
     }
-    
-    // Analytics tracking
+
     if (typeof gtag !== 'undefined') {
       gtag('event', 'enroll_cta_click', {
         course_name: course?.basicInfo?.title,
@@ -31,16 +32,16 @@ function CourseEnrollCTA({ course, onEnrollClick }) {
       <div className="@container max-w-5xl mx-auto px-4">
         <div className="relative">
           {/* Background gradient */}
-          <div 
+          <div
             className="absolute inset-0 rounded-2xl sm:rounded-3xl opacity-20"
             style={{
               background: `linear-gradient(135deg, ${course?.themeColors?.gradient?.from || '#2196F3'}, ${course?.themeColors?.gradient?.to || '#00BCD4'})`
             }}
           />
-          
+
           {/* Conteúdo principal */}
           <div className="relative bg-gradient-to-r from-gray-800/70 to-gray-900/70 backdrop-blur-sm border border-white/10 rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 text-center">
-            
+
             {/* Selo destacado */}
             <div className="inline-flex items-center gap-2 bg-gradient-to-r from-yellow-400 to-orange-500 text-black px-3 sm:px-4 py-2 rounded-full font-semibold text-xs sm:text-sm mb-4 sm:mb-6 shadow-lg min-h-[36px] touch-manipulation">
               {getIconForContext('Star', 'cta', '#000000', { size: 16, weight: 'fill' })}
@@ -56,7 +57,7 @@ function CourseEnrollCTA({ course, onEnrollClick }) {
             {/* Subtítulo */}
             <p className="text-gray-300 text-base sm:text-lg md:text-xl mb-6 sm:mb-8 max-w-2xl mx-auto leading-relaxed">
               Desenvolva suas habilidades com o curso de{' '}
-              <span 
+              <span
                 className="font-semibold"
                 style={{ color: course?.themeColors?.primary || '#2196F3' }}
               >
@@ -84,14 +85,13 @@ function CourseEnrollCTA({ course, onEnrollClick }) {
             {/* Context 7: Botão principal com touch targets otimizados */}
             <button
               onClick={handleEnrollClick}
-              className="group inline-flex items-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 text-white font-bold text-base sm:text-lg rounded-full shadow-2xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-2 focus:outline-none focus:ring-4 focus:ring-white/20 min-h-[44px] min-w-[200px] touch-manipulation active:scale-95"
+              className="group inline-flex items-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 text-white font-bold text-base sm:text-lg rounded-full shadow-2xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-2 focus:outline-none focus:ring-4 focus:ring-white/20 min-h-[44px] min-w-[200px] touch-manipulation active:scale-95 cursor-pointer"
               style={{
                 background: `linear-gradient(135deg, ${course?.themeColors?.gradient?.from || '#2196F3'}, ${course?.themeColors?.gradient?.to || '#00BCD4'})`
               }}
-              disabled={!deferredInteractive}
             >
               <span>Garantir Minha Vaga</span>
-              {getIconForContext('ArrowRight', 'cta', '#ffffff', { 
+              {getIconForContext('ArrowRight', 'cta', '#ffffff', {
                 className: 'group-hover:translate-x-1 transition-transform duration-300',
                 size: 18
               })}

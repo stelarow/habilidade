@@ -691,14 +691,15 @@ const designGrafico = {
 
   // ✅ DADOS DE INVESTIMENTO (OBRIGATÓRIO)
   investment: {
-    originalPrice: 1197,
-    currentPrice: 797,
-    discount: 33,
+    originalPrice: 3480,
+    currentPrice: 3480,
+    discount: 10,
     installments: {
       max: 12,
-      value: 79.7,
+      value: 290,
+      originalValue: 490,
     },
-    paymentMethods: ['Cartão de crédito', 'PIX', 'Boleto bancário'],
+    paymentMethods: ['Cartão de crédito (10x sem juros)', 'PIX (à vista 10% desconto)', 'Boleto bancário (12x R$290)'],
   },
 
   // ✅ DADOS DO INSTRUTOR (OBRIGATÓRIO)
