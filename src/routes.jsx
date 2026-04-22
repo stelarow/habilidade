@@ -108,16 +108,6 @@ export const routes = [
           return { Component, loader };
         }
       },
-      // Página do evento DevStart
-      {
-        path: 'devstart',
-        lazy: () => import('./pages/DevStart')
-      },
-      // Página do Programa de Afiliados
-      {
-        path: 'afiliacao',
-        lazy: () => import('./pages/Afiliacao')
-      },
       {
         path: 'contato',
         lazy: () => import('./pages/Contact')
@@ -139,11 +129,6 @@ export const routes = [
             getStaticPaths: () => blogSlugs
           }
         ]
-      },
-      // Página de orçamento
-      {
-        path: 'orcamento/santa-madeira-casas',
-        lazy: () => import('./pages/OrcamentoSantaMadeira')
       },
       // Páginas de localização (SEO local)
       {

@@ -158,11 +158,63 @@ const metaConfig = {
   }
 };
 
+function replaceOrInsertUniqueTag(html, tagRegex, newTag, insertionRegex = /<\/head>/) {
+  let found = false;
+  const transformedHtml = html.replace(tagRegex, () => {
+    if (!found) {
+      found = true;
+      return newTag;
+    }
+
+    return '';
+  });
+
+  if (found) {
+    return transformedHtml;
+  }
+
+  if (insertionRegex.test(transformedHtml)) {
+    return transformedHtml.replace(insertionRegex, `${newTag}\n$&`);
+  }
+
+  return transformedHtml;
+}
+
+function removeDuplicateTagsKeepFirst(html, tagRegex) {
+  let found = false;
+
+  return html.replace(tagRegex, match => {
+    if (!found) {
+      found = true;
+      return match;
+    }
+
+    return '';
+  });
+}
+
+function dedupeBaseSeoTags(html) {
+  let transformedHtml = html;
+
+  // Keep the first SSR/base-computed title and remove any fallback duplicates from the template.
+  transformedHtml = removeDuplicateTagsKeepFirst(transformedHtml, /<title\b[^>]*>[^<]*<\/title>/g);
+
+  // Normalize twitter:card across pages that only rely on SSR output.
+  transformedHtml = replaceOrInsertUniqueTag(
+    transformedHtml,
+    /<meta\b(?=[^>]*\bname="twitter:card")[^>]*>/g,
+    '<meta name="twitter:card" content="summary_large_image" />'
+  );
+
+  return transformedHtml;
+}
+
 // Função para transformar HTML
-function transformHtml(htmlContent, pagePath) {
+export function transformHtml(htmlContent, pagePath) {
+  let transformedHtml = dedupeBaseSeoTags(htmlContent);
   const config = metaConfig[pagePath];
   if (!config) {
-    return htmlContent;
+    return transformedHtml;
   }
 
   // Definir imagem padrão se não houver
@@ -171,38 +223,29 @@ function transformHtml(htmlContent, pagePath) {
     config.ogImage = defaultOgImage;
   }
 
-  let transformedHtml = htmlContent;
-
   // Substituir title
-  const titleRegex = /<title>([^<]*)<\/title>/;
-  if (titleRegex.test(transformedHtml)) {
-    transformedHtml = transformedHtml.replace(titleRegex, `<title>${config.title}</title>`);
-  }
+  transformedHtml = replaceOrInsertUniqueTag(
+    transformedHtml,
+    /<title\b[^>]*>[^<]*<\/title>/g,
+    `<title>${config.title}</title>`
+  );
 
   // Substituir ou adicionar meta description
-  const descriptionRegex = /<meta name="description" content="[^"]*"/;
-  if (descriptionRegex.test(transformedHtml)) {
-    transformedHtml = transformedHtml.replace(descriptionRegex, `<meta name="description" content="${config.description}"`);
-  } else {
-    // Adicionar meta description após viewport ou charset se não existir
-    const addDescRegex = /(<meta name="viewport"[^>]*>|<meta charset="[^"]*">)/;
-    if (addDescRegex.test(transformedHtml)) {
-      transformedHtml = transformedHtml.replace(addDescRegex, `$1\n    <meta name="description" content="${config.description}" />`);
-    }
-  }
+  transformedHtml = replaceOrInsertUniqueTag(
+    transformedHtml,
+    /<meta\b(?=[^>]*\bname="description")[^>]*>/g,
+    `<meta name="description" content="${config.description}" />`,
+    /(<meta name="viewport"[^>]*>|<meta charset="[^"]*"\s*\/>|<meta charset="[^"]*">)/
+  );
 
   // Substituir ou adicionar meta keywords se configurado
   if (config.keywords) {
-    const keywordsRegex = /<meta name="keywords" content="[^"]*"/;
-    if (keywordsRegex.test(transformedHtml)) {
-      transformedHtml = transformedHtml.replace(keywordsRegex, `<meta name="keywords" content="${config.keywords}"`);
-    } else {
-      // Adicionar keywords após description
-      const addKeywordsRegex = /(<meta name="description" content="[^"]*"[^>]*>)/;
-      if (addKeywordsRegex.test(transformedHtml)) {
-        transformedHtml = transformedHtml.replace(addKeywordsRegex, `$1\n    <meta name="keywords" content="${config.keywords}" />`);
-      }
-    }
+    transformedHtml = replaceOrInsertUniqueTag(
+      transformedHtml,
+      /<meta\b(?=[^>]*\bname="keywords")[^>]*>/g,
+      `<meta name="keywords" content="${config.keywords}" />`,
+      /(<meta\b(?=[^>]*\bname="description")[^>]*>)/
+    );
   }
 
   // Adicionar ou atualizar Open Graph tags
@@ -210,84 +253,91 @@ function transformHtml(htmlContent, pagePath) {
   const insertionPoint = ogSiteNameRegex.test(transformedHtml) ? ogSiteNameRegex : /<meta property="og:locale"[^>]*>/;
 
   // Open Graph title
-  const ogTitleRegex = /<meta property="og:title" content="[^"]*"/;
-  transformedHtml = ogTitleRegex.test(transformedHtml) ? transformedHtml.replace(ogTitleRegex, `<meta property="og:title" content="${config.title}"`) : transformedHtml.replace(insertionPoint, `$&\n    <meta property="og:title" content="${config.title}" />`);
+  transformedHtml = replaceOrInsertUniqueTag(
+    transformedHtml,
+    /<meta\b(?=[^>]*\bproperty="og:title")[^>]*>/g,
+    `<meta property="og:title" content="${config.title}" />`,
+    insertionPoint
+  );
 
   // Open Graph description
-  const ogDescRegex = /<meta property="og:description" content="[^"]*"/;
-  if (ogDescRegex.test(transformedHtml)) {
-    transformedHtml = transformedHtml.replace(ogDescRegex, `<meta property="og:description" content="${config.description}"`);
-  } else {
-    const ogTitleTag = /<meta property="og:title"[^>]*>/;
-    transformedHtml = transformedHtml.replace(ogTitleTag, `$&\n    <meta property="og:description" content="${config.description}" />`);
-  }
+  transformedHtml = replaceOrInsertUniqueTag(
+    transformedHtml,
+    /<meta\b(?=[^>]*\bproperty="og:description")[^>]*>/g,
+    `<meta property="og:description" content="${config.description}" />`,
+    /(<meta\b(?=[^>]*\bproperty="og:title")[^>]*>)/
+  );
 
   // Open Graph URL
-  const ogUrlRegex = /<meta property="og:url" content="[^"]*"/;
-  if (ogUrlRegex.test(transformedHtml)) {
-    transformedHtml = transformedHtml.replace(ogUrlRegex, `<meta property="og:url" content="${config.canonical}"`);
-  } else {
-    const ogDescTag = /<meta property="og:description"[^>]*>/;
-    transformedHtml = transformedHtml.replace(ogDescTag, `$&\n    <meta property="og:url" content="${config.canonical}" />`);
-  }
+  transformedHtml = replaceOrInsertUniqueTag(
+    transformedHtml,
+    /<meta\b(?=[^>]*\bproperty="og:url")[^>]*>/g,
+    `<meta property="og:url" content="${config.canonical}" />`,
+    /(<meta\b(?=[^>]*\bproperty="og:description")[^>]*>)/
+  );
 
   // Open Graph image
   if (config.ogImage) {
-    const ogImageRegex = /<meta property="og:image" content="[^"]*"/;
-    if (ogImageRegex.test(transformedHtml)) {
-      transformedHtml = transformedHtml.replace(ogImageRegex, `<meta property="og:image" content="${config.ogImage}"`);
-    } else {
-      const ogUrlTag = /<meta property="og:url"[^>]*>/;
-      transformedHtml = transformedHtml.replace(ogUrlTag, `$&\n    <meta property="og:image" content="${config.ogImage}" />\n    <meta property="og:image:width" content="1200" />\n    <meta property="og:image:height" content="630" />`);
-    }
+    transformedHtml = replaceOrInsertUniqueTag(
+      transformedHtml,
+      /<meta\b(?=[^>]*\bproperty="og:image")[^>]*>/g,
+      `<meta property="og:image" content="${config.ogImage}" />`,
+      /(<meta\b(?=[^>]*\bproperty="og:url")[^>]*>)/
+    );
+    transformedHtml = replaceOrInsertUniqueTag(
+      transformedHtml,
+      /<meta\b(?=[^>]*\bproperty="og:image:width")[^>]*>/g,
+      '<meta property="og:image:width" content="1200" />',
+      /(<meta\b(?=[^>]*\bproperty="og:image")[^>]*>)/
+    );
+    transformedHtml = replaceOrInsertUniqueTag(
+      transformedHtml,
+      /<meta\b(?=[^>]*\bproperty="og:image:height")[^>]*>/g,
+      '<meta property="og:image:height" content="630" />',
+      /(<meta\b(?=[^>]*\bproperty="og:image:width")[^>]*>)/
+    );
   }
+
+  transformedHtml = replaceOrInsertUniqueTag(
+    transformedHtml,
+    /<meta\b(?=[^>]*\bname="twitter:card")[^>]*>/g,
+    '<meta name="twitter:card" content="summary_large_image" />'
+  );
 
   // Atualizar Twitter title se existir, senão adicionar
-  const twitterTitleRegex = /<meta name="twitter:title" content="[^"]*"/;
-  if (twitterTitleRegex.test(transformedHtml)) {
-    transformedHtml = transformedHtml.replace(twitterTitleRegex, `<meta name="twitter:title" content="${config.title}"`);
-  } else {
-    const twitterCardTag = /<meta name="twitter:card"[^>]*>/;
-    if (twitterCardTag.test(transformedHtml)) {
-      transformedHtml = transformedHtml.replace(twitterCardTag, `$&\n    <meta name="twitter:title" content="${config.title}" />`);
-    }
-  }
+  transformedHtml = replaceOrInsertUniqueTag(
+    transformedHtml,
+    /<meta\b(?=[^>]*\bname="twitter:title")[^>]*>/g,
+    `<meta name="twitter:title" content="${config.title}" />`,
+    /(<meta\b(?=[^>]*\bname="twitter:card")[^>]*>)/
+  );
 
   // Atualizar Twitter description se existir, senão adicionar
-  const twitterDescRegex = /<meta name="twitter:description" content="[^"]*"/;
-  if (twitterDescRegex.test(transformedHtml)) {
-    transformedHtml = transformedHtml.replace(twitterDescRegex, `<meta name="twitter:description" content="${config.description}"`);
-  } else {
-    const twitterTitleTag = /<meta name="twitter:title"[^>]*>/;
-    if (twitterTitleTag.test(transformedHtml)) {
-      transformedHtml = transformedHtml.replace(twitterTitleTag, `$&\n    <meta name="twitter:description" content="${config.description}" />`);
-    }
-  }
+  transformedHtml = replaceOrInsertUniqueTag(
+    transformedHtml,
+    /<meta\b(?=[^>]*\bname="twitter:description")[^>]*>/g,
+    `<meta name="twitter:description" content="${config.description}" />`,
+    /(<meta\b(?=[^>]*\bname="twitter:title")[^>]*>)/
+  );
 
   // Twitter image
   if (config.ogImage) {
-    const twitterImageRegex = /<meta name="twitter:image" content="[^"]*"/;
-    if (twitterImageRegex.test(transformedHtml)) {
-      transformedHtml = transformedHtml.replace(twitterImageRegex, `<meta name="twitter:image" content="${config.ogImage}"`);
-    } else {
-      const twitterDescTag = /<meta name="twitter:description"[^>]*>/;
-      if (twitterDescTag.test(transformedHtml)) {
-        transformedHtml = transformedHtml.replace(twitterDescTag, `$&\n    <meta name="twitter:image" content="${config.ogImage}" />`);
-      }
-    }
+    transformedHtml = replaceOrInsertUniqueTag(
+      transformedHtml,
+      /<meta\b(?=[^>]*\bname="twitter:image")[^>]*>/g,
+      `<meta name="twitter:image" content="${config.ogImage}" />`,
+      /(<meta\b(?=[^>]*\bname="twitter:description")[^>]*>)/
+    );
   }
 
   // Atualizar ou adicionar canonical tag se configurado
   if (config.canonical) {
-    const canonicalRegex = /<link rel="canonical" href="[^"]*"[^>]*>/;
-    if (canonicalRegex.test(transformedHtml)) {
-      transformedHtml = transformedHtml.replace(canonicalRegex, `<link rel="canonical" href="${config.canonical}" />`);
-    } else {
-      const addCanonicalRegex = /(<meta name="author" content="[^"]*"[^>]*>)/;
-      if (addCanonicalRegex.test(transformedHtml)) {
-        transformedHtml = transformedHtml.replace(addCanonicalRegex, `$1\n    <link rel="canonical" href="${config.canonical}" />`);
-      }
-    }
+    transformedHtml = replaceOrInsertUniqueTag(
+      transformedHtml,
+      /<link\b(?=[^>]*\brel="canonical")[^>]*>/g,
+      `<link rel="canonical" href="${config.canonical}" />`,
+      /(<meta\b(?=[^>]*\bname="author")[^>]*>)/
+    );
   }
 
   return transformedHtml;
