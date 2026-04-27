@@ -192,7 +192,7 @@ export const MarketingDigitalCurriculum = () => {
 
           <ScrollReveal animation="fade-up" delay={0.2}>
             <p className="text-lg text-[#cccccc] max-w-3xl mx-auto leading-relaxed font-serif mb-8">
-              {curriculum.length} módulos completos, {totalLessons} aulas práticas, {totalHours.toFixed(1)} horas de conteúdo.
+              {curriculum.length} módulos completos, {totalLessons} aulas práticas, {totalHours} horas de conteúdo.
               Do básico ao avançado em marketing digital.
             </p>
           </ScrollReveal>
@@ -210,7 +210,7 @@ export const MarketingDigitalCurriculum = () => {
             </div>
 
             <div className="border border-[#262626] p-4 text-center">
-              <div className="text-2xl font-normal text-white tracking-[2px]">{totalHours.toFixed(1)}h</div>
+              <div className="text-2xl font-normal text-white tracking-[2px]">{totalHours}h</div>
               <div className="text-[#999999] text-xs tracking-[2px] uppercase font-mono mt-1">Duração</div>
             </div>
           </div>

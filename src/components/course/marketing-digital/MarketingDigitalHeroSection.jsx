@@ -49,7 +49,7 @@ export const MarketingDigitalHeroSection = () => {
         <div className="flex items-center justify-center gap-4 text-sm text-[#999999] mb-8 tracking-[2px] uppercase">
           <MapPin className="hidden sm:block w-5 h-5 text-[#c3d9f3]" />
           <span>
-            <strong className="text-white">68h de conteúdo</strong> • Certificado nacional • 6 módulos
+            <strong className="text-white">82h de conteúdo</strong> • Certificado nacional • 9 módulos
           </span>
         </div>
 

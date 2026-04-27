@@ -17,7 +17,7 @@ const MarketingDigital = () => {
       {/* SEO Head */}
       <Helmet prioritizeSeoTags>
         <title>Curso de Marketing Digital Completo | Escola Habilidade - São José SC</title>
-        <meta name="description" content="Domine Marketing Digital: Canva, Facebook Business, Google Ads, Chat GPT, Mídias Sociais e Técnicas de Vendas. 68h com certificado. Turmas presenciais em São José." />
+        <meta name="description" content="Domine Marketing Digital: Canva, Facebook Business, Google Ads, Chat GPT, Mídias Sociais e Técnicas de Vendas. 82h com certificado. Turmas presenciais em São José." />
         <meta name="keywords" content="curso marketing digital, facebook business, google ads, canva, mídias sociais, marketing pessoal, técnicas de vendas, curso são josé, escolahabilidade" />
         <link rel="canonical" href="https://www.escolahabilidade.com/cursos/marketing-digital" />
         <meta property="og:type" content="website" />

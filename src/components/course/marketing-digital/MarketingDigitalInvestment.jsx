@@ -36,7 +36,7 @@ const paymentOptions = [
 ];
 
 const included = [
-  "68 horas de conteúdo completo",
+  "82 horas de conteúdo completo",
   "9 módulos do básico ao avançado",
   "Material didático impresso incluído",
   "Formas Presencial e Online",
@@ -76,7 +76,7 @@ export const MarketingDigitalInvestment = () => {
                 <h3 className="text-2xl font-normal text-white tracking-[1.5px] uppercase mb-2">
                   Marketing Digital Completo
                 </h3>
-                <p className="text-[#999999] font-serif">9 módulos, 57 aulas, 68 horas</p>
+                <p className="text-[#999999] font-serif">9 módulos, 57 aulas, 82 horas</p>
               </div>
 
               <div className="p-8 md:p-12">
