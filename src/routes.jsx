@@ -71,8 +71,8 @@ export const routes = [
       {
         path: 'cursos/marketing-digital',
         lazy: async () => {
-          const { default: Component, loader } = await import('./pages/courses/MarketingDigital');
-          return { Component, loader };
+          const { default: Component } = await import('./components/course/marketing-digital/MarketingDigitalPage');
+          return { Component };
         }
       },
       {
