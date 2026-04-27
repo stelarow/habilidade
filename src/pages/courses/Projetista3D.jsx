@@ -31,10 +31,11 @@ const Projetista3DNew = () => {
         <meta name="robots" content="index, follow" />
 
         {/* Open Graph tags gerenciadas por transform-html-meta.js durante build */}
+      </Helmet>
 
-        {/* Course Schema */}
-        <script type="application/ld+json">
-          {JSON.stringify({
+      {/* Course Schema - renderizado fora do Helmet para compatibilidade com SSG */}
+      <script type="application/ld+json">
+        {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Course",
             "name": "Curso Projetista 3D - SketchUp e Enscape",
@@ -236,12 +237,12 @@ const Projetista3DNew = () => {
               }
             ],
             "teaches": "Modelagem 3D com SketchUp, Renderização com Enscape, Projeto de Interiores e Arquitetura"
-          })}
-        </script>
+        })}
+      </script>
 
-        {/* VideoObject Schema - Casos de Sucesso */}
-        <script type="application/ld+json">
-          {JSON.stringify([
+      {/* VideoObject Schema - Casos de Sucesso */}
+      <script type="application/ld+json">
+        {JSON.stringify([
             {
               "@context": "https://schema.org",
               "@type": "VideoObject",
@@ -286,12 +287,12 @@ const Projetista3DNew = () => {
               "embedUrl": "https://www.escolahabilidade.com/assets/projetista-3d/cases/patricia-ricardo-moveis/video-salao-beleza.mp4",
               "duration": "PT8S"
             }
-          ])}
-        </script>
+        ])}
+      </script>
 
-        {/* FAQPage Schema */}
-        <script type="application/ld+json">
-          {JSON.stringify({
+      {/* FAQPage Schema */}
+      <script type="application/ld+json">
+        {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "FAQPage",
             "mainEntity": [
@@ -360,9 +361,8 @@ const Projetista3DNew = () => {
                 }
               }
             ]
-          })}
-        </script>
-      </Helmet>
+        })}
+      </script>
 
       {/* Hero Section */}
       <ProjetistaHeroSection />
