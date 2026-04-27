@@ -12,6 +12,19 @@ import {
 } from '@phosphor-icons/react';
 import { CountdownTimer } from '../../shared/CountdownTimer';
 
+const heroImageWidths = [640, 960, 1280, 1536, 1920];
+
+export const projetistaHeroImage = {
+  fallback: '/assets/projetista-3d/hero/hero-bg-new.jpg',
+  sizes: '100vw',
+  avifSrcSet: heroImageWidths
+    .map((width) => `/assets/projetista-3d/hero/hero-bg-new-${width}.avif ${width}w`)
+    .join(', '),
+  webpSrcSet: heroImageWidths
+    .map((width) => `/assets/projetista-3d/hero/hero-bg-new-${width}.webp ${width}w`)
+    .join(', ')
+};
+
 const TrustCard = ({ icon: Icon, value, label, color }) => (
   <div className="group relative">
     {/* Glow effect on hover */}
@@ -34,12 +47,29 @@ export const ProjetistaHeroSection = () => {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-zinc-950">
       {/* Background Image */}
       <div className="absolute inset-0">
-        <img
-          src="/assets/projetista-3d/hero/hero-bg-new.jpg"
-          alt="Projetista 3D Background"
-          title="Curso Projetista 3D - SketchUp e Enscape - Escola Habilidade São José SC"
-          className="w-full h-full object-cover"
-        />
+        <picture className="block w-full h-full">
+          <source
+            type="image/avif"
+            srcSet={projetistaHeroImage.avifSrcSet}
+            sizes={projetistaHeroImage.sizes}
+          />
+          <source
+            type="image/webp"
+            srcSet={projetistaHeroImage.webpSrcSet}
+            sizes={projetistaHeroImage.sizes}
+          />
+          <img
+            src={projetistaHeroImage.fallback}
+            alt="Render de ambiente 3D criado com SketchUp e Enscape"
+            title="Curso Projetista 3D - SketchUp e Enscape - Escola Habilidade São José SC"
+            className="w-full h-full object-cover"
+            width="2688"
+            height="1424"
+            loading="eager"
+            decoding="async"
+            fetchPriority="high"
+          />
+        </picture>
         {/* Refined overlays for depth */}
         <div className="absolute inset-0 bg-gradient-to-b from-zinc-950/80 via-zinc-950/70 to-zinc-950/90" />
         <div className="absolute inset-0 bg-gradient-to-r from-zinc-950/60 via-transparent to-zinc-950/60" />

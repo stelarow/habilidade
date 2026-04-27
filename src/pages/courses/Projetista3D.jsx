@@ -1,4 +1,7 @@
-import { ProjetistaHeroSection } from '../../components/course/projetista/ProjetistaHeroSection';
+import {
+  ProjetistaHeroSection,
+  projetistaHeroImage
+} from '../../components/course/projetista/ProjetistaHeroSection';
 import { ProjetistaPortfolioSection } from '../../components/course/projetista/ProjetistaPortfolioSection';
 import { ProjetistaSuccessCases } from '../../components/course/projetista/ProjetistaSuccessCases';
 import { ProjetistaTransformationPromise } from '../../components/course/projetista/ProjetistaTransformationPromise';
@@ -29,6 +32,15 @@ const Projetista3DNew = () => {
         <meta name="description" content="Curso presencial completo de SketchUp e Enscape em São José SC. 56 horas práticas, turmas pequenas de até 4 alunos, certificado nacional. Transforme sua carreira como Projetista 3D." />
         <meta name="keywords" content="curso sketchup, curso enscape, projetista 3d, são josé sc, florianópolis, curso presencial, certificado, arquitetura, design" />
         <meta name="robots" content="index, follow" />
+        <link
+          rel="preload"
+          as="image"
+          href="/assets/projetista-3d/hero/hero-bg-new-1280.avif"
+          type="image/avif"
+          imageSrcSet={projetistaHeroImage.avifSrcSet}
+          imageSizes={projetistaHeroImage.sizes}
+          fetchPriority="high"
+        />
 
         {/* Open Graph tags gerenciadas por transform-html-meta.js durante build */}
       </Helmet>
