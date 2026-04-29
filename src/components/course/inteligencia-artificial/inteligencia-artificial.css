@@ -1,0 +1,550 @@
+.ai-page {
+  --ai-black: #000000;
+  --ai-soft: #0d0d0d;
+  --ai-card: #141414;
+  --ai-line: #262626;
+  --ai-white: #ffffff;
+  --ai-body: #cccccc;
+  --ai-muted: #999999;
+  --ai-muted-soft: #666666;
+  --ai-purple: #d400ff;
+  background: var(--ai-black);
+  color: var(--ai-white);
+  font-family: 'Bugatti Text Regular', Georgia, serif;
+  min-height: 100vh;
+}
+
+.ai-page *,
+.ai-page *::before,
+.ai-page *::after {
+  box-sizing: border-box;
+}
+
+.ai-page h1,
+.ai-page h2,
+.ai-page h3 {
+  font-family: 'Bugatti Display', Montserrat, sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.11em;
+  line-height: 1.12;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.ai-page p {
+  color: var(--ai-body);
+  line-height: 1.55;
+  margin: 0;
+}
+
+.ai-eyebrow,
+.ai-panel-index,
+.ai-page dt,
+.ai-page small,
+.ai-price-label,
+.ai-button,
+.ai-field span,
+.ai-module-number,
+.ai-module-duration {
+  font-family: 'Bugatti Monospace', 'Fira Code', ui-monospace, monospace;
+  font-size: 0.72rem;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.ai-eyebrow,
+.ai-panel-index,
+.ai-price-label,
+.ai-module-number {
+  color: var(--ai-purple);
+}
+
+.ai-hero {
+  align-items: end;
+  background: var(--ai-black);
+  display: grid;
+  min-height: calc(100vh - 1px);
+  overflow: hidden;
+  padding: 8rem clamp(1.25rem, 5vw, 6rem) 2rem;
+  position: relative;
+}
+
+.ai-hero-image,
+.ai-photo-overlay {
+  inset: 0;
+  position: absolute;
+}
+
+.ai-hero-image {
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.42;
+  width: 100%;
+}
+
+.ai-photo-overlay {
+  background: var(--ai-black);
+  opacity: 0.54;
+}
+
+.ai-hero-content {
+  max-width: 56rem;
+  position: relative;
+  z-index: 1;
+}
+
+.ai-hero h1 {
+  color: var(--ai-white);
+  font-size: clamp(3rem, 9vw, 7.8rem);
+  margin-top: 1.2rem;
+  overflow-wrap: anywhere;
+}
+
+.ai-hero h1 span {
+  display: block;
+}
+
+.ai-hero h1 span:last-child {
+  color: var(--ai-purple);
+}
+
+.ai-hero-copy {
+  font-size: clamp(1.05rem, 1.6vw, 1.35rem);
+  margin: 1.5rem 0 2rem;
+  max-width: 42rem;
+}
+
+.ai-button {
+  align-items: center;
+  background: transparent;
+  border: 1px solid var(--ai-purple);
+  border-radius: 9999px;
+  color: var(--ai-white);
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0.85rem 2rem;
+  transition: background-color 180ms ease, color 180ms ease, border-color 180ms ease;
+}
+
+.ai-button:hover,
+.ai-button:focus-visible {
+  background: var(--ai-purple);
+  color: var(--ai-black);
+  outline: 1px solid var(--ai-purple);
+  outline-offset: 4px;
+}
+
+.ai-button:disabled {
+  border-color: var(--ai-muted-soft);
+  color: var(--ai-muted-soft);
+  cursor: wait;
+}
+
+.ai-hero-specs {
+  border-top: 1px solid var(--ai-line);
+  display: grid;
+  gap: 0;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 5rem 0 0;
+  position: relative;
+  z-index: 1;
+}
+
+.ai-hero-specs div {
+  border-right: 1px solid var(--ai-line);
+  padding: 1.25rem;
+}
+
+.ai-hero-specs div:last-child {
+  border-right: 0;
+}
+
+.ai-hero-specs dt {
+  color: var(--ai-muted);
+  margin-bottom: 0.65rem;
+}
+
+.ai-hero-specs dd {
+  color: var(--ai-white);
+  font-family: 'Bugatti Display', Montserrat, sans-serif;
+  letter-spacing: 0.08em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.ai-section {
+  border-top: 1px solid var(--ai-line);
+  padding: clamp(5rem, 10vw, 7.5rem) clamp(1.25rem, 5vw, 6rem);
+}
+
+.ai-section-header {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(8rem, 0.34fr) minmax(0, 1fr);
+  margin: 0 auto 3rem;
+  max-width: 76rem;
+}
+
+.ai-section-header h2 {
+  color: var(--ai-white);
+  font-size: clamp(2rem, 4vw, 4.1rem);
+  max-width: 54rem;
+}
+
+.ai-section-header > p:last-child {
+  grid-column: 2;
+  max-width: 42rem;
+}
+
+.ai-line-grid,
+.ai-two-column,
+.ai-investment-grid,
+.ai-testimonials,
+.ai-company-grid {
+  display: grid;
+  gap: 1px;
+  margin: 0 auto;
+  max-width: 76rem;
+}
+
+.ai-line-grid {
+  background: var(--ai-line);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.ai-line-panel,
+.ai-list-block,
+.ai-testimonial,
+.ai-company {
+  background: var(--ai-black);
+  border: 1px solid var(--ai-line);
+  padding: 1.5rem;
+}
+
+.ai-line-panel h3,
+.ai-list-block h3 {
+  color: var(--ai-white);
+  font-size: 1rem;
+  margin: 1.5rem 0 0.8rem;
+}
+
+.ai-curriculum-list,
+.ai-faq-list {
+  margin: 0 auto;
+  max-width: 76rem;
+}
+
+.ai-module,
+.ai-faq-item {
+  border-top: 1px solid var(--ai-line);
+}
+
+.ai-module:last-child,
+.ai-faq-item:last-child {
+  border-bottom: 1px solid var(--ai-line);
+}
+
+.ai-module summary,
+.ai-faq-item summary {
+  align-items: center;
+  color: var(--ai-white);
+  cursor: pointer;
+  display: grid;
+  gap: 1rem;
+  list-style: none;
+  padding: 1.6rem 0;
+}
+
+.ai-module summary {
+  grid-template-columns: 4rem minmax(0, 1fr) minmax(6rem, auto);
+}
+
+.ai-faq-item summary {
+  font-family: 'Bugatti Display', Montserrat, sans-serif;
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.ai-module summary::-webkit-details-marker,
+.ai-faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.ai-module-title {
+  font-family: 'Bugatti Display', Montserrat, sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.ai-module-duration {
+  color: var(--ai-muted);
+  text-align: right;
+}
+
+.ai-module-body {
+  background: var(--ai-soft);
+  border-top: 1px solid var(--ai-line);
+  padding: 1.4rem;
+}
+
+.ai-note {
+  color: var(--ai-muted);
+  margin-top: 0.5rem;
+}
+
+.ai-module-body ol,
+.ai-list-block ul {
+  list-style: none;
+  margin: 1.2rem 0 0;
+  padding: 0;
+}
+
+.ai-module-body li,
+.ai-list-block li {
+  border-top: 1px solid var(--ai-line);
+  color: var(--ai-body);
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+}
+
+.ai-module-body small {
+  color: var(--ai-muted);
+  white-space: nowrap;
+}
+
+.ai-two-column {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.ai-list-block {
+  background: var(--ai-card);
+}
+
+.ai-investment-grid {
+  align-items: center;
+  border-bottom: 1px solid var(--ai-line);
+  border-top: 1px solid var(--ai-line);
+  grid-template-columns: 1fr 1fr auto;
+  padding: 2rem 0;
+}
+
+.ai-price {
+  color: var(--ai-purple);
+  font-family: 'Bugatti Display', Montserrat, sans-serif;
+  font-size: clamp(2.5rem, 5vw, 5rem);
+  letter-spacing: 0.08em;
+  line-height: 1;
+  margin-top: 0.7rem;
+  text-transform: uppercase;
+}
+
+.ai-muted {
+  color: var(--ai-muted);
+  margin-top: 0.75rem;
+}
+
+.ai-investment-copy {
+  color: var(--ai-white);
+  font-size: 1.15rem;
+}
+
+.ai-testimonials {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.ai-testimonial {
+  display: flex;
+  flex-direction: column;
+  min-height: 18rem;
+}
+
+.ai-testimonial footer {
+  border-top: 1px solid var(--ai-line);
+  margin-top: auto;
+  padding-top: 1rem;
+}
+
+.ai-testimonial span {
+  color: var(--ai-white);
+  display: block;
+  font-family: 'Bugatti Display', Montserrat, sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.ai-testimonial small {
+  color: var(--ai-muted);
+  display: block;
+  margin-top: 0.5rem;
+}
+
+.ai-company-grid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.ai-company {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: center;
+  min-height: 10rem;
+}
+
+.ai-company img {
+  filter: grayscale(1);
+  max-height: 3.8rem;
+  max-width: 7rem;
+  object-fit: contain;
+}
+
+.ai-company span {
+  color: var(--ai-muted);
+  font-family: 'Bugatti Monospace', 'Fira Code', ui-monospace, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.ai-faq-item p {
+  background: var(--ai-soft);
+  border-top: 1px solid var(--ai-line);
+  padding: 1.25rem;
+}
+
+.ai-contact-form {
+  border: 1px solid var(--ai-line);
+  margin: 0 auto;
+  max-width: 76rem;
+  padding: clamp(1.2rem, 4vw, 2rem);
+}
+
+.ai-form-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.ai-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.ai-field span {
+  color: var(--ai-muted);
+}
+
+.ai-field input,
+.ai-field textarea {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--ai-line);
+  color: var(--ai-white);
+  font: 400 1rem/1.4 'Bugatti Text Regular', Georgia, serif;
+  padding: 0.8rem 0;
+  width: 100%;
+}
+
+.ai-field input:focus,
+.ai-field textarea:focus {
+  border-bottom-color: var(--ai-purple);
+  outline: 1px solid var(--ai-purple);
+  outline-offset: 4px;
+}
+
+.ai-field input::placeholder,
+.ai-field textarea::placeholder {
+  color: var(--ai-muted-soft);
+}
+
+.ai-field-full {
+  margin-top: 1.5rem;
+}
+
+.ai-form-status {
+  border-top: 1px solid var(--ai-purple);
+  color: var(--ai-white);
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+}
+
+.ai-form-submit {
+  margin-top: 1.5rem;
+  width: 100%;
+}
+
+.ai-final-cta {
+  border-top: 1px solid var(--ai-purple);
+  padding: clamp(5rem, 12vw, 9rem) clamp(1.25rem, 5vw, 6rem);
+  text-align: center;
+}
+
+.ai-final-cta h2 {
+  color: var(--ai-white);
+  font-size: clamp(2rem, 5vw, 5rem);
+  margin: 1rem auto 2rem;
+  max-width: 58rem;
+}
+
+@media (max-width: 900px) {
+  .ai-hero {
+    padding-top: 6rem;
+  }
+
+  .ai-hero-specs,
+  .ai-line-grid,
+  .ai-two-column,
+  .ai-investment-grid,
+  .ai-testimonials,
+  .ai-company-grid,
+  .ai-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ai-hero-specs div {
+    border-bottom: 1px solid var(--ai-line);
+    border-right: 0;
+  }
+
+  .ai-section-header {
+    grid-template-columns: 1fr;
+  }
+
+  .ai-section-header > p:last-child {
+    grid-column: 1;
+  }
+
+  .ai-investment-grid {
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .ai-page h1,
+  .ai-page h2,
+  .ai-page h3 {
+    letter-spacing: 0.08em;
+  }
+
+  .ai-module summary {
+    align-items: start;
+    grid-template-columns: 1fr;
+  }
+
+  .ai-module-duration {
+    text-align: left;
+  }
+
+  .ai-module-body li,
+  .ai-list-block li {
+    flex-direction: column;
+  }
+}

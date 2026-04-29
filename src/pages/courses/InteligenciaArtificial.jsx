@@ -1,4 +1,5 @@
-import CoursePage, { getCourseBySlug } from '../CoursePage';
+import InteligenciaArtificialPage from '../../components/course/inteligencia-artificial/InteligenciaArtificialPage';
+import { getCourseBySlug } from '../../utils/courseHelpers';
 import COURSES_DATA from '../../data/coursesData';
 
 // JSON-LD Schema para Course
@@ -21,7 +22,7 @@ const courseSchema = {
   },
   "offers": {
     "@type": "Offer",
-    "availability": "http://schema.org/InStock",
+    "availability": "https://schema.org/InStock",
     "priceCurrency": "BRL"
   }
 };
@@ -134,7 +135,7 @@ export default function InteligenciaArtificial() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify(localBusinessSchema)}} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify(faqPageSchema)}} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify(breadcrumbSchema)}} />
-      <CoursePage slug="inteligencia-artificial" />
+      <InteligenciaArtificialPage />
     </>
   );
 }
