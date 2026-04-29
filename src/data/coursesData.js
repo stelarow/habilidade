@@ -1832,12 +1832,12 @@ const inteligenciaArtificial = {
 
   // ✅ DADOS DE INVESTIMENTO (OBRIGATÓRIO)
   investment: {
-    originalPrice: 797,
-    currentPrice: 497,
-    discount: 38,
+    originalPrice: 1897,
+    currentPrice: 1497,
+    discount: 21,
     installments: {
       max: 12,
-      value: 49.7,
+      value: 124.75,
     },
     paymentMethods: ['Cartão de crédito', 'PIX', 'Boleto bancário'],
   },
