@@ -1,0 +1,837 @@
+- generic [ref=e3]:
+  - link "Pular para o conteudo" [ref=e4] [cursor=pointer]:
+    - /url: "#main-content"
+  - banner [ref=e5]:
+    - generic [ref=e7]:
+      - link "H Escola Habilidade" [ref=e9] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e12]:
+          - generic [ref=e13]: H
+          - generic [ref=e14]: Escola Habilidade
+      - navigation [ref=e15]:
+        - button "Cursos" [ref=e16] [cursor=pointer]:
+          - text: Cursos
+          - img [ref=e17]
+        - link "Como Funciona" [ref=e19] [cursor=pointer]:
+          - /url: "#como-funciona"
+        - link "Avaliações" [ref=e20] [cursor=pointer]:
+          - /url: "#avaliacoes"
+        - link "Blog" [ref=e21] [cursor=pointer]:
+          - /url: /blog
+        - link "FAQ" [ref=e22] [cursor=pointer]:
+          - /url: "#faq"
+        - link "Contato" [ref=e23] [cursor=pointer]:
+          - /url: "#contato"
+      - generic [ref=e25]:
+        - link "Área do Aluno" [ref=e26] [cursor=pointer]:
+          - /url: https://ead.escolahabilidade.com/
+        - link "Entrar em contato via WhatsApp" [ref=e27] [cursor=pointer]:
+          - /url: https://wa.me/5548988559491
+          - img [ref=e28]
+  - main [ref=e30]:
+    - main [ref=e31]:
+      - generic [ref=e32]:
+        - img "Design Gráfico Background" [ref=e34]
+        - generic [ref=e40]:
+          - generic [ref=e41] [cursor=pointer]:
+            - generic [ref=e42]:
+              - img [ref=e43]
+              - img [ref=e45]
+              - img [ref=e47]
+              - img [ref=e49]
+              - img [ref=e51]
+            - generic [ref=e53]: 5.0 • 200+ alunos formados
+          - heading "Curso de Design Gráfico Do Básico ao Profissional" [level=1] [ref=e54]:
+            - text: Curso de Design Gráfico
+            - generic [ref=e55]: Do Básico ao Profissional
+          - paragraph [ref=e56]: Domine Photoshop, Illustrator, InDesign, Canva e CorelDRAW
+          - generic [ref=e57]:
+            - generic [ref=e58]:
+              - img [ref=e59]
+              - generic [ref=e61]: Presencial ou Online
+            - generic [ref=e62]:
+              - img [ref=e63]
+              - generic [ref=e65]: Certificado 90h
+            - generic [ref=e66]:
+              - img [ref=e67]
+              - generic [ref=e69]: 5 Módulos
+          - generic [ref=e70]:
+            - button "Garantir Minha Vaga" [ref=e71] [cursor=pointer]:
+              - generic [ref=e72]: Garantir Minha Vaga
+              - img [ref=e73]
+            - link "Ver Grade Curricular" [ref=e75] [cursor=pointer]:
+              - /url: "#curriculum"
+          - generic [ref=e76]:
+            - paragraph [ref=e77]: "Ferramentas que você vai dominar:"
+            - generic [ref=e78]:
+              - generic [ref=e79] [cursor=pointer]:
+                - img [ref=e80]
+                - generic [ref=e83]: Photoshop
+              - generic [ref=e84] [cursor=pointer]:
+                - img [ref=e85]
+                - generic [ref=e88]: Illustrator
+              - generic [ref=e89] [cursor=pointer]:
+                - img [ref=e90]
+                - generic [ref=e93]: InDesign
+              - generic [ref=e94] [cursor=pointer]:
+                - img [ref=e95]
+                - generic [ref=e98]: Canva
+              - generic [ref=e99] [cursor=pointer]:
+                - img [ref=e100]
+                - generic [ref=e103]: CorelDRAW
+          - generic [ref=e104]:
+            - generic [ref=e105]:
+              - generic [ref=e106]: 90h
+              - generic [ref=e107]: de conteúdo
+            - generic [ref=e108]:
+              - generic [ref=e109]: "76"
+              - generic [ref=e110]: aulas práticas
+            - generic [ref=e111]:
+              - generic [ref=e112]: "5"
+              - generic [ref=e113]: softwares
+            - generic [ref=e114]:
+              - generic [ref=e115]: 100%
+              - generic [ref=e116]: prático
+      - generic [ref=e118]:
+        - generic [ref=e119]:
+          - heading "Por que estudar conosco?" [level=2] [ref=e120]
+          - paragraph [ref=e121]: Descubra os benefícios exclusivos que vão acelerar sua jornada profissional
+        - generic [ref=e122]:
+          - generic [ref=e124]:
+            - img [ref=e126]
+            - heading "Guia completo de design" [level=3] [ref=e129]
+            - paragraph [ref=e130]: Metodologia estruturada para dominar todas as ferramentas Adobe e design profissional
+          - generic [ref=e132]:
+            - img [ref=e134]
+            - heading "Do iniciante ao expert" [level=3] [ref=e137]
+            - paragraph [ref=e138]: Evolução progressiva desde conceitos básicos até projetos complexos
+          - generic [ref=e140]:
+            - img [ref=e142]
+            - heading "Portfolio profissional" [level=3] [ref=e145]
+            - paragraph [ref=e146]: Crie projetos reais que impressionam clientes e empregadores
+      - generic [ref=e148]:
+        - generic [ref=e149]:
+          - heading "Sua Jornada de Transformação" [level=2] [ref=e150]
+          - paragraph [ref=e151]: Veja como você vai evoluir passo a passo até se tornar um profissional qualificado
+        - generic [ref=e155]:
+          - generic [ref=e156]:
+            - generic [ref=e157]:
+              - generic [ref=e158]: "1"
+              - img [ref=e160]
+            - generic [ref=e163]:
+              - heading "Fundamentos" [level=3] [ref=e164]
+              - paragraph [ref=e165]: Domine Photoshop e conceitos básicos de design visual
+              - generic [ref=e167]: Etapa 1 de 4
+          - generic [ref=e170]:
+            - generic [ref=e171]:
+              - generic [ref=e172]: "2"
+              - img [ref=e174]
+            - generic [ref=e177]:
+              - heading "Criação Vetorial" [level=3] [ref=e178]
+              - paragraph [ref=e179]: Desenvolva expertise em Illustrator e criação de logotipos
+              - generic [ref=e181]: Etapa 2 de 4
+          - generic [ref=e184]:
+            - generic [ref=e185]:
+              - generic [ref=e186]: "3"
+              - img [ref=e188]
+            - generic [ref=e191]:
+              - heading "Design Editorial" [level=3] [ref=e192]
+              - paragraph [ref=e193]: Avance com InDesign, CorelDRAW e projetos complexos
+              - generic [ref=e195]: Etapa 3 de 4
+          - generic [ref=e198]:
+            - generic [ref=e199]:
+              - generic [ref=e200]: "4"
+              - img [ref=e202]
+            - generic [ref=e205]:
+              - heading "Profissionalização" [level=3] [ref=e206]
+              - paragraph [ref=e207]: Construa portfolio completo e destaque-se no mercado
+              - generic [ref=e209]: Etapa 4 de 4
+      - generic [ref=e213]:
+        - generic [ref=e214]:
+          - heading "Grade Curricular" [level=2] [ref=e215]
+          - paragraph [ref=e216]: 5 módulos completos • 76 aulas • 114h de conteúdo prático
+        - generic [ref=e217]:
+          - generic [ref=e218]:
+            - button "Photoshop (Adobe Photoshop CC) Edição e manipulação de imagens profissional 20 aulas • 30 horas" [ref=e219] [cursor=pointer]:
+              - generic [ref=e220]:
+                - img [ref=e222]
+                - generic [ref=e225]:
+                  - heading "Photoshop (Adobe Photoshop CC)" [level=3] [ref=e226]
+                  - paragraph [ref=e227]: Edição e manipulação de imagens profissional
+                  - generic [ref=e228]:
+                    - generic [ref=e229]: 20 aulas
+                    - generic [ref=e230]: •
+                    - generic [ref=e231]: 30 horas
+              - img [ref=e233]
+            - generic [ref=e236]:
+              - generic [ref=e237] [cursor=pointer]:
+                - img [ref=e239]
+                - heading "1. Conhecendo o Photoshop" [level=4] [ref=e243]
+                - generic [ref=e244]: 90 min
+              - generic [ref=e245] [cursor=pointer]:
+                - img [ref=e247]
+                - heading "2. Inserindo Imagens, Painéis e Outras Ferramentas" [level=4] [ref=e251]
+                - generic [ref=e252]: 90 min
+              - generic [ref=e253] [cursor=pointer]:
+                - img [ref=e255]
+                - heading "3. Unidades de medida, Objeto Inteligente, Conceito das Camadas, Modos de Mesclagem" [level=4] [ref=e259]
+                - generic [ref=e260]: 90 min
+              - generic [ref=e261] [cursor=pointer]:
+                - img [ref=e263]
+                - heading "4. Formas básicas" [level=4] [ref=e267]
+                - generic [ref=e268]: 90 min
+              - generic [ref=e269] [cursor=pointer]:
+                - img [ref=e271]
+                - heading "5. Espelhando e rotacionando imagens" [level=4] [ref=e275]
+                - generic [ref=e276]: 90 min
+              - generic [ref=e277] [cursor=pointer]:
+                - img [ref=e279]
+                - 'heading "6. Ferramentas de Seleção 1: Seleção Rápida, Varinha Mágica; Remover Olhos Vermelhos" [level=4] [ref=e283]'
+                - generic [ref=e284]: 90 min
+              - generic [ref=e285] [cursor=pointer]:
+                - img [ref=e287]
+                - 'heading "7. Ferramentas de Seleção 2: Caneta, Laços, Letreiros" [level=4] [ref=e291]'
+                - generic [ref=e292]: 90 min
+              - generic [ref=e293] [cursor=pointer]:
+                - img [ref=e295]
+                - heading "8. Utilizando a ferramenta Borracha; Conceito de Máscaras" [level=4] [ref=e299]
+                - generic [ref=e300]: 90 min
+              - generic [ref=e301] [cursor=pointer]:
+                - img [ref=e303]
+                - heading "9. Retirando o fundo de uma imagem com Caneta, Filtros e algumas aplicações" [level=4] [ref=e307]
+                - generic [ref=e308]: 90 min
+              - generic [ref=e309] [cursor=pointer]:
+                - img [ref=e311]
+                - heading "10. Zoom, Ferramenta Carimbo e alterar a cor de uma forma" [level=4] [ref=e315]
+                - generic [ref=e316]: 90 min
+              - generic [ref=e317] [cursor=pointer]:
+                - img [ref=e319]
+                - heading "11. Ferramenta de Texto" [level=4] [ref=e323]
+                - generic [ref=e324]: 90 min
+              - generic [ref=e325] [cursor=pointer]:
+                - img [ref=e327]
+                - heading "12. Matiz/Saturação e Desfoque Gaussiano" [level=4] [ref=e331]
+                - generic [ref=e332]: 90 min
+              - generic [ref=e333] [cursor=pointer]:
+                - img [ref=e335]
+                - heading "13. Ajustes de imagem 1 (Brilho/Contraste, Níveis, Matiz/Saturação)" [level=4] [ref=e339]
+                - generic [ref=e340]: 90 min
+              - generic [ref=e341] [cursor=pointer]:
+                - img [ref=e343]
+                - heading "14. Ajustes de imagem 2 (Preto e Branco, Filtro de Fotos)" [level=4] [ref=e347]
+                - generic [ref=e348]: 90 min
+              - generic [ref=e349] [cursor=pointer]:
+                - img [ref=e351]
+                - heading "15. Conhecendo Mockup; Ajustando imagem em perspectiva" [level=4] [ref=e355]
+                - generic [ref=e356]: 90 min
+              - generic [ref=e357] [cursor=pointer]:
+                - img [ref=e359]
+                - heading "16. Inserindo pincéis e novas fontes" [level=4] [ref=e363]
+                - generic [ref=e364]: 90 min
+              - generic [ref=e365] [cursor=pointer]:
+                - img [ref=e367]
+                - heading "17. Efeito Dupla Exposição" [level=4] [ref=e371]
+                - generic [ref=e372]: 90 min
+              - generic [ref=e373] [cursor=pointer]:
+                - img [ref=e375]
+                - heading "18. Efeito Desintegração" [level=4] [ref=e379]
+                - generic [ref=e380]: 90 min
+              - generic [ref=e381] [cursor=pointer]:
+                - img [ref=e383]
+                - heading "19. Efeito Glitch" [level=4] [ref=e387]
+                - generic [ref=e388]: 90 min
+              - generic [ref=e389] [cursor=pointer]:
+                - img [ref=e391]
+                - 'heading "20. Projeto: Criando um Cartão de Visitas" [level=4] [ref=e395]'
+                - generic [ref=e396]: 90 min
+          - button "Illustrator (Adobe Illustrator CC) Criação de ilustrações e logotipos vetoriais 16 aulas • 24 horas" [ref=e398] [cursor=pointer]:
+            - generic [ref=e399]:
+              - img [ref=e401]
+              - generic [ref=e404]:
+                - heading "Illustrator (Adobe Illustrator CC)" [level=3] [ref=e405]
+                - paragraph [ref=e406]: Criação de ilustrações e logotipos vetoriais
+                - generic [ref=e407]:
+                  - generic [ref=e408]: 16 aulas
+                  - generic [ref=e409]: •
+                  - generic [ref=e410]: 24 horas
+            - img [ref=e412]
+          - button "InDesign (Adobe InDesign CS6) Diagramação e design editorial profissional 12 aulas • 18 horas" [ref=e415] [cursor=pointer]:
+            - generic [ref=e416]:
+              - img [ref=e418]
+              - generic [ref=e421]:
+                - heading "InDesign (Adobe InDesign CS6)" [level=3] [ref=e422]
+                - paragraph [ref=e423]: Diagramação e design editorial profissional
+                - generic [ref=e424]:
+                  - generic [ref=e425]: 12 aulas
+                  - generic [ref=e426]: •
+                  - generic [ref=e427]: 18 horas
+            - img [ref=e429]
+          - button "Canva Design gráfico acessível para todos 12 aulas • 18 horas" [ref=e432] [cursor=pointer]:
+            - generic [ref=e433]:
+              - img [ref=e435]
+              - generic [ref=e438]:
+                - heading "Canva" [level=3] [ref=e439]
+                - paragraph [ref=e440]: Design gráfico acessível para todos
+                - generic [ref=e441]:
+                  - generic [ref=e442]: 12 aulas
+                  - generic [ref=e443]: •
+                  - generic [ref=e444]: 18 horas
+            - img [ref=e446]
+          - button "CorelDRAW Ilustração e design vetorial profissional 16 aulas • 24 horas" [ref=e449] [cursor=pointer]:
+            - generic [ref=e450]:
+              - img [ref=e452]
+              - generic [ref=e455]:
+                - heading "CorelDRAW" [level=3] [ref=e456]
+                - paragraph [ref=e457]: Ilustração e design vetorial profissional
+                - generic [ref=e458]:
+                  - generic [ref=e459]: 16 aulas
+                  - generic [ref=e460]: •
+                  - generic [ref=e461]: 24 horas
+            - img [ref=e463]
+        - generic [ref=e466]:
+          - generic [ref=e467]:
+            - generic [ref=e468]: "5"
+            - generic [ref=e469]: Módulos
+          - generic [ref=e470]:
+            - generic [ref=e471]: "76"
+            - generic [ref=e472]: Aulas
+          - generic [ref=e473]:
+            - generic [ref=e474]: 114h
+            - generic [ref=e475]: Duração
+          - generic [ref=e476]:
+            - generic [ref=e477]: "5"
+            - generic [ref=e478]: Softwares
+      - generic [ref=e480]:
+        - generic [ref=e481]:
+          - heading "Investimento na sua Carreira" [level=2] [ref=e482]
+          - paragraph [ref=e483]: Condições especiais para você começar hoje
+        - generic [ref=e484]:
+          - generic [ref=e485]:
+            - generic [ref=e486]:
+              - generic [ref=e487]: 33% DE DESCONTO
+              - generic [ref=e489]: de R$ 1.197,00
+              - generic [ref=e490]: R$ 797,00à vista
+              - generic [ref=e492]: Economia de R$ 400,00
+              - generic [ref=e493]:
+                - paragraph [ref=e494]:
+                  - text: ou até
+                  - generic [ref=e495]: 12x
+                  - text: de R$ 79,70
+                - paragraph [ref=e496]: sem juros no cartão
+              - button "Matricular-se Agora" [ref=e497] [cursor=pointer]
+            - generic [ref=e498]:
+              - heading "Formas de Pagamento" [level=3] [ref=e499]
+              - generic [ref=e500]:
+                - generic [ref=e501]:
+                  - img [ref=e503]
+                  - generic [ref=e506]: Cartão de crédito
+                - generic [ref=e507]:
+                  - img [ref=e509]
+                  - generic [ref=e512]: PIX
+                - generic [ref=e513]:
+                  - img [ref=e515]
+                  - generic [ref=e518]: Boleto bancário
+          - generic [ref=e519]:
+            - generic [ref=e520]:
+              - heading "Suas Garantias" [level=3] [ref=e521]:
+                - img [ref=e522]
+                - text: Suas Garantias
+              - generic [ref=e525]:
+                - generic [ref=e526]:
+                  - img [ref=e527]
+                  - generic [ref=e530]: Garantia de satisfação de 30 dias
+                - generic [ref=e531]:
+                  - img [ref=e532]
+                  - generic [ref=e535]: Certificado reconhecido nacionalmente
+                - generic [ref=e536]:
+                  - img [ref=e537]
+                  - generic [ref=e540]: Material didático impresso incluso
+                - generic [ref=e541]:
+                  - img [ref=e542]
+                  - generic [ref=e545]: Suporte vitalício aos alunos
+                - generic [ref=e546]:
+                  - img [ref=e547]
+                  - generic [ref=e550]: Aulas práticas com projetos reais
+                - generic [ref=e551]:
+                  - img [ref=e552]
+                  - generic [ref=e555]: Laboratório equipado disponível
+            - generic [ref=e556]:
+              - heading "Valor por Hora" [level=3] [ref=e557]:
+                - img [ref=e558]
+                - text: Valor por Hora
+              - generic [ref=e561]:
+                - generic [ref=e562]:
+                  - generic [ref=e563]: Carga horária total
+                  - generic [ref=e564]: 90 horas
+                - generic [ref=e565]:
+                  - generic [ref=e566]: Valor por hora/aula
+                  - generic [ref=e567]: R$ 8,86
+                - generic [ref=e568]:
+                  - generic [ref=e569]: Total de módulos
+                  - generic [ref=e570]: "5"
+            - generic [ref=e571]:
+              - heading "Dúvidas?" [level=3] [ref=e572]
+              - paragraph [ref=e573]: Nossa equipe está pronta para ajudar você a escolher a melhor forma de pagamento.
+              - paragraph [ref=e575]:
+                - img [ref=e576]
+                - text: "WhatsApp: (48) 98855-9491"
+      - generic [ref=e579]:
+        - generic [ref=e580]:
+          - heading "O que nossos alunos dizem" [level=2] [ref=e581]
+          - paragraph [ref=e582]: Histórias reais de quem transformou a carreira com design gráfico
+        - generic [ref=e583]:
+          - generic [ref=e584]:
+            - img [ref=e587]
+            - generic [ref=e590]:
+              - generic [ref=e591]:
+                - generic [ref=e592]:
+                  - img [ref=e593]
+                  - img [ref=e595]
+                  - img [ref=e597]
+                  - img [ref=e599]
+                  - img [ref=e601]
+                - blockquote [ref=e603]: "\"Entrei no curso sem saber nada e hoje já consigo criar artes incríveis. As aulas são leves, criativas e práticas. Me surpreendi!\""
+              - generic [ref=e604]:
+                - img [ref=e606]
+                - generic [ref=e609]:
+                  - generic [ref=e610]: Julia Menezes
+                  - generic [ref=e611]: Designer Gráfico • São José - SC
+          - generic [ref=e612]:
+            - button [ref=e613] [cursor=pointer]:
+              - img [ref=e614]
+            - generic [ref=e616]:
+              - button [ref=e617] [cursor=pointer]
+              - button [ref=e618] [cursor=pointer]
+              - button [ref=e619] [cursor=pointer]
+              - button [ref=e620] [cursor=pointer]
+              - button [ref=e621] [cursor=pointer]
+              - button [ref=e622] [cursor=pointer]
+            - button [ref=e623] [cursor=pointer]:
+              - img [ref=e624]
+        - generic [ref=e626]:
+          - generic [ref=e627] [cursor=pointer]:
+            - generic [ref=e628]:
+              - img [ref=e629]
+              - img [ref=e631]
+              - img [ref=e633]
+              - img [ref=e635]
+              - img [ref=e637]
+            - paragraph [ref=e639]: "\"Entrei no curso sem saber nada e hoje já consigo criar artes incríveis. As aulas...\""
+            - paragraph [ref=e640]: Julia Menezes
+          - generic [ref=e641] [cursor=pointer]:
+            - generic [ref=e642]:
+              - img [ref=e643]
+              - img [ref=e645]
+              - img [ref=e647]
+              - img [ref=e649]
+              - img [ref=e651]
+            - paragraph [ref=e653]: "\"O curso tem uma pegada bem atualizada, cheia de referências visuais que realment...\""
+            - paragraph [ref=e654]: Anderson Carvalho
+          - generic [ref=e655] [cursor=pointer]:
+            - generic [ref=e656]:
+              - img [ref=e657]
+              - img [ref=e659]
+              - img [ref=e661]
+              - img [ref=e663]
+              - img [ref=e665]
+            - paragraph [ref=e667]: "\"A Escola Habilidade oferece um ambiente que realmente estimula a criação. Estou ...\""
+            - paragraph [ref=e668]: Camila Pacheco
+          - generic [ref=e669] [cursor=pointer]:
+            - generic [ref=e670]:
+              - img [ref=e671]
+              - img [ref=e673]
+              - img [ref=e675]
+              - img [ref=e677]
+              - img [ref=e679]
+            - paragraph [ref=e681]: "\"Estou tendo uma experiência fantástica. Além de ensinar técnicas, o curso ajuda ...\""
+            - paragraph [ref=e682]: Marcelo Andrade
+      - generic [ref=e684]:
+        - generic [ref=e685]:
+          - heading "Perguntas Frequentes" [level=2] [ref=e686]
+          - paragraph [ref=e687]: Tudo que você precisa saber antes de começar
+        - generic [ref=e688]:
+          - button "Preciso ter talento artístico natural?" [ref=e690] [cursor=pointer]:
+            - generic [ref=e691]:
+              - img [ref=e693]
+              - heading "Preciso ter talento artístico natural?" [level=3] [ref=e696]
+            - img [ref=e698]
+          - button "Qual a diferença entre as modalidades Presencial e Online?" [ref=e701] [cursor=pointer]:
+            - generic [ref=e702]:
+              - img [ref=e704]
+              - heading "Qual a diferença entre as modalidades Presencial e Online?" [level=3] [ref=e707]
+            - img [ref=e709]
+          - button "As apostilas estão incluídas no preço?" [ref=e712] [cursor=pointer]:
+            - generic [ref=e713]:
+              - img [ref=e715]
+              - heading "As apostilas estão incluídas no preço?" [level=3] [ref=e718]
+            - img [ref=e720]
+          - button "O curso serve para design de redes sociais?" [ref=e723] [cursor=pointer]:
+            - generic [ref=e724]:
+              - img [ref=e726]
+              - heading "O curso serve para design de redes sociais?" [level=3] [ref=e729]
+            - img [ref=e731]
+        - generic [ref=e734]:
+          - heading "Ainda tem dúvidas?" [level=3] [ref=e735]
+          - paragraph [ref=e736]: Nossa equipe está pronta para esclarecer todas as suas questões sobre o curso.
+          - link "Falar com Consultor" [ref=e737] [cursor=pointer]:
+            - /url: "#contato"
+            - text: Falar com Consultor
+            - img [ref=e738]
+      - generic [ref=e744]:
+        - generic [ref=e745]:
+          - img [ref=e746]
+          - generic [ref=e748]: Desenvolva uma nova habilidade
+          - img [ref=e749]
+        - heading "Pronto para se Matricular?" [level=2] [ref=e751]
+        - paragraph [ref=e752]: Desenvolva suas habilidades com o curso de Design Gráfico. Comece hoje mesmo sua jornada profissional!
+        - generic [ref=e753]:
+          - generic [ref=e754]:
+            - img [ref=e755]
+            - generic [ref=e758]: Certificado Reconhecido
+          - generic [ref=e759]:
+            - img [ref=e760]
+            - generic [ref=e763]: Suporte Completo
+          - generic [ref=e764]:
+            - img [ref=e765]
+            - generic [ref=e768]: Material Incluso
+        - button "Garantir Minha Vaga" [disabled] [ref=e769]:
+          - generic [ref=e770]: Garantir Minha Vaga
+          - img [ref=e771]
+        - paragraph [ref=e773]: 📞 Entre em contato conosco • Resposta rápida garantida
+      - generic [ref=e779]:
+        - generic [ref=e780]:
+          - heading "Empresas que confiam na Escola Habilidade" [level=2] [ref=e781]
+          - paragraph [ref=e782]: Profissionais de empresas regionais já se capacitaram conosco
+        - generic [ref=e784]:
+          - generic [ref=e785]:
+            - img "Portinox" [ref=e787]
+            - generic [ref=e788]:
+              - heading "Portinox" [level=3] [ref=e789]
+              - paragraph [ref=e790]: Equipamentos Gastronômicos
+          - generic [ref=e791]:
+            - img "Ricardo Móveis" [ref=e793]
+            - generic [ref=e794]:
+              - heading "Ricardo Móveis" [level=3] [ref=e795]
+              - paragraph [ref=e796]: Móveis Planejados
+          - generic [ref=e797]:
+            - img "Rinox" [ref=e799]
+            - generic [ref=e800]:
+              - heading "Rinox" [level=3] [ref=e801]
+              - paragraph [ref=e802]: Soluções Industriais
+          - generic [ref=e803]:
+            - img "Serralheria Mota" [ref=e805]
+            - generic [ref=e806]:
+              - heading "Serralheria Mota" [level=3] [ref=e807]
+              - paragraph [ref=e808]: Serralheria e Metalurgia
+          - generic [ref=e809]:
+            - img "Steinbach" [ref=e811]
+            - generic [ref=e812]:
+              - heading "Steinbach" [level=3] [ref=e813]
+              - paragraph [ref=e814]: Marcenaria
+          - generic [ref=e815]:
+            - img "Torres" [ref=e817]
+            - generic [ref=e818]:
+              - heading "Torres" [level=3] [ref=e819]
+              - paragraph [ref=e820]: Projetos Farmacêuticos
+          - generic [ref=e821]:
+            - img "Legno" [ref=e823]
+            - generic [ref=e824]:
+              - heading "Legno" [level=3] [ref=e825]
+              - paragraph [ref=e826]: Móveis sob Medida
+          - generic [ref=e827]:
+            - img "Mobiliário e Miniaturas" [ref=e829]
+            - generic [ref=e830]:
+              - heading "Mobiliário e Miniaturas" [level=3] [ref=e831]
+              - paragraph [ref=e832]: Móveis em Miniaturas
+          - generic [ref=e833]:
+            - img "Protérmica" [ref=e835]
+            - generic [ref=e836]:
+              - heading "Protérmica" [level=3] [ref=e837]
+              - paragraph [ref=e838]: Climatização
+          - generic [ref=e839]:
+            - img "Marcenaria JP" [ref=e841]
+            - generic [ref=e842]:
+              - heading "Marcenaria JP" [level=3] [ref=e843]
+              - paragraph [ref=e844]: Móveis Planejados
+          - generic [ref=e845]:
+            - img "Ousadia" [ref=e847]
+            - generic [ref=e848]:
+              - heading "Ousadia" [level=3] [ref=e849]
+              - paragraph [ref=e850]: Móveis sob Medida
+          - generic [ref=e851]:
+            - img "Escadas Imperatriz" [ref=e853]
+            - generic [ref=e854]:
+              - heading "Escadas Imperatriz" [level=3] [ref=e855]
+              - paragraph [ref=e856]: Escadas e Estruturas
+          - generic [ref=e857]:
+            - img "Pedra Granada" [ref=e859]
+            - generic [ref=e860]:
+              - heading "Pedra Granada" [level=3] [ref=e861]
+              - paragraph [ref=e862]: Marmoraria
+          - generic [ref=e863]:
+            - img "Brasil Mármore" [ref=e865]
+            - generic [ref=e866]:
+              - heading "Brasil Mármore" [level=3] [ref=e867]
+              - paragraph [ref=e868]: Marmoraria e Granitos
+          - generic [ref=e869]:
+            - img "Santa Madeira Casas" [ref=e871]
+            - generic [ref=e872]:
+              - heading "Santa Madeira Casas" [level=3] [ref=e873]
+              - paragraph [ref=e874]: Casas de Madeira
+          - generic [ref=e875]:
+            - img "Nexus Center" [ref=e877]
+            - generic [ref=e878]:
+              - heading "Nexus Center" [level=3] [ref=e879]
+              - paragraph [ref=e880]: Contact Center
+          - generic [ref=e881]:
+            - img "Casa da Mana" [ref=e883]
+            - generic [ref=e884]:
+              - heading "Casa da Mana" [level=3] [ref=e885]
+              - paragraph [ref=e886]: Produtos Artesanais
+          - generic [ref=e887]:
+            - img "Portinox" [ref=e889]
+            - generic [ref=e890]:
+              - heading "Portinox" [level=3] [ref=e891]
+              - paragraph [ref=e892]: Equipamentos Gastronômicos
+          - generic [ref=e893]:
+            - img "Ricardo Móveis" [ref=e895]
+            - generic [ref=e896]:
+              - heading "Ricardo Móveis" [level=3] [ref=e897]
+              - paragraph [ref=e898]: Móveis Planejados
+          - generic [ref=e899]:
+            - img "Rinox" [ref=e901]
+            - generic [ref=e902]:
+              - heading "Rinox" [level=3] [ref=e903]
+              - paragraph [ref=e904]: Soluções Industriais
+          - generic [ref=e905]:
+            - img "Serralheria Mota" [ref=e907]
+            - generic [ref=e908]:
+              - heading "Serralheria Mota" [level=3] [ref=e909]
+              - paragraph [ref=e910]: Serralheria e Metalurgia
+          - generic [ref=e911]:
+            - img "Steinbach" [ref=e913]
+            - generic [ref=e914]:
+              - heading "Steinbach" [level=3] [ref=e915]
+              - paragraph [ref=e916]: Marcenaria
+          - generic [ref=e917]:
+            - img "Torres" [ref=e919]
+            - generic [ref=e920]:
+              - heading "Torres" [level=3] [ref=e921]
+              - paragraph [ref=e922]: Projetos Farmacêuticos
+          - generic [ref=e923]:
+            - img "Legno" [ref=e925]
+            - generic [ref=e926]:
+              - heading "Legno" [level=3] [ref=e927]
+              - paragraph [ref=e928]: Móveis sob Medida
+          - generic [ref=e929]:
+            - img "Mobiliário e Miniaturas" [ref=e931]
+            - generic [ref=e932]:
+              - heading "Mobiliário e Miniaturas" [level=3] [ref=e933]
+              - paragraph [ref=e934]: Móveis em Miniaturas
+          - generic [ref=e935]:
+            - img "Protérmica" [ref=e937]
+            - generic [ref=e938]:
+              - heading "Protérmica" [level=3] [ref=e939]
+              - paragraph [ref=e940]: Climatização
+          - generic [ref=e941]:
+            - img "Marcenaria JP" [ref=e943]
+            - generic [ref=e944]:
+              - heading "Marcenaria JP" [level=3] [ref=e945]
+              - paragraph [ref=e946]: Móveis Planejados
+          - generic [ref=e947]:
+            - img "Ousadia" [ref=e949]
+            - generic [ref=e950]:
+              - heading "Ousadia" [level=3] [ref=e951]
+              - paragraph [ref=e952]: Móveis sob Medida
+          - generic [ref=e953]:
+            - img "Escadas Imperatriz" [ref=e955]
+            - generic [ref=e956]:
+              - heading "Escadas Imperatriz" [level=3] [ref=e957]
+              - paragraph [ref=e958]: Escadas e Estruturas
+          - generic [ref=e959]:
+            - img "Pedra Granada" [ref=e961]
+            - generic [ref=e962]:
+              - heading "Pedra Granada" [level=3] [ref=e963]
+              - paragraph [ref=e964]: Marmoraria
+          - generic [ref=e965]:
+            - img "Brasil Mármore" [ref=e967]
+            - generic [ref=e968]:
+              - heading "Brasil Mármore" [level=3] [ref=e969]
+              - paragraph [ref=e970]: Marmoraria e Granitos
+          - generic [ref=e971]:
+            - img "Santa Madeira Casas" [ref=e973]
+            - generic [ref=e974]:
+              - heading "Santa Madeira Casas" [level=3] [ref=e975]
+              - paragraph [ref=e976]: Casas de Madeira
+          - generic [ref=e977]:
+            - img "Nexus Center" [ref=e979]
+            - generic [ref=e980]:
+              - heading "Nexus Center" [level=3] [ref=e981]
+              - paragraph [ref=e982]: Contact Center
+          - generic [ref=e983]:
+            - img "Casa da Mana" [ref=e985]
+            - generic [ref=e986]:
+              - heading "Casa da Mana" [level=3] [ref=e987]
+              - paragraph [ref=e988]: Produtos Artesanais
+        - generic [ref=e989]:
+          - generic [ref=e990]:
+            - generic [ref=e991]: 17+
+            - generic [ref=e992]: Empresas Atendidas
+          - generic [ref=e993]:
+            - generic [ref=e994]: 200+
+            - generic [ref=e995]: Projetos Entregues
+          - generic [ref=e996]:
+            - generic [ref=e997]: 95%
+            - generic [ref=e998]: Taxa de Aprovação
+          - generic [ref=e999]:
+            - generic [ref=e1000]: 5★
+            - generic [ref=e1001]: Avaliação Média
+      - generic [ref=e1003]:
+        - generic [ref=e1004]:
+          - heading "Entre em Contato" [level=2] [ref=e1005]
+          - paragraph [ref=e1006]: Interessado no curso de Design Gráfico? Preencha o formulário e entraremos em contato!
+        - generic [ref=e1007]:
+          - generic [ref=e1008]:
+            - generic [ref=e1009]:
+              - generic [ref=e1010]:
+                - generic [ref=e1011]:
+                  - img [ref=e1012]
+                  - text: Nome completo *
+                - textbox "Nome completo *" [ref=e1014]:
+                  - /placeholder: Seu nome completo
+              - generic [ref=e1015]:
+                - generic [ref=e1016]:
+                  - img [ref=e1017]
+                  - text: Email *
+                - textbox "Email *" [ref=e1019]:
+                  - /placeholder: seu@email.com
+              - generic [ref=e1020]:
+                - generic [ref=e1021]:
+                  - img [ref=e1022]
+                  - text: Telefone *
+                - textbox "Telefone *" [ref=e1024]:
+                  - /placeholder: (48) 9 9999-9999
+              - generic [ref=e1025]:
+                - generic [ref=e1026]:
+                  - img [ref=e1027]
+                  - text: Curso de interesse
+                - combobox "Curso de interesse" [ref=e1029]:
+                  - option "Selecione um curso"
+                  - option "Projetista"
+                  - option "Edição de Vídeo"
+                  - option "Informática"
+                  - option "Design Gráfico" [selected]
+                  - option "Programação"
+                  - option "Marketing Digital"
+                  - option "Inteligência Artificial"
+                  - option "Business Intelligence"
+            - generic [ref=e1030]:
+              - generic [ref=e1031]: Mensagem (opcional)
+              - textbox "Mensagem (opcional)" [ref=e1032]:
+                - /placeholder: Deixe uma mensagem (opcional)
+            - button "Enviar Mensagem" [ref=e1033] [cursor=pointer]:
+              - img [ref=e1034]
+              - text: Enviar Mensagem
+          - paragraph [ref=e1037]: Seus dados são tratados com total confidencialidade conforme nossa política de privacidade.
+  - contentinfo [ref=e1038]:
+    - generic [ref=e1039]:
+      - generic [ref=e1040]:
+        - generic [ref=e1041]:
+          - generic [ref=e1043]:
+            - generic [ref=e1044]: H
+            - generic [ref=e1045]: Escola Habilidade
+          - paragraph [ref=e1046]: Transformando vidas através da educação tecnológica. Cursos práticos e atualizados para o mercado de trabalho.
+          - generic [ref=e1047]:
+            - img [ref=e1048]
+            - generic [ref=e1050]: "Seg-Sex: 8h às 18h"
+        - generic [ref=e1051]:
+          - heading "Navegação" [level=3] [ref=e1052]
+          - list [ref=e1053]:
+            - listitem [ref=e1054]:
+              - link "Início" [ref=e1055] [cursor=pointer]:
+                - /url: /
+            - listitem [ref=e1056]:
+              - link "Cursos" [ref=e1057] [cursor=pointer]:
+                - /url: "#cursos"
+            - listitem [ref=e1058]:
+              - link "Blog" [ref=e1059] [cursor=pointer]:
+                - /url: /blog
+            - listitem [ref=e1060]:
+              - link "Como Funciona" [ref=e1061] [cursor=pointer]:
+                - /url: "#como-funciona"
+            - listitem [ref=e1062]:
+              - link "Contato" [ref=e1063] [cursor=pointer]:
+                - /url: "#contato"
+        - generic [ref=e1064]:
+          - heading "Nossos Cursos" [level=3] [ref=e1065]
+          - list [ref=e1066]:
+            - listitem [ref=e1067]:
+              - link "Informática" [ref=e1068] [cursor=pointer]:
+                - /url: /cursos/informatica
+            - listitem [ref=e1069]:
+              - link "Design Gráfico" [ref=e1070] [cursor=pointer]:
+                - /url: /cursos/design-grafico
+            - listitem [ref=e1071]:
+              - link "Programação" [ref=e1072] [cursor=pointer]:
+                - /url: /cursos/programacao
+            - listitem [ref=e1073]:
+              - link "Marketing Digital" [ref=e1074] [cursor=pointer]:
+                - /url: /cursos/marketing-digital
+            - listitem [ref=e1075]:
+              - link "Inteligência Artificial" [ref=e1076] [cursor=pointer]:
+                - /url: /cursos/inteligencia-artificial
+            - listitem [ref=e1077]:
+              - link "Business Intelligence" [ref=e1078] [cursor=pointer]:
+                - /url: /cursos/business-intelligence
+            - listitem [ref=e1079]:
+              - link "Projetista 3D" [ref=e1080] [cursor=pointer]:
+                - /url: /cursos/projetista-3d
+            - listitem [ref=e1081]:
+              - link "Edição de Vídeo" [ref=e1082] [cursor=pointer]:
+                - /url: /cursos/edicao-video
+            - listitem [ref=e1083]:
+              - link "Administração" [ref=e1084] [cursor=pointer]:
+                - /url: /cursos/administracao
+        - generic [ref=e1085]:
+          - heading "Nossa Localização" [level=3] [ref=e1086]
+          - generic [ref=e1087]:
+            - generic [ref=e1088]:
+              - img [ref=e1089]
+              - generic [ref=e1091]:
+                - paragraph [ref=e1092]: R. Caetano José Ferreira, 426
+                - paragraph [ref=e1093]: Sala 5 - Kobrasol
+                - paragraph [ref=e1094]: São José - SC, 88102-280
+            - generic [ref=e1095]:
+              - generic [ref=e1096]:
+                - iframe [ref=e1097]
+                - generic "Abrir no Google Maps" [ref=e1098] [cursor=pointer]
+              - paragraph [ref=e1099]: Clique para abrir no Google Maps
+        - generic [ref=e1100]:
+          - heading "Contato" [level=3] [ref=e1101]
+          - generic [ref=e1102]:
+            - generic [ref=e1103]:
+              - img [ref=e1104]
+              - link "(48) 98855-9491" [ref=e1106] [cursor=pointer]:
+                - /url: tel:+5548988559491
+            - generic [ref=e1107]:
+              - img [ref=e1108]
+              - generic [ref=e1110]: Kobrasol - São José/SC
+        - generic [ref=e1111]:
+          - heading "Contato Rápido" [level=3] [ref=e1112]
+          - generic [ref=e1113]:
+            - link "WhatsApp (48) 98855-9491" [ref=e1114] [cursor=pointer]:
+              - /url: https://wa.me/5548988559491
+              - img [ref=e1115]
+              - generic [ref=e1117]:
+                - generic [ref=e1118]: WhatsApp
+                - generic [ref=e1119]: (48) 98855-9491
+            - link "Instagram @habilidade.escola" [ref=e1120] [cursor=pointer]:
+              - /url: https://instagram.com/habilidade.escola
+              - img [ref=e1121]
+              - generic [ref=e1123]:
+                - generic [ref=e1124]: Instagram
+                - generic [ref=e1125]: "@habilidade.escola"
+      - paragraph [ref=e1127]:
+        - text: © 2026 Escola Habilidade. Feito com
+        - img [ref=e1128]
+        - text: em São José/SC.

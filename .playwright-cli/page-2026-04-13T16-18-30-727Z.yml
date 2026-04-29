@@ -1,0 +1,856 @@
+- generic [ref=e3]:
+  - link "Pular para o conteudo" [ref=e4] [cursor=pointer]:
+    - /url: "#main-content"
+  - banner [ref=e5]:
+    - generic [ref=e7]:
+      - link "H Escola Habilidade" [ref=e9] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e12]:
+          - generic [ref=e13]: H
+          - generic [ref=e14]: Escola Habilidade
+      - navigation [ref=e15]:
+        - button "Cursos" [ref=e16] [cursor=pointer]:
+          - text: Cursos
+          - img [ref=e17]
+        - link "Como Funciona" [ref=e19] [cursor=pointer]:
+          - /url: "#como-funciona"
+        - link "Avaliações" [ref=e20] [cursor=pointer]:
+          - /url: "#avaliacoes"
+        - link "Blog" [ref=e21] [cursor=pointer]:
+          - /url: /blog
+        - link "FAQ" [ref=e22] [cursor=pointer]:
+          - /url: "#faq"
+        - link "Contato" [ref=e23] [cursor=pointer]:
+          - /url: "#contato"
+      - generic [ref=e25]:
+        - link "Área do Aluno" [ref=e26] [cursor=pointer]:
+          - /url: https://ead.escolahabilidade.com/
+        - link "Entrar em contato via WhatsApp" [ref=e27] [cursor=pointer]:
+          - /url: https://wa.me/5548988559491
+          - img [ref=e28]
+  - main [ref=e30]:
+    - generic [ref=e32]:
+      - heading "Escola Habilidade Cursos Profissionalizantes em São José e Grande Florianópolis Especialista em Intelig |" [level=1] [ref=e33]:
+        - generic [ref=e34]: Escola Habilidade
+        - generic [ref=e35]: Cursos Profissionalizantes em São José e Grande Florianópolis
+        - generic [ref=e36]: Especialista em
+        - generic [ref=e38]:
+          - text: Intelig
+          - generic [ref=e39]: "|"
+      - paragraph [ref=e40]: Aprenda hoje as habilidades que vão liderar o mercado de amanhã.
+      - paragraph [ref=e41]: Não sabe qual curso escolher? Descubra em 5 minutos!
+      - generic [ref=e42]:
+        - link "Ver Cursos" [ref=e43] [cursor=pointer]:
+          - /url: "#cursos"
+        - link "Teste Vocacional" [ref=e44] [cursor=pointer]:
+          - /url: /teste-vocacional
+      - generic [ref=e45]:
+        - generic [ref=e46]:
+          - img [ref=e47]
+          - img [ref=e49]
+          - img [ref=e51]
+          - img [ref=e53]
+          - img [ref=e55]
+        - generic [ref=e57]:
+          - strong [ref=e58]: "4.9"
+          - text: no Google|
+          - strong [ref=e59]: 127+
+          - text: avaliações
+      - generic [ref=e60]:
+        - generic [ref=e61]:
+          - img [ref=e62]
+          - generic [ref=e64]: Certificado Incluso
+        - generic [ref=e65]:
+          - img [ref=e66]
+          - generic [ref=e68]: Aulas Práticas
+        - generic [ref=e69]:
+          - img [ref=e70]
+          - generic [ref=e72]: Turmas Pequenas
+    - generic [ref=e74]:
+      - heading "Nossos Cursos" [level=2] [ref=e75]
+      - generic [ref=e76]:
+        - link "Projetista SketchUp, Enscape, Renderização com IA, Projetos 3D…" [ref=e78] [cursor=pointer]:
+          - /url: /cursos/projetista-3d
+          - img
+          - generic [ref=e79]:
+            - heading "Projetista" [level=3] [ref=e80]
+            - paragraph [ref=e81]: SketchUp, Enscape, Renderização com IA, Projetos 3D…
+        - link "Informática Windows, Word, Excel (fundamental → avançado)…" [ref=e83] [cursor=pointer]:
+          - /url: /cursos/informatica
+          - img
+          - generic [ref=e84]:
+            - heading "Informática" [level=3] [ref=e85]
+            - paragraph [ref=e86]: Windows, Word, Excel (fundamental → avançado)…
+        - link "Programação Lógica, Python, Java, PHP, Android Studio, Jogos…" [ref=e88] [cursor=pointer]:
+          - /url: /cursos/programacao
+          - img
+          - generic [ref=e89]:
+            - heading "Programação" [level=3] [ref=e90]
+            - paragraph [ref=e91]: Lógica, Python, Java, PHP, Android Studio, Jogos…
+        - link "Edição de Vídeo Premiere, After Effects, DaVinci Resolve, Motion Graphics…" [ref=e93] [cursor=pointer]:
+          - /url: /cursos/edicao-video
+          - img
+          - generic [ref=e94]:
+            - heading "Edição de Vídeo" [level=3] [ref=e95]
+            - paragraph [ref=e96]: Premiere, After Effects, DaVinci Resolve, Motion Graphics…
+        - link "Design Gráfico Photoshop, Illustrator, InDesign, Canva, Social…" [ref=e98] [cursor=pointer]:
+          - /url: /cursos/design-grafico
+          - img
+          - generic [ref=e99]:
+            - heading "Design Gráfico" [level=3] [ref=e100]
+            - paragraph [ref=e101]: Photoshop, Illustrator, InDesign, Canva, Social…
+        - link "Marketing Digital Social Ads, SEO, Copywriting, Canva, Branding, Analytics…" [ref=e103] [cursor=pointer]:
+          - /url: /cursos/marketing-digital
+          - img
+          - generic [ref=e104]:
+            - heading "Marketing Digital" [level=3] [ref=e105]
+            - paragraph [ref=e106]: Social Ads, SEO, Copywriting, Canva, Branding, Analytics…
+        - link "Inteligência Artificial Cursor, Prompt Engineering, ChatGPT, Visão…" [ref=e108] [cursor=pointer]:
+          - /url: /cursos/inteligencia-artificial
+          - img
+          - generic [ref=e109]:
+            - heading "Inteligência Artificial" [level=3] [ref=e110]
+            - paragraph [ref=e111]: Cursor, Prompt Engineering, ChatGPT, Visão…
+        - link "Business Intelligence Master Excel, Power BI, Dashboards, Storytelling de Dados…" [ref=e113] [cursor=pointer]:
+          - /url: /cursos/business-intelligence
+          - img
+          - generic [ref=e114]:
+            - heading "Business Intelligence" [level=3] [ref=e115]
+            - paragraph [ref=e116]: Master Excel, Power BI, Dashboards, Storytelling de Dados…
+        - link "Administração Office, Excel Avançado, DP, Matemática Financeira, Liderança…" [ref=e118] [cursor=pointer]:
+          - /url: /cursos/administracao
+          - img
+          - generic [ref=e119]:
+            - heading "Administração" [level=3] [ref=e120]
+            - paragraph [ref=e121]: Office, Excel Avançado, DP, Matemática Financeira, Liderança…
+      - link "Descubra Seu Curso Ideal Teste Vocacional Científico - Metodologia MIT, Harvard e Stanford ✨ Apenas 5 minutos 100% Gratuito Fazer Teste →" [ref=e125] [cursor=pointer]:
+        - /url: /teste-vocacional
+        - generic [ref=e126]:
+          - img
+          - generic [ref=e127]:
+            - heading "Descubra Seu Curso Ideal" [level=3] [ref=e128]
+            - paragraph [ref=e129]: Teste Vocacional Científico - Metodologia MIT, Harvard e Stanford
+        - generic [ref=e130]:
+          - generic [ref=e131]:
+            - generic [ref=e132]: ✨ Apenas 5 minutos
+            - paragraph [ref=e133]: 100% Gratuito
+          - button "Fazer Teste →" [ref=e134]
+    - generic [ref=e136]:
+      - generic [ref=e137]:
+        - heading "Habilidades que destacam você no mercado" [level=2] [ref=e138]
+        - paragraph [ref=e139]: Cursos práticos e objetivos para desenvolver suas habilidades. Aprenda fazendo e veja resultados reais na sua vida profissional.
+      - generic [ref=e141]:
+        - button "01 Escolha seu Curso Selecione a área que mais combina com seus objetivos" [ref=e143] [cursor=pointer]:
+          - generic [ref=e144]:
+            - generic [ref=e147]: "01"
+            - generic [ref=e149]:
+              - img [ref=e151]
+              - heading "Escolha seu Curso" [level=3] [ref=e154]
+              - paragraph [ref=e155]: Selecione a área que mais combina com seus objetivos
+        - generic [ref=e161]:
+          - generic [ref=e164]: "02"
+          - generic [ref=e167]:
+            - img [ref=e169]
+            - heading "Experimente Grátis" [level=3] [ref=e172]
+            - paragraph [ref=e173]: Aula experimental sem compromisso
+        - generic [ref=e176]:
+          - generic [ref=e179]: "03"
+          - generic [ref=e181]:
+            - img [ref=e183]
+            - heading "Aprenda na Prática" [level=3] [ref=e186]
+            - paragraph [ref=e187]: Projetos reais desde o primeiro dia
+        - generic [ref=e190]:
+          - generic [ref=e193]: "04"
+          - generic [ref=e195]:
+            - img [ref=e197]
+            - heading "Acelere sua Carreira" [level=3] [ref=e200]
+            - paragraph [ref=e201]: Conquiste melhores oportunidades
+    - generic [ref=e203]:
+      - generic [ref=e204]:
+        - generic [ref=e205]:
+          - img [ref=e206]
+          - text: Avaliações
+        - heading "O que nossos alunos dizem" [level=2] [ref=e208]
+        - paragraph [ref=e209]: Histórias reais de transformação e sucesso profissional
+        - generic [ref=e210]:
+          - generic [ref=e212]:
+            - generic [ref=e214]:
+              - img [ref=e215]
+              - img [ref=e217]
+              - img [ref=e219]
+              - img [ref=e221]
+              - img [ref=e223]
+            - generic [ref=e225]: "4.9"
+            - generic [ref=e226]: Google Reviews
+          - generic [ref=e228]:
+            - img [ref=e230]
+            - generic [ref=e232]: 127+
+            - generic [ref=e233]: Avaliações
+          - generic [ref=e235]:
+            - img [ref=e237]
+            - generic [ref=e239]: 1000+
+            - generic [ref=e240]: Alunos Formados
+          - generic [ref=e242]:
+            - img [ref=e244]
+            - generic [ref=e246]: "8"
+            - generic [ref=e247]: Anos de Experiência
+      - generic [ref=e248]:
+        - generic [ref=e251]:
+          - generic [ref=e253]:
+            - img [ref=e254]
+            - generic [ref=e256]: DESTAQUE
+          - generic [ref=e257]:
+            - img [ref=e258]
+            - img [ref=e260]
+            - img [ref=e262]
+            - img [ref=e264]
+            - img [ref=e266]
+          - paragraph [ref=e268]: "\"Estou fazendo o curso e estou adorando, professor atencioso, com atividades super dinâmicas, aprendi já bastante coisas que ainda não sabia, estão super atualizados no mercado, eles têm deles mesmo até IA ajudando o pessoal nas medições e até em render rápidos, fora a apostila bem completa.\""
+          - generic [ref=e270]:
+            - generic [ref=e271]:
+              - generic [ref=e272]: KRR
+              - generic [ref=e273]:
+                - heading "Karolain Roberta Régis" [level=4] [ref=e274]
+                - paragraph [ref=e275]: Projetista
+            - generic [ref=e276]:
+              - generic [ref=e277]:
+                - img [ref=e278]
+                - text: nov. de 2024
+              - generic [ref=e280]:
+                - img [ref=e281]
+                - text: São José - SC
+        - generic [ref=e285]:
+          - generic [ref=e287]:
+            - img [ref=e288]
+            - generic [ref=e290]: DESTAQUE
+          - generic [ref=e291]:
+            - img [ref=e292]
+            - img [ref=e294]
+            - img [ref=e296]
+            - img [ref=e298]
+            - img [ref=e300]
+          - paragraph [ref=e302]: "\"Minha experiência na Escola Habilidade está sendo ótima, estou no curso de programação. Curso presencial, atenção total do professor, atividades totalmente práticas e divertidas que chamam totalmente minha atenção.\""
+          - generic [ref=e304]:
+            - generic [ref=e305]:
+              - generic [ref=e306]: RS
+              - generic [ref=e307]:
+                - heading "Renan Souza" [level=4] [ref=e308]
+                - paragraph [ref=e309]: Programação
+            - generic [ref=e310]:
+              - generic [ref=e311]:
+                - img [ref=e312]
+                - text: out. de 2024
+              - generic [ref=e314]:
+                - img [ref=e315]
+                - text: São José - SC
+        - generic [ref=e319]:
+          - img [ref=e322]
+          - generic [ref=e324]:
+            - img [ref=e325]
+            - img [ref=e327]
+            - img [ref=e329]
+            - img [ref=e331]
+            - img [ref=e333]
+          - paragraph [ref=e335]: "\"Lugar ótimo e acolhedor, as turmas pequenas realmente facilitam a precisão na hora de aprender e o foco do professor para cada aluno. Recomendo!\""
+          - generic [ref=e337]:
+            - generic [ref=e338]:
+              - generic [ref=e339]: EV
+              - generic [ref=e340]:
+                - heading "Emily Vitoria" [level=4] [ref=e341]
+                - paragraph [ref=e342]: Informática Fundamental + Administração de Empresas
+            - generic [ref=e343]:
+              - generic [ref=e344]:
+                - img [ref=e345]
+                - text: nov. de 2024
+              - generic [ref=e347]:
+                - img [ref=e348]
+                - text: São José - SC
+        - generic [ref=e352]:
+          - generic [ref=e354]:
+            - img [ref=e355]
+            - generic [ref=e357]: DESTAQUE
+          - generic [ref=e358]:
+            - img [ref=e359]
+            - img [ref=e361]
+            - img [ref=e363]
+            - img [ref=e365]
+            - img [ref=e367]
+          - paragraph [ref=e369]: "\"O espaço é muito acolhedor, e as aulas são bastante explicativas e práticas. Durante as aulas, conseguimos tirar todas as nossas dúvidas, e os professores são extremamente dedicados.\""
+          - generic [ref=e371]:
+            - generic [ref=e372]:
+              - generic [ref=e373]: LBD
+              - generic [ref=e374]:
+                - heading "Luiza Bóz Dutra" [level=4] [ref=e375]
+                - paragraph [ref=e376]: Informática Fundamental
+            - generic [ref=e377]:
+              - generic [ref=e378]:
+                - img [ref=e379]
+                - text: out. de 2024
+              - generic [ref=e381]:
+                - img [ref=e382]
+                - text: São José - SC
+        - generic [ref=e386]:
+          - img [ref=e389]
+          - generic [ref=e391]:
+            - img [ref=e392]
+            - img [ref=e394]
+            - img [ref=e396]
+            - img [ref=e398]
+            - img [ref=e400]
+          - paragraph [ref=e402]: "\"Estou tendo uma excelente experiência com a Escola Habilidade no curso de SketchUp. O conteúdo é muito bem estruturado, o professor domina o assunto e sabe explicar de forma clara, mesmo para quem está começando.\""
+          - generic [ref=e404]:
+            - generic [ref=e405]:
+              - generic [ref=e406]: JT
+              - generic [ref=e407]:
+                - heading "Jonatas Torres" [level=4] [ref=e408]
+                - paragraph [ref=e409]: Projetista
+            - generic [ref=e410]:
+              - generic [ref=e411]:
+                - img [ref=e412]
+                - text: nov. de 2024
+              - generic [ref=e414]:
+                - img [ref=e415]
+                - text: São José - SC
+        - generic [ref=e419]:
+          - img [ref=e422]
+          - generic [ref=e424]:
+            - img [ref=e425]
+            - img [ref=e427]
+            - img [ref=e429]
+            - img [ref=e431]
+            - img [ref=e433]
+          - paragraph [ref=e435]: "\"Estou adorando as aulas, professor muito atencioso, sempre traz questões do cotidiano para resolução das atividades!\""
+          - generic [ref=e437]:
+            - generic [ref=e438]:
+              - generic [ref=e439]: ACO
+              - generic [ref=e440]:
+                - heading "Ana Caroline Orofino" [level=4] [ref=e441]
+                - paragraph [ref=e442]: Projetista
+            - generic [ref=e443]:
+              - generic [ref=e444]:
+                - img [ref=e445]
+                - text: out. de 2024
+              - generic [ref=e447]:
+                - img [ref=e448]
+                - text: São José - SC
+      - generic [ref=e456]:
+        - generic [ref=e457]:
+          - img [ref=e458]
+          - generic [ref=e460]: Seja o próximo sucesso!
+        - heading "Desenvolva suas habilidades conosco" [level=3] [ref=e461]
+        - paragraph [ref=e462]: Junte-se aos nossos alunos que já aprimoraram suas habilidades e conhecimentos
+        - generic [ref=e463]:
+          - link "Ver Cursos Disponíveis" [ref=e464] [cursor=pointer]:
+            - /url: "#cursos"
+          - link "Agendar Visita" [ref=e465] [cursor=pointer]:
+            - /url: https://wa.me/5548988559491?text=Olá! Gostaria de agendar uma visita.
+      - generic [ref=e466]:
+        - generic [ref=e467]:
+          - img [ref=e468]
+          - generic [ref=e470]: Certificação Nacional
+        - generic [ref=e471]:
+          - img [ref=e472]
+          - generic [ref=e474]: Kobrasol, São José - SC
+    - generic [ref=e476]:
+      - generic [ref=e477]:
+        - heading "Empresas que confiam na Escola Habilidade" [level=2] [ref=e478]
+        - paragraph [ref=e479]: Profissionais de empresas regionais já se capacitaram conosco
+      - generic [ref=e481]:
+        - generic [ref=e482]:
+          - img "Portinox" [ref=e484]
+          - generic [ref=e485]:
+            - heading "Portinox" [level=3] [ref=e486]
+            - paragraph [ref=e487]: Equipamentos Gastronômicos
+        - generic [ref=e488]:
+          - img "Ricardo Móveis" [ref=e490]
+          - generic [ref=e491]:
+            - heading "Ricardo Móveis" [level=3] [ref=e492]
+            - paragraph [ref=e493]: Móveis Planejados
+        - generic [ref=e494]:
+          - img "Rinox" [ref=e496]
+          - generic [ref=e497]:
+            - heading "Rinox" [level=3] [ref=e498]
+            - paragraph [ref=e499]: Soluções Industriais
+        - generic [ref=e500]:
+          - img "Serralheria Mota" [ref=e502]
+          - generic [ref=e503]:
+            - heading "Serralheria Mota" [level=3] [ref=e504]
+            - paragraph [ref=e505]: Serralheria e Metalurgia
+        - generic [ref=e506]:
+          - img "Steinbach" [ref=e508]
+          - generic [ref=e509]:
+            - heading "Steinbach" [level=3] [ref=e510]
+            - paragraph [ref=e511]: Marcenaria
+        - generic [ref=e512]:
+          - img "Torres" [ref=e514]
+          - generic [ref=e515]:
+            - heading "Torres" [level=3] [ref=e516]
+            - paragraph [ref=e517]: Projetos Farmacêuticos
+        - generic [ref=e518]:
+          - img "Legno" [ref=e520]
+          - generic [ref=e521]:
+            - heading "Legno" [level=3] [ref=e522]
+            - paragraph [ref=e523]: Móveis sob Medida
+        - generic [ref=e524]:
+          - img "Mobiliário e Miniaturas" [ref=e526]
+          - generic [ref=e527]:
+            - heading "Mobiliário e Miniaturas" [level=3] [ref=e528]
+            - paragraph [ref=e529]: Móveis em Miniaturas
+        - generic [ref=e530]:
+          - img "Protérmica" [ref=e532]
+          - generic [ref=e533]:
+            - heading "Protérmica" [level=3] [ref=e534]
+            - paragraph [ref=e535]: Climatização
+        - generic [ref=e536]:
+          - img "Marcenaria JP" [ref=e538]
+          - generic [ref=e539]:
+            - heading "Marcenaria JP" [level=3] [ref=e540]
+            - paragraph [ref=e541]: Móveis Planejados
+        - generic [ref=e542]:
+          - img "Ousadia" [ref=e544]
+          - generic [ref=e545]:
+            - heading "Ousadia" [level=3] [ref=e546]
+            - paragraph [ref=e547]: Móveis sob Medida
+        - generic [ref=e548]:
+          - img "Escadas Imperatriz" [ref=e550]
+          - generic [ref=e551]:
+            - heading "Escadas Imperatriz" [level=3] [ref=e552]
+            - paragraph [ref=e553]: Escadas e Estruturas
+        - generic [ref=e554]:
+          - img "Pedra Granada" [ref=e556]
+          - generic [ref=e557]:
+            - heading "Pedra Granada" [level=3] [ref=e558]
+            - paragraph [ref=e559]: Marmoraria
+        - generic [ref=e560]:
+          - img "Brasil Mármore" [ref=e562]
+          - generic [ref=e563]:
+            - heading "Brasil Mármore" [level=3] [ref=e564]
+            - paragraph [ref=e565]: Marmoraria e Granitos
+        - generic [ref=e566]:
+          - img "Santa Madeira Casas" [ref=e568]
+          - generic [ref=e569]:
+            - heading "Santa Madeira Casas" [level=3] [ref=e570]
+            - paragraph [ref=e571]: Casas de Madeira
+        - generic [ref=e572]:
+          - img "Nexus Center" [ref=e574]
+          - generic [ref=e575]:
+            - heading "Nexus Center" [level=3] [ref=e576]
+            - paragraph [ref=e577]: Contact Center
+        - generic [ref=e578]:
+          - img "Casa da Mana" [ref=e580]
+          - generic [ref=e581]:
+            - heading "Casa da Mana" [level=3] [ref=e582]
+            - paragraph [ref=e583]: Produtos Artesanais
+      - generic [ref=e584]:
+        - generic [ref=e585]:
+          - generic [ref=e586]: 17+
+          - generic [ref=e587]: Empresas Atendidas
+        - generic [ref=e588]:
+          - generic [ref=e589]: 200+
+          - generic [ref=e590]: Profissionais Formados
+        - generic [ref=e591]:
+          - generic [ref=e592]: 95%
+          - generic [ref=e593]: Taxa de Satisfação
+        - generic [ref=e594]:
+          - generic [ref=e595]: 4.9★
+          - generic [ref=e596]: Avaliação Média
+    - generic [ref=e602]:
+      - generic [ref=e603]:
+        - generic [ref=e604]:
+          - img [ref=e606]
+          - img [ref=e608]
+        - heading "Últimas Novidades" [level=2] [ref=e610]
+        - paragraph [ref=e611]: Fique por dentro das últimas tendências em tecnologia, dicas de carreira e novidades do mercado digital
+      - generic [ref=e612]:
+        - generic [ref=e613]:
+          - heading "Artigo em Destaque" [level=3] [ref=e614]:
+            - img [ref=e615]
+            - text: Artigo em Destaque
+          - article [ref=e618] [cursor=pointer]:
+            - generic [ref=e619]:
+              - generic:
+                - 'img "Transforme Dados em Decisões Estratégicas: O Poder dos Dashboards Empresariais"'
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - img
+                      - paragraph: Tecnologia
+                - generic:
+                  - generic:
+                    - img
+                    - text: Tecnologia
+                - generic:
+                  - generic:
+                    - img
+                    - text: 9 min
+              - generic:
+                - 'heading "Transforme Dados em Decisões Estratégicas: O Poder dos Dashboards Empresariais" [level=2]'
+                - paragraph: Descubra como dashboards empresariais podem revolucionar suas decisões de negócio, com exemplos práticos de diferentes setores e um guia completo...
+                - generic:
+                  - generic:
+                    - generic:
+                      - img
+                      - text: 11 de ago. de 2025
+        - generic [ref=e620]:
+          - heading "Mais Artigos" [level=3] [ref=e621]:
+            - img [ref=e622]
+            - text: Mais Artigos
+          - generic [ref=e624]:
+            - article [ref=e625] [cursor=pointer]:
+              - generic [ref=e626]:
+                - generic:
+                  - img "5 Razões Pelas Quais Organizações Devem Investir em Treinamento do Excel"
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img
+                        - paragraph: Tecnologia
+                  - generic:
+                    - generic:
+                      - img
+                      - text: Tecnologia
+                  - generic:
+                    - generic:
+                      - img
+                      - text: 6 min
+                - generic:
+                  - heading "5 Razões Pelas Quais Organizações Devem Investir em Treinamento do Excel" [level=2]
+                  - paragraph: Descubra por que o treinamento em Excel é fundamental para o sucesso empresarial. Explore como capacitar sua equipe pode aumentar produtividade,...
+                  - generic:
+                    - generic:
+                      - generic:
+                        - img
+                        - text: 11 de ago. de 2025
+            - article [ref=e627] [cursor=pointer]:
+              - generic [ref=e628]:
+                - generic:
+                  - 'img "SketchUp 2025: Nova Era de Visualização 3D e Materiais Fotorrealistas"'
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img
+                        - paragraph: Arquitetura
+                  - generic:
+                    - generic:
+                      - img
+                      - text: Arquitetura
+                  - generic:
+                    - generic:
+                      - img
+                      - text: 8 min
+                - generic:
+                  - 'heading "SketchUp 2025: Nova Era de Visualização 3D e Materiais Fotorrealistas" [level=2]'
+                  - paragraph: "Descubra as revolucionárias novidades do SketchUp 2025: materiais fotorrealistas, ambientes 3D interativos, interoperabilidade avançada com Revit/IFC..."
+                  - generic:
+                    - generic:
+                      - generic:
+                        - img
+                        - text: 10 de ago. de 2025
+      - generic [ref=e629]:
+        - link "Ver Todos os Artigos" [ref=e631] [cursor=pointer]:
+          - /url: /blog
+          - text: Ver Todos os Artigos
+          - img [ref=e632]
+        - paragraph [ref=e634]: Explore nossa biblioteca completa de artigos sobre tecnologia e carreira
+      - generic [ref=e635]:
+        - generic [ref=e636]:
+          - generic [ref=e637]: 50+
+          - generic [ref=e638]: Artigos
+        - generic [ref=e640]:
+          - generic [ref=e641]: "5"
+          - generic [ref=e642]: Categorias
+        - generic [ref=e644]:
+          - generic [ref=e645]: Semanal
+          - generic [ref=e646]: Atualizações
+    - generic [ref=e648]:
+      - generic [ref=e649]:
+        - heading "Entre em Contato" [level=2] [ref=e650]
+        - paragraph [ref=e651]: Interessado em algum curso? Preencha o formulário e entraremos em contato!
+      - generic [ref=e652]:
+        - generic [ref=e653]:
+          - generic [ref=e654]:
+            - generic [ref=e655]:
+              - generic [ref=e656]:
+                - img [ref=e657]
+                - text: Nome completo *
+              - textbox "Nome completo *" [ref=e659]:
+                - /placeholder: Seu nome completo
+            - generic [ref=e660]:
+              - generic [ref=e661]:
+                - img [ref=e662]
+                - text: Email *
+              - textbox "Email *" [ref=e664]:
+                - /placeholder: seu@email.com
+            - generic [ref=e665]:
+              - generic [ref=e666]:
+                - img [ref=e667]
+                - text: Telefone *
+              - textbox "Telefone *" [ref=e669]:
+                - /placeholder: (48) 9 9999-9999
+            - generic [ref=e670]:
+              - generic [ref=e671]:
+                - img [ref=e672]
+                - text: Curso de interesse
+              - combobox "Curso de interesse" [ref=e674]:
+                - option "Selecione um curso" [selected]
+                - option "Projetista"
+                - option "Edição de Vídeo"
+                - option "Informática"
+                - option "Design Gráfico"
+                - option "Programação"
+                - option "Marketing Digital"
+                - option "Inteligência Artificial"
+                - option "Business Intelligence"
+          - generic [ref=e675]:
+            - generic [ref=e676]: Mensagem (opcional)
+            - textbox "Mensagem (opcional)" [ref=e677]:
+              - /placeholder: Deixe uma mensagem (opcional)
+          - generic [ref=e678]:
+            - button "Enviar Mensagem" [ref=e679] [cursor=pointer]:
+              - img [ref=e680]
+              - text: Enviar Mensagem
+            - link "WhatsApp" [ref=e682] [cursor=pointer]:
+              - /url: https://wa.me/5548988559491?text=Olá! Gostaria de saber mais sobre os cursos.
+              - img [ref=e683]
+              - generic [ref=e685]: WhatsApp
+        - paragraph [ref=e687]: Seus dados são tratados com total confidencialidade conforme nossa política de privacidade.
+    - generic [ref=e689]:
+      - generic [ref=e690]:
+        - heading "Onde Estamos" [level=2] [ref=e691]
+        - paragraph [ref=e692]: Venha nos visitar! Estamos no coração de Kobrasol, São José, com fácil acesso para toda a Grande Florianópolis.
+      - generic [ref=e693]:
+        - generic [ref=e694]:
+          - generic [ref=e696]:
+            - img [ref=e698]
+            - generic [ref=e701]:
+              - heading "Endereço" [level=3] [ref=e702]
+              - generic [ref=e703]:
+                - text: Rua Caetano José Ferreira, 426 - Sala 5
+                - text: Kobrasol, São José - SC
+                - text: "CEP: 88102-280"
+          - generic [ref=e705]:
+            - img [ref=e707]
+            - generic [ref=e710]:
+              - heading "Contato" [level=3] [ref=e711]
+              - generic [ref=e712]:
+                - 'link "WhatsApp: (48) 98855-9491" [ref=e713] [cursor=pointer]':
+                  - /url: https://wa.me/5548988559491
+                - 'link "Fixo: (48) 3206-5246" [ref=e714] [cursor=pointer]':
+                  - /url: tel:+554832065246
+          - generic [ref=e716]:
+            - img [ref=e718]
+            - generic [ref=e721]:
+              - heading "E-mail" [level=3] [ref=e722]
+              - link "contato@escolahabilidade.com" [ref=e724] [cursor=pointer]:
+                - /url: mailto:contato@escolahabilidade.com
+          - generic [ref=e726]:
+            - img [ref=e728]
+            - generic [ref=e731]:
+              - heading "Horário de Atendimento" [level=3] [ref=e732]
+              - generic [ref=e733]:
+                - generic [ref=e734]: "Segunda a Quinta: 08:00 às 20:00"
+                - generic [ref=e735]: "Quarta-feira: 08:00 às 22:00"
+                - generic [ref=e736]: "Sexta-feira: 08:00 às 17:30"
+                - generic [ref=e737]: "Sábado: 08:00 às 12:00"
+          - link "Abrir no Google Maps" [ref=e738] [cursor=pointer]:
+            - /url: https://www.google.com/maps/place/Escola+Habilidade/@-27.5923906,-48.6149943,17z/data=!3m1!4b1!4m6!3m5!1s0x9527492f4454ef8d:0xd345f5e77312fdec!8m2!3d-27.5923906!4d-48.6149943!16s%2Fg%2F11w49mrz34
+            - img [ref=e739]
+            - text: Abrir no Google Maps
+        - generic [ref=e743]:
+          - generic [ref=e744]:
+            - iframe [ref=e745]
+            - img [ref=e748]
+          - generic [ref=e751]:
+            - generic [ref=e752]: Próximo ao Shopping Kobrasol
+            - generic [ref=e754]: Fácil acesso de ônibus
+            - generic [ref=e756]: Estacionamento na rua
+      - paragraph [ref=e759]: Atendemos alunos de Florianópolis, São José, Palhoça, Biguaçu e toda a Grande Florianópolis
+    - generic [ref=e761]:
+      - generic [ref=e762]:
+        - generic [ref=e763]:
+          - img [ref=e764]
+          - heading "Perguntas Frequentes" [level=2] [ref=e766]
+        - paragraph [ref=e767]: Tire suas dúvidas sobre nossos cursos, metodologia e processo de matrícula
+      - generic [ref=e768]:
+        - generic [ref=e769]:
+          - button "A Escola Habilidade fica bem localizada em São José?" [expanded] [ref=e770] [cursor=pointer]:
+            - generic [ref=e771]: A Escola Habilidade fica bem localizada em São José?
+            - img [ref=e772]
+          - region [ref=e774]:
+            - generic [ref=e775]: Sim! Estamos estrategicamente localizados no centro de São José, próximo ao Terminal Central, Shopping Pátio São José e fácil acesso pela BR-101. Nossa localização privilegiada permite chegada fácil por transporte público (várias linhas de ônibus) e oferece estacionamento gratuito para estudantes. Atendemos toda a Grande Florianópolis, especialmente São José, Palhoça e Biguaçu.
+        - generic [ref=e776]:
+          - button "Vocês têm parcerias com empresas de São José e região?" [ref=e777] [cursor=pointer]:
+            - generic [ref=e778]: Vocês têm parcerias com empresas de São José e região?
+            - img [ref=e779]
+          - generic [ref=e781]: Sim! Temos parcerias ativas com mais de 50 empresas da Grande Florianópolis, incluindo escritórios de arquitetura, agências de marketing, desenvolvedoras e empresas de tecnologia. Nossos alunos desenvolvem projetos reais durante o curso e muitos são contratados diretamente por empresas parceiras. Mantemos um programa de indicação profissional exclusivo.
+        - generic [ref=e782]:
+          - button "Qual a diferença entre curso técnico e curso profissionalizante na Escola Habilidade?" [ref=e783] [cursor=pointer]:
+            - generic [ref=e784]: Qual a diferença entre curso técnico e curso profissionalizante na Escola Habilidade?
+            - img [ref=e785]
+          - generic [ref=e787]: Nossos cursos profissionalizantes são 100% focados na prática profissional. Diferente de cursos técnicos convencionais, investimos 80% do tempo em projetos reais e apenas 20% em teoria. Isso significa que você sai preparado para o mercado de trabalho desde o primeiro dia, com portfolio robusto e experiência prática que os empregadores valorizam.
+        - generic [ref=e788]:
+          - button "Quais cursos a Escola Habilidade oferece?" [ref=e789] [cursor=pointer]:
+            - generic [ref=e790]: Quais cursos a Escola Habilidade oferece?
+            - img [ref=e791]
+          - generic [ref=e793]: "Oferecemos 6 cursos principais: Projetista (SketchUp/AutoCAD), Edição de Vídeo, Design Gráfico, Programação, Marketing Digital e BI/Inteligência Artificial. Todos são cursos práticos com projetos reais, certificação reconhecida pelo mercado e suporte para colocação profissional. Cada curso é personalizado conforme demanda do mercado regional."
+        - generic [ref=e794]:
+          - button "Como é a metodologia de ensino da Escola Habilidade?" [ref=e795] [cursor=pointer]:
+            - generic [ref=e796]: Como é a metodologia de ensino da Escola Habilidade?
+            - img [ref=e797]
+          - generic [ref=e799]: Nossa metodologia única "Prática Primeiro" combina projetos reais com mentoria individualizada. Turmas pequenas (máximo 12 alunos), professores especialistas do mercado e 80% do tempo dedicado à prática. Você desenvolve portfolio profissional durante o curso e recebe orientação personalizada para sua área de interesse.
+        - generic [ref=e800]:
+          - button "Por que a Escola Habilidade tem avaliação 5.0 estrelas?" [ref=e801] [cursor=pointer]:
+            - generic [ref=e802]: Por que a Escola Habilidade tem avaliação 5.0 estrelas?
+            - img [ref=e803]
+          - generic [ref=e805]: "Nossa nota máxima reflete o compromisso com resultados reais: metodologia prática, acompanhamento individualizado e foco na preparação para o mercado de trabalho. Diferente de instituições grandes, priorizamos qualidade sobre quantidade, com turmas reduzidas e atenção personalizada a cada aluno."
+        - generic [ref=e806]:
+          - button "A Escola Habilidade ajuda na colocação profissional?" [ref=e807] [cursor=pointer]:
+            - generic [ref=e808]: A Escola Habilidade ajuda na colocação profissional?
+            - img [ref=e809]
+          - generic [ref=e811]: Sim! Oferecemos apoio através de nossa rede de empresas parceiras que conhecem a qualidade dos nossos alunos, programa de preparação para freelancers com projetos reais e orientação para desenvolvimento de carreira. Nosso foco é preparar você com as habilidades e portfolio que o mercado busca.
+        - generic [ref=e812]:
+          - button "Qual curso tem mais chance de conseguir emprego rápido em São José?" [ref=e813] [cursor=pointer]:
+            - generic [ref=e814]: Qual curso tem mais chance de conseguir emprego rápido em São José?
+            - img [ref=e815]
+          - generic [ref=e817]: Nossos cursos de Projetista (SketchUp + Enscape), Programação, Design Gráfico e Marketing Digital são os que mais colocam profissionais no mercado na Grande Florianópolis. Com metodologia 80% prática, você desenvolve portfolio real durante o curso. Estatisticamente, cursos técnicos como Desenvolvimento de Sistemas têm 76,7% de empregabilidade, mas nosso diferencial é a preparação específica para o mercado local.
+        - generic [ref=e818]:
+          - button "A Escola Habilidade oferece cursos técnicos gratuitos como o SENAI?" [ref=e819] [cursor=pointer]:
+            - generic [ref=e820]: A Escola Habilidade oferece cursos técnicos gratuitos como o SENAI?
+            - img [ref=e821]
+          - generic [ref=e823]: Nossos cursos são investimento acessível com resultado superior ao ensino técnico tradicional. Diferente dos cursos gratuitos que priorizam teoria, oferecemos mentoria individualizada, turmas pequenas e projetos reais. O retorno do investimento acontece rapidamente através das oportunidades de trabalho e freelances que nossos alunos conseguem.
+        - generic [ref=e824]:
+          - button "Qual a diferença da Escola Habilidade para o SENAI e IFSC de São José?" [ref=e825] [cursor=pointer]:
+            - generic [ref=e826]: Qual a diferença da Escola Habilidade para o SENAI e IFSC de São José?
+            - img [ref=e827]
+          - generic [ref=e829]: Enquanto instituições técnicas focam em certificação, priorizamos empregabilidade real. Turmas pequenas vs. turmas de 40+ alunos, professores do mercado vs. professores acadêmicos, projetos reais vs. exercícios teóricos. Nossos alunos começam a trabalhar antes mesmo de formar, diferente do modelo tradicional.
+        - generic [ref=e830]:
+          - button "Por que escolher curso profissionalizante ao invés de curso técnico em São José?" [ref=e831] [cursor=pointer]:
+            - generic [ref=e832]: Por que escolher curso profissionalizante ao invés de curso técnico em São José?
+            - img [ref=e833]
+          - generic [ref=e835]: Cursos profissionalizantes são mais rápidos, práticos e alinhados com demandas reais das empresas. Não há burocracia de certificação técnica, permitindo atualização constante do conteúdo. Você aprende exatamente o que o mercado precisa, não grade curricular desatualizada de instituições técnicas.
+        - generic [ref=e836]:
+          - button "Quais empresas de São José contratam alunos da Escola Habilidade?" [ref=e837] [cursor=pointer]:
+            - generic [ref=e838]: Quais empresas de São José contratam alunos da Escola Habilidade?
+            - img [ref=e839]
+          - generic [ref=e841]: Temos parcerias com escritórios de arquitetura do centro de São José, agências de marketing da região e empresas de tecnologia da Grande Florianópolis. Nossa localização estratégica próxima ao Terminal Central facilita o networking com empresas parceiras que conhecem a qualidade dos nossos alunos.
+        - generic [ref=e842]:
+          - button "Como funciona o estacionamento para alunos no centro de Kobrasol?" [ref=e843] [cursor=pointer]:
+            - generic [ref=e844]: Como funciona o estacionamento para alunos no centro de Kobrasol?
+            - img [ref=e845]
+          - generic [ref=e847]: Estamos localizados no centro de Kobrasol em uma rua estratégica paralela onde é possível estacionar tranquilamente. Temos vagas gratuitas na rua, incluindo frequentemente na frente da escola. Também somos facilmente acessíveis por transporte público, com várias linhas de ônibus que param próximo à escola.
+        - generic [ref=e848]:
+          - button "Como faço para me matricular?" [ref=e849] [cursor=pointer]:
+            - generic [ref=e850]: Como faço para me matricular?
+            - img [ref=e851]
+          - generic [ref=e853]: Entre em contato conosco pelo WhatsApp (48) 98855-9491 ou preencha o formulário de contato. Nossa equipe irá esclarecer todas as dúvidas e auxiliar com a matrícula.
+      - generic [ref=e854]:
+        - paragraph [ref=e855]: Não encontrou sua resposta?
+        - link "Fale Conosco" [ref=e856] [cursor=pointer]:
+          - /url: https://wa.me/5548988559491?text=Olá! Ainda tenho uma dúvida a respeito dos cursos, pode me ajudar?
+          - img [ref=e857]
+          - text: Fale Conosco
+  - contentinfo [ref=e859]:
+    - generic [ref=e860]:
+      - generic [ref=e861]:
+        - generic [ref=e862]:
+          - generic [ref=e864]:
+            - generic [ref=e865]: H
+            - generic [ref=e866]: Escola Habilidade
+          - paragraph [ref=e867]: Transformando vidas através da educação tecnológica. Cursos práticos e atualizados para o mercado de trabalho.
+          - generic [ref=e868]:
+            - img [ref=e869]
+            - generic [ref=e871]: "Seg-Sex: 8h às 18h"
+        - generic [ref=e872]:
+          - heading "Navegação" [level=3] [ref=e873]
+          - list [ref=e874]:
+            - listitem [ref=e875]:
+              - link "Início" [ref=e876] [cursor=pointer]:
+                - /url: /
+            - listitem [ref=e877]:
+              - link "Cursos" [ref=e878] [cursor=pointer]:
+                - /url: "#cursos"
+            - listitem [ref=e879]:
+              - link "Blog" [ref=e880] [cursor=pointer]:
+                - /url: /blog
+            - listitem [ref=e881]:
+              - link "Como Funciona" [ref=e882] [cursor=pointer]:
+                - /url: "#como-funciona"
+            - listitem [ref=e883]:
+              - link "Contato" [ref=e884] [cursor=pointer]:
+                - /url: "#contato"
+        - generic [ref=e885]:
+          - heading "Nossos Cursos" [level=3] [ref=e886]
+          - list [ref=e887]:
+            - listitem [ref=e888]:
+              - link "Informática" [ref=e889] [cursor=pointer]:
+                - /url: /cursos/informatica
+            - listitem [ref=e890]:
+              - link "Design Gráfico" [ref=e891] [cursor=pointer]:
+                - /url: /cursos/design-grafico
+            - listitem [ref=e892]:
+              - link "Programação" [ref=e893] [cursor=pointer]:
+                - /url: /cursos/programacao
+            - listitem [ref=e894]:
+              - link "Marketing Digital" [ref=e895] [cursor=pointer]:
+                - /url: /cursos/marketing-digital
+            - listitem [ref=e896]:
+              - link "Inteligência Artificial" [ref=e897] [cursor=pointer]:
+                - /url: /cursos/inteligencia-artificial
+            - listitem [ref=e898]:
+              - link "Business Intelligence" [ref=e899] [cursor=pointer]:
+                - /url: /cursos/business-intelligence
+            - listitem [ref=e900]:
+              - link "Projetista 3D" [ref=e901] [cursor=pointer]:
+                - /url: /cursos/projetista-3d
+            - listitem [ref=e902]:
+              - link "Edição de Vídeo" [ref=e903] [cursor=pointer]:
+                - /url: /cursos/edicao-video
+            - listitem [ref=e904]:
+              - link "Administração" [ref=e905] [cursor=pointer]:
+                - /url: /cursos/administracao
+        - generic [ref=e906]:
+          - heading "Nossa Localização" [level=3] [ref=e907]
+          - generic [ref=e908]:
+            - generic [ref=e909]:
+              - img [ref=e910]
+              - generic [ref=e912]:
+                - paragraph [ref=e913]: R. Caetano José Ferreira, 426
+                - paragraph [ref=e914]: Sala 5 - Kobrasol
+                - paragraph [ref=e915]: São José - SC, 88102-280
+            - generic [ref=e916]:
+              - generic [ref=e917]:
+                - iframe [ref=e918]
+                - generic "Abrir no Google Maps" [ref=e919] [cursor=pointer]
+              - paragraph [ref=e920]: Clique para abrir no Google Maps
+        - generic [ref=e921]:
+          - heading "Contato" [level=3] [ref=e922]
+          - generic [ref=e923]:
+            - generic [ref=e924]:
+              - img [ref=e925]
+              - link "(48) 98855-9491" [ref=e927] [cursor=pointer]:
+                - /url: tel:+5548988559491
+            - generic [ref=e928]:
+              - img [ref=e929]
+              - generic [ref=e931]: Kobrasol - São José/SC
+        - generic [ref=e932]:
+          - heading "Contato Rápido" [level=3] [ref=e933]
+          - generic [ref=e934]:
+            - link "WhatsApp (48) 98855-9491" [ref=e935] [cursor=pointer]:
+              - /url: https://wa.me/5548988559491
+              - img [ref=e936]
+              - generic [ref=e938]:
+                - generic [ref=e939]: WhatsApp
+                - generic [ref=e940]: (48) 98855-9491
+            - link "Instagram @habilidade.escola" [ref=e941] [cursor=pointer]:
+              - /url: https://instagram.com/habilidade.escola
+              - img [ref=e942]
+              - generic [ref=e944]:
+                - generic [ref=e945]: Instagram
+                - generic [ref=e946]: "@habilidade.escola"
+      - paragraph [ref=e948]:
+        - text: © 2026 Escola Habilidade. Feito com
+        - img [ref=e949]
+        - text: em São José/SC.

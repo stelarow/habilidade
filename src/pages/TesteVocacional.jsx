@@ -1,1418 +1,604 @@
-import React, { useState, useEffect, useRef, Component as ReactComponent, useLayoutEffect } from 'react';
-import { motion, AnimatePresence } from '../utils/lazyMotion.jsx';
+import React, { Component as ReactComponent, useEffect, useMemo, useRef, useState } from 'react';
 import { Helmet } from '@dr.pogodin/react-helmet';
-import LogoH from '../components/LogoH';
-import { analytics } from '../utils/analytics';
-import { generatePDF as generatePDFWorker, onLoadProgress } from '../utils/pdfWorker';
-import { 
-  Brain,
-  Code,
-  Palette,
-  TrendUp,
-  Users,
-  BookOpen,
-  MapPin,
-  CaretRight,
-  CaretLeft,
-  Check,
-  Star,
-  ChatCircle,
-  Phone,
-  Target,
-  Trophy,
-  Clock,
-  DownloadSimple,
-  ShareNetwork,
+import {
   ArrowsClockwise,
-  User,
-  Lightbulb,
-  Camera,
-  ChartPie,
-  ChartBar,
-  Pulse
+  CaretLeft,
+  ChatCircle,
+  DownloadSimple,
+  Phone,
+  ShareNetwork,
 } from '@phosphor-icons/react';
+import LogoH from '../components/LogoH';
+import { analytics, trackEvent } from '../utils/analytics';
+import { generatePDF as generatePDFWorker, onLoadProgress } from '../utils/pdfWorker';
 
-// Hook seguro para operações DOM que funciona tanto no cliente quanto servidor
-const useIsomorphicLayoutEffect = globalThis.window === undefined ? useEffect : useLayoutEffect;
-
-// Error Boundary para capturar erros de DOM Manipulation
 class DOMErrorBoundary extends ReactComponent {
   constructor(properties) {
     super(properties);
-    this.state = { hasError: false, error: null };
+    this.state = { hasError: false };
   }
 
   static getDerivedStateFromError(error) {
-    // Captura erros DOM relacionados ao React 19 + Framer Motion
-    const isDOMError = error.message && (
-      error.message.includes('removeChild') ||
-      error.message.includes('insertBefore') ||
-      error.message.includes('appendChild') ||
-      error.message.includes('Node')
+    const message = error?.message || '';
+    const isDOMError = ['removeChild', 'insertBefore', 'appendChild', 'Node'].some((term) =>
+      message.includes(term)
     );
-    
+
     if (isDOMError) {
-      return { hasError: true, error };
+      return { hasError: true };
     }
-    // Para outros erros, relança para o Error Boundary pai
+
     throw error;
   }
 
-  componentDidCatch(error, errorInfo) {
-    // Log do erro para debugging
-    console.warn('🔧 DOM Error Boundary caught:', error.message);
-    console.warn('🔧 Error Details:', errorInfo);
-    console.warn('🔧 React Version: 19.1.0, Framer Motion: 12.23.12');
-    
-    // Track error para analytics
-    if (typeof analytics?.trackError === 'function') {
-      analytics.trackError(`React19_DOM_Error: ${error.message}`, 'DOM_BOUNDARY');
-    }
+  componentDidCatch(error) {
+    console.warn('DOM Error Boundary caught:', error.message);
+    trackEvent('teste_vocacional_dom_error', {
+      event_category: 'Teste Vocacional',
+      event_label: error.message,
+    });
   }
 
   render() {
     if (this.state.hasError) {
-      // Renderização alternativa sem animações Framer Motion
-      return (
-        <div className={this.props.className || ''}>
-          {this.props.fallbackChildren || this.props.children}
-        </div>
-      );
+      return <div className={this.props.className || ''}>{this.props.fallbackChildren}</div>;
     }
 
     return this.props.children;
   }
 }
 
-// Componente Radar Chart customizado
-// Componente Gráfico de Barras para todas as 8 áreas
-const BarChart = ({ data }) => {
-  return (
-    <div className="space-y-4">
-      {data.map((item, index) => (
-        <motion.div
-          key={item.area}
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 * index }}
-          className="space-y-2"
-        >
-          <div className="flex justify-between items-center">
-            <span className="text-sm font-medium text-gray-700 capitalize">
-              {item.area === 'gestao' ? 'Gestão' : 
-               item.area === 'educacao' ? 'Educação' : 
-               item.area === 'comunicacao' ? 'Comunicação' :
-               item.area === 'logica' ? 'Lógica' : item.area}
-            </span>
-            <span className="text-sm font-bold text-gray-600">{item.score}%</span>
-          </div>
-          <div className="w-full bg-gray-200 rounded-full h-3">
-            <motion.div
-              className={`h-3 rounded-full ${
-                index === 0 ? 'bg-[#d400ff]' : 
-                index === 1 ? 'bg-purple-400' : 
-                index === 2 ? 'bg-blue-400' :
-                'bg-gray-400'
-              }`}
-              initial={{ width: 0 }}
-              animate={{ width: `${item.score}%` }}
-              transition={{ duration: 1, delay: 0.3 + index * 0.1 }}
-            />
-          </div>
-        </motion.div>
-      ))}
-    </div>
-  );
-};
-const RadarChart = ({ data, size = 200 }) => {
-  const center = size / 2;
-  const radius = size / 2 - 20;
-  const angleStep = (Math.PI * 2) / data.length;
-  
-  const points = data.map((item, index) => {
-    const angle = angleStep * index - Math.PI / 2;
-    const value = item.value / 100;
-    const x = center + Math.cos(angle) * radius * value;
-    const y = center + Math.sin(angle) * radius * value;
-    return { x, y, label: item.label, value: item.value, color: item.color };
-  });
-
-  const maxPoints = data.map((item, index) => {
-    const angle = angleStep * index - Math.PI / 2;
-    const x = center + Math.cos(angle) * radius;
-    const y = center + Math.sin(angle) * radius;
-    return { x, y };
-  });
-
-  return (
-    <div className="relative">
-      <svg width={size} height={size} className="drop-shadow-lg">
-        {/* Grid circles */}
-        {[0.2, 0.4, 0.6, 0.8, 1].map((scale, index) => (
-          <circle
-            key={index}
-            cx={center}
-            cy={center}
-            r={radius * scale}
-            fill="none"
-            stroke="#e5e7eb"
-            strokeWidth="1"
-            opacity={0.3}
-          />
-        ))}
-        
-        {/* Grid lines */}
-        {maxPoints.map((point, index) => (
-          <line
-            key={index}
-            x1={center}
-            y1={center}
-            x2={point.x}
-            y2={point.y}
-            stroke="#e5e7eb"
-            strokeWidth="1"
-            opacity={0.3}
-          />
-        ))}
-
-        {/* Data area */}
-        <motion.polygon
-          points={points.map(p => `${p.x},${p.y}`).join(' ')}
-          fill="rgba(212, 0, 255, 0.2)"
-          stroke="#d400ff"
-          strokeWidth="2"
-          initial={{ scale: 0, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 1, delay: 0.5 }}
-        />
-
-        {/* Data points */}
-        {points.map((point, index) => (
-          <motion.circle
-            key={index}
-            cx={point.x}
-            cy={point.y}
-            r="4"
-            fill={point.color}
-            stroke="white"
-            strokeWidth="2"
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.7 + index * 0.1 }}
-          />
-        ))}
-      </svg>
-      
-      {/* Labels */}
-      {data.map((item, index) => {
-        const angle = angleStep * index - Math.PI / 2;
-        const labelRadius = radius + 25;
-        const x = center + Math.cos(angle) * labelRadius;
-        const y = center + Math.sin(angle) * labelRadius;
-        
-        return (
-          <motion.div
-            key={index}
-            className="absolute text-xs font-semibold text-gray-700 text-center"
-            style={{
-              left: x - 30,
-              top: y - 10,
-              width: 60,
-            }}
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 1 + index * 0.1 }}
-          >
-            <div className={`text-${item.color.replace('#', '')}`}>
-              {item.label}
-            </div>
-            <div className="text-gray-600 font-bold">{item.value}%</div>
-          </motion.div>
-        );
-      })}
-    </div>
-  );
-};
-
-// Perguntas do teste vocacional - Versão Completa (15 Perguntas)
-// Metodologia baseada em MIT, Harvard e Stanford
-const allQuestions = [
+const questions = [
   {
-    id: 1,
-    section: "Valores Profissionais",
-    question: "Se você pudesse criar algo incrível, o que seria?",
-    answers: [
-      { text: "Um aplicativo ou programa de computador que resolve um problema difícil.", scores: { tecnologia: 3, logica: 2, criatividade: 1 } },
-      { text: "Um projeto para ajudar as pessoas da sua escola ou bairro.", scores: { educacao: 3, comunicacao: 2, gestao: 1 } },
-      { text: "Um novo negócio ou um time para competir em algo que você gosta.", scores: { gestao: 3, comunicacao: 2, marketing: 1 } },
-      { text: "Um desenho, uma música ou um vídeo que todo mundo achasse muito legal.", scores: { design: 3, criatividade: 3, marketing: 1 } },
-      { text: "Um jeito de organizar informações para que todos entendam um assunto complicado.", scores: { logica: 3, tecnologia: 2, gestao: 1 } }
-    ]
+    id: 'analise-dados',
+    area: 'Análise de Dados',
+    courseName: 'Excel Avançado e Business Intelligence',
+    route: '/cursos/excel-avancado-business-intelligence',
+    statement:
+      'Gosto de olhar números, planilhas ou informações e encontrar padrões que ajudam a decidir melhor.',
+    profile:
+      'Você combina com uma rotina de análise, organização e leitura de cenários. Dados podem virar uma vantagem real quando você aprende a transformar informação em decisão.',
   },
-  {
-    id: 2,
-    section: "Valores Profissionais",
-    question: "Onde você se sentiria mais à vontade passando a maior parte do seu dia?",
-    answers: [
-      { text: "Num lugar cheio de computadores e tecnologia de ponta, descobrindo como as coisas funcionam.", scores: { tecnologia: 3, logica: 2, design: 1, comunicacao: -1 } },
-      { text: "Conversando e interagindo com muitas pessoas diferentes, ajudando e trocando ideias.", scores: { educacao: 3, comunicacao: 3, marketing: 1, tecnologia: -1 } },
-      { text: "Em reuniões, planejando os próximos passos de um projeto e apresentando ideias.", scores: { gestao: 3, marketing: 2, comunicacao: 2, criatividade: -1 } },
-      { text: "Em um espaço criativo, com liberdade para desenhar, criar e testar coisas novas.", scores: { design: 3, criatividade: 3, marketing: 1, logica: -1 } },
-      { text: "Em um lugar organizado, onde tudo tem um passo a passo claro para ser feito.", scores: { logica: 3, gestao: 2, tecnologia: 1, criatividade: -1 } }
-    ]
-  },
-  {
-    id: 3,
-    section: "Valores Profissionais",
-    question: "O que te deixa mais animado e com vontade de continuar fazendo?",
-    answers: [
-      { text: "Encontrar a resposta para um desafio muito difícil, como um jogo de quebra-cabeça.", scores: { logica: 3, tecnologia: 2, criatividade: 1 } },
-      { text: "Bater papo com a galera, trocar ideias e sentir que está conectado com as pessoas.", scores: { comunicacao: 3, educacao: 2, marketing: 1 } },
-      { text: "Ver uma ideia sua saindo do papel e se transformando em algo real.", scores: { design: 3, criatividade: 3, tecnologia: 1 } },
-      { text: "Encontrar um jeito mais fácil ou mais rápido de fazer uma tarefa que antes era demorada.", scores: { gestao: 3, logica: 2, tecnologia: 1 } },
-      { text: "Aprender uma coisa nova e sentir que você está ficando cada vez melhor naquilo.", scores: { educacao: 2, tecnologia: 2, criatividade: 2 } }
-    ]
-  },
-  {
-    id: 4,
-    section: "Valores Profissionais",
-    question: "Para você, o que seria \"mandar muito bem\" no futuro?",
-    answers: [
-      { text: "Criar uma tecnologia que mude o jeito como as pessoas vivem.", scores: { tecnologia: 3, logica: 2, criatividade: 2 } },
-      { text: "Ser alguém que ensina coisas importantes e inspira outras pessoas.", scores: { educacao: 3, comunicacao: 3, gestao: 1 } },
-      { text: "Ser o líder de um grande projeto ou ter sua própria empresa de sucesso.", scores: { gestao: 3, marketing: 3, comunicacao: 2 } },
-      { text: "Ter seus desenhos, vídeos ou criações conhecidos e admirados por muita gente.", scores: { design: 3, criatividade: 3, marketing: 2 } },
-      { text: "Ser a pessoa que mais entende de um assunto, a quem todos pedem ajuda.", scores: { tecnologia: 2, logica: 3, educacao: 1 } }
-    ]
-  },
-  {
-    id: 5,
-    section: "Valores Profissionais",
-    question: "Pelo que você gostaria de ser lembrado?",
-    answers: [
-      { text: "Por ter criado ferramentas que facilitaram a vida de todo mundo.", scores: { tecnologia: 3, logica: 2, gestao: 1 } },
-      { text: "Por ter ajudado muitas pessoas a aprenderem e a crescerem.", scores: { educacao: 3, comunicacao: 2, gestao: 2 } },
-      { text: "Por ter organizado projetos que funcionaram muito bem e deram ótimos resultados.", scores: { gestao: 3, logica: 2, comunicacao: 1 } },
-      { text: "Por ter deixado o mundo mais bonito e interessante com suas criações.", scores: { design: 3, criatividade: 3, marketing: 1 } },
-      { text: "Por ter criado uma marca ou produto que milhões de pessoas conhecem e gostam.", scores: { marketing: 3, comunicacao: 2, design: 2 } }
-    ]
-  },
-  {
-    id: 6,
-    section: "Interesses Profissionais",
-    question: "No seu tempo livre, o que você mais gosta de fazer?",
-    answers: [
-      { text: "Mexer no computador, no celular ou tentar entender como um aparelho funciona.", scores: { tecnologia: 3, logica: 3, criatividade: 1 } },
-      { text: "Participar de grupos, projetos sociais ou atividades que ajudem os outros.", scores: { educacao: 3, comunicacao: 2, gestao: 1 } },
-      { text: "Organizar o rolê com os amigos, planejando o que cada um vai fazer.", scores: { gestao: 3, comunicacao: 2, marketing: 2 } },
-      { text: "Desenhar, tirar fotos, editar vídeos ou criar posts legais para a internet.", scores: { design: 3, criatividade: 3, marketing: 1 } },
-      { text: "Organizar suas músicas em playlists, seus jogos por categoria ou fazer listas de filmes.", scores: { logica: 3, gestao: 2, tecnologia: 1 } }
-    ]
-  },
-  {
-    id: 7,
-    section: "Interesses Profissionais",
-    question: "Se você estivesse num jogo, que tipo de missão você escolheria?",
-    answers: [
-      { text: "Uma missão de criar um código ou um sistema para destravar a próxima fase.", scores: { tecnologia: 3, logica: 3, criatividade: 1 } },
-      { text: "Uma missão de ensinar um truque novo para outros jogadores para que o time vença.", scores: { educacao: 3, comunicacao: 3, gestao: 1 } },
-      { text: "Uma missão de convencer outros times a se aliarem ao seu para ganhar o jogo.", scores: { marketing: 3, comunicacao: 3, gestao: 2 } },
-      { text: "Uma missão de criar o visual do seu personagem ou do seu time para que seja o mais legal de todos.", scores: { design: 3, criatividade: 3, marketing: 2 } },
-      { text: "Uma missão de analisar o mapa e os dados do jogo para descobrir o melhor caminho para a vitória.", scores: { logica: 3, tecnologia: 2, gestao: 1 } }
-    ]
-  },
-  {
-    id: 8,
-    section: "Interesses Profissionais",
-    question: "Qual destas coisas você faria por horas, até esquecer do tempo?",
-    answers: [
-      { text: "Tentar resolver um problema num jogo ou programa de computador.", scores: { tecnologia: 3, logica: 3, criatividade: 1 } },
-      { text: "Explicar para um amigo um assunto que você domina e ele tem dificuldade.", scores: { educacao: 3, comunicacao: 2, design: 1 } },
-      { text: "Pensar em jeitos de divulgar algo legal, como uma festa ou um canal na internet.", scores: { marketing: 3, gestao: 2, comunicacao: 2 } },
-      { text: "Editando fotos, criando um desenho no computador ou montando um vídeo.", scores: { design: 3, criatividade: 3, tecnologia: 1 } },
-      { text: "Arrumando e organizando algo (seu quarto, seus arquivos, suas figurinhas) para ficar perfeito.", scores: { logica: 3, gestao: 3, tecnologia: 2 } }
-    ]
-  },
-  {
-    id: 9,
-    section: "Habilidades e Aptidões",
-    question: "Num trabalho em grupo da escola, o que você geralmente faz?",
-    answers: [
-      { text: "Pego os dados e as informações da pesquisa para organizar e ver o que significam.", scores: { logica: 3, gestao: 2, tecnologia: 1 } },
-      { text: "Cuido da parte visual, fazendo os slides da apresentação ficarem bonitos e claros.", scores: { design: 3, comunicacao: 2, criatividade: 2 } },
-      { text: "Se o computador ou algum programa dá problema, eu sou a pessoa que tenta resolver.", scores: { tecnologia: 3, logica: 2, criatividade: 1 } },
-      { text: "Escrevo o roteiro do que vamos falar para convencer o professor e a turma da nossa ideia.", scores: { marketing: 3, comunicacao: 3, educacao: 1 } },
-      { text: "Ajudo a organizar quem faz o quê e a garantir que todos entreguem a sua parte a tempo.", scores: { gestao: 3, comunicacao: 2, educacao: 1 } }
-    ]
-  },
-  {
-    id: 10,
-    section: "Habilidades e Aptidões",
-    question: "Qual o seu jeito preferido de aprender algo novo?",
-    answers: [
-      { text: "Ler tudo sobre o assunto para entender a lógica por trás daquilo.", scores: { logica: 3, educacao: 2, tecnologia: 1, criatividade: -1 } },
-      { text: "Ir direto para a prática, testando e descobrindo como funciona na hora.", scores: { tecnologia: 2, criatividade: 3, design: 2, logica: -1 } },
-      { text: "Conversar com outras pessoas que entendem do assunto e trocar ideias.", scores: { comunicacao: 3, educacao: 2, gestao: 1, tecnologia: -1 } },
-      { text: "Assistir a vídeos ou ver imagens que mostrem como fazer.", scores: { design: 2, marketing: 2, criatividade: 2, logica: -1 } },
-      { text: "Fazer um resumo ou um esquema com os pontos mais importantes para não esquecer.", scores: { logica: 3, gestao: 2, educacao: 1, criatividade: -1 } }
-    ]
-  },
-  {
-    id: 11,
-    section: "Habilidades e Aptidões",
-    question: "Em um projeto em grupo, qual é o seu papel natural?",
-    answers: [
-      { text: "O líder, que organiza as tarefas e mantém o time focado.", scores: { gestao: 3, comunicacao: 2, educacao: 1 } },
-      { text: "O \"nerd\", que cuida da parte mais técnica e resolve os problemas.", scores: { tecnologia: 3, logica: 2, design: 1 } },
-      { text: "O \"artista\", que cuida do visual e deixa tudo mais bonito e apresentável.", scores: { design: 3, criatividade: 2, marketing: 2 } },
-      { text: "O \"pesquisador\", que busca as informações e ajuda a entender o tema.", scores: { logica: 2, educacao: 3, comunicacao: 1 } },
-      { text: "O \"divulgador\", que conta para todo mundo sobre o projeto e anima a galera.", scores: { marketing: 3, comunicacao: 3, gestao: 1 } }
-    ]
-  },
-  {
-    id: 12,
-    section: "Realizações Pessoais",
-    question: "O que te deixaria mais orgulhoso de ter feito?",
-    answers: [
-      { text: "Ter criado um aplicativo que milhões de pessoas usam todos os dias.", scores: { tecnologia: 3, criatividade: 2, marketing: 1 } },
-      { text: "Encontrar pessoas que dissessem: \"Aprendi muito com você!\".", scores: { educacao: 3, comunicacao: 2, gestao: 1 } },
-      { text: "Ter liderado um time que criou algo incrível e muito bem-sucedido.", scores: { gestao: 3, marketing: 2, comunicacao: 2 } },
-      { text: "Ver um desenho ou um vídeo seu famoso no mundo todo.", scores: { design: 3, criatividade: 3, marketing: 1 } },
-      { text: "Ser conhecido por ter resolvido um problema que ninguém mais conseguia.", scores: { logica: 3, tecnologia: 2, criatividade: 1 } }
-    ]
-  },
-  {
-    id: 13,
-    section: "Comportamento sob Pressão",
-    question: "Quando você tem um prazo apertado para entregar algo, o que você faz?",
-    answers: [
-      { text: "Crio um plano e uma lista de tarefas para não me perder.", scores: { gestao: 3, logica: 2, tecnologia: 1 } },
-      { text: "Foco totalmente em encontrar a solução mais rápida para o problema principal.", scores: { tecnologia: 3, logica: 3, criatividade: 1 } },
-      { text: "Penso em uma ideia diferente ou um jeito novo de fazer as coisas para surpreender.", scores: { criatividade: 3, design: 2, marketing: 1 } },
-      { text: "Chamo a galera para conversar e alinhar o que cada um precisa fazer.", scores: { comunicacao: 3, gestao: 2, educacao: 1 } },
-      { text: "Paro para analisar a situação e pensar no melhor caminho antes de sair fazendo.", scores: { logica: 3, gestao: 2, tecnologia: 1 } }
-    ]
-  },
-  {
-    id: 14,
-    section: "Interesses Digitais",
-    question: "Na internet (YouTube, TikTok, etc.), que tipo de conteúdo você mais gosta de assistir?",
-    answers: [
-      { text: "Vídeos explicando como a tecnologia funciona, tutoriais de programação ou reviews detalhados de eletrônicos.", scores: { tecnologia: 3, logica: 3, educacao: 1 } },
-      { text: "Canais de arte, tutoriais de desenho/edição de vídeo ou perfis com fotos e visuais muito criativos.", scores: { design: 3, criatividade: 3, comunicacao: 1 } },
-      { text: "Vídeos de reviews de produtos, análise de propagandas ou pessoas que são muito boas em convencer os outros sobre uma ideia.", scores: { marketing: 3, comunicacao: 3, gestao: 1 } },
-      { text: "Documentários, canais de curiosidades ou vídeos que ensinam algo novo sobre ciência, história ou qualquer outro assunto.", scores: { educacao: 3, comunicacao: 2, logica: 2 } },
-      { text: "Vídeos sobre como ser mais produtivo, dicas de organização, ou histórias de como empresas de sucesso começaram.", scores: { gestao: 3, logica: 2, marketing: 1 } }
-    ]
-  },
-  {
-    id: 15,
-    section: "Iniciativa e Planejamento",
-    question: "Você tem uma ideia incrível para um projeto (um canal, um app, um evento). Qual é a sua primeira reação?",
-    answers: [
-      { text: "Escrever um plano com todos os passos, do começo ao fim, para não me perder.", scores: { logica: 3, gestao: 3, tecnologia: 1 } },
-      { text: "Chamar meus amigos mais próximos para contar a ideia, ouvir opiniões e ver quem topa participar.", scores: { comunicacao: 3, marketing: 2, gestao: 2 } },
-      { text: "Fazer um rascunho, um desenho ou um modelo de como a ideia vai parecer visualmente.", scores: { criatividade: 3, design: 3, tecnologia: 1 } },
-      { text: "Começar a pesquisar e testar as ferramentas ou os programas que eu precisaria para colocar a ideia em prática.", scores: { tecnologia: 3, logica: 2, criatividade: 1 } },
-      { text: "Começar a estudar tudo sobre o assunto para ter certeza de que sei o suficiente antes de dar o primeiro passo.", scores: { educacao: 3, logica: 2, comunicacao: 1 } }
-    ]
-  }
-];
-
-// Cursos da Escola Habilidade
-const courses = [
   {
     id: 'informatica',
-    name: 'Informática',
-    subtitle: 'Windows 11 + Office + Ambientes Digitais + IA',
-    description: 'Curso completo de informática com Windows 11, Office, ambientes digitais, Canva e IA aplicada',
-    duration: '184,5h',
-    price: 'Consulte valores',
-    areas: ['educacao', 'gestao', 'comunicacao', 'tecnologia'],
-    icon: BookOpen,
-    image: 'keys/curso-informatica?prompt=Professional computer workspace with Office applications'
-  },
-  {
-    id: 'design-grafico',
-    name: 'Design Gráfico',
-    subtitle: 'Photoshop + Illustrator + InDesign + Canva + CorelDRAW',
-    description: 'Domine Photoshop, Illustrator, InDesign, Canva e CorelDRAW para criar designs profissionais',
-    duration: '90h',
-    price: 'Consulte valores',
-    areas: ['design', 'criatividade', 'marketing'],
-    icon: Palette,
-    image: 'keys/curso-design?prompt=Graphic design workspace with creative tools and colorful designs'
-  },
-  {
-    id: 'programacao',
-    name: 'Programação',
-    subtitle: 'Lógica + Python + Java + PHP + Android + IA',
-    description: 'Curso completo de programação full-stack. Aprenda Lógica, Python, Java, PHP, desenvolvimento Android e Cursor com IA',
-    duration: '118h',
-    price: 'Consulte valores',
-    areas: ['tecnologia', 'logica', 'gestao'],
-    icon: Code,
-    image: 'keys/curso-programacao?prompt=Modern programming workspace with code on multiple monitors'
-  },
-  {
-    id: 'marketing-digital',
-    name: 'Marketing Digital',
-    subtitle: 'Estratégias Digitais + Redes Sociais + Ads',
-    description: 'Estratégias completas de marketing digital para vender online',
-    duration: 'Consulte',
-    price: 'Consulte valores',
-    areas: ['marketing', 'comunicacao', 'gestao'],
-    icon: TrendUp,
-    image: 'keys/curso-marketing?prompt=Digital marketing dashboard with social media analytics and charts'
-  },
-  {
-    id: 'inteligencia-artificial',
-    name: 'Inteligência Artificial',
-    subtitle: 'IA + Machine Learning + Aplicações Práticas',
-    description: 'Domine inteligência artificial e suas aplicações no mercado de trabalho',
-    duration: 'Consulte',
-    price: 'Consulte valores',
-    areas: ['tecnologia', 'logica', 'criatividade'],
-    icon: Brain,
-    image: 'keys/curso-ia?prompt=AI workspace with machine learning and data analysis'
-  },
-  {
-    id: 'business-intelligence',
-    name: 'Business Intelligence',
-    subtitle: 'Power BI + Análise de Dados + Dashboard',
-    description: 'Análise de dados e criação de dashboards profissionais',
-    duration: 'Consulte',
-    price: 'Consulte valores',
-    areas: ['gestao', 'logica', 'tecnologia'],
-    icon: ChartBar,
-    image: 'keys/curso-bi?prompt=Business intelligence dashboard with charts and data analysis'
-  },
-  {
-    id: 'projetista-3d',
-    name: 'Projetista 3D Completo',
-    subtitle: 'SketchUp + Enscape + V-Ray + IA',
-    description: 'Crie projetos 3D profissionais com renderizações fotorrealísticas',
-    duration: 'Consulte',
-    price: 'Consulte valores',
-    areas: ['design', 'tecnologia', 'criatividade'],
-    icon: Camera,
-    image: 'keys/curso-sketchup?prompt=3D architectural rendering modern house SketchUp professional'
-  },
-  {
-    id: 'edicao-video',
-    name: 'Edição de Vídeo',
-    subtitle: 'Premier + After Effects + Criação de Conteúdo',
-    description: 'Edição profissional de vídeos para redes sociais e mercado audiovisual',
-    duration: 'Consulte',
-    price: 'Consulte valores',
-    areas: ['design', 'criatividade', 'marketing'],
-    icon: Pulse,
-    image: 'keys/curso-video?prompt=Video editing workspace with timeline and effects'
+    area: 'Informática',
+    courseName: 'Informática',
+    route: '/cursos/informatica',
+    statement:
+      'Quero dominar melhor computador, internet, arquivos e ferramentas digitais para estudar ou trabalhar com mais segurança.',
+    profile:
+      'Você tem um perfil prático e quer ganhar autonomia digital. A base de informática abre portas para estudar melhor, trabalhar com mais confiança e se adaptar a novas ferramentas.',
   },
   {
     id: 'administracao',
-    name: 'Administração',
-    subtitle: 'Gestão + Liderança + RH + Projetos',
-    description: 'Desenvolva habilidades de liderança, gestão e administração empresarial',
-    duration: 'Consulte',
-    price: 'Consulte valores',
-    areas: ['gestao', 'comunicacao', 'educacao'],
-    icon: Users,
-    image: 'keys/curso-gestao?prompt=Business leadership meeting with charts and professional team'
-  }
+    area: 'Administração',
+    courseName: 'Administração',
+    route: '/cursos/administracao',
+    statement:
+      'Me vejo organizando tarefas, acompanhando resultados e ajudando uma equipe ou empresa a funcionar melhor.',
+    profile:
+      'Você tende a se conectar com planejamento, rotina, atendimento e tomada de decisão. Administração é uma boa trilha para quem gosta de entender como as coisas funcionam por dentro.',
+  },
+  {
+    id: 'projetista-3d',
+    area: 'Projetista 3D',
+    courseName: 'Projetista 3D',
+    route: '/cursos/projetista-3d',
+    statement:
+      'Tenho curiosidade por projetos, ambientes, peças ou objetos em 3D e gosto de imaginar como algo fica antes de existir.',
+    profile:
+      'Você tem uma afinidade visual e técnica ao mesmo tempo. Projetos 3D pedem atenção a detalhe, noção espacial e vontade de tirar ideias do papel.',
+  },
+  {
+    id: 'marketing-digital',
+    area: 'Marketing Digital',
+    courseName: 'Marketing Digital',
+    route: '/cursos/marketing-digital',
+    statement:
+      'Gosto de pensar em conteúdo, redes sociais, campanhas e formas de chamar a atenção das pessoas para uma ideia.',
+    profile:
+      'Você se aproxima de comunicação, estratégia e comportamento online. Marketing Digital é para quem quer entender como marcas crescem e como ideias chegam nas pessoas certas.',
+  },
+  {
+    id: 'design-grafico',
+    area: 'Designer Gráfico',
+    courseName: 'Design Gráfico',
+    route: '/cursos/design-grafico',
+    statement:
+      'Gosto de criar visuais, editar imagens, escolher cores, montar layouts e deixar uma mensagem mais bonita e clara.',
+    profile:
+      'Você tem inclinação para expressão visual e cuidado com apresentação. Design Gráfico pode transformar esse olhar em uma habilidade profissional aplicável a marcas, posts e materiais.',
+  },
+  {
+    id: 'programacao',
+    area: 'Programação',
+    courseName: 'Programação',
+    route: '/cursos/programacao',
+    statement:
+      'Tenho vontade de entender códigos, criar sistemas, automatizar tarefas ou construir meus próprios aplicativos.',
+    profile:
+      'Você combina com lógica, solução de problemas e construção digital. Programação é uma trilha forte para quem gosta de descobrir como as coisas funcionam e criar algo do zero.',
+  },
+  {
+    id: 'inteligencia-artificial',
+    area: 'Inteligência Artificial',
+    courseName: 'Inteligência Artificial',
+    route: '/cursos/inteligencia-artificial',
+    statement:
+      'Tenho interesse em usar IA para criar, estudar, resolver problemas e trabalhar de um jeito mais rápido e inteligente.',
+    profile:
+      'Você se conecta com ferramentas novas e maneiras mais inteligentes de produzir. IA é uma boa escolha para quem quer usar tecnologia como vantagem nos estudos, trabalho e criação.',
+  },
 ];
 
+const scale = [
+  { value: 1, label: 'discordo' },
+  { value: 2, label: '' },
+  { value: 3, label: 'neutro' },
+  { value: 4, label: '' },
+  { value: 5, label: 'concordo' },
+];
 
-// Componente Hero
-const Hero = () => {
-  return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 pt-16">
-      {/* Fundo com partículas */}
-      <div className="absolute inset-0">
-        {Array.from({length: 30}).map((_, index) => (
-          <motion.div
-            key={index}
-            className="absolute w-2 h-2 bg-white rounded-full opacity-20"
-            style={{
-              left: `${(index * 37 + 13) % 100}%`,
-              top: `${(index * 23 + 7) % 100}%`,
-            }}
-            animate={{
-              y: [0, -20, 0],
-              opacity: [0.2, 0.8, 0.2],
-            }}
-            transition={{
-              duration: 3 + (index % 5) * 0.4,
-              repeat: Infinity,
-              delay: index * 0.1,
-            }}
-          />
-        ))}
-      </div>
+const CONTACT_PHONE = '5548988559491';
 
-      <div className="relative z-10 text-center px-4 max-w-6xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="mb-8"
-        >
-          <div className="flex items-center justify-center gap-2 mb-6">
-            <Brain className="text-[#d400ff]" size={32} />
-            <span className="text-white font-semibold text-lg">Teste Vocacional Inteligente</span>
-          </div>
-          
-          <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
-            Descubra seu <span className="text-[#d400ff]">Curso Ideal</span>
-          </h1>
-          
-          <p className="text-xl md:text-2xl text-gray-200 mb-8 max-w-4xl mx-auto">
-            Em apenas 15 perguntas científicas, descubra o curso da Escola Habilidade que mais combina com você. <strong className="text-[#d400ff]">Metodologia inspirada no MIT, Harvard e Stanford</strong> — disponível para toda a <span className="text-[#d400ff] font-semibold">Grande Florianópolis</span>.
-          </p>
+const getSortedResults = (answers) => {
+  const ranked = questions
+    .map((question) => ({
+      ...question,
+      score: answers[question.id] || 0,
+      isStrong: (answers[question.id] || 0) >= 4,
+    }))
+    .sort((a, b) => b.score - a.score || questions.findIndex((q) => q.id === a.id) - questions.findIndex((q) => q.id === b.id));
 
-          <div className="flex flex-wrap justify-center gap-6 text-gray-300 mb-8">
-            <span className="flex items-center gap-2">
-              <Clock size={16} className="text-[#d400ff]" />
-              Apenas 5 minutos
-            </span>
-            <span className="flex items-center gap-2">
-              <Target size={16} className="text-[#d400ff]" />
-              100% personalizado
-            </span>
-            <span className="flex items-center gap-2">
-              <Trophy size={16} className="text-[#d400ff]" />
-              Resultado profissional
-            </span>
-          </div>
+  const strongMatches = ranked.filter((item) => item.isStrong);
+  const topRecommendations = (strongMatches.length > 0 ? strongMatches : ranked).slice(0, 3);
+  const primary = topRecommendations[0] || ranked[0];
+  const maxScore = ranked[0]?.score || 0;
+  const tiedAtTop = ranked.filter((item) => item.score === maxScore);
 
-          <motion.div
-            className="text-center mb-8"
-          >
-            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-100/20 to-blue-100/20 px-6 py-3 rounded-full mb-6">
-              <Trophy className="text-[#d400ff]" size={20} />
-              <span className="text-white font-bold text-sm uppercase tracking-wide">
-                Metodologia MIT • Harvard • Stanford
-              </span>
-            </div>
-            
-            <div className="grid md:grid-cols-3 gap-6 mb-8 max-w-3xl mx-auto">
-              <div className="text-center">
-                <div className="w-12 h-12 bg-[#d400ff]/20 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <User className="text-[#d400ff]" size={24} />
-                </div>
-                <h3 className="text-white font-semibold text-base mb-1">1. Responda</h3>
-                <p className="text-gray-300 text-sm">15 perguntas científicas baseadas no modelo VIPS</p>
-              </div>
-              <div className="text-center">
-                <div className="w-12 h-12 bg-[#d400ff]/20 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <Pulse className="text-[#d400ff]" size={24} />
-                </div>
-                <h3 className="text-white font-semibold text-base mb-1">2. Analisamos</h3>
-                <p className="text-gray-300 text-sm">Análise baseada no modelo Holland RIASEC</p>
-              </div>
-              <div className="text-center">
-                <div className="w-12 h-12 bg-[#d400ff]/20 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <Target className="text-[#d400ff]" size={24} />
-                </div>
-                <h3 className="text-white font-semibold text-base mb-1">3. Recomendamos</h3>
-                <p className="text-gray-300 text-sm">Cursos personalizados com base no seu resultado</p>
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.button
-            onClick={() => {
-              // Iniciar teste diretamente
-              const event = new CustomEvent('startVocationalTest');
-              globalThis.dispatchEvent(event);
-            }}
-            className="bg-gradient-to-r from-[#ff00ff] to-[#d400ff] text-white px-12 py-6 rounded-full font-bold text-xl hover:from-purple-600 hover:to-[#d400ff] transition-all duration-300 inline-flex items-center gap-3 shadow-lg"
-            whileHover={{ 
-              scale: 1.05, 
-              boxShadow: "0 0 40px rgba(212, 0, 255, 0.5)" 
-            }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <Brain size={24} />
-            Iniciar Teste Vocacional
-            <CaretRight size={20} />
-          </motion.button>
-        </motion.div>
-
-        {/* Benefícios do teste */}
-        <motion.div 
-          className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-        >
-        </motion.div>
-      </div>
-    </section>
-  );
+  return {
+    ranked,
+    topRecommendations,
+    primary,
+    secondary: topRecommendations[1] || ranked[1] || null,
+    hasStrongMatch: strongMatches.length > 0,
+    isTie: tiedAtTop.length > 1,
+  };
 };
 
-// Componente do Teste Vocacional
+const outlineButton =
+  'inline-flex items-center justify-center gap-2 rounded-full border border-[#d400ff] px-7 py-3 font-mono text-xs uppercase tracking-[2.5px] text-white transition-colors hover:bg-[#d400ff] hover:text-white disabled:cursor-not-allowed disabled:opacity-50';
+
+const subtleButton =
+  'inline-flex items-center justify-center gap-2 rounded-full border border-[#3a3a3a] px-7 py-3 font-mono text-xs uppercase tracking-[2.5px] text-white transition-colors hover:border-[#d400ff] hover:bg-[#d400ff]/10 disabled:cursor-not-allowed disabled:opacity-50';
+
+const trackCourseClick = (course) => {
+  analytics.trackCourseClicked(course.courseName, true);
+};
+
+const trackResultContact = () => {
+  analytics.trackContactFromTest('whatsapp');
+  analytics.trackResultShared('whatsapp');
+};
+
+const Hero = ({ onStart }) => (
+  <section className="min-h-screen bg-black text-white">
+    <div className="mx-auto flex min-h-screen max-w-6xl flex-col justify-between px-6 py-8 md:px-10">
+      <header className="flex items-center justify-between border-b border-[#262626] pb-6">
+        <LogoH size="small" animated={false} showFullText textColor="text-white" />
+        <span className="font-mono text-[10px] uppercase tracking-[2.5px] text-[#8a8a8a]">
+          8 perguntas
+        </span>
+      </header>
+
+      <div className="max-w-4xl py-20 md:py-28">
+        <p className="mb-6 font-mono text-xs uppercase tracking-[3px] text-[#8a8a8a]">
+          Escola Habilidade
+        </p>
+        <h1 className="mb-8 font-['Saira_Condensed'] text-6xl font-normal uppercase leading-[0.92] tracking-[4px] text-[#d400ff] sm:text-7xl md:text-8xl">
+          Teste Vocacional
+        </h1>
+        <p className="max-w-2xl font-['EB_Garamond'] text-xl leading-8 text-[#cfcfcf] md:text-2xl">
+          Responda afirmações simples em uma escala de 1 a 5 e veja quais cursos combinam
+          melhor com o seu momento.
+        </p>
+        <button type="button" onClick={onStart} className={`${outlineButton} mt-10`}>
+          Começar teste
+        </button>
+      </div>
+
+      <div className="grid gap-4 border-t border-[#262626] pt-6 font-mono text-[10px] uppercase tracking-[2px] text-[#8a8a8a] sm:grid-cols-3">
+        <span>Sem cadastro obrigatório</span>
+        <span>Resultado imediato</span>
+        <span>Recomendação de curso</span>
+      </div>
+    </div>
+  </section>
+);
+
 const VocationalTest = ({ onComplete }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState({});
-  const [isCompleted, setIsCompleted] = useState(false);
+  const question = questions[currentQuestion];
+  const selectedValue = answers[question.id];
+  const progress = ((currentQuestion + 1) / questions.length) * 100;
 
-  const handleAnswer = (answerIndex, scores) => {
-    const question = allQuestions[currentQuestion];
-    const answer = question.answers[answerIndex];
-    
-    // Track resposta
-    analytics.trackQuestionAnswered(
-      currentQuestion + 1,
-      question.question,
-      answer.text
-    );
-    
-    const newAnswers = {
-      ...answers,
-      [currentQuestion]: { answerIndex, scores }
-    };
-    setAnswers(newAnswers);
+  const selectAnswer = (value) => {
+    const nextAnswers = { ...answers, [question.id]: value };
+    setAnswers(nextAnswers);
 
-    if (currentQuestion < allQuestions.length - 1) {
-      setTimeout(() => {
-        setCurrentQuestion(currentQuestion + 1);
-        // Track progresso
-        analytics.trackTestProgress(currentQuestion + 2, allQuestions.length);
-      }, 300);
-    } else {
-      setIsCompleted(true);
-      const results = calculateResults(newAnswers);
-      
-      // Track conclusão
-      const timeSpent = analytics.measureTestDuration.end();
-      const primaryArea = results[0]?.area || 'não identificado';
-      const secondaryArea = results[1]?.area || 'não identificado';
-      
-      analytics.trackTestCompleted(
-        { primaryArea, secondaryArea },
-        timeSpent
-      );
-      
-      setTimeout(() => {
-        onComplete(results);
-      }, 300);
-    }
+    analytics.trackQuestionAnswered(currentQuestion + 1, question.statement, value);
+    trackEvent('teste_vocacional_likert_resposta', {
+      event_category: 'Teste Vocacional',
+      event_label: `Pergunta ${currentQuestion + 1}`,
+      question_number: currentQuestion + 1,
+      score: value,
+      primary_area: question.area,
+      secondary_area: '',
+    });
   };
 
-  const calculateResults = (allAnswers) => {
-    const totals = {
-      tecnologia: 0,
-      design: 0,
-      marketing: 0,
-      gestao: 0,
-      educacao: 0,
-      criatividade: 0,
-      comunicacao: 0,
-      logica: 0
-    };
-
-    for (const answer of Object.values(allAnswers)) {
-      for (const [area, score] of Object.entries(answer.scores)) {
-        totals[area] += score;
-      }
+  const goNext = () => {
+    if (!selectedValue) {
+      return;
     }
 
-    // Ajustar scores negativos para valores mínimos de 0
-    const adjustedTotals = {};
-    const minScore = Math.min(...Object.values(totals));
-    const adjustment = minScore < 0 ? Math.abs(minScore) : 0;
-    
-    for (const [area, score] of Object.entries(totals)) {
-      adjustedTotals[area] = score + adjustment;
+    if (currentQuestion === questions.length - 1) {
+      const calculated = getSortedResults(answers);
+      const timeSpent = analytics.measureTestDuration.end();
+
+      analytics.trackTestCompleted(
+        {
+          primaryArea: calculated.primary?.area,
+          secondaryArea: calculated.secondary?.area,
+        },
+        timeSpent
+      );
+      analytics.trackCombinedProfile(calculated.topRecommendations, calculated.isTie ? 'tie' : 'direct');
+      analytics.trackCourseCompatibility(calculated.topRecommendations, {
+        primaryArea: calculated.primary?.area,
+        secondaryArea: calculated.secondary?.area,
+      });
+
+      onComplete({
+        answers,
+        timeSpent,
+        ...calculated,
+      });
+      return;
     }
 
-    // Normalizar para porcentagem
-    const maxScore = Math.max(...Object.values(adjustedTotals));
-    const normalizedResults = Object.entries(adjustedTotals).map(([area, score]) => ({
-      area,
-      score: maxScore > 0 ? Math.round((score / maxScore) * 100) : 0
-    }));
-
-    return normalizedResults;
+    analytics.trackTestProgress(currentQuestion + 2, questions.length);
+    setCurrentQuestion((current) => current + 1);
   };
 
   const goBack = () => {
-    if (currentQuestion > 0) {
-      setCurrentQuestion(currentQuestion - 1);
-    }
+    setCurrentQuestion((current) => Math.max(0, current - 1));
   };
 
-  if (isCompleted) {
-    return (
-      <div className="text-center py-20">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.5 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8 }}
-        >
-          <div className="w-20 h-20 bg-[#d400ff] rounded-full flex items-center justify-center mx-auto mb-6">
-            <Check className="text-white" size={40} />
-          </div>
-          <h3 className="text-2xl font-bold text-gray-900 mb-4">
-            Teste Concluído!
-          </h3>
-          <p className="text-gray-600 mb-6">
-            Analisando seus resultados e preparando suas recomendações...
-          </p>
-          <div className="flex justify-center">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#d400ff]"></div>
-          </div>
-        </motion.div>
-      </div>
-    );
-  }
-
-  const progress = ((currentQuestion + 1) / allQuestions.length) * 100;
-  const question = allQuestions[currentQuestion];
-
   return (
-    <div className="max-w-4xl mx-auto" key="vocational-test-container">
-      {/* Progress Bar */}
-      <div className="mb-8">
-        <div className="flex justify-between text-sm text-gray-600 mb-2">
-          <span>Pergunta {currentQuestion + 1} de {allQuestions.length}</span>
-          <span>{Math.round(progress)}% completo</span>
+    <div className="mx-auto max-w-4xl bg-black text-white">
+      <div className="mb-10 border-b border-[#262626] pb-5">
+        <div className="mb-4 flex items-center justify-between font-mono text-[10px] uppercase tracking-[2.5px] text-[#8a8a8a]">
+          <span>
+            Pergunta {currentQuestion + 1} de {questions.length}
+          </span>
+          <span>{Math.round(progress)}%</span>
         </div>
-        <div className="w-full bg-gray-200 rounded-full h-2">
-          <motion.div 
-            className="bg-[#d400ff] h-2 rounded-full"
-            key="progress-bar-animation"
-            initial={{ width: 0 }}
-            animate={{ width: `${progress}%` }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-          />
+        <div className="h-px w-full bg-[#262626]">
+          <div className="h-px bg-[#d400ff] transition-all duration-300" style={{ width: `${progress}%` }} />
         </div>
       </div>
 
-      {/* Question */}
-      <motion.div
-        key={`question-${currentQuestion}`}
-        initial={{ opacity: 0, x: 20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.4 }}
-        className="text-center mb-8"
-      >
-        <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8">
-          {question.question}
-        </h3>
+      <div key={question.id} className="border border-[#262626] p-6 sm:p-10">
+        <p className="mb-5 font-mono text-[10px] uppercase tracking-[2.5px] text-[#8a8a8a]">
+          Marque o quanto essa frase combina com você
+        </p>
+        <h2 className="font-['Cormorant_Garamond'] text-3xl font-normal leading-tight text-[#d400ff] sm:text-4xl md:text-5xl">
+          {question.statement}
+        </h2>
 
-        <div className="grid gap-4 max-w-2xl mx-auto">
-          {question.answers.map((answer, index) => (
-            <motion.button
-              key={index}
-              onClick={() => handleAnswer(index, answer.scores)}
-              className="p-6 bg-white border-2 border-gray-200 rounded-xl text-left hover:border-[#d400ff] hover:bg-purple-50 transition-all duration-300"
-              whileHover={{ scale: 1.02, y: -2 }}
-              whileTap={{ scale: 0.98 }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: index * 0.1 }}
-            >
-              <div className="flex items-center justify-between">
-                <span className="text-gray-800 font-medium">{answer.text}</span>
-                <CaretRight className="text-[#d400ff] opacity-0 group-hover:opacity-100 transition-opacity" size={20} />
-              </div>
-            </motion.button>
-          ))}
+        <div className="mt-10">
+          <div className="mb-4 flex justify-between font-mono text-[10px] uppercase tracking-[2px] text-[#8a8a8a]">
+            <span>Discordo</span>
+            <span>Concordo</span>
+          </div>
+          <div className="grid grid-cols-5 gap-2 sm:gap-4">
+            {scale.map((item) => (
+              <button
+                key={item.value}
+                type="button"
+                onClick={() => selectAnswer(item.value)}
+                aria-pressed={selectedValue === item.value}
+                className={`flex aspect-square min-h-14 flex-col items-center justify-center rounded-full border font-mono transition-colors ${
+                  selectedValue === item.value
+                    ? 'border-[#d400ff] bg-[#d400ff] text-white'
+                    : 'border-[#3a3a3a] bg-transparent text-white hover:border-[#d400ff]'
+                }`}
+              >
+                <span className="text-lg">{item.value}</span>
+                {item.label && (
+                  <span className="mt-1 hidden text-[8px] uppercase tracking-[1.5px] sm:block">
+                    {item.label}
+                  </span>
+                )}
+              </button>
+            ))}
+          </div>
         </div>
+      </div>
 
-        {/* Back Button */}
-        {currentQuestion > 0 && (
-          <motion.button
-            onClick={goBack}
-            className="mt-8 text-gray-600 hover:text-[#d400ff] inline-flex items-center gap-2"
-            whileHover={{ x: -2 }}
-          >
-            <CaretLeft size={16} />
-            Voltar
-          </motion.button>
-        )}
-        </motion.div>
+      <div className="mt-8 flex flex-col-reverse gap-3 sm:flex-row sm:justify-between">
+        <button
+          type="button"
+          onClick={goBack}
+          disabled={currentQuestion === 0}
+          className={subtleButton}
+        >
+          <CaretLeft size={16} />
+          Voltar
+        </button>
+        <button type="button" onClick={goNext} disabled={!selectedValue} className={outlineButton}>
+          {currentQuestion === questions.length - 1 ? 'Ver resultado' : 'Próxima'}
+        </button>
+      </div>
     </div>
   );
 };
 
-// Componente Results Dashboard
 const ResultsDashboard = ({ results, onRestart }) => {
-  const [showCourses, setShowCourses] = useState(false);
-  const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
-  const [pdfProgress, setPdfProgress] = useState({ phase: '', progress: 0, message: '' });
-  const resultsReference = useRef(null);
   const pdfContentReference = useRef(null);
+  const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
+  const [pdfProgress, setPdfProgress] = useState({});
+  const { ranked, topRecommendations, primary, secondary, hasStrongMatch, isTie } = results;
 
-  // Setup PDF progress callback
-  useEffect(() => {
-    const unsubscribe = onLoadProgress((progress) => {
-      setPdfProgress(progress);
-    });
-    return unsubscribe;
-  }, []);
+  useEffect(() => onLoadProgress(setPdfProgress), []);
 
-  // Preparar dados para o gráfico radar
-  const radarData = [
-    { label: 'Tecnologia', value: results.find(r => r.area === 'tecnologia')?.score || 0, color: '#3b82f6' },
-    { label: 'Design', value: results.find(r => r.area === 'design')?.score || 0, color: '#f59e0b' },
-    { label: 'Marketing', value: results.find(r => r.area === 'marketing')?.score || 0, color: '#10b981' },
-    { label: 'Gestão', value: results.find(r => r.area === 'gestao')?.score || 0, color: '#8b5cf6' },
-    { label: 'Educação', value: results.find(r => r.area === 'educacao')?.score || 0, color: '#f97316' },
-    { label: 'Criatividade', value: results.find(r => r.area === 'criatividade')?.score || 0, color: '#ec4899' }
-  ];
-
-  // Encontrar área dominante
-  const dominantArea = results.reduce((previous, current) => 
-    (previous.score > current.score) ? previous : current
+  const whatsappText = useMemo(
+    () =>
+      encodeURIComponent(
+        `Olá! Fiz o teste vocacional da Escola Habilidade e meu principal resultado foi ${primary.area}.\n\n` +
+          `Curso recomendado: ${primary.courseName}\n` +
+          `Top 3:\n${topRecommendations
+            .map((item, index) => `${index + 1}. ${item.area} (${item.score}/5)`)
+            .join('\n')}\n\n` +
+          'Gostaria de saber mais sobre valores, horários e próximas turmas.'
+      ),
+    [primary, topRecommendations]
   );
 
-  // Recomendar cursos baseado no perfil
-  // Calcular score de compatibilidade baseado nas top 3 áreas
-  const calculateCourseCompatibility = (course, userResults) => {
-    // Ordenar resultados do usuário por score (maior para menor)
-    const topAreas = userResults.sort((a, b) => b.score - a.score).slice(0, 3);
-    
-    let compatibilityScore = 0;
-    
-    // Atribuir pesos: 1ª área (3 pontos), 2ª área (2 pontos), 3ª área (1 ponto)
-    for (const [index, userArea] of topAreas.entries()) {
-      if (course.areas.includes(userArea.area)) {
-        const weight = 3 - index; // 3, 2, 1
-        compatibilityScore += weight;
-      }
-    }
-    
-    return {
-      ...course,
-      compatibilityScore,
-      compatibilityPercentage: Math.round((compatibilityScore / 6) * 100) // Máximo possível: 6 pontos
-    };
-  };
-  const recommendedCourses = courses
-    .map(course => calculateCourseCompatibility(course, results))
-    .filter(course => course.compatibilityScore > 0) // Apenas cursos com alguma compatibilidade
-    .sort((a, b) => b.compatibilityScore - a.compatibilityScore) // Ordenar por score (maior primeiro)
-    .slice(0, 3); // Pegar os top 3 cursos;
+  const contactUrl = `https://wa.me/${CONTACT_PHONE}?text=${whatsappText}`;
 
-  // Mensagens personalizadas por perfil
-  const getPersonalizedMessage = (results) => {
-    // Ordenar por score e pegar as top 3 áreas
-    const topAreas = results.sort((a, b) => b.score - a.score).slice(0, 3);
-    const [first, second, third] = topAreas;
-    
-    // Definir perfis combinados mais comuns
-    const combinedProfiles = {
-      // Tecnologia + outras áreas
-      'tecnologia-logica': "Você tem um perfil **Tecnológico-Analítico**! Combina habilidades técnicas com raciocínio lógico excepcional. É ideal para desenvolvimento de software, programação de sistemas complexos, análise de dados e inteligência artificial.",
-      'tecnologia-criatividade': "Seu perfil é **Tecnológico-Criativo**! Une conhecimento técnico com pensamento inovador. Perfeito para design de interfaces, desenvolvimento de games, soluções criativas em tech e projetos que exigem tanto código quanto criatividade.",
-      'tecnologia-design': "Você é **Tecnológico-Visual**! Combina programação com senso estético. Ideal para desenvolvimento front-end, UX/UI design, criação de aplicativos visuais e projetos que unem código e design.",
-      
-      // Design + outras áreas
-      'design-marketing': "Seu perfil é **Criativo-Estratégico**! Combina talento visual com visão comercial. Excelente para marketing digital, gestão de redes sociais, criação de campanhas visuais e branding que realmente vendem.",
-      'design-comunicacao': "Você tem perfil **Visual-Comunicativo**! Une criação visual com habilidades de comunicação. Perfeito para produção de conteúdo, design editorial, apresentações impactantes e comunicação visual.",
-      
-      // Marketing + outras áreas
-      'marketing-gestao': "Seu perfil é **Comercial-Estratégico**! Combina visão de negócios com liderança. Ideal para gestão comercial, empreendedorismo, desenvolvimento de negócios e liderança de equipes comerciais.",
-      'marketing-comunicacao': "Você é **Comunicativo-Persuasivo**! Excellence em comunicação e persuasão. Perfeito para vendas, marketing digital, relações públicas e qualquer área que exija convencer e engajar pessoas.",
-      
-      // Gestão + outras áreas
-      'gestao-logica': "Seu perfil é **Gerencial-Analítico**! Combina liderança com análise sistemática. Ideal para gestão de projetos, business intelligence, consultoria empresarial e cargos que exigem decisões baseadas em dados.",
-      'gestao-educacao': "Você tem perfil **Líder-Educador**! Une capacidade de gestão com desenvolvimento de pessoas. Excelente para gestão de recursos humanos, treinamentos corporativos e liderança de equipes.",
-      
-      // Educação + outras áreas
-      'educacao-comunicacao': "Seu perfil é **Educativo-Comunicativo**! Combina ensino com excelente comunicação. Perfeito para treinamentos, palestras, criação de conteúdo educativo e qualquer área que envolva transmitir conhecimento.",
-      
-      // Lógica + outras áreas
-      'logica-gestao': "Você é **Analítico-Organizacional**! Combina raciocínio lógico com visão de processos. Ideal para análise de dados, otimização de processos, business intelligence e consultoria analítica."
-    };
-    
-    // Criar chave para perfil combinado
-    const profileKey = `${first.area}-${second.area}`;
-    
-    // Se existe perfil combinado específico, usar ele
-    if (combinedProfiles[profileKey]) {
-      return combinedProfiles[profileKey];
-    }
-    
-    // Caso contrário, usar mensagem baseada na área dominante com menção da segunda área
-    const singleAreaMessages = {
-      tecnologia: `Você tem um **perfil técnico e analítico** com forte afinidade por ${second.area === 'logica' ? 'raciocínio lógico' : second.area === 'design' ? 'criação visual' : second.area === 'criatividade' ? 'inovação' : second.area}. Adora resolver problemas complexos usando tecnologia e criar soluções que realmente funcionam.`,
-      design: `Sua **criatividade é seu grande diferencial**, combinada com ${second.area === 'marketing' ? 'visão comercial' : second.area === 'comunicacao' ? 'habilidades de comunicação' : second.area === 'tecnologia' ? 'conhecimento técnico' : second.area}. Você tem olhar estético apurado e transforma ideias em realidade visual.`,
-      marketing: `Você é um **comunicador nato com visão estratégica**, especialmente forte em ${second.area === 'comunicacao' ? 'persuasão' : second.area === 'gestao' ? 'liderança' : second.area === 'design' ? 'comunicação visual' : second.area}. Entende como conectar pessoas, produtos e ideias de forma eficaz.`,
-      gestao: `**Líder por natureza**, com forte capacidade de ${second.area === 'comunicacao' ? 'comunicação' : second.area === 'logica' ? 'análise' : second.area === 'marketing' ? 'visão comercial' : second.area}. Tem facilidade para organizar, planejar e coordenar pessoas e projetos para alcançar resultados.`,
-      educacao: `**Ensinar é sua vocação natural**, combinada com ${second.area === 'comunicacao' ? 'excelente comunicação' : second.area === 'gestao' ? 'capacidade organizacional' : second.area === 'tecnologia' ? 'conhecimento técnico' : second.area}. Tem paciência e satisfação em desenvolver outras pessoas.`,
-      criatividade: `Sua **mente criativa é sua maior força**, especialmente quando aplicada à ${second.area === 'design' ? 'criação visual' : second.area === 'tecnologia' ? 'inovação técnica' : second.area === 'marketing' ? 'comunicação criativa' : second.area}. Pensa fora da caixa e encontra soluções únicas.`,
-      comunicacao: `**Comunicação é seu talento natural**, potencializada por sua ${second.area === 'marketing' ? 'visão estratégica' : second.area === 'educacao' ? 'vocação para ensinar' : second.area === 'gestao' ? 'capacidade de liderança' : second.area}. Se expressa bem e consegue influenciar pessoas positivamente.`,
-      logica: `**Raciocínio lógico é seu diferencial**, especialmente quando combinado com ${second.area === 'tecnologia' ? 'conhecimento técnico' : second.area === 'gestao' ? 'visão organizacional' : second.area === 'educacao' ? 'capacidade de ensinar' : second.area}. Resolve problemas complexos de forma sistemática e organizada.`
-    };
-    
-    return singleAreaMessages[first.area] || "Você tem um **perfil único e diversificado** com múltiplas fortalezas profissionais!";
-  };
-
-  // Função para gerar PDF usando o novo PDF Worker
   const generatePDF = async () => {
-    console.log('📄 TESTE VOCACIONAL: Starting PDF generation with PDF Worker');
     if (!pdfContentReference.current) {
-      console.error('❌ PDF: pdfContentRef not found');
       return;
     }
-    
+
     setIsGeneratingPDF(true);
-    setPdfProgress({ phase: 'start', progress: 0, message: 'Iniciando...' });
-    
-    // Track download do PDF
-    analytics.trackPDFDownloaded(dominantArea.area);
-    
+    analytics.trackPDFDownloaded(primary.area);
+
     try {
-      // Usar o PDF Worker para geração
-      const hoje = new Date().toLocaleDateString('pt-BR').replaceAll('/', '-');
-      const filename = `Teste-Vocacional-Escola-Habilidade-${hoje}.pdf`;
-      
-      await generatePDFWorker(pdfContentReference.current, filename);
-      
-      console.log('✅ PDF: Generated successfully using PDF Worker');
-      
-    } catch (error) {
-      console.error('❌ PDF: Generation failed:', error);
-      alert(error.message || 'Erro ao gerar PDF. Tente novamente.');
+      await generatePDFWorker(
+        pdfContentReference.current,
+        `teste-vocacional-${primary.id}.pdf`,
+        {
+          canvas: {
+            backgroundColor: '#000000',
+          },
+        }
+      );
     } finally {
       setIsGeneratingPDF(false);
-      setPdfProgress({ phase: '', progress: 0, message: '' });
     }
   };
 
-  // Preload removido: PDF Worker carrega bibliotecas apenas quando necessário
-
-  // Função para compartilhar resultados
   const shareResults = async () => {
-    const areaName = dominantArea.area === 'gestao' ? 'Gestão' : 
-                    dominantArea.area === 'educacao' ? 'Educação' : 
-                    dominantArea.area === 'comunicacao' ? 'Comunicação' :
-                    dominantArea.area === 'logica' ? 'Lógica' : dominantArea.area;
-    
-    const shareText = `🎯 Descobri meu perfil vocacional na Escola Habilidade!
-    
-📊 Meu perfil dominante: ${areaName} (${dominantArea.score}%)
-${getPersonalizedMessage(results)}
+    const text =
+      `Meu resultado no teste vocacional da Escola Habilidade foi ${primary.area}.\n` +
+      `Curso recomendado: ${primary.courseName}\n` +
+      'Faça o teste: https://escolahabilidade.com/teste-vocacional';
 
-✅ Resultado baseado em metodologia científica de MIT, Harvard e Stanford
-📍 Cursos presenciais em Florianópolis, São José e Palhoça
-
-Faça seu teste gratuito: https://escolahabilidade.com/teste-vocacional
-#TesteVocacional #EscolaHabilidade #Florianópolis`;
-
-    if (navigator.share) {
-      // API Web Share (móvel)
-      try {
-        await navigator.share({
-          title: 'Meu Resultado do Teste Vocacional - Escola Habilidade',
-          text: shareText,
-          url: 'https://escolahabilidade.com/teste-vocacional'
-        });
-        // Track compartilhamento bem sucedido
-        analytics.trackResultShared('native_share');
-      } catch (error) {
-        if (error.name !== 'AbortError') {
-          fallbackShare(shareText);
-        }
-      }
-    } else {
-      fallbackShare(shareText);
-    }
-  };
-
-  // Função alternativa de compartilhamento
-  const fallbackShare = (text) => {
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(text).then(() => {
-        alert('Texto copiado! Cole em suas redes sociais para compartilhar 📋');
-        // Track compartilhamento via clipboard
-        analytics.trackResultShared('clipboard');
-      }).catch(() => {
-        openWhatsAppShare(text);
+    if (globalThis.navigator?.share) {
+      await globalThis.navigator.share({
+        title: 'Teste Vocacional Escola Habilidade',
+        text,
+        url: 'https://escolahabilidade.com/teste-vocacional',
       });
-    } else {
-      openWhatsAppShare(text);
+      analytics.trackResultShared('native_share');
+      return;
     }
+
+    await globalThis.navigator?.clipboard?.writeText(text);
+    analytics.trackResultShared('clipboard');
   };
-
-  // Abrir WhatsApp com texto pré-preenchido
-  const openWhatsAppShare = (text) => {
-    const encodedText = encodeURIComponent(text);
-    window.open(`https://wa.me/?text=${encodedText}`, '_blank');
-    // Track compartilhamento via WhatsApp
-    analytics.trackResultShared('whatsapp');
-  };
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowCourses(true);
-    }, 2000);
-    return () => clearTimeout(timer);
-  }, []);
-
-  // Analytics para perfis combinados e compatibilidade de cursos
-  useEffect(() => {
-    // Preparar dados para analytics
-    const topAreas = results.sort((a, b) => b.score - a.score).slice(0, 3);
-    const [first, second] = topAreas;
-    
-    // Determinar tipo de perfil
-    const combinedProfiles = {
-      'tecnologia-logica': 'Tecnológico-Analítico',
-      'tecnologia-criatividade': 'Tecnológico-Criativo',
-      'tecnologia-design': 'Tecnológico-Visual',
-      'design-marketing': 'Criativo-Estratégico',
-      'design-comunicacao': 'Visual-Comunicativo',
-      'marketing-gestao': 'Comercial-Estratégico',
-      'marketing-comunicacao': 'Comunicativo-Persuasivo',
-      'gestao-logica': 'Gerencial-Analítico',
-      'gestao-educacao': 'Líder-Educador',
-      'educacao-comunicacao': 'Educativo-Comunicativo',
-      'logica-gestao': 'Analítico-Organizacional'
-    };
-    
-    const profileKey = `${first.area}-${second.area}`;
-    const profileType = combinedProfiles[profileKey] || `${first.area}-dominante`;
-    
-    // Track perfil combinado
-    analytics.trackCombinedProfile(topAreas, profileType);
-    
-    // Track compatibilidade de cursos
-    analytics.trackCourseCompatibility(recommendedCourses, {
-      primaryArea: first.area,
-      secondaryArea: second.area
-    });
-  }, [results, recommendedCourses]);
 
   return (
-    <motion.div
-      ref={resultsReference}
-      key="vocational-results-dashboard"
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="max-w-6xl mx-auto"
-    >
-      {/* Container específico para PDF (exclui botões de ação) */}
-      <div ref={pdfContentReference}>
-      {/* Header dos Resultados */}
-      <div className="text-center mb-12">
-        <motion.div
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="w-20 h-20 bg-[#d400ff] rounded-full flex items-center justify-center mx-auto mb-6"
-        >
-          <Star className="text-white" size={40} />
-        </motion.div>
-        
-        <div className="flex items-center justify-center gap-2 mb-4">
-          <Trophy className="text-[#d400ff]" size={24} />
-          <span className="text-sm uppercase tracking-wide text-gray-500 font-semibold">
-            Análise Científica MIT • Harvard • Stanford
-          </span>
-        </div>
-        
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-          Seu Perfil Vocacional Está Pronto! 🎉
-        </h2>
-        
-        <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-          <strong>Baseado em metodologias validadas por 2+ milhões de estudantes:</strong><br />
-          {getPersonalizedMessage(results)}
-        </p>
-      </div>
-
-      {/* Dashboard Grid */}
-      <div className="grid lg:grid-cols-2 gap-8 mb-12">
-        {/* Gráfico Radar */}
-        <motion.div
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          className="bg-white rounded-2xl p-8 shadow-xl"
-        >
-          <div className="text-center mb-6">
-            <div className="flex items-center justify-center gap-2 mb-2">
-              <ChartPie className="text-[#d400ff]" size={20} />
-              <span className="text-xs uppercase tracking-wide text-gray-500 font-semibold">
-                Metodologia RIASEC - Stanford
-              </span>
-            </div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-2">Seu Perfil Profissional</h3>
-            <p className="text-gray-600">Análise científica das suas afinidades por área</p>
-          </div>
-          
-          <div className="flex justify-center">
-            <RadarChart data={radarData} size={300} />
-          </div>
-        </motion.div>
-
-        {/* Ranking das Áreas */}
-        <motion.div
-          initial={{ opacity: 0, x: 50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, delay: 0.7 }}
-          className="bg-white rounded-2xl p-8 shadow-xl"
-        >
-          <div className="flex items-center gap-2 mb-6">
-            <ChartBar className="text-[#d400ff]" size={20} />
-            <span className="text-xs uppercase tracking-wide text-gray-500 font-semibold">
-              Modelo VIPS - MIT
+    <div className="mx-auto max-w-6xl bg-black text-white">
+      <div ref={pdfContentReference} className="bg-black p-0 text-white md:p-8">
+        <div className="border-b border-[#262626] pb-8">
+          <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <LogoH size="small" animated={false} showFullText textColor="text-white" />
+            <span className="font-mono text-[10px] uppercase tracking-[2.5px] text-[#8a8a8a]">
+              Resultado vocacional
             </span>
           </div>
-          <h3 className="text-2xl font-bold text-gray-900 mb-6">Análise Completa de Todas as Áreas</h3>
-          <p className="text-gray-600 mb-6">Veja sua pontuação em todas as 8 áreas vocacionais analisadas</p>
-          
-          <BarChart data={results.sort((a, b) => b.score - a.score)} />
-        </motion.div>
-      </div>
 
-      {/* Cursos Recomendados */}
-      {showCourses && (
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="bg-gradient-to-br from-[#d400ff] to-purple-600 rounded-2xl p-8 text-white mb-8"
-        >
-          <div className="text-center mb-8">
-            <div className="flex items-center justify-center gap-2 mb-4">
-              <Trophy className="text-white" size={24} />
-              <span className="text-sm uppercase tracking-wide text-purple-100 font-semibold">
-                Metodologia MIT • Harvard • Stanford
-              </span>
-            </div>
-            <h3 className="text-3xl font-bold mb-4">Cursos Cientificamente Recomendados 🎯</h3>
-            <p className="text-purple-100 text-lg">
-              Baseado na análise do seu perfil VIPS, estes cursos têm alta compatibilidade com você
+          <p className="mb-4 font-mono text-xs uppercase tracking-[3px] text-[#8a8a8a]">
+            {isTie ? 'Top 3 recomendado' : 'Curso principal'}
+          </p>
+          <h2 className="font-['Saira_Condensed'] text-5xl font-normal uppercase leading-none tracking-[4px] text-[#d400ff] md:text-7xl">
+            {primary.area}
+          </h2>
+          <p className="mt-6 max-w-3xl font-['EB_Garamond'] text-xl leading-8 text-[#cfcfcf]">
+            {primary.profile}
+          </p>
+          {!hasStrongMatch && (
+            <p className="mt-5 max-w-2xl font-mono text-xs uppercase tracking-[2px] text-[#8a8a8a]">
+              Como nenhuma resposta ficou em 4 ou 5, usamos suas maiores notas para sugerir caminhos
+              próximos.
             </p>
-          </div>
+          )}
+        </div>
 
-          <div className="grid md:grid-cols-2 gap-6">
-            {recommendedCourses.map((course, index) => (
-              <motion.div
-                key={course.id}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                className="bg-white/10 backdrop-blur-sm rounded-xl p-6 hover:bg-white/20 transition-all duration-300"
-              >
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
-                    <course.icon className="text-white" size={24} />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-lg">{course.name}</h4>
-                    <p className="text-purple-100 text-sm">{course.subtitle}</p>
-                  </div>
-                </div>
-                
-                <p className="text-purple-100 mb-4">{course.description}</p>
-                
-                {/* Badge de Compatibilidade */}
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="bg-white/20 rounded-full px-3 py-1 flex items-center gap-2">
-                    <Star size={14} className="text-yellow-300" />
-                    <span className="text-white text-sm font-semibold">
-                      {course.compatibilityPercentage}% Compatible
-                    </span>
-                  </div>
-                  <span className="text-purple-100 text-xs">
-                    Baseado no seu perfil científico
+        <div className="grid gap-8 py-10 lg:grid-cols-[1.1fr_0.9fr]">
+          <section className="border border-[#262626] p-6 md:p-8">
+            <h3 className="mb-8 font-mono text-xs uppercase tracking-[2.5px] text-[#8a8a8a]">
+              Ranking
+            </h3>
+            <div className="space-y-5">
+              {ranked.map((item, index) => (
+                <div key={item.id} className="grid grid-cols-[2rem_1fr_auto] items-center gap-4">
+                  <span className="font-mono text-xs text-[#8a8a8a]">
+                    {String(index + 1).padStart(2, '0')}
                   </span>
+                  <div>
+                    <div className="flex items-center justify-between gap-4">
+                      <span className="font-['Saira_Condensed'] text-xl uppercase tracking-[2px] text-[#d400ff]">
+                        {item.area}
+                      </span>
+                      <span className="font-mono text-xs text-[#cfcfcf]">{item.score}/5</span>
+                    </div>
+                    <div className="mt-2 h-px bg-[#262626]">
+                      <div
+                        className="h-px bg-[#d400ff]"
+                        style={{ width: `${Math.max(6, item.score * 20)}%` }}
+                      />
+                    </div>
+                  </div>
+                  <a
+                    href={item.route}
+                    onClick={() => trackCourseClick(item)}
+                    className="hidden rounded-full border border-[#3a3a3a] px-4 py-2 font-mono text-[10px] uppercase tracking-[2px] text-white transition-colors hover:border-[#d400ff] hover:bg-[#d400ff] hover:text-white sm:inline-flex"
+                  >
+                    Curso
+                  </a>
                 </div>
-                
-                <div className="flex justify-between items-center mb-4">
-                  <span className="text-sm">Duração: {course.duration}</span>
-                  <span className="font-bold">{course.price}</span>
+              ))}
+            </div>
+          </section>
+
+          <aside className="space-y-5">
+            <div className="border border-[#d400ff] p-6 md:p-8">
+              <p className="mb-3 font-mono text-[10px] uppercase tracking-[2.5px] text-[#8a8a8a]">
+                Recomendação principal
+              </p>
+              <h3 className="font-['Saira_Condensed'] text-3xl font-normal uppercase tracking-[3px] text-[#d400ff]">
+                {primary.courseName}
+              </h3>
+              <a
+                href={primary.route}
+                onClick={() => trackCourseClick(primary)}
+                className={`${outlineButton} mt-6 w-full`}
+              >
+                Ver curso
+              </a>
+            </div>
+
+            {secondary && (
+              <div className="border border-[#262626] p-6 md:p-8">
+                <p className="mb-4 font-mono text-[10px] uppercase tracking-[2.5px] text-[#8a8a8a]">
+                  Alternativas próximas
+                </p>
+                <div className="space-y-4">
+                  {topRecommendations.slice(1, 3).map((item) => (
+                    <a
+                      key={item.id}
+                      href={item.route}
+                      onClick={() => trackCourseClick(item)}
+                      className="flex items-center justify-between border-b border-[#262626] pb-4 text-white transition-colors hover:text-[#d400ff]"
+                    >
+                      <span className="font-['Saira_Condensed'] text-xl uppercase tracking-[2px]">
+                        {item.area}
+                      </span>
+                      <span className="font-mono text-xs text-[#8a8a8a]">{item.score}/5</span>
+                    </a>
+                  ))}
                 </div>
-                
-                <motion.a
-                  href={`https://wa.me/5548988559491?text=${encodeURIComponent(
-                    `Olá! Fiz o teste vocacional científico e obtive ${dominantArea.score}% de afinidade com ${
-                      dominantArea.area === 'gestao' ? 'Gestão' : 
-                      dominantArea.area === 'educacao' ? 'Educação' : 
-                      dominantArea.area === 'comunicacao' ? 'Comunicação' :
-                      dominantArea.area === 'logica' ? 'Lógica' : 
-                      dominantArea.area.charAt(0).toUpperCase() + dominantArea.area.slice(1)
-                    }.\n\n` +
-                    `O curso ${course.name} foi recomendado para meu perfil.\n` +
-                    `Gostaria de saber mais sobre:\n` +
-                    `• Valores e formas de pagamento\n` +
-                    `• Horários disponíveis\n` +
-                    `• Início das próximas turmas\n` +
-                    `• Local das aulas (Florianópolis, São José ou Palhoça)`
-                  )}`}
-                  className="w-full bg-white text-[#d400ff] py-3 rounded-lg font-bold hover:bg-gray-100 transition-colors inline-flex items-center justify-center gap-2"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <ChatCircle size={18} />
-                  Quero Este Curso
-                </motion.a>
-              </motion.div>
-            ))}
+              </div>
+            )}
+          </aside>
+        </div>
+
+        <div className="border-t border-[#262626] pt-8">
+          <p className="mb-5 font-['EB_Garamond'] text-lg leading-7 text-[#cfcfcf]">
+            Quer conversar sobre esse resultado? A equipe da Escola Habilidade pode indicar a
+            melhor turma para sua idade, objetivo e disponibilidade.
+          </p>
+          <div className="flex flex-wrap gap-3 font-mono text-[10px] uppercase tracking-[2px] text-[#8a8a8a]">
+            <span>Florianópolis</span>
+            <span>São José</span>
+            <span>Palhoça</span>
+            <span>(48) 98855-9491</span>
           </div>
-        </motion.div>
-      )}
-
-      {/* Footer para PDF - Informações de contato */}
-      <div className="bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl p-6 mt-8 text-center">
-        <div className="flex items-center justify-center gap-2 mb-3">
-          <LogoH 
-            size="small"
-            animated={true}
-            showFullText={true}
-            textColor="text-gray-700"
-            className="opacity-80"
-          />
-        </div>
-        <p className="text-gray-600 text-sm mb-2">
-          Transformando carreiras através da tecnologia • Grande Florianópolis
-        </p>
-        <div className="flex flex-wrap justify-center gap-4 text-xs text-gray-500">
-          <span className="flex items-center gap-1">
-            <Phone size={12} />
-            (48) 98855-9491
-          </span>
-          <span className="flex items-center gap-1">
-            <MapPin size={12} />
-            Florianópolis • São José • Palhoça
-          </span>
-          <span>www.escolahabilidade.com</span>
         </div>
       </div>
-      </div>
 
-      {/* Ações */}
-      <div className="text-center space-y-4">
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <motion.a
-            href={`https://wa.me/5548988559491?text=${encodeURIComponent(
-              `Olá! Acabei de fazer o teste vocacional científico e meus resultados foram:\n\n` +
-              `🎯 Perfil Dominante: ${dominantArea.area === 'gestao' ? 'Gestão' : 
-                dominantArea.area === 'educacao' ? 'Educação' : 
-                dominantArea.area === 'comunicacao' ? 'Comunicação' :
-                dominantArea.area === 'logica' ? 'Lógica' : 
-                dominantArea.area.charAt(0).toUpperCase() + dominantArea.area.slice(1)} (${dominantArea.score}%)\n\n` +
-              `📊 Top 3 Áreas:\n` +
-              results.sort((a, b) => b.score - a.score).slice(0, 3).map((r, index) => 
-                `${index + 1}. ${r.area === 'gestao' ? 'Gestão' : 
-                  r.area === 'educacao' ? 'Educação' : 
-                  r.area === 'comunicacao' ? 'Comunicação' :
-                  r.area === 'logica' ? 'Lógica' : 
-                  r.area.charAt(0).toUpperCase() + r.area.slice(1)}: ${r.score}%`
-              ).join('\n') + `\n\n` +
-              `📚 Cursos Recomendados:\n` +
-              recommendedCourses.map(course => 
-                `• ${course.name} - ${course.subtitle}`
-              ).join('\n') + `\n\n` +
-              `Gostaria de saber mais detalhes sobre os cursos e valores!`
-            )}`}
-            className="bg-[#d400ff] text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-purple-600 transition-all duration-300 inline-flex items-center justify-center gap-2"
-            whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(212, 0, 255, 0.4)" }}
-          >
-            <ChatCircle size={20} />
-            Falar Conosco
-          </motion.a>
-          
-          <motion.button
-            onClick={onRestart}
-            className="border-2 border-[#d400ff] text-[#d400ff] px-8 py-4 rounded-full font-bold text-lg hover:bg-[#d400ff] hover:text-white transition-all duration-300 inline-flex items-center justify-center gap-2"
-            whileHover={{ scale: 1.05 }}
-          >
-            <ArrowsClockwise size={20} />
-            Refazer Teste
-          </motion.button>
-        </div>
-
-        <div className="flex flex-wrap justify-center gap-4 text-sm">
-          <motion.button
+      <div className="mt-10 flex flex-col gap-4 border-t border-[#262626] pt-8">
+        <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <a href={contactUrl} onClick={trackResultContact} className={outlineButton}>
+            <ChatCircle size={18} />
+            Falar no WhatsApp
+          </a>
+          <button type="button" onClick={onRestart} className={subtleButton}>
+            <ArrowsClockwise size={18} />
+            Refazer teste
+          </button>
+          <button
+            type="button"
             onClick={generatePDF}
             disabled={isGeneratingPDF}
-            className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-full hover:bg-red-700 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-            whileHover={{ scale: isGeneratingPDF ? 1 : 1.05 }}
-            whileTap={{ scale: isGeneratingPDF ? 1 : 0.95 }}
+            className={subtleButton}
           >
-            <DownloadSimple size={14} />
-            {isGeneratingPDF ? (
-              pdfProgress.message || 'Gerando PDF...'
-            ) : (
-              'Resultado em PDF'
-            )}
-          </motion.button>
-          
-          <motion.button
-            onClick={shareResults}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-all duration-300"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <ShareNetwork size={14} />
+            <DownloadSimple size={18} />
+            {isGeneratingPDF ? pdfProgress.message || 'Gerando PDF' : 'Baixar PDF'}
+          </button>
+          <button type="button" onClick={shareResults} className={subtleButton}>
+            <ShareNetwork size={18} />
             Compartilhar
-          </motion.button>
-          
-          <a
-            href="tel:+5548988559491"
-            className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-full hover:bg-green-700 transition-all duration-300"
-          >
-            <Phone size={14} />
-            (48) 98855-9491
+          </button>
+          <a href="tel:+5548988559491" className={subtleButton}>
+            <Phone size={18} />
+            Ligar
           </a>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
-// Componente Principal
 const TesteVocacional = () => {
-  const [currentStep, setCurrentStep] = useState('intro'); // 'intro', 'test', 'results'
+  const [currentStep, setCurrentStep] = useState('intro');
   const [results, setResults] = useState(null);
-  
-  // Track page view on mount
+
   useEffect(() => {
-    console.log('🎯 TESTE VOCACIONAL: Component mounted');
-    console.log('📊 TESTE VOCACIONAL: Initial state - step:', currentStep);
     analytics.trackTestPageView();
   }, []);
 
-  // Listener para o evento customizado do Hero
   useEffect(() => {
     const handleStartTest = () => {
-      console.log('🚀 TESTE VOCACIONAL: Starting test from Hero');
-      setCurrentStep('test');
-      // Track início do teste
-      analytics.trackTestStart();
-      analytics.measureTestDuration.start();
-      
-      // Scroll automático para o início do teste com delay mínimo
-      setTimeout(() => {
-        const testSection = document.querySelector('#teste-section');
-        if (testSection) {
-          testSection.scrollIntoView({ 
-            behavior: 'smooth', 
-            block: 'start'
-          });
-        }
-      }, 100);
+      startTest();
     };
 
     globalThis.addEventListener('startVocationalTest', handleStartTest);
-    
     return () => {
       globalThis.removeEventListener('startVocationalTest', handleStartTest);
     };
   }, []);
 
+  const startTest = () => {
+    setCurrentStep('test');
+    analytics.trackTestStart();
+    analytics.measureTestDuration.start();
+
+    setTimeout(() => {
+      globalThis.document?.querySelector('#teste-section')?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    }, 100);
+  };
+
   const handleTestComplete = (testResults) => {
-    console.log('✅ TESTE VOCACIONAL: Test completed', testResults);
     setResults(testResults);
     setCurrentStep('results');
   };
@@ -1420,26 +606,21 @@ const TesteVocacional = () => {
   const handleRestart = () => {
     setCurrentStep('intro');
     setResults(null);
-    // Track reiniciar teste
     analytics.trackTestRestart();
   };
 
   return (
     <>
       <Helmet>
-        <title>Teste Vocacional Científico - Metodologia MIT, Harvard, Stanford | Escola Habilidade</title>
-        <meta 
-          name="description" 
-          content="Descubra seu curso ideal com nosso teste vocacional científico baseado em metodologias de MIT, Harvard e Stanford. Florianópolis, São José, Palhoça." 
+        <title>Teste Vocacional | Escola Habilidade</title>
+        <meta
+          name="description"
+          content="Faça o teste vocacional gratuito da Escola Habilidade e descubra qual curso combina com seus interesses em tecnologia, design, administração e criatividade."
         />
         <style>
           {`
-            @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
-            
-            body {
-              font-family: 'Montserrat', sans-serif;
-            }
-            
+            @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=EB+Garamond:wght@400;500&family=JetBrains+Mono:wght@400;500&family=Saira+Condensed:wght@400;500&display=swap');
+
             html {
               scroll-behavior: smooth;
             }
@@ -1447,158 +628,113 @@ const TesteVocacional = () => {
         </style>
       </Helmet>
 
-      <div className="min-h-screen bg-gray-50">
-        {currentStep === 'intro' && <Hero />}
+      <div className="min-h-screen bg-black text-white">
+        {currentStep === 'intro' && <Hero onStart={startTest} />}
 
-        <main className={currentStep === 'intro' ? 'pt-0' : 'pt-20'}>
         {currentStep === 'test' && (
-          <motion.section 
+          <main
             key="vocational-test-questions-section"
-            id="teste-section" 
-            className="py-20 bg-gray-50"
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
+            id="teste-section"
+            className="min-h-screen bg-black px-4 py-20"
           >
-            <div className="container mx-auto px-4">
-              <DOMErrorBoundary 
-                className="max-w-4xl mx-auto"
-                fallbackChildren={
-                  <div className="text-center py-20">
-                    <div className="w-20 h-20 bg-[#d400ff] rounded-full flex items-center justify-center mx-auto mb-6">
-                      <Brain className="text-white" size={40} />
-                    </div>
-                    <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                      Teste Vocacional
-                    </h3>
-                    <p className="text-gray-600 mb-6">
-                      Recarregue a página para continuar com o teste.
-                    </p>
-                    <button
-                      onClick={() => globalThis.location.reload()}
-                      className="bg-[#d400ff] text-white px-8 py-3 rounded-full font-bold hover:bg-purple-600 transition-all duration-300"
-                    >
-                      Recarregar Página
-                    </button>
-                  </div>
-                }
-              >
-                <VocationalTest onComplete={handleTestComplete} />
-              </DOMErrorBoundary>
-            </div>
-          </motion.section>
+            <DOMErrorBoundary
+              className="mx-auto max-w-4xl"
+              fallbackChildren={
+                <div className="mx-auto max-w-xl border border-[#262626] p-8 text-center text-white">
+                  <h3 className="mb-4 font-['Saira_Condensed'] text-3xl uppercase tracking-[3px] text-[#d400ff]">
+                    Teste Vocacional
+                  </h3>
+                  <p className="mb-6 font-['EB_Garamond'] text-lg text-[#cfcfcf]">
+                    Recarregue a página para continuar.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => globalThis.location.reload()}
+                    className={outlineButton}
+                  >
+                    Recarregar página
+                  </button>
+                </div>
+              }
+            >
+              <VocationalTest onComplete={handleTestComplete} />
+            </DOMErrorBoundary>
+          </main>
         )}
 
-        {currentStep === 'results' && (
-          <motion.section 
+        {currentStep === 'results' && results && (
+          <main
             key="vocational-test-results-section"
-            className="py-20 bg-gray-50"
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
+            className="min-h-screen bg-black px-4 py-20"
           >
-            <div className="container mx-auto px-4">
-              <DOMErrorBoundary 
-                className="max-w-6xl mx-auto"
-                fallbackChildren={
-                  <div className="text-center py-20">
-                    <div className="w-20 h-20 bg-[#d400ff] rounded-full flex items-center justify-center mx-auto mb-6">
-                      <Star className="text-white" size={40} />
-                    </div>
-                    <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                      Resultados do Teste
-                    </h3>
-                    <p className="text-gray-600 mb-6">
-                      Houve um problema ao exibir seus resultados. Tente recarregar a página.
-                    </p>
-                    <div className="flex gap-4 justify-center">
-                      <button
-                        onClick={() => globalThis.location.reload()}
-                        className="bg-[#d400ff] text-white px-8 py-3 rounded-full font-bold hover:bg-purple-600 transition-all duration-300"
-                      >
-                        Recarregar Página
-                      </button>
-                      <button
-                        onClick={handleRestart}
-                        className="border-2 border-[#d400ff] text-[#d400ff] px-8 py-3 rounded-full font-bold hover:bg-[#d400ff] hover:text-white transition-all duration-300"
-                      >
-                        Refazer Teste
-                      </button>
-                    </div>
-                  </div>
-                }
-              >
-                <ResultsDashboard results={results} onRestart={handleRestart} />
-              </DOMErrorBoundary>
-            </div>
-          </motion.section>
+            <DOMErrorBoundary
+              className="mx-auto max-w-6xl"
+              fallbackChildren={
+                <div className="mx-auto max-w-xl border border-[#262626] p-8 text-center text-white">
+                  <h3 className="mb-4 font-['Saira_Condensed'] text-3xl uppercase tracking-[3px] text-[#d400ff]">
+                    Resultado
+                  </h3>
+                  <p className="mb-6 font-['EB_Garamond'] text-lg text-[#cfcfcf]">
+                    Houve um problema ao exibir seus resultados.
+                  </p>
+                  <button type="button" onClick={handleRestart} className={outlineButton}>
+                    Refazer teste
+                  </button>
+                </div>
+              }
+            >
+              <ResultsDashboard results={results} onRestart={handleRestart} />
+            </DOMErrorBoundary>
+          </main>
         )}
-      </main>
 
-      {/* Floating WhatsApp */}
-      <motion.a
-        href="https://wa.me/5548988559491?text=Olá! Gostaria de saber mais sobre os cursos da Escola Habilidade."
-        className="fixed bottom-6 right-6 z-50 w-16 h-16 bg-[#d400ff] rounded-full flex items-center justify-center shadow-lg"
-        whileHover={{ 
-          scale: 1.1,
-          boxShadow: "0 0 20px rgba(212, 0, 255, 0.5)"
-        }}
-        animate={{ 
-          y: [0, -5, 0],
-        }}
-        transition={{ 
-          y: { duration: 2, repeat: Infinity }
-        }}
-      >
-        <ChatCircle className="text-white" size={24} />
-      </motion.a>
+        <a
+          href="https://wa.me/5548988559491?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20os%20cursos%20da%20Escola%20Habilidade."
+          onClick={() => analytics.trackContactFromTest('whatsapp_float')}
+          className="fixed bottom-5 right-5 z-50 inline-flex h-14 w-14 items-center justify-center rounded-full border border-[#d400ff] bg-black text-white transition-colors hover:bg-[#d400ff] hover:text-white"
+          aria-label="Falar com a Escola Habilidade pelo WhatsApp"
+        >
+          <ChatCircle size={24} />
+        </a>
 
-      {/* Schema.org para SEO Local */}
-      <script type="application/ld+json" dangerouslySetInnerHTML={{
-        __html: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "EducationalOrganization",
-          "name": "Escola Habilidade - Teste Vocacional",
-          "description": "Teste vocacional gratuito para descobrir o curso ideal em Florianópolis, São José e Palhoça",
-          "url": "https://escolahabilidade.com/teste-vocacional",
-          "areaServed": [
-            {
-              "@type": "City",
-              "name": "Florianópolis"
-            },
-            {
-              "@type": "City", 
-              "name": "São José"
-            },
-            {
-              "@type": "City",
-              "name": "Palhoça"
-            }
-          ],
-          "address": {
-            "@type": "PostalAddress",
-            "streetAddress": "R. Caetano José Ferreira, 426 - Sala 5",
-            "addressLocality": "Kobrasol",
-            "addressRegion": "SC",
-            "postalCode": "88102-280",
-            "addressCountry": "BR"
-          },
-          "telephone": "+55-48-98855-9491",
-          "offers": [
-            {
-              "@type": "Service",
-              "name": "Teste Vocacional Gratuito",
-              "description": "Descubra qual curso combina com seu perfil"
-            }
-          ]
-        })
-      }} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'EducationalOrganization',
+              name: 'Escola Habilidade - Teste Vocacional',
+              description:
+                'Teste vocacional gratuito para descobrir qual curso combina com seus interesses.',
+              url: 'https://escolahabilidade.com/teste-vocacional',
+              areaServed: [
+                { '@type': 'City', name: 'Florianópolis' },
+                { '@type': 'City', name: 'São José' },
+                { '@type': 'City', name: 'Palhoça' },
+              ],
+              address: {
+                '@type': 'PostalAddress',
+                streetAddress: 'R. Caetano José Ferreira, 426 - Sala 5',
+                addressLocality: 'Kobrasol',
+                addressRegion: 'SC',
+                postalCode: '88102-280',
+                addressCountry: 'BR',
+              },
+              telephone: '+55-48-98855-9491',
+              offers: [
+                {
+                  '@type': 'Service',
+                  name: 'Teste Vocacional Gratuito',
+                  description: 'Descubra qual curso combina com seu perfil.',
+                },
+              ],
+            }),
+          }}
+        />
       </div>
     </>
   );
 };
 
 export default TesteVocacional;
-
-// Export para React Router lazy loading
 export const Component = TesteVocacional;
