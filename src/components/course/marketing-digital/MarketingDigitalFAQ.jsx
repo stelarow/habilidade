@@ -61,7 +61,7 @@ export const MarketingDigitalFAQ = () => {
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-5xl lg:text-6xl font-normal tracking-[3px] text-white mb-6 uppercase">
               Perguntas{' '}
-              <span className="text-[#c3d9f3]">Frequentes</span>
+              <span className="text-[#d400ff]">Frequentes</span>
             </h2>
             <p className="text-lg text-[#cccccc] max-w-2xl mx-auto font-serif">
               Tire suas dúvidas sobre o curso de Marketing Digital
@@ -77,7 +77,7 @@ export const MarketingDigitalFAQ = () => {
                 key={faq.id}
                 className={`border transition-all duration-300 ${
                   openFAQ === faq.id
-                    ? 'border-[#c3d9f3]/30 bg-[#0d0d0d]'
+                    ? 'border-[#d400ff]/30 bg-[#0d0d0d]'
                     : 'border-[#262626] bg-[#141414] hover:border-[#3a3a3a]'
                 }`}
               >
@@ -86,7 +86,7 @@ export const MarketingDigitalFAQ = () => {
                   className="w-full p-6 text-left flex items-center gap-4"
                 >
                   <Question className={`w-5 h-5 flex-shrink-0 ${
-                    openFAQ === faq.id ? 'text-[#c3d9f3]' : 'text-[#999999]'
+                    openFAQ === faq.id ? 'text-[#d400ff]' : 'text-[#999999]'
                   }`} />
                   <span className={`flex-grow text-left font-normal tracking-wider ${
                     openFAQ === faq.id ? 'text-white' : 'text-[#e6e6e6]'
@@ -125,7 +125,7 @@ export const MarketingDigitalFAQ = () => {
             </p>
             <button
               onClick={() => handleCTAClick('faq')}
-              className="inline-flex items-center px-10 py-4 border border-white text-white font-mono text-sm tracking-[2.5px] uppercase rounded-full hover:bg-white/10 transition-all duration-300 cursor-pointer"
+              className="inline-flex items-center px-10 py-4 border border-[#d400ff] text-white font-mono text-sm tracking-[2.5px] uppercase rounded-full hover:bg-[#d400ff] transition-all duration-300 cursor-pointer"
             >
               Falar com Consultor
             </button>

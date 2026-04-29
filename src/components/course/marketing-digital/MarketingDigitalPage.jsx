@@ -66,8 +66,8 @@ const MarketingDigital = () => {
 
       {/* Final CTA - Bugatti style */}
       <section id="cta-final" className="px-6 py-20 lg:py-24 bg-[#0d0d0d] relative overflow-hidden">
-        {/* Background - subtle gradient */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#141414]/20 to-transparent" />
+        {/* Background - subtle surface */}
+        <div className="absolute inset-0 bg-[#0d0d0d]" />
 
         <div className="container mx-auto max-w-4xl relative z-10 text-center">
           <div className="max-w-3xl mx-auto">
@@ -75,7 +75,7 @@ const MarketingDigital = () => {
               Pronto para{' '}
               <span className="text-white">aprender</span>
               <br />
-              <span className="text-[#c3d9f3]">marketing digital?</span>
+              <span className="text-[#d400ff]">marketing digital?</span>
             </h2>
 
             <p className="text-lg text-[#cccccc] mb-12 max-w-2xl mx-auto font-serif leading-relaxed">
@@ -86,7 +86,7 @@ const MarketingDigital = () => {
             <div className="space-y-6">
               <button
                 onClick={() => handleCTAClick('final')}
-                className="inline-flex items-center px-12 py-5 border border-white text-white font-mono text-base tracking-[2.5px] uppercase rounded-full hover:bg-white/10 transition-all duration-300 cursor-pointer"
+                className="inline-flex items-center px-12 py-5 border border-[#d400ff] text-white font-mono text-base tracking-[2.5px] uppercase rounded-full hover:bg-[#d400ff] transition-all duration-300 cursor-pointer"
               >
                 <Rocket className="w-5 h-5 mr-3" />
                 Garantir Minha Vaga

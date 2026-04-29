@@ -24,8 +24,8 @@ export const MarketingDigitalHeroSection = () => {
           }}
         />
         {/* Overlays for text legibility - Bugatti style */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/80" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-black/60" />
+        <div className="absolute inset-0 bg-black/70" />
+        <div className="absolute inset-0 bg-black/20" />
       </div>
 
       {/* Content - Uppercase headlines with wide tracking per Bugatti */}
@@ -47,7 +47,7 @@ export const MarketingDigitalHeroSection = () => {
 
         {/* Compact benefits line */}
         <div className="flex items-center justify-center gap-4 text-sm text-[#999999] mb-8 tracking-[2px] uppercase">
-          <MapPin className="hidden sm:block w-5 h-5 text-[#c3d9f3]" />
+          <MapPin className="hidden sm:block w-5 h-5 text-[#d400ff]" />
           <span>
             <strong className="text-white">82h de conteúdo</strong> • Certificado nacional • 9 módulos
           </span>
@@ -57,7 +57,7 @@ export const MarketingDigitalHeroSection = () => {
         <div className="flex justify-center mb-8">
           <Badge
             variant="outline"
-            className="border border-white/50 text-white px-6 py-2 text-base font-mono tracking-[2.5px] uppercase hover:border-white/70 transition-colors"
+            className="border border-[#d400ff] text-white px-6 py-2 text-base font-mono tracking-[2.5px] uppercase hover:bg-[rgba(212,0,255,0.10)] transition-colors"
           >
             A partir de R$ 299,90/mês
           </Badge>
@@ -67,7 +67,7 @@ export const MarketingDigitalHeroSection = () => {
         <div className="mb-12">
           <button
             onClick={() => handleCTAClick('hero')}
-            className="inline-flex items-center px-10 py-4 border border-white text-white font-mono text-sm tracking-[2.5px] uppercase rounded-full hover:bg-white/10 transition-all duration-300 cursor-pointer"
+            className="inline-flex items-center px-10 py-4 border border-[#d400ff] text-white font-mono text-sm tracking-[2.5px] uppercase rounded-full hover:bg-[#d400ff] transition-all duration-300 cursor-pointer"
           >
             <span>Quero Conhecer o Curso</span>
             <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -18,7 +18,7 @@ const MarketingDigitalInlineContactForm = () => {
           <input
             type="text"
             required
-            className="w-full bg-transparent border-b border-[#262626] py-3 text-white placeholder-[#666666] focus:border-white focus:outline-none transition-colors font-serif"
+            className="w-full bg-transparent border-b border-[#262626] py-3 text-white placeholder-[#666666] focus:border-[#d400ff] focus:outline-none transition-colors font-serif"
             placeholder="Seu nome completo"
           />
         </div>
@@ -30,7 +30,7 @@ const MarketingDigitalInlineContactForm = () => {
           <input
             type="email"
             required
-            className="w-full bg-transparent border-b border-[#262626] py-3 text-white placeholder-[#666666] focus:border-white focus:outline-none transition-colors font-serif"
+            className="w-full bg-transparent border-b border-[#262626] py-3 text-white placeholder-[#666666] focus:border-[#d400ff] focus:outline-none transition-colors font-serif"
             placeholder="seu@email.com"
           />
         </div>
@@ -42,7 +42,7 @@ const MarketingDigitalInlineContactForm = () => {
           <input
             type="tel"
             required
-            className="w-full bg-transparent border-b border-[#262626] py-3 text-white placeholder-[#666666] focus:border-white focus:outline-none transition-colors font-serif"
+            className="w-full bg-transparent border-b border-[#262626] py-3 text-white placeholder-[#666666] focus:border-[#d400ff] focus:outline-none transition-colors font-serif"
             placeholder="(48) 9 9999-9999"
           />
         </div>
@@ -54,7 +54,7 @@ const MarketingDigitalInlineContactForm = () => {
           <input
             type="text"
             required
-            className="w-full bg-transparent border-b border-[#262626] py-3 text-white placeholder-[#666666] focus:border-white focus:outline-none transition-colors font-serif"
+            className="w-full bg-transparent border-b border-[#262626] py-3 text-white placeholder-[#666666] focus:border-[#d400ff] focus:outline-none transition-colors font-serif"
             placeholder="Sua cidade"
           />
         </div>
@@ -65,7 +65,7 @@ const MarketingDigitalInlineContactForm = () => {
           Mensagem (opcional)
         </label>
         <textarea
-          className="w-full bg-transparent border-b border-[#262626] py-3 text-white placeholder-[#666666] focus:border-white focus:outline-none transition-colors font-serif resize-none"
+          className="w-full bg-transparent border-b border-[#262626] py-3 text-white placeholder-[#666666] focus:border-[#d400ff] focus:outline-none transition-colors font-serif resize-none"
           rows="3"
           placeholder="Deixe uma mensagem..."
         />
@@ -74,7 +74,7 @@ const MarketingDigitalInlineContactForm = () => {
       <div className="text-center pt-4">
         <button
           type="submit"
-          className="inline-flex items-center px-10 py-4 border border-white text-white font-mono text-sm tracking-[2.5px] uppercase rounded-full hover:bg-white/10 transition-all duration-300 cursor-pointer"
+          className="inline-flex items-center px-10 py-4 border border-[#d400ff] text-white font-mono text-sm tracking-[2.5px] uppercase rounded-full hover:bg-[#d400ff] transition-all duration-300 cursor-pointer"
         >
           Enviar Mensagem
           <ArrowRight className="ml-2 w-4 h-4" />
@@ -91,7 +91,7 @@ const MarketingDigitalContactSection = () => {
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-5xl font-normal tracking-[3px] text-white mb-6 uppercase">
             Fale Conosco em{' '}
-            <span className="text-[#c3d9f3]">3 Passos</span>
+            <span className="text-[#d400ff]">3 Passos</span>
           </h2>
 
           <p className="text-lg text-[#cccccc] mb-8 max-w-2xl mx-auto font-serif">
@@ -101,7 +101,7 @@ const MarketingDigitalContactSection = () => {
           {/* Benefits */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 max-w-4xl mx-auto">
             <div className="border border-[#262626] p-6 text-center bg-[#141414]">
-              <Clock size={32} className="text-[#c3d9f3] mx-auto mb-3" />
+              <Clock size={32} className="text-[#d400ff] mx-auto mb-3" />
               <h3 className="text-white font-normal tracking-wider uppercase mb-2">Resposta Rápida</h3>
               <p className="text-[#999999] text-sm font-serif">Respondemos em até 30 minutos</p>
             </div>
@@ -113,7 +113,7 @@ const MarketingDigitalContactSection = () => {
             </div>
 
             <div className="border border-[#262626] p-6 text-center bg-[#141414]">
-              <WhatsappLogo size={32} className="text-green-400 mx-auto mb-3" />
+              <WhatsappLogo size={32} className="text-[#d400ff] mx-auto mb-3" />
               <h3 className="text-white font-normal tracking-wider uppercase mb-2">Via WhatsApp</h3>
               <p className="text-[#999999] text-sm font-serif">Atendimento personalizado</p>
             </div>
@@ -136,7 +136,7 @@ const MarketingDigitalContactSection = () => {
             </p>
             <button
               onClick={() => handleCTAClick('contact-whatsapp')}
-              className="inline-flex items-center px-8 py-4 bg-green-500 text-white font-mono text-sm tracking-[2.5px] uppercase rounded-full hover:bg-green-600 transition-all duration-300 cursor-pointer"
+              className="inline-flex items-center px-8 py-4 border border-[#d400ff] text-white font-mono text-sm tracking-[2.5px] uppercase rounded-full hover:bg-[#d400ff] transition-all duration-300 cursor-pointer"
             >
               <WhatsappLogo className="w-5 h-5 mr-2" />
               Falar com Consultor

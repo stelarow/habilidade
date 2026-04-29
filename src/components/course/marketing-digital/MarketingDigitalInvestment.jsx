@@ -70,8 +70,8 @@ export const MarketingDigitalInvestment = () => {
               {/* Card Header */}
               <div className="border-b border-[#262626] p-8 text-center bg-[#141414]">
                 <div className="inline-flex items-center gap-2 border border-[#3a3a3a] px-4 py-2 mb-4">
-                  <Gift className="w-5 h-5 text-[#c3d9f3]" />
-                  <span className="text-[#c3d9f3] font-mono text-sm tracking-wider uppercase">Curso Completo</span>
+                  <Gift className="w-5 h-5 text-[#d400ff]" />
+                  <span className="text-[#d400ff] font-mono text-sm tracking-wider uppercase">Curso Completo</span>
                 </div>
                 <h3 className="text-2xl font-normal text-white tracking-[1.5px] uppercase mb-2">
                   Marketing Digital Completo
@@ -94,7 +94,7 @@ export const MarketingDigitalInvestment = () => {
                           key={index}
                           className={`relative text-center transition-all duration-300 hover:scale-105 ${
                             option.highlight
-                              ? 'border-[#c3d9f3]/50 bg-[#141414] ring-1 ring-[#c3d9f3]/20'
+                              ? 'border-[#d400ff]/50 bg-[#141414] ring-1 ring-[#d400ff]/20'
                               : 'bg-[#0d0d0d] border-[#262626] hover:border-[#3a3a3a]'
                           }`}
                         >
@@ -108,7 +108,7 @@ export const MarketingDigitalInvestment = () => {
 
                           {option.discount && (
                             <div className="absolute -top-3 right-2 z-10">
-                              <Badge variant="destructive" className="font-mono text-xs tracking-wider px-2 py-1">
+                              <Badge variant="outline" className="bg-[#141414] text-white border-[#3a3a3a] font-mono text-xs tracking-wider px-2 py-1">
                                 {option.discount}
                               </Badge>
                             </div>
@@ -116,7 +116,7 @@ export const MarketingDigitalInvestment = () => {
 
                           <CardHeader className="pb-2 pt-6 px-4">
                             <IconComponent className={`w-8 h-8 mx-auto mb-2 ${
-                              option.highlight ? 'text-[#c3d9f3]' : 'text-[#999999]'
+                              option.highlight ? 'text-[#d400ff]' : 'text-[#999999]'
                             }`} />
                             <CardTitle className="text-white font-normal text-base tracking-wider uppercase">
                               {option.name}
@@ -166,7 +166,7 @@ export const MarketingDigitalInvestment = () => {
                 <div className="text-center">
                   <button
                     onClick={() => handleCTAClick('investment')}
-                    className="inline-flex items-center px-10 py-4 border border-white text-white font-mono text-sm tracking-[2.5px] uppercase rounded-full hover:bg-white/10 transition-all duration-300 cursor-pointer"
+                    className="inline-flex items-center px-10 py-4 border border-[#d400ff] text-white font-mono text-sm tracking-[2.5px] uppercase rounded-full hover:bg-[#d400ff] transition-all duration-300 cursor-pointer"
                   >
                     <Lightning className="w-5 h-5 mr-2" />
                     Escolher Meu Plano
@@ -213,50 +213,50 @@ export const MarketingDigitalInvestment = () => {
                 </TabsTrigger>
                 <TabsTrigger
                   value="depois"
-                  className="font-mono text-xs tracking-wider uppercase data-[state=active]:bg-[#c3d9f3]/20 data-[state=active]:text-[#c3d9f3]"
+                  className="font-mono text-xs tracking-wider uppercase data-[state=active]:bg-[rgba(212,0,255,0.10)] data-[state=active]:text-[#d400ff]"
                 >
                   Com o Curso
                 </TabsTrigger>
               </TabsList>
 
               <TabsContent value="antes" className="space-y-6">
-                <Card className="bg-[#0d0d0d] border-red-500/20">
+                <Card className="bg-[#0d0d0d] border-[#262626]">
                   <CardHeader className="text-center pb-4">
                     <div className="flex items-center justify-center mb-4">
-                      <div className="p-3 border border-red-500/30 rounded-full">
-                        <Clock className="w-8 h-8 text-red-400" />
+                      <div className="p-3 border border-[#3a3a3a] rounded-full">
+                        <Clock className="w-8 h-8 text-[#999999]" />
                       </div>
                     </div>
-                    <CardTitle className="text-xl text-red-400 font-normal tracking-wider uppercase">
+                    <CardTitle className="text-xl text-[#e6e6e6] font-normal tracking-wider uppercase">
                       SEM Marketing Digital
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <ul className="space-y-3 text-[#cccccc] font-serif">
                       <li className="flex items-start gap-3">
-                        <div className="w-2 h-2 rounded-full bg-red-400 mt-2 flex-shrink-0" />
+                        <div className="w-2 h-2 rounded-full bg-[#666666] mt-2 flex-shrink-0" />
                         Conhecimento básico limitado
                       </li>
                       <li className="flex items-start gap-3">
-                        <div className="w-2 h-2 rounded-full bg-red-400 mt-2 flex-shrink-0" />
+                        <div className="w-2 h-2 rounded-full bg-[#666666] mt-2 flex-shrink-0" />
                         Dificuldade em gerar resultados online
                       </li>
                       <li className="flex items-start gap-3">
-                        <div className="w-2 h-2 rounded-full bg-red-400 mt-2 flex-shrink-0" />
+                        <div className="w-2 h-2 rounded-full bg-[#666666] mt-2 flex-shrink-0" />
                         Perde clientes para concorrentes
                       </li>
                       <li className="flex items-start gap-3">
-                        <div className="w-2 h-2 rounded-full bg-red-400 mt-2 flex-shrink-0" />
+                        <div className="w-2 h-2 rounded-full bg-[#666666] mt-2 flex-shrink-0" />
                         Sem métricas ou dados de campanhas
                       </li>
                     </ul>
-                    <Separator className="my-6 bg-red-500/20" />
-                    <div className="text-center p-4 border border-red-500/20 bg-red-500/5">
-                      <h5 className="text-lg font-normal text-red-400 tracking-wider uppercase mb-2">
+                    <Separator className="my-6 bg-[#262626]" />
+                    <div className="text-center p-4 border border-[#262626] bg-[#141414]">
+                      <h5 className="text-lg font-normal text-[#e6e6e6] tracking-wider uppercase mb-2">
                         Custo Real
                       </h5>
                       <p className="text-[#cccccc] font-serif">
-                        <strong className="text-red-400">Clientes perdidos</strong> e oportunidades arrancadas
+                        <strong className="text-white">Clientes perdidos</strong> e oportunidades arrancadas
                       </p>
                     </div>
                   </CardContent>
@@ -264,59 +264,59 @@ export const MarketingDigitalInvestment = () => {
               </TabsContent>
 
               <TabsContent value="depois" className="space-y-6">
-                <Card className="bg-[#0d0d0d] border-green-500/20">
+                <Card className="bg-[#0d0d0d] border-[#d400ff]/30">
                   <CardHeader className="text-center pb-4">
                     <div className="flex items-center justify-center mb-4">
-                      <div className="p-3 border border-green-500/30 rounded-full">
-                        <Star className="w-8 h-8 text-green-400" />
+                      <div className="p-3 border border-[#d400ff]/40 rounded-full">
+                        <Star className="w-8 h-8 text-[#d400ff]" />
                       </div>
                     </div>
-                    <CardTitle className="text-xl text-green-400 font-normal tracking-wider uppercase">
+                    <CardTitle className="text-xl text-[#d400ff] font-normal tracking-wider uppercase">
                       COM Marketing Digital
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <ul className="space-y-3 text-[#cccccc] font-serif">
                       <li className="flex items-start gap-3">
-                        <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+                        <CheckCircle className="w-5 h-5 text-[#d400ff] mt-0.5 flex-shrink-0" />
                         Especialista em campanhas e redes sociais
                       </li>
                       <li className="flex items-start gap-3">
-                        <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+                        <CheckCircle className="w-5 h-5 text-[#d400ff] mt-0.5 flex-shrink-0" />
                         Resultados mensuráveis eROI positivo
                       </li>
                       <li className="flex items-start gap-3">
-                        <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+                        <CheckCircle className="w-5 h-5 text-[#d400ff] mt-0.5 flex-shrink-0" />
                         Atrai clientes de forma consistente
                       </li>
                       <li className="flex items-start gap-3">
-                        <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+                        <CheckCircle className="w-5 h-5 text-[#d400ff] mt-0.5 flex-shrink-0" />
                         Dados e analytics para otimizar resultados
                       </li>
                     </ul>
-                    <Separator className="my-6 bg-green-500/20" />
+                    <Separator className="my-6 bg-[#d400ff]/20" />
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                      <div className="text-center p-4 border border-green-500/20 bg-green-500/5">
-                        <TrendUp className="w-6 h-6 text-green-400 mx-auto mb-2" />
+                      <div className="text-center p-4 border border-[#d400ff]/20 bg-[rgba(212,0,255,0.10)]">
+                        <TrendUp className="w-6 h-6 text-[#d400ff] mx-auto mb-2" />
                         <h6 className="text-sm font-normal text-white tracking-wider uppercase">Aumento</h6>
-                        <p className="text-2xl font-normal text-green-400">+40%</p>
+                        <p className="text-2xl font-normal text-[#d400ff]">+40%</p>
                         <p className="text-xs text-[#999999] font-mono">nos ganhos</p>
                       </div>
-                      <div className="text-center p-4 border border-[#c3d9f3]/20 bg-[#c3d9f3]/5">
-                        <Clock className="w-6 h-6 text-[#c3d9f3] mx-auto mb-2" />
+                      <div className="text-center p-4 border border-[#d400ff]/20 bg-[rgba(212,0,255,0.10)]">
+                        <Clock className="w-6 h-6 text-[#d400ff] mx-auto mb-2" />
                         <h6 className="text-sm font-normal text-white tracking-wider uppercase">ROI</h6>
-                        <p className="text-2xl font-normal text-[#c3d9f3]">3-6</p>
+                        <p className="text-2xl font-normal text-[#d400ff]">3-6</p>
                         <p className="text-xs text-[#999999] font-mono">meses</p>
                       </div>
-                      <div className="text-center p-4 border border-purple-500/20 bg-purple-500/5">
-                        <Target className="w-6 h-6 text-purple-400 mx-auto mb-2" />
+                      <div className="text-center p-4 border border-[#d400ff]/20 bg-[rgba(212,0,255,0.10)]">
+                        <Target className="w-6 h-6 text-[#d400ff] mx-auto mb-2" />
                         <h6 className="text-sm font-normal text-white tracking-wider uppercase">Clientes</h6>
-                        <p className="text-2xl font-normal text-purple-400">∞</p>
+                        <p className="text-2xl font-normal text-[#d400ff]">∞</p>
                         <p className="text-xs text-[#999999] font-mono">potenciais</p>
                       </div>
                     </div>
-                    <div className="text-center p-4 border border-green-500/20 bg-green-500/5">
-                      <h5 className="text-lg font-normal text-green-400 tracking-wider uppercase mb-2">
+                    <div className="text-center p-4 border border-[#d400ff]/20 bg-[rgba(212,0,255,0.10)]">
+                      <h5 className="text-lg font-normal text-[#d400ff] tracking-wider uppercase mb-2">
                         Investimento Inteligente
                       </h5>
                       <p className="text-[#cccccc] font-serif mb-2">

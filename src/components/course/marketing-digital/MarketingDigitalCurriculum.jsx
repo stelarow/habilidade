@@ -23,7 +23,7 @@ const curriculum = [
     description: 'Design gráfico para criar conteúdo profissional',
     duration: '10 horas',
     icon: Palette,
-    color: 'from-[#00D4AA] to-[#00B894]',
+    color: 'bg-[#141414] border border-[#262626]',
     lessons: [
       { id: 1, title: 'Introdução ao Canva' },
       { id: 2, title: 'Templates e identidade visual' },
@@ -40,7 +40,7 @@ const curriculum = [
     description: 'Estratégias e fundamentos do marketing online',
     duration: '12 horas',
     icon: Megaphone,
-    color: 'from-[#3F51B5] to-[#5C6BC0]',
+    color: 'bg-[#141414] border border-[#262626]',
     lessons: [
       { id: 8, title: 'O que é Marketing Digital?' },
       { id: 9, title: 'Conhecendo seu público-alvo e persona' },
@@ -58,7 +58,7 @@ const curriculum = [
     description: 'Construção e posicionamento da sua marca',
     duration: '8 horas',
     icon: User,
-    color: 'from-[#E91E63] to-[#C2185B]',
+    color: 'bg-[#141414] border border-[#262626]',
     lessons: [
       { id: 16, title: 'Valores e autoconhecimento' },
       { id: 17, title: 'Networking e relacionamentos' },
@@ -73,7 +73,7 @@ const curriculum = [
     description: 'Campanhas e anúncios profissionais no Facebook',
     duration: '14 horas',
     icon: FacebookLogo,
-    color: 'from-[#1877F2] to-[#0D65D9]',
+    color: 'bg-[#141414] border border-[#262626]',
     lessons: [
       { id: 21, title: 'Conhecendo o Facebook Business' },
       { id: 22, title: 'Criando conta de usuário e página' },
@@ -93,7 +93,7 @@ const curriculum = [
     description: 'Estratégias para todas as redes sociais',
     duration: '10 horas',
     icon: ShareNetwork,
-    color: 'from-[#E1306C] to-[#833AB4]',
+    color: 'bg-[#141414] border border-[#262626]',
     lessons: [
       { id: 31, title: 'Introdução a mídias sociais' },
       { id: 32, title: 'Conhecendo Instagram' },
@@ -111,7 +111,7 @@ const curriculum = [
     description: 'Plataforma completa de anúncios Meta',
     duration: '8 horas',
     icon: ChartLine,
-    color: 'from-[#0081FB] to-[#0066CC]',
+    color: 'bg-[#141414] border border-[#262626]',
     lessons: [
       { id: 39, title: 'Visão geral Meta Business' },
       { id: 40, title: 'Configurações e permissões' },
@@ -126,7 +126,7 @@ const curriculum = [
     description: 'Anúncios pagos no Google e YouTube',
     duration: '8 horas',
     icon: Target,
-    color: 'from-[#EA4335] to-[#FBBC05]',
+    color: 'bg-[#141414] border border-[#262626]',
     lessons: [
       { id: 44, title: 'Introdução ao Google Ads' },
       { id: 45, title: 'Estrutura de campanhas' },
@@ -142,7 +142,7 @@ const curriculum = [
     description: 'Inteligência artificial para marketing',
     duration: '6 horas',
     icon: ChatCircle,
-    color: 'from-[#10A37F] to-[#0D8A6C]',
+    color: 'bg-[#141414] border border-[#262626]',
     lessons: [
       { id: 50, title: 'Introdução ao ChatGPT' },
       { id: 51, title: 'Prompt engineering para marketing' },
@@ -156,7 +156,7 @@ const curriculum = [
     description: 'Fechamento e conversão de clientes',
     duration: '6 horas',
     icon: Target,
-    color: 'from-[#FF6B00] to-[#E65100]',
+    color: 'bg-[#141414] border border-[#262626]',
     lessons: [
       { id: 54, title: 'Fundamentos de vendas' },
       { id: 55, title: 'Qualificação de leads' },
@@ -235,8 +235,8 @@ export const MarketingDigitalCurriculum = () => {
                     className="w-full p-6 text-left flex items-center gap-6 hover:bg-[#141414]/30 transition-colors"
                   >
                     {/* Icon */}
-                    <div className={`w-12 h-12 bg-gradient-to-br ${module.color} flex items-center justify-center flex-shrink-0`}>
-                      <IconComponent className="w-6 h-6 text-white" />
+                    <div className={`w-12 h-12 ${module.color} flex items-center justify-center flex-shrink-0`}>
+                      <IconComponent className="w-6 h-6 text-[#d400ff]" />
                     </div>
 
                     {/* Module Info */}
@@ -271,7 +271,7 @@ export const MarketingDigitalCurriculum = () => {
                             key={lesson.id}
                             className="flex items-center gap-3 p-3 border border-[#262626] hover:border-[#3a3a3a] transition-colors"
                           >
-                            <div className={`w-8 h-8 bg-gradient-to-br ${module.color} rounded-full flex items-center justify-center flex-shrink-0`}>
+                            <div className={`w-8 h-8 ${module.color} rounded-full flex items-center justify-center flex-shrink-0`}>
                               <span className="text-white text-xs font-mono">{lessonIndex + 1}</span>
                             </div>
                             <div className="flex-grow min-w-0">
@@ -301,7 +301,7 @@ export const MarketingDigitalCurriculum = () => {
               </p>
               <button
                 onClick={() => handleCTAClick('curriculum')}
-                className="inline-flex items-center px-10 py-4 border border-white text-white font-mono text-sm tracking-[2.5px] uppercase rounded-full hover:bg-white/10 transition-all duration-300 cursor-pointer"
+                className="inline-flex items-center px-10 py-4 border border-[#d400ff] text-white font-mono text-sm tracking-[2.5px] uppercase rounded-full hover:bg-[#d400ff] transition-all duration-300 cursor-pointer"
               >
                 Ver Detalhes do Curso
                 <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

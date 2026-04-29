@@ -71,12 +71,12 @@ const getInitials = (name) => {
 };
 
 const avatarColors = [
-  'bg-gradient-to-br from-[#3F51B5] to-[#5C6BC0]',
-  'bg-gradient-to-br from-[#E91E63] to-[#C2185B]',
-  'bg-gradient-to-br from-[#10A37F] to-[#0D8A6C]',
-  'bg-gradient-to-br from-[#1877F2] to-[#0D65D9]',
-  'bg-gradient-to-br from-[#EA4335] to-[#FBBC05]',
-  'bg-gradient-to-br from-[#0081FB] to-[#0066CC]'
+  'bg-[#141414] border border-[#262626]',
+  'bg-[#141414] border border-[#262626]',
+  'bg-[#141414] border border-[#262626]',
+  'bg-[#141414] border border-[#262626]',
+  'bg-[#141414] border border-[#262626]',
+  'bg-[#141414] border border-[#262626]'
 ];
 
 export const MarketingDigitalTestimonials = () => {
@@ -112,7 +112,7 @@ export const MarketingDigitalTestimonials = () => {
           <ScrollReveal animation="fade-up">
             <h2 className="text-3xl md:text-5xl lg:text-6xl font-normal tracking-[3px] text-white mb-6 uppercase">
               TRANSFORMAÇÕES{' '}
-              <span className="text-[#c3d9f3]">REAIS</span>
+              <span className="text-[#d400ff]">REAIS</span>
             </h2>
             <p className="text-lg text-[#cccccc] max-w-3xl mx-auto font-serif">
               Histórias de profissionais que conquistaram resultados com marketing digital
@@ -138,7 +138,7 @@ export const MarketingDigitalTestimonials = () => {
                     <div className="flex flex-col md:flex-row items-center gap-8">
                       {/* Avatar */}
                       <div className="flex-shrink-0">
-                        <div className="ring-2 ring-[#c3d9f3]/30">
+                        <div className="ring-2 ring-[#d400ff]/30">
                           <Avatar className="w-24 h-24 md:w-28 md:h-28">
                             <AvatarFallback
                               className={`${avatarColors[currentIndex % avatarColors.length]} text-white font-mono text-lg md:text-xl tracking-wider`}
@@ -187,14 +187,14 @@ export const MarketingDigitalTestimonials = () => {
             {/* Navigation Arrows - Bugatti style circular */}
             <button
               onClick={previousTestimonial}
-              className="absolute left-4 top-1/2 transform -translate-y-1/2 w-12 h-12 border border-white/20 flex items-center justify-center text-white hover:border-white/40 transition-colors rounded-full"
+              className="absolute left-4 top-1/2 transform -translate-y-1/2 w-12 h-12 border border-[#3a3a3a] flex items-center justify-center text-white hover:border-[#d400ff] transition-colors rounded-full"
             >
               <CaretLeft className="w-6 h-6" />
             </button>
 
             <button
               onClick={nextTestimonial}
-              className="absolute right-4 top-1/2 transform -translate-y-1/2 w-12 h-12 border border-white/20 flex items-center justify-center text-white hover:border-white/40 transition-colors rounded-full"
+              className="absolute right-4 top-1/2 transform -translate-y-1/2 w-12 h-12 border border-[#3a3a3a] flex items-center justify-center text-white hover:border-[#d400ff] transition-colors rounded-full"
             >
               <CaretRight className="w-6 h-6" />
             </button>
@@ -207,7 +207,7 @@ export const MarketingDigitalTestimonials = () => {
                 key={index}
                 onClick={() => goToTestimonial(index)}
                 className={`w-2 h-2 rounded-full transition-colors ${
-                  index === currentIndex ? 'bg-[#c3d9f3]' : 'bg-[#666666] hover:bg-[#999999]'
+                  index === currentIndex ? 'bg-[#d400ff]' : 'bg-[#666666] hover:bg-[#999999]'
                 }`}
               />
             ))}
@@ -250,7 +250,7 @@ export const MarketingDigitalTestimonials = () => {
               </p>
               <button
                 onClick={() => handleCTAClick('testimonials')}
-                className="inline-flex items-center px-10 py-4 border border-white text-white font-mono text-sm tracking-[2.5px] uppercase rounded-full hover:bg-white/10 transition-all duration-300 cursor-pointer"
+                className="inline-flex items-center px-10 py-4 border border-[#d400ff] text-white font-mono text-sm tracking-[2.5px] uppercase rounded-full hover:bg-[#d400ff] transition-all duration-300 cursor-pointer"
               >
                 Falar com Especialista
                 <ArrowRight className="ml-2 w-5 h-5" />

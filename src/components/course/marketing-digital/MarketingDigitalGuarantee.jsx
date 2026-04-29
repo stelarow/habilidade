@@ -25,8 +25,8 @@ export const MarketingDigitalGuarantee = () => {
             <div className="flex flex-col md:flex-row items-center gap-8">
               {/* Shield Icon */}
               <div className="flex-shrink-0">
-                <div className="w-32 h-32 border-2 border-white flex items-center justify-center rounded-full">
-                  <Shield className="w-16 h-16 text-white" />
+                <div className="w-32 h-32 border-2 border-[#d400ff] flex items-center justify-center rounded-full">
+                  <Shield className="w-16 h-16 text-[#d400ff]" />
                 </div>
               </div>
 
@@ -59,7 +59,7 @@ export const MarketingDigitalGuarantee = () => {
                 <div className="mt-8">
                   <button
                     onClick={() => handleCTAClick('guarantee')}
-                    className="inline-flex items-center px-10 py-4 border border-white text-white font-mono text-sm tracking-[2.5px] uppercase rounded-full hover:bg-white/10 transition-all duration-300 cursor-pointer"
+                    className="inline-flex items-center px-10 py-4 border border-[#d400ff] text-white font-mono text-sm tracking-[2.5px] uppercase rounded-full hover:bg-[#d400ff] transition-all duration-300 cursor-pointer"
                   >
                     Garantir Minha Vaga
                     <ArrowRight className="ml-2 w-5 h-5" />
