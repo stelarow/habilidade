@@ -5,7 +5,7 @@ import { generateCourseMetadata, validateAndSanitizeCourse } from '../../../util
 import InteligenciaArtificialContactForm from './InteligenciaArtificialContactForm';
 import './inteligencia-artificial.css';
 
-const heroImage = '/assets/informatica-nova/hero/hero-bg-new-1280.webp';
+const heroImage = '/assets/inteligencia-artificial/hero/manter_a_imagem_sem_nenhum_202604291100.jpeg';
 
 function trackEvent(eventName, parameters = {}) {
   if (typeof globalThis.gtag === 'function') {
