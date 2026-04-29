@@ -2,6 +2,7 @@ import { Head } from 'vite-react-ssg';
 import { Navigate, useLoaderData } from 'react-router-dom';
 import { getCompaniesByCategory } from '../../../data/trustedCompanies';
 import { generateCourseMetadata, validateAndSanitizeCourse } from '../../../utils/courseHelpers';
+import { ScrollReveal, CardGridReveal } from '../../../components/shared/ScrollReveal';
 import InteligenciaArtificialContactForm from './InteligenciaArtificialContactForm';
 import './inteligencia-artificial.css';
 
@@ -26,11 +27,13 @@ function handleEnrollClick(source = 'hero') {
 
 function SectionHeader({ eyebrow, title, copy }) {
   return (
-    <div className="ai-section-header">
-      <p className="ai-eyebrow">{eyebrow}</p>
-      <h2>{title}</h2>
-      {copy && <p>{copy}</p>}
-    </div>
+    <ScrollReveal animation="fade-up">
+      <div className="ai-section-header">
+        <p className="ai-eyebrow">{eyebrow}</p>
+        <h2>{title}</h2>
+        {copy && <p>{copy}</p>}
+      </div>
+    </ScrollReveal>
   );
 }
 
@@ -39,7 +42,7 @@ function Hero({ course, lessonsCount }) {
     <section className="ai-hero">
       <img className="ai-hero-image" src={heroImage} alt="" fetchPriority="high" />
       <div className="ai-photo-overlay" />
-      <div className="ai-hero-content">
+      <ScrollReveal animation="fade-up" className="ai-hero-content">
         <p className="ai-eyebrow">Escola Habilidade / Curso</p>
         <h1>
           <span>Inteligencia</span>
@@ -49,25 +52,27 @@ function Hero({ course, lessonsCount }) {
         <button className="ai-button ai-button-primary" onClick={() => handleEnrollClick('hero')}>
           Garantir minha vaga
         </button>
-      </div>
-      <dl className="ai-hero-specs" aria-label="Resumo do curso">
-        <div>
-          <dt>Duracao</dt>
-          <dd>{course.basicInfo.duration}</dd>
-        </div>
-        <div>
-          <dt>Modulos</dt>
-          <dd>{course.curriculum.length}</dd>
-        </div>
-        <div>
-          <dt>Aulas</dt>
-          <dd>{lessonsCount}</dd>
-        </div>
-        <div>
-          <dt>Formato</dt>
-          <dd>Presencial / Online</dd>
-        </div>
-      </dl>
+      </ScrollReveal>
+      <ScrollReveal animation="fade-up" delay={0.2}>
+        <dl className="ai-hero-specs" aria-label="Resumo do curso">
+          <div>
+            <dt>Duracao</dt>
+            <dd>{course.basicInfo.duration}</dd>
+          </div>
+          <div>
+            <dt>Modulos</dt>
+            <dd>{course.curriculum.length}</dd>
+          </div>
+          <div>
+            <dt>Aulas</dt>
+            <dd>{lessonsCount}</dd>
+          </div>
+          <div>
+            <dt>Formato</dt>
+            <dd>Presencial / Online</dd>
+          </div>
+        </dl>
+      </ScrollReveal>
     </section>
   );
 }
@@ -82,15 +87,15 @@ function Proposition({ course }) {
         title="IA aplicada ao trabalho real"
         copy="Aprenda fundamentos, prompts e ferramentas de IA para criar conteudos, automatizar tarefas e aplicar solucoes no trabalho ou no seu negocio."
       />
-      <div className="ai-line-grid">
-        {benefits.map((benefit) => (
+      <CardGridReveal className="ai-line-grid" staggerDelay={0.12}>
+        {benefits.map((benefit, index) => (
           <article className="ai-line-panel" key={benefit.title}>
-            <p className="ai-panel-index">0{benefits.indexOf(benefit) + 1}</p>
+            <p className="ai-panel-index">0{index + 1}</p>
             <h3>{benefit.title}</h3>
             <p>{benefit.description}</p>
           </article>
         ))}
-      </div>
+      </CardGridReveal>
     </section>
   );
 }
@@ -103,7 +108,7 @@ function Curriculum({ course }) {
         title="Seis blocos de dominio"
         copy="O curso combina fundamentos, IA para negocios e ferramentas praticas como Cursor, Flowlabs, ElevenLabs e HatchCanvas, com aulas organizadas por modulo."
       />
-      <div className="ai-curriculum-list">
+      <CardGridReveal className="ai-curriculum-list" staggerDelay={0.08}>
         {course.curriculum.map((module) => (
           <details className="ai-module" key={module.id}>
             <summary>
@@ -125,7 +130,7 @@ function Curriculum({ course }) {
             </div>
           </details>
         ))}
-      </div>
+      </CardGridReveal>
     </section>
   );
 }
@@ -141,7 +146,7 @@ function Tools({ course }) {
         title="Do prompt ao projeto"
         copy="Voce pratica com ferramentas usadas para gerar textos, imagens, audios, codigo, automacoes e projetos visuais, sempre com foco em entrega real."
       />
-      <div className="ai-two-column">
+      <CardGridReveal className="ai-two-column" staggerDelay={0.14}>
         <div className="ai-list-block">
           <h3>Voce aprende</h3>
           <ul>
@@ -154,7 +159,7 @@ function Tools({ course }) {
             {requirements.map((item) => <li key={item}>{item}</li>)}
           </ul>
         </div>
-      </div>
+      </CardGridReveal>
     </section>
   );
 }
@@ -168,7 +173,7 @@ function Investment({ course }) {
         eyebrow="Investimento"
         title="Entrada controlada para uma habilidade de alto impacto"
       />
-      <div className="ai-investment-grid">
+      <CardGridReveal className="ai-investment-grid" staggerDelay={0.12}>
         <div>
           <p className="ai-price-label">Valor atual</p>
           <p className="ai-price">R$ {investment.currentPrice}</p>
@@ -182,7 +187,7 @@ function Investment({ course }) {
         <button className="ai-button ai-button-primary" onClick={() => handleEnrollClick('investment')}>
           Ver condicoes
         </button>
-      </div>
+      </CardGridReveal>
     </section>
   );
 }
@@ -191,7 +196,7 @@ function Testimonials({ course }) {
   return (
     <section className="ai-section" id="depoimentos">
       <SectionHeader eyebrow="Resultados" title="Relatos de alunos" />
-      <div className="ai-testimonials">
+      <CardGridReveal className="ai-testimonials" staggerDelay={0.12}>
         {course.testimonials.slice(0, 4).map((testimonial) => (
           <article className="ai-testimonial" key={testimonial.id}>
             <p>{testimonial.text}</p>
@@ -201,7 +206,7 @@ function Testimonials({ course }) {
             </footer>
           </article>
         ))}
-      </div>
+      </CardGridReveal>
     </section>
   );
 }
@@ -216,14 +221,14 @@ function Companies() {
         title="Credibilidade regional"
         copy="Profissionais de empresas da Grande Florianopolis ja passaram pela Escola Habilidade."
       />
-      <div className="ai-company-grid">
+      <CardGridReveal className="ai-company-grid" staggerDelay={0.08}>
         {companies.map((company) => (
           <div className="ai-company" key={company.name}>
             <img src={company.logo} alt={company.name} loading="lazy" />
             <span>{company.name}</span>
           </div>
         ))}
-      </div>
+      </CardGridReveal>
     </section>
   );
 }
@@ -232,14 +237,14 @@ function FAQ({ course }) {
   return (
     <section className="ai-section" id="faq">
       <SectionHeader eyebrow="FAQ" title="Perguntas frequentes" />
-      <div className="ai-faq-list">
+      <CardGridReveal className="ai-faq-list" staggerDelay={0.08}>
         {course.faq.map((item) => (
           <details className="ai-faq-item" key={item.id}>
             <summary>{item.question}</summary>
             <p>{item.answer}</p>
           </details>
         ))}
-      </div>
+      </CardGridReveal>
     </section>
   );
 }
@@ -252,7 +257,9 @@ function Contact() {
         title="Fale sobre sua vaga"
         copy="Preencha seus dados para receber informacoes sobre turmas, horarios, modalidades e formas de pagamento."
       />
-      <InteligenciaArtificialContactForm />
+      <ScrollReveal animation="fade-up" delay={0.1}>
+        <InteligenciaArtificialContactForm />
+      </ScrollReveal>
     </section>
   );
 }
@@ -291,13 +298,15 @@ export default function InteligenciaArtificialPage({ course: courseProperty }) {
         <Companies />
         <FAQ course={course} />
         <Contact />
-        <section className="ai-final-cta">
-          <p className="ai-eyebrow">Proxima turma</p>
-          <h2>Transforme IA em rotina produtiva.</h2>
-          <button className="ai-button ai-button-primary" onClick={() => handleEnrollClick('final')}>
-            Conversar com a escola
-          </button>
-        </section>
+        <ScrollReveal animation="fade-up">
+          <section className="ai-final-cta">
+            <p className="ai-eyebrow">Proxima turma</p>
+            <h2>Transforme IA em rotina produtiva.</h2>
+            <button className="ai-button ai-button-primary" onClick={() => handleEnrollClick('final')}>
+              Conversar com a escola
+            </button>
+          </section>
+        </ScrollReveal>
       </main>
     </>
   );
