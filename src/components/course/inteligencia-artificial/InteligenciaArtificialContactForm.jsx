@@ -61,7 +61,7 @@ export default function InteligenciaArtificialContactForm() {
       from_email: formData.email,
       phone: formData.phone,
       course: 'Inteligencia Artificial',
-      message: formData.message || 'Contato originado na pagina dedicada do curso de IA.',
+      message: formData.message || 'Quero saber mais sobre conteudo, horarios e formas de pagamento do curso de Inteligencia Artificial.',
       to_email: EMAIL_CONFIG.CONTACT_EMAIL,
       reply_to: formData.email
     };

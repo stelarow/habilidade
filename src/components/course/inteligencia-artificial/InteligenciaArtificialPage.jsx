@@ -80,7 +80,7 @@ function Proposition({ course }) {
       <SectionHeader
         eyebrow="Proposta"
         title="IA aplicada ao trabalho real"
-        copy="A pagina foi desenhada para ser objetiva: aprender fundamentos, dominar prompts e usar ferramentas para criar, automatizar e vender melhor."
+        copy="Aprenda fundamentos, prompts e ferramentas de IA para criar conteudos, automatizar tarefas e aplicar solucoes no trabalho ou no seu negocio."
       />
       <div className="ai-line-grid">
         {benefits.map((benefit) => (
@@ -101,7 +101,7 @@ function Curriculum({ course }) {
       <SectionHeader
         eyebrow="Curriculo"
         title="Seis blocos de dominio"
-        copy="Os modulos preservam a estrutura atual do curso, com aulas, duracao e observacoes do catalogo."
+        copy="O curso combina fundamentos, IA para negocios e ferramentas praticas como Cursor, Flowlabs, ElevenLabs e HatchCanvas, com aulas organizadas por modulo."
       />
       <div className="ai-curriculum-list">
         {course.curriculum.map((module) => (
@@ -139,7 +139,7 @@ function Tools({ course }) {
       <SectionHeader
         eyebrow="Ferramentas"
         title="Do prompt ao projeto"
-        copy="ChatGPT, Cursor, Flowlabs, ElevenLabs e HatchCanvas entram como ferramentas de producao, nao como vitrines."
+        copy="Voce pratica com ferramentas usadas para gerar textos, imagens, audios, codigo, automacoes e projetos visuais, sempre com foco em entrega real."
       />
       <div className="ai-two-column">
         <div className="ai-list-block">
@@ -250,7 +250,7 @@ function Contact() {
       <SectionHeader
         eyebrow="Contato"
         title="Fale sobre sua vaga"
-        copy="Envie seus dados. Se o EmailJS nao responder, o fluxo abre WhatsApp com uma mensagem especifica do curso de Inteligencia Artificial."
+        copy="Preencha seus dados para receber informacoes sobre turmas, horarios, modalidades e formas de pagamento."
       />
       <InteligenciaArtificialContactForm />
     </section>

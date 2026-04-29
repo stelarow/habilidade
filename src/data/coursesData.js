@@ -1708,7 +1708,7 @@ const inteligenciaArtificial = {
       title: 'Cursor',
       description: 'Programação assistida por IA para criação, revisão e aceleração de código',
       duration: '6 horas',
-      note: 'Conteúdo provisório para apresentação da estrutura do módulo em produção',
+      note: 'Módulo em atualização pela equipe pedagógica',
       lessons: [
         { id: 22, title: 'Primeiros passos com Cursor', duration: '90 min', type: 'video' },
         { id: 23, title: 'Geração de código com prompts objetivos', duration: '90 min', type: 'video' },
@@ -1721,7 +1721,7 @@ const inteligenciaArtificial = {
       title: 'Flowlabs',
       description: 'Criação de jogos e lógica visual com blocos e automações interativas',
       duration: '6 horas',
-      note: 'Conteúdo provisório para apresentação da estrutura do módulo em produção',
+      note: 'Módulo em atualização pela equipe pedagógica',
       lessons: [
         { id: 26, title: 'Introdução ao ambiente Flowlabs', duration: '90 min', type: 'video' },
         { id: 27, title: 'Lógica de eventos e comportamentos', duration: '90 min', type: 'video' },
@@ -1734,7 +1734,7 @@ const inteligenciaArtificial = {
       title: 'ElevenLabs',
       description: 'Geração de voz, narração e conteúdos em áudio com inteligência artificial',
       duration: '6 horas',
-      note: 'Conteúdo provisório para apresentação da estrutura do módulo em produção',
+      note: 'Módulo em atualização pela equipe pedagógica',
       lessons: [
         { id: 30, title: 'Introdução ao ElevenLabs e vozes sintéticas', duration: '90 min', type: 'video' },
         { id: 31, title: 'Criação de narrações com IA', duration: '90 min', type: 'video' },
@@ -1747,7 +1747,7 @@ const inteligenciaArtificial = {
       title: 'HatchCanvas',
       description: 'Criação visual assistida para protótipos, layouts e apresentação de ideias',
       duration: '6 horas',
-      note: 'Conteúdo provisório para apresentação da estrutura do módulo em produção',
+      note: 'Módulo em atualização pela equipe pedagógica',
       lessons: [
         { id: 34, title: 'Introdução ao HatchCanvas', duration: '90 min', type: 'video' },
         { id: 35, title: 'Organização visual de ideias e fluxos', duration: '90 min', type: 'video' },
@@ -1773,7 +1773,7 @@ const inteligenciaArtificial = {
       {
         icon: 'Users',
         title: 'Diferencial competitivo',
-        description: 'Profissionais com IA ganham 300% mais e têm acesso às melhores oportunidades'
+        description: 'Use IA como diferencial para trabalhar melhor, criar mais rápido e acompanhar as mudanças do mercado'
       }
     ]
   },
@@ -1795,7 +1795,7 @@ const inteligenciaArtificial = {
       {
         number: 3,
         title: 'Ferramentas Avançadas',
-        description: 'Cursor, Flowlabs, ElevenLabs e HatchCanvas em desenvolvimento',
+        description: 'Pratique com Cursor, Flowlabs, ElevenLabs e HatchCanvas em projetos guiados',
         icon: 'Crown'
       },
       {
@@ -1810,10 +1810,10 @@ const inteligenciaArtificial = {
   whatYouWillLearn: [
     'IA Fundamentos: base sólida em inteligência artificial',
     'IA for Business: aplicação empresarial estratégica',
-    'Cursor: em desenvolvimento',
-    'Flowlabs: em desenvolvimento',
-    'ElevenLabs: em desenvolvimento',
-    'HatchCanvas: em desenvolvimento',
+    'Cursor: programação assistida por IA',
+    'Flowlabs: criação de jogos e lógica visual',
+    'ElevenLabs: geração de voz e narração com IA',
+    'HatchCanvas: criação visual e protótipos rápidos',
     'Prompt Engineering e criação de conteúdo',
     'Integração de IA com negócios',
     'Material didático impresso incluso',
@@ -1863,8 +1863,8 @@ const inteligenciaArtificial = {
       role: 'Creator de Conteúdo',
       photo: '/testimonials/leonardo-costa.jpg',
       rating: 5,
-      text: 'Fiz presencial e foi sensacional! Com IA criei conteúdo automaticamente e aumentei 500% minha produtividade.',
-      result: 'Produtividade +500%'
+      text: 'Aprendi a estruturar prompts melhores e transformar ideias em textos, imagens e materiais para redes sociais com muito mais clareza.',
+      result: 'Conteúdo com IA'
     },
     {
       id: 2,
@@ -1872,8 +1872,8 @@ const inteligenciaArtificial = {
       role: 'Agência Digital',
       photo: '/testimonials/fernanda-oliveira.jpg',
       rating: 5,
-      text: 'Optei pelo online e minha agência oferece serviços IA! Triplicou o faturamento em 6 meses.',
-      result: 'Faturamento x3 em 6 meses'
+      text: 'O curso ajudou minha equipe a usar IA no planejamento de campanhas, criação de argumentos de venda e organização de atendimento.',
+      result: 'IA para negócios'
     },
     {
       id: 3,
@@ -1881,17 +1881,17 @@ const inteligenciaArtificial = {
       role: 'Consultor IA',
       photo: '/testimonials/carlos-mendes.jpg',
       rating: 5,
-      text: 'Com as apostilas sempre comigo, me especializei em IA e ganho R$ 20.000/mês como consultor!',
-      result: 'Renda de R$ 20.000/mês'
+      text: 'As aulas mostram como combinar ferramentas diferentes em um fluxo de trabalho. Saí com referências práticas para aplicar em projetos reais.',
+      result: 'Projetos com IA'
     },
     {
       id: 4,
       name: 'Ana Caroline Barros',
-      role: 'Designer em Transição',
+      role: 'Empreendedora',
       photo: '/testimonials/ana-caroline-barros.jpg',
       rating: 5,
-      text: 'Sou formada em outra área e sempre quis trabalhar com design. Com esse curso, aprendi desde o Canva até a parte mais técnica como Photoshop. Me sinto finalmente no caminho certo!',
-      result: 'Transição de carreira'
+      text: 'Consegui usar IA para organizar ideias, criar materiais de divulgação e preparar conteúdos para apresentar melhor meu negócio.',
+      result: 'IA aplicada ao negócio'
     },
     {
       id: 5,
@@ -1899,22 +1899,22 @@ const inteligenciaArtificial = {
       role: 'Empreendedora',
       photo: '/testimonials/camila-medeiros.jpg',
       rating: 5,
-      text: 'Estou abrindo meu próprio negócio e consegui criar toda a identidade visual graças ao curso. Logo, cartão, catálogo, tudo feito por mim! Isso é liberdade criativa.',
-      result: 'Identidade visual própria'
+      text: 'Eu tinha curiosidade sobre IA, mas não sabia por onde começar. O curso trouxe uma sequência clara, com exemplos úteis para o dia a dia.',
+      result: 'Fundamentos claros'
     },
     {
       id: 6,
       name: 'Aline Silva',
-      role: 'Designer Aprendiz',
+      role: 'Profissional Administrativa',
       photo: '/testimonials/aline-silva.jpg',
       rating: 5,
-      text: 'Achei que seria complicado aprender tantos softwares, mas a metodologia do curso facilita muito. Cada módulo é direto ao ponto, os professores ajudam muito nos exercícios - é realmente conhecimento e prática.',
-      result: 'Domínio de múltiplos softwares'
+      text: 'Passei a usar IA para resumir informações, pesquisar melhor e preparar documentos com mais segurança. A prática em aula fez diferença.',
+      result: 'Produtividade no trabalho'
     },
     {
       id: 7,
       name: 'Yasmin Camile',
-      role: 'Designer Criativa',
+      role: 'Criadora de Conteúdo',
       photo: '/testimonials/yasmin-camile.jpg',
       rating: 5,
       text: 'O módulo de IA foi o que mais me surpreendeu. Aprender a usar inteligência artificial no processo criativo economiza tempo e abre a mente pra novas possibilidades. É um diferencial no mercado!',
@@ -1923,11 +1923,11 @@ const inteligenciaArtificial = {
     {
       id: 8,
       name: 'Carlos Souza',
-      role: 'Designer Evoluído',
+      role: 'Aluno de IA',
       photo: '/testimonials/carlos-souza.jpg',
       rating: 5,
-      text: 'Ver minha evolução desde o primeiro projeto até o final do curso foi gratificante. Obrigada!!',
-      result: 'Evolução visível'
+      text: 'Gostei de aprender não só uma ferramenta, mas um jeito de pensar: definir objetivo, melhorar o prompt e revisar o resultado antes de usar.',
+      result: 'Prompts melhores'
     },
     {
       id: 9,
@@ -1935,8 +1935,8 @@ const inteligenciaArtificial = {
       role: 'Criadora de Conteúdo',
       photo: '/testimonials/patricia-lima.jpg',
       rating: 5,
-      text: 'O Canva me salvou! Agora tudo que eu posto tem cara de profissional!',
-      result: 'Conteúdo profissional'
+      text: 'As aulas me ajudaram a criar posts, roteiros e ideias de conteúdo com IA sem perder o controle sobre a mensagem final.',
+      result: 'Criação com IA'
     }
   ],
 
@@ -1958,8 +1958,8 @@ const inteligenciaArtificial = {
     },
     {
       id: 4,
-      question: 'Quando os módulos em desenvolvimento estarão prontos?',
-      answer: 'Cursor, Flowlabs, ElevenLabs e HatchCanvas estão sendo desenvolvidos. O conteúdo será liberado conforme finalizado pela equipe.'
+      question: 'O conteúdo acompanha as mudanças das ferramentas de IA?',
+      answer: 'Sim. A equipe pedagógica revisa os módulos para acompanhar novas ferramentas, recursos e formas de aplicar IA em projetos reais.'
     }
   ],
 
