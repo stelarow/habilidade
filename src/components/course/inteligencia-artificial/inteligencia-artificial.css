@@ -1,17 +1,33 @@
 .ai-page {
-  --ai-black: #000000;
-  --ai-soft: #0d0d0d;
-  --ai-card: #141414;
-  --ai-line: #262626;
-  --ai-white: #ffffff;
+  --ai-canvas: #000000;
+  --ai-surface-soft: #0d0d0d;
+  --ai-surface-card: #141414;
+  --ai-surface-elevated: #1f1f1f;
+  --ai-hairline: #262626;
+  --ai-hairline-strong: #3a3a3a;
+  --ai-ink: #ffffff;
   --ai-body: #cccccc;
+  --ai-body-strong: #e6e6e6;
   --ai-muted: #999999;
   --ai-muted-soft: #666666;
   --ai-purple: #d400ff;
+  --ai-purple-soft: rgba(212, 0, 255, 0.10);
+  --ai-link: #c3d9f3;
+  --ai-on-primary: #000000;
+  --ai-black: var(--ai-canvas);
+  --ai-soft: var(--ai-surface-soft);
+  --ai-card: var(--ai-surface-card);
+  --ai-line: var(--ai-hairline);
+  --ai-white: var(--ai-ink);
   background: var(--ai-black);
   color: var(--ai-white);
   font-family: 'Bugatti Text Regular', Georgia, serif;
   min-height: 100vh;
+}
+
+.ai-page ::selection {
+  background: var(--ai-purple);
+  color: var(--ai-on-primary);
 }
 
 .ai-page *,
@@ -110,6 +126,7 @@
 }
 
 .ai-hero-copy {
+  color: var(--ai-body-strong);
   font-size: clamp(1.05rem, 1.6vw, 1.35rem);
   margin: 1.5rem 0 2rem;
   max-width: 42rem;
@@ -132,7 +149,7 @@
 .ai-button:hover,
 .ai-button:focus-visible {
   background: var(--ai-purple);
-  color: var(--ai-black);
+  color: var(--ai-on-primary);
   outline: 1px solid var(--ai-purple);
   outline-offset: 4px;
 }
@@ -141,6 +158,12 @@
   border-color: var(--ai-muted-soft);
   color: var(--ai-muted-soft);
   cursor: wait;
+}
+
+.ai-button:disabled:hover,
+.ai-button:disabled:focus-visible {
+  background: transparent;
+  color: var(--ai-muted-soft);
 }
 
 .ai-hero-specs {
@@ -195,6 +218,7 @@
 }
 
 .ai-section-header > p:last-child {
+  color: var(--ai-body-strong);
   grid-column: 2;
   max-width: 42rem;
 }
@@ -220,7 +244,6 @@
 .ai-testimonial,
 .ai-company {
   background: var(--ai-black);
-  border: 1px solid var(--ai-line);
   padding: 1.5rem;
 }
 
@@ -324,6 +347,7 @@
 
 .ai-list-block {
   background: var(--ai-card);
+  border: 1px solid var(--ai-line);
 }
 
 .ai-investment-grid {
@@ -350,7 +374,7 @@
 }
 
 .ai-investment-copy {
-  color: var(--ai-white);
+  color: var(--ai-body-strong);
   font-size: 1.15rem;
 }
 
@@ -359,6 +383,7 @@
 }
 
 .ai-testimonial {
+  border: 1px solid var(--ai-line);
   display: flex;
   flex-direction: column;
   min-height: 18rem;
@@ -390,6 +415,7 @@
 
 .ai-company {
   align-items: center;
+  border: 1px solid var(--ai-line);
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -446,7 +472,7 @@
 .ai-field textarea {
   background: transparent;
   border: 0;
-  border-bottom: 1px solid var(--ai-line);
+  border-bottom: 1px solid var(--ai-hairline-strong);
   color: var(--ai-white);
   font: 400 1rem/1.4 'Bugatti Text Regular', Georgia, serif;
   padding: 0.8rem 0;
@@ -458,6 +484,11 @@
   border-bottom-color: var(--ai-purple);
   outline: 1px solid var(--ai-purple);
   outline-offset: 4px;
+}
+
+.ai-field input:hover,
+.ai-field textarea:hover {
+  border-bottom-color: var(--ai-purple);
 }
 
 .ai-field input::placeholder,
