@@ -508,8 +508,26 @@
 }
 
 .ai-form-submit {
-  margin-top: 1.5rem;
   width: 100%;
+}
+
+.ai-form-actions {
+  display: grid;
+  gap: 0.9rem;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  margin-top: 1.5rem;
+}
+
+.ai-button-whatsapp {
+  border-color: #25d366;
+  color: #25d366;
+}
+
+.ai-button-whatsapp:hover,
+.ai-button-whatsapp:focus-visible {
+  background: #25d366;
+  color: var(--ai-on-primary);
+  outline-color: #25d366;
 }
 
 .ai-final-cta {
@@ -536,7 +554,8 @@
   .ai-investment-grid,
   .ai-testimonials,
   .ai-company-grid,
-  .ai-form-grid {
+  .ai-form-grid,
+  .ai-form-actions {
     grid-template-columns: 1fr;
   }
 

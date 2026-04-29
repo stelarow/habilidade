@@ -16,13 +16,17 @@ function trackEvent(eventName, parameters = {}) {
 }
 
 function buildWhatsAppMessage(formData) {
+  const contactLines = [
+    formData.name && `Nome: ${formData.name}`,
+    formData.email && `Email: ${formData.email}`,
+    formData.phone && `Telefone: ${formData.phone}`
+  ].filter(Boolean);
+
   return [
     'Nova solicitacao de contato - Curso de Inteligencia Artificial',
     '',
-    `Nome: ${formData.name}`,
-    `Email: ${formData.email}`,
-    `Telefone: ${formData.phone}`,
     'Curso de interesse: Inteligencia Artificial',
+    ...contactLines,
     `Mensagem: ${formData.message || 'Quero saber mais sobre conteudo, horarios e formas de pagamento do curso de IA.'}`
   ].join('\n');
 }
@@ -37,13 +41,13 @@ export default function InteligenciaArtificialContactForm() {
     setFormData((current) => ({ ...current, [name]: value }));
   };
 
-  const openWhatsApp = () => {
+  const openWhatsApp = (eventLabel = 'inteligencia-artificial-whatsapp-fallback') => {
     const message = buildWhatsAppMessage(formData);
     const whatsappUrl = `https://wa.me/${EMAIL_CONFIG.WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 
     trackEvent('cta_click', {
       event_category: 'CTA',
-      event_label: 'inteligencia-artificial-whatsapp-fallback',
+      event_label: eventLabel,
       course_name: 'Inteligencia Artificial',
       course_slug: 'inteligencia-artificial'
     });
@@ -98,7 +102,7 @@ export default function InteligenciaArtificialContactForm() {
       setFormData(initialFormData);
     } else {
       setSubmitStatus('whatsapp');
-      setTimeout(openWhatsApp, 900);
+      setTimeout(() => openWhatsApp(), 900);
     }
 
     setIsSubmitting(false);
@@ -171,9 +175,19 @@ export default function InteligenciaArtificialContactForm() {
         <p className="ai-form-status">Abrindo WhatsApp com sua mensagem sobre o curso de IA.</p>
       )}
 
-      <button className="ai-button ai-button-primary ai-form-submit" type="submit" disabled={isSubmitting}>
-        {isSubmitting ? 'Enviando' : 'Solicitar contato'}
-      </button>
+      <div className="ai-form-actions">
+        <button className="ai-button ai-button-primary ai-form-submit" type="submit" disabled={isSubmitting}>
+          {isSubmitting ? 'Enviando' : 'Solicitar contato'}
+        </button>
+
+        <button
+          className="ai-button ai-button-whatsapp ai-form-submit"
+          type="button"
+          onClick={() => openWhatsApp('inteligencia-artificial-whatsapp-direct')}
+        >
+          Falar direto no WhatsApp
+        </button>
+      </div>
     </form>
   );
 }
